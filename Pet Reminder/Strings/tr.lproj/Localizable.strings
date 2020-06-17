@@ -1,0 +1,82 @@
+/* 
+  Localizable.strings
+  Pet Reminder
+
+  Created by Ege Sucu on 2.06.2020.
+  Copyright © 2020 Softhion. All rights reserved.
+*/
+
+// General
+
+"Okey"="Tamam";
+"Continue"="Devam";
+"Save"="Kaydet";
+"Create"="Oluştur";
+"Welcome"="Merhaba";
+
+
+
+
+// Event
+
+"Event-Note" = "Bu etkinlik Pet Reminder uygulaması ile oluşturulmuştur.";
+"Auth-Error" = "İzin Hatası";
+"Auth-Message" = "We can't access your Calendar to show/create events.";
+
+
+// Setup Name
+
+"Name-Error"="İsim Hatası";
+"Name-Message"="Lütfen evcil hayvanına bir isim ver.";
+"Name"="Hadi bir isim ile başlayalım";
+"Birthday"="Arkadaşın ne zaman doğdu?";
+
+// Home
+
+
+"Home"="Ev";
+"Morning-Feed"="Sabah Kahvaltısı";
+"Evening-Feed"="Akşam Yemeği";
+"Events"="Etkinlikler";
+"Event-Name"="İsim";
+"Start"="Başlangıç";
+"End"="Bitiş";
+
+
+
+// Welcome
+
+"Welcome-Slogan"="Pet Reminder'a hoşgeldiniz.";
+"Welcome-Slogan-2"="Evimizde küçük dostlarımızla yaşıyoruz ve onların da bizler gibi ihtiyaçları olabiliyor. Bazen bunları unutabiliyoruz. Bu uygulama sayesinde onların tüm ihtiyaçlarını sizlere hatırlatabiliriz. Önce bir arkadaşınızı ekleyerek başlayalım.";
+
+
+
+// Notification
+
+"Notification"="Arkadaşını ne zaman besliyorsun?";
+"Time"="Anımsatmamızı istediğin saati seç";
+"Morning-Time"="Sabah saatini seç";
+"Evening-Time"="Şimdi gece saatini seç";
+"Morning"="Sabah";
+"Evening"="Akşam";
+"Both"="İkisi de";
+"Notification-Error"="Lütfen devam etmek için bir opsiyonu seçin.";
+
+"Morning-Title"="Günaydın ☀️";
+"Morning-Pre"="İyi Uyuyabildin mi?";
+"Morning-After"="senden mama ve su bekliyor. Arkadaşını unutma.";
+
+"Evening-Title"="İyi Geceler 🌝";
+"Evening-Pre"="Henüz uykuya geçme!";
+"Evening-After"="senden mama ve su bekliyor. Arkadaşını unutma.";
+
+"Birthday-Title"="İyi Ki Doğdun 🎉";
+"Birthday-Pre"="Mutlu Yıllar";
+"Birthday-After"="Dostunla güzel bir yıl geçir.🎁";
+
+// Photo Selection
+
+"Upload"="Arkadaşının sevimli bir fotoğrafını yükle";
+"Permission-Error"="İzin Hatası";
+"Permission-Message"="Galerine erişme iznimiz yok.";
+

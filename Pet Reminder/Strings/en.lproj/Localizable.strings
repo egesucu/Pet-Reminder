@@ -1,0 +1,76 @@
+/* 
+  Localizable.strings
+  Pet Reminder
+
+  Created by Ege Sucu on 2.06.2020.
+  Copyright © 2020 Softhion. All rights reserved.
+*/
+
+// General
+
+"Okey"="Okey";
+"Continue"="Continue";
+"Save"="Save";
+"Create"="Create";
+"Welcome"="Welcome";
+
+
+
+
+// Event
+
+"Event-Note" = "This event is created with the Pet Reminder app.";
+"Auth-Error" = "Authentication Error";
+"Auth-Message" = "We can't access your Calendar to show/create events.";
+
+
+// Setup Name
+
+"Name-Error"="Name Error";
+"Name-Message"="Please add a name for your pet.";
+"Name"="Let's begin with a name";
+"Birthday"="When is your friend born?";
+
+// Home
+
+
+"Home"="Home";
+"Morning-Feed"="Morning Feed";
+"Evening-Feed"="Evening Feed";
+"Events"="Events";
+"Event-Name"="Name";
+"Start"="Start";
+"End"="End";
+
+
+
+// Welcome
+
+"Welcome-Slogan"="Welcome to Pet Reminder.";
+"Welcome-Slogan-2"="We live with our little friends and they may have daily needs just like us. We could forget this sometimes. With the help of this application we can remember you all of their needs. First, we can start by adding your friend.";
+
+// Notification
+"Notification"="When do you feed your friend?";
+"Time"="Choose a time to be notified";
+"Morning-Time"="Choose the morning time";
+"Evening-Time"="Now choose the evening time";
+"Morning"="Morning";
+"Evening"="Evening";
+"Both"="Both";
+"Notification-Error"="Please choose an option to continue.";
+
+"Morning-Title"="Good Morning ☀️";
+"Morning-Content"="Did you sleep good? %@ needs some food and water from you. Don't forget your friend.";
+
+
+"Evening-Title"="Good Evening 🌝";
+"Evening-Content"="Don't sleep yet! %@ needs some food and water from you. Don't forget your friend.";
+
+"Birthday-Title"="Happy Birthday 🎉";
+"Birthday-Content"="Happy birthday %@!. Have a best year with your friend.🎁";
+
+// Photo Selection
+
+"Upload"="Upload a cute photo of your Friend";
+"Permission-Error"="Permission Error";
+"Permission-Message"="We don't have access to your gallery.";
