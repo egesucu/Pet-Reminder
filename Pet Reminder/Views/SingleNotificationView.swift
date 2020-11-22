@@ -11,7 +11,7 @@ import UserNotifications
 
 struct SingleNotificationView: View {
     
-    @EnvironmentObject var pet : PetModel
+
     var selectedTime : LocalizedStringKey
     @State private var time: Date = Date()
     @Environment(\.managedObjectContext) var moc
@@ -27,7 +27,7 @@ struct SingleNotificationView: View {
             Spacer()
             
             Button(action: {
-                self.savePet()
+//                self.savePet()
             }) {
                 Text("Submit").font(.largeTitle).foregroundColor(Color(.systemBackground)).padding().background(Color(.systemGreen)).cornerRadius(20)
             }
@@ -37,52 +37,53 @@ struct SingleNotificationView: View {
         
     }
     
-    private func savePet(){
-        
-        let addedPet = Pet(context: self.moc)
-        addedPet.name = self.pet.name
-        addedPet.id = UUID()
-        addedPet.image = self.pet.imageData
-        addedPet.birthday = self.pet.birthday
-        
-        
-        if selectedTime == "Morning-Time" {
-            addedPet.morningTime = self.time
-        } else if selectedTime == "Evening-Time"{
-            addedPet.eveningTime = self.time
-        } else {
-            print("Error on Getting time selection")
-        }
-        
-        do {
-            try self.moc.save()
-            self.createNotification()
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-    }
+//    private func savePet(){
+//
+//
+//        let addedPet = Pet(context: self.moc)
+//        addedPet.name = self.pet.name
+//        addedPet.id = UUID()
+//        addedPet.image = self.pet.imageData
+//        addedPet.birthday = self.pet.birthday
+//
+//
+//        if selectedTime == "Morning-Time" {
+//            addedPet.morningTime = self.time
+//        } else if selectedTime == "Evening-Time"{
+//            addedPet.eveningTime = self.time
+//        } else {
+//            print("Error on Getting time selection")
+//        }
+//
+//        do {
+//            try self.moc.save()
+//            self.createNotification()
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//
+//    }
     
-    private func createNotification(){
-        
-        if askNotificationRequest(){
-            
-            if selectedTime == "Morning-Time" {
-                 NotificationManager.createNotification(from: time, identifier: "\(pet.name)-morning-notification", name: pet.name)
-            } else if selectedTime == "Evening-Time"{
-                NotificationManager.createNotification(from: time, identifier: "\(pet.name)-evening-notification", name: pet.name)
-            } else {
-                print("Error on Getting time selection")
-            }
-            
-//            Create Birthday Notification
-            NotificationManager.createNotification(from: self.pet.birthday, identifier: "\(pet.name)-birthday-notification", name: pet.name)
-
-            
-        }
-        
-        
-    }
+//    private func createNotification(){
+//
+//        if askNotificationRequest(){
+//
+//            if selectedTime == "Morning-Time" {
+//                 NotificationManager.createNotification(from: time, identifier: "\(pet.name)-morning-notification", name: pet.name)
+//            } else if selectedTime == "Evening-Time"{
+//                NotificationManager.createNotification(from: time, identifier: "\(pet.name)-evening-notification", name: pet.name)
+//            } else {
+//                print("Error on Getting time selection")
+//            }
+//
+////            Create Birthday Notification
+//            NotificationManager.createNotification(from: self.pet.birthday, identifier: "\(pet.name)-birthday-notification", name: pet.name)
+//
+//
+//        }
+//
+//
+//    }
     
     
     private func askNotificationRequest()->Bool{
@@ -104,7 +105,7 @@ struct SingleNotificationView: View {
 struct SingleNotificationView_Previews: PreviewProvider {
     
     static var previews: some View {
-        SingleNotificationView(selectedTime: "").environment(\.locale, .init(identifier: "en"))
+        SingleNotificationView(selectedTime: "")
 
     }
 }

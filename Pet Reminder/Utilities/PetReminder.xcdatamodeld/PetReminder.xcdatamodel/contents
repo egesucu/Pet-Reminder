@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="PetModel" representedClassName="PetModel" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Pet" representedClassName="Pet" syncable="YES" codeGenerationType="class">
         <attribute name="birthday" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="eveningFeed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="eveningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="eveningTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
@@ -11,6 +11,6 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="PetModel" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="Pet" positionX="-63" positionY="-18" width="128" height="14"/>
     </elements>
 </model>

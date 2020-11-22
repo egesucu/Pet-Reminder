@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectNotificationView: View {
     
-    @EnvironmentObject var pet : PetModel
+
     @State private var selectedIndex : Int?
     
     
@@ -79,7 +79,7 @@ struct SelectNotificationView: View {
 struct SelectNotificationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
-            SelectNotificationView().environmentObject(PetModel())
+            SelectNotificationView()
         }.navigationBarBackButtonHidden(false)
        
     }

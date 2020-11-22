@@ -10,82 +10,95 @@ import SwiftUI
 
 struct SetupNameView: View {
     
-    @EnvironmentObject var pet : PetModel
-    @State private var birthday = Date()
-    @State private var name = ""
-    
-    @State private var tag:Int? = nil
-    @State private var showingAlert = false
-    
-    let generator = UINotificationFeedbackGenerator()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         
-        ScrollView{
-            VStack(alignment: .center, spacing: 10){
-                Spacer().navigationBarTitle("Setup").navigationBarBackButtonHidden(true).navigationViewStyle(StackNavigationViewStyle())
-                Group{
-                    Text("Name")
-                        .font(.largeTitle).padding().lineLimit(1).minimumScaleFactor(0.5)
-                    TextField("Text", text: $name).textFieldStyle(RoundedBorderTextFieldStyle()).padding().shadow(color: Color(.label).opacity(0.6),radius: 4, x:0, y:2).multilineTextAlignment(.center)
-                    
-                }
-                Spacer()
-                Group{
-                    Text("Birthday").font(.largeTitle).padding().lineLimit(1).minimumScaleFactor(0.5)
-                    Spacer()
-                    DatePicker("Please enter a date", selection: $birthday, displayedComponents: .date).labelsHidden().environment(\.locale, Locale.init(identifier: Locale.current.languageCode ?? "tr")).padding().shadow(color: Color(.label).opacity(0.6),radius: 4, x:0, y:2).frame(height: 80).clipped()
-                    
-                }
-                Spacer()
-                Group {
-                    NavigationLink(destination: SetupPhotoView(), tag: 1, selection: $tag) {
-                        EmptyView()
-                    }
-                    
-                    
-                    Button("Next") {
-                        if (self.name.isEmpty){
-                            self.generator.notificationOccurred(.error)
-                            self.showingAlert = true
-                        } else {
-                            self.generator.notificationOccurred(.success)
-                            self.savePet()
-                        }
-                    }.font(Font.system(size: 35))
-                        .foregroundColor(.white)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green)
-                        .cornerRadius(20)
-                        .shadow(color: Color(.label).opacity(0.6),radius: 4, x:0, y:2)
-                        .alert(isPresented: $showingAlert) { () -> Alert in
-                            Alert(title: Text("Name-Message"))
-                            
-                    }
-                    
-                }
-                
-            }.padding()
-        }.padding([.top],40)
+        VStack{
+            NameInputView()
+            Spacer()
+            BirthdayInputView()
+            Spacer()
+            NextButton()
+        }
+        .background(Color(UIColor.systemGroupedBackground).ignoresSafeArea(.all, edges: .all))
+        .navigationBarTitle("Personal Information")
         
-        
-    }
-    
-    private func savePet(){
-        
-        self.pet.name = self.name
-        self.pet.birthday = self.birthday
-        self.tag = 1
     }
     
     
 }
 
+struct NameInputView : View {
+    
+    @State private var name = ""
+    
+    var body: some View {
+        VStack{
+            Text("Name")
+                .font(.largeTitle)
+                .padding()
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+            TextField("Text", text: $name).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                .multilineTextAlignment(.center)
+            
+        }
+        
+    }
+    
+}
+
+struct BirthdayInputView : View {
+    
+    @State private var birthday = Date()
+    
+    var body: some View {
+        VStack{
+            Text("Birthday").font(.largeTitle).padding().lineLimit(1).minimumScaleFactor(0.5)
+            DatePicker("Please enter a date", selection: $birthday, displayedComponents: .date)
+                .labelsHidden()
+                .environment(\.locale, Locale.init(identifier: Locale.current.languageCode ?? "tr"))
+                .padding()
+                .frame(height: 80)
+                .clipped()
+            
+        }
+        
+    }
+    
+}
+
+struct NextButton : View {
+    
+    @State private var showingAlert = false
+    
+    var body: some View{
+        NavigationLink(destination: SetupPhotoView()) {
+            Button("Next") {
+//        action goes here
+            }
+            .font(Font.system(size: 35))
+            .foregroundColor(.white)
+            .frame(minWidth: 0, maxWidth: .infinity)
+            
+            .background(Color.green)
+            .cornerRadius(60)
+            .alert(isPresented: $showingAlert) { () -> Alert in
+                Alert(title: Text("Name-Message"))
+            }
+            .padding()
+        }
+    }
+}
+
 struct SetupNameView_Previews: PreviewProvider {
     static var previews: some View {
         
-            SetupNameView().environmentObject(PetModel()).navigationBarBackButtonHidden(true).navigationBarTitle("Setup").navigationViewStyle(StackNavigationViewStyle())
+        NavigationView {
+            SetupNameView()
+        }
+        
         
     }
 }
