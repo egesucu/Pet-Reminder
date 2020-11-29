@@ -11,6 +11,6 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Pet" positionX="-63" positionY="-18" width="128" height="14"/>
+        <element name="Pet" positionX="-63" positionY="-18" width="128" height="149"/>
     </elements>
 </model>

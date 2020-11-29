@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9D59129D248BBDDF001B2D26 /* SingleNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D59129C248BBDDF001B2D26 /* SingleNotificationView.swift */; };
 		9D59129F248BBDE9001B2D26 /* MultipleNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D59129E248BBDE9001B2D26 /* MultipleNotificationView.swift */; };
-		9D708A6A256953F900A89ACB /* PetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A69256953F900A89ACB /* PetInfo.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
@@ -18,7 +17,6 @@
 		9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */; };
 		9D8E77092486690F004610C8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E77082486690F004610C8 /* HelloView.swift */; };
 		9D8E770C24866963004610C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E770E24866963004610C8 /* Localizable.strings */; };
-		9D8E771224866A34004610C8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E771124866A34004610C8 /* Images.xcassets */; };
 		9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E77132486ABBC004610C8 /* SetupNameView.swift */; };
 		9D8E77162486D820004610C8 /* SetupPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E77152486D820004610C8 /* SetupPhotoView.swift */; };
 		9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA497592490E1B0002D4051 /* NotificationManager.swift */; };
@@ -31,7 +29,6 @@
 /* Begin PBXFileReference section */
 		9D59129C248BBDDF001B2D26 /* SingleNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNotificationView.swift; sourceTree = "<group>"; };
 		9D59129E248BBDE9001B2D26 /* MultipleNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleNotificationView.swift; sourceTree = "<group>"; };
-		9D708A69256953F900A89ACB /* PetInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetInfo.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -46,7 +43,6 @@
 		9D8E770D24866963004610C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D8E770F2486697A004610C8 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9D8E77102486697B004610C8 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9D8E771124866A34004610C8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9D8E77132486ABBC004610C8 /* SetupNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupNameView.swift; sourceTree = "<group>"; };
 		9D8E77152486D820004610C8 /* SetupPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPhotoView.swift; sourceTree = "<group>"; };
 		9DA497592490E1B0002D4051 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -118,7 +114,6 @@
 			children = (
 				9D8E77082486690F004610C8 /* HelloView.swift */,
 				9D8E77132486ABBC004610C8 /* SetupNameView.swift */,
-				9D708A69256953F900A89ACB /* PetInfo.swift */,
 				9D8E77152486D820004610C8 /* SetupPhotoView.swift */,
 				9DFADA46248971DE00C20FC1 /* SelectNotificationView.swift */,
 				9D59129C248BBDDF001B2D26 /* SingleNotificationView.swift */,
@@ -151,7 +146,6 @@
 				9D8970A425681E9300B3C414 /* PetReminderApp.swift */,
 				9D708A6C2569640E00A89ACB /* Persistence.swift */,
 				9D8E76FA248666C1004610C8 /* Assets.xcassets */,
-				9D8E771124866A34004610C8 /* Images.xcassets */,
 				9D8E76FF248666C1004610C8 /* LaunchScreen.storyboard */,
 				9D8E7702248666C1004610C8 /* Info.plist */,
 				9D8970EC2568394700B3C414 /* PetReminder.xcdatamodeld */,
@@ -227,7 +221,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DFF73F6248BAE27004B4901 /* LaunchScreen.storyboard in Resources */,
-				9D8E771224866A34004610C8 /* Images.xcassets in Resources */,
 				9D8E770C24866963004610C8 /* Localizable.strings in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
 				9D8E76FB248666C1004610C8 /* Assets.xcassets in Resources */,
@@ -246,7 +239,6 @@
 				9DF18F77256042F800720AA2 /* NotificationView.swift in Sources */,
 				9D59129D248BBDDF001B2D26 /* SingleNotificationView.swift in Sources */,
 				9D8E77092486690F004610C8 /* HelloView.swift in Sources */,
-				9D708A6A256953F900A89ACB /* PetInfo.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */,

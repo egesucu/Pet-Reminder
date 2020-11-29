@@ -10,77 +10,92 @@ import SwiftUI
 
 struct SelectNotificationView: View {
     
-
+    
     @State private var selectedIndex : Int?
+    
+    var name : String
+    var birthday : Date
+    var petImage : Image
     
     
     var body: some View {
-        ScrollView(.vertical){
-            VStack(alignment: .center,spacing: 5){
-                
-                Group {
-                    Spacer()
-                    Text("Notification").font(.largeTitle).multilineTextAlignment(.center).lineLimit(1).minimumScaleFactor(0.6)
-                }
-                
-                Group {
-                    Spacer()
-                    ZStack(alignment: .center) {
-                        Image("morning").onTapGesture {
-                            self.selectedIndex = 0
-                        }
-                        Text("Morning").foregroundColor(Color(.systemBackground)).font(.largeTitle)
-                    }
+        
+        VStack{
+            Text("Notification")
+                .font(.largeTitle)
+                .multilineTextAlignment(.center)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            NavigationLink(destination: SingleNotificationView(selectedTime: "Morning-Time")) {
+                ZStack(alignment: .center) {
+                    Image("morning")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipped()
+                        .overlay(Color.black.opacity(0.5))
+                        .cornerRadius(30)
+                        .shadow(color: Color(UIColor.label).opacity(0.5), radius: 10)
+                        .padding()
                     
-                }
-                
-                Group {
-                    Spacer()
-                    ZStack(alignment: .center) {
-                        Image("evening").onTapGesture {
-                            self.selectedIndex = 1
-                        }
-                        Text("Evening").foregroundColor(Color(.systemBackground)).font(.largeTitle)
-                    }
                     
+                    Text("Morning")
+                        .foregroundColor(.white)
+                        .font(.largeTitle)
                 }
-                
-                Group{
-                    Spacer()
-                    ZStack(alignment: .center) {
-                        Image("both").onTapGesture {
-                            self.selectedIndex = 2
-                        }
-                        Text("Both").foregroundColor(Color(.systemBackground)).font(.largeTitle)
-                    }
-                    
-                    Spacer()
+            }
+            
+            NavigationLink(destination: SingleNotificationView(selectedTime: "Evening-Time")) {
+                ZStack(alignment: .center) {
+                    Image("evening")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipped()
+                        .overlay(Color.black.opacity(0.5))
+                        .cornerRadius(30)
+                        .shadow(color: Color(UIColor.label).opacity(0.5), radius: 10)
+                        .padding()
+                    Text("Evening")
+                        .foregroundColor(.white)
+                        .font(.largeTitle)
                 }
-                
-                NavigationLink(destination: SingleNotificationView(selectedTime: "Morning-Time"), tag: 0, selection: $selectedIndex) {
-                    EmptyView()
+            }
+            
+            NavigationLink(destination: MultipleNotificationView()){
+                ZStack(alignment: .center) {
+                    Image("both")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipped()
+                        .overlay(Color.black.opacity(0.5))
+                        .cornerRadius(30)
+                        .shadow(color: Color(UIColor.label).opacity(0.5), radius: 10)
+                        .padding()
+                    Text("Both")
+                        .foregroundColor(.white)
+                        .font(.largeTitle)
                 }
-                
-                NavigationLink(destination: SingleNotificationView(selectedTime: "Evening-Time"), tag: 1, selection: $selectedIndex) {
-                    EmptyView()
-                }
-                
-                NavigationLink(destination: MultipleNotificationView(), tag: 2, selection: $selectedIndex) {
-                    EmptyView()
-                }.navigationBarTitle("Notification Select", displayMode: .inline)
-                
-            }.padding()
-        }
+            }
+            
+            
+            
+            .navigationBarTitle("Notification Select", displayMode: .inline)
+            
+        }.padding()
     }
+    
     
     
 }
 
 struct SelectNotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView{
-            SelectNotificationView()
-        }.navigationBarBackButtonHidden(false)
-       
+        Group {
+            NavigationView{
+                SelectNotificationView(name: "", birthday: Date(), petImage: Image("default-animal"))
+            }
+            
+            
+        }
+        
     }
 }
