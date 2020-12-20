@@ -11,13 +11,24 @@ import CoreData
 
 @main
 struct PetReminderApp: App {
-   
+    
+    
     let persistenceController = PersistenceController.shared
     
+    let isPetSaved = UserDefaults.standard.bool(forKey: "petSaved")
+    
+    @FetchRequest(sortDescriptors: [])
+    var pets : FetchedResults<Pet>
    
     var body: some Scene {
         WindowGroup {
-            HelloView().environment(\.managedObjectContext, persistenceController.container.viewContext)
+                if (isPetSaved){
+                    HomeView().environment(\.managedObjectContext, persistenceController.container.viewContext)
+                } else {
+                    HelloView().environment(\.managedObjectContext, persistenceController.container.viewContext)  
+                }
+            
+            
         }
     }
 }

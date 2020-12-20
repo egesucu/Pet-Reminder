@@ -17,6 +17,7 @@ struct SetupPhotoView: View {
     @State var showImagePicker: Bool = false
     @State var inputImage: UIImage?
     @State private var useDefaultImage = false
+    @State private var petImageToSave : UIImage? = nil
     
     
     var name : String
@@ -51,7 +52,7 @@ struct SetupPhotoView: View {
             
             Spacer()
             NavigationLink(
-                destination: SelectNotificationView(name: name, birthday: birthday, petImage: petImage ?? Image("default-animal")),
+                destination: SelectNotificationView(name: name, birthday: birthday, petImage: petImageToSave ?? UIImage(named: "default-animal")!),
                 tag: 1,
                 selection: $selection,
                 label: {
@@ -82,6 +83,7 @@ struct SetupPhotoView: View {
     private func loadImage(){
         guard let inputImage = inputImage else {return}
         petImage = Image(uiImage: inputImage)
+        petImageToSave = inputImage
     }
     
 }

@@ -15,7 +15,7 @@ struct SelectNotificationView: View {
     
     var name : String
     var birthday : Date
-    var petImage : Image
+    var petImage : UIImage
     
     
     var body: some View {
@@ -26,7 +26,7 @@ struct SelectNotificationView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-            NavigationLink(destination: SingleNotificationView(selectedTime: "Morning-Time")) {
+            NavigationLink(destination: NotificationView(type: .morning, name: name, birthday: birthday, petImage: petImage)) {
                 ZStack(alignment: .center) {
                     Image("morning")
                         .resizable()
@@ -44,7 +44,7 @@ struct SelectNotificationView: View {
                 }
             }
             
-            NavigationLink(destination: SingleNotificationView(selectedTime: "Evening-Time")) {
+            NavigationLink(destination: NotificationView(type: .evening, name: name, birthday: birthday, petImage: petImage)) {
                 ZStack(alignment: .center) {
                     Image("evening")
                         .resizable()
@@ -59,8 +59,7 @@ struct SelectNotificationView: View {
                         .font(.largeTitle)
                 }
             }
-            
-            NavigationLink(destination: MultipleNotificationView()){
+            NavigationLink(destination: NotificationView(type: .both, name: name, birthday: birthday, petImage: petImage)){
                 ZStack(alignment: .center) {
                     Image("both")
                         .resizable()
@@ -91,7 +90,7 @@ struct SelectNotificationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView{
-                SelectNotificationView(name: "", birthday: Date(), petImage: Image("default-animal"))
+                SelectNotificationView(name: "", birthday: Date(), petImage: UIImage(named: "default-animal")!)
             }
             
             
