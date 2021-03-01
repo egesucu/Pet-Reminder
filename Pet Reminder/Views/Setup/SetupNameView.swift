@@ -9,10 +9,14 @@
 import SwiftUI
 
 struct SetupNameView: View {
+    @Environment(\.managedObjectContext)
+    private var viewContext
     @State private var name = ""
     @State private var birthday = Date()
     @State private var showingAlert = false
     @State var selection: Int? = nil
+    
+    @StateObject var demoPet = DemoPet()
     
     var body: some View {
         
@@ -35,17 +39,12 @@ struct SetupNameView: View {
                     .frame(height: 80)
                     .clipped()
                 Spacer()
-                NavigationLink(destination: SetupPhotoView(name: self.name, birthday: self.birthday), tag: 1, selection : $selection) {
-                    Button("Next"){
-                        if self.name.isEmpty {
-                            self.selection = 0
-                            self.showingAlert = true
-                        } else {
-                            self.showingAlert = false
-                            self.selection = 1
-                        }
-                        
-                    }
+                NavigationLink(destination: SetupPhotoView(demoPet: demoPet).environment(\.managedObjectContext, viewContext), tag: 1, selection : $selection) {
+                    Button(action: {
+                           saveName(name: name)
+                    }, label: {
+                        Text("Next")
+                    })
                     .font(Font.system(size: 35))
                     .foregroundColor(.white)
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -62,6 +61,18 @@ struct SetupNameView: View {
         }
         
     }
+    
+    func saveName(name: String){
+        if name.isEmpty{
+            self.selection = 0
+            self.showingAlert = true
+        } else {
+            demoPet.name = name
+            demoPet.birthday = birthday
+            self.showingAlert = false
+            self.selection = 1
+        }
+    }
 }
 
 
@@ -69,10 +80,39 @@ struct SetupNameView_Previews: PreviewProvider {
     static var previews: some View {
         
         NavigationView {
-            SetupNameView()
+            SetupNameView(demoPet: DemoPet())
         }
         
         
     }
+}
+
+enum NotificationType{
+    case morning, evening, both
+}
+
+
+class DemoPet : ObservableObject {
+    
+    var name: String
+    var birthday : Date
+    var petImage : UIImage
+    var type : NotificationType
+    
+    init(){
+        name = ""
+        birthday = Date()
+        petImage = UIImage()
+        type = .morning
+    }
+    
+    @Published var demoPet = DemoPet()
+    
+    
+    
+    func emptyName(name: String)->Bool{
+        return name.isEmpty
+    }
+    
 }
 

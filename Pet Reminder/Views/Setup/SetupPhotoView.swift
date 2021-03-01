@@ -10,7 +10,8 @@ import SwiftUI
 
 struct SetupPhotoView: View {
     
-   
+    @Environment(\.managedObjectContext)
+    private var viewContext
     @State private var petImage : Image? = nil
     @State private var selection : Int? = 0
     @State private var showingAlert = false
@@ -20,8 +21,8 @@ struct SetupPhotoView: View {
     @State private var petImageToSave : UIImage? = nil
     
     
-    var name : String
-    var birthday : Date
+    
+    @StateObject var demoPet : DemoPet
     
     var body: some View {
         
@@ -52,7 +53,7 @@ struct SetupPhotoView: View {
             
             Spacer()
             NavigationLink(
-                destination: SelectNotificationView(name: name, birthday: birthday, petImage: petImageToSave ?? UIImage(named: "default-animal")!),
+                destination: SelectNotificationView(demoPet: demoPet).environment(\.managedObjectContext, viewContext),
                 tag: 1,
                 selection: $selection,
                 label: {
@@ -71,10 +72,7 @@ struct SetupPhotoView: View {
                 
                 })
             .navigationBarTitle("Photo",displayMode: .inline)
-            
-            
-            
-            
+
         }.padding()
         
         
@@ -82,6 +80,8 @@ struct SetupPhotoView: View {
     
     private func loadImage(){
         guard let inputImage = inputImage else {return}
+        
+        demoPet.petImage = inputImage
         petImage = Image(uiImage: inputImage)
         petImageToSave = inputImage
     }
@@ -92,7 +92,7 @@ struct SetupPhotoView_Previews: PreviewProvider {
     static var previews: some View {
         
         NavigationView {
-            SetupPhotoView(name: "", birthday: Date())
+            SetupPhotoView(demoPet: DemoPet())
         }
     }
 }

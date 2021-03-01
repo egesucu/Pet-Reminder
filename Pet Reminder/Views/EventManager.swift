@@ -1,15 +1,14 @@
 //
-//  EventList.swift
+//  EventManager.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 20.12.2020.
 //  Copyright © 2020 Softhion. All rights reserved.
 //
 
-import SwiftUI
 import EventKit
 
-class EventList : ObservableObject{
+class EventManager : ObservableObject{
     
     @Published var events : [EKEvent] = [EKEvent]()
     let eventStore = EKEventStore()
@@ -25,19 +24,40 @@ class EventList : ObservableObject{
                 print(error.localizedDescription)
             } else if success{
                 
-                if let petCalendar = self.eventStore.calendar(withIdentifier: "Pet Reminder"){
-//                    load all events
-                    self.loadEvents(from: petCalendar)
-                } else {
-//                    create a calendar account
-                    
-                }
-   
+                self.findCalendar()
                 
             } else {
                 print("How did I reach here?")
             }
         }
+    }
+    
+    func findCalendar(){
+        let calendars = self.eventStore.calendars(for: .event)
+        debugPrint(calendars)
+        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
+            self.loadEvents(from: petCalendar)
+        } else {
+            self.createCalendar()
+        }
+        
+    }
+    
+    func createCalendar() {
+        
+        let calendar = EKCalendar(for: .event, eventStore: eventStore)
+        calendar.title = "Pet Reminder"
+        
+        if let defaultCalendar = eventStore.defaultCalendarForNewEvents{
+            calendar.source = defaultCalendar.source
+        }
+        
+        do {
+            try eventStore.saveCalendar(calendar, commit: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
     }
     
     func loadEvents(from calendar : EKCalendar){
@@ -48,7 +68,11 @@ class EventList : ObservableObject{
             let startDate = Date()
             let endDate = Date(timeIntervalSinceNow: 60*60*24*180)
             let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
-            events = eventStore.events(matching: predicate)
+            
+            DispatchQueue.main.async {
+                self.events = self.eventStore.events(matching: predicate)
+            }
+           
             
         } else {
             requestEvents()
@@ -65,17 +89,20 @@ class EventList : ObservableObject{
     
     func saveEvent(name : String, start : Date, end: Date){
         
-        if let calendar = eventStore.calendar(withIdentifier: "Pet Reminder") {
+        let calendars = eventStore.calendars(for: .event)
+        
+        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}) {
             let newEvent = EKEvent(eventStore: eventStore)
             newEvent.title = name
             newEvent.startDate = start
             newEvent.endDate = end
-            newEvent.calendar = calendar
+            newEvent.calendar = petCalendar
             newEvent.addAlarm(EKAlarm(relativeOffset: -60*10))
             newEvent.notes = "This event is created by Pet Reminder app."
             
             do {
                 try eventStore.save(newEvent, span: .thisEvent)
+                print("Event Saved")
             } catch {
                 print(error.localizedDescription)
             }
@@ -88,3 +115,4 @@ class EventList : ObservableObject{
     
     
 }
+

@@ -12,11 +12,10 @@ struct SelectNotificationView: View {
     
     
     @State private var selectedIndex : Int?
+    @Environment(\.managedObjectContext)
+    private var viewContext
     
-    var name : String
-    var birthday : Date
-    var petImage : UIImage
-    
+    @StateObject var demoPet : DemoPet
     
     var body: some View {
         
@@ -26,7 +25,7 @@ struct SelectNotificationView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-            NavigationLink(destination: NotificationView(type: .morning, name: name, birthday: birthday, petImage: petImage)) {
+            NavigationLink(destination: NotificationView(demoPet: demoPet).environment(\.managedObjectContext, viewContext)) {
                 ZStack(alignment: .center) {
                     Image("morning")
                         .resizable()
@@ -42,9 +41,11 @@ struct SelectNotificationView: View {
                         .foregroundColor(.white)
                         .font(.largeTitle)
                 }
+            }.onTapGesture {
+                demoPet.type = .morning
             }
             
-            NavigationLink(destination: NotificationView(type: .evening, name: name, birthday: birthday, petImage: petImage)) {
+            NavigationLink(destination: NotificationView(demoPet: demoPet)) {
                 ZStack(alignment: .center) {
                     Image("evening")
                         .resizable()
@@ -59,7 +60,10 @@ struct SelectNotificationView: View {
                         .font(.largeTitle)
                 }
             }
-            NavigationLink(destination: NotificationView(type: .both, name: name, birthday: birthday, petImage: petImage)){
+            .onTapGesture {
+                demoPet.type = .evening
+            }
+            NavigationLink(destination: NotificationView(demoPet: demoPet)){
                 ZStack(alignment: .center) {
                     Image("both")
                         .resizable()
@@ -73,6 +77,9 @@ struct SelectNotificationView: View {
                         .foregroundColor(.white)
                         .font(.largeTitle)
                 }
+            }
+            .onTapGesture {
+                demoPet.type = .both
             }
             
             
@@ -90,7 +97,7 @@ struct SelectNotificationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView{
-                SelectNotificationView(name: "", birthday: Date(), petImage: UIImage(named: "default-animal")!)
+                SelectNotificationView(demoPet: DemoPet())
             }
             
             

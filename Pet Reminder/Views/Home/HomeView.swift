@@ -20,21 +20,19 @@ struct HomeView: View {
     
     @State private var selectedPet : Pet?
     @State private var allPetsRemoved = false
-    @State private var showAddEvent = false
     
     
     var body: some View {
         
         ScrollView {
             VStack(alignment: .leading){
-                Text("Hello \(selectedPet?.name ?? pets.first!.name!)")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding([.top,.bottom],30)
-                    .padding(.leading)
-                Text("Your Pets")
-                    .font(.largeTitle)
-                    .padding()
+                
+                if let selectedPet = selectedPet {
+                    TopView(name: selectedPet.name ?? "")
+                } else if let firstPet = pets.first{
+                    TopView(name: firstPet.name!)
+                }
+                
                 ScrollView(.horizontal){
                     HStack {
                         ForEach(pets){ pet in
@@ -46,6 +44,7 @@ struct HomeView: View {
                                     Button(action: {
                                         withAnimation{
                                             self.removePet(pet: pet)
+                                            selectedPet = pets.first!
                                         }
                                     }, label: {
                                         Text("Remove Pet")
@@ -72,27 +71,7 @@ struct HomeView: View {
                 if let firstPet = pets.first {
                     DailyRoutineView(selectedPet: selectedPet ?? firstPet)
                 }
-                HStack{
-                    Text("Up Next")
-                        .font(.largeTitle)
-                        .padding()
-                    Spacer()
-                    Button(action: {
-                        showAddEvent.toggle()
-                    }, label: {
-                        Text("Add Event")
-                            .padding()
-                            .background(Color(.systemGreen))
-                            .foregroundColor(.white)
-                            .cornerRadius(60)
-                            .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
-                    })
-                    .padding(.trailing)
-                    .sheet(isPresented: $showAddEvent) {
-                        AddEventView()
-                    }
-                }
-                EventsView()
+                
                 
                 Spacer()
                 
@@ -120,21 +99,25 @@ struct HomeView: View {
         
     }
     
-    
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-        
-        
+struct TopView : View {
+    var name : String
+    var body: some View{
+        Text("Hello \(name)")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .padding([.top,.bottom],30)
+            .padding(.leading)
+        Text("Your Pets")
+            .font(.largeTitle)
+            .padding()
     }
 }
 
 struct CircularAnimalView : View {
     
     var pet : Pet
-    
     var body: some View {
         
         VStack{
@@ -149,7 +132,6 @@ struct CircularAnimalView : View {
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color(.label),lineWidth: 4))
                     .shadow(color: Color(.systemGray4), radius: 4, x: 4, y: 8)
-                
             } else {
                 Image("default-animal")
             }
@@ -164,7 +146,6 @@ struct CircularAnimalView : View {
 struct PetDetailView: View {
     
     var pet : Pet
-    
     var body: some View{
         
         HStack{
@@ -182,10 +163,7 @@ struct PetDetailView: View {
             }
             Spacer()
         }
-        
-        
     }
-    
 }
 
 struct DailyRoutineView : View {
@@ -193,10 +171,8 @@ struct DailyRoutineView : View {
     var selectedPet : Pet
     @Environment(\.managedObjectContext)
     private var viewContext
-    
     @State private var morningSelected = false
     @State private var eveningSelected = false
-    
     
     var body: some View{
         
@@ -204,7 +180,8 @@ struct DailyRoutineView : View {
             Spacer()
             if selectedPet.morningTime != nil{
                 ZStack {
-                    Rectangle().fill(Color(.systemYellow))
+                    Rectangle()
+                        .fill(Color(.systemYellow))
                         .frame(width: 100, height: 92, alignment: .center)
                         .cornerRadius(15)
                         .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
@@ -218,12 +195,9 @@ struct DailyRoutineView : View {
                                 selectedPet.morningFed = $0
                                 try? viewContext.save()
                             }
-                            
-                            
                         ), label: {
                             Text("")
                         }).labelsHidden()
-                        
                         
                     }
                     
@@ -233,7 +207,8 @@ struct DailyRoutineView : View {
             Spacer()
             if selectedPet.eveningTime != nil {
                 ZStack {
-                    Rectangle().fill(Color(.systemBlue))
+                    Rectangle()
+                        .fill(Color(.systemBlue))
                         .frame(width: 100, height: 92, alignment: .center)
                         .cornerRadius(15)
                         .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
@@ -265,124 +240,10 @@ struct DailyRoutineView : View {
     
 }
 
-struct EventsView : View {
-    
-    @ObservedObject var eventVM = EventList()
-    
-    
-    var body: some View{
-        
-        VStack(alignment: .center){
-            if eventVM.events.isEmpty {
-                HStack {
-                    Spacer()
-                    Text("There is no event")
-                        .font(.body)
-                        .padding()
-                    Spacer()
-                }
-                
-            } else {
-                ForEach(eventVM.events, id: \.self){ event in
-                    ZStack{
-                        Rectangle()
-                            .fill(Color(.systemGreen))
-                            .cornerRadius(15)
-                            .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
-                        EventView(event: event, startDateInString: eventVM.convertDateToString(date: event.startDate), endDateInString: eventVM.convertDateToString(date: event.endDate))
-                        
-                    }
-                }
-            }
-        }
-        
-    }
-    
-    
-}
 
-struct EventView : View{
-    
-    var event : EKEvent
-    
-    var startDateInString : String
-    var endDateInString : String
-    
-    var body: some View{
-        VStack{
-            Text(event.title)
-                .font(.largeTitle)
-            HStack {
-                Text(startDateInString)
-                    .font(.body)
-                Text(endDateInString)
-                    .font(.body)
-            }
-        }
-    }
-}
 
-struct AddEventView : View {
-    
-    @State private var eventName = ""
-    @State private var eventStartDate = Date()
-    @State private var eventEndDate = Date()
-    @ObservedObject var eventVM = EventList()
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View{
-        
-        ZStack(alignment: .topLeading) {
-            Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-                eventName = ""
-            }, label: {
-                Image(systemName: "xmark")
-                    .frame(width: 30, height: 30)
-                    
-                    .offset(x: 10 , y: 10)
-                    
-                    
-                    .foregroundColor(.black)
-            })
-            VStack{
-                    Text("Event Name")
-                        .font(.largeTitle)
-                        .padding(.top)
-                    TextField("Type to add...", text: $eventName)
-                        .labelsHidden()
-                        .padding()
-                        .cornerRadius(15)
-                        .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
-                
-                .padding()
-                Spacer()
-                Text("Event Start Date")
-                    .font(.headline).padding()
-                DatePicker("Start Date", selection: $eventStartDate).labelsHidden().padding()
-                Text("Event End Date")
-                    .font(.headline).padding()
-                DatePicker("End Date", selection: $eventEndDate).labelsHidden().padding()
-                
-                Spacer()
-                Button(action: {
-                    self.eventVM.saveEvent(name: eventName, start: eventStartDate, end: eventEndDate)
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Text("Save Event")
-                        .padding()
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .background(Color(.systemGreen))
-                        .cornerRadius(60)
-                })
-                .padding()
-                .cornerRadius(60)
-                .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
-                .padding()
-
-            }
-        }
-        
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
     }
 }
