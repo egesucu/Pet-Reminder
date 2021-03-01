@@ -34,7 +34,7 @@ struct HomeView: View {
                 }
                 
                 ScrollView(.horizontal){
-                    HStack {
+                    LazyHStack {
                         ForEach(pets){ pet in
                             CircularAnimalView(pet: pet)
                                 .onTapGesture {
@@ -44,17 +44,17 @@ struct HomeView: View {
                                     Button(action: {
                                         withAnimation{
                                             self.removePet(pet: pet)
-                                            selectedPet = pets.first!
+                                            selectedPet = pets.first ?? nil
                                         }
                                     }, label: {
-                                        Text("Remove Pet")
-                                        Image(systemName: "trash")
+                                        Text("Remove Pet").foregroundColor(Color.red)
+                                        Image(systemName: "trash").foregroundColor(Color.red)
                                     })
                                     Button(action: {}, label: {
                                         Text("Cancel")
                                         Image(systemName: "xmark")
                                     })
-                                }))
+                                })).id(UUID())
                                 .sheet(isPresented: $allPetsRemoved, content: {
                                     HelloView()
                                 })
@@ -102,16 +102,36 @@ struct HomeView: View {
 }
 
 struct TopView : View {
+    
+    @State private var showAddAnimal = false
+
     var name : String
     var body: some View{
-        Text("Hello \(name)")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .padding([.top,.bottom],30)
-            .padding(.leading)
-        Text("Your Pets")
-            .font(.largeTitle)
-            .padding()
+        VStack {
+            HStack {
+                Text("Hello \(name)")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding([.top,.bottom],30)
+                    .padding(.leading)
+                Spacer()
+                Button(action: {
+                    self.showAddAnimal.toggle()
+                }, label: {
+                    Image(systemName: "plus.circle.fill").accessibilityLabel("Add Animal")
+                        .font(.largeTitle)
+                    
+                })
+                .padding()
+                .fullScreenCover(isPresented: $showAddAnimal, content: {
+                    SetupNameView(comingFromMain: .constant(true))
+                })
+            }
+            Text("Your Pets")
+                .font(.largeTitle)
+                .padding()
+                .multilineTextAlignment(.leading)
+        }
     }
 }
 
@@ -125,15 +145,25 @@ struct CircularAnimalView : View {
                let uiImage = UIImage(data: imageData){
                 Image(uiImage: uiImage)
                     .resizable()
+                    .clipShape(Circle())
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50, alignment: .center)
-                    .padding()
+                    .padding(10)
                     .background(Color(.systemBackground))
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color(.label),lineWidth: 4))
                     .shadow(color: Color(.systemGray4), radius: 4, x: 4, y: 8)
             } else {
                 Image("default-animal")
+                    .resizable()
+                    .clipShape(Circle())
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50, alignment: .center)
+                    .padding(10)
+                    .background(Color(.systemBackground))
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color(.label),lineWidth: 4))
+                    .shadow(color: Color(.systemGray4), radius: 4, x: 4, y: 8)
             }
             Text(pet.name ?? "Error Name")
         }
@@ -154,12 +184,24 @@ struct PetDetailView: View {
                let image = UIImage(data: data){
                 Image(uiImage: image)
                     .resizable()
+                    .clipShape(Circle())
                     .aspectRatio(contentMode: .fit)
                     .frame(minWidth: 30, maxWidth: 100, minHeight: 30, maxHeight: 100)
                     .padding()
                     .overlay(Circle().stroke(Color(.label),lineWidth: 4))
                     .shadow(color: Color(.systemGray4), radius: 4, x: 4, y: 8)
                 
+            } else {
+                Image("default-animal")
+                    .resizable()
+                    .clipShape(Circle())
+                    .aspectRatio(contentMode: .fit)
+                    .frame(minWidth: 30, maxWidth: 100, minHeight: 30, maxHeight: 100)
+                    .padding(10)
+                    .background(Color(.systemBackground))
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color(.label),lineWidth: 4))
+                    .shadow(color: Color(.systemGray4), radius: 4, x: 4, y: 8)
             }
             Spacer()
         }
@@ -204,7 +246,9 @@ struct DailyRoutineView : View {
                     .padding(20)
                 }
             }
-            Spacer()
+            
+            selectedPet.eveningTime != nil ? AnyView(Spacer()) : AnyView(EmptyView())
+            
             if selectedPet.eveningTime != nil {
                 ZStack {
                     Rectangle()

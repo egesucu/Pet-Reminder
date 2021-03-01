@@ -7,29 +7,22 @@
 //
 
 import SwiftUI
-import CoreData
 
 @main
 struct PetReminderApp: App {
     
     
-    let persistenceController = PersistenceController.shared
-    
-    let isPetSaved = UserDefaults.standard.bool(forKey: "petSaved")
-    
-    @FetchRequest(sortDescriptors: [])
-    var pets : FetchedResults<Pet>
-   
+    let context = PersistenceController.shared.container.viewContext
+ 
     var body: some Scene {
         WindowGroup {
-                if (isPetSaved){
-                    HomeView().environment(\.managedObjectContext, persistenceController.container.viewContext)
-                } else {
-                    HelloView().environment(\.managedObjectContext, persistenceController.container.viewContext)  
-                }
-            
-            
+     
+            AppRootView().environment(\.managedObjectContext, context)
+
         }
     }
+    
+    
+    
 }
 

@@ -9,13 +9,37 @@
 import SwiftUI
 
 struct AppRootView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
+    @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
+    var results : FetchedResults<Pet>
+    @Environment(\.managedObjectContext)
+    private var viewContext
+    
+    
+    var helloView : some View {
+        HelloView().environment(\.managedObjectContext, viewContext)
     }
+    
+    var rootView : some View  {
+        RootView().environment(\.managedObjectContext, viewContext)
+    }
+    
+    var body: some View {
+        
+        
+        Group{
+            
+            results.count > 0 ? AnyView(rootView) : AnyView(helloView)
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    
 }
 
-struct AppRootView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppRootView()
-    }
-}

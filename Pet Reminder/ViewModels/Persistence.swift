@@ -7,23 +7,37 @@
 //
 
 import CoreData
+import Foundation
 
 struct PersistenceController {
     
     static let shared = PersistenceController()
     
-    let container : NSPersistentCloudKitContainer
-    
-    init() {
-        container = NSPersistentCloudKitContainer(name: "PetReminder")
-        
-        container.loadPersistentStores { (storeDescription, error) in
+    let container : NSPersistentCloudKitContainer = {
+        let container = NSPersistentCloudKitContainer(name: "PetReminder")
+        container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
-                
-                fatalError("An error occured with the code: \(error.code) and title :\(error.userInfo)")
-                
+                print(error.localizedDescription)
             }
         }
+        return container
+    }()
+    
+    private init() {
+       
+    }
+    public func saveContext(){
+        
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        
     }
     
     

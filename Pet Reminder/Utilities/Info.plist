@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSCalendarsUsageDescription</key>
 	<string>We need to access your calendar to create specific events for your friend</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To add location to your event</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We would like to access your photos to let you choose a photo for your friend.</string>
 	<key>UIApplicationSceneManifest</key>

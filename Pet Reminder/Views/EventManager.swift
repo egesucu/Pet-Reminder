@@ -17,30 +17,47 @@ class EventManager : ObservableObject{
         requestEvents()
     }
     
+    
+    
+    var exampleEvents : [EKEvent] {
+        
+        var events = [EKEvent]()
+        
+        for i in 0...4 {
+            
+            let event = EKEvent(eventStore: self.eventStore)
+            event.title = "Demo Event \(i+1)"
+            event.startDate = Date()
+            event.endDate = Date()
+            
+            events.append(event)
+            
+        }
+        
+        return events
+        
+    }
+    
     func requestEvents(){
         
         eventStore.requestAccess(to: .event) { (success, error) in
             if let error = error{
                 print(error.localizedDescription)
-            } else if success{
-                
-                self.findCalendar()
-                
             } else {
-                print("How did I reach here?")
+                self.findCalendar()
             }
         }
     }
     
     func findCalendar(){
         let calendars = self.eventStore.calendars(for: .event)
-        debugPrint(calendars)
+        
         if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
             self.loadEvents(from: petCalendar)
         } else {
             self.createCalendar()
+            
         }
-        
     }
     
     func createCalendar() {
@@ -71,38 +88,65 @@ class EventManager : ObservableObject{
             
             DispatchQueue.main.async {
                 self.events = self.eventStore.events(matching: predicate)
+                debugPrint("Events loaded are: \(self.events)")
             }
-           
-            
         } else {
             requestEvents()
+        }
+    }
+    
+    
+    func reloadEvents(){
+        let calendars = self.eventStore.calendars(for: .event)
+        
+        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
+            self.loadEvents(from: petCalendar)
         }
     }
     
     func convertDateToString(date: Date)->String{
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MMMM HH:mm"
+        dateFormatter.dateFormat = "dd MMMM HH:mm"
         return dateFormatter.string(from: date)
     }
     
+    func removeEvent(event: EKEvent){
+        do {
+            try self.eventStore.remove(event, span: .thisEvent, commit: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
     
-    func saveEvent(name : String, start : Date, end: Date){
+    
+    func saveEvent(name : String, start : Date, end: Date = Date(), isAllDay: Bool = false){
         
         let calendars = eventStore.calendars(for: .event)
         
         if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}) {
             let newEvent = EKEvent(eventStore: eventStore)
             newEvent.title = name
-            newEvent.startDate = start
-            newEvent.endDate = end
+            newEvent.isAllDay = isAllDay
+            
+            if isAllDay {
+                newEvent.startDate = start
+                newEvent.endDate = start
+            } else {
+                newEvent.startDate = start
+                newEvent.endDate = end
+            }
+           
             newEvent.calendar = petCalendar
+            
+            
             newEvent.addAlarm(EKAlarm(relativeOffset: -60*10))
             newEvent.notes = "This event is created by Pet Reminder app."
             
             do {
                 try eventStore.save(newEvent, span: .thisEvent)
-                print("Event Saved")
+                
             } catch {
                 print(error.localizedDescription)
             }

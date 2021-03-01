@@ -9,12 +9,20 @@
 import SwiftUI
 
 struct SetupNameView: View {
+    
+    
     @Environment(\.managedObjectContext)
     private var viewContext
+    @Environment(\.presentationMode)
+    private var presentationMode
+    
+    
     @State private var name = ""
     @State private var birthday = Date()
     @State private var showingAlert = false
     @State var selection: Int? = nil
+    
+    @Binding var comingFromMain : Bool
     
     @StateObject var demoPet = DemoPet()
     
@@ -58,8 +66,16 @@ struct SetupNameView: View {
             }
             .background(Color(UIColor.systemGroupedBackground).ignoresSafeArea(.all, edges: .all))
             .navigationBarTitle("Personal Information")
+            .navigationBarItems(leading: self.comingFromMain ? AnyView(cancelButton) : AnyView(EmptyView()))
+            
         }
         
+    }
+    
+    var cancelButton : some View {
+        Button(action : { self.presentationMode.wrappedValue.dismiss()},label : {
+            Text("Cancel")
+        })
     }
     
     func saveName(name: String){
@@ -80,7 +96,7 @@ struct SetupNameView_Previews: PreviewProvider {
     static var previews: some View {
         
         NavigationView {
-            SetupNameView(demoPet: DemoPet())
+            SetupNameView(comingFromMain: .constant(false), demoPet: DemoPet())
         }
         
         
@@ -106,7 +122,7 @@ class DemoPet : ObservableObject {
         type = .morning
     }
     
-    @Published var demoPet = DemoPet()
+    static let demoPet = DemoPet()
     
     
     

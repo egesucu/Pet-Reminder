@@ -12,41 +12,36 @@ struct RootView: View {
     
     @Environment(\.managedObjectContext)
     private var viewContext
+    @State private var currentTab = 1
     
     
     var body: some View {
         
         
-        TabView {
+        TabView(selection: $currentTab) {
             HomeView().environment(\.managedObjectContext, viewContext)
                 .tabItem {
-                    Image(systemName: "person.crop.circle")
+                    Image(systemName: currentTab != 1 ? "person.crop.circle" : "person.crop.circle.fill")
                     Text("Daily")
-                }
+                }.tag(1)
             EventsView()
                 .tabItem {
-                    Image(systemName: "list.bullet")
+                    Image(systemName: currentTab != 2 ? "list.bullet" : "list.bullet.indent")
                     Text("Events")
-                }
+                }.tag(2)
             FindVetView()
                 .tabItem {
-                    Image(systemName: "map")
+                    Image(systemName: currentTab != 3 ? "map" : "map.fill")
                     Text("Find Vet")
-                }
+                }.tag(3)
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gear")
+                    Image(systemName: currentTab != 4 ? "gearshape" : "gearshape.fill")
                     Text("Settings")
-                }
+                }.tag(4)
         }
-        .font(.headline)
+        .accentColor(Color(.label))
         
         
-    }
-}
-
-struct RootView_Previews: PreviewProvider {
-    static var previews: some View {
-        RootView()
     }
 }
