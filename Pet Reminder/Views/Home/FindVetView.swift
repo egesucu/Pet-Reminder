@@ -11,10 +11,7 @@ import MapKit
 
 struct FindVetView: View {
     
-    @ObservedObject var vets = VetViewModel()
-    
-    @State private var manager = CLLocationManager()
-    @StateObject var managerDelegate = LocationDelegate()
+    @StateObject var vetViewModel = VetViewModel()
     
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     @State private var defaultLocation = MKCoordinateRegion(
@@ -31,15 +28,12 @@ struct FindVetView: View {
     var body: some View {
         Map(coordinateRegion: $defaultLocation, interactionModes: .all, showsUserLocation : true, userTrackingMode : $userTrackingMode)
             .onAppear(){
-                manager.delegate = managerDelegate
-                
-                if manager.authorizationStatus == .authorizedWhenInUse{
-                    manager.requestLocation()
-                    let userLocation = managerDelegate.userLocation
-                    
-                    defaultLocation = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5))
-                }
+                self.defaultLocation = MKCoordinateRegion(center: self.vetViewModel.userLocation.coordinate, span: MKCoordinateSpan(
+                    latitudeDelta: 5,
+                    longitudeDelta: 5
+                ))
             }
+            .ignoresSafeArea()
         
     }
 }

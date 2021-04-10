@@ -6,27 +6,34 @@
 //  Copyright © 2021 Softhion. All rights reserved.
 //
 
-import Foundation
 import MapKit
 import CoreLocation
+import SwiftUI
 
-class VetViewModel : ObservableObject{
+class VetViewModel : NSObject, ObservableObject{
     
-    @Published var vets : [Vet] = [Vet]()
+    @Published var vetAnnotations : [MapMarker] = [MapMarker]()
+    @Published var userLocation : CLLocation = CLLocation()
+    
+    private let locationManager = CLLocationManager()
     
     
-    init() {
-        loadVets()
+    override init() {
+        super.init()
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
     }
  
-    private func loadVets(){
+    private func searchVets(){
         
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = "Veteriner"
         
         let search = MKLocalSearch(request: request)
         
-        self.vets.removeAll()
+        self.vetAnnotations.removeAll()
         
         search.start { response, error in
             if let error = error {
@@ -35,26 +42,25 @@ class VetViewModel : ObservableObject{
                 if let result = response {
                     for place in result.mapItems {
                         
-                        var foundVet = Vet()
-                        foundVet.id = place.name
-                        foundVet.name = place.name
-                        foundVet.phoneNumber = place.phoneNumber
-                        foundVet.coordinate = place.placemark.coordinate
+                        let foundVet = MapMarker(coordinate: place.placemark.coordinate)
                         
-                        self.vets.append(foundVet)
+                        self.vetAnnotations.append(foundVet)
                     }
                 }
             }
         }
     }
+    
+    
+    func getUserLocation(){
+        
+    }
 }
 
-// MARK: User Location Definition
-
-class LocationDelegate : NSObject, ObservableObject, CLLocationManagerDelegate{
+extension VetViewModel : CLLocationManagerDelegate {
     
-    @Published var userLocation = CLLocation()
     
+   
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
         
@@ -84,37 +90,11 @@ class LocationDelegate : NSObject, ObservableObject, CLLocationManagerDelegate{
 //     Get the latest location and update the user location.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        if let location = locations.first {
-            self.userLocation = location
-        }
-        print("New Location")
+        guard let location = locations.last else { return }
+        
+        self.userLocation = location
         
         
     }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
-    }
-    
-    
-    
-    
-}
 
-
-struct Vet : Identifiable {
-    
-    var id                      : String?
-    var name                    : String?
-    var phoneNumber             : String?
-    var coordinate              : CLLocationCoordinate2D?
-    
-    
-    init(){
-        id = nil
-        name = nil
-        phoneNumber = nil
-        coordinate = nil
-    }
 }
