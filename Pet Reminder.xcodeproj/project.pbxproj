@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D0C24DF25D07FEA008F93CD /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* RootView.swift */; };
+		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
 		9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E425D081B4008F93CD /* EventListView.swift */; };
@@ -32,7 +32,8 @@
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA497592490E1B0002D4051 /* NotificationManager.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
-		9DAC8B5525E70CC600CA28DF /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5425E70CC600CA28DF /* AppRootView.swift */; };
+		9DC1B9C7264EC81A00F8561A /* DemoPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C6264EC81A00F8561A /* DemoPet.swift */; };
+		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DD920D0258E76CC001A6B7E /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD920CF258E76CC001A6B7E /* CollectionView.swift */; };
 		9DFADA47248971DE00C20FC1 /* SelectNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFADA46248971DE00C20FC1 /* SelectNotificationView.swift */; };
 		9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */; };
@@ -40,7 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9D0C24DE25D07FEA008F93CD /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeManagerView.swift; sourceTree = "<group>"; };
 		9D0C24E025D08177008F93CD /* FindVetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVetView.swift; sourceTree = "<group>"; };
 		9D0C24E225D08181008F93CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D0C24E425D081B4008F93CD /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
@@ -71,7 +72,8 @@
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DA497592490E1B0002D4051 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
-		9DAC8B5425E70CC600CA28DF /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
+		9DC1B9C6264EC81A00F8561A /* DemoPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPet.swift; sourceTree = "<group>"; };
+		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DD920CF258E76CC001A6B7E /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		9DFADA46248971DE00C20FC1 /* SelectNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNotificationView.swift; sourceTree = "<group>"; };
 		9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		9D8E76F0248666BD004610C8 /* Pet Reminder */ = {
 			isa = PBXGroup;
 			children = (
+				9DC1B9C8264ED3C000F8561A /* Components */,
 				9DFF73F4248BADB2004B4901 /* Utilities */,
 				9DFF73F1248BAD76004B4901 /* Views */,
 				9DFF73F2248BAD7F004B4901 /* Models */,
@@ -175,14 +178,21 @@
 			isa = PBXGroup;
 			children = (
 				9D279845257ABEF20078B668 /* LoadingView.swift */,
-				9DAC8B5425E70CC600CA28DF /* AppRootView.swift */,
-				9D0C24DE25D07FEA008F93CD /* RootView.swift */,
+				9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */,
 				9D0C24E225D08181008F93CD /* SettingsView.swift */,
 				9D0C24E425D081B4008F93CD /* EventListView.swift */,
 				9D0C24E025D08177008F93CD /* FindVetView.swift */,
 				9D279848257ABFDD0078B668 /* HomeView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		9DC1B9C8264ED3C000F8561A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9DC1B9C9264ED3D000F8561A /* NextButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		9DFF73F1248BAD76004B4901 /* Views */ = {
@@ -199,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				9DA497592490E1B0002D4051 /* NotificationManager.swift */,
+				9DC1B9C6264EC81A00F8561A /* DemoPet.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -297,11 +308,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
 				9D9F59AA25E17201007672E8 /* MorningNotificationView.swift in Sources */,
 				9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */,
 				9DFADA47248971DE00C20FC1 /* SelectNotificationView.swift in Sources */,
 				9DD920D0258E76CC001A6B7E /* CollectionView.swift in Sources */,
 				9D71069F258F403700683409 /* EventManager.swift in Sources */,
+				9DC1B9C7264EC81A00F8561A /* DemoPet.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
 				9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */,
 				9D279846257ABEF20078B668 /* LoadingView.swift in Sources */,
@@ -309,14 +322,13 @@
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */,
-				9D0C24DF25D07FEA008F93CD /* RootView.swift in Sources */,
+				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9D59129F248BBDE9001B2D26 /* NotificationView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */,
 				9D8E77162486D820004610C8 /* SetupPhotoView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
 				9D9F59AC25E172C0007672E8 /* EveningNotificationView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
-				9DAC8B5525E70CC600CA28DF /* AppRootView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
 				9D9F59AE25E172EB007672E8 /* BothNotificationView.swift in Sources */,

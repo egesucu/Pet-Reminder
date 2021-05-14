@@ -32,7 +32,7 @@ struct HelloView: View {
             .clipShape(RoundedRectangle(cornerRadius: 15))
             .shadow(color: Color.black.opacity(0.5), radius: 2, x: 2.0, y: 2.0)
             .fullScreenCover(isPresented: $showNextView, content: {
-                SetupNameView(comingFromMain: .constant(false))
+                SetupNameView()
             })
             
         }

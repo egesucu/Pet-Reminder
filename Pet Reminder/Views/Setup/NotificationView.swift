@@ -7,11 +7,10 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct NotificationView: View {
     
-    @StateObject var demoPet : DemoPet
+    @StateObject var petManager : PetManager
     
     @Environment(\.managedObjectContext)
     private var viewContext
@@ -25,7 +24,7 @@ struct NotificationView: View {
     var body: some View {
         VStack {
             
-            switch (demoPet.type){
+            switch (petManager.type){
             
             case .morning:
                 MorningNotificationView(morningTime: $morningTime)
@@ -44,7 +43,7 @@ struct NotificationView: View {
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .shadow(radius: 10)
             .fullScreenCover(isPresented: $petSaved, content: {
-                RootView().environment(\.managedObjectContext, viewContext)
+                HomeManagerView().environment(\.managedObjectContext, viewContext)
                 
             })
             
@@ -53,56 +52,9 @@ struct NotificationView: View {
     
     func savePet(){
         
-        let newPet = Pet(context: viewContext)
-        
-        debugPrint("I'm at saving pet")
-        
-        newPet.id = UUID()
-        newPet.name = demoPet.name
-        newPet.birthday = demoPet.birthday
-        
-        if let data = demoPet.petImage.pngData() {
-            newPet.image = data
-        } else {
-            debugPrint("I couldn't convert image to png data")
-        }
-        
-        switch demoPet.type {
-        case .morning:
-            newPet.morningTime = morningTime
-            newPet.eveningTime = nil
-        case .evening:
-            newPet.morningTime = nil
-            newPet.eveningTime = eveningTime
-        case .both:
-            newPet.morningTime = morningTime
-            newPet.eveningTime = eveningTime
-        }
-        
-        newPet.eveningFed = false
-        newPet.morningFed = false
-        
-        
-        debugPrint(newPet)
-        
-        do {
-            try viewContext.save()
+        petSaved = self.petManager.savePet(context: viewContext, morningTime: morningTime, eveningTime: eveningTime)
             
-            debugPrint("Animal saved")
-            
-            petSaved = true
-            
-            let petAvailable = UserDefaults.standard.bool(forKey: "petAvailable")
-            
-            if !petAvailable {
-                UserDefaults.standard.setValue(petSaved, forKey: "petAvailable")
-            }
-            
-        } catch {
-            print(error.localizedDescription)
-            debugPrint("An error occured with")
-        }
-        
+
     }
     
 
@@ -110,6 +62,6 @@ struct NotificationView: View {
 
 struct MultipleNotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationView(demoPet: DemoPet())
+        NotificationView(petManager: PetManager())
     }
 }

@@ -18,9 +18,6 @@ struct SetupPhotoView: View {
     @State var showImagePicker: Bool = false
     @State var inputImage: UIImage?
     @State private var useDefaultImage = false
-    @State private var petImageToSave : UIImage? = nil
-    
-    
     
     @StateObject var demoPet : DemoPet
     
@@ -28,10 +25,10 @@ struct SetupPhotoView: View {
         
         VStack(alignment: .center) {
             
-            Text("Upload").font(.largeTitle).multilineTextAlignment(.center)
+            Text("Upload")
+                .font(.title)
+                .multilineTextAlignment(.center)
             Spacer()
-            Text("Tap the animal image to select a photo from your library")
-                .font(.body).multilineTextAlignment(.center)
             if (petImage != nil){
                 petImage?.resizable().scaledToFit().frame(width: 200, height: 200, alignment: .center).clipShape(RoundedRectangle(cornerRadius: 10))
 
@@ -46,44 +43,41 @@ struct SetupPhotoView: View {
                 }
                 .disabled(useDefaultImage)
             }
+            Text("Tap the animal image to select a photo from your library")
+                .font(.footnote)
+                .font(.body).multilineTextAlignment(.center)
             Spacer()
             Toggle("I don't want to upload any photo", isOn: $useDefaultImage)
-            Text("If you don't consent to upload your data, we'll use the default image.")
-                .font(.footnote).multilineTextAlignment(.center).foregroundColor(.gray)
-            
+            Text("If you don't consent to upload your data, we'll use the default image. You can change it later.")
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
             Spacer()
             NavigationLink(
                 destination: SelectNotificationView(demoPet: demoPet).environment(\.managedObjectContext, viewContext),
                 tag: 1,
                 selection: $selection,
-                label: {
-                    Button(action: {
-                        self.selection = 1
-                    }, label: {
-                    Text("Next")
-                        .font(Font.system(size: 35))
-                        .foregroundColor(.white)
-                        .frame(minWidth: 0, maxWidth: .infinity,idealHeight: 60)
-                        .padding([.leading, .trailing], 20)
-                        .background(Color.green)
-                        .cornerRadius(UIScreen.main.bounds.width / 2)
-                        .shadow(color: Color.black.opacity(0.6),radius: 4, x:0, y:2)
-                })
-                
-                })
+                label: {EmptyView()})
+            Button(action: {
+                demoPet.saveImage(image: inputImage)
+                self.selection = 1
+            }, label: {
+                Text("Next")
+            })
+            .buttonStyle(NextButton(conditionMet: !useDefaultImage && petImage == nil))
+            .disabled(!useDefaultImage && petImage == nil)
+               
             .navigationBarTitle("Photo",displayMode: .inline)
-
         }.padding()
-        
-        
     }
     
     private func loadImage(){
-        guard let inputImage = inputImage else {return}
         
-        demoPet.petImage = inputImage
-        petImage = Image(uiImage: inputImage)
-        petImageToSave = inputImage
+        if let image = inputImage {
+            petImage = Image(uiImage: image)
+        } else {
+            return
+        }
     }
     
 }

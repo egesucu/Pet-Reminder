@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18153" systemVersion="20E5186d" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="FeedTime" representedClassName="FeedTime" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="eveningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="morningFed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="ofPet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pet" inverseName="feedTimes" inverseEntity="Pet"/>
-    </entity>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Pet" representedClassName="Pet" syncable="YES" codeGenerationType="class">
         <attribute name="birthday" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="eveningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -16,10 +9,8 @@
         <attribute name="morningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="morningTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="feedTimes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FeedTime" inverseName="ofPet" inverseEntity="FeedTime"/>
     </entity>
     <elements>
-        <element name="Pet" positionX="-63" positionY="-18" width="128" height="178"/>
-        <element name="FeedTime" positionX="-54" positionY="54" width="128" height="104"/>
+        <element name="Pet" positionX="-63" positionY="-18" width="128" height="149"/>
     </elements>
 </model>

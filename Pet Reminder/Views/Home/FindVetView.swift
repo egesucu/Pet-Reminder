@@ -38,11 +38,11 @@ struct FindVetView: View {
     }
 }
 
-struct FindVetView_Previews: PreviewProvider {
-    static var previews: some View {
-        FindVetView()
-    }
-}
+//struct FindVetView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FindVetView()
+//    }
+//}
 
 
 

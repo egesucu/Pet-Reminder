@@ -124,7 +124,7 @@ struct TopView : View {
                 })
                 .padding()
                 .fullScreenCover(isPresented: $showAddAnimal, content: {
-                    SetupNameView(comingFromMain: .constant(true))
+                    SetupNameView()
                 })
             }
             Text("Your Pets")

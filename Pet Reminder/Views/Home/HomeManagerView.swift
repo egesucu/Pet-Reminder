@@ -1,5 +1,5 @@
 //
-//  RootView.swift
+//  HomeManagerView.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 7.02.2021.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct RootView: View {
+struct HomeManagerView: View {
     
     @Environment(\.managedObjectContext)
     private var viewContext
