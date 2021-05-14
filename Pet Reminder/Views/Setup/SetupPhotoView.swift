@@ -19,7 +19,7 @@ struct SetupPhotoView: View {
     @State var inputImage: UIImage?
     @State private var useDefaultImage = false
     
-    @StateObject var demoPet : DemoPet
+    @StateObject var petManager : PetManager
     
     var body: some View {
         
@@ -54,12 +54,12 @@ struct SetupPhotoView: View {
                 .foregroundColor(.gray)
             Spacer()
             NavigationLink(
-                destination: SelectNotificationView(demoPet: demoPet).environment(\.managedObjectContext, viewContext),
+                destination: SelectNotificationView(petManager: petManager).environment(\.managedObjectContext, viewContext),
                 tag: 1,
                 selection: $selection,
                 label: {EmptyView()})
             Button(action: {
-                demoPet.saveImage(image: inputImage)
+                petManager.saveImage(image: inputImage)
                 self.selection = 1
             }, label: {
                 Text("Next")
@@ -86,7 +86,7 @@ struct SetupPhotoView_Previews: PreviewProvider {
     static var previews: some View {
         
         NavigationView {
-            SetupPhotoView(demoPet: DemoPet())
+            SetupPhotoView(petManager: PetManager())
         }
     }
 }

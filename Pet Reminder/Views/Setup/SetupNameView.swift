@@ -18,7 +18,7 @@ struct SetupNameView: View {
     @State private var showingAlert = false
     @State var selection: Int? = nil
     
-    @StateObject var demoPet = DemoPet()
+    @StateObject var petManager = PetManager()
     
     var body: some View {
         
@@ -39,10 +39,10 @@ struct SetupNameView: View {
                     .padding()
                     .labelsHidden()
                 Spacer()
-                NavigationLink(destination: SetupPhotoView(demoPet: demoPet).environment(\.managedObjectContext, viewContext), tag: 1, selection : $selection) { EmptyView()}
+                NavigationLink(destination: SetupPhotoView(petManager: petManager).environment(\.managedObjectContext, viewContext), tag: 1, selection : $selection) { EmptyView()}
                 
                 Button(action: {
-                    demoPet.saveNameAndBirthday(name: name, birthday: birthday)
+                    petManager.saveNameAndBirthday(name: name, birthday: birthday)
                         self.selection = 1
                     
                 }, label: {
@@ -60,6 +60,6 @@ struct SetupNameView: View {
 
 struct SetupNameView_Previews: PreviewProvider {
     static var previews: some View {
-        SetupNameView(demoPet: DemoPet())
+        SetupNameView(petManager: PetManager())
     }
 }

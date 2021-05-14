@@ -1,5 +1,5 @@
 //
-//  DemoPet.swift
+//  PetManager.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 14.05.2021.
@@ -14,7 +14,7 @@ enum NotificationType{
     case morning, evening, both
 }
 
-class DemoPet : ObservableObject {
+class PetManager : ObservableObject {
     
     var name: String
     var birthday : Date
@@ -28,7 +28,7 @@ class DemoPet : ObservableObject {
         type = .morning
     }
     
-    static let demoPet = DemoPet()
+    static let petManager = PetManager()
     
     func saveNameAndBirthday(name: String,birthday: Date){
         

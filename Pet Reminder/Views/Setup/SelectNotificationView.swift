@@ -15,7 +15,7 @@ struct SelectNotificationView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
     
-    @StateObject var demoPet : DemoPet
+    @StateObject var petManager : PetManager
     
     var body: some View {
         
@@ -25,7 +25,7 @@ struct SelectNotificationView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-            NavigationLink(destination: NotificationView(demoPet: demoPet).environment(\.managedObjectContext, viewContext)) {
+            NavigationLink(destination: NotificationView(petManager: petManager).environment(\.managedObjectContext, viewContext)) {
                 ZStack(alignment: .center) {
                     Image("morning")
                         .resizable()
@@ -42,10 +42,10 @@ struct SelectNotificationView: View {
                         .font(.largeTitle)
                 }
             }.onTapGesture {
-                demoPet.type = .morning
+                petManager.type = .morning
             }
             
-            NavigationLink(destination: NotificationView(demoPet: demoPet)) {
+            NavigationLink(destination: NotificationView(petManager: petManager)) {
                 ZStack(alignment: .center) {
                     Image("evening")
                         .resizable()
@@ -61,9 +61,9 @@ struct SelectNotificationView: View {
                 }
             }
             .onTapGesture {
-                demoPet.type = .evening
+                petManager.type = .evening
             }
-            NavigationLink(destination: NotificationView(demoPet: demoPet)){
+            NavigationLink(destination: NotificationView(petManager: petManager)){
                 ZStack(alignment: .center) {
                     Image("both")
                         .resizable()
@@ -79,7 +79,7 @@ struct SelectNotificationView: View {
                 }
             }
             .onTapGesture {
-                demoPet.type = .both
+                petManager.type = .both
             }
             
             
@@ -97,7 +97,7 @@ struct SelectNotificationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView{
-                SelectNotificationView(demoPet: DemoPet())
+                SelectNotificationView(petManager: PetManager())
             }
             
             
