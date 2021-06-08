@@ -5,7 +5,6 @@
 //  Created by Ege Sucu on 10.06.2020.
 //  Copyright © 2020 Softhion. All rights reserved.
 //
-
 //
 //  NotificationManager.swift
 //  Pet Reminder
@@ -90,7 +89,6 @@ class NotificationManager {
                 
                 self.notificationCenter.add(request, withCompletionHandler: nil)
                 
-                
             }
         }
         
@@ -101,8 +99,5 @@ class NotificationManager {
         notificationCenter.removeDeliveredNotifications(withIdentifiers: identifiers)
         
     }
-    
-    
-    
     
 }
