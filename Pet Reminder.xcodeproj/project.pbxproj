@@ -25,17 +25,12 @@
 		9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */; };
 		9D8E770C24866963004610C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E770E24866963004610C8 /* Localizable.strings */; };
 		9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E77132486ABBC004610C8 /* SetupNameView.swift */; };
-		9D8E77162486D820004610C8 /* SetupPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E77152486D820004610C8 /* SetupPhotoView.swift */; };
-		9D9F59AA25E17201007672E8 /* MorningNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59A925E17201007672E8 /* MorningNotificationView.swift */; };
-		9D9F59AC25E172C0007672E8 /* EveningNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59AB25E172C0007672E8 /* EveningNotificationView.swift */; };
-		9D9F59AE25E172EB007672E8 /* BothNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59AD25E172EB007672E8 /* BothNotificationView.swift */; };
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA497592490E1B0002D4051 /* NotificationManager.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C6264EC81A00F8561A /* PetManager.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DD920D0258E76CC001A6B7E /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD920CF258E76CC001A6B7E /* CollectionView.swift */; };
-		9DFADA47248971DE00C20FC1 /* SelectNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFADA46248971DE00C20FC1 /* SelectNotificationView.swift */; };
 		9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */; };
 		9DFF73F6248BAE27004B4901 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FF248666C1004610C8 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -65,17 +60,12 @@
 		9D8E770F2486697A004610C8 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9D8E77102486697B004610C8 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9D8E77132486ABBC004610C8 /* SetupNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupNameView.swift; sourceTree = "<group>"; };
-		9D8E77152486D820004610C8 /* SetupPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPhotoView.swift; sourceTree = "<group>"; };
-		9D9F59A925E17201007672E8 /* MorningNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningNotificationView.swift; sourceTree = "<group>"; };
-		9D9F59AB25E172C0007672E8 /* EveningNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningNotificationView.swift; sourceTree = "<group>"; };
-		9D9F59AD25E172EB007672E8 /* BothNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothNotificationView.swift; sourceTree = "<group>"; };
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DA497592490E1B0002D4051 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DC1B9C6264EC81A00F8561A /* PetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManager.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DD920CF258E76CC001A6B7E /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
-		9DFADA46248971DE00C20FC1 /* SelectNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNotificationView.swift; sourceTree = "<group>"; };
 		9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,12 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				9D8E77132486ABBC004610C8 /* SetupNameView.swift */,
-				9D8E77152486D820004610C8 /* SetupPhotoView.swift */,
-				9DFADA46248971DE00C20FC1 /* SelectNotificationView.swift */,
 				9D59129E248BBDE9001B2D26 /* NotificationView.swift */,
-				9D9F59AB25E172C0007672E8 /* EveningNotificationView.swift */,
-				9D9F59AD25E172EB007672E8 /* BothNotificationView.swift */,
-				9D9F59A925E17201007672E8 /* MorningNotificationView.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -198,9 +183,9 @@
 		9DFF73F1248BAD76004B4901 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9D9F59B425E18248007672E8 /* Home */,
 				9D9F59B125E18228007672E8 /* Intro */,
 				9D9F59AF25E1818B007672E8 /* Setup */,
+				9D9F59B425E18248007672E8 /* Home */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -309,9 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
-				9D9F59AA25E17201007672E8 /* MorningNotificationView.swift in Sources */,
 				9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */,
-				9DFADA47248971DE00C20FC1 /* SelectNotificationView.swift in Sources */,
 				9DD920D0258E76CC001A6B7E /* CollectionView.swift in Sources */,
 				9D71069F258F403700683409 /* EventManager.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
@@ -325,13 +308,10 @@
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9D59129F248BBDE9001B2D26 /* NotificationView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */,
-				9D8E77162486D820004610C8 /* SetupPhotoView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
-				9D9F59AC25E172C0007672E8 /* EveningNotificationView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
-				9D9F59AE25E172EB007672E8 /* BothNotificationView.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
 				9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */,
 			);

@@ -17,37 +17,60 @@ struct NotificationView: View {
     
     @State private var showProgressStatus = false
     @State private var petSaved = false
-    @State private var finishProgress = false
     @State private var morningTime = Date()
     @State private var eveningTime = Date()
+    @State private var morningOn = false
+    @State private var eveningOn = false
     
     var body: some View {
         VStack {
             
-            switch (petManager.type){
+            HStack {
+                ZStack(alignment: .center) {
+                    Image("morning")
+                        .resizable()
+                        .scaledToFit()
+                        .overlay(Color.black.opacity(0.4))
+                        .cornerRadius(20)
+                        .shadow(radius: 10)
+                        .frame(maxWidth: 300)
+                        
+                    .padding()
+                    Text("Morning").font(.title).foregroundColor(.white)
+                }
+                DatePicker("Choose a time", selection: $eveningTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .accentColor(morningOn ? .black : .gray)
+                    
+                    .disabled(!morningOn)
+                Toggle("Morning", isOn: $morningOn)
+                    .font(.title.bold()).labelsHidden()
+            }.padding()
+            HStack {
+                ZStack(alignment: .center) {
+                    Image("evening")
+                        .resizable()
+                        .scaledToFit()
+                        .overlay(Color.black.opacity(0.4))
+                        .cornerRadius(20)
+                        .shadow(radius: 10)
+                        .frame(maxWidth: 300)
+                        
+                    .padding()
+                    Text("Evening").font(.title).foregroundColor(.white)
+                }
+                DatePicker("Choose a time", selection: $eveningTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .disabled(!eveningOn)
+                Toggle("Evening", isOn: $eveningOn)
+                    .font(.title.bold()).labelsHidden()
+            }.padding()
             
-            case .morning:
-                MorningNotificationView(morningTime: $morningTime)
-            case .evening:
-                EveningNotificationView(eveningTime: $eveningTime)
-            case .both:
-                BothNotificationView(morningTime: $morningTime, eveningTime: $eveningTime)
-            }
-            Button(action: savePet, label: {
-                Text("Setup")
-            })
-            .font(.title)
-            .padding()
-            .background(Color.green)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 10)
-            .fullScreenCover(isPresented: $petSaved, content: {
-                HomeManagerView().environment(\.managedObjectContext, viewContext)
-                
-            })
-            
-        }.padding()
+        }
+        .fullScreenCover(isPresented: $petSaved, content: {
+            HomeView()
+        })
+        .navigationBarTitle("Notification")
     }
     
     func savePet(){
@@ -62,6 +85,8 @@ struct NotificationView: View {
 
 struct MultipleNotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationView(petManager: PetManager())
+        NavigationView {
+            NotificationView(petManager: PetManager())
+        }.navigationViewStyle(.stack)
     }
 }
