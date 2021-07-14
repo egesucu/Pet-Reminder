@@ -64,12 +64,14 @@ struct NotificationView: View {
                     .disabled(!eveningOn)
                 Toggle("Evening", isOn: $eveningOn)
                     .font(.title.bold()).labelsHidden()
-            }.padding()
+            }
+            .padding()
+            .fullScreenCover(isPresented: $petSaved, content: {
+                    HomeView()
+                })
             
         }
-        .fullScreenCover(isPresented: $petSaved, content: {
-            HomeView()
-        })
+        
         .navigationBarTitle("Notification")
     }
     
