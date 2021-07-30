@@ -15,7 +15,6 @@
 		9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* ActivityIndicator.swift */; };
 		9D279846257ABEF20078B668 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279845257ABEF20078B668 /* LoadingView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
-		9D59129F248BBDE9001B2D26 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D59129E248BBDE9001B2D26 /* NotificationView.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
@@ -30,6 +29,9 @@
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C6264EC81A00F8561A /* PetManager.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
+		9DD752F126B4487600A0E380 /* SetupBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F026B4487600A0E380 /* SetupBirthdayView.swift */; };
+		9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F226B4488000A0E380 /* SetupPhotoView.swift */; };
+		9DD752F526B4488E00A0E380 /* SetupNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F426B4488E00A0E380 /* SetupNotificationView.swift */; };
 		9DD920D0258E76CC001A6B7E /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD920CF258E76CC001A6B7E /* CollectionView.swift */; };
 		9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */; };
 		9DFF73F6248BAE27004B4901 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FF248666C1004610C8 /* LaunchScreen.storyboard */; };
@@ -44,7 +46,6 @@
 		9D279842257ABE710078B668 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		9D279845257ABEF20078B668 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		9D59129E248BBDE9001B2D26 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D71069E258F403700683409 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = "Pet Reminder/Views/EventManager.swift"; sourceTree = SOURCE_ROOT; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
@@ -65,6 +66,9 @@
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DC1B9C6264EC81A00F8561A /* PetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManager.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
+		9DD752F026B4487600A0E380 /* SetupBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupBirthdayView.swift; sourceTree = "<group>"; };
+		9DD752F226B4488000A0E380 /* SetupPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPhotoView.swift; sourceTree = "<group>"; };
+		9DD752F426B4488E00A0E380 /* SetupNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupNotificationView.swift; sourceTree = "<group>"; };
 		9DD920CF258E76CC001A6B7E /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,7 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				9D8E77132486ABBC004610C8 /* SetupNameView.swift */,
-				9D59129E248BBDE9001B2D26 /* NotificationView.swift */,
+				9DD752F026B4487600A0E380 /* SetupBirthdayView.swift */,
+				9DD752F226B4488000A0E380 /* SetupPhotoView.swift */,
+				9DD752F426B4488E00A0E380 /* SetupNotificationView.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -297,18 +303,20 @@
 				9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */,
 				9DD920D0258E76CC001A6B7E /* CollectionView.swift in Sources */,
 				9D71069F258F403700683409 /* EventManager.swift in Sources */,
+				9DD752F526B4488E00A0E380 /* SetupNotificationView.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
 				9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */,
 				9D279846257ABEF20078B668 /* LoadingView.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
+				9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
-				9D59129F248BBDE9001B2D26 /* NotificationView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
+				9DD752F126B4487600A0E380 /* SetupBirthdayView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,

@@ -13,32 +13,43 @@ struct PersistenceController {
     
     static let shared = PersistenceController()
     
-    let container : NSPersistentCloudKitContainer = {
-        let container = NSPersistentCloudKitContainer(name: "PetReminder")
-        container.loadPersistentStores { storeDescription, error in
-            if let error = error as NSError? {
-                print(error.localizedDescription)
-            }
+    static var preview: PersistenceController = {
+        let result = PersistenceController(inMemory: true)
+        let viewContext = result.container.viewContext
+        for _ in 0..<10 {
+            let demoPet = Pet(context: viewContext)
+            demoPet.id = UUID()
+            demoPet.image = Data()
+            demoPet.birthday = Date()
+            demoPet.morningFed = false
+            demoPet.morningTime = Date()
+            demoPet.eveningFed = false
+            demoPet.eveningTime = Date()
         }
-        return container
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return result
     }()
     
-    private init() {
-       
-    }
-    public func saveContext(){
-        
-        let context = container.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print(error.localizedDescription)
-            }
+    
+    
+    let container: NSPersistentCloudKitContainer
+
+    init(inMemory: Bool = false) {
+        container = NSPersistentCloudKitContainer(name: "PetReminder")
+        if inMemory {
+            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        
-        
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
     }
     
-    
+
 }

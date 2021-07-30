@@ -11,21 +11,13 @@ import SwiftUI
 @main
 struct PetReminderApp: App {
     
-    
     let context = PersistenceController.shared.container.viewContext
-    let petSaved = UserDefaults.standard.bool(forKey: "petAvailable")
  
     var body: some Scene {
         WindowGroup {
             
+            HelloView().environment(\.managedObjectContext, context)
             
-            if petSaved{
-                HomeManagerView().environment(\.managedObjectContext, context)
-            } else {
-                HelloView().environment(\.managedObjectContext, context)
-            }
-            
-
         }
     }
     

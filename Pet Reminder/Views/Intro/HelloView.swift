@@ -8,40 +8,61 @@
 
 import SwiftUI
 
+
+
+struct MainView: View {
+    
+    let petCount = UserDefaults.standard.integer(forKey: "petCount")
+    
+    var body: some View{
+        
+        VStack{
+            if petCount > 0 {
+                HomeView()
+            } else {
+                HelloView()
+            }
+        }
+        
+    }
+
+}
+
 struct HelloView: View {
     
-    @State private var showNextView = false
+    @State private var showSetup = false
     
     var body: some View {
         VStack(alignment: .center) {
             Image("pet-reminder")
                 .resizable()
                 .scaledToFit()
-                .padding([.top,.bottom],20)
+                .padding([.top,.bottom])
             Text("Welcome-Slogan")
-                .padding([.top,.bottom],20)
+                .padding([.top,.bottom])
                 .font(.title)
             Spacer()
             Text("Welcome-Slogan-2")
-                .padding([.top,.bottom],20)
+                .padding([.top,.bottom])
                 .font(.body)
             Spacer()
-            Button("Continue") {
-                self.showNextView.toggle()
+            Button {
+                self.showSetup.toggle()
+            } label: {
+                
+                Label("Add Pet", systemImage: "plus.circle.fill")
+                .font(.largeTitle)
+                .foregroundColor(.white)
             }
             .padding()
-            .font(.largeTitle)
-            .background(.green)
-            .foregroundColor(.white)
-            .clipShape(Capsule())
-            .shadow(color: .black, radius: 8, x: 4, y: 4)
-            
-            .fullScreenCover(isPresented: $showNextView, onDismiss: nil, content: {
+            .background(Capsule().fill(Color(uiColor: .systemGreen)))
+            .shadow(radius: 10)
+            .sheet(isPresented: $showSetup) {
+                // some reload method to get petCount, ondismiss
+            } content: {
                 SetupNameView()
-            })
-            
-            
-            
+            }
+
         }.padding()
     }
     
@@ -50,10 +71,7 @@ struct HelloView: View {
 struct HelloView_Previews: PreviewProvider {
     static var previews: some View {
         Group{
-            HelloView()
-                .preferredColorScheme(.dark)
-            
-            
+           MainView()
         }
         
     }
