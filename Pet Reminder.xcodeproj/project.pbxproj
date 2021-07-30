@@ -16,6 +16,7 @@
 		9D279846257ABEF20078B668 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279845257ABEF20078B668 /* LoadingView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
+		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
@@ -47,6 +48,7 @@
 		9D279845257ABEF20078B668 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		9D71069E258F403700683409 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = "Pet Reminder/Views/EventManager.swift"; sourceTree = SOURCE_ROOT; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -174,6 +176,7 @@
 				9D0C24E425D081B4008F93CD /* EventListView.swift */,
 				9D0C24E025D08177008F93CD /* FindVetView.swift */,
 				9D279848257ABFDD0078B668 /* HomeView.swift */,
+				9D70F67226B4B6BC007D37EF /* PetDetailView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
+				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
 				9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */,
 			);
@@ -479,7 +483,7 @@
 				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -502,7 +506,7 @@
 				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

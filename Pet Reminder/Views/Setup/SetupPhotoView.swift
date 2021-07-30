@@ -33,23 +33,25 @@ struct SetupPhotoView: View {
                 .padding([.top,.bottom])
             
         }
+        .onAppear(){
+            
+            if let outputImage = outputImage{
+                petManager.getImage(image: outputImage)
+            } else {
+                petManager.getImage()
+            }
+
+        }
         .navigationTitle(Text("Photo"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Continue") {
-                    SetupNotificationView(petManager: petManager)
-                }
-//                TODO: Write the correct condition here.
-//                .foregroundColor(name.isEmpty ? .gray : .green)
-//                .disabled(name.isEmpty)
+                
+                NavigationLink(
+                    destination: SetupNotificationView(petManager: petManager),
+                    label: {
+                        Text("Continue")
+                    })
                 .font(.body.bold())
-                .onTapGesture {
-                    if let outputImage = outputImage {
-                        petManager.getImage(image: outputImage)
-                    } else {
-                        petManager.getImage()
-                    }
-                }
             }
         }
     }
@@ -87,9 +89,10 @@ struct SetupPhotoView: View {
         
         if let outputImage = outputImage {
             petImage = Image(uiImage: outputImage)
-            
+            petManager.getImage(image: outputImage)
         } else {
             petImage = nil
+            petManager.getImage()
         }
     }
     

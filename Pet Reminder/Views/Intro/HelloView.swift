@@ -8,20 +8,22 @@
 
 import SwiftUI
 
-
-
 struct MainView: View {
     
-    let petCount = UserDefaults.standard.integer(forKey: "petCount")
+    @Environment(\.managedObjectContext) private var context
+    @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
+    var pets : FetchedResults<Pet>
+    
     
     var body: some View{
         
-        VStack{
-            if petCount > 0 {
-                HomeView()
+        ZStack{
+            if pets.count > 0 {
+                HomeManagerView().environment(\.managedObjectContext, context)
             } else {
-                HelloView()
+                HelloView().environment(\.managedObjectContext, context)
             }
+            
         }
         
     }
@@ -55,7 +57,7 @@ struct HelloView: View {
                 .foregroundColor(.white)
             }
             .padding()
-            .background(Capsule().fill(Color(uiColor: .systemGreen)))
+            .background(Capsule().fill(Color(.systemGreen)))
             .shadow(radius: 10)
             .sheet(isPresented: $showSetup) {
                 // some reload method to get petCount, ondismiss

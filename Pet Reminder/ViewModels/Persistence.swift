@@ -18,6 +18,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let demoPet = Pet(context: viewContext)
+            demoPet.name = ""
             demoPet.id = UUID()
             demoPet.image = Data()
             demoPet.birthday = Date()
@@ -49,6 +50,16 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+    }
+    
+    func save(){
+        let context = container.viewContext
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
     }
     
 

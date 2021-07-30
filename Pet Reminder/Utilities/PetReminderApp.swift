@@ -11,13 +11,17 @@ import SwiftUI
 @main
 struct PetReminderApp: App {
     
-    let context = PersistenceController.shared.container.viewContext
+    @Environment(\.scenePhase) var scenePhase
+    
+    let controller = PersistenceController.shared
  
     var body: some Scene {
         WindowGroup {
             
-            HelloView().environment(\.managedObjectContext, context)
+            MainView().environment(\.managedObjectContext, controller.container.viewContext)
             
+        }.onChange(of: scenePhase) { _ in
+            controller.save()
         }
     }
     

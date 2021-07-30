@@ -21,20 +21,26 @@ struct SetupBirthdayView: View {
             DatePicker("Select the Date", selection: $birthday, displayedComponents: .date)
                 .padding([.top,.bottom])
                 .multilineTextAlignment(.center)
+                .onAppear(){
+                    petManager.getBirthday(date: Date())
+                }
+                .onChange(of: birthday, perform: { value in
+                    petManager.getBirthday(date: value)
+                })
+                
         }
         .padding()
 //        TODO: Fix the Localization nonsense here.
         .navigationTitle("Birthday ")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Continue") {
-                    SetupPhotoView(petManager: petManager)
-                }
+                NavigationLink(
+                    destination: SetupPhotoView(petManager: petManager),
+                    label: {
+                        Text("Continue")
+                    })
                 .foregroundColor(.green)
                 .font(.body.bold())
-                .onTapGesture {
-                    petManager.getBirthday(date: birthday)
-                }
             }
         }
     }

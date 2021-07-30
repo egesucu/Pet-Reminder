@@ -11,9 +11,9 @@ import SwiftUI
 struct SetupNameView: View {
     
     @State private var name = ""
-    @State private var petSaved = false
+    @State private var textWritten = false
     
-    var petManager = PetManager()
+    var petManager = PetManager.shared
     
     var body: some View {
         
@@ -21,36 +21,41 @@ struct SetupNameView: View {
             VStack{
                 Text("Name")
                     .font(.title).bold()
-                TextField("Text", text: $name)
-                    .textFieldStyle(.roundedBorder)
+                
+                TextField("Text", text: $name, onCommit: {
+                    petManager.getName(name: name)
+                    textWritten.toggle()
+                    print("Name is: \(name)")
+                })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .shadow(radius: 8)
                     .multilineTextAlignment(.center)
                     .padding([.top,.bottom])
+                    
             }
             .padding()
             .navigationBarTitle("Setup")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink("Continue") {
-                        SetupBirthdayView(petManager: petManager)
-                    }
-                    .foregroundColor(name.isEmpty ? .gray : .green)
+                    NavigationLink(
+                        destination: SetupBirthdayView(petManager: petManager),
+                        label: {
+                            Text("Continue")
+                        })
+                    .foregroundColor(!textWritten ? .gray : .green)
                     .font(.body.bold())
-                    .disabled(name.isEmpty)
-                    .onTapGesture {
-                        petManager.getName(name: name)
-                    }
+                    .disabled(!textWritten)
                 }
             }
             
         }
-        .navigationViewStyle(.stack)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
 }
 
 struct SetupNameView_Previews: PreviewProvider {
     static var previews: some View {
-        SetupNameView(petManager: PetManager())
+        SetupNameView(petManager: PetManager.shared)
     }
 }

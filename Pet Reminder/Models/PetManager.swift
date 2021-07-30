@@ -10,61 +10,70 @@ import UIKit
 import SwiftUI
 import CoreData
 
+enum Selection {
+    case morning,evening,both
+}
+
 class PetManager{
 
-    static let petManager = PetManager()
+    static let shared = PetManager()
+
+    var name         : String? = nil
+    var birthday     : Date?   = nil
+    var imageData    : Data?   = nil
+    var morningTime  : Date?   = nil
+    var eveningTime  : Date?   = nil
+    var selection    : Selection = .both
     
-    private let tempPet = Pet()
     
     func getName(name: String){
-        tempPet.name = name
+        self.name = name
         
+    }
+    
+    func getBirthday(date: Date){
+        self.birthday = date
+    }
+    
+    func getSelection(selection: Selection){
+        self.selection = selection
     }
     
     func getImage(image: UIImage? = nil){
         
         if let image = image,
            let imageData = image.jpegData(compressionQuality: 0.5){
-            tempPet.image = imageData
+            self.imageData = imageData
         } else {
-            tempPet.image = UIImage(named: "default-animal")?.jpegData(compressionQuality: 0.5) ?? Data()
+            self.imageData = UIImage(named: "default-animal")?.jpegData(compressionQuality: 0.5) ?? Data()
         }
         
     }
     
-    func getBirthday(date: Date){
-        tempPet.birthday = date
-    }
+    
     
     func getDates(morning: Date?, evening: Date?) {
         if let morning = morning {
-            tempPet.morningTime = morning
+            self.morningTime = morning
         }
         
         if let evening = evening {
-            tempPet.eveningTime = evening
+            self.eveningTime = evening
         }
     }
     
-    func savePet(context: NSManagedObjectContext){
+    func savePet(){
         
-        let newPet = Pet(context: context)
-        newPet.name = tempPet.name
-        newPet.birthday = tempPet.birthday
-        newPet.morningTime = tempPet.morningTime
-        newPet.eveningTime = tempPet.eveningTime
-        newPet.image = tempPet.image
+        let persistence = PersistenceController.shared
         
-        do {
-            try context.save()
-            
-            var petCount = UserDefaults.standard.integer(forKey: "petCount")
-            petCount += 1
-            UserDefaults.standard.set(petCount, forKey: "petCount")
-            
-        } catch let error{
-            print("There is an error: \(error), with description: \(error.localizedDescription)")
-        }
+        let newPet = Pet(context: persistence.container.viewContext)
+        newPet.name = self.name
+        newPet.birthday = self.birthday
+        newPet.morningTime = self.morningTime
+        newPet.eveningTime = self.eveningTime
+        newPet.image = self.imageData
+        
+        persistence.save()
         
     }
     
