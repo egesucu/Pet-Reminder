@@ -80,6 +80,7 @@ struct PetDetailView: View {
                                 .foregroundColor(.blue)
                                 .font(.largeTitle.bold())
                         }
+//                        FIXME: This action won't save the data to CoreData
                         EveningView(eveningOn: $eveningOn, pet: pet,feedback: feedback,perform: save)
                             .cornerRadius(20)
                             .frame(width:150,height:150)
