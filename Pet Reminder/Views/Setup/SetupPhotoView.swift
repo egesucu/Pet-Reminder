@@ -13,6 +13,8 @@ struct SetupPhotoView: View {
     @State private var showImagePicker = false
     @State private var petImage : Image? = nil
     @State private var outputImage: UIImage?
+    @State private var defaultPhotoOn = true
+    @State private var shouldContinue = false
     
     var petManager : PetManager
     
@@ -23,7 +25,7 @@ struct SetupPhotoView: View {
                 .padding([.top,.bottom])
             ImageView()
                 .onTapGesture {
-                    self.showImagePicker = true
+                    self.showImagePicker = defaultPhotoOn ? false :true
                 }
                 .sheet(isPresented: $showImagePicker, onDismiss: {
                     self.loadImage()
@@ -31,6 +33,12 @@ struct SetupPhotoView: View {
                     ImagePicker(image: $outputImage)
                 })
                 .padding([.top,.bottom])
+            Toggle("I want to use default photo.", isOn: $defaultPhotoOn).padding()
+            Text("Your photos are stored in your private iCloud container and won't be shared neither by our developer nor in any servers.")
+                .font(.footnote)
+                .foregroundColor(Color(.systemGray2))
+                .multilineTextAlignment(.center)
+                .padding()
             
         }
         .onAppear(){
@@ -43,19 +51,20 @@ struct SetupPhotoView: View {
 
         }
         .navigationTitle(Text("Photo"))
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                
                 NavigationLink(
                     destination: SetupNotificationView(petManager: petManager),
                     label: {
                         Text("Continue")
                     })
-                .font(.body.bold())
+                    .disabled(!defaultPhotoOn && outputImage == nil)
+                
             }
+            
         }
     }
-    
     
     @ViewBuilder
     func ImageView() -> some View {
@@ -90,9 +99,10 @@ struct SetupPhotoView: View {
         if let outputImage = outputImage {
             petImage = Image(uiImage: outputImage)
             petManager.getImage(image: outputImage)
+            defaultPhotoOn = false
         } else {
             petImage = nil
-            petManager.getImage()
+            defaultPhotoOn = true
         }
     }
     
@@ -103,6 +113,6 @@ struct SetupPhotoView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SetupPhotoView(petManager: PetManager())
-        }
+        }.accentColor(.green)
     }
 }

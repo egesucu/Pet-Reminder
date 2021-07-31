@@ -14,7 +14,6 @@ struct MainView: View {
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
     var pets : FetchedResults<Pet>
     
-    
     var body: some View{
         
         ZStack{

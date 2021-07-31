@@ -18,8 +18,8 @@ class PetManager{
 
     static let shared = PetManager()
 
-    var name         : String? = nil
-    var birthday     : Date?   = nil
+    var name         : String  = ""
+    var birthday     : Date    = Date()
     var imageData    : Data?   = nil
     var morningTime  : Date?   = nil
     var eveningTime  : Date?   = nil
@@ -45,12 +45,10 @@ class PetManager{
            let imageData = image.jpegData(compressionQuality: 0.5){
             self.imageData = imageData
         } else {
-            self.imageData = UIImage(named: "default-animal")?.jpegData(compressionQuality: 0.5) ?? Data()
+            self.imageData = nil
         }
         
     }
-    
-    
     
     func getDates(morning: Date?, evening: Date?) {
         if let morning = morning {
@@ -67,6 +65,7 @@ class PetManager{
         let persistence = PersistenceController.shared
         
         let newPet = Pet(context: persistence.container.viewContext)
+        newPet.id = UUID()
         newPet.name = self.name
         newPet.birthday = self.birthday
         newPet.morningTime = self.morningTime

@@ -17,8 +17,9 @@ struct PetReminderApp: App {
  
     var body: some Scene {
         WindowGroup {
-            
-            MainView().environment(\.managedObjectContext, controller.container.viewContext)
+            MainView()
+                .environment(\.managedObjectContext, controller.container.viewContext)
+                .accentColor(.green)
             
         }.onChange(of: scenePhase) { _ in
             controller.save()

@@ -13,7 +13,6 @@
 		9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E425D081B4008F93CD /* EventListView.swift */; };
 		9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E625D092E0008F93CD /* EventGenerateView.swift */; };
 		9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* ActivityIndicator.swift */; };
-		9D279846257ABEF20078B668 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279845257ABEF20078B668 /* LoadingView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
@@ -45,7 +44,6 @@
 		9D0C24E425D081B4008F93CD /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		9D0C24E625D092E0008F93CD /* EventGenerateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventGenerateView.swift; sourceTree = "<group>"; };
 		9D279842257ABE710078B668 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		9D279845257ABEF20078B668 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 		9D9F59B425E18248007672E8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9D279845257ABEF20078B668 /* LoadingView.swift */,
 				9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */,
 				9D0C24E225D08181008F93CD /* SettingsView.swift */,
 				9D0C24E425D081B4008F93CD /* EventListView.swift */,
@@ -310,7 +307,6 @@
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
 				9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */,
-				9D279846257ABEF20078B668 /* LoadingView.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
 				9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,

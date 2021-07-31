@@ -49,6 +49,7 @@ struct SetupNameView: View {
             }
             
         }
+        .accentColor(.green)
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
