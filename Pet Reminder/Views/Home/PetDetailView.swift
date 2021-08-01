@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct PetDetailView: View {
     
@@ -15,6 +16,7 @@ struct PetDetailView: View {
     @State private var eveningOn = false
     
     let feedback = UINotificationFeedbackGenerator()
+    var context: NSManagedObjectContext
 
     var body: some View {
         VStack{
@@ -57,15 +59,21 @@ struct PetDetailView: View {
                                 .font(.largeTitle.bold())
                         }.font(.title.bold())
 
-                        MorningView(morningOn: $morningOn,pet: pet, feedback: feedback, perform: save)
-                            .onTapGesture {
-                                feedback.notificationOccurred(.success)
-                                morningOn.toggle()
-                                pet.morningFed = morningOn
-                                save()
-                        }
+                        MorningView(morningOn: $morningOn)
                             .cornerRadius(20)
                             .frame(width:150,height:150)
+                            .onChange(of: morningOn, perform: { value in
+                                feedback.notificationOccurred(.success)
+                                pet.morningFed = value
+                                do{
+                                    try context.save()
+                                } catch {
+                                    print(error)
+                                }
+                            })
+                            .onTapGesture {
+                                morningOn.toggle()
+                            }
                     }
                 }
                 
@@ -81,51 +89,61 @@ struct PetDetailView: View {
                                 .font(.largeTitle.bold())
                         }
 //                        FIXME: This action won't save the data to CoreData
-                        EveningView(eveningOn: $eveningOn, pet: pet,feedback: feedback,perform: save)
+                        EveningView(eveningOn: $eveningOn)
                             .cornerRadius(20)
                             .frame(width:150,height:150)
+                            .onChange(of: eveningOn, perform: { value in
+                                feedback.notificationOccurred(.success)
+                                pet.eveningFed = value
+                                do{
+                                    try context.save()
+                                } catch {
+                                    print(error)
+                                }
+                            })
+                            .onTapGesture {
+                                eveningOn.toggle()
+                            }
                     }
                 }
             }
             Spacer()
         }
+        .onAppear{
+            morningOn = pet.morningFed
+            eveningOn = pet.eveningFed
+            
+        }
         .navigationTitle("Hello \(pet.name ?? "Error")")
     }
     
     func save(){
+        
         PersistenceController.shared.save()
     }
 }
 
 struct MorningView : View {
+    
     @Binding var morningOn : Bool
-    var pet: Pet
-    var feedback: UINotificationFeedbackGenerator
-    var perform: () -> ()
     
     var body: some View{
-                Image(systemName: morningOn ? "square.fill" : "square")
-                    .font(.system(size: 50))
-                    .animation(.easeInOut, value: morningOn)
-                    .onTapGesture {
-                        feedback.notificationOccurred(.success)
-                        morningOn.toggle()
-                        pet.eveningFed = morningOn
-                        perform()
-                }
+        withAnimation{
+            Image(systemName: morningOn ? "checkmark.square" : "square")
+                        .font(.system(size: 50))
+                .animation(.easeInOut, value: morningOn)
+        }
     }
 }
 
 
 struct EveningView : View {
+    
     @Binding var eveningOn : Bool
-    var pet: Pet
-    var feedback: UINotificationFeedbackGenerator
-    var perform: () -> ()
     
     var body: some View{
         withAnimation {
-            Image(systemName: eveningOn ? "square.fill" : "square")
+            Image(systemName: eveningOn ? "checkmark.square" : "square")
                 .font(.system(size: 50))
                 .animation(.easeInOut, value: eveningOn)
         }
@@ -145,8 +163,7 @@ struct PetDetailView_Previews: PreviewProvider {
         demo.eveningTime = Date()
         
         return NavigationView {
-            PetDetailView(pet: demo)
-                .environment(\.managedObjectContext, persistence.container.viewContext)
+            PetDetailView(pet: demo, context: persistence.container.viewContext)
         }
     }
 }

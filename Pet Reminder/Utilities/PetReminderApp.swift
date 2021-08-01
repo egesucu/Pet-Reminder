@@ -7,14 +7,15 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct PetReminderApp: App {
     
     @Environment(\.scenePhase) var scenePhase
-    
+
     let controller = PersistenceController.shared
- 
+    
     var body: some Scene {
         WindowGroup {
             MainView()
@@ -24,9 +25,7 @@ struct PetReminderApp: App {
         }.onChange(of: scenePhase) { _ in
             controller.save()
         }
+        
     }
-    
-    
-    
 }
 

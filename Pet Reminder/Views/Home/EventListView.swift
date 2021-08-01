@@ -14,55 +14,63 @@ struct EventsView : View {
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
     
-    
-    var addEventButton : some View{
-        Button(action: {
-            showAddEvent.toggle()
-        }, label: {
-            HStack {
-                Image(systemName: "plus.circle.fill")
-                Text("Add Event").bold()
-            }
-            .foregroundColor(.white)
-            .padding()
-            .background(LinearGradient(gradient: Gradient(colors:[Color(.systemGreen), Color(.systemTeal)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-            .cornerRadius(60)
-        })
-        .hoverEffect()
-        
-        .sheet(isPresented: $showAddEvent, onDismiss: {
-            eventVM.reloadEvents()
-            eventVM.objectWillChange.send()
-        }) {
-            AddEventView()
-        }
-    }
-    
+    let feedback = UINotificationFeedbackGenerator()
     
     var body: some View{
         
         VStack{
-            
             HStack {
                 Text("Up Next")
                     .font(.largeTitle)
                     .bold()
                 
                 Spacer()
-                addEventButton
+                AddEventButton()
             }
             .padding()
             Spacer()
-            
-            #if targetEnvironment(simulator)
-            MultipleEventsView(eventVM: eventVM)
-            #else
-            eventVM.events.isEmpty ? AnyView(EmptyEventView()) : AnyView(MultipleEventsView(eventVM: eventVM))
-            #endif
+            ShowEventView()
             Spacer()
         }
+        .onAppear(perform: {
+            eventVM.reloadEvents()
+        })
         
     }
+    
+    @ViewBuilder
+    func ShowEventView() -> some View {
+        if eventVM.events.isEmpty {
+            EmptyEventView()
+        } else {
+            MultipleEventsView(eventVM: eventVM)
+        }
+    }
+    
+    func AddEventButton() -> some View {
+        
+        Button(action: {
+            feedback.notificationOccurred(.success)
+            showAddEvent.toggle()
+        }, label: {
+            
+            Label("Add Event", systemImage: "plus.circle.fill")
+                .font(.title)
+                .labelStyle(IconOnlyLabelStyle())
+                .foregroundColor(.white)
+                .padding(5)
+                .background(LinearGradient(gradient: Gradient(colors:[Color(.systemGreen), Color(.systemTeal)]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                .cornerRadius(60)
+        })
+        .sheet(isPresented: $showAddEvent, onDismiss: {
+            eventVM.reloadEvents()
+            eventVM.objectWillChange.send()
+        }) {
+            AddEventView(feedback: feedback)
+        }
+        .hoverEffect()
+    }
+    
 }
 
 struct EventView : View {
@@ -70,6 +78,9 @@ struct EventView : View {
     var event : EKEvent
     var startDateInString : String
     var endDateInString : String
+    var eventVM : EventManager
+
+    @State private var isShowing = false
     
     var body: some View{
         ZStack {
@@ -100,9 +111,8 @@ struct EventView : View {
                 
             }
             .padding()
-            
-            
         }
+        .modifier(CustomContextMenu(isShowing: $isShowing, eventVM: eventVM, event: event))
         .padding(.bottom, 10)
     }
 }
@@ -117,9 +127,45 @@ struct AddEventView : View {
     @StateObject var eventVM = EventManager()
     @Environment(\.presentationMode) var presentationMode
     
+    var feedback: UINotificationFeedbackGenerator
     
-    var saveButton : some View {
+    var body: some View{
+        
+        ZStack(alignment: .topLeading) {
+            NavigationView {
+                Form {
+                    Section(header: Text("Event Info")) {
+                        TextField("Event Name", text: $eventName)
+                    }
+                    Section(header: Text("Event Time")) {
+                        Toggle("All Day ?", isOn: $isAllDay)
+                        
+                        if isAllDay{
+                            DatePicker("Event Date", selection: $allDayDate, displayedComponents: .date)
+                        } else {
+                            DatePicker("Event Start Date", selection: $eventStartDate)
+                                .onChange(of: eventStartDate, perform: { value in
+                                    eventEndDate = value
+                                })
+                            DatePicker("Event End Date", selection: $eventEndDate, in: eventStartDate...)
+                        }
+                    }
+                }
+                .accentColor(Color(.systemGreen))
+                .navigationTitle(Text("Add a New Event"))
+                .toolbar(content: {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        SaveButton()
+                    }
+                })
+            }
+        }
+    }
+    
+    
+    func SaveButton() -> some View {
         Button(action: {
+            feedback.notificationOccurred(.success)
             
             if isAllDay{
                 self.eventVM.saveEvent(name: eventName, start: allDayDate, isAllDay: isAllDay)
@@ -138,42 +184,8 @@ struct AddEventView : View {
         })
     }
     
-    var cancelButton : some View {
-        Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-            eventName = ""
-        }, label: {
-            Image(systemName: "xmark.circle.fill")
-                .foregroundColor(Color(.systemGreen))
-            
-        })
-    }
     
-    var body: some View{
-        
-        ZStack(alignment: .topLeading) {
-            NavigationView {
-                Form {
-                    Section(header: Text("Event Info")) {
-                        TextField("Event Name", text: $eventName)
-                    }
-                    Section(header: Text("Event Time")) {
-                        Toggle("All Day ?", isOn: $isAllDay)
-                        
-                        if isAllDay{
-                            DatePicker("Event Date", selection: $allDayDate, displayedComponents: .date)
-                        } else {
-                            DatePicker("Event Start Date", selection: $eventStartDate)
-                            DatePicker("Event End Date", selection: $eventEndDate)
-                        }
-                    }
-                }
-                .accentColor(Color(.systemGreen))
-                .navigationTitle(Text("Add a New Event"))
-                .navigationBarItems(leading: cancelButton, trailing: saveButton)
-            }
-        }
-    }
+    
 }
 
 
@@ -192,67 +204,20 @@ struct EmptyEventView: View {
 
 struct MultipleEventsView: View {
     
-   
-    @State private var deleteEvent = false
-    @State private var isShowing = false
-    
     @ObservedObject var eventVM: EventManager
     
     var body: some View {
         
         ScrollView {
             
-            LazyVStack(spacing: 0) {
-                
-                #if targetEnvironment(simulator)
-                ForEach(eventVM.exampleEvents, id: \.self) { event in
-                    if isShowing {
-                        EventView(event: event, startDateInString: eventVM.convertDateToString(date: event.startDate), endDateInString: eventVM.convertDateToString(date: event.endDate))
-                            .padding([.leading,.trailing])
-                            .contextMenu(ContextMenu(menuItems: {
-                                Button(action: {
-                                    withAnimation {
-                                        self.isShowing.toggle()
-                                    }
-                                    self.eventVM.removeEvent(event: event)
-                                    self.eventVM.reloadEvents()
-                                    self.eventVM.objectWillChange.send()
-                                }, label: {
-                                    Text("Remove")
-                                })
-                                Text("Cancel")
-                               
-                            }))
-                    }
-                    
-                }
-                .padding([.top,.bottom],10)
-                #else
-                ForEach(eventVM.events, id: \.self) { event in
-                    EventView(event: event, startDateInString: eventVM.convertDateToString(date: event.startDate), endDateInString: eventVM.convertDateToString(date: event.endDate))
+            VStack {
+                ForEach(eventVM.events, id: \.eventIdentifier) { event in
+                    EventView(event: event, startDateInString: eventVM.convertDateToString(date: event.startDate,isAllday: event.isAllDay), endDateInString: eventVM.convertDateToString(date: event.endDate,isAllday: event.isAllDay), eventVM: eventVM)
                         .padding()
                         .transition(.scale)
-                        .contextMenu(ContextMenu(menuItems: {
-                            Button(action: {
-                                withAnimation {
-                                    self.isShowing.toggle()
-                                }
-                                self.eventVM.removeEvent(event: event)
-                                self.eventVM.reloadEvents()
-                                self.eventVM.objectWillChange.send()
-                            }, label: {
-                                Image(systemName: "xmark.bin.fill")
-                                Text("Remove")
-                            })
-                            Button(action: {}, label: {
-                                Text("Cancel")
-                            })
-                           
-                        }))
+                        
                 }
                 .padding([.top,.bottom],20)
-                #endif
-                
             }
         }
     }
@@ -261,6 +226,61 @@ struct MultipleEventsView: View {
 struct EventsView_Previews: PreviewProvider {
     static var previews: some View {
         EventsView()
-//        AddEventView()
+        //        AddEventView()
+    }
+}
+
+
+struct CustomContextMenu : ViewModifier{
+    
+    @Binding var isShowing: Bool
+    var eventVM:EventManager
+    var event: EKEvent
+    
+    func body(content: Content) -> some View {
+        
+        if #available(iOS 15, *) {
+//            content
+//                .contextMenu(ContextMenu(menuItems: {
+//                    Button("Remove", role: .destructive) {
+//                        withAnimation {
+//                            self.isShowing.toggle()
+//                        }
+//                        self.eventVM.removeEvent(event: event)
+//                        self.eventVM.reloadEvents()
+//                        self.eventVM.objectWillChange.send()
+//                    }
+//            Divider()
+//                    Button(action: {
+//                    }, label: {
+//                        Label("Cancel", systemImage: "xmark.circle.fill")
+//                            .labelStyle(TitleOnlyLabelStyle())
+//                    })
+//
+//                }))
+//
+//
+        } else {
+            content
+                .contextMenu(ContextMenu(menuItems: {
+                    Button(action: {
+                        withAnimation {
+                            self.isShowing.toggle()
+                        }
+                        self.eventVM.removeEvent(event: event)
+                        self.eventVM.reloadEvents()
+                        self.eventVM.objectWillChange.send()
+                    }, label: {
+                        Label("Remove", systemImage: "xmark.bin.fill")
+                    })
+                    Divider()
+                    Button(action: {
+                    }, label: {
+                        Label("Cancel", systemImage: "xmark.circle.fill")
+                            .labelStyle(TitleOnlyLabelStyle())
+                    })
+                    
+                }))
+        }
     }
 }

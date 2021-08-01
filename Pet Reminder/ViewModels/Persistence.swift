@@ -55,6 +55,8 @@ struct PersistenceController {
     func save(){
         let context = container.viewContext
         
+        context.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
+        
         do {
             try context.save()
         } catch {

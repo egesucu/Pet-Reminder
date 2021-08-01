@@ -26,14 +26,12 @@ struct HomeView: View {
             if pets.count > 0 {
                 List{
                     ForEach(pets, id: \.name){ pet in
-                        
-                        NavigationLink( destination: PetDetailView(pet: pet)) {
+                        NavigationLink( destination: PetDetailView(pet: pet,context: viewContext)) {
                             PetCell(pet: pet).padding()
                         }
-
                     }
                     .onDelete(perform: delete)
-                    .navigationTitle("Pets")
+                    .navigationTitle("Evcil Hayvanlar")
                 }
                 .listStyle(InsetGroupedListStyle())
                 .sheet(isPresented: $addPet, content: {
@@ -53,6 +51,7 @@ struct HomeView: View {
             } else {
                 Text("No Pets added yet, Let's add one.")
             }
+            Text("Select an animal to view.")
         }
         
     }

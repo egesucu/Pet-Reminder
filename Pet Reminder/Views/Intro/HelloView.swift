@@ -24,7 +24,52 @@ struct MainView: View {
             }
             
         }
+        .onAppear(perform: {
+            resetLogic()
+        })
+    }
+    
+    func resetLogic() {
         
+        let today = UserDefaults.standard.object(forKey: "today") as? Date
+        
+        if let today = today{
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            
+            let first = dateFormatter.string(from: today)
+            let second = dateFormatter.string(from: Date())
+    
+            if first != second{
+                removePetFeeds()
+                UserDefaults.standard.setValue(Date(), forKey: "today")
+                print("Pet Choices are removed. Date is different")
+            } else {
+                print("Pet Choices are not removed. Date is same.")
+            }
+            
+        } else {
+            UserDefaults.standard.setValue(Date(), forKey: "today")
+            print("Pet Choices are not removed. Date does not exist.")
+        }
+        
+    }
+    
+    
+    func removePetFeeds(){
+        
+        DispatchQueue.main.async {
+            for pet in pets{
+                pet.morningFed = false
+                pet.eveningFed = false
+            }
+            do {
+                try context.save()
+            } catch {
+                print(error)
+            }
+        }
     }
 
 }

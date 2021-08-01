@@ -17,8 +17,6 @@ class EventManager : ObservableObject{
         requestEvents()
     }
     
-    
-    
     var exampleEvents : [EKEvent] {
         
         var events = [EKEvent]()
@@ -104,10 +102,10 @@ class EventManager : ObservableObject{
         }
     }
     
-    func convertDateToString(date: Date)->String{
+    func convertDateToString(date: Date, isAllday: Bool)->String{
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM HH:mm"
+        dateFormatter.dateFormat = isAllday ? "dd MMMM" : "dd MMMM HH:mm"
         return dateFormatter.string(from: date)
     }
     
