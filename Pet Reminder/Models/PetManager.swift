@@ -10,8 +10,10 @@ import UIKit
 import SwiftUI
 import CoreData
 
-enum Selection {
-    case morning,evening,both
+enum Selection: Int64 {
+    case both
+    case morning
+    case evening
 }
 
 class PetManager{
@@ -60,6 +62,10 @@ class PetManager{
         }
     }
     
+    func getChoice(selection: Selection) {
+        self.selection = selection
+    }
+    
     func savePet(){
         
         let persistence = PersistenceController.shared
@@ -71,9 +77,22 @@ class PetManager{
         newPet.morningTime = self.morningTime
         newPet.eveningTime = self.eveningTime
         newPet.image = self.imageData
+        newPet.selection = selection
         
         persistence.save()
         
     }
     
+}
+
+extension Pet{
+    
+    var selection: Selection {
+        get{
+            return Selection(rawValue: self.choice) ?? .both
+        }
+        set{
+            choice = newValue.rawValue
+        }
+    }
 }

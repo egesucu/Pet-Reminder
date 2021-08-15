@@ -12,89 +12,108 @@ import SwiftUI
 
 class VetViewModel : NSObject, ObservableObject{
     
-    @Published var vetAnnotations : [MapMarker] = [MapMarker]()
-    @Published var userLocation : CLLocation = CLLocation()
+    @Published var userLocation = CLLocation()
     
-    private let locationManager = CLLocationManager()
+    @Published var mapView = MKMapView()
+    @Published var region : MKCoordinateRegion!
+    @Published var permissionDenied = false
+    @Published var searchText = "Vet"
+    @Published var places = [VetPin]()
     
-    
-    override init() {
-        super.init()
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
-    }
- 
-    private func searchVets(){
+    func searchPins(){
         
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = "Veteriner"
+        places.removeAll()
         
-        let search = MKLocalSearch(request: request)
+        let searchRequest = MKLocalSearch.Request()
         
-        self.vetAnnotations.removeAll()
+        let region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         
-        search.start { response, error in
+        searchRequest.naturalLanguageQuery = searchText
+        searchRequest.region = region
+        
+        let localSearch = MKLocalSearch(request: searchRequest)
+        localSearch.start { response, error in
             if let error = error {
-                print(error.localizedDescription)
-            } else {
-                if let result = response {
-                    for place in result.mapItems {
-                        
-                        let foundVet = MapMarker(coordinate: place.placemark.coordinate)
-                        
-                        self.vetAnnotations.append(foundVet)
-                    }
-                }
+                print(error)
+            } else if let response = response{
+                self.places = response.mapItems.compactMap({ (item) -> VetPin? in
+                    return VetPin(place: item.placemark)
+                })
+                self.showPlaces()
             }
         }
     }
     
-    
-    func getUserLocation(){
+    func showPlaces(){
+        mapView.removeAnnotations(mapView.annotations)
         
+        self.places.forEach { place in
+            if let location = place.place.location{
+                
+                let coordinate = location.coordinate
+                let pointAnnotation = MKPointAnnotation()
+                pointAnnotation.coordinate = coordinate
+                pointAnnotation.title = place.place.name ?? "No Name"
+                
+                self.mapView.addAnnotation(pointAnnotation)
+                
+            } else {
+                return
+            }
+            
+        }
+        
+        guard !self.places.isEmpty else {
+            return
+        }
+        if let location = places[0].place.location{
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            self.mapView.setRegion(coordinateRegion, animated: true)
+            self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
+        }
+       
     }
+    
+    
+    
 }
 
-extension VetViewModel : CLLocationManagerDelegate {
+extension VetViewModel : CLLocationManagerDelegate{
     
     
-   
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
+        switch manager.authorizationStatus {
         
-        if manager.authorizationStatus == .authorizedWhenInUse{
-            
-            //manager.startUpdatingLocation()
-            
-            print("User authorized for its location")
-            
-            
-            if manager.accuracyAuthorization != .fullAccuracy {
-                print("Your location is not precise, wrong placement could occur.")
-            }
-            
-            
-            
-        } else {
-            print("User did not allow any permission.")
-            
+        case .notDetermined:
             manager.requestWhenInUseAuthorization()
+        case .denied:
+            permissionDenied.toggle()
+            break
+        case .authorizedWhenInUse:
+            manager.requestLocation()
+        default:
+            break
+            
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        print(error.localizedDescription)
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else {
+            return
         }
         
+        self.region = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+        self.mapView.setRegion(self.region, animated: true)
+        self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
         
         
     }
     
-//     Get the latest location and update the user location.
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        guard let location = locations.last else { return }
-        
-        self.userLocation = location
-        
-        
-    }
-
 }

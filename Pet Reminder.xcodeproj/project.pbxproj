@@ -14,6 +14,7 @@
 		9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E625D092E0008F93CD /* EventGenerateView.swift */; };
 		9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* ActivityIndicator.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
+		9D2EF8FB26C410DA009048C4 /* ESMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2EF8FA26C410DA009048C4 /* ESMapView.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
@@ -45,6 +46,7 @@
 		9D0C24E625D092E0008F93CD /* EventGenerateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventGenerateView.swift; sourceTree = "<group>"; };
 		9D279842257ABE710078B668 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		9D2EF8FA26C410DA009048C4 /* ESMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESMapView.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		9D71069E258F403700683409 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = "Pet Reminder/Views/EventManager.swift"; sourceTree = SOURCE_ROOT; };
@@ -85,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D2EF8F926C410C7009048C4 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D2EF8FA26C410DA009048C4 /* ESMapView.swift */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
 		9D44CEC9258E1B74002F5BDF /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +199,7 @@
 		9DFF73F1248BAD76004B4901 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9D2EF8F926C410C7009048C4 /* Custom Views */,
 				9D9F59B125E18228007672E8 /* Intro */,
 				9D9F59AF25E1818B007672E8 /* Setup */,
 				9D9F59B425E18248007672E8 /* Home */,
@@ -310,6 +321,7 @@
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
 				9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
+				9D2EF8FB26C410DA009048C4 /* ESMapView.swift in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9DA4975A2490E1B0002D4051 /* NotificationManager.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,

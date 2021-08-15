@@ -8,41 +8,68 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct FindVetView: View {
     
     @StateObject var vetViewModel = VetViewModel()
+    @State private var locationManager = CLLocationManager()
     
-    @State private var userTrackingMode: MapUserTrackingMode = .follow
-    @State private var defaultLocation = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: 41.1090480252826,
-            longitude: 28.979255511303712
-        ),
-        span: MKCoordinateSpan(
-            latitudeDelta: 5,
-            longitudeDelta: 5
-        )
-    )
-
     var body: some View {
-        Map(coordinateRegion: $defaultLocation, interactionModes: .all, showsUserLocation : true, userTrackingMode : $userTrackingMode)
-            .onAppear(){
-                self.defaultLocation = MKCoordinateRegion(center: self.vetViewModel.userLocation.coordinate, span: MKCoordinateSpan(
-                    latitudeDelta: 5,
-                    longitudeDelta: 5
-                ))
+        
+        ZStack(alignment: .top) {
+            
+            ESMapView()
+                .environmentObject(vetViewModel)
+                .ignoresSafeArea()
+            
+            TextField("Search", text: $vetViewModel.searchText, onCommit: {
+                self.vetViewModel.searchPins()
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .shadow(radius: 10)
+            .padding()
+            
+        }.onAppear(perform: {
+            locationManager.delegate = vetViewModel
+            locationManager.requestWhenInUseAuthorization()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.vetViewModel.searchPins()
             }
-            .ignoresSafeArea()
+            
+        })
+        .alert(isPresented: $vetViewModel.permissionDenied, content: {
+            
+            Alert(title: Text("Alert"), message: Text("Location permission denied. In order to work with this page, you need to allow us from app settings"), primaryButton: Alert.Button.default(Text("Change"), action: {
+                self.changeLocationSettings()
+            }), secondaryButton: Alert.Button.cancel())
+            
+        })
+        .onChange(of: vetViewModel.searchText, perform: { value in
+    
+            let delay = 0.3
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                if value == vetViewModel.searchText{
+                    self.vetViewModel.searchPins()
+                }
+            }
+        })
         
     }
 }
 
-//struct FindVetView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FindVetView()
-//    }
-//}
+extension FindVetView {
+    func changeLocationSettings(){
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+    }
+}
+
+struct FindVetView_Previews: PreviewProvider {
+    static var previews: some View {
+        FindVetView()
+    }
+}
 
 
 

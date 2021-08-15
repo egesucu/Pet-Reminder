@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="21A5294g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G80" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Pet" representedClassName="Pet" syncable="YES" codeGenerationType="class">
         <attribute name="birthday" attributeType="Date" defaultDateTimeInterval="-31629600" usesScalarValueType="NO"/>
+        <attribute name="choice" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="eveningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="eveningTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -12,6 +13,6 @@
         <attribute name="name" attributeType="String" defaultValueString=""/>
     </entity>
     <elements>
-        <element name="Pet" positionX="-63" positionY="-18" width="128" height="164"/>
+        <element name="Pet" positionX="-63" positionY="-18" width="128" height="179"/>
     </elements>
 </model>

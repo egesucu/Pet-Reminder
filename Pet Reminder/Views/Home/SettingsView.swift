@@ -9,8 +9,28 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @State private var accentColor = Color.green
+    
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            Form{
+                Section(header: Text("Account Info")) {
+                    Text("Demo")
+                }
+                
+                Section(header: Text("App Settings")) {
+                    NavigationLink("Pets", destination: Text("Hi"))
+                    ColorPicker("Accent Color", selection: $accentColor)
+                }
+
+            }
+            
+            .navigationTitle("Settings")
+            
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

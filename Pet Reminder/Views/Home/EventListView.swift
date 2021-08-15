@@ -184,11 +184,7 @@ struct AddEventView : View {
         })
     }
     
-    
-    
 }
-
-
 
 struct EmptyEventView: View {
     var body: some View {
