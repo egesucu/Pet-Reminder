@@ -28,8 +28,7 @@ struct SettingsView: View {
 
             }
             
-            .navigationTitle(Text("Settings")
-                                .foregroundColor(.accentColor))
+            .navigationTitle(Text("Settings"))
             
         }.navigationViewStyle(StackNavigationViewStyle())
     }

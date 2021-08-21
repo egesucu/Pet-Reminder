@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-
-
 struct HelloView: View {
     
     @State private var showSetup = false

@@ -23,34 +23,38 @@ struct HomeView: View {
     var body: some View {
         
         NavigationView{
-            if pets.count > 0 {
-                List{
-                    ForEach(pets, id: \.name){ pet in
-                        NavigationLink( destination: PetDetailView(pet: pet,context: viewContext)) {
-                            PetCell(pet: pet).padding()
+            
+            VStack{
+                if pets.count > 0 {
+                    List{
+                        ForEach(pets, id: \.name){ pet in
+                            NavigationLink( destination: PetDetailView(pet: pet,context: viewContext)) {
+                                PetCell(pet: pet).padding()
+                            }
                         }
+                        .onDelete(perform: delete)
+                        .navigationTitle("Evcil Hayvanlar")
                     }
-                    .onDelete(perform: delete)
-                    .navigationTitle("Evcil Hayvanlar")
-                }
-                .listStyle(InsetGroupedListStyle())
-                .sheet(isPresented: $addPet, content: {
-                    SetupNameView()
+                    .listStyle(InsetGroupedListStyle())
+                    .sheet(isPresented: $addPet, content: {
+                        SetupNameView()
+                    })
+                    .toolbar(content: {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                self.addPet.toggle()
+                            }, label: {
+                                Label("Add", systemImage: "plus.circle.fill")
+                                    .foregroundColor(.green)
+                                    .font(.title)
+                            })
+                        }
                 })
-                .toolbar(content: {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            self.addPet.toggle()
-                        }, label: {
-                            Label("Add", systemImage: "plus.circle.fill")
-                                .foregroundColor(.green)
-                                .font(.title)
-                        })
-                    }
-            })
-            } else {
-                Text("No Pets added yet, Let's add one.")
+                } else {
+                    Text("No Pets added yet, Let's add one.")
+                }
             }
+            .navigationTitle("Pets")
             Text("Select an animal to view.")
         }
         
