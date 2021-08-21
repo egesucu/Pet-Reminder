@@ -19,6 +19,9 @@
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
+		9D850C8526D0F84100642CAE /* DailyFeedChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D850C8426D0F84100642CAE /* DailyFeedChecker.swift */; };
+		9D850C8726D0F9F300642CAE /* MainView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D850C8626D0F9F300642CAE /* MainView+Helpers.swift */; };
+		9D850C8926D10AAF00642CAE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9D850C8826D10AAF00642CAE /* .gitignore */; };
 		9D87C5A326C953E5006BEF59 /* VetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A226C953E5006BEF59 /* VetPin.swift */; };
 		9D87C5A726C95F20006BEF59 /* Pet+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */; };
 		9D87C5A926C95F3C006BEF59 /* Pet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */; };
@@ -56,6 +59,9 @@
 		9D71069E258F403700683409 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = "Pet Reminder/Views/EventManager.swift"; sourceTree = SOURCE_ROOT; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		9D850C8426D0F84100642CAE /* DailyFeedChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyFeedChecker.swift; sourceTree = "<group>"; };
+		9D850C8626D0F9F300642CAE /* MainView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+Helpers.swift"; sourceTree = "<group>"; };
+		9D850C8826D10AAF00642CAE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9D87C5A226C953E5006BEF59 /* VetPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VetPin.swift; path = "Pet Reminder/Views/Custom Views/VetPin.swift"; sourceTree = SOURCE_ROOT; };
 		9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+Enums.swift"; sourceTree = "<group>"; };
 		9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+Extensions.swift"; sourceTree = "<group>"; };
@@ -122,12 +128,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9D87C5A426C95412006BEF59 /* Helper Classes */ = {
+		9D87C5A426C95412006BEF59 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				9DA497592490E1B0002D4051 /* NotificationManager.swift */,
+				9D850C8426D0F84100642CAE /* DailyFeedChecker.swift */,
+				9D850C8626D0F9F300642CAE /* MainView+Helpers.swift */,
 			);
-			path = "Helper Classes";
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		9D87C5A526C95452006BEF59 /* View Representables */ = {
@@ -144,6 +152,7 @@
 		9D8E76E5248666BD004610C8 = {
 			isa = PBXGroup;
 			children = (
+				9D850C8826D10AAF00642CAE /* .gitignore */,
 				9D71CEF2248836BD00AA1458 /* Frameworks */,
 				9D8E76F0248666BD004610C8 /* Pet Reminder */,
 				9D8E76EF248666BD004610C8 /* Products */,
@@ -161,7 +170,7 @@
 		9D8E76F0248666BD004610C8 /* Pet Reminder */ = {
 			isa = PBXGroup;
 			children = (
-				9D87C5A426C95412006BEF59 /* Helper Classes */,
+				9D87C5A426C95412006BEF59 /* Helpers */,
 				9DFF73F4248BADB2004B4901 /* Utilities */,
 				9DFF73F1248BAD76004B4901 /* Views */,
 				9DFF73F2248BAD7F004B4901 /* Models */,
@@ -324,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D850C8926D10AAF00642CAE /* .gitignore in Resources */,
 				9DFF73F6248BAE27004B4901 /* LaunchScreen.storyboard in Resources */,
 				9D8E770C24866963004610C8 /* Localizable.strings in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
@@ -363,7 +373,9 @@
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
+				9D850C8526D0F84100642CAE /* DailyFeedChecker.swift in Sources */,
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
+				9D850C8726D0F9F300642CAE /* MainView+Helpers.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
 				9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */,
 			);
