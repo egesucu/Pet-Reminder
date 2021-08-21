@@ -21,11 +21,8 @@ struct SetupBirthdayView: View {
             DatePicker("Select the Date", selection: $birthday, displayedComponents: .date)
                 .padding([.top,.bottom])
                 .multilineTextAlignment(.center)
-                .onAppear(){
-                    petManager.getBirthday(date: Date())
-                }
-                .onChange(of: birthday, perform: { value in
-                    petManager.getBirthday(date: value)
+                .onChange(of: birthday, perform: { date in
+                    petManager.birthday = date
                 })
                 
         }

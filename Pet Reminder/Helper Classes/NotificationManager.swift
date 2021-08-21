@@ -16,6 +16,10 @@
 
 import UserNotifications
 
+enum NotificationType: String{
+    case morning, evening,birthday
+}
+
 class NotificationManager {
     
     static let notificationCenter = UNUserNotificationCenter.current()
@@ -30,7 +34,7 @@ class NotificationManager {
         - name: Name of the pet ot be inserted into notification
  
      */
-    static func createNotification(from date: Date,identifier: String, name: String){
+    static func createNotification(from date: Date,identifier: NotificationType, name: String){
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
@@ -44,7 +48,7 @@ class NotificationManager {
                 
                 switch identifier{
                     
-                case "\(name)-morning-notification":
+                case .morning:
                     let morningTitle = NSLocalizedString("Morning-Title", comment: "Morning Notification Title")
                         
                     let morningContent = String.localizedStringWithFormat(NSLocalizedString("Morning-Content", comment: "Morning Notification Content"),name)
@@ -55,7 +59,7 @@ class NotificationManager {
                     dateComponents.hour = hour
                     dateComponents.minute = minute
                     break
-                case "\(name)-evening-notification":
+                case .evening:
                     let eveningTitle = NSLocalizedString("Evening-Title", comment: "Evening Notification Title")
                         
                     let eveningContent = String.localizedStringWithFormat(NSLocalizedString("Evening-Content", comment: "Evening Notification Content"),name)
@@ -66,7 +70,7 @@ class NotificationManager {
                     dateComponents.minute = minute
                     break
                     
-                case "\(name)-birthday-notification":
+                case .birthday:
                     let birthdayTitle = NSLocalizedString("Birthday-Title", comment: "Birthday Notification Title")
                     let birthdayContent = String.localizedStringWithFormat(NSLocalizedString("Birthday-Content", comment: "Evening Notification Content"),name)
                     
@@ -78,14 +82,12 @@ class NotificationManager {
                     dateComponents.minute = 0
                     dateComponents.second = 0
                     break
-                default:
-                    break
                 }
                 
                 notification.sound = .default
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                let request = UNNotificationRequest(identifier: identifier, content: notification, trigger: trigger)
+                let request = UNNotificationRequest(identifier: "\(name)-\(identifier.rawValue)-notification", content: notification, trigger: trigger)
                 
                 self.notificationCenter.add(request, withCompletionHandler: nil)
                 

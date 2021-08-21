@@ -39,6 +39,24 @@ struct PersistenceController {
     
     
     let container: NSPersistentCloudKitContainer
+    
+    
+    func seeCloudKitStatus(with error: Error?, block: @escaping () -> ()) -> Error?{
+        guard let effectiveError = error as? CKError else {
+            return error
+        }
+        
+        guard let retryAfter = effectiveError.retryAfterSeconds else {
+            return effectiveError
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + retryAfter) {
+            block()
+        }
+        
+        return nil
+        
+    }
 
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "PetReminder")
@@ -54,7 +72,6 @@ struct PersistenceController {
     
     func save(){
         let context = container.viewContext
-        
         context.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
         
         do {

@@ -14,7 +14,7 @@ struct SetupPhotoView: View {
     @State private var petImage : Image? = nil
     @State private var outputImage: UIImage?
     @State private var defaultPhotoOn = true
-    @State private var shouldContinue = false
+    @State private var imageData : Data?
     
     var petManager : PetManager
     
@@ -25,7 +25,7 @@ struct SetupPhotoView: View {
                 .padding([.top,.bottom])
             ImageView()
                 .onTapGesture {
-                    self.showImagePicker = defaultPhotoOn ? false :true
+                    self.showImagePicker = defaultPhotoOn ? false : true
                 }
                 .sheet(isPresented: $showImagePicker, onDismiss: {
                     self.loadImage()
@@ -33,7 +33,8 @@ struct SetupPhotoView: View {
                     ImagePicker(image: $outputImage)
                 })
                 .padding([.top,.bottom])
-            Toggle("I want to use default photo.", isOn: $defaultPhotoOn).padding()
+            Toggle("I want to use default photo.", isOn: $defaultPhotoOn)
+                .padding()
             Text("Your photos are stored in your private iCloud container and won't be shared neither by our developer nor in any servers.")
                 .font(.footnote)
                 .foregroundColor(Color(.systemGray2))
@@ -41,29 +42,23 @@ struct SetupPhotoView: View {
                 .padding()
             
         }
-        .onAppear(){
-            
-            if let outputImage = outputImage{
-                petManager.getImage(image: outputImage)
-            } else {
-                petManager.getImage()
-            }
-
-        }
         .navigationTitle(Text("Photo"))
-        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(
-                    destination: SetupNotificationView(petManager: petManager),
-                    label: {
-                        Text("Continue")
-                    })
-                    .disabled(!defaultPhotoOn && outputImage == nil)
-                
+                MenuButton()
             }
-            
         }
+    }
+    
+    
+    func MenuButton() -> some View{
+        NavigationLink(
+            destination: SetupNotificationView(petManager: petManager),
+            label: {
+                Text("Continue")
+            })
+            .disabled(!defaultPhotoOn && outputImage == nil)
+        
     }
     
     @ViewBuilder
@@ -98,15 +93,19 @@ struct SetupPhotoView: View {
         
         if let outputImage = outputImage {
             petImage = Image(uiImage: outputImage)
-            petManager.getImage(image: outputImage)
+            
+            if let data = outputImage.jpegData(compressionQuality: 0.8){
+                self.petManager.imageData = data
+                self.imageData = data
+            }
+            
             defaultPhotoOn = false
         } else {
             petImage = nil
             defaultPhotoOn = true
         }
     }
-    
-    
+
 }
 
 struct SetupPhotoView_Previews: PreviewProvider {

@@ -6,70 +6,25 @@
 //  Copyright © 2021 Softhion. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
 import CoreData
-
-enum Selection: Int64 {
-    case both
-    case morning
-    case evening
-}
 
 class PetManager{
 
     static let shared = PetManager()
+    let persistence = PersistenceController.shared
 
-    var name         : String  = ""
-    var birthday     : Date    = Date()
-    var imageData    : Data?   = nil
-    var morningTime  : Date?   = nil
-    var eveningTime  : Date?   = nil
-    var selection    : Selection = .both
+    var name         = ""
+    var birthday     = Date()
+    var imageData    : Data?
+    var morningTime  : Date?
+    var eveningTime  : Date?
+    var selection    = Selection.both
     
     
-    func getName(name: String){
-        self.name = name
-        
-    }
-    
-    func getBirthday(date: Date){
-        self.birthday = date
-    }
-    
-    func getSelection(selection: Selection){
-        self.selection = selection
-    }
-    
-    func getImage(image: UIImage? = nil){
-        
-        if let image = image,
-           let imageData = image.jpegData(compressionQuality: 0.5){
-            self.imageData = imageData
-        } else {
-            self.imageData = nil
-        }
-        
-    }
-    
-    func getDates(morning: Date?, evening: Date?) {
-        if let morning = morning {
-            self.morningTime = morning
-        }
-        
-        if let evening = evening {
-            self.eveningTime = evening
-        }
-    }
-    
-    func getChoice(selection: Selection) {
-        self.selection = selection
-    }
-    
+    /// This function creates a Persistence Context to create a new Pet, transfers information that PetManager has been collecting from Setup Screens
+    /// and sends the object to the persistence to save.
     func savePet(){
-        
-        let persistence = PersistenceController.shared
-        
         let newPet = Pet(context: persistence.container.viewContext)
         newPet.id = UUID()
         newPet.name = self.name
@@ -80,19 +35,21 @@ class PetManager{
         newPet.selection = selection
         
         persistence.save()
+    }
+    
+    func saveNotification(){
         
+        if let morning = morningTime {
+            NotificationManager.createNotification(from: morning, identifier: .morning, name: self.name)
+        }
+        
+        if let evening = eveningTime{
+            NotificationManager.createNotification(from: evening, identifier: .evening, name: self.name)
+        }
+        
+        NotificationManager.createNotification(from: birthday, identifier: .birthday, name: self.name)
+        
+        self.savePet()
     }
     
-}
-
-extension Pet{
-    
-    var selection: Selection {
-        get{
-            return Selection(rawValue: self.choice) ?? .both
-        }
-        set{
-            choice = newValue.rawValue
-        }
-    }
 }

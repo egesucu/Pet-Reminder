@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var accentColor = Color.green
+    @State private var accentColor = Color.accentColor
     
     
     
@@ -28,7 +28,8 @@ struct SettingsView: View {
 
             }
             
-            .navigationTitle("Settings")
+            .navigationTitle(Text("Settings")
+                                .foregroundColor(.accentColor))
             
         }.navigationViewStyle(StackNavigationViewStyle())
     }

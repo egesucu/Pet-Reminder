@@ -23,7 +23,7 @@ struct SetupNameView: View {
                     .font(.title).bold()
                 
                 TextField("Text", text: $name, onCommit: {
-                    petManager.getName(name: name)
+                    petManager.name = name
                     textWritten.toggle()
                     print("Name is: \(name)")
                 })

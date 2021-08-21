@@ -36,55 +36,23 @@ struct SetupNotificationView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             Spacer()
-            
-            ZStack{
-                if feedType == 1 {
-                    MorningView
-                        .padding()
-                    
-                } else if feedType == 2 {
-                    EveningView
-                        .padding()
-                    
-                } else {
-                    BothView
-                        .padding()
-                }
-            }
-            
-            
+            NotificationType()
+                .padding()
             Spacer()
-            Button {
-                self.showHomeSheet.toggle()
-                
-                
-                switch feedType{
-                    case 0:
-                        self.petManager.getSelection(selection: .both)
-                        self.petManager.getDates(morning: morningFeed, evening: eveningFeed)
-                    case 1:
-                        self.petManager.getSelection(selection: .morning)
-                        self.petManager.getDates(morning: morningFeed,evening: nil)
-                    case 2:
-                        self.petManager.getSelection(selection: .evening)
-                        self.petManager.getDates(morning: nil, evening: eveningFeed)
-                    default:
-                        self.petManager.getSelection(selection: .both)
-                        self.petManager.getDates(morning: morningFeed, evening: eveningFeed)
-                }
-
-                self.petManager.savePet()
-            } label: {
-                Text("Add Animal")
-                    .font(.title)
-                    .foregroundColor(.green)
-            }
-            .padding()
-            .buttonStyle(BorderlessButtonStyle())
-            .fullScreenCover(isPresented: $showHomeSheet) {
-                MainView()
-            }
-            
+            AddPetButton()
+        }
+        
+        
+    }
+    
+    @ViewBuilder func NotificationType() -> some View {
+        switch feedType {
+        case 1:
+            MorningView
+        case 2:
+            EveningView
+        default:
+            BothView
         }
     }
     
@@ -101,6 +69,35 @@ struct SetupNotificationView: View {
         
     }
     
+    func AddPetButton() -> some View {
+        Button {
+            self.showHomeSheet.toggle()
+            
+            switch feedType{
+            case 1:
+                self.petManager.selection = .morning
+                self.petManager.morningTime = morningFeed
+            case 2:
+                self.petManager.selection = .evening
+                self.petManager.eveningTime = eveningFeed
+            default:
+                self.petManager.selection = .both
+                self.petManager.morningTime = morningFeed
+                self.petManager.eveningTime = eveningFeed
+            }
+            self.petManager.saveNotification()
+        } label: {
+            Text("Add Animal")
+                .font(.title)
+                .foregroundColor(.green)
+        }
+        .padding()
+        .buttonStyle(BorderlessButtonStyle())
+        .fullScreenCover(isPresented: $showHomeSheet) {
+            MainView()
+        }
+    }
+    
     var EveningView: some View{
         HStack{
             Image("evening")
@@ -114,24 +111,8 @@ struct SetupNotificationView: View {
     
     var BothView: some View {
         VStack {
-            HStack {
-                Image("morning")
-                    .resizable()
-                    .frame(maxWidth: 100, maxHeight: 80)
-                    .cornerRadius(15)
-                Spacer()
-                DatePicker("Morning", selection: $morningFeed, displayedComponents: .hourAndMinute)
-                
-            }
-            HStack{
-                Image("evening")
-                    .resizable()
-                    .frame(maxWidth: 100, maxHeight: 80)
-                    .cornerRadius(15)
-                Spacer()
-                DatePicker("Evening", selection: $eveningFeed, displayedComponents: .hourAndMinute)
-            }
-            
+            MorningView
+            EveningView
         }
     }
 }

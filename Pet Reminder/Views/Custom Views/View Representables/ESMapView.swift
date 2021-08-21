@@ -23,9 +23,7 @@ struct ESMapView: UIViewRepresentable{
        
     }
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-       
-    }
+    func updateUIView(_ uiView: MKMapView, context: Context) { }
     
     func makeCoordinator() -> Coordinator {
         return Coordinator()
@@ -73,8 +71,3 @@ struct ESMapView: UIViewRepresentable{
 }
 
 
-struct VetPin: Identifiable{
-    
-    var id  = UUID().uuidString
-    var place: CLPlacemark
-}
