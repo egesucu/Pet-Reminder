@@ -17,7 +17,7 @@ struct MainView: View {
     @State private var alertShown = false
     @State private var alertText = ""
     @State private var showProgress = true
-    let feedChecker = DailyFeedChecker.shared
+    //let feedChecker = DailyFeedChecker.shared
     
     
     
@@ -47,23 +47,23 @@ struct MainView: View {
             }))
         })
         .onAppear {
-            runBackgroundCheck()
-            feedChecker.resetLogic(pets: pets, context: context)
+//            runBackgroundCheck()
+//            feedChecker.resetLogic(pets: pets, context: context)
         }
     }
     
-    func runBackgroundCheck(){
-        checkData { result in
-            switch result{
-            case .success(_):
-                self.showProgress = false
-                print("Okey")
-            case .failure(let error):
-                self.alertText = error.localizedDescription
-                self.alertShown = true
-            }
-        }
-    }
+//    func runBackgroundCheck(){
+//        checkData { result in
+//            switch result{
+//            case .success(_):
+//                self.showProgress = false
+//                print("Okey")
+//            case .failure(let error):
+//                self.alertText = error.localizedDescription
+//                self.alertShown = true
+//            }
+//        }
+//    }
     
 }
 

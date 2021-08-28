@@ -85,7 +85,7 @@ struct SetupNotificationView: View {
                 self.petManager.morningTime = morningFeed
                 self.petManager.eveningTime = eveningFeed
             }
-            self.petManager.saveNotification()
+            self.petManager.savePet()
         } label: {
             Text("Add Animal")
                 .font(.title)
