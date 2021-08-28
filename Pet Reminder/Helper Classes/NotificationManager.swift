@@ -54,6 +54,9 @@ class NotificationManager{
                     content.body = "\(String(describing: pet.name)) born today. Happy birthday friend, here's a free hug and paw-five."
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
+                    dateComponents.hour = 0
+                    dateComponents.minute = 0
+                    dateComponents.second = 0
                 }
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
