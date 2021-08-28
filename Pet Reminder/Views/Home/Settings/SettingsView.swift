@@ -10,20 +10,14 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var accentColor = Color.accentColor
-    
-    
+    @Environment(\.managedObjectContext)
+    private var viewContext
     
     var body: some View {
         NavigationView{
             Form{
-                Section(header: Text("Account Info")) {
-                    Text("Demo")
-                }
-                
                 Section(header: Text("App Settings")) {
-                    NavigationLink("Pets", destination: Text("Hi"))
-                    ColorPicker("Accent Color", selection: $accentColor)
+                    NavigationLink("Pets", destination: PetListView().environment(\.managedObjectContext, viewContext))
                 }
 
             }

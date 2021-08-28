@@ -60,18 +60,7 @@ struct HomeView: View {
         
     }
     
-    func PetCell(pet: Pet) -> some View {
-        HStack{
-            Image(uiImage: UIImage(data: pet.image ?? Data()) ?? UIImage(named: "default-animal")!)
-                .resizable()
-                .frame(width: 80, height:80)
-                .clipShape(Circle())
-                .padding([.trailing])
-            Text(pet.name ?? "Error")
-                .foregroundColor(Color(.label))
-                .font(.title)
-        }
-    }
+    
     
     func delete(at offsets: IndexSet){
         
@@ -87,5 +76,23 @@ struct HomeView: View {
     
     
     
+    
+}
+
+struct PetCell: View {
+    var pet: Pet
+    
+    var body: some View{
+        HStack{
+            Image(uiImage: UIImage(data: pet.image ?? Data()) ?? UIImage(named: "default-animal")!)
+                .resizable()
+                .frame(width: 80, height:80)
+                .clipShape(Circle())
+                .padding([.trailing])
+            Text(pet.name ?? "Error")
+                .foregroundColor(Color(.label))
+                .font(.title)
+        }
+    }
     
 }
