@@ -9,7 +9,6 @@
 import Foundation
 import UserNotifications
 
-
 enum NotificationType: String{
     case morning
     case evening
