@@ -17,6 +17,7 @@ struct MainView: View {
     @State private var alertShown = false
     @State private var alertText = ""
     @State private var showProgress = true
+    @State private var progressText = "Loading"
     let feedChecker = DailyFeedChecker.shared
     
     
@@ -26,31 +27,36 @@ struct MainView: View {
         ZStack(alignment: .center){
             
             if showProgress{
-                ProgressView("Loading")
+                ProgressView(progressText)
                     .offset(x: 0, y: 20)
                     .padding()
                     .background(Color.white)
                     .transition(.opacity)
             } else {
-                if pets.underestimatedCount > 0 {
-                    HomeManagerView().environment(\.managedObjectContext, context)
-                } else {
-                    HelloView().environment(\.managedObjectContext, context)
+                VStack{
+                    if pets.underestimatedCount > 0 {
+                        HomeManagerView().environment(\.managedObjectContext, context)
+                    } else {
+                        HelloView().environment(\.managedObjectContext, context)
+                    }
                 }
             }
             
         }
         .alert(isPresented: $alertShown, content: {
-            Alert(title: Text("Error"), message: Text(alertText), dismissButton: .cancel({
-                self.alertShown = false
-                self.showProgress = false
-            }))
+            Alert(title: Text("Error"), message: Text(alertText), dismissButton:
+                    .default(Text("Done"), action: {
+                        self.alertShown = false
+                        self.showProgress = false
+                    }))
         })
         .onAppear {
             runBackgroundCheck()
             feedChecker.resetLogic(pets: pets, context: context)
         }
     }
+    
+    
     
     func runBackgroundCheck(){
         checkData { result in

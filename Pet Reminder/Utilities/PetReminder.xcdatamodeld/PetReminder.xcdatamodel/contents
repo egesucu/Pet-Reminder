@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G80" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Pet" representedClassName="Pet" syncable="YES" codeGenerationType="class">
         <attribute name="birthday" attributeType="Date" defaultDateTimeInterval="-31629600" usesScalarValueType="NO"/>
         <attribute name="choice" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

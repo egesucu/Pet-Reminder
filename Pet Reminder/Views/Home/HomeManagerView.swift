@@ -34,7 +34,7 @@ struct HomeManagerView: View {
                     Image(systemName: currentTab != 3 ? "map" : "map.fill")
                     Text("Find Vet")
                 }.tag(3)
-            SettingsView()
+            SettingsView().environment(\.managedObjectContext, viewContext)
                 .tabItem {
                     Image(systemName: currentTab != 4 ? "gearshape" : "gearshape.fill")
                     Text("Settings")

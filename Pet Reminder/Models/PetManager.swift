@@ -13,6 +13,7 @@ class PetManager{
 
     static let shared = PetManager()
     let persistence = PersistenceController.shared
+    let manager = NotificationManager.shared
 
     var name         = ""
     var birthday     = Date()
@@ -35,21 +36,23 @@ class PetManager{
         newPet.selection = selection
         
         persistence.save()
+        
+        saveNotifications(of: newPet)
     }
     
-    func saveNotification(){
+    func saveNotifications(of pet: Pet){
+        
         
         if let morning = morningTime {
-            NotificationManager.createNotification(from: morning, identifier: .morning, name: self.name)
+            manager.createNotification(of: pet, with: .morning, date: morning)
         }
         
         if let evening = eveningTime{
-            NotificationManager.createNotification(from: evening, identifier: .evening, name: self.name)
+            manager.createNotification(of: pet, with: .evening, date: evening)
         }
         
-        NotificationManager.createNotification(from: birthday, identifier: .birthday, name: self.name)
+        manager.createNotification(of: pet, with: .birthday, date: birthday)
         
-        self.savePet()
     }
     
 }
