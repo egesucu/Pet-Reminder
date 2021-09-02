@@ -13,28 +13,37 @@ struct PetChangeView: View {
     var pet: Pet
     @State private var nameText = ""
     @State private var petImage : UIImage? = nil
+    @State private var birthday = Date()
+    @State private var selection : Selection = .both
     
     var body: some View {
-        ScrollView {
-            VStack {
-                
-                if pet.image == nil {
-                    Image("default-pet")
-                } else {
-                    ImagePicker(image: $petImage)
-                }
-                List{
-                    Form(content: {
-                        HStack{
-                            TextField("Name", text: $nameText)
-                                .onChange(of: nameText, perform: { value in
-                                    self.changeName(with: value)
-                                })
-                        }
+        
+        VStack {
+            Image("default-animal")
+                .resizable()
+                .frame(width: 200, height: 200, alignment: .center)
+            Form{
+                TextField("Name", text: $nameText)
+                    .onChange(of: nameText, perform: { value in
+                        self.changeName(with: value)
                     })
-                }
+                DatePicker("Date", selection: $birthday, displayedComponents: .date)
+                Picker("Notification Settings", selection: $selection) {
+                    Text("Morning").tag(selection)
+                    Text("Evening").tag(selection)
+                    Text("Both").tag(selection)
+                }.pickerStyle(SegmentedPickerStyle())
+                
             }
+            .navigationTitle(pet.name ?? "Pet")
         }
+        .onAppear{
+            self.birthday = pet.birthday ?? Date()
+            self.nameText = pet.name ?? ""
+            self.petImage = UIImage(data: pet.image ?? Data()) ?? nil
+            self.selection = pet.selection
+        }
+        
     }
     
     func changeName(with value: String){
@@ -52,6 +61,9 @@ struct PetChangeView: View {
 
 struct PetChangeView_Previews: PreviewProvider {
     static var previews: some View {
-        PetChangeView(pet: Pet())
+        let pet = Pet(context: PersistenceController.preview.container.viewContext)
+        NavigationView {
+            PetChangeView(pet: pet)
+        }
     }
 }

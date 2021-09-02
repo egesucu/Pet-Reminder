@@ -18,9 +18,10 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let demoPet = Pet(context: viewContext)
-            demoPet.name = ""
+            demoPet.name = "Viski"
             demoPet.id = UUID()
-            demoPet.image = Data()
+            demoPet.image = nil
+            demoPet.selection = .both
             demoPet.birthday = Date()
             demoPet.morningFed = false
             demoPet.morningTime = Date()
