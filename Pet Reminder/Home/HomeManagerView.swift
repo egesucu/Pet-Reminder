@@ -24,7 +24,7 @@ struct HomeManagerView: View {
                     Image(systemName: currentTab != 1 ? "person.crop.circle" : "person.crop.circle.fill")
                     Text("Daily")
                 }.tag(1)
-            EventsView()
+            EventListView()
                 .tabItem {
                     Image(systemName: currentTab != 2 ? "list.bullet" : "list.bullet.indent")
                     Text("Events")

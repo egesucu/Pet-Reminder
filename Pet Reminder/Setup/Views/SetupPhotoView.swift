@@ -30,7 +30,7 @@ struct SetupPhotoView: View {
                 .sheet(isPresented: $showImagePicker, onDismiss: {
                     self.loadImage()
                 }, content: {
-                    ImagePicker(image: $outputImage)
+                    ImagePickerView(image: $outputImage)
                 })
                 .padding([.top,.bottom])
             Toggle("I want to use default photo.", isOn: $defaultPhotoOn)

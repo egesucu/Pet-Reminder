@@ -1,5 +1,5 @@
 //
-//  ImagePicker.swift
+//  ImagePickerView.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 6.06.2020.
@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-struct ImagePicker: UIViewControllerRepresentable {
+struct ImagePickerView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: UIImage?
 
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePickerView>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
         picker.allowsEditing = true
@@ -22,9 +22,9 @@ struct ImagePicker: UIViewControllerRepresentable {
 
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        let parent: ImagePicker
+        let parent: ImagePickerView
 
-        init(_ parent: ImagePicker) {
+        init(_ parent: ImagePickerView) {
             self.parent = parent
         }
         
@@ -37,7 +37,7 @@ struct ImagePicker: UIViewControllerRepresentable {
            }
     }
 
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePickerView>) {
 
     }
     

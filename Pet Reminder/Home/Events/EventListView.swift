@@ -9,7 +9,7 @@
 import SwiftUI
 import EventKit
 
-struct EventsView : View {
+struct EventListView : View {
     
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
@@ -71,50 +71,6 @@ struct EventsView : View {
         .hoverEffect()
     }
     
-}
-
-struct EventView : View {
-    
-    var event : EKEvent
-    var startDateInString : String
-    var endDateInString : String
-    var eventVM : EventManager
-
-    @State private var isShowing = false
-    
-    var body: some View{
-        ZStack {
-            Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors:[Color(.systemGreen), Color(.systemTeal)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                .cornerRadius(15)
-                .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
-            VStack{
-                Text(event.title)
-                    .font(.largeTitle)
-                    .padding(.bottom, 10)
-                
-                if event.isAllDay{
-                    Text(startDateInString)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                } else {
-                    HStack {
-                        Text(startDateInString)
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                        Text("-")
-                        Text(endDateInString)
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                    }
-                }
-                
-            }
-            .padding()
-        }
-        .modifier(CustomContextMenu(isShowing: $isShowing, eventVM: eventVM, event: event))
-        .padding(.bottom, 10)
-    }
 }
 
 struct AddEventView : View {
@@ -186,17 +142,7 @@ struct AddEventView : View {
     
 }
 
-struct EmptyEventView: View {
-    var body: some View {
-        HStack {
-            Spacer()
-            Text("There is no event")
-                .font(.headline)
-                .padding()
-            Spacer()
-        }
-    }
-}
+
 
 struct MultipleEventsView: View {
     
@@ -221,62 +167,6 @@ struct MultipleEventsView: View {
 
 struct EventsView_Previews: PreviewProvider {
     static var previews: some View {
-        EventsView()
-        //        AddEventView()
-    }
-}
-
-
-struct CustomContextMenu : ViewModifier{
-    
-    @Binding var isShowing: Bool
-    var eventVM:EventManager
-    var event: EKEvent
-    
-    func body(content: Content) -> some View {
-        
-        if #available(iOS 15, *) {
-//            content
-//                .contextMenu(ContextMenu(menuItems: {
-//                    Button("Remove", role: .destructive) {
-//                        withAnimation {
-//                            self.isShowing.toggle()
-//                        }
-//                        self.eventVM.removeEvent(event: event)
-//                        self.eventVM.reloadEvents()
-//                        self.eventVM.objectWillChange.send()
-//                    }
-//            Divider()
-//                    Button(action: {
-//                    }, label: {
-//                        Label("Cancel", systemImage: "xmark.circle.fill")
-//                            .labelStyle(TitleOnlyLabelStyle())
-//                    })
-//
-//                }))
-//
-//
-        } else {
-            content
-                .contextMenu(ContextMenu(menuItems: {
-                    Button(action: {
-                        withAnimation {
-                            self.isShowing.toggle()
-                        }
-                        self.eventVM.removeEvent(event: event)
-                        self.eventVM.reloadEvents()
-                        self.eventVM.objectWillChange.send()
-                    }, label: {
-                        Label("Remove", systemImage: "xmark.bin.fill")
-                    })
-                    Divider()
-                    Button(action: {
-                    }, label: {
-                        Label("Cancel", systemImage: "xmark.circle.fill")
-                            .labelStyle(TitleOnlyLabelStyle())
-                    })
-                    
-                }))
-        }
+        EventListView()
     }
 }

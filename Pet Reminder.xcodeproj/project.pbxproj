@@ -11,8 +11,7 @@
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
 		9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E425D081B4008F93CD /* EventListView.swift */; };
-		9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E625D092E0008F93CD /* EventGenerateView.swift */; };
-		9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* ActivityIndicator.swift */; };
+		9D279843257ABE710078B668 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* IndicatorView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
 		9D2EF8FB26C410DA009048C4 /* ESMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2EF8FA26C410DA009048C4 /* ESMapView.swift */; };
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
@@ -38,11 +37,13 @@
 		9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C6264EC81A00F8561A /* PetManager.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DCDA06126E3C34600DF290F /* VetPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06026E3C34600DF290F /* VetPin.swift */; };
+		9DCDA06326E3C72400DF290F /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06226E3C72400DF290F /* EventView.swift */; };
+		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
 		9DD752F126B4487600A0E380 /* SetupBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F026B4487600A0E380 /* SetupBirthdayView.swift */; };
 		9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F226B4488000A0E380 /* SetupPhotoView.swift */; };
 		9DD752F526B4488E00A0E380 /* SetupNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F426B4488E00A0E380 /* SetupNotificationView.swift */; };
 		9DED86D426D0E9F000839A94 /* MainView+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED86D326D0E9F000839A94 /* MainView+Enums.swift */; };
-		9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */; };
+		9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */; };
 		9DFF73F6248BAE27004B4901 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FF248666C1004610C8 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +52,7 @@
 		9D0C24E025D08177008F93CD /* FindVetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVetView.swift; sourceTree = "<group>"; };
 		9D0C24E225D08181008F93CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D0C24E425D081B4008F93CD /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
-		9D0C24E625D092E0008F93CD /* EventGenerateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventGenerateView.swift; sourceTree = "<group>"; };
-		9D279842257ABE710078B668 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		9D279842257ABE710078B668 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9D2EF8FA26C410DA009048C4 /* ESMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESMapView.swift; sourceTree = "<group>"; };
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -84,11 +84,13 @@
 		9DC1B9C6264EC81A00F8561A /* PetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManager.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DCDA06026E3C34600DF290F /* VetPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetPin.swift; sourceTree = "<group>"; };
+		9DCDA06226E3C72400DF290F /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		9DCDA06426E3C84000DF290F /* EmptyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEventView.swift; sourceTree = "<group>"; };
 		9DD752F026B4487600A0E380 /* SetupBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupBirthdayView.swift; sourceTree = "<group>"; };
 		9DD752F226B4488000A0E380 /* SetupPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPhotoView.swift; sourceTree = "<group>"; };
 		9DD752F426B4488E00A0E380 /* SetupNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupNotificationView.swift; sourceTree = "<group>"; };
 		9DED86D326D0E9F000839A94 /* MainView+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+Enums.swift"; sourceTree = "<group>"; };
-		9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		9D2EF8F926C410C7009048C4 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				9DCDA06826E3C94100DF290F /* Views */,
 				9DC1B9C8264ED3C000F8561A /* View Styles */,
 				9D87C5A526C95452006BEF59 /* View Representables */,
 			);
@@ -145,9 +148,8 @@
 		9D87C5A526C95452006BEF59 /* View Representables */ = {
 			isa = PBXGroup;
 			children = (
-				9DFF73ED248B9BB5004B4901 /* ImagePicker.swift */,
-				9D279842257ABE710078B668 /* ActivityIndicator.swift */,
-				9D0C24E625D092E0008F93CD /* EventGenerateView.swift */,
+				9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */,
+				9D279842257ABE710078B668 /* IndicatorView.swift */,
 				9D2EF8FA26C410DA009048C4 /* ESMapView.swift */,
 			);
 			path = "View Representables";
@@ -274,8 +276,17 @@
 			isa = PBXGroup;
 			children = (
 				9D0C24E425D081B4008F93CD /* EventListView.swift */,
+				9DCDA06426E3C84000DF290F /* EmptyEventView.swift */,
+				9DCDA06226E3C72400DF290F /* EventView.swift */,
 			);
 			path = Events;
+			sourceTree = "<group>";
+		};
+		9DCDA06826E3C94100DF290F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9DFF73F2248BAD7F004B4901 /* Models */ = {
@@ -389,18 +400,20 @@
 				9D87C5A726C95F20006BEF59 /* Pet+Enums.swift in Sources */,
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
+				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
-				9D279843257ABE710078B668 /* ActivityIndicator.swift in Sources */,
+				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
 				9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */,
 				9DED86D426D0E9F000839A94 /* MainView+Enums.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9D2EF8FB26C410DA009048C4 /* ESMapView.swift in Sources */,
+				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
 				9D34019126DA7392005822DA /* MainView+Helpers.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
-				9DFF73EE248B9BB5004B4901 /* ImagePicker.swift in Sources */,
+				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
 				9DD752F126B4487600A0E380 /* SetupBirthdayView.swift in Sources */,
 				9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */,
@@ -413,7 +426,6 @@
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9DCDA06126E3C34600DF290F /* VetPin.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
-				9D0C24E725D092E0008F93CD /* EventGenerateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
