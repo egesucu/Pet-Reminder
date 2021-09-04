@@ -18,11 +18,11 @@ class VetViewModel : NSObject, ObservableObject{
     @Published var region : MKCoordinateRegion!
     @Published var permissionDenied = false
     @Published var searchText = "Vet"
-    @Published var places = [VetPin]()
+//    @Published var places = [VetPin]()
     
     func searchPins(){
         
-        places.removeAll()
+//        places.removeAll()
         
         let searchRequest = MKLocalSearch.Request()
         
@@ -36,43 +36,44 @@ class VetViewModel : NSObject, ObservableObject{
             if let error = error {
                 print(error)
             } else if let response = response{
-                self.places = response.mapItems.compactMap({ (item) -> VetPin? in
-                    return VetPin(place: item.placemark)
-                })
-                self.showPlaces()
+                print(response)
+//                self.places = response.mapItems.compactMap({ (item) -> VetPin? in
+//                    return VetPin(place: item.placemark)
+//                })
+//                self.showPlaces()
             }
         }
     }
     
-    func showPlaces(){
-        mapView.removeAnnotations(mapView.annotations)
-        
-        self.places.forEach { place in
-            if let location = place.place.location{
-                
-                let coordinate = location.coordinate
-                let pointAnnotation = MKPointAnnotation()
-                pointAnnotation.coordinate = coordinate
-                pointAnnotation.title = place.place.name ?? "No Name"
-                
-                self.mapView.addAnnotation(pointAnnotation)
-                
-            } else {
-                return
-            }
-            
-        }
-        
-        guard !self.places.isEmpty else {
-            return
-        }
-        if let location = places[0].place.location{
-            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-            self.mapView.setRegion(coordinateRegion, animated: true)
-            self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
-        }
-       
-    }
+//    func showPlaces(){
+//        mapView.removeAnnotations(mapView.annotations)
+//
+//        self.places.forEach { place in
+//            if let location = place.place.location{
+//
+//                let coordinate = location.coordinate
+//                let pointAnnotation = MKPointAnnotation()
+//                pointAnnotation.coordinate = coordinate
+//                pointAnnotation.title = place.place.name ?? "No Name"
+//
+//                self.mapView.addAnnotation(pointAnnotation)
+//
+//            } else {
+//                return
+//            }
+//
+//        }
+//
+//        guard !self.places.isEmpty else {
+//            return
+//        }
+//        if let location = places[0].place.location{
+//            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+//            self.mapView.setRegion(coordinateRegion, animated: true)
+//            self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
+//        }
+//
+//    }
     
     
     
