@@ -8,6 +8,7 @@
 
 import CoreData
 import Foundation
+import CloudKit
 
 struct PersistenceController {
     

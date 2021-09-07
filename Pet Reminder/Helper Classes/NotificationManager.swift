@@ -21,7 +21,7 @@ class NotificationManager{
     let notificationCenter = UNUserNotificationCenter.current()
     
     func accessRequest(completion: @escaping (Bool,Error?) -> (Void)){
-        notificationCenter.requestAuthorization(options: [.alert,.badge,.announcement,.sound], completionHandler: completion)
+        notificationCenter.requestAuthorization(options: [.alert,.badge,.sound], completionHandler: completion)
     }
     
     func createNotification(of pet: Pet, with type: NotificationType, date: Date){

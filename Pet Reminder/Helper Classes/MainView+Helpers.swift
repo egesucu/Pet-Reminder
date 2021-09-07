@@ -29,6 +29,8 @@ extension MainView{
                 completion(.failure(.restricted))
             case .couldNotDetermine:
                 completion(.failure(.icloudUnavailable))
+            case .temporarilyUnavailable:
+                completion(.failure(.icloudUnavailable))
             @unknown default:
                 completion(.failure(.unknownError(error?.localizedDescription ?? "")))
             }
