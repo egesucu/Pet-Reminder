@@ -21,7 +21,8 @@ struct FindVetView: View {
             
             ESMapView()
                 .environmentObject(vetViewModel)
-                .ignoresSafeArea()
+                .edgesIgnoringSafeArea(.top)
+                
             
             TextField("Search", text: $vetViewModel.searchText, onCommit: {
                 self.vetViewModel.searchPins()
@@ -47,6 +48,7 @@ struct FindVetView: View {
         })
         .onChange(of: vetViewModel.searchText, perform: { value in
     
+            #if !targetEnvironment(simulator)
             let delay = 0.3
             
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
@@ -54,6 +56,7 @@ struct FindVetView: View {
                     self.vetViewModel.searchPins()
                 }
             }
+            #endif
         })
         
     }
