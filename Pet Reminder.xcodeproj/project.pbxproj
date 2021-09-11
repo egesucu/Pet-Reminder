@@ -23,6 +23,8 @@
 		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */; };
+		9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */; };
+		9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */; };
 		9D87C5A726C95F20006BEF59 /* Pet+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */; };
 		9D87C5A926C95F3C006BEF59 /* Pet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */; };
 		9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5AA26C9668D006BEF59 /* MainView.swift */; };
@@ -65,6 +67,8 @@
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
+		9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+Enums.swift"; sourceTree = "<group>"; };
 		9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+Extensions.swift"; sourceTree = "<group>"; };
 		9D87C5AA26C9668D006BEF59 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 			isa = PBXGroup;
 			children = (
 				9D0C24E425D081B4008F93CD /* EventListView.swift */,
+				9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */,
+				9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */,
 				9DCDA06426E3C84000DF290F /* EmptyEventView.swift */,
 				9DCDA06226E3C72400DF290F /* EventView.swift */,
 			);
@@ -394,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
+				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
 				9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */,
 				9D71069F258F403700683409 /* EventManager.swift in Sources */,
 				9DD752F526B4488E00A0E380 /* SetupNotificationView.swift in Sources */,
@@ -420,6 +427,7 @@
 				9D34019026DA7392005822DA /* NotificationManager.swift in Sources */,
 				9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */,
 				9D87C5A926C95F3C006BEF59 /* Pet+Extensions.swift in Sources */,
+				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
