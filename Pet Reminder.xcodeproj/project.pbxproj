@@ -15,7 +15,6 @@
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
 		9D2EF8FB26C410DA009048C4 /* ESMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2EF8FA26C410DA009048C4 /* ESMapView.swift */; };
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
-		9D34019126DA7392005822DA /* MainView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018E26DA7392005822DA /* MainView+Helpers.swift */; };
 		9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018F26DA7392005822DA /* DailyFeedChecker.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
@@ -57,7 +56,6 @@
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9D2EF8FA26C410DA009048C4 /* ESMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESMapView.swift; sourceTree = "<group>"; };
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		9D34018E26DA7392005822DA /* MainView+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainView+Helpers.swift"; sourceTree = "<group>"; };
 		9D34018F26DA7392005822DA /* DailyFeedChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyFeedChecker.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				9D34018D26DA7392005822DA /* NotificationManager.swift */,
-				9D34018E26DA7392005822DA /* MainView+Helpers.swift */,
 				9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */,
 				9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */,
 				9DED86D326D0E9F000839A94 /* MainView+Enums.swift */,
@@ -415,7 +412,6 @@
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
-				9D34019126DA7392005822DA /* MainView+Helpers.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
