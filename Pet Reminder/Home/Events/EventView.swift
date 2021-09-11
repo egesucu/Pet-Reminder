@@ -12,48 +12,49 @@ import EventKit
 struct EventView : View {
     
     var event : EKEvent? = nil
-    var startDateInString : String? = ""
-    var endDateInString : String? = ""
-    var eventVM : EventManager? = nil
-
+    @State private var eventTitle = ""
+    @State private var dateString = ""
     @State private var isShowing = false
     
     var body: some View{
-        ZStack {
-            Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors:[Color(.systemGreen), Color(.systemTeal)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                .cornerRadius(15)
-                .shadow(color: Color(.systemGray4), radius: 8, x: 4, y: 4)
-            VStack{
-                Text(event?.title ?? "")
-                    .font(.largeTitle)
-                    .padding(.bottom, 10)
-                
-                if ((event?.isAllDay) != nil){
-                    Text(startDateInString ?? "")
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                } else {
-                    HStack {
-                        Text(startDateInString ?? "")
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                        Text("-")
-                        Text(endDateInString ?? "")
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                    }
-                }
-                
-            }
-            .padding()
+        
+        VStack{
+            Text(eventTitle)
+                .font(.largeTitle)
+                .padding(.bottom, 10)
+            Text(dateString)
+                .font(.title2)
+                .padding(.bottom)
         }
-        .padding(.bottom, 10)
+        .onAppear(perform: {
+            fillData()
+        })
+        .padding()
+        .background(Color(uiColor: .systemGroupedBackground))
+        .cornerRadius(20)
+        .shadow(color: .gray, radius: 8, x: 4, y: 4)
+    }
+    
+    func fillData(){
+        if let event = event {
+            self.eventTitle = event.title
+            DispatchQueue.main.async {
+                let manager = EventManager()
+                self.dateString  = manager.convertDateToString(startDate: event.startDate, endDate: event.endDate)
+            }
+        } else {
+            self.eventTitle = ""
+            self.dateString = ""
+        }
     }
 }
 
 struct EventView_Previews: PreviewProvider {
     static var previews: some View {
-        EventView()
+        let manager = EventManager()
+        let event = manager.exampleEvents[0]
+        return EventView(event: event)
+            .previewLayout(.sizeThatFits)
+            .padding()
     }
 }

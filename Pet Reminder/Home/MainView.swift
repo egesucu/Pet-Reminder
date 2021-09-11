@@ -14,62 +14,24 @@ struct MainView: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
     var pets : FetchedResults<Pet>
-    @State private var alertShown = false
-    @State private var alertText = ""
-    @State private var showProgress = true
-    @State private var progressText = "Loading"
+    
     let feedChecker = DailyFeedChecker.shared
     
-    
-    
     var body: some View{
-        
-        ZStack(alignment: .center){
-            
-            if showProgress{
-                ProgressView(progressText)
-                    .offset(x: 0, y: 20)
-                    .padding()
-                    .background(Color.white)
-                    .transition(.opacity)
+        VStack{
+            if pets.count > 0 {
+                HomeManagerView().environment(\.managedObjectContext, context)
             } else {
-                VStack{
-                    if pets.underestimatedCount > 0 {
-                        HomeManagerView().environment(\.managedObjectContext, context)
-                    } else {
-                        HelloView().environment(\.managedObjectContext, context)
-                    }
-                }
+                HelloView().environment(\.managedObjectContext, context)
             }
-            
         }
-        .alert(isPresented: $alertShown, content: {
-            Alert(title: Text("Error"), message: Text(alertText), dismissButton:
-                    .default(Text("Done"), action: {
-                        self.alertShown = false
-                        self.showProgress = false
-                    }))
-        })
-        .onAppear {
-            runBackgroundCheck()
+        .onAppear { resetFeedTimes() }
+    }
+    
+    func resetFeedTimes(){
+        if pets.count > 0{
             feedChecker.resetLogic(pets: pets, context: context)
         }
     }
-    
-    
-    
-    func runBackgroundCheck(){
-        checkData { result in
-            switch result{
-            case .success(_):
-                self.showProgress = false
-                print("Okey")
-            case .failure(let error):
-                self.alertText = error.localizedDescription
-                self.alertShown = true
-            }
-        }
-    }
-    
 }
 

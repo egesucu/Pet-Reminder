@@ -18,57 +18,37 @@ struct EventListView : View {
     
     var body: some View{
         
-        VStack{
-            HStack {
-                Text("Up Next")
-                    .font(.largeTitle)
-                    .bold()
-                
-                Spacer()
-                AddEventButton()
-            }
-            .padding()
-            Spacer()
-            ShowEventView()
-            Spacer()
-        }
-        .onAppear(perform: {
-            eventVM.reloadEvents()
-        })
-        
-    }
-    
-    @ViewBuilder
-    func ShowEventView() -> some View {
-        if eventVM.events.isEmpty {
-            EmptyEventView()
-        } else {
-            MultipleEventsView(eventVM: eventVM)
-        }
-    }
-    
-    func AddEventButton() -> some View {
-        
-        Button(action: {
-            feedback.notificationOccurred(.success)
-            showAddEvent.toggle()
-        }, label: {
+        NavigationView{
             
-            Label("Add Event", systemImage: "plus.circle.fill")
-                .font(.title)
-                .labelStyle(IconOnlyLabelStyle())
-                .foregroundColor(.white)
-                .padding(5)
-                .background(LinearGradient(gradient: Gradient(colors:[Color(.systemGreen), Color(.systemTeal)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                .cornerRadius(60)
-        })
-        .sheet(isPresented: $showAddEvent, onDismiss: {
+            VStack{
+                if eventVM.events.isEmpty{
+                    EmptyEventView()
+                } else {
+                    MultipleEventsView(eventVM: eventVM)
+                }
+                
+            }
+            .navigationTitle(Text("Up Next"))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: { showAddEvent.toggle() }, label: {
+                        Label("Add Event", systemImage: "calendar.badge.plus")
+                            .font(.title2)
+                            .foregroundColor(.green)
+                    })
+                        .sheet(isPresented: $showAddEvent, onDismiss: {
+                            eventVM.reloadEvents()
+                            
+                        }) { AddEventView(feedback: feedback) }
+                        .hoverEffect()
+                }
+            }
+        }.onAppear {
             eventVM.reloadEvents()
-            eventVM.objectWillChange.send()
-        }) {
-            AddEventView(feedback: feedback)
         }
-        .hoverEffect()
+        
+        
+        
     }
     
 }
@@ -154,10 +134,10 @@ struct MultipleEventsView: View {
             
             VStack {
                 ForEach(eventVM.events, id: \.eventIdentifier) { event in
-                    EventView(event: event, startDateInString: eventVM.convertDateToString(date: event.startDate,isAllday: event.isAllDay), endDateInString: eventVM.convertDateToString(date: event.endDate,isAllday: event.isAllDay), eventVM: eventVM)
+                    EventView(event: event)
                         .padding()
                         .transition(.scale)
-                        
+                    
                 }
                 .padding([.top,.bottom],20)
             }
@@ -167,6 +147,11 @@ struct MultipleEventsView: View {
 
 struct EventsView_Previews: PreviewProvider {
     static var previews: some View {
-        EventListView()
+        Group {
+            EventListView(eventVM: EventManager(isDemo: true))
+                .previewDisplayName("Demo")
+            //            EventListView()
+            //                .previewDisplayName("Real")
+        }
     }
 }

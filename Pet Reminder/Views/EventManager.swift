@@ -17,6 +17,12 @@ class EventManager : ObservableObject{
         requestEvents()
     }
     
+    init(isDemo: Bool = false){
+        if isDemo{
+            events = exampleEvents
+        }
+    }
+    
     var exampleEvents : [EKEvent] {
         
         var events = [EKEvent]()
@@ -102,11 +108,17 @@ class EventManager : ObservableObject{
         }
     }
     
-    func convertDateToString(date: Date, isAllday: Bool)->String{
+    func convertDateToString(startDate: Date?, endDate: Date?)->String{
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = isAllday ? "dd MMMM" : "dd MMMM HH:mm"
-        return dateFormatter.string(from: date)
+        if let startDate = startDate {
+            let start = startDate.formatted(date: .numeric, time: .standard)
+            if let endDate = endDate {
+                let end = endDate.formatted(date: .numeric, time: .standard)
+                return "\(start) - \(end)"
+            }
+            return start
+        }
+       return ""
     }
     
     func removeEvent(event: EKEvent){

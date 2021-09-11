@@ -10,7 +10,7 @@ import Foundation
 import CloudKit
 
 extension MainView{
-    func checkData(completion: @escaping (Result<Bool,IcloudError>) -> Void){
+    func checkIcloudAvailability(completion: @escaping (Result<Bool,IcloudError>) -> Void){
         
         var isIcloudAvailable = false
         
