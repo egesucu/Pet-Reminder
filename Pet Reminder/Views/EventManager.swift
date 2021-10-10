@@ -87,7 +87,8 @@ class EventManager : ObservableObject{
         if status == .authorized {
             
             let startDate = Date()
-            let endDate = Date(timeIntervalSinceNow: 60*60*24*180)
+//            86400 = tomowwow.
+            let endDate = Date(timeIntervalSinceNow: 86400*2)
             let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
             
             DispatchQueue.main.async {
@@ -165,8 +166,21 @@ class EventManager : ObservableObject{
         
     }
     
-    
-    
-    
 }
 
+
+extension Date{
+    
+    func convertDateToString()->String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MM yyyy"
+        return formatter.string(from: self)
+    }
+    
+    func convertStringToDate(string: String)->Date{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MM yyyy"
+        return formatter.date(from: string) ?? Date()
+    }
+    
+}

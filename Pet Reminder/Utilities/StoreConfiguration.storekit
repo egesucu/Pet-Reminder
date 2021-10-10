@@ -1,0 +1,58 @@
+{
+  "identifier" : "DF5A4587",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "BA5BAFAC",
+      "localizations" : [
+        {
+          "description" : "Donate us to support our work.",
+          "displayName" : "Buy me a Tea",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Bize bağışta bulunarak destek olabilirsiniz.",
+          "displayName" : "Bana Bir Çay Ismarla",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_donate_tea",
+      "referenceName" : "TeaConsumable",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "AB2E3D7A",
+      "localizations" : [
+        {
+          "description" : "Donate us to support our work",
+          "displayName" : "Buy me a food",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Bağış yaparak bize destek olabilirsiniz.",
+          "displayName" : "Bana bir Yemek Al",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_donate_food",
+      "referenceName" : "FoodConsumable",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

@@ -7,24 +7,57 @@
 //
 
 import SwiftUI
-import EventKit
+import Foundation
 
 struct EventsView: View {
     
-    @ObservedObject var eventVM = EventManager()
+    @ObservedObject var eventVM : EventManager
+    
+    @State private var dates = [Date]()
     
     var body: some View {
         
-        ScrollView {
-            
-            VStack {
-                ForEach(eventVM.events, id: \.eventIdentifier) { event in
-                    EventView(event: event)
-                        .padding()
-                        .transition(.scale)
+        List{
+            ForEach(dates, id: \.self){ date in
+                Section {
+                    ForEach(eventVM.events.filter({ $0.startDate == date }),
+                            id: \.eventIdentifier){ event in
+                        EventView(event: event)
+                            .padding([.leading, .trailing])
+                            .listRowSeparator(.hidden)
+                    }.listRowBackground(Color.clear)
+                } header: {
+                    Text(convertDate(date: date))
                 }
-                .padding([.top,.bottom],5)
+                
+            }
+        }.onAppear {
+            self.getDates()
+        }
+    }
+    
+    func getDates(){
+        let events = eventVM.events
+        let dates = events.map({ $0.startDate})
+        self.dates = removeDuplicates(from: dates)
+        
+    }
+    
+    func removeDuplicates(from array: [Date?])-> [Date]{
+        var temp = [Date]()
+        array.forEach { date in
+            if let date = date{
+                temp.append(date)
             }
         }
+        
+        temp = Array(Set(temp)).sorted()
+        
+        return temp
+        
+    }
+    
+    func convertDate(date: Date)->String{
+        return date.formatted(.dateTime.day().month().year().weekday())
     }
 }

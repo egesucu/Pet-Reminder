@@ -12,14 +12,18 @@ import SwiftUI
 struct PetReminderApp: App {
     
     @Environment(\.scenePhase) var scenePhase
-
+    @StateObject var storeManager = StoreManager()
     let controller = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView(storeManager: storeManager)
                 .environment(\.managedObjectContext, controller.container.viewContext)
                 .accentColor(.green)
+                .onAppear {
+                    storeManager.getProducts()
+                    
+                }
             
         }.onChange(of: scenePhase) { _ in
             controller.save()

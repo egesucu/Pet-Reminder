@@ -14,13 +14,14 @@ struct MainView: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
     var pets : FetchedResults<Pet>
+    @StateObject var storeManager : StoreManager
     
     let feedChecker = DailyFeedChecker.shared
     
     var body: some View{
         VStack{
             if pets.count > 0 {
-                HomeManagerView().environment(\.managedObjectContext, context)
+                HomeManagerView(storeManager: storeManager).environment(\.managedObjectContext, context)
             } else {
                 HelloView().environment(\.managedObjectContext, context)
             }

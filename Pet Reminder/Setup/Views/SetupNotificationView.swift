@@ -94,7 +94,7 @@ struct SetupNotificationView: View {
         .padding()
         .buttonStyle(BorderlessButtonStyle())
         .fullScreenCover(isPresented: $showHomeSheet) {
-            MainView()
+            MainView(storeManager: StoreManager())
         }
     }
     

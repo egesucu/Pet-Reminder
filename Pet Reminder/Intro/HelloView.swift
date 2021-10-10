@@ -65,7 +65,7 @@ struct HelloView: View {
                 
             }.padding()
             if petsAvailable{
-                HomeManagerView().environment(\.managedObjectContext, context)
+                HomeManagerView(storeManager: StoreManager()).environment(\.managedObjectContext, context)
             }
         }
     }

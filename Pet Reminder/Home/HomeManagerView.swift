@@ -13,7 +13,7 @@ struct HomeManagerView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
     @State private var currentTab = 1
-    
+    @StateObject var storeManager : StoreManager
     
     var body: some View {
         
@@ -34,7 +34,7 @@ struct HomeManagerView: View {
                     Image(systemName: currentTab != 3 ? "map" : "map.fill")
                     Text("Find Vet")
                 }.tag(3)
-            SettingsView().environment(\.managedObjectContext, viewContext)
+            SettingsView(storeManager: storeManager).environment(\.managedObjectContext, viewContext)
                 .tabItem {
                     Image(systemName: currentTab != 4 ? "gearshape" : "gearshape.fill")
                     Text("Settings")

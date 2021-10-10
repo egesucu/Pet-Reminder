@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import EventKit
 
 struct EventListView : View {
     
@@ -23,7 +22,7 @@ struct EventListView : View {
                 if eventVM.events.isEmpty{
                     EmptyEventView()
                 } else {
-                    EventsView()
+                    EventsView(eventVM: eventVM)
                 }
             }
             .navigationTitle(Text("Up Next"))
