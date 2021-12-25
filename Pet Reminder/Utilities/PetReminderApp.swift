@@ -21,8 +21,8 @@ struct PetReminderApp: App {
                 .environment(\.managedObjectContext, controller.container.viewContext)
                 .accentColor(.green)
                 .onAppear {
+                    storeManager.addManagerToPayment(manager: storeManager)
                     storeManager.getProducts()
-                    
                 }
             
         }.onChange(of: scenePhase) { _ in

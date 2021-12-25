@@ -54,8 +54,13 @@ class StoreManager : NSObject, ObservableObject{
         }
     }
     
-    
-    
+    func clearPreviousPurchases(){
+        productIDs.forEach { id in
+            UserDefaults.standard.removeObject(forKey: id)
+        }
+        objectWillChange.send()
+    }
+
 }
 
 //MARK: - SKProductsrequestDelegate
@@ -92,16 +97,21 @@ extension StoreManager: SKPaymentTransactionObserver{
                 state = .purchased
                 UserDefaults.standard.set(true, forKey: transaction.payment.productIdentifier)
                 queue.finishTransaction(transaction)
-            case .failed, .deferred:
+            case .failed:
                 state = .failed
+                queue.finishTransaction(transaction)
+            case .deferred:
+                state = .deferred
                 queue.finishTransaction(transaction)
             case .restored:
                 state = .restored
+                UserDefaults.standard.set(true, forKey: transaction.payment.productIdentifier)
                 queue.finishTransaction(transaction)
             default:
                 queue.finishTransaction(transaction)
             }
         }
+        objectWillChange.send()
     }
     
     
