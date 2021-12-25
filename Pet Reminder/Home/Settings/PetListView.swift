@@ -24,6 +24,18 @@ struct PetListView: View {
                     label: {
                         PetCell(pet: pet).padding()
                     })
+                
+                    
+            }.onDelete { indexSet in
+                for index in indexSet{
+                    viewContext.delete(pets[index])
+                }
+                do {
+                    try viewContext.save()
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
             }
         }
         .navigationTitle(Text("Manage Pets"))

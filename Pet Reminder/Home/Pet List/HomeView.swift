@@ -60,8 +60,6 @@ struct HomeView: View {
         
     }
     
-    
-    
     func delete(at offsets: IndexSet){
         
         for index in offsets{
@@ -73,14 +71,10 @@ struct HomeView: View {
         
     }
     
-    
-    
-    
-    
 }
 
 struct PetCell: View {
-    var pet: Pet
+    @ObservedObject var pet: Pet
     
     var body: some View{
         HStack{
