@@ -78,10 +78,8 @@ struct PetCell: View {
     
     var body: some View{
         HStack{
-            Image(uiImage: UIImage(data: pet.image ?? Data()) ?? UIImage(named: "default-animal")!)
-                .resizable()
+            ESImageView(data: pet.image)
                 .frame(width: 80, height:80)
-                .clipShape(Circle())
                 .padding([.trailing])
             Text(pet.name ?? "Error")
                 .foregroundColor(Color(.label))

@@ -16,23 +16,30 @@ struct EventsView: View {
     @State private var dates = [Date]()
     
     var body: some View {
-        
         List{
-            ForEach(dates, id: \.self){ date in
-                Section {
-                    ForEach(eventVM.events.filter({ $0.startDate == date }),
-                            id: \.eventIdentifier){ event in
-                        EventView(event: event)
-                            .padding([.leading, .trailing])
-                            .listRowSeparator(.hidden)
-                    }.listRowBackground(Color.clear)
-                } header: {
-                    Text(convertDate(date: date))
-                }
-                
+            Section{
+                ForEach(eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)}), id: \.eventIdentifier) { event in
+                    EventView(event: event)
+                        .padding([.leading, .trailing],5)
+                        .listRowSeparator(.hidden)
+                }.listRowBackground(Color.clear)
+            } header: {
+                Text("Today")
+            }
+            
+            Section{
+                ForEach(eventVM.events.filter({ ($0.startDate > Calendar.current.nextDate(after: .now, matching: DateComponents(hour: 0), matchingPolicy: .nextTime)! )}),id: \.eventIdentifier) { event in
+                    EventView(event: event)
+                        .padding([.leading, .trailing],5)
+                        .listRowSeparator(.hidden)
+                }.listRowBackground(Color.clear)
+            } header: {
+                Text("Upcoming Events")
             }
         }.onAppear {
             self.getDates()
+        }.refreshable {
+            eventVM.reloadEvents()
         }
     }
     
@@ -40,7 +47,6 @@ struct EventsView: View {
         let events = eventVM.events
         let dates = events.map({ $0.startDate})
         self.dates = removeDuplicates(from: dates)
-        
     }
     
     func removeDuplicates(from array: [Date?])-> [Date]{
@@ -50,11 +56,8 @@ struct EventsView: View {
                 temp.append(date)
             }
         }
-        
         temp = Array(Set(temp)).sorted()
-        
         return temp
-        
     }
     
     func convertDate(date: Date)->String{

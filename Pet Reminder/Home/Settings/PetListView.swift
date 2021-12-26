@@ -24,29 +24,27 @@ struct PetListView: View {
                     label: {
                         PetCell(pet: pet).padding()
                     })
-                
-                    
             }.onDelete { indexSet in
-                for index in indexSet{
-                    viewContext.delete(pets[index])
-                }
-                do {
-                    try viewContext.save()
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
+                deletePet(at: indexSet)
             }
         }
         .navigationTitle(Text("Manage Pets"))
-       
+    }
+    
+    func deletePet(at indexSet: IndexSet){
+        for index in indexSet{
+            let pet = pets[index]
+            viewContext.delete(pet)
+        }
+        PersistenceController.shared.save()
     }
 }
 
 struct PetListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PetListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            PetListView()
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
     }
 }

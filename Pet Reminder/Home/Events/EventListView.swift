@@ -40,19 +40,13 @@ struct EventListView : View {
                     }, content: {
                         AddEventView(feedback: feedback)
                     })
-
                 }
             }
-            
         }
         .onAppear {
             eventVM.reloadEvents()
         }
-        
-        
-        
     }
-    
 }
 
 struct EventsView_Previews: PreviewProvider {
@@ -60,8 +54,6 @@ struct EventsView_Previews: PreviewProvider {
         Group {
             EventListView(eventVM: EventManager(isDemo: true))
                 .previewDisplayName("Demo")
-            //            EventListView()
-            //                .previewDisplayName("Real")
         }
     }
 }
