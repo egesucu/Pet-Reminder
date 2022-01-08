@@ -45,3 +45,12 @@ struct HomeManagerView: View {
         
     }
 }
+
+struct HomeManager_Previews: PreviewProvider{
+    static var previews: some View{
+        HomeManagerView(storeManager: StoreManager())
+            .previewDevice("iPhone 13 Pro Max")
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .previewInterfaceOrientation(.landscapeLeft)
+    }
+}

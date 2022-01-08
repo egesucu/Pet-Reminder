@@ -28,15 +28,19 @@ struct HomeView: View {
                 if pets.count > 0 {
                     List{
                         ForEach(pets, id: \.name){ pet in
-                            NavigationLink( destination: PetDetailView(pet: pet,context: viewContext)) {
-                                PetCell(pet: pet).padding()
+                            NavigationLink {
+                                PetDetailView(pet: pet, context: viewContext)
+                            } label: {
+                                PetCell(pet: pet)
                             }
                         }
                         .onDelete(perform: delete)
                         .navigationTitle("Evcil Hayvanlar")
                     }
-                    .listStyle(InsetGroupedListStyle())
-                    .sheet(isPresented: $addPet, content: {
+                    .listStyle(.insetGrouped)
+                    .sheet(isPresented: $addPet, onDismiss: {
+                        viewContext.refreshAllObjects()
+                    }, content: {
                         SetupNameView()
                     })
                     .toolbar(content: {
@@ -70,21 +74,11 @@ struct HomeView: View {
         PersistenceController.shared.save()
         
     }
-    
 }
 
-struct PetCell: View {
-    @ObservedObject var pet: Pet
+struct HomeViewPreview: PreviewProvider{
     
-    var body: some View{
-        HStack{
-            ESImageView(data: pet.image)
-                .frame(width: 80, height:80)
-                .padding([.trailing])
-            Text(pet.name ?? "Error")
-                .foregroundColor(Color(.label))
-                .font(.title)
-        }
+    static var previews: some View{
+        HomeView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
-    
 }

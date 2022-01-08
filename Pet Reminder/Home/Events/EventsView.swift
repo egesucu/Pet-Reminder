@@ -22,17 +22,17 @@ struct EventsView: View {
                     EventView(event: event)
                         .padding([.leading, .trailing],5)
                         .listRowSeparator(.hidden)
-                }.listRowBackground(Color.clear)
+                }
             } header: {
                 Text("Today")
             }
             
             Section{
-                ForEach(eventVM.events.filter({ ($0.startDate > Calendar.current.nextDate(after: .now, matching: DateComponents(hour: 0), matchingPolicy: .nextTime)! )}),id: \.eventIdentifier) { event in
+                ForEach(eventVM.events.filter({ Calendar.current.isDateLater(date: $0.startDate) }),id: \.eventIdentifier) { event in
                     EventView(event: event)
                         .padding([.leading, .trailing],5)
                         .listRowSeparator(.hidden)
-                }.listRowBackground(Color.clear)
+                }
             } header: {
                 Text("Upcoming Events")
             }

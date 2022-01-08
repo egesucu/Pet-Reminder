@@ -88,7 +88,7 @@ class EventManager : ObservableObject{
             
             let startDate = Date()
 //            86400 = tomowwow.
-            let endDate = Date(timeIntervalSinceNow: 86400*2)
+            let endDate = Date(timeIntervalSinceNow: 86400*3)
             let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
             
             DispatchQueue.main.async {

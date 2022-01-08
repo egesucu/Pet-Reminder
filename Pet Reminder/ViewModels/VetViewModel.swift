@@ -10,23 +10,36 @@ import MapKit
 import CoreLocation
 import SwiftUI
 
-class VetViewModel : NSObject, ObservableObject{
+class VetViewModel : NSObject,ObservableObject{
     
     @Published var userLocation = CLLocation()
-    
-    @Published var mapView = MKMapView()
-    @Published var region : MKCoordinateRegion!
+    @Published var region = MKCoordinateRegion()
     @Published var permissionDenied = false
     @Published var searchText = "Vet"
-//    @Published var places = [VetPin]()
     
-    func searchPins(){
-        
-//        places.removeAll()
-        
+    var locationManager = CLLocationManager()
+    
+    func askLocationPermission(){
+        locationManager.requestWhenInUseAuthorization()
+        getUserLocation()
+    }
+    
+    func getUserLocation(){
+        if locationManager.authorizationStatus == .authorizedWhenInUse{
+            if let location = locationManager.location{
+                userLocation = location
+                setRegion()
+            }
+        }
+    }
+    
+    func setRegion(){
+        self.region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+    }
+
+    func searchPins(searchText: String, completion: @escaping (Result<[Pin],Error>) -> Void){
+        var pins = [Pin]()
         let searchRequest = MKLocalSearch.Request()
-        
-        let region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         
         searchRequest.naturalLanguageQuery = searchText
         searchRequest.region = region
@@ -34,87 +47,20 @@ class VetViewModel : NSObject, ObservableObject{
         let localSearch = MKLocalSearch(request: searchRequest)
         localSearch.start { response, error in
             if let error = error {
-                print(error)
+                completion(.failure(error))
             } else if let response = response{
-                print(response)
-//                self.places = response.mapItems.compactMap({ (item) -> VetPin? in
-//                    return VetPin(place: item.placemark)
-//                })
-//                self.showPlaces()
+                for item in response.mapItems{
+                    pins.append(Pin(item: item))
+                }
+                completion(.success(pins))
             }
         }
     }
     
-//    func showPlaces(){
-//        mapView.removeAnnotations(mapView.annotations)
-//
-//        self.places.forEach { place in
-//            if let location = place.place.location{
-//
-//                let coordinate = location.coordinate
-//                let pointAnnotation = MKPointAnnotation()
-//                pointAnnotation.coordinate = coordinate
-//                pointAnnotation.title = place.place.name ?? "No Name"
-//
-//                self.mapView.addAnnotation(pointAnnotation)
-//
-//            } else {
-//                return
-//            }
-//
-//        }
-//
-//        guard !self.places.isEmpty else {
-//            return
-//        }
-//        if let location = places[0].place.location{
-//            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-//            self.mapView.setRegion(coordinateRegion, animated: true)
-//            self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
-//        }
-//
-//    }
-    
-    
-    
 }
 
-extension VetViewModel : CLLocationManagerDelegate{
-    
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
-        switch manager.authorizationStatus {
-        
-        case .notDetermined:
-            manager.requestWhenInUseAuthorization()
-        case .denied:
-            permissionDenied.toggle()
-            break
-        case .authorizedWhenInUse:
-            manager.requestLocation()
-        default:
-            break
-            
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
-        print(error.localizedDescription)
-        
-    }
-    
+extension VetViewModel: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            return
-        }
-        
-        self.region = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-        self.mapView.setRegion(self.region, animated: true)
-        self.mapView.setVisibleMapRect(self.mapView.visibleMapRect, animated: true)
-        
-        
+        askLocationPermission()
     }
-    
 }

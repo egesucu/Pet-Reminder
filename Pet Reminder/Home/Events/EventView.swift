@@ -21,20 +21,20 @@ struct EventView : View {
     
     var body: some View{
         ZStack(alignment: .leading) {
-            Rectangle().fill(Color(.systemBackground))
+            Rectangle().fill(Color(.clear))
             HStack{
                 Rectangle()
                     .fill(Color(.systemGreen))
                     .frame(width: 5)
                 Text(dateString)
-                    .font(.largeTitle)
+                    .font(.headline)
                 VStack(alignment: .leading){
                     Text(eventTitle)
                         .font(.title)
                     if event.location != nil {
                         Text(event.location!)
                     }
-                }
+                }.padding(.leading)
                 if event.location != nil {
                     Image(systemName: "location.circle.fill").foregroundColor(.green)
                         .font(.headline)
@@ -48,33 +48,33 @@ struct EventView : View {
         .onTapGesture {
             self.showWarningForCalendar = true
         }
-        
-        .alert("This will open the event on your Calendar.",isPresented: $showWarningForCalendar) {
-            Button("OK",role: .cancel){
-                print("\(String(describing: event.url))")
-                let url = event.url ?? URL(string: "calshow://")!
-                if (UIApplication.shared.canOpenURL(url)){
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-                
-            }
-            
-           
-            
-            
-            
-        }
+        .sheet(isPresented: $showWarningForCalendar, onDismiss: {
+            fillData()
+        }, content: {
+            ESEventDetailView(event: event)
+        })
         .padding(10)
         .shadow(radius: 8)
     }
     
     func fillData(){
         self.eventTitle = event.title
-        
+        let eventDate = event.startDate
+            .formatted(.dateTime.day().month().year())
         if event.isAllDay{
-            self.dateString = "All Day"
+            self.dateString = """
+\(eventDate)
+All Day
+"""
         } else {
-            self.dateString = "\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
+            if Calendar.current.isDateLater(date: event.startDate){
+                self.dateString = """
+\(eventDate)
+\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))
+"""
+            } else {
+                self.dateString = "\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
+            }
         }
     }
 }

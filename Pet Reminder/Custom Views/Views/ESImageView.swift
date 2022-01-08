@@ -20,11 +20,9 @@ struct ESImageView: View {
                     .fill(Color(.systemGreen))
                     .cornerRadius(25)
                     .shadow(radius: 10)
-                    .frame(width: 250, height: 250, alignment: .center)
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200, alignment: .center)
                     .clipShape(Circle())
             }
         } else {
@@ -33,11 +31,10 @@ struct ESImageView: View {
                     .fill(Color(.systemGreen))
                     .cornerRadius(25)
                     .shadow(radius: 10)
-                    .frame(width: 250, height: 250, alignment: .center)
+                    
                 Image("default-animal")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200, alignment: .center)
                     .clipShape(Circle())
             }
         }

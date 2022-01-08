@@ -38,7 +38,8 @@ struct EventListView : View {
                     .sheet(isPresented: $showAddEvent, onDismiss: {
                         eventVM.reloadEvents()
                     }, content: {
-                        AddEventView(feedback: feedback)
+                        ESAddEventView(shouldDismiss: .constant(false))
+                        //AddEventView(feedback: feedback)
                     })
                 }
             }

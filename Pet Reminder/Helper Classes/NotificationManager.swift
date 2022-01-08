@@ -38,19 +38,17 @@ class NotificationManager{
                 var dateComponents = DateComponents()
                 let calendar = Calendar.current
                 
-                
-                
                 switch type {
                 case .morning:
-                    content.body = "Your friend \(String(describing: pet.name)) needs food and water. Don't forget."
+                    content.body = "Your friend \(pet.name ?? "") needs food and water. Don't forget."
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 case .evening:
-                    content.body = "Your friend \(String(describing: pet.name)) needs food and water. Don't forget."
+                    content.body = "Your friend \(pet.name ?? "") needs food and water. Don't forget."
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 case .birthday:
-                    content.body = "\(String(describing: pet.name)) born today. Happy birthday friend, here's a free hug and paw-five."
+                    content.body = "\(pet.name ?? "") born today. Happy birthday friend, here's a free hug and paw-five."
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
                     dateComponents.hour = 0
@@ -58,27 +56,24 @@ class NotificationManager{
                     dateComponents.second = 0
                 }
                 
-                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                let request = UNNotificationRequest(identifier: "\(pet.id!.uuidString)-\(type.rawValue)-notification", content: content, trigger: trigger)
-                
-                self.notificationCenter.add(request) { error in
-                    if let error = error {
-                        print(error.localizedDescription)
+                if let id = pet.id{
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                    let request = UNNotificationRequest(identifier: "\(id.uuidString)-\(type.rawValue)-notification", content: content, trigger: trigger)
+                    
+                    self.notificationCenter.add(request) { error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                        }
                     }
                 }
             }
         }
-
     }
     
-//    func calculateAge(from date: Date) -> Int{
-//        let timeInterval = date.timeIntervalSinceNow
-//        return abs(Int(timeInterval / 31556926.0))
-//    }
-    
-    
     func removeNotification(of pet: Pet, with type: NotificationType){
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: ["\(pet.id!.uuidString)-\(type.rawValue)-notification"])
+        if let id = pet.id{
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: ["\(id.uuidString)-\(type.rawValue)-notification"])
+        }
         
     }
     

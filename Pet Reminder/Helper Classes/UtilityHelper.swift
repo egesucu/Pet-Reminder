@@ -15,4 +15,20 @@ struct UtilityHelper {
     func removeDuplicateDates(from array: [Date]){
         
     }
+   
+}
+
+extension Date{
+    static let tomorrow : Date = {
+        var today = Calendar.current.startOfDay(for: Date.now)
+        var tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today) ?? Date()
+        return tomorrow
+    }()
+}
+
+extension Calendar{
+    
+    func isDateLater(date: Date) -> Bool{
+        return date >= Date.tomorrow
+    }
 }
