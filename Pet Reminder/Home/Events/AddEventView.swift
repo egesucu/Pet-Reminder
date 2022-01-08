@@ -26,24 +26,24 @@ struct AddEventView : View {
         ZStack(alignment: .topLeading) {
             NavigationView {
                 Form {
-                    Section(header: Text("Event Info")) {
-                        TextField("Event Name", text: $eventName)
+                    Section(header: Text("add_event_info")) {
+                        TextField("add_event_name", text: $eventName)
                     }
-                    Section(header: Text("Event Time")) {
-                        Toggle("All Day ?", isOn: $isAllDay)
+                    Section(header: Text("add_event_time")) {
+                        Toggle("all_day_title", isOn: $isAllDay)
                         if isAllDay{
-                            DatePicker("Event Date", selection: $allDayDate, displayedComponents: .date)
+                            DatePicker("add_event_date", selection: $allDayDate, displayedComponents: .date)
                         } else {
-                            DatePicker("Event Start Date", selection: $eventStartDate)
+                            DatePicker("add_event_start", selection: $eventStartDate)
                                 .onChange(of: eventStartDate, perform: { value in
                                     eventEndDate = value
                                 })
-                            DatePicker("Event End Date", selection: $eventEndDate, in: eventStartDate...)
+                            DatePicker(NSLocalizedString("add_event_end", comment: "") , selection: $eventEndDate, in: eventStartDate...)
                         }
                     }
                 }
                 .accentColor(Color(.systemGreen))
-                .navigationTitle(Text("Add a New Event"))
+                .navigationTitle(Text("add_event_title"))
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         SaveButton()
@@ -67,7 +67,7 @@ struct AddEventView : View {
             self.eventVM.reloadEvents()
             self.presentationMode.wrappedValue.dismiss()
         }, label: {
-            Text("Save Event")
+            Text("add_event_save")
                 .foregroundColor(Color(.systemGreen))
                 .bold()
             

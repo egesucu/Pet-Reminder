@@ -17,21 +17,21 @@ struct SettingsView: View {
     var body: some View {
         NavigationView{
             Form{
-                Section(header: Text("App Settings")) {
-                    NavigationLink("Change Pet Data", destination: PetListView().environment(\.managedObjectContext, viewContext))
+                Section(header: Text("app_settings")) {
+                    NavigationLink("manage_pet_title", destination: PetListView().environment(\.managedObjectContext, viewContext))
                 }
                 Section {
-                    NavigationLink("Donate") {
+                    NavigationLink("donate_us_title") {
                         DonateView(storeManager: storeManager)
                     }
                 } header: {
-                    Text("Buy a 🫖")
+                    Text("buy_coffee_title")
                 } footer: {
                     Text("© Ege Sucu \(Date.now.formatted(.dateTime.year()))")
                 }
             }
             
-            .navigationTitle(Text("Settings"))
+            .navigationTitle(Text("settings_tab_title"))
             
         }.navigationViewStyle(StackNavigationViewStyle())
     }

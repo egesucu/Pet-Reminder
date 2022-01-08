@@ -29,14 +29,11 @@ class DailyFeedChecker{
             if first != second{
                 removePetFeeds(pets: pets, context: context)
                 UserDefaults.standard.setValue(Date(), forKey: "today")
-                print("Pet Choices are removed. Date is different")
             } else {
-                print("Pet Choices are not removed. Date is same.")
             }
             
         } else {
             UserDefaults.standard.setValue(Date(), forKey: "today")
-            print("Pet Choices are not removed. Date does not exist.")
         }
         
     }

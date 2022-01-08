@@ -35,7 +35,7 @@ struct HomeView: View {
                             }
                         }
                         .onDelete(perform: delete)
-                        .navigationTitle("Evcil Hayvanlar")
+                        .navigationTitle("pet_name_title")
                     }
                     .listStyle(.insetGrouped)
                     .sheet(isPresented: $addPet, onDismiss: {
@@ -48,18 +48,18 @@ struct HomeView: View {
                             Button(action: {
                                 self.addPet.toggle()
                             }, label: {
-                                Label("Add", systemImage: "plus.circle.fill")
+                                Label("add_animal_accessible_label", systemImage: "plus.circle.fill")
                                     .foregroundColor(.green)
                                     .font(.title)
                             })
                         }
                 })
                 } else {
-                    Text("No Pets added yet, Let's add one.")
+                    Text("pet_no_pet")
                 }
             }
-            .navigationTitle("Pets")
-            Text("Select an animal to view.")
+            .navigationTitle("pet_name_title")
+            Text("pet_select")
         }
         
     }

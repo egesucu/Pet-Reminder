@@ -28,7 +28,7 @@ struct PetListView: View {
                 deletePet(at: indexSet)
             }
         }
-        .navigationTitle(Text("Manage Pets"))
+        .navigationTitle(Text("manage_pet_title"))
     }
     
     func deletePet(at indexSet: IndexSet){

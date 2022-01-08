@@ -53,7 +53,7 @@ struct PetDetailView: View {
             eveningOn = pet.eveningFed
             
         }
-        .navigationTitle("Hello \(pet.name ?? "Error")")
+        .navigationTitle(Text("pet_name_title_\(pet.name ?? "")"))
     }
     
     func save(){

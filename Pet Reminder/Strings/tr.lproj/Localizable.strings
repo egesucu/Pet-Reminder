@@ -2,81 +2,124 @@
   Localizable.strings
   Pet Reminder
 
-  Created by Ege Sucu on 2.06.2020.
-  Copyright © 2020 Softhion. All rights reserved.
+  Created by Ege Sucu on 8.01.2022.
+  Copyright © 2022 Softhion. All rights reserved.
 */
 
-// General
+/*
+GENERALS
+*/
+"hello" = "Merhaba";
+"continue" = "Devam Et";
+"select_date" = "Bir tarih seç";
 
-"Okey"="Tamam";
-"Continue"="Devam";
-"Save"="Kaydet";
-"Create"="Oluştur";
-"Welcome"="Merhaba";
+/*
+HELLO
+*/
+"welcome_title" = "Pet Reminder'a hoşgeldin";
+"welcome_context" = "Pet Reminder'a hoşgeldin. Burada küçük dostlarını yönetebilirsin. Onların günlük ihtiyaçlarını yönetebilir ve onlar için etkinlikler oluşturabilirsin. Hazır mısın? Hadi ilk dostunu ekleyerek başlayalım.";
+"welcome_add_pet" = "Dostunu Ekle";
+"welcome_restore" = "Geri Döndür";
 
+/*
+SETUP
+*/
 
-
-
-// Event
-
-"Event-Note" = "Bu etkinlik Pet Reminder uygulaması ile oluşturulmuştur.";
-"Auth-Error" = "İzin Hatası";
-"Auth-Message" = "We can't access your Calendar to show/create events.";
-
-
-// Setup Name
-
-"Name-Error"="İsim Hatası";
-"Name-Message"="Lütfen evcil hayvanına bir isim ver.";
-"Name"="Hadi bir isim ile başlayalım";
-"Birthday"="Arkadaşın ne zaman doğdu?";
-
-// Home
-
-
-"Home"="Ev";
-"Morning-Feed"="Sabah Kahvaltısı";
-"Evening-Feed"="Akşam Yemeği";
-"Events"="Etkinlikler";
-"Event-Name"="İsim";
-"Start"="Başlangıç";
-"End"="Bitiş";
-
+"start_name_label" = "Hadi bir isim ile başlayalım.";
+"setup_title" = "Kurulum";
+"setup_name" = "İsim";
+"birthday_title" = "Doğumgünü";
+"birthday_ask_label" = "Arkadaşın ne zaman doğdu?";
+"date_select_label" = "Bir tarih seç";
+"photo_title" = "Fotoğraf";
+"photo_set_label" = "Yeni Fotoğraf Ayarla";
+"default_photo_label" = "Varsayılan fotoğrafı kullanmak istiyorum.";
+"photo_upload_detail_title" = "Fotoğrafınız kendi iCloud alanınızda depolanacak olup geliştirici veya bir sunucu bunu göremez.";
+"feed_time_title" = "Besleme Düzeni Seç";
+"feed_selection_morning" = "Sabah";
+"feed_selection_evening" = "Akşam";
+"feed_selection_both" = "İkisi De";
+"add_animal_button" = "Dostunu Ekle";
 
 
-// Welcome
+/*
+HOME
+*/
+"home_tab_title" = "Günlük";
+"pet_name_title" = "Evcil Hayvanlar";
+"pet_no_pet" = "Henüz evcil hayvan eklemedin. Hadi bir tane ekle.";
+"add_animal_accessible_label" = "Evcil Hayvan Ekle";
+"pet_name_title_%@" = "Merhaba %@";
+"pet_select" = "Görüntülemek için bir evcil hayvan seçin.";
 
-"Welcome-Slogan"="Pet Reminder'a hoşgeldiniz.";
-"Welcome-Slogan-2"="Evimizde küçük dostlarımızla yaşıyoruz ve onların da bizler gibi ihtiyaçları olabiliyor. Bazen bunları unutabiliyoruz. Bu uygulama sayesinde onların tüm ihtiyaçlarını sizlere hatırlatabiliriz. Önce bir arkadaşınızı ekleyerek başlayalım.";
+/*
+EVENT
+*/
+"event_tab_title" = "Etkinlikler";
+"event_title" = "Sıradaki";
+"today_title" = "Bugün";
+"upcoming_title" = "Sıradaki Etkinlikler";
+"all_day_title" = "Tüm Gün";
+"add_event_accessible_title" = "Etkinlik Ekle";
+"event_no_title" = "Bir etkinlik yok.";
+
+"add_event_info" = "Etkinlik Bilgisi";
+"add_event_name" = "Etkinlik Adı";
+"add_event_time" = "Etkinlik Zamanı";
+"add_event_date" = "Etkinlik Tarihi";
+"add_event_start" = "Başlangıç";
+"add_event_end" = "Bitiş";
+"add_event_title" = "Yeni Etkinlik";
+"add_event_save" = "Etkinliği Kaydet";
+"add_event_note" = "Pet Reminder uygulaması tarafından eklenmiştir.";
+
+/*
+VET
+*/
+"find_vet_title" = "Vet Bul";
+"location_alert_title" = "Uyarı";
+"location_alert_context" = "Konum iznini reddettiniz. Bu sayfanın düzgün çalışması için uygulama ayarlarından konum izni vermeniz gerekiyor.";
+"location_alert_change" = "Değiştir";
+"location_search_title" = "Ara";
+"default_vet_text" = "Veteriner";
+
+/*
+SETTINGS
+*/
+"settings_tab_title" = "Ayarlar";
+"settings_title" = "Aayarlar";
+"app_settings" = "Uygulama Ayarları";
+"buy_coffee_title" = "Bir ☕️ satın al";
+
+"manage_pet_title" = "Dostlarını Yönet";
+"tap_to_change_text" = "Değiştirmek için dokun";
+
+"donate_us_title" = "Bağış Yap";
+"donate_us_context" = "Bu uygulama ücretsiz bir uygulama olarak başladı(Hala da ücretsiz). Bu uygulama tek bir geliştirici tarafından hobi olarak ve yeteneklerini geliştirmek adına yaratıldı ve hala desteklenmeye devam ediyor. Uygulama yüzlerce insanın indirip kullandığı bir noktaya ulaştı. Burada olmanızdan ötürü çok memnunuz.";
+"donate_us_comment" = "Bu bağışın opsiyonel olduğunu unutma. Bunun için size asla reklam çıkarmayacağız veya ilginizi buraya çekmeye çalışmayacağız.";
+"donate_us_clear" = "Satın alma geçmişini temizle.";
+"donate_us_donated" = "Bu bağışı çoktan yaptın. İstersen tekrar yapabilirsin.";
+"donate_us_cleared_successfull" = "Önceki satın almalar başarıyla silindi.";
 
 
+/*
+NOTIFICATIONS
+*/
+"notification_title" = "Selam İnsan";
+"notification_content_%@" = "Arkadaşın %@ su ve yemeğe muhtaç. Onu Unutma.";
+"notification_birthday_content_%@" = "%@ bugün doğru. Doğumgünün kutlu olsun dost, bizden sana ücretsiz bir sarılma ve pati-beşlik.";
 
-// Notification
+/*
+PAYMENT
+*/
+"payment_cant" = "Kullanıcı satın alma yapamıyor.";
 
-"Notification"="Arkadaşını ne zaman besliyorsun?";
-"Time"="Anımsatmamızı istediğin saati seç";
-"Morning-Time"="Sabah saatini seç";
-"Evening-Time"="Şimdi gece saatini seç";
-"Morning"="Sabah";
-"Evening"="Akşam";
-"Both"="İkisi de";
-"Notification-Error"="Lütfen devam etmek için bir opsiyonu seçin.";
+/*
+CLOUD
+*/
 
-"Morning-Title"="Günaydın ☀️";
-"Morning-Pre"="İyi Uyuyabildin mi?";
-"Morning-After"="senden mama ve su bekliyor. Arkadaşını unutma.";
-
-"Evening-Title"="İyi Geceler 🌝";
-"Evening-Pre"="Henüz uykuya geçme!";
-"Evening-After"="senden mama ve su bekliyor. Arkadaşını unutma.";
-
-"Birthday-Title"="İyi Ki Doğdun 🎉";
-"Birthday-Pre"="Mutlu Yıllar";
-"Birthday-After"="Dostunla güzel bir yıl geçir.🎁";
-
-// Photo Selection
-
-"Upload"="Arkadaşının sevimli bir fotoğrafını yükle";
-"Permission-Error"="İzin Hatası";
-"Permission-Message"="Galerine erişme iznimiz yok.";
+"cloud_unavailable" = "iCloud Aktif Değil";
+"no_account" = "iCloud hesabı yok.";
+"restricted_account" = "iCloud hesabı kısıtlı";
+"cant_fetch_status" = "iCloud şu an aktif değil. Lütfen daha sonra tekrar deneyin.";
 

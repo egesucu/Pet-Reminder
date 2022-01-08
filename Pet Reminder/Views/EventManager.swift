@@ -93,7 +93,6 @@ class EventManager : ObservableObject{
             
             DispatchQueue.main.async {
                 self.events = self.eventStore.events(matching: predicate)
-                debugPrint("Events loaded are: \(self.events)")
             }
         } else {
             requestEvents()
@@ -153,7 +152,7 @@ class EventManager : ObservableObject{
             
             
             newEvent.addAlarm(EKAlarm(relativeOffset: -60*10))
-            newEvent.notes = "This event is created by Pet Reminder app."
+            newEvent.notes = NSLocalizedString("add_event_note", comment: "")
             
             do {
                 try eventStore.save(newEvent, span: .thisEvent)

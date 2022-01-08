@@ -21,14 +21,14 @@ struct DonateView: View {
                 .scaledToFit()
                 .frame(height: 150)
                 .padding([.top,.bottom],10)
-            Text("This app began as a free app and still is a free app. This app was create from an indie developer as a hobby project and through the years, it has become the app that has more than tousands of users. We're so grateful to have you as users.")
+            Text("donate_us_context")
                 .padding()
-            Text("Note that this is completely a volunteer donation. Feel free to do.")
+            Text("donate_us_comment")
                 .padding()
             ForEach(storeManager.products, id: \.productIdentifier){ product in
                 
                 if storeManager.userDidPurchase(product) {
-                    Text("You already donated this before, you can do it again if you wish.")
+                    Text("donate_us_donated")
                         .foregroundColor(.green)
                         .padding()
                 }
@@ -37,7 +37,7 @@ struct DonateView: View {
                         self.generateHaptic()
                         storeManager.purchaseProduct(product)
                     } label: {
-                        Text(product.localizedPrice)
+                        Text(product.localizedPrice).foregroundColor(Color(uiColor: .systemBackground))
                     }
                     .buttonStyle(.borderedProminent)
                     Spacer()
@@ -52,11 +52,12 @@ struct DonateView: View {
                 
                 self.generateHaptic()
                 
-                self.alertText = "Previous Purchase history cleaned successfully."
+                self.alertText = "donate_us_cleared_successfull"
                 self.showAlert = true
                 
             } label: {
-                Text("Clear Previous Purchase History")
+                Text("donate_us_clear")
+                    .foregroundColor(Color(uiColor: .systemBackground))
             }
             .buttonStyle(.borderedProminent)
             .alert(alertText, isPresented: $showAlert) {
@@ -68,7 +69,7 @@ struct DonateView: View {
                 storeManager.getProducts()
             }
         }
-        .navigationTitle(Text("Donate Us"))
+        .navigationTitle(Text("donate_us_title"))
     }
     
     func generateHaptic(){

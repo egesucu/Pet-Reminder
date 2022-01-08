@@ -23,13 +23,13 @@ extension IcloudError: LocalizedError {
         switch self {
         
         case .icloudUnavailable:
-            return "iCloud Available"
+            return NSLocalizedString("cloud_unavailable", comment: "")
         case .noIcloud:
-            return "No iCloud account"
+            return NSLocalizedString("no_account", comment: "")
         case .restricted:
-            return "iCloud is restricted"
+            return NSLocalizedString("restricted_account", comment: "")
         case .cantFetchStatus:
-            return "iCloud is unavailable at the moment. Please try again later."
+            return NSLocalizedString("cant_fetch_status", comment: "")
         case .unknownError(let message):
             return message
         }

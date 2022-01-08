@@ -20,7 +20,7 @@ struct SetupPhotoView: View {
     
     var body: some View {
         VStack{
-            Text("Set a Photo")
+            Text("photo_set_label")
                 .font(.title).bold()
                 .padding([.top,.bottom])
             ImageView()
@@ -33,16 +33,16 @@ struct SetupPhotoView: View {
                     ImagePickerView(image: $outputImage)
                 })
                 .padding([.top,.bottom])
-            Toggle("I want to use default photo.", isOn: $defaultPhotoOn)
+            Toggle("default_photo_label", isOn: $defaultPhotoOn)
                 .padding()
-            Text("Your photos are stored in your private iCloud container and won't be shared neither by our developer nor in any servers.")
+            Text("photo_upload_detail_title")
                 .font(.footnote)
                 .foregroundColor(Color(.systemGray2))
                 .multilineTextAlignment(.center)
                 .padding()
             
         }
-        .navigationTitle(Text("Photo"))
+        .navigationTitle(Text("photo_title"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 MenuButton()
@@ -55,7 +55,7 @@ struct SetupPhotoView: View {
         NavigationLink(
             destination: SetupNotificationView(petManager: petManager),
             label: {
-                Text("Continue")
+                Text("continue")
             })
             .disabled(!defaultPhotoOn && outputImage == nil)
         

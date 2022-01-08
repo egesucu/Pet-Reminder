@@ -28,11 +28,11 @@ struct HelloView: View {
                     .resizable()
                     .scaledToFit()
                     .padding([.top,.bottom])
-                Text("Welcome-Slogan")
+                Text("welcome_title")
                     .padding([.top,.bottom])
                     .font(.title)
                 Spacer()
-                Text("Welcome-Slogan-2")
+                Text("welcome_context")
                     .padding([.top,.bottom])
                     .font(.body)
                 Spacer()
@@ -40,7 +40,7 @@ struct HelloView: View {
                     Button {
                         self.showSetup.toggle()
                     } label: {
-                        Text("Add Pet")
+                        Text("welcome_add_pet")
                             .font(.title)
                             .foregroundColor(.white)
                     }
@@ -55,7 +55,7 @@ struct HelloView: View {
                     Button {
                         restoreFromIcloud()
                     } label: {
-                        Text("Restore")
+                        Text("welcome_restore")
                             .font(.title)
                             .foregroundColor(.green)
                     }

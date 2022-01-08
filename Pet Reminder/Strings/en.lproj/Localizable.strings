@@ -2,75 +2,123 @@
   Localizable.strings
   Pet Reminder
 
-  Created by Ege Sucu on 2.06.2020.
-  Copyright © 2020 Softhion. All rights reserved.
+  Created by Ege Sucu on 8.01.2022.
+  Copyright © 2022 Softhion. All rights reserved.
 */
 
-// General
+/*
+ GENERALS
+ */
+"hello" = "Hello";
+"continue" = "Continue";
+"select_date" = "Select a date";
 
-"Okey"="Okey";
-"Continue"="Continue";
-"Save"="Save";
-"Create"="Create";
-"Welcome"="Welcome";
+/*
+ HELLO
+ */
+"welcome_title" = "Welcome to Pet Reminder";
+"welcome_context" = "Welcome to Pet Reminder. You can manage your little friend here. You can manage their daily feed and create reminder events for them. Are you ready? Let's start by adding your first friend.";
+"welcome_add_pet" = "Add Pet";
+"welcome_restore" = "Restore";
 
+/*
+SETUP
+ */
 
-
-
-// Event
-
-"Event-Note" = "This event is created with the Pet Reminder app.";
-"Auth-Error" = "Authentication Error";
-"Auth-Message" = "We can't access your Calendar to show/create events.";
-
-
-// Setup Name
-
-"Name-Error"="Name Error";
-"Name-Message"="Please add a name for your pet.";
-"Name"="Let's begin with a name";
-"Birthday"="When is your friend born?";
-
-// Home
-
-
-"Home"="Home";
-"Morning-Feed"="Morning Feed";
-"Evening-Feed"="Evening Feed";
-"Events"="Events";
-"Event-Name"="Name";
-"Start"="Start";
-"End"="End";
-
+"start_name_label" = "Let's start with a name";
+"setup_title" = "Setup";
+"setup_name" = "Name";
+"birthday_title" = "Birthday";
+"birthday_ask_label" = "When does your friend born?";
+"date_select_label" = "Select the Date";
+"photo_title" = "Photo";
+"photo_set_label" = "Set a Photo";
+"default_photo_label" = "I want to use the default photo.";
+"photo_upload_detail_title" = "Your photos are stored in your iCloud and not shared with the developer or server.";
+"feed_time_title" = "Choose a Feed Time";
+"feed_selection_morning" = "Morning";
+"feed_selection_evening" = "Evening";
+"feed_selection_both" = "Both";
+"add_animal_button" = "Add Animal";
 
 
-// Welcome
+/*
+ HOME
+ */
+"home_tab_title" = "Daily";
+"pet_name_title" = "Pets";
+"pet_no_pet" = "No Pets added yet. Let's add one.";
+"add_animal_accessible_label" = "Add Animal";
+"pet_name_title_%@" = "Hello %@";
+"pet_select" = "Select an animal to view.";
 
-"Welcome-Slogan"="Welcome to Pet Reminder.";
-"Welcome-Slogan-2"="We live with our little friends and they may have daily needs just like us. We could forget this sometimes. With the help of this application we can remember you all of their needs. First, we can start by adding your friend.";
+/*
+ EVENT
+ */
+"event_tab_title" = "Events";
+"event_title" = "Up Next";
+"today_title" = "Today";
+"upcoming_title" = "Upcoming Events";
+"all_day_title" = "All Day";
+"add_event_accessible_title" = "Add Event";
+"event_no_title" = "No event there";
 
-// Notification
-"Notification"="When do you feed your friend?";
-"Time"="Choose a time to be notified";
-"Morning-Time"="Choose the morning time";
-"Evening-Time"="Now choose the evening time";
-"Morning"="Morning";
-"Evening"="Evening";
-"Both"="Both";
-"Notification-Error"="Please choose an option to continue.";
+"add_event_info" = "Event Info";
+"add_event_name" = "Event Name";
+"add_event_time" = "Event Time";
+"add_event_date" = "Event Date";
+"add_event_start" = "Start";
+"add_event_end" = "End";
+"add_event_title" = "New Event";
+"add_event_save" = "Save Event";
+"add_event_note" = "This event is created by Pet Reminder app.";
 
-"Morning-Title"="Good Morning ☀️";
-"Morning-Content"="Did you sleep good? %@ needs some food and water from you. Don't forget your friend.";
+/*
+ VET
+ */
+"find_vet_title" = "Find Vet";
+"location_alert_title" = "Alert";
+"location_alert_context" = "Location permission denied. In order to work with this page, you need to allow us from app settings";
+"location_alert_change" = "Change";
+"location_search_title" = "Search";
+"default_vet_text" = "Vet";
+
+/*
+ SETTINGS
+ */
+"settings_tab_title" = "Settings";
+"settings_title" = "Settings";
+"app_settings" = "App Settings";
+"buy_coffee_title" = "Buy a ☕️";
+
+"manage_pet_title" = "Manage Pets";
+"tap_to_change_text" = "Tap to Change";
+
+"donate_us_title" = "Donate Us";
+"donate_us_context" = "This app began as a free app(and still is). This app is created from an indie developer as a hobby project to test its skills and supported through the years, it has become into an app with more than hundreds of downloads. We're so grateful to have you here.";
+"donate_us_comment" = "Note that the donation is completely optional. We will never pop up an ad or get your attention to here.";
+"donate_us_clear" = "Clear Previous Purchase History";
+"donate_us_donated" = "You already donated this before, you can do it again if you wish.";
+"donate_us_cleared_successfull" = "Previous Purchase history cleaned successfully.";
 
 
-"Evening-Title"="Good Evening 🌝";
-"Evening-Content"="Don't sleep yet! %@ needs some food and water from you. Don't forget your friend.";
+/*
+ NOTIFICATIONS
+ */
+"notification_title" = "Hello Human";
+"notification_content_%@" = "Your friend %@ needs food and water. Don't forget.";
+"notification_birthday_content_%@" = "%@ born today. Happy birthday friend, here's a free hug and paw-five.";
 
-"Birthday-Title"="Happy Birthday 🎉";
-"Birthday-Content"="Happy birthday %@!. Have a best year with your friend.🎁";
+/*
+ PAYMENT
+ */
+"payment_cant" = "User can't make any payment.";
 
-// Photo Selection
+/*
+ CLOUD
+ */
 
-"Upload"="Upload a cute photo of your Friend";
-"Permission-Error"="Permission Error";
-"Permission-Message"="We don't have access to your gallery.";
+"cloud_unavailable" = "iCloud Unavailable";
+"no_account" = "No iCloud account";
+"restricted_account" = "iCloud is restricted";
+"cant_fetch_status" = "iCloud is unavailable at the moment. Please try again later.";

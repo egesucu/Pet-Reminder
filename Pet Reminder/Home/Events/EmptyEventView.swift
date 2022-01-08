@@ -12,7 +12,7 @@ struct EmptyEventView: View {
     var body: some View {
         HStack {
             Spacer()
-            Text("There is no event")
+            Text("event_no_title")
                 .font(.headline)
                 .padding()
             Spacer()

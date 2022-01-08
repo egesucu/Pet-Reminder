@@ -12,6 +12,7 @@ struct SetupNameView: View {
     
     @State private var name = ""
     @State private var textWritten = false
+    @FocusState private var nameIsFocused: Bool
     
     var petManager = PetManager.shared
     
@@ -19,28 +20,38 @@ struct SetupNameView: View {
         
         NavigationView {
             VStack{
-                Text("Name")
+                Text("setup_name")
                     .font(.title).bold()
                 
-                TextField("Text", text: $name, onCommit: {
+                TextField("Bessie", text: $name, onCommit: {
                     petManager.name = name
                     textWritten.toggle()
-                    print("Name is: \(name)")
                 })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .shadow(radius: 8)
                     .multilineTextAlignment(.center)
                     .padding([.top,.bottom])
-                    
+                    .focused($nameIsFocused)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard){
+                            Button("Done") {
+                                nameIsFocused = false
+                                if !name.isEmpty{
+                                    textWritten.toggle()
+                                }
+                            }
+                            Spacer()
+                        }
+                    }
             }
             .padding()
-            .navigationBarTitle("Setup")
+            .navigationBarTitle("setup_title")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(
                         destination: SetupBirthdayView(petManager: petManager),
                         label: {
-                            Text("Continue")
+                            Text("continue")
                         })
                     .foregroundColor(!textWritten ? .gray : .green)
                     .font(.body.bold())

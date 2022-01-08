@@ -25,21 +25,20 @@ struct EventListView : View {
                     EventsView(eventVM: eventVM)
                 }
             }
-            .navigationTitle(Text("Up Next"))
+            .navigationTitle(Text("event_title"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showAddEvent.toggle()
                     } label: {
-                        Label("Add Event", systemImage: "calendar.badge.plus")
+                        Label("add_event_accessible_title", systemImage: "calendar.badge.plus")
                             .font(.title2)
                             .foregroundColor(.green)
                     }
                     .sheet(isPresented: $showAddEvent, onDismiss: {
                         eventVM.reloadEvents()
                     }, content: {
-                        ESAddEventView(shouldDismiss: .constant(false))
-                        //AddEventView(feedback: feedback)
+                        AddEventView(feedback: feedback)
                     })
                 }
             }

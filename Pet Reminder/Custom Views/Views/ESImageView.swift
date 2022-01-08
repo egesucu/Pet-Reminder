@@ -24,6 +24,7 @@ struct ESImageView: View {
                     .resizable()
                     .scaledToFit()
                     .clipShape(Circle())
+                    .padding(5)
             }
         } else {
             ZStack {

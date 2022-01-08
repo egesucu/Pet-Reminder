@@ -10,7 +10,15 @@ import Foundation
 import StoreKit
 
 enum PaymentError: String,Error{
-    case cantPay = "User can't make any payment."
+    case cantPay = "payment_cant"
+    
+    func localizedString() -> String {
+            return NSLocalizedString(self.rawValue, comment: "")
+        }
+
+        static func getTitleFor(title:PaymentError) -> String {
+            return title.localizedString()
+        }
 }
 
 

@@ -22,22 +22,22 @@ struct HomeManagerView: View {
             HomeView().environment(\.managedObjectContext, viewContext)
                 .tabItem {
                     Image(systemName: currentTab != 1 ? "person.crop.circle" : "person.crop.circle.fill")
-                    Text("Daily")
+                    Text("home_tab_title")
                 }.tag(1)
             EventListView()
                 .tabItem {
                     Image(systemName: currentTab != 2 ? "list.bullet" : "list.bullet.indent")
-                    Text("Events")
+                    Text("event_tab_title")
                 }.tag(2)
             FindVetView()
                 .tabItem {
                     Image(systemName: currentTab != 3 ? "map" : "map.fill")
-                    Text("Find Vet")
+                    Text("find_vet_title")
                 }.tag(3)
             SettingsView(storeManager: storeManager).environment(\.managedObjectContext, viewContext)
                 .tabItem {
                     Image(systemName: currentTab != 4 ? "gearshape" : "gearshape.fill")
-                    Text("Settings")
+                    Text("settings_tab_title")
                 }.tag(4)
         }
         .accentColor(Color(.label))
@@ -49,8 +49,6 @@ struct HomeManagerView: View {
 struct HomeManager_Previews: PreviewProvider{
     static var previews: some View{
         HomeManagerView(storeManager: StoreManager())
-            .previewDevice("iPhone 13 Pro Max")
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

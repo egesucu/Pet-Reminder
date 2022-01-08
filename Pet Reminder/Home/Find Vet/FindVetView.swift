@@ -20,25 +20,28 @@ struct FindVetView: View {
     var body: some View {
         ZStack(alignment: .center){
             ZStack(alignment: .top) {
-                Map(coordinateRegion: $region,interactionModes: .all,showsUserLocation: true, annotationItems: mapItems) { annotation in
-                    withAnimation {
-                        MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
-                            VStack{
-                                Image(systemName: "pawprint.circle.fill")
-                                    .font(.largeTitle)
-                                    .padding(2)
-                            }.background(Color(uiColor: .systemGreen))
-                                .cornerRadius(15)
-                                .shadow(radius:8)
-                                .onTapGesture {
-                                    annotation.item.openInMaps(launchOptions: nil)
-                                }
+                withAnimation {
+                    Map(coordinateRegion: $region,interactionModes: .all,showsUserLocation: true, annotationItems: mapItems) { annotation in
+                        withAnimation {
+                            MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
+                                VStack{
+                                    Image(systemName: "pawprint.circle.fill")
+                                        .font(.largeTitle)
+                                        .padding(2)
+                                }.background(Color(uiColor: .systemGreen))
+                                    .cornerRadius(15)
+                                    .shadow(radius:8)
+                                    .scaleEffect(1)
+                                    .onTapGesture {
+                                        annotation.item.openInMaps(launchOptions: nil)
+                                    }
+                                    .animation(.easeInOut, value: 1)
+                            }
                         }
-                    }
-                    
-                }.edgesIgnoringSafeArea(.top)
+                    }.edgesIgnoringSafeArea(.top)
+                }
                 
-                TextField("Search", text: $vetViewModel.searchText, onCommit: {
+                TextField("location_search_title", text: $vetViewModel.searchText, onCommit: {
                     reloadMapView()
                 })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -58,7 +61,7 @@ struct FindVetView: View {
         })
         .alert(isPresented: $vetViewModel.permissionDenied, content: {
             
-            Alert(title: Text("Alert"), message: Text("Location permission denied. In order to work with this page, you need to allow us from app settings"), primaryButton: Alert.Button.default(Text("Change"), action: {
+            Alert(title: Text("location_alert_title"), message: Text("location_alert_context"), primaryButton: Alert.Button.default(Text("location_alert_change"), action: {
                 self.changeLocationSettings()
             }), secondaryButton: Alert.Button.cancel())
             
@@ -103,9 +106,4 @@ struct FindVetView_Previews: PreviewProvider {
     static var previews: some View {
         FindVetView()
     }
-}
-
-struct Pin: Identifiable{
-    var id = UUID()
-    var item: MKMapItem
 }

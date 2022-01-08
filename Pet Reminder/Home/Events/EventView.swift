@@ -17,7 +17,7 @@ struct EventView : View {
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
     
-    let eventManager = EventManager()
+    @ObservedObject var eventVM : EventManager
     
     var body: some View{
         ZStack(alignment: .leading) {
@@ -50,6 +50,7 @@ struct EventView : View {
         }
         .sheet(isPresented: $showWarningForCalendar, onDismiss: {
             fillData()
+            eventVM.reloadEvents()
         }, content: {
             ESEventDetailView(event: event)
         })
@@ -62,10 +63,7 @@ struct EventView : View {
         let eventDate = event.startDate
             .formatted(.dateTime.day().month().year())
         if event.isAllDay{
-            self.dateString = """
-\(eventDate)
-All Day
-"""
+            self.dateString = "\(eventDate)" + "\n" + NSLocalizedString("all_day_title", comment: "")
         } else {
             if Calendar.current.isDateLater(date: event.startDate){
                 self.dateString = """
@@ -81,9 +79,9 @@ All Day
 
 struct EventView_Previews: PreviewProvider {
     static var previews: some View {
-        let manager = EventManager()
+        let manager = EventManager(isDemo: true)
         let event = manager.exampleEvents[0]
-        return EventView(event: event)
+        return EventView(event: event, eventVM: manager)
             .previewLayout(.sizeThatFits)
             .padding()
     }

@@ -15,54 +15,77 @@ struct PetChangeView: View {
     let notificationManager = NotificationManager.shared
     
     @State private var nameText = ""
-    @State private var petImage : UIImage? = nil
+    @State private var petImage : Image? = nil
     @State private var birthday = Date()
     @State private var selection = 0
     @State private var morningDate = Date()
     @State private var eveningDate = Date()
-    
+    @State private var showImagePicker = false
+    @State private var outputImage: UIImage?
+    @State private var defaultPhotoOn = false
+    @State private var imageData : Data?
     var body: some View {
         
         VStack {
-            Image("default-animal")
-                .resizable()
-                .frame(width: 200, height: 200, alignment: .center)
+            ESImageView(data: pet.image)
+                .onTapGesture {
+                    self.showImagePicker = defaultPhotoOn ? false : true
+                }
+                .sheet(isPresented: $showImagePicker, onDismiss: {
+                    self.loadImage()
+                }, content: {
+                    ImagePickerView(image: $outputImage)
+                })
+                .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
+            Toggle("default_photo_label", isOn: $defaultPhotoOn)
+                .onChange(of: defaultPhotoOn, perform: { _isOn in
+                    if _isOn{
+                        pet.image = nil
+                        persistence.save()
+                    }
+                })
+                .padding()
+            Text("photo_upload_detail_title")
+                .font(.footnote)
+                .foregroundColor(Color(.systemGray2))
+                .multilineTextAlignment(.center)
+                .padding()
             Form{
                 Section{
-                    TextField("Tap to Change", text: $nameText)
+                    TextField("tap_to_change_text", text: $nameText)
                         .onChange(of: nameText, perform: { _ in
                             self.changeName()
                         })
-                    DatePicker("Date", selection: $birthday, displayedComponents: .date)
+                    DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
                         .onChange(of: birthday) { _ in
                             self.changeBirthday()
                         }
                 }
                 Section{
-                    Picker("Notification Settings", selection: $selection) {
-                        Text("Both").tag(0)
-                        Text("Morning").tag(1)
-                        Text("Evening").tag(2)
+                    Picker("feed_time_title", selection: $selection) {
+                        Text("feed_selection_both").tag(0)
+                        Text("feed_selection_morning").tag(1)
+                        Text("feed_selection_evening").tag(2)
                         
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     
                     if selection == 0{
-                        DatePicker("Morning", selection: $morningDate, displayedComponents: .hourAndMinute)
+                        DatePicker("feed_selection_morning", selection: $morningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
-                        DatePicker("Evening", selection: $eveningDate, displayedComponents: .hourAndMinute)
+                        DatePicker("feed_selection_evening", selection: $eveningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }
                     } else if selection == 1 {
-                        DatePicker("Morning", selection: $morningDate, displayedComponents: .hourAndMinute)
+                        DatePicker("feed_selection_morning", selection: $morningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
                     } else if selection == 2{
-                        DatePicker("Evening", selection: $eveningDate, displayedComponents: .hourAndMinute)
+                        DatePicker("feed_selection_evening", selection: $eveningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }
@@ -70,7 +93,7 @@ struct PetChangeView: View {
                 }
                 
             }
-            .navigationTitle(pet.name ?? "Pet")
+            .navigationTitle(pet.name ?? "")
         }
         .onAppear{
             getPetData()
@@ -78,10 +101,27 @@ struct PetChangeView: View {
         
     }
     
+    func loadImage(){
+        
+        if let outputImage = outputImage {
+            petImage = Image(uiImage: outputImage)
+            
+            if let data = outputImage.jpegData(compressionQuality: 0.8){
+                pet.image = data
+                self.imageData = data
+                persistence.save()
+            }
+            
+            defaultPhotoOn = false
+        } else {
+            petImage = nil
+            defaultPhotoOn = true
+        }
+    }
+    
     func getPetData(){
         self.birthday = pet.birthday ?? Date()
         self.nameText = pet.name!
-        self.petImage = UIImage(data: pet.image ?? Data()) ?? nil
         let selection = pet.selection
         switch selection {
         case .both:
@@ -96,6 +136,12 @@ struct PetChangeView: View {
         }
         if let evening = pet.eveningTime{
             self.eveningDate = evening
+        }
+        
+        if let _ = pet.image{
+            defaultPhotoOn = false
+        } else {
+            defaultPhotoOn = true
         }
     }
     

@@ -15,10 +15,7 @@ struct SetupBirthdayView: View {
     
     var body: some View {
         VStack{
-            Text("Birthday")
-                .font(.title).bold()
-            .padding([.top,.bottom])
-            DatePicker("Select the Date", selection: $birthday, displayedComponents: .date)
+            DatePicker("select_date", selection: $birthday, displayedComponents: .date)
                 .padding([.top,.bottom])
                 .multilineTextAlignment(.center)
                 .onChange(of: birthday, perform: { date in
@@ -27,14 +24,13 @@ struct SetupBirthdayView: View {
                 
         }
         .padding()
-//        TODO: Fix the Localization nonsense here.
-        .navigationTitle("Birthday ")
+        .navigationTitle(Text("birthday_title"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(
                     destination: SetupPhotoView(petManager: petManager),
                     label: {
-                        Text("Continue")
+                        Text("continue")
                     })
                 .foregroundColor(.green)
                 .font(.body.bold())

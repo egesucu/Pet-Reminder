@@ -33,22 +33,22 @@ class NotificationManager{
             } else {
                 
                 let content = UNMutableNotificationContent()
-                content.title = "Hello Human"
+                content.title = NSLocalizedString("notification_title", comment: "Notification Title")
                 
                 var dateComponents = DateComponents()
                 let calendar = Calendar.current
                 
                 switch type {
                 case .morning:
-                    content.body = "Your friend \(pet.name ?? "") needs food and water. Don't forget."
+                    content.body = NSLocalizedString("notification_content_\(pet.name ?? "")", comment: "Pet's name with content")
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 case .evening:
-                    content.body = "Your friend \(pet.name ?? "") needs food and water. Don't forget."
+                    content.body = NSLocalizedString("notification_content_\(pet.name ?? "")", comment: "Pet's name with content")
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 case .birthday:
-                    content.body = "\(pet.name ?? "") born today. Happy birthday friend, here's a free hug and paw-five."
+                    content.body = NSLocalizedString("notification_birthday_content_\(pet.name ?? "")", comment: "Pet's name with birthday content")
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
                     dateComponents.hour = 0
@@ -78,11 +78,11 @@ class NotificationManager{
     }
     
     func removeAllNotifications(of pet: Pet){
-        
+        guard let id = pet.id else { return }
         let notifications = [
-            pet.id!.uuidString + "-morning-notification",
-            pet.id!.uuidString + "-evening-notification",
-            pet.id!.uuidString + "-birthday-notification"
+            id.uuidString + "-morning-notification",
+            id.uuidString + "-evening-notification",
+            id.uuidString + "-birthday-notification"
         ]
         notificationCenter.removePendingNotificationRequests(withIdentifiers: notifications)
         

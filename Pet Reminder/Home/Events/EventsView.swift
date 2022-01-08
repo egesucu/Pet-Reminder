@@ -19,22 +19,22 @@ struct EventsView: View {
         List{
             Section{
                 ForEach(eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)}), id: \.eventIdentifier) { event in
-                    EventView(event: event)
+                    EventView(event: event, eventVM: eventVM)
                         .padding([.leading, .trailing],5)
                         .listRowSeparator(.hidden)
                 }
             } header: {
-                Text("Today")
+                Text("today_title")
             }
             
             Section{
                 ForEach(eventVM.events.filter({ Calendar.current.isDateLater(date: $0.startDate) }),id: \.eventIdentifier) { event in
-                    EventView(event: event)
+                    EventView(event: event,eventVM: eventVM)
                         .padding([.leading, .trailing],5)
                         .listRowSeparator(.hidden)
                 }
             } header: {
-                Text("Upcoming Events")
+                Text("upcoming_title")
             }
         }.onAppear {
             self.getDates()

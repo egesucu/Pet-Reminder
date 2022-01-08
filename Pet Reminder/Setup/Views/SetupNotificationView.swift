@@ -24,14 +24,14 @@ struct SetupNotificationView: View {
         
         VStack{
             
-            Text("Choose a Feed Time")
+            Text("feed_time_title")
                 .font(.title).bold()
                 .padding([.top,.bottom])
             
-            Picker(selection: $feedType, label: Text("Choose a type")) {
-                Text("Both").tag(0)
-                Text("Morning").tag(1)
-                Text("Evening").tag(2)
+            Picker(selection: $feedType, label: Text("feed_time_title")) {
+                Text("feed_selection_both").tag(0)
+                Text("feed_selection_morning").tag(1)
+                Text("feed_selection_evening").tag(2)
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
@@ -63,7 +63,7 @@ struct SetupNotificationView: View {
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
             Spacer()
-            DatePicker("Morning", selection: $morningFeed, displayedComponents: .hourAndMinute)
+            DatePicker("feed_selection_morning", selection: $morningFeed, displayedComponents: .hourAndMinute)
             
         }
         
@@ -87,7 +87,7 @@ struct SetupNotificationView: View {
             }
             self.petManager.savePet()
         } label: {
-            Text("Add Animal")
+            Text("add_animal_button")
                 .font(.title)
                 .foregroundColor(.green)
         }
@@ -105,7 +105,7 @@ struct SetupNotificationView: View {
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
             Spacer()
-            DatePicker("Evening", selection: $eveningFeed, displayedComponents: .hourAndMinute)
+            DatePicker("feed_selection_evening", selection: $eveningFeed, displayedComponents: .hourAndMinute)
         }
     }
     
