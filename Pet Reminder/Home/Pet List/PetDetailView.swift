@@ -21,6 +21,7 @@ struct PetDetailView: View {
     var body: some View {
         VStack{
             ESImageView(data: pet.image)
+                .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
             Spacer()
             HStack(spacing: 30){
                 if pet.morningTime != nil{

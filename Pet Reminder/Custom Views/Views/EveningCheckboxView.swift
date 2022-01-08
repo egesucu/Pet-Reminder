@@ -15,14 +15,15 @@ struct EveningCheckboxView : View {
     var body: some View{
         VStack{
             Label {
-                Text("Evening")
-                    .foregroundColor(.black)
-                    .font(.title.bold())
+                Text("feed_selection_evening")
+                    .foregroundColor(Color(uiColor: .label))
+                    .font(.title2.bold())
             } icon: {
                 Image(systemName: eveningOn ? "moon.fill" : "moon")
                     .foregroundColor(.blue)
                     .font(.largeTitle.bold())
             }
+            .padding(.bottom)
             withAnimation {
                 Image(systemName: eveningOn ? "checkmark.square" : "square")
                     .font(.system(size: 50))

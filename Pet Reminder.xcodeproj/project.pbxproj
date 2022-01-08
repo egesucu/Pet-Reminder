@@ -37,7 +37,6 @@
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DADDF6927821591000943AE /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6827821591000943AE /* PetCell.swift */; };
-		9DADDF6B2782213B000943AE /* ESAddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6A2782213B000943AE /* ESAddEventView.swift */; };
 		9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0512778BC870089E9B0 /* ESImageView.swift */; };
 		9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */; };
 		9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */; };
@@ -95,7 +94,6 @@
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DADDF6827821591000943AE /* PetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
-		9DADDF6A2782213B000943AE /* ESAddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESAddEventView.swift; sourceTree = "<group>"; };
 		9DB0E0512778BC870089E9B0 /* ESImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESImageView.swift; sourceTree = "<group>"; };
 		9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningCheckboxView.swift; sourceTree = "<group>"; };
 		9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningCheckboxView.swift; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */,
-				9DADDF6A2782213B000943AE /* ESAddEventView.swift */,
 				9DD754A1278266FA002E2768 /* ESEventDetailView.swift */,
 				9D279842257ABE710078B668 /* IndicatorView.swift */,
 			);
@@ -467,7 +464,6 @@
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
-				9DADDF6B2782213B000943AE /* ESAddEventView.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
