@@ -60,13 +60,16 @@ struct HelloView: View {
                             .foregroundColor(.green)
                     }
                     .buttonStyle(.borderless)
+                    .onReceive(pets.publisher) { result in
+                        
+                    }
                     
                 }
                 
             }.padding()
-            if petsAvailable{
-                HomeManagerView(storeManager: StoreManager()).environment(\.managedObjectContext, context)
-            }
+        }
+        .onAppear {
+            context.refreshAllObjects()
         }
     }
     
@@ -74,9 +77,7 @@ struct HelloView: View {
         manager.checkIcloudAvailability { result in
             switch result {
             case .success:
-                if pets.count > 0{
-                    petsAvailable = true
-                }
+                context.refreshAllObjects()
             case .error(let icloudError):
                 self.showAlert = true
                 self.alertText = icloudError.errorDescription ?? ""

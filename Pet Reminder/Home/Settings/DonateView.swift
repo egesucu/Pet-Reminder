@@ -32,7 +32,8 @@ struct DonateView: View {
                         .foregroundColor(.green)
                         .padding()
                 }
-                HStack {
+                HStack(alignment: .center) {
+                    Spacer()
                     Button {
                         self.generateHaptic()
                         storeManager.purchaseProduct(product)
@@ -40,11 +41,12 @@ struct DonateView: View {
                         Text(product.localizedPrice).foregroundColor(Color(uiColor: .systemBackground))
                     }
                     .buttonStyle(.borderedProminent)
-                    Spacer()
+                    .padding(.trailing,5)
                     VStack(alignment: .leading) {
                         Text(product.localizedTitle)
                         Text(product.localizedDescription)
                     }
+                    Spacer()
                 }.padding()
             }
             Button {

@@ -7,28 +7,46 @@
 //
 
 import SwiftUI
-import CloudKit
+import CoreData
 
 struct MainView: View {
-    
-    @Environment(\.managedObjectContext) private var context
-    @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name , ascending: true)])
     var pets : FetchedResults<Pet>
     @StateObject var storeManager : StoreManager
+    @State private var petSaved = false
+    @State private var loading = true
     
     let feedChecker = DailyFeedChecker.shared
     
     var body: some View{
-        VStack{
-            if pets.count > 0 {
-                HomeManagerView(storeManager: storeManager).environment(\.managedObjectContext, context)
+        ZStack(alignment: .center){
+            if petSaved || UserDefaults.standard.bool(forKey: "petSaved"){
+                HomeManagerView(storeManager: storeManager)
             } else {
-                HelloView().environment(\.managedObjectContext, context)
+                HelloView()
+                if loading {
+                    ProgressView(LocalizedStringKey("Loading"))
+                        .frame(width: 100, height: 100, alignment: .center)
+                }
             }
+            
         }
-        .onAppear { resetFeedTimes() }
+        .onAppear(perform: {
+            resetFeedTimes()
+        })
+        .onChange(of: pets.count) { newValue in
+            if newValue > 0{
+                petSaved = true
+                UserDefaults.standard.set(true, forKey: "petSaved")
+            } else {
+                UserDefaults.standard.set(false, forKey: "petSaved")
+                petSaved = false
+            }
+            loading = false
+        }
     }
-    
+  
     func resetFeedTimes(){
         if pets.count > 0{
             feedChecker.resetLogic(pets: pets, context: context)

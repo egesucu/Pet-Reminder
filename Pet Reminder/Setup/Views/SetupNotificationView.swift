@@ -17,6 +17,7 @@ struct SetupNotificationView: View {
     @State private var showHomeSheet = false
     
     @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.dismiss) private var dismiss
     
     var petManager : PetManager
     
@@ -71,8 +72,6 @@ struct SetupNotificationView: View {
     
     func AddPetButton() -> some View {
         Button {
-            self.showHomeSheet.toggle()
-            
             switch feedType{
             case 1:
                 self.petManager.selection = .morning
@@ -86,6 +85,8 @@ struct SetupNotificationView: View {
                 self.petManager.eveningTime = eveningFeed
             }
             self.petManager.savePet()
+            UserDefaults.standard.set(true, forKey: "petSaved")
+            dismiss()
         } label: {
             Text("add_animal_button")
                 .font(.title)
@@ -93,9 +94,6 @@ struct SetupNotificationView: View {
         }
         .padding()
         .buttonStyle(BorderlessButtonStyle())
-        .fullScreenCover(isPresented: $showHomeSheet) {
-            MainView(storeManager: StoreManager())
-        }
     }
     
     var EveningView: some View{
