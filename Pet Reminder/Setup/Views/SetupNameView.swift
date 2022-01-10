@@ -39,6 +39,7 @@ struct SetupNameView: View {
                                 if !name.isEmpty{
                                     textWritten.toggle()
                                 }
+                                petManager.name = name
                             }
                             Spacer()
                         }

@@ -17,7 +17,6 @@ struct SetupNotificationView: View {
     @State private var showHomeSheet = false
     
     @Environment(\.managedObjectContext) var managedObjectContext
-    @Environment(\.dismiss) private var dismiss
     
     var petManager : PetManager
     
@@ -86,7 +85,16 @@ struct SetupNotificationView: View {
             }
             self.petManager.savePet()
             UserDefaults.standard.set(true, forKey: "petSaved")
-            dismiss()
+            let rootViewController = UIApplication.shared.connectedScenes
+                    .filter {$0.activationState == .foregroundActive }
+                    .map {$0 as? UIWindowScene }
+                    .compactMap { $0 }
+                    .first?.windows
+                    .filter({ $0.isKeyWindow }).first?.rootViewController
+                
+                rootViewController?.dismiss(animated: true) {
+                }
+
         } label: {
             Text("add_animal_button")
                 .font(.title)
