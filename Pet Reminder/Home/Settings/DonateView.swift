@@ -25,15 +25,14 @@ struct DonateView: View {
                 .padding()
             Text("donate_us_comment")
                 .padding()
-            ForEach(storeManager.products, id: \.productIdentifier){ product in
+            ForEach(storeManager.products, id: \.localizedPrice){ product in
                 
                 if storeManager.userDidPurchase(product) {
                     Text("donate_us_donated")
                         .foregroundColor(.green)
                         .padding()
                 }
-                HStack(alignment: .center) {
-                    Spacer()
+                HStack{
                     Button {
                         self.generateHaptic()
                         storeManager.purchaseProduct(product)
@@ -41,14 +40,14 @@ struct DonateView: View {
                         Text(product.localizedPrice).foregroundColor(Color(uiColor: .systemBackground))
                     }
                     .buttonStyle(.borderedProminent)
-                    .padding(.trailing,5)
-                    VStack(alignment: .leading) {
-                        Text(product.localizedTitle)
-                        Text(product.localizedDescription)
-                    }
+                    .padding([.trailing,.leading],5)
+                    Text(product.localizedTitle)
                     Spacer()
                 }.padding()
+            }.onAppear{
+                storeManager.products.sort(by: { $0.price.doubleValue < $1.price.doubleValue })
             }
+
             Button {
                 self.storeManager.clearPreviousPurchases()
                 
