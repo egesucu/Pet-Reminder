@@ -12,6 +12,7 @@ struct SetupBirthdayView: View {
     
     @State private var birthday = Date()
     var petManager: PetManager
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         VStack{
@@ -32,7 +33,7 @@ struct SetupBirthdayView: View {
                     label: {
                         Text("continue")
                     })
-                .foregroundColor(.green)
+                .foregroundColor(tintColor)
                 .font(.body.bold())
             }
         }

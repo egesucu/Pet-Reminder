@@ -15,6 +15,7 @@ struct SetupPhotoView: View {
     @State private var outputImage: UIImage?
     @State private var defaultPhotoOn = true
     @State private var imageData : Data?
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var petManager : PetManager
     
@@ -71,7 +72,7 @@ struct SetupPhotoView: View {
                 .frame(width: 150, height: 150)
                 .cornerRadius(50)
                 .padding()
-                .background(Color(.systemGreen))
+                .background(tintColor)
                 .cornerRadius(50)
                 .shadow(radius: 10)
         } else {
@@ -81,7 +82,7 @@ struct SetupPhotoView: View {
                 .frame(width: 150, height: 150)
                 .cornerRadius(50)
                 .padding()
-                .background(Color(.systemGreen))
+                .background(tintColor)
                 .cornerRadius(50)
                 .shadow(radius: 10)
             
@@ -109,9 +110,10 @@ struct SetupPhotoView: View {
 }
 
 struct SetupPhotoView_Previews: PreviewProvider {
+    
     static var previews: some View {
         NavigationView {
             SetupPhotoView(petManager: PetManager())
-        }.accentColor(.green)
+        }
     }
 }

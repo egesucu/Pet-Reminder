@@ -20,20 +20,17 @@ class DailyFeedChecker{
         
         if let today = today{
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
-            
-            let first = dateFormatter.string(from: today)
-            let second = dateFormatter.string(from: Date())
+            let first = Calendar.current.startOfDay(for: today)
+            let second = Calendar.current.startOfDay(for: .now)
             
             if first != second{
                 removePetFeeds(pets: pets, context: context)
-                UserDefaults.standard.setValue(Date(), forKey: "today")
+                UserDefaults.standard.setValue(Date.now, forKey: "today")
             } else {
             }
             
         } else {
-            UserDefaults.standard.setValue(Date(), forKey: "today")
+            UserDefaults.standard.setValue(Date.now, forKey: "today")
         }
         
     }

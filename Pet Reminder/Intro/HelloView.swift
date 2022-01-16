@@ -13,6 +13,7 @@ struct HelloView: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
     var pets : FetchedResults<Pet>
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     let manager = DataManager.shared
     
@@ -37,6 +38,7 @@ struct HelloView: View {
                     .font(.body)
                 Spacer()
                 HStack {
+                    Spacer()
                     Button {
                         self.showSetup.toggle()
                     } label: {
@@ -45,24 +47,12 @@ struct HelloView: View {
                             .foregroundColor(.white)
                     }
                     .padding()
-                    .background(Color.green)
+                    .background(tintColor)
                     .cornerRadius(5)
                     .shadow(radius: 3)
                     .sheet(isPresented: $showSetup, content: { SetupNameView()})
                     
                     Spacer()
-                    
-                    Button {
-                        restoreFromIcloud()
-                    } label: {
-                        Text("welcome_restore")
-                            .font(.title)
-                            .foregroundColor(.green)
-                    }
-                    .buttonStyle(.borderless)
-                    .onReceive(pets.publisher) { result in
-                        
-                    }
                     
                 }
                 
@@ -70,18 +60,6 @@ struct HelloView: View {
         }
         .onAppear {
             context.refreshAllObjects()
-        }
-    }
-    
-    func restoreFromIcloud(){
-        manager.checkIcloudAvailability { result in
-            switch result {
-            case .success:
-                context.refreshAllObjects()
-            case .error(let icloudError):
-                self.showAlert = true
-                self.alertText = icloudError.errorDescription ?? ""
-            }
         }
     }
 }

@@ -18,13 +18,14 @@ struct EventView : View {
     @State private var showWarningForCalendar = false
     
     @ObservedObject var eventVM : EventManager
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View{
         ZStack(alignment: .leading) {
             Rectangle().fill(Color(.clear))
             HStack{
                 Rectangle()
-                    .fill(Color(.systemGreen))
+                    .fill(tintColor)
                     .frame(width: 5)
                 Text(dateString)
                     .font(.headline)
@@ -36,7 +37,7 @@ struct EventView : View {
                     }
                 }.padding(.leading)
                 if event.location != nil {
-                    Image(systemName: "location.circle.fill").foregroundColor(.green)
+                    Image(systemName: "location.circle.fill").foregroundColor(tintColor)
                         .font(.headline)
                 }
                 

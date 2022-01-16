@@ -15,7 +15,7 @@ struct SetupNotificationView: View {
     @State private var morningFeed = Date()
     @State private var eveningFeed = Date()
     @State private var showHomeSheet = false
-    
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     @Environment(\.managedObjectContext) var managedObjectContext
     
     var petManager : PetManager
@@ -98,7 +98,7 @@ struct SetupNotificationView: View {
         } label: {
             Text("add_animal_button")
                 .font(.title)
-                .foregroundColor(.green)
+                .foregroundColor(tintColor)
         }
         .padding()
         .buttonStyle(BorderlessButtonStyle())

@@ -16,6 +16,7 @@ struct FindVetView: View {
     @State private var mapItems : [Pin] = []
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
     @State private var pinLoaded = false
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         ZStack(alignment: .center){
@@ -28,7 +29,7 @@ struct FindVetView: View {
                                     Image(systemName: "pawprint.circle.fill")
                                         .font(.largeTitle)
                                         .padding(2)
-                                }.background(Color(uiColor: .systemGreen))
+                                }.background(tintColor)
                                     .cornerRadius(15)
                                     .shadow(radius:8)
                                     .scaleEffect(1)

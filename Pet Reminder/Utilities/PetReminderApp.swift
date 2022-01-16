@@ -14,12 +14,13 @@ struct PetReminderApp: App {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var storeManager = StoreManager()
     let controller = PersistenceController.shared
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some Scene {
         WindowGroup {
             MainView(storeManager: storeManager)
                 .environment(\.managedObjectContext, controller.container.viewContext)
-                .accentColor(.green)
+                .accentColor(tintColor)
                 .onAppear {
                     storeManager.addManagerToPayment(manager: storeManager)
                     storeManager.getProducts()

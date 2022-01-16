@@ -18,6 +18,7 @@ struct AddEventView : View {
     @State private var isAllDay = false
     @StateObject var eventVM = EventManager()
     @Environment(\.presentationMode) var presentationMode
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var feedback: UINotificationFeedbackGenerator
     
@@ -42,7 +43,7 @@ struct AddEventView : View {
                         }
                     }
                 }
-                .accentColor(Color(.systemGreen))
+                .accentColor(tintColor)
                 .navigationTitle(Text("add_event_title"))
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -68,7 +69,7 @@ struct AddEventView : View {
             self.presentationMode.wrappedValue.dismiss()
         }, label: {
             Text("add_event_save")
-                .foregroundColor(Color(.systemGreen))
+                .foregroundColor(tintColor)
                 .bold()
             
         })

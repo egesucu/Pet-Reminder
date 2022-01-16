@@ -12,6 +12,7 @@ struct EventListView : View {
     
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     let feedback = UINotificationFeedbackGenerator()
     
@@ -33,7 +34,7 @@ struct EventListView : View {
                     } label: {
                         Label("add_event_accessible_title", systemImage: "calendar.badge.plus")
                             .font(.title2)
-                            .foregroundColor(.green)
+                            .foregroundColor(tintColor)
                     }
                     .sheet(isPresented: $showAddEvent, onDismiss: {
                         eventVM.reloadEvents()

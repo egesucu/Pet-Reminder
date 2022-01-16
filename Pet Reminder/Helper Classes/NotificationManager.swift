@@ -39,26 +39,20 @@ class NotificationManager{
                 let calendar = Calendar.current
                 
                 switch type {
-                case .morning:
-                    content.body = NSLocalizedString("notification_content_\(pet.name ?? "")", comment: "Pet's name with content")
-                    dateComponents.hour = calendar.component(.hour, from: date)
-                    dateComponents.minute = calendar.component(.minute, from: date)
-                case .evening:
-                    content.body = NSLocalizedString("notification_content_\(pet.name ?? "")", comment: "Pet's name with content")
-                    dateComponents.hour = calendar.component(.hour, from: date)
-                    dateComponents.minute = calendar.component(.minute, from: date)
                 case .birthday:
-                    content.body = NSLocalizedString("notification_birthday_content_\(pet.name ?? "")", comment: "Pet's name with birthday content")
+                    content.body = String.localizedStringWithFormat(NSLocalizedString("notification_birthday_content", comment: "Pet's name with birthday content"), pet.name ?? "")
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
-                    dateComponents.hour = 0
-                    dateComponents.minute = 0
-                    dateComponents.second = 0
+                    dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
+                default:
+                    content.body = String.localizedStringWithFormat(NSLocalizedString("notification_content", comment: "Pet's name with content"), pet.name ?? "")
+                    dateComponents.hour = calendar.component(.hour, from: date)
+                    dateComponents.minute = calendar.component(.minute, from: date)
                 }
                 
-                if let id = pet.id{
+                if let name = pet.name{
                     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                    let request = UNNotificationRequest(identifier: "\(id.uuidString)-\(type.rawValue)-notification", content: content, trigger: trigger)
+                    let request = UNNotificationRequest(identifier: "\(name)-\(type.rawValue)-notification", content: content, trigger: trigger)
                     
                     self.notificationCenter.add(request) { error in
                         if let error = error {
@@ -71,25 +65,22 @@ class NotificationManager{
     }
     
     func removeNotification(of pet: Pet, with type: NotificationType){
-        if let id = pet.id{
-            notificationCenter.removePendingNotificationRequests(withIdentifiers: ["\(id.uuidString)-\(type.rawValue)-notification"])
+        if let name = pet.name{
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: ["\(name)-\(type.rawValue)-notification"])
         }
-        
     }
     
     func removeAllNotifications(of pet: Pet){
-        guard let id = pet.id else { return }
+        guard let name = pet.name else { return }
         let notifications = [
-            id.uuidString + "-morning-notification",
-            id.uuidString + "-evening-notification",
-            id.uuidString + "-birthday-notification"
+            name + "-morning-notification",
+            name + "-evening-notification",
+            name + "-birthday-notification"
         ]
         notificationCenter.removePendingNotificationRequests(withIdentifiers: notifications)
-        
     }
     
     func changeNotificationTime(of pet: Pet, with date: Date, for type: NotificationType){
-        
         removeAllNotifications(of: pet)
         createNotification(of: pet, with: type, date: date)
         

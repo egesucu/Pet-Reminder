@@ -11,13 +11,14 @@ import SwiftUI
 struct ESImageView: View {
     
     var data: Data?
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         if let data = data,
         let image = UIImage(data: data){
             ZStack {
                 Rectangle()
-                    .fill(Color(.systemGreen))
+                    .fill(tintColor)
                     .cornerRadius(25)
                     .shadow(radius: 10)
                 Image(uiImage: image)
@@ -29,7 +30,7 @@ struct ESImageView: View {
         } else {
             ZStack {
                 Rectangle()
-                    .fill(Color(.systemGreen))
+                    .fill(tintColor)
                     .cornerRadius(25)
                     .shadow(radius: 10)
                     

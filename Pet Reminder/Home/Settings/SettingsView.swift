@@ -13,12 +13,14 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
     @StateObject var storeManager : StoreManager
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         NavigationView{
             Form{
                 Section(header: Text("app_settings")) {
                     NavigationLink("manage_pet_title", destination: PetListView().environment(\.managedObjectContext, viewContext))
+                    ColorPicker("settings_tint_color", selection: $tintColor)
                 }
                 Section {
                     NavigationLink("donate_us_title") {

@@ -17,6 +17,7 @@ struct HomeView: View {
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     private var pets : FetchedResults<Pet>
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     @State private var addPet = false
     
@@ -49,7 +50,7 @@ struct HomeView: View {
                                 self.addPet.toggle()
                             }, label: {
                                 Label("add_animal_accessible_label", systemImage: "plus.circle.fill")
-                                    .foregroundColor(.green)
+                                    .foregroundColor(tintColor)
                                     .font(.title)
                             })
                         }

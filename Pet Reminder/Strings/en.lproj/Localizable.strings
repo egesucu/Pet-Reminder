@@ -49,7 +49,7 @@ SETUP
 "pet_name_title" = "Pets";
 "pet_no_pet" = "No Pets added yet. Let's add one.";
 "add_animal_accessible_label" = "Add Animal";
-"pet_name_title_%@" = "Hello %@";
+"pet_name_title %@" = "Hello %@";
 "pet_select" = "Select an animal to view.";
 
 /*
@@ -90,6 +90,7 @@ SETUP
 "settings_title" = "Settings";
 "app_settings" = "App Settings";
 "buy_coffee_title" = "Buy a ☕️";
+"settings_tint_color" = "App Color";
 
 "manage_pet_title" = "Manage Pets";
 "tap_to_change_text" = "Tap to Change";
@@ -106,8 +107,8 @@ SETUP
  NOTIFICATIONS
  */
 "notification_title" = "Hello Human";
-"notification_content_%@" = "Your friend %@ needs food and water. Don't forget.";
-"notification_birthday_content_%@" = "%@ born today. Happy birthday friend, here's a free hug and paw-five.";
+"notification_content" = "Your friend %@ needs food and water. Don't forget.";
+"notification_birthday_content" = "%@ born today. Happy birthday friend, here's a free hug and paw-five.";
 
 /*
  PAYMENT

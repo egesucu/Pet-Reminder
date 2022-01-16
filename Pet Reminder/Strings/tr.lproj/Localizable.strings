@@ -49,7 +49,7 @@ HOME
 "pet_name_title" = "Evcil Hayvanlar";
 "pet_no_pet" = "Henüz evcil hayvan eklemedin. Hadi bir tane ekle.";
 "add_animal_accessible_label" = "Evcil Hayvan Ekle";
-"pet_name_title_%@" = "Merhaba %@";
+"pet_name_title %@" = "Merhaba %@";
 "pet_select" = "Görüntülemek için bir evcil hayvan seçin.";
 
 /*
@@ -90,6 +90,7 @@ SETTINGS
 "settings_title" = "Aayarlar";
 "app_settings" = "Uygulama Ayarları";
 "buy_coffee_title" = "Bir ☕️ satın al";
+"settings_tint_color" = "Uygulama Rengi";
 
 "manage_pet_title" = "Dostlarını Yönet";
 "tap_to_change_text" = "Değiştirmek için dokun";
@@ -106,8 +107,8 @@ SETTINGS
 NOTIFICATIONS
 */
 "notification_title" = "Selam İnsan";
-"notification_content_%@" = "Arkadaşın %@ su ve yemeğe muhtaç. Onu Unutma.";
-"notification_birthday_content_%@" = "%@ bugün doğru. Doğumgünün kutlu olsun dost, bizden sana ücretsiz bir sarılma ve pati-beşlik.";
+"notification_content" = "Arkadaşın %@ su ve yemeğe muhtaç. Onu Unutma.";
+"notification_birthday_content" = "%@ bugün doğru. Doğumgünün kutlu olsun dost, bizden sana ücretsiz bir sarılma ve pati-beşlik.";
 
 /*
 PAYMENT

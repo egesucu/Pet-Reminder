@@ -13,6 +13,7 @@ struct SetupNameView: View {
     @State private var name = ""
     @State private var textWritten = false
     @FocusState private var nameIsFocused: Bool
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var petManager = PetManager.shared
     
@@ -54,14 +55,14 @@ struct SetupNameView: View {
                         label: {
                             Text("continue")
                         })
-                    .foregroundColor(!textWritten ? .gray : .green)
+                    .foregroundColor(!textWritten ? .gray : tintColor)
                     .font(.body.bold())
                     .disabled(!textWritten)
                 }
             }
             
         }
-        .accentColor(.green)
+        .accentColor(tintColor)
         .navigationViewStyle(StackNavigationViewStyle())
     }
     

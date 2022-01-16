@@ -12,9 +12,7 @@ struct UtilityHelper {
     
     static let shared = UtilityHelper()
     
-    func removeDuplicateDates(from array: [Date]){
-        
-    }
+    
    
 }
 
