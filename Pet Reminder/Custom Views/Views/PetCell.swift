@@ -18,6 +18,7 @@ struct PetCell: View {
             Text(pet.name ?? "Viski")
                 .foregroundColor(Color(uiColor: .label))
                 .font(.title)
+                .minimumScaleFactor(0.5)
                 .padding()
         }
     }

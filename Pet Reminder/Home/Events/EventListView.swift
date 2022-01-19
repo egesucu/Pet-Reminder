@@ -44,6 +44,7 @@ struct EventListView : View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
         .onAppear {
             eventVM.reloadEvents()
         }

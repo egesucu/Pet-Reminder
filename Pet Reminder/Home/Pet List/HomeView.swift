@@ -61,7 +61,7 @@ struct HomeView: View {
             }
             .navigationTitle("pet_name_title")
             Text("pet_select")
-        }
+        }.navigationViewStyle(.stack)
         
     }
     

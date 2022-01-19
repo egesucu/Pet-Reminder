@@ -32,6 +32,8 @@ struct EventView : View {
                 VStack(alignment: .leading){
                     Text(eventTitle)
                         .font(.title)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(0)
                     if event.location != nil {
                         Text(event.location!)
                     }
