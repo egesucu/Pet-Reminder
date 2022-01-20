@@ -54,7 +54,7 @@ struct DonateView: View {
                 
                 self.generateHaptic()
                 
-                self.alertText = "donate_us_cleared_successfull"
+                self.alertText = NSLocalizedString("donate_us_cleared_successfull", comment: "")
                 self.showAlert = true
                 
             } label: {
