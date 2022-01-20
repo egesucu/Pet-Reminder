@@ -20,7 +20,7 @@
           "locale" : "tr"
         }
       ],
-      "productID" : "pet_reminder_donate_tea",
+      "productID" : "pet_reminder_tea_donate",
       "referenceName" : "TeaConsumable",
       "type" : "Consumable"
     },
@@ -40,7 +40,7 @@
           "locale" : "tr"
         }
       ],
-      "productID" : "pet_reminder_donate_food",
+      "productID" : "pet_reminder_food_donate",
       "referenceName" : "FoodConsumable",
       "type" : "Consumable"
     }

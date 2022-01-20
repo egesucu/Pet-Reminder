@@ -28,7 +28,7 @@ class StoreManager : NSObject, ObservableObject{
     @Published var state : SKPaymentTransactionState?
     var request : SKProductsRequest!
     var userCanPurchase = SKPaymentQueue.canMakePayments()
-    let productIDs = ["pet_reminder_donate_tea","pet_reminder_donate_food"]
+    let productIDs = ["pet_reminder_tea_donate","pet_reminder_food_donate"]
     
     func addManagerToPayment(manager: StoreManager){
         SKPaymentQueue.default().add(manager)
