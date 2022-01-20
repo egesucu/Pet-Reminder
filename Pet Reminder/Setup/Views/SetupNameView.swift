@@ -33,12 +33,26 @@ struct SetupNameView: View {
                     .multilineTextAlignment(.center)
                     .padding([.top,.bottom])
                     .focused($nameIsFocused)
+                    .onSubmit {
+                        nameIsFocused = false
+                        petManager.name = name
+                        textWritten = true
+                    }
+                    .onChange(of: name, perform: { newValue in
+                        if newValue.isEmpty{
+                            petManager.name = ""
+                            textWritten = false
+                        } else {
+                            petManager.name = name
+                            textWritten = true
+                        }
+                    })
                     .toolbar {
                         ToolbarItemGroup(placement: .keyboard){
                             Button("Done") {
                                 nameIsFocused = false
                                 if !name.isEmpty{
-                                    textWritten.toggle()
+                                    textWritten = true
                                 }
                                 petManager.name = name
                             }
@@ -46,6 +60,9 @@ struct SetupNameView: View {
                         }
                     }
             }
+            .onAppear(perform: {
+                nameIsFocused = true
+            })
             .padding()
             .navigationBarTitle("setup_title")
             .toolbar {

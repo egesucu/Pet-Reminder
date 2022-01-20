@@ -147,6 +147,16 @@ struct PetChangeView: View {
     
     func changeName(){
         pet.name = nameText
+        switch selection{
+        case 0:
+            changeNotification(for: .both)
+        case 1:
+            changeNotification(for: .morning)
+        case 2:
+            changeNotification(for: .evening)
+        default:
+            break
+        }
         persistence.save()
     }
     
