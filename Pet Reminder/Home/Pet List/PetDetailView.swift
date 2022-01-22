@@ -21,7 +21,8 @@ struct PetDetailView: View {
     var body: some View {
         VStack{
             ESImageView(data: pet.image)
-                .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
+                .padding([.top,.leading,.trailing],20)
+                .frame(minWidth: 50, idealWidth: 150, maxWidth: 350, minHeight: 50, idealHeight: 150, maxHeight: 350, alignment: .center)
             Spacer()
             HStack(spacing: 30){
                 if pet.morningTime != nil{
@@ -76,6 +77,8 @@ struct PetDetailView_Previews: PreviewProvider {
         
         return NavigationView {
             PetDetailView(pet: demo, context: persistence.container.viewContext)
-        }
+        }.navigationViewStyle(.stack)
+            .previewDevice("iPad (9th generation)")
+.previewInterfaceOrientation(.portrait)
     }
 }

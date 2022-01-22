@@ -53,7 +53,14 @@ struct PetChangeView: View {
             Form{
                 Section{
                     TextField("tap_to_change_text", text: $nameText)
-                        .onChange(of: nameText, perform: { _ in
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Button("Done"){
+                                    self.changeName()
+                                }
+                            }
+                        }
+                        .onSubmit({
                             self.changeName()
                         })
                     DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)

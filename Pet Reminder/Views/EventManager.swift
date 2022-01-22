@@ -130,7 +130,6 @@ class EventManager : ObservableObject{
         
     }
     
-    
     func saveEvent(name : String, start : Date, end: Date = Date(), isAllDay: Bool = false){
         
         let calendars = eventStore.calendars(for: .event)
@@ -161,25 +160,5 @@ class EventManager : ObservableObject{
                 print(error.localizedDescription)
             }
         }
-        
-        
     }
-    
-}
-
-
-extension Date{
-    
-    func convertDateToString()->String{
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MM yyyy"
-        return formatter.string(from: self)
-    }
-    
-    func convertStringToDate(string: String)->Date{
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MM yyyy"
-        return formatter.date(from: string) ?? Date()
-    }
-    
 }

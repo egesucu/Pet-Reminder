@@ -9,10 +9,7 @@
 import Foundation
 import CloudKit
 
-enum IcloudResult{
-    case success
-    case error(IcloudError)
-}
+
 class DataManager{
     
     static let shared = DataManager()

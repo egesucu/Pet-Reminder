@@ -12,6 +12,8 @@ GENERALS
 "hello" = "Merhaba";
 "continue" = "Devam Et";
 "select_date" = "Bir tarih seç";
+"done" = "Tamam";
+"remove_all" = "Tümünü Sil";
 
 /*
 HELLO
@@ -109,6 +111,10 @@ NOTIFICATIONS
 "notification_title" = "Selam İnsan";
 "notification_content" = "Arkadaşın %@ su ve yemeğe muhtaç. Onu Unutma.";
 "notification_birthday_content" = "%@ bugün doğru. Doğumgünün kutlu olsun dost, bizden sana ücretsiz bir sarılma ve pati-beşlik.";
+"notifications %lld" = "%lld bildirim";
+"notification %lld" = "%lld bildirim";
+"notifications_title" = "Bildirimler";
+"notifications_manage_title" = "Bildirimleri Yönet";
 
 /*
 PAYMENT

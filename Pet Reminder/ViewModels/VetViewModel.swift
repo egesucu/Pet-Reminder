@@ -59,8 +59,4 @@ class VetViewModel : NSObject,ObservableObject{
     
 }
 
-extension VetViewModel: CLLocationManagerDelegate{
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        askLocationPermission()
-    }
-}
+

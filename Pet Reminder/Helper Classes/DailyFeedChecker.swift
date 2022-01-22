@@ -13,7 +13,6 @@ class DailyFeedChecker{
     
     static let shared = DailyFeedChecker()
     
-    
     func resetLogic(pets: FetchedResults<Pet>, context: NSManagedObjectContext) {
         
         let today = UserDefaults.standard.object(forKey: "today") as? Date

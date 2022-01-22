@@ -21,6 +21,8 @@ struct SettingsView: View {
                 Section(header: Text("app_settings")) {
                     NavigationLink("manage_pet_title", destination: PetListView().environment(\.managedObjectContext, viewContext))
                     ColorPicker("settings_tint_color", selection: $tintColor)
+                    NavigationLink("notifications_manage_title", destination:
+                        NotificationView().environment(\.managedObjectContext, viewContext))
                 }
                 Section {
                     NavigationLink("donate_us_title") {

@@ -9,19 +9,23 @@
 import Foundation
 import UserNotifications
 
-enum NotificationType: String{
-    case morning
-    case evening
-    case birthday
-}
-
-class NotificationManager{
+class NotificationManager: ObservableObject{
     
     static let shared = NotificationManager()
     let notificationCenter = UNUserNotificationCenter.current()
     
     func accessRequest(completion: @escaping (Bool,Error?) -> (Void)){
         notificationCenter.requestAuthorization(options: [.alert,.badge,.sound], completionHandler: completion)
+    }
+    
+    @Published var notifications : [UNNotificationRequest] = .empty
+    
+    func getNotifications(){
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            DispatchQueue.main.async {
+                self.notifications = requests
+            }
+        }
     }
     
     func createNotification(of pet: Pet, with type: NotificationType, date: Date){
@@ -62,6 +66,27 @@ class NotificationManager{
                 }
             }
         }
+    }
+    
+    func removeNotifications(pets: [Pet]){
+        notificationCenter.removeAllPendingNotificationRequests()
+        for pet in pets {
+            switch pet.selection{
+            case .both:
+                createNotification(of: pet, with: .morning, date: pet.eveningTime ?? .now)
+                createNotification(of: pet, with: .evening, date: pet.morningTime ?? .now)
+            case .evening:
+                createNotification(of: pet, with: .evening, date: pet.morningTime ?? .now)
+            case .morning:
+                createNotification(of: pet, with: .morning, date: pet.eveningTime ?? .now)
+            }
+            createNotification(of: pet, with: .birthday, date: pet.birthday ?? .now)
+        }
+    }
+    
+    func removeNotificationWithId(_ id: String){
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
+        notificationCenter.removeDeliveredNotifications(withIdentifiers: [id])
     }
     
     func removeNotification(of pet: Pet, with type: NotificationType){

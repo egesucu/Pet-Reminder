@@ -11,13 +11,15 @@
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
 		9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E425D081B4008F93CD /* EventListView.swift */; };
-		9D14FA992794D75E000EC3B2 /* App+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D14FA982794D75E000EC3B2 /* App+Color.swift */; };
 		9D279843257ABE710078B668 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* IndicatorView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
 		9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018F26DA7392005822DA /* DailyFeedChecker.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
+		9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */; };
+		9D44ACCA279C6154007EB5B6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC9279C6154007EB5B6 /* Enums.swift */; };
+		9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
@@ -28,8 +30,6 @@
 		9D849050277748CB005EAC5B /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84904F277748CB005EAC5B /* DonateView.swift */; };
 		9D87773127947372005FCDDA /* Pet_ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87773027947372005FCDDA /* Pet_ReminderUITests.swift */; };
 		9D87773327947372005FCDDA /* Pet_ReminderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87773227947372005FCDDA /* Pet_ReminderUITestsLaunchTests.swift */; };
-		9D87C5A726C95F20006BEF59 /* Pet+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */; };
-		9D87C5A926C95F3C006BEF59 /* Pet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */; };
 		9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5AA26C9668D006BEF59 /* MainView.swift */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
 		9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970EC2568394700B3C414 /* PetReminder.xcdatamodeld */; };
@@ -56,7 +56,6 @@
 		9DD752F526B4488E00A0E380 /* SetupNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD752F426B4488E00A0E380 /* SetupNotificationView.swift */; };
 		9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD754A1278266FA002E2768 /* ESEventDetailView.swift */; };
 		9DE4579F2794629F00DA821D /* Pet_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE4579E2794629F00DA821D /* Pet_ReminderTests.swift */; };
-		9DED86D426D0E9F000839A94 /* MainView+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DED86D326D0E9F000839A94 /* MainView+Enums.swift */; };
 		9DFEE1CD278A150400A41340 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9DFEE1CF278A150400A41340 /* Localizable.strings */; };
 		9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */; };
 		9DFF73F6248BAE27004B4901 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FF248666C1004610C8 /* LaunchScreen.storyboard */; };
@@ -84,13 +83,15 @@
 		9D0C24E025D08177008F93CD /* FindVetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVetView.swift; sourceTree = "<group>"; };
 		9D0C24E225D08181008F93CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D0C24E425D081B4008F93CD /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
-		9D14FA982794D75E000EC3B2 /* App+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+Color.swift"; sourceTree = "<group>"; };
 		9D279842257ABE710078B668 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9D34018F26DA7392005822DA /* DailyFeedChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyFeedChecker.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
+		9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		9D44ACC9279C6154007EB5B6 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		9D71069E258F403700683409 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = "Pet Reminder/Views/EventManager.swift"; sourceTree = SOURCE_ROOT; };
@@ -103,8 +104,6 @@
 		9D87772E27947372005FCDDA /* Pet ReminderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pet ReminderUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D87773027947372005FCDDA /* Pet_ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_ReminderUITests.swift; sourceTree = "<group>"; };
 		9D87773227947372005FCDDA /* Pet_ReminderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_ReminderUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+Enums.swift"; sourceTree = "<group>"; };
-		9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+Extensions.swift"; sourceTree = "<group>"; };
 		9D87C5AA26C9668D006BEF59 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9D8970A425681E9300B3C414 /* PetReminderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderApp.swift; sourceTree = "<group>"; };
 		9D8970ED2568394700B3C414 /* PetReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetReminder.xcdatamodel; sourceTree = "<group>"; };
@@ -136,7 +135,6 @@
 		9DD754A1278266FA002E2768 /* ESEventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESEventDetailView.swift; sourceTree = "<group>"; };
 		9DE457952794629100DA821D /* Pet ReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pet ReminderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DE4579E2794629F00DA821D /* Pet_ReminderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pet_ReminderTests.swift; sourceTree = "<group>"; };
-		9DED86D326D0E9F000839A94 /* MainView+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView+Enums.swift"; sourceTree = "<group>"; };
 		9DFEE1CE278A150400A41340 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9DFEE1D0278A150600A41340 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
@@ -182,15 +180,13 @@
 		9D34018C26DA7392005822DA /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */,
+				9D44ACC9279C6154007EB5B6 /* Enums.swift */,
 				9D34018D26DA7392005822DA /* NotificationManager.swift */,
 				9DC8262626FF697200EA2423 /* StoreManager.swift */,
-				9D87C5A826C95F3C006BEF59 /* Pet+Extensions.swift */,
-				9D87C5A626C95F20006BEF59 /* Pet+Enums.swift */,
-				9DED86D326D0E9F000839A94 /* MainView+Enums.swift */,
 				9D34018F26DA7392005822DA /* DailyFeedChecker.swift */,
 				9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */,
 				9DB0E0572778C4A90089E9B0 /* UtilityHelper.swift */,
-				9D14FA982794D75E000EC3B2 /* App+Color.swift */,
 			);
 			path = "Helper Classes";
 			sourceTree = "<group>";
@@ -347,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				9D0C24E225D08181008F93CD /* SettingsView.swift */,
+				9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */,
 				9D84904F277748CB005EAC5B /* DonateView.swift */,
 				9D34019426DA7950005822DA /* PetListView.swift */,
 				9D34019626DA7AAD005822DA /* PetChangeView.swift */,
@@ -565,16 +562,15 @@
 				9D8E77142486ABBD004610C8 /* SetupNameView.swift in Sources */,
 				9D71069F258F403700683409 /* EventManager.swift in Sources */,
 				9DD752F526B4488E00A0E380 /* SetupNotificationView.swift in Sources */,
-				9D87C5A726C95F20006BEF59 /* Pet+Enums.swift in Sources */,
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
+				9D44ACCA279C6154007EB5B6 /* Enums.swift in Sources */,
 				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
 				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
 				9DD752F326B4488000A0E380 /* SetupPhotoView.swift in Sources */,
-				9DED86D426D0E9F000839A94 /* MainView+Enums.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
@@ -584,13 +580,13 @@
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
-				9D14FA992794D75E000EC3B2 /* App+Color.swift in Sources */,
+				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
 				9DD752F126B4487600A0E380 /* SetupBirthdayView.swift in Sources */,
 				9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */,
 				9D34019026DA7392005822DA /* NotificationManager.swift in Sources */,
 				9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */,
-				9D87C5A926C95F3C006BEF59 /* Pet+Extensions.swift in Sources */,
+				9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */,
 				9DB0E0582778C4A90089E9B0 /* UtilityHelper.swift in Sources */,
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
@@ -816,7 +812,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pet Reminder/Preview Content\"";
 				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_PREVIEWS = YES;
@@ -826,7 +822,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = 5.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -842,7 +838,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pet Reminder/Preview Content\"";
 				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_PREVIEWS = YES;
@@ -852,7 +848,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = 5.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

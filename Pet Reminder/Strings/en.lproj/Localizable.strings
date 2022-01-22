@@ -12,6 +12,8 @@
 "hello" = "Hello";
 "continue" = "Continue";
 "select_date" = "Select a date";
+"done" = "Done";
+"remove_all" = "Remove All";
 
 /*
  HELLO
@@ -109,8 +111,11 @@ SETUP
 "notification_title" = "Hello Human";
 "notification_content" = "Your friend %@ needs food and water. Don't forget.";
 "notification_birthday_content" = "%@ born today. Happy birthday friend, here's a free hug and paw-five.";
-
-/*
+"notifications %lld" = "%lld notifications";
+"notification %lld" = "%lld notification";
+"notifications_title" = "Notifications";
+"notifications_manage_title" = "Manage Notifications";
+ /*
  PAYMENT
  */
 "payment_cant" = "User can't make any payment.";
