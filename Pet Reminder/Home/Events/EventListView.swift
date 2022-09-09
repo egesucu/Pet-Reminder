@@ -37,7 +37,7 @@ struct EventListView : View {
                             .foregroundColor(tintColor)
                     }
                     .sheet(isPresented: $showAddEvent, onDismiss: {
-                        eventVM.reloadEvents()
+                        reload()
                     }, content: {
                         AddEventView(feedback: feedback)
                     })
@@ -46,8 +46,18 @@ struct EventListView : View {
         }
         .navigationViewStyle(.stack)
         .onAppear {
-            eventVM.reloadEvents()
+            reload()
         }
+    }
+    
+    func reload(){
+        Task {
+            await reloadEvents()
+        }
+    }
+    
+    func reloadEvents() async {
+        await eventVM.reloadEvents()
     }
 }
 

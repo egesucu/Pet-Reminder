@@ -39,8 +39,18 @@ struct EventsView: View {
         }.onAppear {
             self.getDates()
         }.refreshable {
-            eventVM.reloadEvents()
+            reload()
         }
+    }
+    
+    func reload(){
+        Task {
+            await reloadEvents()
+        }
+    }
+    
+    func reloadEvents() async {
+        await eventVM.reloadEvents()
     }
     
     func getDates(){
