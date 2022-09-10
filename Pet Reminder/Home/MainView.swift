@@ -21,11 +21,11 @@ struct MainView: View {
     
     var body: some View{
         ZStack(alignment: .center){
-            if let petSaved = petSaved {
+            if let petSaved {
                 if petSaved{
                     HomeManagerView(storeManager: storeManager)
                 } else {
-                    HelloView()
+                    HelloView(storeManager: storeManager)
                 }
             } else {
                 Color(uiColor: .label)

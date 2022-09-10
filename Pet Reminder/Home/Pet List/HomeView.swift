@@ -40,9 +40,11 @@ struct HomeView: View {
                     }
                     .listStyle(.insetGrouped)
                     .sheet(isPresented: $addPet, onDismiss: {
-                        viewContext.refreshAllObjects()
+                        DispatchQueue.main.async {
+                            viewContext.refreshAllObjects()
+                        }
                     }, content: {
-                        SetupNameView()
+                        AddPetView()
                     })
                     .toolbar(content: {
                         ToolbarItem(placement: .navigationBarTrailing) {

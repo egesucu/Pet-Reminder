@@ -28,16 +28,17 @@ class PetManager{
     func savePet(){
         let newPet = Pet(context: persistence.container.viewContext)
         newPet.id = UUID()
-        newPet.name = self.name
-        newPet.birthday = self.birthday
-        newPet.morningTime = self.morningTime
-        newPet.eveningTime = self.eveningTime
-        newPet.image = self.imageData
+        newPet.name = name
+        newPet.birthday = birthday
+        newPet.morningTime = morningTime
+        newPet.eveningTime = eveningTime
+        newPet.image = imageData
         newPet.selection = selection
         
         persistence.save()
         
         saveNotifications(of: newPet)
+        completion()
     }
     
     func saveNotifications(of pet: Pet){

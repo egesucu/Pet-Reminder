@@ -106,6 +106,14 @@ extension Date{
         var tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today) ?? Date()
         return tomorrow
     }()
+    
+    func eightAM() -> Self {
+        return Calendar.current.startOfDay(for: self).addingTimeInterval(60*60*8)
+    }
+    
+    func eightPM() -> Self {
+        return Calendar.current.startOfDay(for: self).addingTimeInterval(60*60*20)
+    }
     func convertDateToString()->String{
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MM yyyy"

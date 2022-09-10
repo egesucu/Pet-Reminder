@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HelloView: View {
-    
+    @StateObject var storeManager : StoreManager
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
     var pets : FetchedResults<Pet>
@@ -21,6 +21,7 @@ struct HelloView: View {
     @State private var showAlert = false
     @State private var alertText = ""
     @State private var petsAvailable = false
+    @State private var navigateToHome = false
     
     var body: some View {
         ZStack {
@@ -50,7 +51,14 @@ struct HelloView: View {
                     .background(tintColor)
                     .cornerRadius(5)
                     .shadow(radius: 3)
-                    .sheet(isPresented: $showSetup, content: { SetupNameView()})
+                    .sheet(isPresented: $showSetup, onDismiss: {
+                        navigateToHome.toggle()
+                    }, content: {
+                        AddPetView()
+                    })
+                    .fullScreenCover(isPresented: $navigateToHome, content: {
+                        HomeManagerView(storeManager: storeManager)
+                    })
                     
                     Spacer()
                     
@@ -66,8 +74,9 @@ struct HelloView: View {
 
 struct HelloView_Previews: PreviewProvider {
     static var previews: some View {
-        Group{
-            HelloView()
+        let storeManager = StoreManager()
+        return Group{
+            HelloView(storeManager: storeManager)
         }
         
     }
