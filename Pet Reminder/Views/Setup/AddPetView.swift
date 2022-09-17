@@ -23,10 +23,8 @@ struct AddPetView : View {
     @State private var dayType : DayTime = .both
     @State private var name = ""
     @State private var birthday : Date = .now
-    @State private var petPhoto: Data? = nil
     @State private var morningFeed : Date = Date().eightAM()
     @State private var eveningFeed : Date = Date().eightPM()
-    @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
     var petManager = PetManager.shared
@@ -75,26 +73,14 @@ struct AddPetView : View {
                         Spacer()
                     }
                 } else {
-                    PhotosPicker(selection: $selectedPhoto,
-                                 matching: .images) {
-                        Image("default-animal")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(50)
-                            .padding()
-                            .background(tintColor)
-                            .cornerRadius(50)
-                            .shadow(radius: 10)
+                    if #available(iOS 16, *){
+                        PhotoImagePickerView { data in
+                            selectedImageData = data
+                        }.padding([.top,.bottom])
+                    } else {
+                        ImagePickerView(imageData: $selectedImageData).padding([.top,.bottom])
                     }
-                    .onChange(of: selectedPhoto, perform: { newValue in
-                        Task{
-                            if let data = try? await newValue?.loadTransferable(type: Data.self){
-                                selectedImageData = data
-                            }
-                        }
-                    })
-                    .padding([.top,.bottom])
+                    
                 }
                 
                 Text("feed_time_title")

@@ -21,33 +21,27 @@ struct EventView : View {
     @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View{
-        ZStack(alignment: .leading) {
-            Rectangle().fill(Color(.clear))
-            HStack{
-                Rectangle()
-                    .fill(tintColor)
-                    .frame(width: 5)
-                Text(dateString)
+        ZStack(alignment: .center) {
+            Rectangle().fill(Color(.clear)).shadow(radius: 8)
+            VStack(alignment: .center){
+                Text(eventTitle)
                     .font(.headline)
-                VStack(alignment: .leading){
-                    Text(eventTitle)
-                        .font(.title)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(0)
-                    if event.location != nil {
-                        Text(event.location!)
-                    }
-                }.padding(.leading)
-                if event.location != nil {
-                    Image(systemName: "location.circle.fill").foregroundColor(tintColor)
-                        .font(.headline)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                ZStack(alignment: .center){
+                    RoundedRectangle(cornerRadius: 100).fill(tintColor)
+                    Text(dateString)
+                        .multilineTextAlignment(.center)
+                        .font(.body)
+                        .foregroundColor(tintColor.isDarkColor ? .white : .black)
                 }
-                
+                .frame(maxWidth: 130)
             }
-            .onAppear(perform: {
-                fillData()
-            })
         }
+        .onAppear(perform: {
+            fillData()
+        })
         .onTapGesture {
             self.showWarningForCalendar = true
         }
@@ -58,7 +52,6 @@ struct EventView : View {
             ESEventDetailView(event: event)
         })
         .padding(10)
-        .shadow(radius: 8)
     }
     
     func reload(){
@@ -74,9 +67,14 @@ struct EventView : View {
     func fillData(){
         self.eventTitle = event.title
         let eventDate = event.startDate
-            .formatted(.dateTime.day().month().year())
+            .formatted(.dateTime.day().month(.twoDigits).year())
         if event.isAllDay{
-            self.dateString = "\(eventDate)" + "\n" + NSLocalizedString("all_day_title", comment: "")
+            if Calendar.current.isDateInToday(event.startDate){
+                self.dateString = NSLocalizedString("all_day_title", comment: "")
+            } else {
+                self.dateString = "\(eventDate)" + "\n" + NSLocalizedString("all_day_title", comment: "")
+            }
+            
         } else {
             if Calendar.current.isDateLater(date: event.startDate){
                 self.dateString = """

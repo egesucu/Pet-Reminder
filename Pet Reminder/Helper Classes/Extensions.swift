@@ -26,7 +26,7 @@ extension Pet{
     }
 }
 
-//MARK: - SKProductsrequestDelegate
+//MARK: - SKProducts Delegate
 extension StoreManager: SKProductsRequestDelegate{
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         
@@ -45,7 +45,7 @@ extension StoreManager: SKProductsRequestDelegate{
         print("Error occured: ",error)
     }
 }
-//MARK: - SKPaymentTransactionObserver
+//MARK: - SKPayment Observer
 extension StoreManager: SKPaymentTransactionObserver{
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
@@ -131,7 +131,7 @@ extension Calendar{
         return date >= Date.tomorrow
     }
 }
-//MARK: - CLLocationManagerDelegate
+//MARK: - CLLocation Delegate
 extension VetViewModel: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         askLocationPermission()
@@ -153,5 +153,22 @@ extension Color: RawRepresentable {
     }
     private var coreImageColor: CIColor {
         return CIColor(color: UIColor(self))
+    }
+}
+//MARK: UIColor Extension
+extension UIColor
+{
+    var isDarkColor: Bool {
+        var r, g, b, a: CGFloat
+        (r, g, b, a) = (0, 0, 0, 0)
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        let lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
+        return  lum < 0.50
+    }
+}
+
+extension Color{
+    var isDarkColor : Bool {
+        return UIColor(self).isDarkColor
     }
 }

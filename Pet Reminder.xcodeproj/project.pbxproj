@@ -22,7 +22,6 @@
 		9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
-		9D71069F258F403700683409 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D71069E258F403700683409 /* EventManager.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */; };
 		9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */; };
@@ -34,13 +33,15 @@
 		9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */; };
 		9D8E76FB248666C1004610C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FA248666C1004610C8 /* Assets.xcassets */; };
 		9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */; };
+		9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13B28D606460018C7A6 /* EventManager.swift */; };
+		9D98B13F28D606F70018C7A6 /* PhotoImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */; };
+		9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */; };
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DADDF6927821591000943AE /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6827821591000943AE /* PetCell.swift */; };
 		9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0512778BC870089E9B0 /* ESImageView.swift */; };
 		9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */; };
 		9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */; };
-		9DB0E0582778C4A90089E9B0 /* UtilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0572778C4A90089E9B0 /* UtilityHelper.swift */; };
 		9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C6264EC81A00F8561A /* PetManager.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
@@ -70,7 +71,6 @@
 		9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
-		9D71069E258F403700683409 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventManager.swift; path = "Pet Reminder/Views/EventManager.swift"; sourceTree = SOURCE_ROOT; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -85,13 +85,15 @@
 		9D8E76FA248666C1004610C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9D8E7702248666C1004610C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D98B13B28D606460018C7A6 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImagePickerView.swift; sourceTree = "<group>"; };
+		9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithSearchBarView.swift; sourceTree = "<group>"; };
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DADDF6827821591000943AE /* PetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
 		9DB0E0512778BC870089E9B0 /* ESImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESImageView.swift; sourceTree = "<group>"; };
 		9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningCheckboxView.swift; sourceTree = "<group>"; };
 		9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningCheckboxView.swift; sourceTree = "<group>"; };
-		9DB0E0572778C4A90089E9B0 /* UtilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityHelper.swift; sourceTree = "<group>"; };
 		9DC1B9C6264EC81A00F8561A /* PetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManager.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -134,22 +136,8 @@
 			children = (
 				9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */,
 				9D44ACC9279C6154007EB5B6 /* Enums.swift */,
-				9D34018D26DA7392005822DA /* NotificationManager.swift */,
-				9DC8262626FF697200EA2423 /* StoreManager.swift */,
-				9D34018F26DA7392005822DA /* DailyFeedChecker.swift */,
-				9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */,
-				9DB0E0572778C4A90089E9B0 /* UtilityHelper.swift */,
 			);
 			path = "Helper Classes";
-			sourceTree = "<group>";
-		};
-		9D44CEC9258E1B74002F5BDF /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				9D71069E258F403700683409 /* EventManager.swift */,
-				9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		9D71CEF2248836BD00AA1458 /* Frameworks */ = {
@@ -191,13 +179,11 @@
 		9D8E76F0248666BD004610C8 /* Pet Reminder */ = {
 			isa = PBXGroup;
 			children = (
+				9D98B13D28D606570018C7A6 /* Managers */,
+				9D98B13A28D606460018C7A6 /* Views */,
 				9D2EF8F926C410C7009048C4 /* Custom Views */,
-				9D9F59B125E18228007672E8 /* Intro */,
-				9DCDA05626E3BFE800DF290F /* Home */,
-				9DCDA05426E3BE2D00DF290F /* Setup */,
 				9D34018C26DA7392005822DA /* Helper Classes */,
 				9DFF73F2248BAD7F004B4901 /* Models */,
-				9D44CEC9258E1B74002F5BDF /* ViewModels */,
 				9DFF73F5248BADBD004B4901 /* Strings */,
 				9DFF73F4248BADB2004B4901 /* Utilities */,
 				9D8E76FC248666C1004610C8 /* Preview Content */,
@@ -211,6 +197,29 @@
 				9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9D98B13A28D606460018C7A6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9DCDA05426E3BE2D00DF290F /* Setup */,
+				9DCDA05626E3BFE800DF290F /* Home */,
+				9D9F59B125E18228007672E8 /* Intro */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9D98B13D28D606570018C7A6 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9D34018F26DA7392005822DA /* DailyFeedChecker.swift */,
+				9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */,
+				9DC8262626FF697200EA2423 /* StoreManager.swift */,
+				9D34018D26DA7392005822DA /* NotificationManager.swift */,
+				9D98B13B28D606460018C7A6 /* EventManager.swift */,
+				9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		9D9F59B125E18228007672E8 /* Intro */ = {
@@ -232,17 +241,9 @@
 		9DCDA05426E3BE2D00DF290F /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				9DCDA05526E3BE3700DF290F /* Views */,
-			);
-			path = Setup;
-			sourceTree = "<group>";
-		};
-		9DCDA05526E3BE3700DF290F /* Views */ = {
-			isa = PBXGroup;
-			children = (
 				9DC849F728CB954A00776197 /* AddPetView.swift */,
 			);
-			path = Views;
+			path = Setup;
 			sourceTree = "<group>";
 		};
 		9DCDA05626E3BFE800DF290F /* Home */ = {
@@ -271,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				9D0C24E025D08177008F93CD /* FindVetView.swift */,
+				9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */,
 			);
 			path = "Find Vet";
 			sourceTree = "<group>";
@@ -302,10 +304,11 @@
 		9DCDA06826E3C94100DF290F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9DADDF6827821591000943AE /* PetCell.swift */,
 				9DB0E0512778BC870089E9B0 /* ESImageView.swift */,
 				9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */,
 				9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */,
-				9DADDF6827821591000943AE /* PetCell.swift */,
+				9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -416,7 +419,6 @@
 			files = (
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
-				9D71069F258F403700683409 /* EventManager.swift in Sources */,
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
@@ -424,6 +426,8 @@
 				9D44ACCA279C6154007EB5B6 /* Enums.swift in Sources */,
 				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
 				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,
+				9D98B13F28D606F70018C7A6 /* PhotoImagePickerView.swift in Sources */,
+				9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
@@ -441,7 +445,6 @@
 				9DC849F828CB954A00776197 /* AddPetView.swift in Sources */,
 				9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */,
 				9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */,
-				9DB0E0582778C4A90089E9B0 /* UtilityHelper.swift in Sources */,
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
@@ -451,6 +454,7 @@
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
 				9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */,
+				9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */,
 				9DCDA06126E3C34600DF290F /* Pin.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
 			);
@@ -524,7 +528,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -581,7 +585,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -604,7 +608,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -631,7 +635,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
