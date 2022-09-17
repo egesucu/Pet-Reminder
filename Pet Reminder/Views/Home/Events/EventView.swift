@@ -47,21 +47,11 @@ struct EventView : View {
         }
         .sheet(isPresented: $showWarningForCalendar, onDismiss: {
             fillData()
-            reload()
+            eventVM.reloadEvents()
         }, content: {
             ESEventDetailView(event: event)
         })
         .padding(10)
-    }
-    
-    func reload(){
-        Task {
-            await reloadEvents()
-        }
-    }
-    
-    func reloadEvents() async {
-        await eventVM.reloadEvents()
     }
     
     func fillData(){
