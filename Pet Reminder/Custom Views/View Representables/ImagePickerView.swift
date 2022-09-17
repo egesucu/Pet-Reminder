@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ImagePickerView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var image: UIImage?
+    @Binding var imageData: Data?
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePickerView>) -> UIImagePickerController {
         let picker = UIImagePickerController()
@@ -30,7 +30,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
                if let uiImage = info[.editedImage] as? UIImage {
-                   parent.image = uiImage
+                   parent.imageData = uiImage.jpegData(compressionQuality: 0.8)
                }
 
                parent.presentationMode.wrappedValue.dismiss()

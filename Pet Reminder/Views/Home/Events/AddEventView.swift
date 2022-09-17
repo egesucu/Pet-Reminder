@@ -59,13 +59,12 @@ struct AddEventView : View {
             feedback.notificationOccurred(.success)
             
             if isAllDay{
-                saveEvent(name: eventName, start: allDayDate, isAllDay: isAllDay)
-                
+                eventVM.saveEvent(name: eventName, start: allDayDate, isAllDay: isAllDay)
             } else {
-                saveEvent(name: eventName, start: allDayDate, end: eventEndDate)
+                eventVM.saveEvent(name: eventName, start: allDayDate, end: eventEndDate)
             }
             self.eventVM.objectWillChange.send()
-            reload()
+            eventVM.reloadEvents()
             
         }, label: {
             Text("add_event_save")
@@ -73,36 +72,6 @@ struct AddEventView : View {
                 .bold()
             
         })
-    }
-    
-    func saveEvent(name: String, start: Date, isAllDay: Bool){
-        Task {
-            await saveEvent(name: eventName, start: allDayDate, isAllDay: isAllDay)
-        }
-    }
-    
-    func saveEvent(name: String, start: Date, end: Date) {
-        Task{
-            await saveEvent(name: name, start: start, end: end)
-        }
-    }
-    
-    func reload() {
-        Task{
-            await reloadEvents()
-            self.presentationMode.wrappedValue.dismiss()
-        }
-    }
-    
-    func saveEvent(name: String, start: Date, end: Date) async {
-        await eventVM.saveEvent(name: name, start: start, end: end)
-    }
-    func saveEvent(name: String, start: Date, isAllDay: Bool) async {
-        await eventVM.saveEvent(name: eventName, start: allDayDate, isAllDay: isAllDay)
-    }
-    
-    func reloadEvents() async {
-        await eventVM.reloadEvents()
     }
     
 }

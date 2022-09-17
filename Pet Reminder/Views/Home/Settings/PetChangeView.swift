@@ -18,23 +18,22 @@ struct PetChangeView: View {
     @State private var petImage : Image? = nil
     @State private var birthday = Date()
     @State private var selection = 0
-    @State private var morningDate = Date()
-    @State private var eveningDate = Date()
+    @State private var morningDate = Date.now.eightAM()
+    @State private var eveningDate = Date.now.eightPM()
     @State private var showImagePicker = false
-    @State private var outputImage: UIImage?
+    @State private var outputImageData: Data? = nil
     @State private var defaultPhotoOn = false
-    @State private var imageData : Data?
     var body: some View {
         
         VStack {
-            ESImageView(data: pet.image)
+            ESImageView(data: outputImageData)
                 .onTapGesture {
                     self.showImagePicker = defaultPhotoOn ? false : true
                 }
                 .sheet(isPresented: $showImagePicker, onDismiss: {
                     self.loadImage()
                 }, content: {
-                    ImagePickerView(image: $outputImage)
+                    ImagePickerView(imageData: $outputImageData)
                 })
                 .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
             Toggle("default_photo_label", isOn: $defaultPhotoOn)
@@ -109,19 +108,13 @@ struct PetChangeView: View {
     }
     
     func loadImage(){
-        
-        if let outputImage = outputImage {
-            petImage = Image(uiImage: outputImage)
-            
-            if let data = outputImage.jpegData(compressionQuality: 0.8){
-                pet.image = data
-                self.imageData = data
-                persistence.save()
-            }
-            
+        if let outputImageData{
+            petImage = Image(uiImage: UIImage(data: outputImageData) ?? UIImage())
+            pet.image = outputImageData
+            persistence.save()
             defaultPhotoOn = false
         } else {
-            petImage = nil
+            outputImageData = nil
             defaultPhotoOn = true
         }
     }
@@ -145,7 +138,8 @@ struct PetChangeView: View {
             self.eveningDate = evening
         }
         
-        if let _ = pet.image{
+        if let image = pet.image{
+            outputImageData = image
             defaultPhotoOn = false
         } else {
             defaultPhotoOn = true

@@ -23,6 +23,7 @@ struct SettingsView: View {
                     ColorPicker("settings_tint_color", selection: $tintColor)
                     NavigationLink("notifications_manage_title", destination:
                         NotificationView().environment(\.managedObjectContext, viewContext))
+                    NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())
                 }
                 Section {
                     NavigationLink("donate_us_title") {
