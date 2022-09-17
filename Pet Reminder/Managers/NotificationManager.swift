@@ -47,6 +47,7 @@ class NotificationManager: ObservableObject{
                     content.body = String.localizedStringWithFormat(NSLocalizedString("notification_birthday_content", comment: "Pet's name with birthday content"), pet.name ?? "")
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
+                    dateComponents.year = calendar.component(.year, from: calendar.date(byAdding: .year, value: 1, to: date) ?? .now)
                     dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
                 default:
                     content.body = String.localizedStringWithFormat(NSLocalizedString("notification_content", comment: "Pet's name with content"), pet.name ?? "")

@@ -32,9 +32,9 @@ struct AddPetView : View {
     var body: some View{
         ScrollView {
             VStack{
-                Text("Name of your friend")
+                Text("start_name_label")
                     .font(.title2).bold()
-                TextField("Can", text: $name)
+                TextField("Doggo", text: $name)
                     .font(.title3)
                     .autocorrectionDisabled()
                     .multilineTextAlignment(.center)
@@ -42,12 +42,12 @@ struct AddPetView : View {
                     .cornerRadius(5)
                     .shadow(radius: 8)
                     .padding(.bottom,50)
-                Text("When was your friend born?")
+                Text("birthday_title")
                     .font(.title2).bold()
-                DatePicker("Birthday", selection: $birthday,displayedComponents: .date)
+                DatePicker("birthday_title", selection: $birthday,displayedComponents: .date)
                     .labelsHidden()
                 
-                Text("Tap on the image to Select a photo")
+                Text("photo_set_label")
                     .font(.title2).bold()
                 if let selectedImageData {
                     HStack{
@@ -82,6 +82,8 @@ struct AddPetView : View {
                     }
                     
                 }
+                Text("photo_upload_detail_title")
+                    .font(.footnote)
                 
                 Text("feed_time_title")
                     .font(.title2).bold()
@@ -95,10 +97,10 @@ struct AddPetView : View {
                         .tag(DayTime.evening)
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .animation(.easeOut(duration: 0.2), value: dayType)
+                .animation(.easeOut(duration: 0.8), value: dayType)
                 
                 NotificationType()
-                    .animation(.easeOut(duration: 0.2), value: dayType)
+                    .animation(.easeOut(duration: 0.8), value: dayType)
                     .padding(.all)
                 
                 
@@ -107,13 +109,13 @@ struct AddPetView : View {
             
             HStack {
                 
-                Button("Cancel", role: .destructive) {
+                Button("cancel", role: .destructive) {
                     cancel()
                 }
                 .buttonStyle(.borderedProminent)
                 .font(.largeTitle)
                 .padding(.trailing, 50)
-                Button("Save") {
+                Button("save") {
                     savePet()
                 }
                 .font(.largeTitle)
@@ -150,9 +152,8 @@ struct AddPetView : View {
                        displayedComponents: .hourAndMinute)
             
         }
-        .animation(.easeOut(duration: 0.2), value: dayType)
-        .transition(.asymmetric(insertion: .move(edge: .leading).combined(with: .opacity),
-                                removal: .scale.combined(with: .opacity)))
+        .animation(.easeOut(duration: 0.8), value: dayType)
+        .transition(.identity)
         
     }
     
@@ -168,9 +169,8 @@ struct AddPetView : View {
                        in: morningFeed.addingTimeInterval(60)...,
                        displayedComponents: .hourAndMinute)
         }
-        .animation(.easeOut(duration: 0.2), value: dayType)
-        .transition(.asymmetric(insertion: .move(edge: .leading).combined(with: .opacity),
-                                    removal: .scale.combined(with: .opacity)))
+        .animation(.easeOut(duration: 0.8), value: dayType)
+        .transition(.identity)
     }
     
     var BothView: some View {
@@ -179,9 +179,8 @@ struct AddPetView : View {
                 .padding([.top,.bottom])
             EveningView
         }
-        .animation(.easeOut(duration: 0.2), value: dayType)
-        .transition(.asymmetric(insertion: .move(edge: .leading).combined(with: .opacity),
-                                removal: .scale.combined(with: .opacity)))
+        .animation(.easeOut(duration: 0.8), value: dayType)
+        .transition(.identity)
     }
     
     private func savePet(){

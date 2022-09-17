@@ -21,7 +21,7 @@ struct EventListView : View {
         NavigationView{
             ZStack{
                 if eventVM.events.isEmpty{
-                    EmptyEventView()
+                    EmptyEventView(eventVM: eventVM)
                 } else {
                     EventsView(eventVM: eventVM)
                 }

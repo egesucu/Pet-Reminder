@@ -13,8 +13,8 @@ class EventManager : ObservableObject{
     @Published var events : [EKEvent] = [EKEvent]()
     let eventStore = EKEventStore()
     
-    init() async {
-        await requestEvents()
+    init() {
+        requestEvents()
     }
     
     init(isDemo: Bool = false){
@@ -42,28 +42,28 @@ class EventManager : ObservableObject{
         
     }
     
-    func requestEvents() async{
-        
-        do {
-            _ = try await eventStore.requestAccess(to: .event)
-            await self.findCalendar()
-        } catch let error {
-            print(error.localizedDescription)
-        }
+    func requestEvents(){
+        eventStore.requestAccess(to: .event, completion: { success, error in
+            if let error{
+                print(error)
+            } else if success{
+                self.findCalendar()
+            }
+        })
     }
     
-    func findCalendar() async{
+    func findCalendar(){
         let calendars1 = self.eventStore.calendars(for: .event)
         
         if let petCalendar = calendars1.first(where: {$0.title == "Pet Reminder"}){
-            await self.loadEvents(from: petCalendar)
+            self.loadEvents(from: petCalendar)
         } else {
-            await self.createCalendar()
+            self.createCalendar()
             
         }
     }
     
-    func createCalendar() async {
+    func createCalendar() {
         
         let calendar = EKCalendar(for: .event, eventStore: eventStore)
         calendar.title = "Pet Reminder"
@@ -80,7 +80,7 @@ class EventManager : ObservableObject{
         
     }
     
-    func loadEvents(from calendar : EKCalendar) async{
+    func loadEvents(from calendar : EKCalendar) {
         let status = EKEventStore.authorizationStatus(for: .event)
         
         if status == .authorized {
@@ -91,22 +91,23 @@ class EventManager : ObservableObject{
             DispatchQueue.main.async {
                 let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
                 self.events = self.eventStore.events(matching: predicate)
+                self.objectWillChange.send()
             }
         } else {
-            await requestEvents()
+            requestEvents()
         }
     }
     
     
-    func reloadEvents() async{
+    func reloadEvents() {
         let calendars1 = self.eventStore.calendars(for: .event)
         
         if let petCalendar = calendars1.first(where: {$0.title == "Pet Reminder"}){
-            await self.loadEvents(from: petCalendar)
+            self.loadEvents(from: petCalendar)
         }
     }
     
-    func convertDateToString(startDate: Date?, endDate: Date?) async->String{
+    func convertDateToString(startDate: Date?, endDate: Date?)->String{
         
         if let startDate = startDate {
             let start = startDate.formatted(date: .numeric, time: .standard)
@@ -119,7 +120,7 @@ class EventManager : ObservableObject{
         return ""
     }
     
-    func removeEvent(event: EKEvent) async{
+    func removeEvent(event: EKEvent) {
         do {
             try self.eventStore.remove(event, span: .thisEvent, commit: true)
         } catch {
@@ -128,7 +129,7 @@ class EventManager : ObservableObject{
         
     }
     
-    func saveEvent(name : String, start : Date, end: Date = Date(), isAllDay: Bool = false) async{
+    func saveEvent(name : String, start : Date, end: Date = Date(), isAllDay: Bool = false) {
         
         let calendars1 = eventStore.calendars(for: .event)
         

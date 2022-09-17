@@ -9,12 +9,18 @@
 import SwiftUI
 
 struct EmptyEventView: View {
+    
+    @ObservedObject var eventVM : EventManager
+    
     var body: some View {
         HStack {
             Spacer()
             Text("event_no_title")
                 .font(.headline)
                 .padding()
+                .onTapGesture {
+                    eventVM.reloadEvents()
+                }
             Spacer()
         }
     }
@@ -22,6 +28,6 @@ struct EmptyEventView: View {
 
 struct EmptyEventView_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyEventView()
+        EmptyEventView(eventVM: .init(isDemo: true))
     }
 }

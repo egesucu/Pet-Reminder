@@ -14,6 +14,8 @@
 "select_date" = "Select a date";
 "done" = "Done";
 "remove_all" = "Remove All";
+"save" = "Save";
+"cancel" = "Cancel";
 
 /*
  HELLO
@@ -34,9 +36,9 @@ SETUP
 "birthday_ask_label" = "When does your friend born?";
 "date_select_label" = "Select the Date";
 "photo_title" = "Photo";
-"photo_set_label" = "Set a Photo";
+"photo_set_label" = "Tap the image to set a photo";
 "default_photo_label" = "I want to use the default photo.";
-"photo_upload_detail_title" = "Your photos are stored in your iCloud and not shared with the developer or server.";
+"photo_upload_detail_title" = "Your friends photo belongs to you. It can not be use for a commercial purpose.";
 "feed_time_title" = "Choose a Feed Time";
 "feed_selection_morning" = "Morning";
 "feed_selection_evening" = "Evening";
@@ -78,12 +80,16 @@ SETUP
 /*
  VET
  */
-"find_vet_title" = "Find Vet";
+"find_vet_title" = "Nearby";
 "location_alert_title" = "Alert";
 "location_alert_context" = "Location permission denied. In order to work with this page, you need to allow us from app settings";
 "location_alert_change" = "Change";
 "location_search_title" = "Search";
 "default_vet_text" = "Vet";
+"find_vet_open" = "Select your map app";
+"google_maps" = "Google Maps";
+"yandex_navi" = "Yandex Navigation";
+"apple_maps" = "Map";
 
 /*
  SETTINGS
@@ -128,3 +134,9 @@ SETUP
 "no_account" = "No iCloud account";
 "restricted_account" = "iCloud is restricted";
 "cant_fetch_status" = "iCloud is unavailable at the moment. Please try again later.";
+
+/*
+PRIVACY POLICY
+*/
+"privacy_policy_title" = "Privacy Policy";
+"privacy_policy_content" = "Pet Reminder is a free indie developed application which aims to make your life easy with your pet friend. We care about the privacy. Your information is stored in your application memory and shared with your other devices using Apple's CloudKit technology with iCloud. We don't value your information as a selling point or a commercial gain, but we only gather simple informations to show you inside of the app. Our app does not use any tracker or logging information to get your app usage, because we don't care. Our mission is to make the application easy to use with supporting latest iOS features and new design trends.";
