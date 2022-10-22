@@ -50,7 +50,7 @@ struct NotificationView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    notificationManager.removeNotifications(pets: pets.reversed())
+                    notificationManager.removeNotifications(pets: pets.compactMap({ $0 as Pet }))
                     notificationManager.getNotifications()
                 } label: {
                     Text("remove_all")
@@ -59,13 +59,14 @@ struct NotificationView: View {
         }
         .onAppear {
             notificationManager.getNotifications()
+            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
     }
     
     func remove(at offset: IndexSet){
         for index in offset{
             let notification = notificationManager.notifications[index]
-            notificationManager.removeNotificationWithId(notification.identifier)
+            notificationManager.removeNotificationsIdentifiers(with: [notification.identifier])
             notificationManager.getNotifications()
         }
     }
