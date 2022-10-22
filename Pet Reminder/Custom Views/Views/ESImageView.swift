@@ -16,17 +16,12 @@ struct ESImageView: View {
     var body: some View {
         if let data = data,
         let image = UIImage(data: data){
-            ZStack {
-                Rectangle()
-                    .fill(tintColor)
-                    .cornerRadius(25)
-                    .shadow(radius: 10)
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .padding(5)
-            }
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(25)
+                .shadow(radius: 10)
+                .padding(5)
         } else {
             ZStack {
                 Rectangle()
