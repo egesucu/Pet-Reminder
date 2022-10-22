@@ -29,7 +29,6 @@ struct NotificationView: View {
                                 Text("notification_to")
                             } icon: {
                                 Image(systemName: "sun.max.circle.fill")
-                                    .symbolRenderingMode(.multicolor)
                                     .foregroundColor(.yellow)
                                     .font(.title)
                             }
@@ -38,8 +37,7 @@ struct NotificationView: View {
                                 Text("notification_to")
                             } icon: {
                                 Image(systemName: "moon.stars.circle.fill")
-                                    .symbolRenderingMode(.multicolor)
-                                    .foregroundColor(.yellow)
+                                    .foregroundColor(.blue)
                                     .font(.title)
                             }
                         } else if notification.identifier.contains("birthday"){
