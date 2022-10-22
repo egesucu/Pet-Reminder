@@ -119,6 +119,7 @@ SETUP
 "notification_birthday_content" = "%@ born today. Happy birthday friend, here's a free hug and paw-five.";
 "notifications %lld" = "%lld notifications";
 "notification %lld" = "%lld notification";
+"notification_to" = "Notification";
 "notifications_title" = "Notifications";
 "notifications_manage_title" = "Manage Notifications";
  /*

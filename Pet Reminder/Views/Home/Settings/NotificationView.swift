@@ -24,7 +24,43 @@ struct NotificationView: View {
             ForEach(pets, id: \.name) { pet in
                 Section {
                     ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}),id: \.self){ notification in
-                        Text(notification.identifier)
+                        if notification.identifier.contains("morning"){
+                            Label {
+                                Text("notification_to")
+                            } icon: {
+                                Image(systemName: "sun.max.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .foregroundColor(.yellow)
+                                    .font(.title)
+                            }
+                        } else if notification.identifier.contains("evening"){
+                            Label {
+                                Text("notification_to")
+                            } icon: {
+                                Image(systemName: "moon.stars.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .foregroundColor(.yellow)
+                                    .font(.title)
+                            }
+                        } else if notification.identifier.contains("birthday"){
+                            Label {
+                                Text("notification_to")
+                            } icon: {
+                                if #available(iOS 16.0, *) {
+                                    Image(systemName: "birthday.cake.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .foregroundStyle(Color.green.gradient, Color.blue.gradient)
+                                        .font(.title)
+                                } else {
+                                    Image(systemName: "birthday.cake.fill")
+                                        .symbolRenderingMode(.palette)
+                                        .foregroundColor(.green)
+                                        .font(.title)
+                                }
+                            }
+                        } else {
+                            Text(notification.identifier)
+                        }
                     }
                 } header: {
                     Text(pet.name ?? "")

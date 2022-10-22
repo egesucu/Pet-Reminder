@@ -118,6 +118,7 @@ NOTIFICATIONS
 "notification_birthday_content" = "%@ bugün doğru. Doğumgünün kutlu olsun dost, bizden sana ücretsiz bir sarılma ve pati-beşlik.";
 "notifications %lld" = "%lld bildirim";
 "notification %lld" = "%lld bildirim";
+"notification_to" = "Bildirimi";
 "notifications_title" = "Bildirimler";
 "notifications_manage_title" = "Bildirimleri Yönet";
 
