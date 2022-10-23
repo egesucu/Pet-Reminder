@@ -44,7 +44,7 @@ struct MainView: View {
             }
         }
     }
-  
+    
     func resetFeedTimes(){
         if pets.count > 0{
             feedChecker.resetLogic(pets: pets, context: context)

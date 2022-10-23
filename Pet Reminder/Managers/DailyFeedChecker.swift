@@ -14,40 +14,26 @@ class DailyFeedChecker{
     static let shared = DailyFeedChecker()
     
     func resetLogic(pets: FetchedResults<Pet>, context: NSManagedObjectContext) {
-        
-        let today = UserDefaults.standard.object(forKey: "today") as? Date
-        
-        if let today = today{
-            
-            let first = Calendar.current.startOfDay(for: today)
-            let second = Calendar.current.startOfDay(for: .now)
-            
-            if first != second{
-                removePetFeeds(pets: pets, context: context)
-                UserDefaults.standard.setValue(Date.now, forKey: "today")
-            } else {
-            }
-            
-        } else {
-            UserDefaults.standard.setValue(Date.now, forKey: "today")
-        }
-        
-    }
-    
-    
-    func removePetFeeds(pets: FetchedResults<Pet>, context: NSManagedObjectContext){
-        
-        DispatchQueue.main.async {
-            for pet in pets{
-                pet.morningFed = false
-                pet.eveningFed = false
-            }
-            do {
-                try context.save()
-            } catch {
-                print(error)
+        for pet in pets{
+            if let feedSet = pet.feeds,
+               let feeds = feedSet.allObjects as? [Feed],
+               let lastFeed = feeds.last,
+               let date = lastFeed.feedDate{
+                if !Calendar.current.isDateInToday(date){
+                    let todaysFeed = Feed()
+                    todaysFeed.feedDate = .now
+                    todaysFeed.eveningFed = false
+                    todaysFeed.morningFed = false
+                    pet.addToFeeds(todaysFeed)
+                }
             }
         }
+        do {
+            try context.save()
+        } catch {
+            print(error)
+        }
+        
     }
     
     

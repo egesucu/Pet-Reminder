@@ -15,11 +15,25 @@ struct PetCell: View {
             ESImageView(data: pet.image)
                 .padding([.top,.trailing,.bottom],10)
                 .frame(maxWidth: 150, maxHeight: 150)
-            Text(pet.name ?? "Viski")
-                .foregroundColor(Color(uiColor: .label))
-                .font(.title)
-                .minimumScaleFactor(0.5)
-                .padding()
+            VStack {
+                Text(pet.name ?? "Viski")
+                    .foregroundColor(Color(uiColor: .label))
+                    .font(.title)
+                    .minimumScaleFactor(0.5)
+                    .padding()
+                if let feedSet = pet.feeds,
+                   let feeds = feedSet.allObjects as? [Feed],
+                   feeds.count > 0,
+                   let lastFeed = feeds.last{
+                    if lastFeed.eveningFed,
+                       let eveningTime = lastFeed.eveningFedStamp{
+                        Text("Last Feed: \(eveningTime.formatted())")
+                    } else if lastFeed.morningFed,
+                              let morningTime = lastFeed.morningFedStamp{
+                        Text("Last Feed: \(morningTime.formatted())")
+                    }
+                }
+            }
         }
     }
 }

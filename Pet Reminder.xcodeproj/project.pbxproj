@@ -37,6 +37,7 @@
 		9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13B28D606460018C7A6 /* EventManager.swift */; };
 		9D98B13F28D606F70018C7A6 /* PhotoImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */; };
 		9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */; };
+		9D9F55392905711D007E014B /* FeedHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F55382905711D007E014B /* FeedHistory.swift */; };
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DADDF6927821591000943AE /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6827821591000943AE /* PetCell.swift */; };
@@ -90,6 +91,7 @@
 		9D98B13B28D606460018C7A6 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImagePickerView.swift; sourceTree = "<group>"; };
 		9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithSearchBarView.swift; sourceTree = "<group>"; };
+		9D9F55382905711D007E014B /* FeedHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHistory.swift; sourceTree = "<group>"; };
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DADDF6827821591000943AE /* PetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
@@ -265,7 +267,9 @@
 			isa = PBXGroup;
 			children = (
 				9D70F67226B4B6BC007D37EF /* PetDetailView.swift */,
+				9D9F55382905711D007E014B /* FeedHistory.swift */,
 				9D279848257ABFDD0078B668 /* HomeView.swift */,
+				9DADDF6827821591000943AE /* PetCell.swift */,
 			);
 			path = "Pet List";
 			sourceTree = "<group>";
@@ -307,7 +311,6 @@
 		9DCDA06826E3C94100DF290F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9DADDF6827821591000943AE /* PetCell.swift */,
 				9DB0E0512778BC870089E9B0 /* ESImageView.swift */,
 				9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */,
 				9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */,
@@ -458,6 +461,7 @@
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
 				9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */,
+				9D9F55392905711D007E014B /* FeedHistory.swift in Sources */,
 				9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */,
 				9DCDA06126E3C34600DF290F /* Pin.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
