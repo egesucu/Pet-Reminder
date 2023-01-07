@@ -16,6 +16,7 @@ struct PetDetailView: View {
     @State private var morningOn = false
     @State private var eveningOn = false
     @State private var showFeedHistory = false
+    @State private var showVaccines = false
     
     let feedback = UINotificationFeedbackGenerator()
     var context: NSManagedObjectContext
@@ -24,7 +25,7 @@ struct PetDetailView: View {
         VStack{
             ESImageView(data: pet.image)
                 .padding([.top,.leading,.trailing],20)
-                .frame(minWidth: 50, idealWidth: 150, maxWidth: 350, minHeight: 50, idealHeight: 150, maxHeight: 350, alignment: .center)
+                .frame(minWidth: 50, idealWidth: 100, maxWidth: 200, minHeight: 50, idealHeight: 100, maxHeight: 200, alignment: .center)
             Spacer()
             HStack(spacing: 30){
                 switch pet.selection{
@@ -71,22 +72,33 @@ struct PetDetailView: View {
             }
             .padding(.bottom,50)
             
-            Button {
-                showFeedHistory.toggle()
-            } label: {
-                Text("Feed History")
+            HStack {
+                Button {
+                    showFeedHistory.toggle()
+                } label: {
+                    Label("feeds_title", systemImage: "fork.knife.circle.fill")
+                }
+                .buttonStyle(.bordered)
+                .tint(.accentColor)
+                Button {
+                    showVaccines.toggle()
+                } label: {
+                    Label("vaccines_title", systemImage: "syringe.fill")
+                }
+                .buttonStyle(.bordered)
+                .tint(.accentColor)
             }
-            .buttonStyle(.borderedProminent)
-            .font(.largeTitle)
-            .tint(Color.accentColor)
 
             Spacer()
         }
         .onAppear{
             getLatestFeed()
         }
-        .sheet(isPresented: $showFeedHistory, content: {
+        .fullScreenCover(isPresented: $showFeedHistory, content: {
             FeedHistory(feeds: filterFeeds(), context: context)
+        })
+        .fullScreenCover(isPresented: $showVaccines , content: {
+            VaccineHistoryView(pet: pet, context: context)
         })
         .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
     }
@@ -102,7 +114,21 @@ struct PetDetailView: View {
     func updateFeed(type: Selection, value: Bool){
         if let feedSet = pet.feeds,
            let feeds = feedSet.allObjects as? [Feed]{
-            if feeds.count > 0 {
+            if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now)}).count == 0{
+                let feed = Feed(context: context)
+                switch type {
+                case .morning:
+                    feed.morningFedStamp = value ? .now : nil
+                    feed.morningFed = value
+                case .evening:
+                    feed.eveningFedStamp = value ? .now : nil
+                    feed.eveningFed = value
+                default:
+                    break
+                }
+                pet.addToFeeds(feed)
+                save()
+            } else {
                 if let lastFeed = feeds.last{
                     switch type {
                     case .morning:
@@ -114,6 +140,10 @@ struct PetDetailView: View {
                     default:
                         break
                     }
+                    if value{
+                        lastFeed.feedDate = .now
+                    }
+                    save()
                 }
             }
         }
@@ -122,14 +152,12 @@ struct PetDetailView: View {
     func getLatestFeed(){
         if let feedSet = pet.feeds,
            let feeds = feedSet.allObjects as? [Feed]{
-            if feeds.count > 0 {
-                if let lastFeed = feeds.last{
-                    if let date = lastFeed.feedDate{
-                        if Calendar.current.isDateInToday(date){
-                            // We have a feed.
-                            morningOn = lastFeed.morningFed
-                            eveningOn = lastFeed.eveningFed
-                        }
+            if let lastFeed = feeds.last{
+                if let date = lastFeed.feedDate{
+                    if Calendar.current.isDateInToday(date){
+                        // We have a feed.
+                        morningOn = lastFeed.morningFed
+                        eveningOn = lastFeed.eveningFed
                     }
                 }
             }

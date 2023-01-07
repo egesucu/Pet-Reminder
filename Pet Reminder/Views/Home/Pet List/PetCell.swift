@@ -27,10 +27,18 @@ struct PetCell: View {
                    let lastFeed = feeds.last{
                     if lastFeed.eveningFed,
                        let eveningTime = lastFeed.eveningFedStamp{
-                        Text("Last Feed: \(eveningTime.formatted())")
+                        VStack(alignment: .leading){
+                            Text("last_feed_title")
+                                .bold()
+                            Text("\(eveningTime.formatted())")
+                        }
                     } else if lastFeed.morningFed,
                               let morningTime = lastFeed.morningFedStamp{
-                        Text("Last Feed: \(morningTime.formatted())")
+                        VStack(alignment: .leading){
+                            Text("last_feed_title")
+                                .bold()
+                            Text("\(morningTime.formatted())")
+                        }
                     }
                 }
             }

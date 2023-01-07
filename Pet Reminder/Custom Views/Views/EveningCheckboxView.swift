@@ -19,9 +19,11 @@ struct EveningCheckboxView : View {
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: eveningOn ? "moon.fill" : "moon")
+                Image(systemName: eveningOn ? "moon.circle.fill" : "moon.circle")
+                    .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.blue)
                     .font(.largeTitle.bold())
+                    .animation(.easeInOut,value: eveningOn)
             }
             .padding(.bottom)
             withAnimation {

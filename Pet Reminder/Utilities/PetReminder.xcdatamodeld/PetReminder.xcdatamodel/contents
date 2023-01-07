@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D5027d" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Feed" representedClassName="Feed" syncable="YES" codeGenerationType="class">
         <attribute name="eveningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="eveningFedStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -20,5 +20,11 @@
         <attribute name="morningTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <relationship name="feeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Feed" inverseName="pet" inverseEntity="Feed"/>
+        <relationship name="vaccines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vaccine" inverseName="pet" inverseEntity="Vaccine"/>
+    </entity>
+    <entity name="Vaccine" representedClassName="Vaccine" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="pet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pet" inverseName="vaccines" inverseEntity="Pet"/>
     </entity>
 </model>
