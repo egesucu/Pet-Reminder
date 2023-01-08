@@ -36,7 +36,7 @@ struct EventView : View {
                         .font(.body)
                         .foregroundColor(tintColor.isDarkColor ? .white : .black)
                 }
-                .frame(maxWidth: 130)
+                
             }
         }
         .onAppear(perform: {
@@ -62,15 +62,12 @@ struct EventView : View {
             if Calendar.current.isDateInToday(event.startDate){
                 self.dateString = NSLocalizedString("all_day_title", comment: "")
             } else {
-                self.dateString = "\(eventDate)" + "\n" + NSLocalizedString("all_day_title", comment: "")
+                self.dateString = "\(eventDate)" + " " + NSLocalizedString("all_day_title", comment: "")
             }
             
         } else {
             if Calendar.current.isDateLater(date: event.startDate){
-                self.dateString = """
-\(eventDate)
-\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))
-"""
+                self.dateString = "\(eventDate) \(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
             } else {
                 self.dateString = "\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
             }

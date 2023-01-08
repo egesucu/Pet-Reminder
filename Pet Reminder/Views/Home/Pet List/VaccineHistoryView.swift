@@ -53,13 +53,13 @@ struct VaccineHistoryView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
-                            .tint(.accentColor)
+                            .tint(.blue)
                     }
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                     Button(action: addVaccine) {
                         Image(systemName: "plus.circle.fill")
-                            .tint(.accentColor)
+                            .tint(.blue)
                     }
                 }
             }
