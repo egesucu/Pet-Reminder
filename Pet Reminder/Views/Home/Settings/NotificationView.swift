@@ -24,7 +24,41 @@ struct NotificationView: View {
             ForEach(pets, id: \.name) { pet in
                 Section {
                     ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}),id: \.self){ notification in
-                        Text(notification.identifier)
+                        if notification.identifier.contains("morning"){
+                            Label {
+                                Text("notification_to")
+                            } icon: {
+                                Image(systemName: "sun.max.circle.fill")
+                                    .foregroundColor(.yellow)
+                                    .font(.title)
+                            }
+                        } else if notification.identifier.contains("evening"){
+                            Label {
+                                Text("notification_to")
+                            } icon: {
+                                Image(systemName: "moon.stars.circle.fill")
+                                    .foregroundColor(.blue)
+                                    .font(.title)
+                            }
+                        } else if notification.identifier.contains("birthday"){
+                            Label {
+                                Text("notification_to")
+                            } icon: {
+                                if #available(iOS 16.0, *) {
+                                    Image(systemName: "birthday.cake.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .foregroundStyle(Color.green.gradient, Color.blue.gradient)
+                                        .font(.title)
+                                } else {
+                                    Image(systemName: "birthday.cake.fill")
+                                        .symbolRenderingMode(.palette)
+                                        .foregroundColor(.green)
+                                        .font(.title)
+                                }
+                            }
+                        } else {
+                            Text(notification.identifier)
+                        }
                     }
                 } header: {
                     Text(pet.name ?? "")
@@ -50,7 +84,7 @@ struct NotificationView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    notificationManager.removeNotifications(pets: pets.reversed())
+                    notificationManager.removeNotifications(pets: pets.compactMap({ $0 as Pet }))
                     notificationManager.getNotifications()
                 } label: {
                     Text("remove_all")
@@ -59,13 +93,14 @@ struct NotificationView: View {
         }
         .onAppear {
             notificationManager.getNotifications()
+            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
     }
     
     func remove(at offset: IndexSet){
         for index in offset{
             let notification = notificationManager.notifications[index]
-            notificationManager.removeNotificationWithId(notification.identifier)
+            notificationManager.removeNotificationsIdentifiers(with: [notification.identifier])
             notificationManager.getNotifications()
         }
     }

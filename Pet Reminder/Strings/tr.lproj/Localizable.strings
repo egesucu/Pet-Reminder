@@ -16,6 +16,11 @@ GENERALS
 "remove_all" = "Tümünü Sil";
 "save" = "Kaydet";
 "cancel" = "İptal Et";
+"add" = "Ekle";
+"previous_title" = "Geçmiş";
+"name" = "İsim";
+"date" = "Tarih";
+"today" = "Bugün";
 /*
 HELLO
 */
@@ -118,6 +123,7 @@ NOTIFICATIONS
 "notification_birthday_content" = "%@ bugün doğru. Doğumgünün kutlu olsun dost, bizden sana ücretsiz bir sarılma ve pati-beşlik.";
 "notifications %lld" = "%lld bildirim";
 "notification %lld" = "%lld bildirim";
+"notification_to" = "Bildirimi";
 "notifications_title" = "Bildirimler";
 "notifications_manage_title" = "Bildirimleri Yönet";
 
@@ -140,3 +146,20 @@ PRIVACY POLICY
 */
 "privacy_policy_title" = "Gizlilik Politikası";
 "privacy_policy_content" = "Pet Reminder, tek bir geliştiriciye ait olan ücretsiz bir uygulamadır. Uygulamanın amacı evcil dostlarınızla olan yaşamınızı kolaylaştırmaktır. Gizliliğe önem veriyoruz. Bilgileriniz uygulama verisi içerisinde saklanıyor ve Apple'ın CloudKit teknolojisi ile iCloud hesabınız üzerinden diğer cihazlara aktarılıyor. Verilerinize bir değer biçmiyoruz ve onları bir ticari kazanç olarak görmüyoruz. Toplamamızdaki tek amaç bunları uygulama içerisinde göstermektir. Uygulamamız aktivitelerinizi takip eden bir kod içermiyor, çünkü umursamıyoruz. Misyonumuz uygulamayı yepyeni iOS özellikleri ile daha kullanışlı bir hale getirmek ve yeni tasarım trendlerini uygulamaktır.";
+
+/*
+FEEDS
+*/
+"last_feed_title" = "Son Öğün:";
+"no_feed_today_content" = "Bugün öğün yok";
+"no_feed_content" = "Öğün Yok";
+"feed_history_title" = "Öğün Geçmişi";
+"feed_content" = "Öğün";
+"feeds_title" = "Öğünler";
+
+/*
+VACCINATIONS
+*/
+"vaccines_title" = "Aşılar";
+"no_vaccine_title" = "Henüz aşı eklenmemiş.";
+"vaccine_history_title" = "Aşı Geçmişi";

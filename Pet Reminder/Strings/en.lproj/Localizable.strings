@@ -16,6 +16,11 @@
 "remove_all" = "Remove All";
 "save" = "Save";
 "cancel" = "Cancel";
+"add" = "Add";
+"previous_title" = "Previous";
+"name" = "Name";
+"date" = "Date";
+"today" = "Today";
 
 /*
  HELLO
@@ -119,6 +124,7 @@ SETUP
 "notification_birthday_content" = "%@ born today. Happy birthday friend, here's a free hug and paw-five.";
 "notifications %lld" = "%lld notifications";
 "notification %lld" = "%lld notification";
+"notification_to" = "Notification";
 "notifications_title" = "Notifications";
 "notifications_manage_title" = "Manage Notifications";
  /*
@@ -140,3 +146,20 @@ PRIVACY POLICY
 */
 "privacy_policy_title" = "Privacy Policy";
 "privacy_policy_content" = "Pet Reminder is a free indie developed application which aims to make your life easy with your pet friend. We care about the privacy. Your information is stored in your application memory and shared with your other devices using Apple's CloudKit technology with iCloud. We don't value your information as a selling point or a commercial gain, but we only gather simple informations to show you inside of the app. Our app does not use any tracker or logging information to get your app usage, because we don't care. Our mission is to make the application easy to use with supporting latest iOS features and new design trends.";
+
+/*
+FEEDS
+*/
+"last_feed_title" = "Last Feed:";
+"no_feed_today_content" = "No Feed today";
+"no_feed_content" = "No Feed";
+"feed_history_title" = "Feed History";
+"feed_content" = "Feed";
+"feeds_title" = "Feeds";
+
+/*
+VACCINATIONS
+*/
+"vaccines_title" = "Vaccines";
+"no_vaccine_title" = "No vaccine added yet.";
+"vaccine_history_title" = "Vaccine History";

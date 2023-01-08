@@ -19,9 +19,11 @@ struct MorningCheckboxView : View {
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: morningOn ? "sun.max.fill" : "sun.max")
+                Image(systemName: morningOn ? "sun.max.circle.fill" : "sun.max.circle")
+                    .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.yellow)
                     .font(.largeTitle.bold())
+                    .animation(.easeInOut,value: morningOn)
             }.font(.title.bold())
                 .padding(.bottom)
             withAnimation{

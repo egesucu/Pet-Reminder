@@ -43,14 +43,14 @@ class PetManager{
     
     func saveNotifications(of pet: Pet){
         if let morning = morningTime {
-            manager.createNotification(of: pet, with: .morning, date: morning)
+            manager.createNotification(of: pet.name ?? "", with: .morning, date: morning)
         }
         
         if let evening = eveningTime{
-            manager.createNotification(of: pet, with: .evening, date: evening)
+            manager.createNotification(of: pet.name ?? "", with: .evening, date: evening)
         }
         
-        manager.createNotification(of: pet, with: .birthday, date: birthday)
+        manager.createNotification(of: pet.name ?? "", with: .birthday, date: birthday)
         
     }
     

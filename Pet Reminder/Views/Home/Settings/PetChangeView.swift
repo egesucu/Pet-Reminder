@@ -169,16 +169,16 @@ struct PetChangeView: View {
     func changeNotification(for selection: Selection){
         switch selection {
         case .both:
-            notificationManager.removeNotification(of: pet, with: .morning)
-            notificationManager.removeNotification(of: pet, with: .evening)
-            notificationManager.createNotification(of: pet, with: .morning, date: morningDate)
-            notificationManager.createNotification(of: pet, with: .evening, date: eveningDate)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
+            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: morningDate)
+            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
         case .morning:
-            notificationManager.removeNotification(of: pet, with: .morning)
-            notificationManager.createNotification(of: pet, with: .morning, date: morningDate)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
+            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: morningDate)
         case .evening:
-            notificationManager.removeNotification(of: pet, with: .evening)
-            notificationManager.createNotification(of: pet, with: .evening, date: eveningDate)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
+            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
         }
         let (morningTime, eveningTime) = (pet.morningTime,pet.eveningTime)
         

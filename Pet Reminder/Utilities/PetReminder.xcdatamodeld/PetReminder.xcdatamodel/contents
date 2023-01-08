@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D5027d" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Feed" representedClassName="Feed" syncable="YES" codeGenerationType="class">
+        <attribute name="eveningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="eveningFedStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="feedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="morningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="morningFedStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="pet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pet" inverseName="feeds" inverseEntity="Pet"/>
+    </entity>
     <entity name="Pet" representedClassName="Pet" syncable="YES" codeGenerationType="class">
         <attribute name="birthday" attributeType="Date" defaultDateTimeInterval="-31629600" usesScalarValueType="NO"/>
         <attribute name="choice" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -11,8 +19,12 @@
         <attribute name="morningFed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="morningTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
+        <relationship name="feeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Feed" inverseName="pet" inverseEntity="Feed"/>
+        <relationship name="vaccines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vaccine" inverseName="pet" inverseEntity="Vaccine"/>
     </entity>
-    <elements>
-        <element name="Pet" positionX="-63" positionY="-18" width="128" height="179"/>
-    </elements>
+    <entity name="Vaccine" representedClassName="Vaccine" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="pet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pet" inverseName="vaccines" inverseEntity="Pet"/>
+    </entity>
 </model>

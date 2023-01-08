@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,8 @@
 		9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */; };
 		9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */; };
 		9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */; };
+		9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D845D0429698D800032063C /* VaccineHistoryView.swift */; };
+		9D845D0829699C3F0032063C /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9D845D0729699C3F0032063C /* AlertKit */; };
 		9D849050277748CB005EAC5B /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84904F277748CB005EAC5B /* DonateView.swift */; };
 		9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5AA26C9668D006BEF59 /* MainView.swift */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
@@ -37,6 +39,7 @@
 		9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13B28D606460018C7A6 /* EventManager.swift */; };
 		9D98B13F28D606F70018C7A6 /* PhotoImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */; };
 		9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */; };
+		9D9F55392905711D007E014B /* FeedHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F55382905711D007E014B /* FeedHistory.swift */; };
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DADDF6927821591000943AE /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6827821591000943AE /* PetCell.swift */; };
@@ -78,6 +81,7 @@
 		9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		9D845D0429698D800032063C /* VaccineHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineHistoryView.swift; sourceTree = "<group>"; };
 		9D84904F277748CB005EAC5B /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		9D87C5AA26C9668D006BEF59 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9D8970A425681E9300B3C414 /* PetReminderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderApp.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 		9D98B13B28D606460018C7A6 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImagePickerView.swift; sourceTree = "<group>"; };
 		9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithSearchBarView.swift; sourceTree = "<group>"; };
+		9D9F55382905711D007E014B /* FeedHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHistory.swift; sourceTree = "<group>"; };
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DADDF6827821591000943AE /* PetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
@@ -117,6 +122,7 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
+				9D845D0829699C3F0032063C /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +271,10 @@
 			isa = PBXGroup;
 			children = (
 				9D70F67226B4B6BC007D37EF /* PetDetailView.swift */,
+				9D9F55382905711D007E014B /* FeedHistory.swift */,
+				9D845D0429698D800032063C /* VaccineHistoryView.swift */,
 				9D279848257ABFDD0078B668 /* HomeView.swift */,
+				9DADDF6827821591000943AE /* PetCell.swift */,
 			);
 			path = "Pet List";
 			sourceTree = "<group>";
@@ -307,7 +316,6 @@
 		9DCDA06826E3C94100DF290F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9DADDF6827821591000943AE /* PetCell.swift */,
 				9DB0E0512778BC870089E9B0 /* ESImageView.swift */,
 				9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */,
 				9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */,
@@ -363,6 +371,9 @@
 			dependencies = (
 			);
 			name = "Pet Reminder";
+			packageProductDependencies = (
+				9D845D0729699C3F0032063C /* AlertKit */,
+			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
 			productType = "com.apple.product-type.application";
@@ -392,6 +403,9 @@
 				tr,
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
+			packageReferences = (
+				9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */,
+			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -450,6 +464,7 @@
 				9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */,
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
+				9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
 				9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
@@ -458,6 +473,7 @@
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
 				9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */,
+				9D9F55392905711D007E014B /* FeedHistory.swift in Sources */,
 				9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */,
 				9DCDA06126E3C34600DF290F /* Pin.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
@@ -675,6 +691,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rebeloper/AlertKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9D845D0729699C3F0032063C /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		9D8970EC2568394700B3C414 /* PetReminder.xcdatamodeld */ = {
