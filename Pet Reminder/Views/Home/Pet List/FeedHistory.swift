@@ -14,6 +14,7 @@ struct FeedHistory: View {
     var feeds: [Feed]
     var context: NSManagedObjectContext
     @Environment(\.dismiss) var dismiss
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         
@@ -26,7 +27,7 @@ struct FeedHistory: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
-                            .tint(.accentColor)
+                            .tint(tintColor)
                     }
                 }
             }

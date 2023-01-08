@@ -17,7 +17,7 @@ struct AddEventView : View {
     @State private var eventEndDate = Date()
     @State private var isAllDay = false
     @StateObject var eventVM = EventManager()
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     var feedback: UINotificationFeedbackGenerator
@@ -37,9 +37,9 @@ struct AddEventView : View {
                         } else {
                             DatePicker("add_event_start", selection: $eventStartDate)
                                 .onChange(of: eventStartDate, perform: { value in
-                                    eventEndDate = value
+                                    eventEndDate = value.addingTimeInterval(60*60)
                                 })
-                            DatePicker(NSLocalizedString("add_event_end", comment: "") , selection: $eventEndDate, in: eventStartDate...)
+                            DatePicker(NSLocalizedString("add_event_end", comment: "") , selection: $eventEndDate)
                         }
                     }
                 }
@@ -61,10 +61,11 @@ struct AddEventView : View {
             if isAllDay{
                 eventVM.saveEvent(name: eventName, start: allDayDate, isAllDay: isAllDay)
             } else {
-                eventVM.saveEvent(name: eventName, start: allDayDate, end: eventEndDate)
+                eventVM.saveEvent(name: eventName, start: eventStartDate, end: eventEndDate)
             }
             self.eventVM.objectWillChange.send()
             eventVM.reloadEvents()
+            dismiss.callAsFunction()
             
         }, label: {
             Text("add_event_save")

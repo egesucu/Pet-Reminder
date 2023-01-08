@@ -17,6 +17,7 @@ struct PetDetailView: View {
     @State private var eveningOn = false
     @State private var showFeedHistory = false
     @State private var showVaccines = false
+    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     let feedback = UINotificationFeedbackGenerator()
     var context: NSManagedObjectContext
@@ -79,14 +80,14 @@ struct PetDetailView: View {
                     Label("feeds_title", systemImage: "fork.knife.circle.fill")
                 }
                 .buttonStyle(.bordered)
-                .tint(.accentColor)
+                .tint(tintColor)
                 Button {
                     showVaccines.toggle()
                 } label: {
                     Label("vaccines_title", systemImage: "syringe.fill")
                 }
                 .buttonStyle(.bordered)
-                .tint(.accentColor)
+                .tint(.blue)
             }
 
             Spacer()

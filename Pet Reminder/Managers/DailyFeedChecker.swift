@@ -20,7 +20,7 @@ class DailyFeedChecker{
                let lastFeed = feeds.last,
                let date = lastFeed.feedDate{
                 if !Calendar.current.isDateInToday(date){
-                    let todaysFeed = Feed()
+                    let todaysFeed = Feed(context: context)
                     todaysFeed.feedDate = .now
                     todaysFeed.eveningFed = false
                     todaysFeed.morningFed = false
