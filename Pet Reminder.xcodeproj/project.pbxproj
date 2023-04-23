@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,17 @@
 		9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */; };
 		9D44ACCA279C6154007EB5B6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC9279C6154007EB5B6 /* Enums.swift */; };
 		9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */; };
+		9D5DC0DB29F57849007A444D /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9D5DC0DA29F57849007A444D /* AlertKit */; };
+		9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0DC29F5804E007A444D /* PetImageView.swift */; };
+		9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0DE29F58061007A444D /* PetNameTextField.swift */; };
+		9D5DC0E129F58074007A444D /* PetBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E029F58074007A444D /* PetBirthdayView.swift */; };
+		9D5DC0E329F58088007A444D /* PetShowImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E229F58088007A444D /* PetShowImageView.swift */; };
+		9D5DC0E529F58098007A444D /* PetSelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E429F58098007A444D /* PetSelectImageView.swift */; };
+		9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */; };
+		9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */; };
+		9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */; };
+		9D5DC0ED29F58412007A444D /* DayTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EC29F58412007A444D /* DayTime.swift */; };
+		9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EE29F58860007A444D /* ActionButton.swift */; };
 		9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D708A6C2569640E00A89ACB /* Persistence.swift */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
@@ -28,7 +39,6 @@
 		9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */; };
 		9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */; };
 		9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D845D0429698D800032063C /* VaccineHistoryView.swift */; };
-		9D845D0829699C3F0032063C /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9D845D0729699C3F0032063C /* AlertKit */; };
 		9D849050277748CB005EAC5B /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84904F277748CB005EAC5B /* DonateView.swift */; };
 		9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5AA26C9668D006BEF59 /* MainView.swift */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
@@ -74,6 +84,16 @@
 		9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9D44ACC9279C6154007EB5B6 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		9D5DC0DC29F5804E007A444D /* PetImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetImageView.swift; sourceTree = "<group>"; };
+		9D5DC0DE29F58061007A444D /* PetNameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetNameTextField.swift; sourceTree = "<group>"; };
+		9D5DC0E029F58074007A444D /* PetBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetBirthdayView.swift; sourceTree = "<group>"; };
+		9D5DC0E229F58088007A444D /* PetShowImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetShowImageView.swift; sourceTree = "<group>"; };
+		9D5DC0E429F58098007A444D /* PetSelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetSelectImageView.swift; sourceTree = "<group>"; };
+		9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetNotificationSelectionView.swift; sourceTree = "<group>"; };
+		9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetActionsView.swift; sourceTree = "<group>"; };
+		9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewModel.swift; sourceTree = "<group>"; };
+		9D5DC0EC29F58412007A444D /* DayTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTime.swift; sourceTree = "<group>"; };
+		9D5DC0EE29F58860007A444D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		9D708A6C2569640E00A89ACB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
@@ -122,7 +142,7 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
-				9D845D0829699C3F0032063C /* AlertKit in Frameworks */,
+				9D5DC0DB29F57849007A444D /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +270,16 @@
 			isa = PBXGroup;
 			children = (
 				9DC849F728CB954A00776197 /* AddPetView.swift */,
+				9D5DC0EC29F58412007A444D /* DayTime.swift */,
+				9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */,
+				9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */,
+				9D5DC0EE29F58860007A444D /* ActionButton.swift */,
+				9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */,
+				9D5DC0E229F58088007A444D /* PetShowImageView.swift */,
+				9D5DC0E029F58074007A444D /* PetBirthdayView.swift */,
+				9D5DC0DE29F58061007A444D /* PetNameTextField.swift */,
+				9D5DC0DC29F5804E007A444D /* PetImageView.swift */,
+				9D5DC0E429F58098007A444D /* PetSelectImageView.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -372,7 +402,7 @@
 			);
 			name = "Pet Reminder";
 			packageProductDependencies = (
-				9D845D0729699C3F0032063C /* AlertKit */,
+				9D5DC0DA29F57849007A444D /* AlertKit */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -384,8 +414,9 @@
 		9D8E76E6248666BD004610C8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = Softhion;
 				TargetAttributes = {
 					9D8E76ED248666BD004610C8 = {
@@ -404,7 +435,7 @@
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
-				9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */,
+				9D5DC0D929F57849007A444D /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -443,9 +474,12 @@
 				9D44ACCA279C6154007EB5B6 /* Enums.swift in Sources */,
 				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
 				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,
+				9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */,
+				9D5DC0E129F58074007A444D /* PetBirthdayView.swift in Sources */,
 				9D98B13F28D606F70018C7A6 /* PhotoImagePickerView.swift in Sources */,
 				9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
+				9D5DC0E329F58088007A444D /* PetShowImageView.swift in Sources */,
 				9D8970EE2568394700B3C414 /* PetReminder.xcdatamodeld in Sources */,
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
@@ -454,15 +488,20 @@
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
+				9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
+				9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */,
+				9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */,
 				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
+				9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */,
 				9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */,
 				9D34019026DA7392005822DA /* NotificationManager.swift in Sources */,
 				9DC849F828CB954A00776197 /* AddPetView.swift in Sources */,
 				9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */,
 				9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */,
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
+				9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
@@ -472,6 +511,8 @@
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
+				9D5DC0ED29F58412007A444D /* DayTime.swift in Sources */,
+				9D5DC0E529F58098007A444D /* PetSelectImageView.swift in Sources */,
 				9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */,
 				9D9F55392905711D007E014B /* FeedHistory.swift in Sources */,
 				9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */,
@@ -693,20 +734,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+		9D5DC0D929F57849007A444D /* XCRemoteSwiftPackageReference "AlertKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rebeloper/AlertKit";
+			repositoryURL = "https://github.com/egesucu/AlertKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9D845D0729699C3F0032063C /* AlertKit */ = {
+		9D5DC0DA29F57849007A444D /* AlertKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */;
+			package = 9D5DC0D929F57849007A444D /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;
 		};
 /* End XCSwiftPackageProductDependency section */
