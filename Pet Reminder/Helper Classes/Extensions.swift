@@ -171,4 +171,6 @@ extension Color{
     var isDarkColor : Bool {
         return UIColor(self).isDarkColor
     }
+    static let dynamicBlack = Color(.label)
+    static let systemGreen = Color(.systemGreen)
 }

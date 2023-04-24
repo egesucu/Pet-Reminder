@@ -18,7 +18,7 @@ struct AddEventView : View {
     @State private var isAllDay = false
     @StateObject var eventVM = EventManager()
     @Environment(\.dismiss) var dismiss
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage("tint_color") var tintColor = Color.systemGreen
     
     var feedback: UINotificationFeedbackGenerator
     

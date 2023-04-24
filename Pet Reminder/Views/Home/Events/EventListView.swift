@@ -12,10 +12,11 @@ struct EventListView : View {
     
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
     
     let feedback = UINotificationFeedbackGenerator()
     
+    @AppStorage("tint_color") var tintColor = Color.systemGreen
+        
     var body: some View{
         
         NavigationView{
