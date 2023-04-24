@@ -12,31 +12,36 @@ struct HomeManagerView: View {
     
     @Environment(\.managedObjectContext)
     private var viewContext
-    @State private var currentTab = 1
+    @State private var currentTab : PetReminderTabs = .home
     @StateObject var storeManager : StoreManager
     
     var body: some View {
         
-        
         TabView(selection: $currentTab) {
-            HomeView().environment(\.managedObjectContext, viewContext)
+            HomeView()
+                .environment(\.managedObjectContext, viewContext)
                 .tabItem {
-                    Image(systemName: currentTab != 1 ? "person.crop.circle" : "person.crop.circle.fill")
-                }.tag(1)
+                    Image(systemName: currentTab != .home ? "person.crop.circle" : "person.crop.circle.fill")
+                }
+                .tag(PetReminderTabs.home)
             EventListView()
                 .tabItem {
-                    Image(systemName: currentTab != 2 ? "list.bullet" : "list.bullet.indent")
-                }.tag(2)
+                    Image(systemName: currentTab != .events ? "list.bullet" : "list.bullet.indent")
+                }
+                .tag(PetReminderTabs.events)
             FindVetView()
                 .tabItem {
-                    Image(systemName: currentTab != 3 ? "map" : "map.fill")
-                }.tag(3)
-            SettingsView(storeManager: storeManager).environment(\.managedObjectContext, viewContext)
+                    Image(systemName: currentTab != .vet ? "map" : "map.fill")
+                }
+                .tag(PetReminderTabs.vet)
+            SettingsView(storeManager: storeManager)
+                .environment(\.managedObjectContext, viewContext)
                 .tabItem {
-                    Image(systemName: currentTab != 4 ? "gearshape" : "gearshape.fill")
-                }.tag(4)
+                    Image(systemName: currentTab != .settings ? "gearshape" : "gearshape.fill")
+                }
+                .tag(PetReminderTabs.settings)
         }
-        .accentColor(Color(.label))
+        .accentColor(.dynamicBlack)
         
         
     }
