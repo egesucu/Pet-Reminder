@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 20.12.2020.
-//  Copyright © 2020 Softhion. All rights reserved.
+//  Copyright © 2020 Ege Sucu. All rights reserved.
 //
 
 import EventKit

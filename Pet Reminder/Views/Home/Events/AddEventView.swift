@@ -3,7 +3,7 @@
 //  AddEventView
 //
 //  Created by Ege Sucu on 11.09.2021.
-//  Copyright © 2021 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
