@@ -21,6 +21,7 @@
 		9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */; };
 		9D44ACCA279C6154007EB5B6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC9279C6154007EB5B6 /* Enums.swift */; };
 		9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */; };
+		9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56661A29F6D50100324DCC /* PetReminderTabs.swift */; };
 		9D5DC0DB29F57849007A444D /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9D5DC0DA29F57849007A444D /* AlertKit */; };
 		9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0DC29F5804E007A444D /* PetImageView.swift */; };
 		9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0DE29F58061007A444D /* PetNameTextField.swift */; };
@@ -84,6 +85,7 @@
 		9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9D44ACC9279C6154007EB5B6 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		9D56661A29F6D50100324DCC /* PetReminderTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderTabs.swift; sourceTree = "<group>"; };
 		9D5DC0DC29F5804E007A444D /* PetImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetImageView.swift; sourceTree = "<group>"; };
 		9D5DC0DE29F58061007A444D /* PetNameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetNameTextField.swift; sourceTree = "<group>"; };
 		9D5DC0E029F58074007A444D /* PetBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetBirthdayView.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			children = (
 				9D87C5AA26C9668D006BEF59 /* MainView.swift */,
 				9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */,
+				9D56661A29F6D50100324DCC /* PetReminderTabs.swift */,
 				9DCDA05B26E3C00F00DF290F /* Events */,
 				9DCDA05A26E3C00A00DF290F /* Settings */,
 				9DCDA05926E3BFFF00DF290F /* Find Vet */,
@@ -468,6 +471,7 @@
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
+				9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
@@ -674,7 +678,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.5;
+				MARKETING_VERSION = 5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -701,7 +705,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.5;
+				MARKETING_VERSION = 5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

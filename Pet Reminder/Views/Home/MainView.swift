@@ -14,44 +14,36 @@ struct MainView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name , ascending: true)])
     var pets : FetchedResults<Pet>
     @StateObject var storeManager : StoreManager
-    @State private var loading = true
-    @AppStorage("petSaved") var petSaved : Bool?
+    @AppStorage("petSaved") var petSaved : Bool = false
     
     let feedChecker = DailyFeedChecker.shared
     
     var body: some View{
-        ZStack(alignment: .center){
-            if let petSaved {
-                if petSaved{
-                    HomeManagerView(storeManager: storeManager)
-                } else {
-                    HelloView(storeManager: storeManager)
-                }
-            } else {
-                Color(uiColor: .label)
-                ProgressView(LocalizedStringKey("Loading"))
-                    .frame(width: 100, height: 100, alignment: .center)
-            }
-        }
-        .onAppear(perform: {
-            resetFeedTimes()
-        })
-        .onChange(of: pets.count) { newValue in
-            if newValue > 0{
-                petSaved = true
-            } else {
-                petSaved = false
-            }
+        PetView()
+            .onAppear(perform: resetFeedTimes)
+            .onChange(of: pets.count, perform: toggleSavedPet(count:))
+    }
+    
+    @ViewBuilder
+    func PetView() -> some View {
+        if petSaved{
+            HomeManagerView(storeManager: storeManager)
+        } else {
+            HelloView(storeManager: storeManager)
         }
     }
     
-    func resetFeedTimes(){
-        if pets.count > 0{
-            feedChecker.resetLogic(pets: pets, context: context)
-            petSaved = true
-        } else {
-            petSaved = false
-        }
+    private func toggleSavedPet(count: Int) {
+        petSaved = checkPetCount(count: count)
+    }
+    
+    private func checkPetCount(count: Int) -> Bool {
+        count > 0 ? true : false
+    }
+    
+    private func resetFeedTimes(){
+        petSaved = checkPetCount(count: pets.count)
+        if petSaved { feedChecker.resetLogic(pets: pets, context: context) }
     }
 }
 
