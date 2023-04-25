@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 20.12.2020.
-//  Copyright © 2020 Softhion. All rights reserved.
+//  Copyright © 2020 Ege Sucu. All rights reserved.
 //
 
 import EventKit
@@ -11,6 +11,12 @@ import EventKit
 class EventManager : ObservableObject{
     
     @Published var events : [EKEvent] = [EKEvent]()
+    @Published var eventName = ""
+    @Published var allDayDate = Date()
+    @Published var eventStartDate = Date()
+    @Published var eventEndDate = Date().addingTimeInterval(60*60)
+    @Published var isAllDay = false
+    
     let eventStore = EKEventStore()
     
     init() {
@@ -44,18 +50,18 @@ class EventManager : ObservableObject{
     
     func requestEvents(){
         eventStore.requestAccess(to: .event, completion: { success, error in
-            if let error{
+            if let error {
                 print(error)
-            } else if success{
+            } else if success {
                 self.findCalendar()
             }
         })
     }
     
     func findCalendar(){
-        let calendars1 = self.eventStore.calendars(for: .event)
+        let calendars = self.eventStore.calendars(for: .event)
         
-        if let petCalendar = calendars1.first(where: {$0.title == "Pet Reminder"}){
+        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
             self.loadEvents(from: petCalendar)
         } else {
             self.createCalendar()
@@ -100,9 +106,9 @@ class EventManager : ObservableObject{
     
     
     func reloadEvents() {
-        let calendars1 = self.eventStore.calendars(for: .event)
+        let calendars = self.eventStore.calendars(for: .event)
         
-        if let petCalendar = calendars1.first(where: {$0.title == "Pet Reminder"}){
+        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
             self.loadEvents(from: petCalendar)
         }
     }
@@ -129,35 +135,41 @@ class EventManager : ObservableObject{
         
     }
     
-    func saveEvent(name : String, start : Date, end: Date = Date(), isAllDay: Bool = false) {
+    func saveEvent(onFinish: () -> ()) {
         
-        let calendars1 = eventStore.calendars(for: .event)
+        let calendars = eventStore.calendars(for: .event)
         
-        if let petCalendar = calendars1.first(where: {$0.title == "Pet Reminder"}) {
+        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}) {
             let newEvent = EKEvent(eventStore: eventStore)
-            newEvent.title = name
+            newEvent.title = eventName
             newEvent.isAllDay = isAllDay
             
             if isAllDay {
-                newEvent.startDate = start
-                newEvent.endDate = start
+                newEvent.startDate = eventStartDate
+                newEvent.endDate = eventStartDate
             } else {
-                newEvent.startDate = start
-                newEvent.endDate = end
+                newEvent.startDate = eventStartDate
+                newEvent.endDate = eventEndDate
             }
             
             newEvent.calendar = petCalendar
             
-            
-            newEvent.addAlarm(EKAlarm(relativeOffset: -60*10))
+            let alarm = EKAlarm(relativeOffset: -60*10)
+            newEvent.addAlarm(alarm)
             newEvent.notes = NSLocalizedString("add_event_note", comment: "")
             
             do {
                 try eventStore.save(newEvent, span: .thisEvent)
-                
+                reloadEvents(onFinish: onFinish)
             } catch {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func reloadEvents(onFinish: () -> ()) {
+        objectWillChange.send()
+        reloadEvents()
+        onFinish()
     }
 }

@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 14.05.2021.
-//  Copyright © 2021 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
@@ -20,7 +20,7 @@ class PetManager{
     var imageData    : Data?
     var morningTime  : Date?
     var eveningTime  : Date?
-    var selection    = Selection.both
+    var selection    = NotificationSelection.both
     
     
     /// This function creates a Persistence Context to create a new Pet, transfers information that PetManager has been collecting from Setup Screens

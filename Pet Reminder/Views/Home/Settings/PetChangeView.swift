@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 28.08.2021.
-//  Copyright © 2021 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
@@ -166,7 +166,7 @@ struct PetChangeView: View {
         persistence.save()
     }
     
-    func changeNotification(for selection: Selection){
+    func changeNotification(for selection: NotificationSelection){
         switch selection {
         case .both:
             notificationManager.removeNotification(of: pet.name ?? "", with: .morning)

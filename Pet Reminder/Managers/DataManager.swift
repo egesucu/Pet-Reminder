@@ -3,7 +3,7 @@
 //  DataManager
 //
 //  Created by Ege Sucu on 11.09.2021.
-//  Copyright © 2021 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ class DataManager{
     
     static let shared = DataManager()
     
-    func checkIcloudAvailability(completion: @escaping (IcloudResult) -> Void){
+    func checkIcloudAvailability(completion: @escaping (ICloudResultType) -> Void){
         
         CKContainer.default().accountStatus { status, error in
             guard error == nil else { completion(.error(.unknownError(error!.localizedDescription))) ; return }

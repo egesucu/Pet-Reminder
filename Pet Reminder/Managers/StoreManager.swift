@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 25.09.2021.
-//  Copyright © 2021 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import Foundation
@@ -34,7 +34,7 @@ class StoreManager : NSObject, ObservableObject{
         request.start()
     }
     
-    func checkAvailability(completion: @escaping (Result<Bool,PaymentError>) -> Void){
+    func checkAvailability(completion: @escaping (Result<Bool,PaymentErrorType>) -> Void){
         if userCanPurchase{
             completion(.success(true))
         } else {
