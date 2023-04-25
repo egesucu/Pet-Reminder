@@ -3,12 +3,11 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 7.01.2023.
-//  Copyright © 2023 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
 import CoreData
-import AlertKit
 
 struct VaccineHistoryView: View {
     
@@ -18,7 +17,6 @@ struct VaccineHistoryView: View {
     @State private var vaccineName = ""
     @State private var vaccineDate = Date.now
     @State private var shouldAddVaccine = false
-    @StateObject var customAlertManager = CustomAlertManager()
     
     var body: some View {
         NavigationView{
@@ -54,36 +52,32 @@ struct VaccineHistoryView: View {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
                             .tint(.blue)
-                    }
+                    }.disabled(shouldAddVaccine)
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button(action: addVaccine) {
+                    Button(action: togglePopup) {
                         Image(systemName: "plus.circle.fill")
                             .tint(.blue)
-                    }
+                    }.disabled(shouldAddVaccine)
                 }
             }
             .navigationTitle(Text("vaccine_history_title"))
-            .customAlert(manager: customAlertManager, content: {
-                VStack{
-                    TextField("name", text: $vaccineName)
-                    DatePicker("date", selection: $vaccineDate)
-                }
-            }, buttons: [
-                .cancel(content: {
-                        Text("cancel").bold()
-                    }),
-                    .regular(content: {
-                        Text("add")
-                    }, action: saveVaccine)
-            ])
-
+            .popupView(isPresented: $shouldAddVaccine.animation()) {
+                AddPopupView(contentInput: $vaccineName, dateInput: $vaccineDate, onSave: saveVaccine, onCancel: cancelVaccine)
+            }
         }
         
     }
     
-    func addVaccine(){
-        customAlertManager.show()
+    func cancelVaccine() {
+        togglePopup()
+        resetTemporaryData()
+    }
+    
+    func togglePopup() {
+        withAnimation {
+            shouldAddVaccine.toggle()
+        }
     }
     
     func saveVaccine(){
@@ -92,6 +86,13 @@ struct VaccineHistoryView: View {
         vaccine.date = vaccineDate
         pet.addToVaccines(vaccine)
         PersistenceController.shared.save()
+        resetTemporaryData()
+        togglePopup()
+    }
+    
+    func resetTemporaryData() {
+        vaccineName = ""
+        vaccineDate = .now
     }
     
     func deleteVaccines(_at offsets: IndexSet){

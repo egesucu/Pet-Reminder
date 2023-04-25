@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 22.01.2022.
-//  Copyright © 2022 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
@@ -16,9 +16,9 @@ extension Array{
 }
 //MARK: - Pet
 extension Pet{
-    var selection: Selection {
+    var selection: NotificationSelection {
         get{
-            return Selection(rawValue: self.choice) ?? .both
+            return NotificationSelection(rawValue: self.choice) ?? .both
         }
         set{
             choice = newValue.rawValue
@@ -83,7 +83,7 @@ extension SKProduct {
     }
 }
 //MARK: - LocalizedError
-extension IcloudError: LocalizedError {
+extension IcloudErrorType: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .icloudUnavailable:
@@ -171,4 +171,6 @@ extension Color{
     var isDarkColor : Bool {
         return UIColor(self).isDarkColor
     }
+    static let dynamicBlack = Color(.label)
+    static let systemGreen = Color(.systemGreen)
 }
