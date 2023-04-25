@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7224CB8929F7B053009B0ADC /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7224CB8829F7B053009B0ADC /* AlertKit */; };
 		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
@@ -28,7 +29,6 @@
 		9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */; };
 		9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */; };
 		9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D845D0429698D800032063C /* VaccineHistoryView.swift */; };
-		9D845D0829699C3F0032063C /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9D845D0729699C3F0032063C /* AlertKit */; };
 		9D849050277748CB005EAC5B /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84904F277748CB005EAC5B /* DonateView.swift */; };
 		9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5AA26C9668D006BEF59 /* MainView.swift */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
@@ -122,7 +122,7 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
-				9D845D0829699C3F0032063C /* AlertKit in Frameworks */,
+				7224CB8929F7B053009B0ADC /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +372,7 @@
 			);
 			name = "Pet Reminder";
 			packageProductDependencies = (
-				9D845D0729699C3F0032063C /* AlertKit */,
+				7224CB8829F7B053009B0ADC /* AlertKit */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -404,7 +404,7 @@
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
-				9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */,
+				7224CB8729F7B053009B0ADC /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -693,20 +693,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+		7224CB8729F7B053009B0ADC /* XCRemoteSwiftPackageReference "AlertKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rebeloper/AlertKit";
+			repositoryURL = "https://github.com/egesucu/AlertKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9D845D0729699C3F0032063C /* AlertKit */ = {
+		7224CB8829F7B053009B0ADC /* AlertKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9D845D0629699C3F0032063C /* XCRemoteSwiftPackageReference "AlertKit" */;
+			package = 7224CB8729F7B053009B0ADC /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;
 		};
 /* End XCSwiftPackageProductDependency section */
