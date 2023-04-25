@@ -52,6 +52,8 @@ struct HomeView: View {
                                 self.addPet.toggle()
                             }, label: {
                                 Label("add_animal_accessible_label", systemImage: "plus.circle.fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle( tintColor.isDarkColor ? .white : .black, tintColor)
                                     .foregroundColor(tintColor)
                                     .font(.title)
                             })

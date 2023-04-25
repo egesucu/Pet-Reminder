@@ -172,5 +172,6 @@ extension Color{
         return UIColor(self).isDarkColor
     }
     static let dynamicBlack = Color(.label)
+    static let background = Color(.systemBackground)
     static let systemGreen = Color(.systemGreen)
 }

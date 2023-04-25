@@ -37,7 +37,7 @@ struct AddEventView : View {
     @ViewBuilder
     func eventDateView() -> some View {
         if eventVM.isAllDay{
-            DatePicker("add_event_date", selection: $eventVM.allDayDate, displayedComponents: .date)
+            DatePicker("add_event_date", selection: $eventVM.eventStartDate, displayedComponents: .date)
         } else {
             DatePicker("add_event_start", selection: $eventVM.eventStartDate)
                 .onChange(of: eventVM.eventStartDate, perform: changeEventMinimumDate(_:))
@@ -62,6 +62,9 @@ struct AddEventView : View {
                 .foregroundColor(tintColor)
                 .bold()
         }
+        .padding(.trailing, 5)
+        .background(tintColor.isDarkColor ? Color.clear : Color.black)
+        .cornerRadius(5)
     }
     
     private func saveEvent() {

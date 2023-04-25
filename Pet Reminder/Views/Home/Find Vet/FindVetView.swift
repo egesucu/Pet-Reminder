@@ -21,34 +21,9 @@ struct FindVetView: View {
     
     var body: some View {
         NavigationView{
-            switch userAccess {
-            case .notDetermined, .restricted, .denied:
-                Text("location_alert_context")
-                    .onTapGesture {
-                        showAlert.toggle()
-                    }
-                    .padding(.all)
-                    .multilineTextAlignment(.center)
-                    .navigationTitle(Text("find_vet_title"))
-            case .authorizedAlways, .authorizedWhenInUse:
-                MapWithSearchBarView(mapItems: $mapItems, region: $region, vetViewModel: vetViewModel) {
-                    reloadMapView()
-                }
-                    
-            @unknown default:
-                VStack {
-                    Text("location_alert_context")
-                        .onTapGesture {
-                            showAlert.toggle()
-                        }.padding(.all).multilineTextAlignment(.center)
-                }.navigationTitle(Text("find_vet_title"))
-            }
+            locationView()
         }
-        .onAppear(perform: {
-            askUserLocation()
-            userAccess = vetViewModel.locationManager.authorizationStatus
-            reloadMapView()
-        })
+        .onAppear(perform: loadView)
         .alert(isPresented: $showAlert, content: {
             
             Alert(title: Text("location_alert_title"), message: Text("location_alert_context"), primaryButton: Alert.Button.default(Text("location_alert_change"), action: {
@@ -56,6 +31,41 @@ struct FindVetView: View {
             }), secondaryButton: Alert.Button.cancel())
             
         })
+    }
+    
+    func loadView() {
+        DispatchQueue.main.async {
+            askUserLocation()
+            userAccess = vetViewModel.locationManager.authorizationStatus
+            reloadMapView()
+        }
+        
+    }
+    
+    @ViewBuilder
+    func locationView() -> some View {
+        switch userAccess {
+        case .notDetermined, .restricted, .denied:
+            Text("location_alert_context")
+                .onTapGesture {
+                    showAlert.toggle()
+                }
+                .padding(.all)
+                .multilineTextAlignment(.center)
+                .navigationTitle(Text("find_vet_title"))
+        case .authorizedAlways, .authorizedWhenInUse:
+            MapWithSearchBarView(mapItems: $mapItems, region: $region, vetViewModel: vetViewModel) {
+                reloadMapView()
+            }
+                
+        @unknown default:
+            VStack {
+                Text("location_alert_context")
+                    .onTapGesture {
+                        showAlert.toggle()
+                    }.padding(.all).multilineTextAlignment(.center)
+            }.navigationTitle(Text("find_vet_title"))
+        }
     }
 }
 

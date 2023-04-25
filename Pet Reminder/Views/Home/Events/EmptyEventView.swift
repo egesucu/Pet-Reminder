@@ -18,10 +18,15 @@ struct EmptyEventView: View {
             Text("event_no_title")
                 .font(.headline)
                 .padding()
-                .onTapGesture {
-                    eventVM.reloadEvents()
-                }
+                
             Spacer()
+        }
+        .onTapGesture(perform: reloadEvents)
+    }
+    
+    func reloadEvents() {
+        DispatchQueue.main.async {
+            eventVM.reloadEvents()
         }
     }
 }

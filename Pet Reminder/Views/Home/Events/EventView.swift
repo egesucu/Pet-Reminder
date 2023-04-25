@@ -22,7 +22,9 @@ struct EventView : View {
     
     var body: some View{
         ZStack(alignment: .center) {
-            Rectangle().fill(Color(.clear)).shadow(radius: 8)
+            Rectangle()
+                .fill(Color(.clear))
+                .shadow(radius: 8)
             VStack(alignment: .center){
                 Text(eventTitle)
                     .font(.headline)
@@ -30,7 +32,8 @@ struct EventView : View {
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
                 ZStack(alignment: .center){
-                    RoundedRectangle(cornerRadius: 100).fill(tintColor)
+                    RoundedRectangle(cornerRadius: 100)
+                        .fill(tintColor)
                     Text(dateString)
                         .multilineTextAlignment(.center)
                         .font(.body)
@@ -39,37 +42,50 @@ struct EventView : View {
                 
             }
         }
-        .onAppear(perform: {
-            fillData()
-        })
-        .onTapGesture {
-            self.showWarningForCalendar = true
-        }
-        .sheet(isPresented: $showWarningForCalendar, onDismiss: {
-            fillData()
-            eventVM.reloadEvents()
-        }, content: {
+        .onAppear(perform: fillData)
+        .onTapGesture(perform: showWarning)
+        .sheet(isPresented: $showWarningForCalendar, onDismiss: reloadView, content: {
             ESEventDetailView(event: event)
         })
         .padding(10)
     }
     
+    func showWarning() {
+        self.showWarningForCalendar = true
+    }
+    
+    func reloadView() {
+        fillData()
+        eventVM.reloadEvents()
+    }
+    
     func fillData(){
-        self.eventTitle = event.title
+        DispatchQueue.main.async {
+            self.eventTitle = event.title
+        }
         let eventDate = event.startDate
             .formatted(.dateTime.day().month(.twoDigits).year())
         if event.isAllDay{
             if Calendar.current.isDateInToday(event.startDate){
-                self.dateString = NSLocalizedString("all_day_title", comment: "")
+                DispatchQueue.main.async {
+                    self.dateString = NSLocalizedString("all_day_title", comment: "")
+                }
             } else {
-                self.dateString = "\(eventDate)" + " " + NSLocalizedString("all_day_title", comment: "")
+                DispatchQueue.main.async {
+                    self.dateString = "\(eventDate)" + " " + NSLocalizedString("all_day_title", comment: "")
+                }
             }
             
         } else {
             if Calendar.current.isDateLater(date: event.startDate){
-                self.dateString = "\(eventDate) \(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
+                DispatchQueue.main.async {
+                    self.dateString = "\(eventDate) \(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
+                }
             } else {
-                self.dateString = "\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
+                DispatchQueue.main.async {
+                    self.dateString = "\(event.startDate.formatted(.dateTime.hour().minute())) - \(event.endDate.formatted(.dateTime.hour().minute()))"
+                }
+                
             }
         }
     }

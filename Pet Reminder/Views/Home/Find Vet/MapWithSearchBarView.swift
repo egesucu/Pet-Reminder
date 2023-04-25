@@ -29,6 +29,7 @@ struct MapWithSearchBarView: View {
                         MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
                             VStack{
                                 Image(systemName: "pawprint.circle.fill")
+                                    .foregroundColor(tintColor.isDarkColor ? .white : .black)
                                     .font(.largeTitle)
                                     .padding(2)
                             }.background(tintColor)

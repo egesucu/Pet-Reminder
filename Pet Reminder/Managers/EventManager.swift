@@ -12,20 +12,19 @@ class EventManager : ObservableObject{
     
     @Published var events : [EKEvent] = [EKEvent]()
     @Published var eventName = ""
-    @Published var allDayDate = Date()
     @Published var eventStartDate = Date()
     @Published var eventEndDate = Date().addingTimeInterval(60*60)
     @Published var isAllDay = false
     
     let eventStore = EKEventStore()
     
-    init() {
-        requestEvents()
-    }
-    
     init(isDemo: Bool = false){
         if isDemo{
-            events = exampleEvents
+            DispatchQueue.main.async {
+                self.events = self.exampleEvents
+            }
+        } else {
+            requestEvents()
         }
     }
     
@@ -90,12 +89,11 @@ class EventManager : ObservableObject{
         let status = EKEventStore.authorizationStatus(for: .event)
         
         if status == .authorized {
-            
-            let startDate = Date()
+            let startDate: Date = .now
             //            86400 = tomowwow.
             let endDate = Date(timeIntervalSinceNow: 86400*3)
+            let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
             DispatchQueue.main.async {
-                let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
                 self.events = self.eventStore.events(matching: predicate)
                 self.objectWillChange.send()
             }

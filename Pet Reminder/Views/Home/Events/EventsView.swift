@@ -36,17 +36,22 @@ struct EventsView: View {
             } header: {
                 Text("upcoming_title")
             }
-        }.onAppear {
-            self.getDates()
-        }.refreshable {
-            eventVM.reloadEvents()
         }
+        .onAppear(perform: getDates)
+        .refreshable(action: reloadEvents)
+    }
+    
+    @Sendable
+    private func reloadEvents() async {
+        eventVM.reloadEvents()
     }
     
     func getDates(){
-        let events = eventVM.events
-        let dates = events.map({ $0.startDate})
-        self.dates = removeDuplicates(from: dates)
+        DispatchQueue.main.async {
+            let events = eventVM.events
+            let dates = events.map({ $0.startDate})
+            self.dates = removeDuplicates(from: dates)
+        }
     }
     
     func removeDuplicates(from array: [Date?])-> [Date]{

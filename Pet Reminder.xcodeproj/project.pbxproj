@@ -162,7 +162,9 @@
 		7224CB8A29F7B1C0009B0ADC /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				9D5DC0EC29F58412007A444D /* DayTime.swift */,
 				7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */,
+				9D56661A29F6D50100324DCC /* PetReminderTabs.swift */,
 				7224CB8D29F7B20B009B0ADC /* PaymentErrorType.swift */,
 				7224CB8F29F7B218009B0ADC /* NotificationSelection.swift */,
 				7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */,
@@ -300,7 +302,6 @@
 			isa = PBXGroup;
 			children = (
 				9DC849F728CB954A00776197 /* AddPetView.swift */,
-				9D5DC0EC29F58412007A444D /* DayTime.swift */,
 				9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */,
 				9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */,
 				9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */,
@@ -318,7 +319,6 @@
 			children = (
 				9D87C5AA26C9668D006BEF59 /* MainView.swift */,
 				9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */,
-				9D56661A29F6D50100324DCC /* PetReminderTabs.swift */,
 				9DCDA05B26E3C00F00DF290F /* Events */,
 				9DCDA05A26E3C00A00DF290F /* Settings */,
 				9DCDA05926E3BFFF00DF290F /* Find Vet */,
