@@ -112,7 +112,7 @@ struct PetDetailView: View {
         return []
     }
     
-    func updateFeed(type: Selection, value: Bool){
+    func updateFeed(type: NotificationSelection, value: Bool){
         if let feedSet = pet.feeds,
            let feeds = feedSet.allObjects as? [Feed]{
             if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now)}).count == 0{

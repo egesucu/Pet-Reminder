@@ -16,9 +16,9 @@ extension Array{
 }
 //MARK: - Pet
 extension Pet{
-    var selection: Selection {
+    var selection: NotificationSelection {
         get{
-            return Selection(rawValue: self.choice) ?? .both
+            return NotificationSelection(rawValue: self.choice) ?? .both
         }
         set{
             choice = newValue.rawValue
@@ -83,7 +83,7 @@ extension SKProduct {
     }
 }
 //MARK: - LocalizedError
-extension IcloudError: LocalizedError {
+extension IcloudErrorType: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .icloudUnavailable:

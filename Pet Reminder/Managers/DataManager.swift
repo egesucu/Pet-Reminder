@@ -14,7 +14,7 @@ class DataManager{
     
     static let shared = DataManager()
     
-    func checkIcloudAvailability(completion: @escaping (IcloudResult) -> Void){
+    func checkIcloudAvailability(completion: @escaping (ICloudResultType) -> Void){
         
         CKContainer.default().accountStatus { status, error in
             guard error == nil else { completion(.error(.unknownError(error!.localizedDescription))) ; return }

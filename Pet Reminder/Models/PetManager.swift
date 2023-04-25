@@ -20,7 +20,7 @@ class PetManager{
     var imageData    : Data?
     var morningTime  : Date?
     var eveningTime  : Date?
-    var selection    = Selection.both
+    var selection    = NotificationSelection.both
     
     
     /// This function creates a Persistence Context to create a new Pet, transfers information that PetManager has been collecting from Setup Screens

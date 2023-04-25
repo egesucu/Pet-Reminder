@@ -166,7 +166,7 @@ struct PetChangeView: View {
         persistence.save()
     }
     
-    func changeNotification(for selection: Selection){
+    func changeNotification(for selection: NotificationSelection){
         switch selection {
         case .both:
             notificationManager.removeNotification(of: pet.name ?? "", with: .morning)

@@ -34,7 +34,7 @@ class StoreManager : NSObject, ObservableObject{
         request.start()
     }
     
-    func checkAvailability(completion: @escaping (Result<Bool,PaymentError>) -> Void){
+    func checkAvailability(completion: @escaping (Result<Bool,PaymentErrorType>) -> Void){
         if userCanPurchase{
             completion(.success(true))
         } else {
