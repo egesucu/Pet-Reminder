@@ -104,8 +104,27 @@ class EventManager : ObservableObject{
         }
     }
     
+    func fillEventData(event: EKEvent, onCreated: (String) -> ()){
+       
+        if event.isAllDay{
+            if Calendar.current.isDateInToday(event.startDate){
+                onCreated(setupDateForCurrentEvents(from: event, allDay: true))
+            } else {
+                onCreated(setupDateForFutureEvents(from: event, allDay: true))
+            }
+            
+        } else {
+            if Calendar.current.isDateLater(date: event.startDate){
+                onCreated(setupDateForFutureEvents(from: event))
+            } else {
+                onCreated(setupDateForCurrentEvents(from: event))
+            }
+        }
+    }
     
-    func reloadEvents() {
+    
+    @Sendable
+    func reloadEvents() async {
         let calendars = self.eventStore.calendars(for: .event)
         
         if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
@@ -135,7 +154,23 @@ class EventManager : ObservableObject{
         
     }
     
-    func saveEvent(onFinish: () -> ()) {
+    func setupDateForFutureEvents(from event: EKEvent, allDay: Bool = false) -> String{
+        if allDay {
+            return .allDayString
+        } else {
+            return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
+        }
+    }
+    
+    func setupDateForCurrentEvents(from event: EKEvent, allDay: Bool = false) -> String{
+        if allDay {
+            return "\(event.startDate.printDate()) \(String.allDayString)"
+        } else {
+            return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
+        }
+    }
+    
+    func saveEvent(onFinish: () -> ()) async {
         
         let calendars = eventStore.calendars(for: .event)
         
@@ -160,16 +195,16 @@ class EventManager : ObservableObject{
             
             do {
                 try eventStore.save(newEvent, span: .thisEvent)
-                reloadEvents(onFinish: onFinish)
+                await reloadEvents(onFinish: onFinish)
             } catch {
                 print(error.localizedDescription)
             }
         }
     }
     
-    func reloadEvents(onFinish: () -> ()) {
+    func reloadEvents(onFinish: () -> ()) async {
         objectWillChange.send()
-        reloadEvents()
+        await reloadEvents()
         onFinish()
     }
 }

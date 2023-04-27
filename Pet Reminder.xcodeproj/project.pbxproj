@@ -66,6 +66,10 @@
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
 		9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC8262626FF697200EA2423 /* StoreManager.swift */; };
 		9DC849F828CB954A00776197 /* AddPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC849F728CB954A00776197 /* AddPetView.swift */; };
+		9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC87F1729FAC05A008AB720 /* TodaysEventsView.swift */; };
+		9DC87F1A29FAC074008AB720 /* FutureEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC87F1929FAC074008AB720 /* FutureEventsView.swift */; };
+		9DC87F1D29FAC8A6008AB720 /* EventTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC87F1C29FAC8A6008AB720 /* EventTimeView.swift */; };
+		9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC87F1E29FAC8CB008AB720 /* EventTitleView.swift */; };
 		9DCDA06126E3C34600DF290F /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06026E3C34600DF290F /* Pin.swift */; };
 		9DCDA06326E3C72400DF290F /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06226E3C72400DF290F /* EventView.swift */; };
 		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
@@ -137,6 +141,10 @@
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9DC8262626FF697200EA2423 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		9DC849F728CB954A00776197 /* AddPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetView.swift; sourceTree = "<group>"; };
+		9DC87F1729FAC05A008AB720 /* TodaysEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysEventsView.swift; sourceTree = "<group>"; };
+		9DC87F1929FAC074008AB720 /* FutureEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureEventsView.swift; sourceTree = "<group>"; };
+		9DC87F1C29FAC8A6008AB720 /* EventTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTimeView.swift; sourceTree = "<group>"; };
+		9DC87F1E29FAC8CB008AB720 /* EventTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTitleView.swift; sourceTree = "<group>"; };
 		9DCDA06026E3C34600DF290F /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		9DCDA06226E3C72400DF290F /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		9DCDA06426E3C84000DF290F /* EmptyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEventView.swift; sourceTree = "<group>"; };
@@ -296,6 +304,28 @@
 			path = "View Styles";
 			sourceTree = "<group>";
 		};
+		9DC87F1B29FAC0A9008AB720 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				9D0C24E425D081B4008F93CD /* EventListView.swift */,
+				9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */,
+				9DC87F1929FAC074008AB720 /* FutureEventsView.swift */,
+				9DC87F1729FAC05A008AB720 /* TodaysEventsView.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		9DC87F2029FAC90A008AB720 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				9DCDA06426E3C84000DF290F /* EmptyEventView.swift */,
+				9DCDA06226E3C72400DF290F /* EventView.swift */,
+				9DC87F1E29FAC8CB008AB720 /* EventTitleView.swift */,
+				9DC87F1C29FAC8A6008AB720 /* EventTimeView.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 		9DCDA05426E3BE2D00DF290F /* Setup */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,11 +394,9 @@
 		9DCDA05B26E3C00F00DF290F /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				9D0C24E425D081B4008F93CD /* EventListView.swift */,
-				9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */,
+				9DC87F1B29FAC0A9008AB720 /* List */,
 				9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */,
-				9DCDA06426E3C84000DF290F /* EmptyEventView.swift */,
-				9DCDA06226E3C72400DF290F /* EventView.swift */,
+				9DC87F2029FAC90A008AB720 /* Event */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -500,6 +528,7 @@
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
 				9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */,
 				7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */,
+				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,
 				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
@@ -517,6 +546,7 @@
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
 				7224CB8E29F7B20B009B0ADC /* PaymentErrorType.swift in Sources */,
+				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
@@ -530,6 +560,7 @@
 				9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */,
 				7224CB9029F7B218009B0ADC /* NotificationSelection.swift in Sources */,
 				9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */,
+				9DC87F1A29FAC074008AB720 /* FutureEventsView.swift in Sources */,
 				9D34019026DA7392005822DA /* NotificationManager.swift in Sources */,
 				9DC849F828CB954A00776197 /* AddPetView.swift in Sources */,
 				9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */,
@@ -537,6 +568,7 @@
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
 				9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
+				9DC87F1D29FAC8A6008AB720 /* EventTimeView.swift in Sources */,
 				9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */,
 				7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,

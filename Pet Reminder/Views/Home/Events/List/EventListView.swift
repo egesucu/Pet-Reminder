@@ -13,17 +13,17 @@ struct EventListView : View {
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
     @AppStorage("tint_color") var tintColor = Color.systemGreen
-        
+    
     var body: some View{
         
         NavigationView{
             showEventView()
                 .navigationTitle(Text("event_title"))
                 .toolbar(content: eventToolBar)
-                
+            
         }
         .navigationViewStyle(.stack)
-        .onAppear(perform: eventVM.reloadEvents)
+        .onAppear(perform: reloadEvents)
     }
     
     @ToolbarContentBuilder
@@ -34,9 +34,13 @@ struct EventListView : View {
                     .font(.title2)
                     .foregroundColor(tintColor)
             }
-            .sheet(isPresented: $showAddEvent, onDismiss: eventVM.reloadEvents, content: {
-                AddEventView()
-            })
+            .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView() })
+        }
+    }
+    
+    private func reloadEvents() {
+        Task {
+            await eventVM.reloadEvents()
         }
     }
     
@@ -55,7 +59,7 @@ struct EventListView : View {
     
 }
 
-struct EventsView_Previews: PreviewProvider {
+struct EventListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             EventListView(eventVM: EventManager(isDemo: true))

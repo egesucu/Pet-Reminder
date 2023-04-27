@@ -66,7 +66,9 @@ struct AddEventView : View {
     
     private func saveEvent() {
         feedback.notificationOccurred(.success)
-        eventVM.saveEvent(onFinish: dismiss.callAsFunction)
+        Task {
+            await eventVM.saveEvent(onFinish: dismiss.callAsFunction)
+        }
     }
     
 }

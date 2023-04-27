@@ -21,6 +21,7 @@
 "name" = "Name";
 "date" = "Date";
 "today" = "Today";
+"refresh" = "Refresh";
 
 /*
  HELLO

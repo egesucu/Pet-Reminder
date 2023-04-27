@@ -21,6 +21,7 @@ GENERALS
 "name" = "İsim";
 "date" = "Tarih";
 "today" = "Bugün";
+"refresh" = "Yenile";
 /*
 HELLO
 */

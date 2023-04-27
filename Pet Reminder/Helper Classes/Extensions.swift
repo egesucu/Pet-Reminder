@@ -14,6 +14,14 @@ import CoreLocation
 extension Array{
     static var empty : Self { [] }
 }
+
+extension Array where Element: Hashable {
+    func removeDuplicates() -> [Element] {
+        var seen = Set<Element>()
+        return filter{ seen.insert($0).inserted }
+    }
+}
+
 //MARK: - Pet
 extension Pet{
     var selection: NotificationSelection {
@@ -124,6 +132,15 @@ extension Date{
         formatter.dateFormat = "dd MM yyyy"
         return formatter.date(from: string) ?? Date()
     }
+    
+    func printTime() -> String {
+        return self.formatted(.dateTime.hour().minute())
+    }
+    
+    func printDate() -> String {
+        return self.formatted(.dateTime.day()
+            .month(.twoDigits).year())
+    }
 }
 //MARK: - Calendar
 extension Calendar{
@@ -173,4 +190,9 @@ extension Color{
     }
     static let dynamicBlack = Color(.label)
     static let systemGreen = Color(.systemGreen)
+}
+
+
+extension String {
+    static let allDayString = NSLocalizedString("all_day_title", comment: "")
 }
