@@ -44,7 +44,7 @@ internal enum SFSymbols {
     internal static let xcircleFill = "x.circle.fill"
     internal static let person = "person.crop.circle"
     internal static let personSelected = "person.crop.circle.fill"
-    internal static let list = "list.bulet"
+    internal static let list = "list.bullet"
     internal static let listSelected = "list.bullet.indent"
     internal static let map = "map"
     internal static let mapSelected = "map.fill"
@@ -58,7 +58,7 @@ internal enum SFSymbols {
     internal static let add = "plus.circle.fill"
     internal static let vaccine = "syringe.fill"
     internal static let eveningToggle = "moon.circle"
-    internal static let eveningToggleSelected = "moon.circle.filled"
+    internal static let eveningToggleSelected = "moon.circle.fill"
     internal static let checked = "checkmark.square"
     internal static let notChecked = "square"
     internal static let morningToggle = "sun.max.circle"
@@ -93,6 +93,6 @@ extension String {
 }
 
 extension LocalizedStringKey {
-    static let cancel: Self = "save"
-    static let save: Self = "cancel"
+    static let save: Self = "save"
+    static let cancel: Self = "cancel"
 }
