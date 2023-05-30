@@ -13,7 +13,7 @@ struct HelloView: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
     var pets : FetchedResults<Pet>
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     let manager = DataManager.shared
     

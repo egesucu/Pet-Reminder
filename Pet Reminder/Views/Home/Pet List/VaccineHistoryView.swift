@@ -33,7 +33,7 @@ struct VaccineHistoryView: View {
                                         Text(vaccine.name ?? "")
                                             .bold()
                                     } icon: {
-                                        Image(systemName: "syringe.fill")
+                                        Image(systemName: SFSymbols.vaccine)
                                     }
                                     Spacer()
                                     Text((vaccine.date ?? Date.now).formatted())
@@ -50,13 +50,13 @@ struct VaccineHistoryView: View {
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button(action: dismiss.callAsFunction) {
-                        Image(systemName: "xmark.circle.fill")
+                        Image(systemName: SFSymbols.close)
                             .tint(.blue)
                     }.disabled(shouldAddVaccine)
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                     Button(action: togglePopup) {
-                        Image(systemName: "plus.circle.fill")
+                        Image(systemName: SFSymbols.add)
                             .tint(.blue)
                     }.disabled(shouldAddVaccine)
                 }
@@ -108,10 +108,10 @@ struct VaccineHistoryView: View {
 struct VaccineHistoryView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let titles = ["Pulvarin","Alvarin","Gagarin","Aclor","Silverin", "Volverine"]
+        let titles = Strings.demoVaccines
         let context = PersistenceController.preview.container.viewContext
         let pet = Pet(context: context)
-        pet.name = "Viski"
+        pet.name = Strings.viski
         for _ in 0..<titles.count{
             let components = DateComponents(year: Int.random(in: 2018...2023), month: Int.random(in: 0...12), day: Int.random(in: 0...30), hour: Int.random(in: 0...23), minute: Int.random(in: 0...59), second: Int.random(in: 0...59))
             let vaccine = Vaccine(context: context)

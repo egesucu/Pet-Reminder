@@ -17,7 +17,7 @@ struct PetNameTextField: View {
             Text(Strings.startNameLabel)
                 .font(.title2)
                 .bold()
-            TextField("Doggo", text: $name)
+            TextField(Strings.doggo, text: $name)
                 .font(.title)
                 .padding()
                 .autocorrectionDisabled()
@@ -31,6 +31,6 @@ struct PetNameTextField: View {
 
 struct PetNameTextField_Previews: PreviewProvider {
     static var previews: some View {
-        PetNameTextField(name: .constant("Viski"))
+        PetNameTextField(name: .constant(Strings.viski))
     }
 }

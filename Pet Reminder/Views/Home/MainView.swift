@@ -14,7 +14,7 @@ struct MainView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name , ascending: true)])
     var pets : FetchedResults<Pet>
     @StateObject var storeManager : StoreManager
-    @AppStorage("petSaved") var petSaved : Bool = false
+    @AppStorage(Strings.petSaved) var petSaved : Bool = false
     
     let feedChecker = DailyFeedChecker.shared
     

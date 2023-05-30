@@ -19,7 +19,7 @@ struct EveningCheckboxView : View {
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: eveningOn ? "moon.circle.fill" : "moon.circle")
+                Image(systemName: eveningOn ? SFSymbols.eveningToggleSelected : SFSymbols.eveningToggle)
                     .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.blue)
                     .font(.largeTitle.bold())
@@ -27,7 +27,7 @@ struct EveningCheckboxView : View {
             }
             .padding(.bottom)
             withAnimation {
-                Image(systemName: eveningOn ? "checkmark.square" : "square")
+                Image(systemName: eveningOn ? SFSymbols.checked : SFSymbols.notChecked)
                     .font(.system(size: 50))
                     .animation(.easeInOut, value: eveningOn)
             }

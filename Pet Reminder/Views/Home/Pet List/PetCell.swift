@@ -16,7 +16,7 @@ struct PetCell: View {
                 .padding([.top,.trailing,.bottom],10)
                 .frame(maxWidth: 150, maxHeight: 150)
             VStack {
-                Text(pet.name ?? "Viski")
+                Text(pet.name ?? Strings.viski)
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
                     .minimumScaleFactor(0.5)
@@ -49,7 +49,7 @@ struct PetCell: View {
 struct PetCell_Previews: PreviewProvider {
     static var previews: some View {
         let pet = Pet(context: PersistenceController.preview.container.viewContext)
-        pet.name = "Viski"
+        pet.name = Strings.viski
         return PetCell(pet: pet)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .preferredColorScheme(.light)

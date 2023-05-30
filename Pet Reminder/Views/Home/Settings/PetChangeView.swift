@@ -54,7 +54,7 @@ struct PetChangeView: View {
                     TextField(Strings.tapToChangeText, text: $nameText)
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
-                                Button("Done"){
+                                Button(Strings.done){
                                     self.changeName()
                                 }
                             }

@@ -10,7 +10,7 @@ import SwiftUI
 
 class AddPetViewModel: ObservableObject {
     
-    @AppStorage("petSaved") var petSaved : Bool?
+    @AppStorage(Strings.petSaved) var petSaved : Bool?
     
     @Published var dayType : DayTime = .both
     @Published var name = ""

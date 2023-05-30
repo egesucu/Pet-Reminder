@@ -53,7 +53,7 @@ extension NotificationManager{
                 return
             } else {
                 let content = UNMutableNotificationContent()
-                content.title = NSLocalizedString("notification_title", comment: "Notification Title")
+                content.title = Strings.notificationTitle
                 var dateComponents = DateComponents()
                 let calendar = Calendar.current
                 
@@ -70,7 +70,7 @@ extension NotificationManager{
                     dateComponents.minute = calendar.component(.minute, from: date)
                 }
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                let request = UNNotificationRequest(identifier: "\(petName)-\(type.rawValue)-notification", content: content, trigger: trigger)
+                let request = UNNotificationRequest(identifier: Strings.notificationIdenfier(petName, type.rawValue), content: content, trigger: trigger)
                 
                 self.notificationCenter.add(request) { error in
                     if let error = error {
@@ -100,15 +100,16 @@ extension NotificationManager{
     }
     
     func removeNotification(of petName: String, with type: NotificationType){
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: ["\(petName)-\(type.rawValue)-notification"])
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [
+            Strings.notificationIdenfier(petName, type.rawValue)])
     }
     
     func removeAllNotifications(of petName: String?){
         guard let name = petName else { return }
         let notifications = [
-            name + "-morning-notification",
-            name + "-evening-notification",
-            name + "-birthday-notification"
+            Strings.notificationIdenfier(name, NotificationType.morning.rawValue),
+            Strings.notificationIdenfier(name, NotificationType.evening.rawValue),
+            Strings.notificationIdenfier(name, NotificationType.birthday.rawValue)
         ]
         notificationCenter.removePendingNotificationRequests(withIdentifiers: notifications)
     }

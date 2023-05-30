@@ -12,7 +12,7 @@ struct EventListView : View {
     
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
-    @AppStorage("tint_color") var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     
     var body: some View{
         
@@ -30,7 +30,7 @@ struct EventListView : View {
     func eventToolBar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: toggleAddEvent) {
-                Label(Strings.addEventAccessibleTitle, systemImage: "calendar.badge.plus")
+                Label(Strings.addEventAccessibleTitle, systemImage: SFSymbols.calendar)
                     .font(.title2)
                     .foregroundColor(tintColor)
             }
@@ -63,7 +63,7 @@ struct EventListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             EventListView(eventVM: EventManager(isDemo: true))
-                .previewDisplayName("Demo")
+                .previewDisplayName(Strings.demo)
         }
     }
 }

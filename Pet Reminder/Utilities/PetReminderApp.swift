@@ -14,7 +14,7 @@ struct PetReminderApp: App {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var storeManager = StoreManager()
     let controller = PersistenceController.shared
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     var body: some Scene {
         WindowGroup {

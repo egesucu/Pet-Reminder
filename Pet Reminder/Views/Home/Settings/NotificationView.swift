@@ -24,33 +24,33 @@ struct NotificationView: View {
             ForEach(pets, id: \.name) { pet in
                 Section {
                     ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}),id: \.self){ notification in
-                        if notification.identifier.contains("morning"){
+                        if notification.identifier.contains(NotificationType.morning.rawValue){
                             Label {
                                 Text(Strings.notificationTo)
                             } icon: {
-                                Image(systemName: "sun.max.circle.fill")
+                                Image(systemName: SFSymbols.morning)
                                     .foregroundColor(.yellow)
                                     .font(.title)
                             }
-                        } else if notification.identifier.contains("evening"){
+                        } else if notification.identifier.contains(NotificationType.evening.rawValue){
                             Label {
                                 Text(Strings.notificationTo)
                             } icon: {
-                                Image(systemName: "moon.stars.circle.fill")
+                                Image(systemName: SFSymbols.evening)
                                     .foregroundColor(.blue)
                                     .font(.title)
                             }
-                        } else if notification.identifier.contains("birthday"){
+                        } else if notification.identifier.contains(NotificationType.birthday.rawValue){
                             Label {
                                 Text(Strings.notificationTo)
                             } icon: {
                                 if #available(iOS 16.0, *) {
-                                    Image(systemName: "birthday.cake.fill")
+                                    Image(systemName: SFSymbols.birthday)
                                         .symbolRenderingMode(.multicolor)
                                         .foregroundStyle(Color.green.gradient, Color.blue.gradient)
                                         .font(.title)
                                 } else {
-                                    Image(systemName: "birthday.cake.fill")
+                                    Image(systemName: SFSymbols.birthday)
                                         .symbolRenderingMode(.palette)
                                         .foregroundColor(.green)
                                         .font(.title)

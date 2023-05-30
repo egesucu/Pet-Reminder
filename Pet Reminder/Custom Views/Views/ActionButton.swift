@@ -30,6 +30,6 @@ struct ActionButton_Previews: PreviewProvider {
     static var previews: some View {
         ActionButton(action: {
             
-        }, content: "save", systemImage: "pawprint.fill", isEnabled: true, tint: .green)
+        }, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: true, tint: .green)
     }
 }

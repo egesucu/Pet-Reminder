@@ -19,7 +19,7 @@ struct MorningCheckboxView : View {
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: morningOn ? "sun.max.circle.fill" : "sun.max.circle")
+                Image(systemName: morningOn ? SFSymbols.morningToggleSelected : SFSymbols.morningToggle)
                     .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.yellow)
                     .font(.largeTitle.bold())
@@ -27,7 +27,7 @@ struct MorningCheckboxView : View {
             }.font(.title.bold())
                 .padding(.bottom)
             withAnimation{
-                Image(systemName: morningOn ? "checkmark.square" : "square")
+                Image(systemName: morningOn ? SFSymbols.checked : SFSymbols.notChecked)
                     .font(.system(size: 50))
                     .animation(.easeInOut, value: morningOn)
             }

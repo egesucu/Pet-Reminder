@@ -11,7 +11,7 @@ import SwiftUI
 struct EventTimeView: View {
     
     @Binding var dateString: String
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         ZStack(alignment: .center){
@@ -26,6 +26,6 @@ struct EventTimeView: View {
 
 struct EventTimeView_Previews: PreviewProvider {
     static var previews: some View {
-        EventTimeView(dateString: .constant("Demo"))
+        EventTimeView(dateString: .constant(Strings.demo))
     }
 }

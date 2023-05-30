@@ -13,7 +13,7 @@ struct AddEventView : View {
     
     @StateObject var eventVM = EventManager()
     @Environment(\.dismiss) var dismiss
-    @AppStorage("tint_color") var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     
     let feedback = UINotificationFeedbackGenerator()
     

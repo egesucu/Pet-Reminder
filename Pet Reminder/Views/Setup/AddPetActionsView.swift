@@ -16,9 +16,9 @@ struct AddPetActionsView: View {
     
     var body: some View {
         HStack {
-            ActionButton(action: onCancel, content: "cancel", systemImage: "xmark.seal.fill", isEnabled: true, tint: .red)
+            ActionButton(action: onCancel, content: .cancel, systemImage: SFSymbols.xmarkSealFill, isEnabled: true, tint: .red)
             .padding(.trailing, 50)
-            ActionButton(action: onSave, content: "save", systemImage: "pawprint.circle.fill", isEnabled: name.isEmpty, tint: .green)
+            ActionButton(action: onSave, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: name.isEmpty, tint: .green)
         }
         .padding(.all)
     }
@@ -28,7 +28,7 @@ struct AddPetActionsView: View {
 
 struct AddPetActionsView_Previews: PreviewProvider {
     static var previews: some View {
-        AddPetActionsView(name: .constant("Viski")) {
+        AddPetActionsView(name: .constant(Strings.viski)) {
             
         } onCancel: {
             

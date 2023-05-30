@@ -12,7 +12,7 @@ import PhotosUI
 @available (iOS 16.0, *)
 struct PhotoImagePickerView : View {
     @State private var selectedPhoto: PhotosPickerItem? = nil
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     var onSelected : (Data) -> ()
     

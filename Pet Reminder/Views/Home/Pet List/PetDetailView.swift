@@ -17,7 +17,7 @@ struct PetDetailView: View {
     @State private var eveningOn = false
     @State private var showFeedHistory = false
     @State private var showVaccines = false
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     let feedback = UINotificationFeedbackGenerator()
     var context: NSManagedObjectContext
@@ -176,7 +176,7 @@ struct PetDetailView_Previews: PreviewProvider {
         let persistence = PersistenceController.preview
         
         let demo = Pet(context: persistence.container.viewContext)
-        demo.name = "Viski"
+        demo.name = Strings.viski
         let feed = Feed(context: persistence.container.viewContext)
         demo.addToFeeds(feed)
         

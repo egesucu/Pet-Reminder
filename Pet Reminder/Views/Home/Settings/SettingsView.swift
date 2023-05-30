@@ -13,7 +13,7 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
     @StateObject var storeManager : StoreManager
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         NavigationView{
@@ -32,7 +32,7 @@ struct SettingsView: View {
                 } header: {
                     Text(Strings.buyCoffeeTitle)
                 } footer: {
-                    Text("© Ege Sucu \(Date.now.formatted(.dateTime.year()))")
+                    Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
                 }
             }
             

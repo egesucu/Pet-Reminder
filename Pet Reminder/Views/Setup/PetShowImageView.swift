@@ -26,7 +26,7 @@ struct PetShowImageView: View {
                 Button {
                     onImageDelete()
                 } label: {
-                    Image(systemName: "x.circle.fill")
+                    Image(systemName: SFSymbols.xcircleFill)
                         .font(.title2)
                         .foregroundColor(.red)
                         .background(Color.black)

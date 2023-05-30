@@ -19,7 +19,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let demoPet = Pet(context: viewContext)
-            demoPet.name = "Viski"
+            demoPet.name = Strings.viski
             demoPet.id = UUID()
             demoPet.image = nil
             demoPet.selection = .both

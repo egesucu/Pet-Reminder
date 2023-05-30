@@ -15,7 +15,8 @@ struct PrivacyPolicyView: View {
                 Text(Strings.privacyPolicyContent)
                     .padding(.all)
             }
-        }.navigationTitle(Text(Strings.privacyPolicyTitle))
+        }
+        .navigationTitle(Text(Strings.privacyPolicyTitle))
         
     }
 }

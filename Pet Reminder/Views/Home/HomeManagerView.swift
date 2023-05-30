@@ -21,23 +21,23 @@ struct HomeManagerView: View {
             HomeView()
                 .environment(\.managedObjectContext, viewContext)
                 .tabItem {
-                    Image(systemName: currentTab != .home ? "person.crop.circle" : "person.crop.circle.fill")
+                    Image(systemName: currentTab != .home ? SFSymbols.person : SFSymbols.personSelected)
                 }
                 .tag(PetReminderTabs.home)
             EventListView()
                 .tabItem {
-                    Image(systemName: currentTab != .events ? "list.bullet" : "list.bullet.indent")
+                    Image(systemName: currentTab != .events ? SFSymbols.list : SFSymbols.listSelected)
                 }
                 .tag(PetReminderTabs.events)
             FindVetView()
                 .tabItem {
-                    Image(systemName: currentTab != .vet ? "map" : "map.fill")
+                    Image(systemName: currentTab != .vet ? SFSymbols.map : SFSymbols.mapSelected)
                 }
                 .tag(PetReminderTabs.vet)
             SettingsView(storeManager: storeManager)
                 .environment(\.managedObjectContext, viewContext)
                 .tabItem {
-                    Image(systemName: currentTab != .settings ? "gearshape" : "gearshape.fill")
+                    Image(systemName: currentTab != .settings ? SFSymbols.settings : SFSymbols.settingsSelected)
                 }
                 .tag(PetReminderTabs.settings)
         }

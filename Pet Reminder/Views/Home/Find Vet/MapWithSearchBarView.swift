@@ -13,7 +13,7 @@ struct MapWithSearchBarView: View {
     
     @Binding var mapItems : [Pin]
     @Binding var region : MKCoordinateRegion
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     @State private var selectedItem : MKMapItem? = nil
     @ObservedObject var vetViewModel: VetViewModel
     @State private var showAlert = false
@@ -28,7 +28,7 @@ struct MapWithSearchBarView: View {
                     withAnimation {
                         MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
                             VStack{
-                                Image(systemName: "pawprint.circle.fill")
+                                Image(systemName: SFSymbols.pawprintCircleFill)
                                     .font(.largeTitle)
                                     .padding(2)
                             }.background(tintColor)
@@ -52,48 +52,15 @@ struct MapWithSearchBarView: View {
                 .shadow(radius: 10)
                 .padding()
                 .alert(Strings.findVetOpen, isPresented: $showAlert) {
-                    Button {
-                        if let selectedItem{
-                            selectedItem.openInMaps(launchOptions: nil)
-                        }
-                    } label: {
-                        Text(Strings.appleMaps)
-                    }
-                    Button {
-                        if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!){
-                            if let selectedItem{
+                    
+                    ForEach(MapApplication.allCases, id: \.self) { item in
+                        Button(item.rawValue) {
+                            if let selectedItem {
                                 let lat = selectedItem.placemark.coordinate.latitude
                                 let long = selectedItem.placemark.coordinate.longitude
-                                let url = URL(string: "comgooglemaps://?saddr=&daddr=\(lat),\(long)")
-                                if let url{
-                                    UIApplication.shared.open(url)
-                                }
+                                openURLWithMap(latitude: lat, longitude: long, application: item)
                             }
-                        } else {
-                            UIApplication.shared.open(URL(string: "https://apps.apple.com/us/app/google-maps/id585027354")!)
                         }
-                        
-                        
-                    } label: {
-                        Text(Strings.googleMaps)
-                    }
-                    Button {
-                        if UIApplication.shared.canOpenURL(URL(string:"yandexnavi://")!){
-                            if let selectedItem{
-                                let lat = selectedItem.placemark.coordinate.latitude
-                                let long = selectedItem.placemark.coordinate.longitude
-                                let url = URL(string: "yandexnavi://build_route_on_map?lat_to=" + "\(lat)" + "&lon_to=" + "\(long)")
-                                if let url{
-                                    UIApplication.shared.open(url)
-                                }
-                            }
-                        } else {
-                            UIApplication.shared.open(URL(string: "https://itunes.apple.com/ru/app/yandex.navigator/id474500851")!)
-                        }
-                        
-                        
-                    } label: {
-                        Text(Strings.yandexNavi)
                     }
                     Button {
                         showAlert.toggle()
@@ -103,7 +70,7 @@ struct MapWithSearchBarView: View {
                 }
             }
 #else
-            Text("Simulation does not support User Location")
+            Text(Strings.simulationError)
 #endif
                 
         }

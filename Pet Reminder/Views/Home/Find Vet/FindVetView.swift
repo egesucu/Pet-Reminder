@@ -17,7 +17,7 @@ struct FindVetView: View {
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.925533, longitude: 32.866287), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
     @State private var userAccess : CLAuthorizationStatus = .notDetermined
     @State private var showAlert = false
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         NavigationView{

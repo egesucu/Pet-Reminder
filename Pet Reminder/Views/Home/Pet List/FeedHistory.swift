@@ -14,7 +14,7 @@ struct FeedHistory: View {
     var feeds: [Feed]
     var context: NSManagedObjectContext
     @Environment(\.dismiss) var dismiss
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View {
         

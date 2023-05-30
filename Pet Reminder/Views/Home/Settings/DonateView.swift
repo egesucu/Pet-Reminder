@@ -13,7 +13,7 @@ struct DonateView: View {
     @StateObject var storeManager : StoreManager
     @State private var showAlert = false
     @State private var alertText = ""
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     
     var body: some View{
         ScrollView{

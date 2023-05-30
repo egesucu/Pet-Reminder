@@ -9,10 +9,10 @@
 import Foundation
 
 enum PaymentErrorType: String,Error{
-    case cantPay = "payment_cant"
+    case cantPay = ""
     
     func localizedString() -> String {
-        return NSLocalizedString(self.rawValue, comment: "")
+        return Strings.paymentCant
     }
     
     static func getTitleFor(title:PaymentErrorType) -> String {

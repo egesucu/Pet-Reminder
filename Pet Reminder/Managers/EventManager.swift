@@ -36,7 +36,7 @@ class EventManager : ObservableObject{
         for i in 0...4 {
             
             let event = EKEvent(eventStore: self.eventStore)
-            event.title = "Demo Event \(i+1)"
+            event.title = Strings.demoEvent(i+1)
             event.startDate = Date()
             event.endDate = Date()
             
@@ -61,7 +61,7 @@ class EventManager : ObservableObject{
     func findCalendar(){
         let calendars = self.eventStore.calendars(for: .event)
         
-        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
+        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}){
             self.loadEvents(from: petCalendar)
         } else {
             self.createCalendar()
@@ -72,7 +72,7 @@ class EventManager : ObservableObject{
     func createCalendar() {
         
         let calendar = EKCalendar(for: .event, eventStore: eventStore)
-        calendar.title = "Pet Reminder"
+        calendar.title = Strings.petReminder
         
         if let defaultCalendar = eventStore.defaultCalendarForNewEvents{
             calendar.source = defaultCalendar.source
@@ -105,20 +105,10 @@ class EventManager : ObservableObject{
     }
     
     func fillEventData(event: EKEvent, onCreated: (String) -> ()){
-       
-        if event.isAllDay{
-            if Calendar.current.isDateInToday(event.startDate){
-                onCreated(setupDateForCurrentEvents(from: event, allDay: true))
-            } else {
-                onCreated(setupDateForFutureEvents(from: event, allDay: true))
-            }
-            
+        if Calendar.current.isDateInToday(event.startDate){
+            onCreated(String.formatEventDateTime(current: true, allDay: event.isAllDay, event: event))
         } else {
-            if Calendar.current.isDateLater(date: event.startDate){
-                onCreated(setupDateForFutureEvents(from: event))
-            } else {
-                onCreated(setupDateForCurrentEvents(from: event))
-            }
+            onCreated(String.formatEventDateTime(current: false, allDay: event.isAllDay, event: event))
         }
     }
     
@@ -127,7 +117,7 @@ class EventManager : ObservableObject{
     func reloadEvents() async {
         let calendars = self.eventStore.calendars(for: .event)
         
-        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}){
+        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}){
             self.loadEvents(from: petCalendar)
         }
     }
@@ -154,27 +144,11 @@ class EventManager : ObservableObject{
         
     }
     
-    func setupDateForFutureEvents(from event: EKEvent, allDay: Bool = false) -> String{
-        if allDay {
-            return Strings.allDayTitle
-        } else {
-            return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
-        }
-    }
-    
-    func setupDateForCurrentEvents(from event: EKEvent, allDay: Bool = false) -> String{
-        if allDay {
-            return "\(event.startDate.printDate()) \(Strings.allDayTitle)"
-        } else {
-            return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
-        }
-    }
-    
     func saveEvent(onFinish: () -> ()) async {
         
         let calendars = eventStore.calendars(for: .event)
         
-        if let petCalendar = calendars.first(where: {$0.title == "Pet Reminder"}) {
+        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}) {
             let newEvent = EKEvent(eventStore: eventStore)
             newEvent.title = eventName
             newEvent.isAllDay = isAllDay
