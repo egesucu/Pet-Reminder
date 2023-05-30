@@ -31,21 +31,3 @@ extension Pet{
         }
     }
 }
-
-//MARK: - LocalizedError
-extension IcloudErrorType: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .icloudUnavailable:
-            return NSLocalizedString("cloud_unavailable", comment: "")
-        case .noIcloud:
-            return NSLocalizedString("no_account", comment: "")
-        case .restricted:
-            return NSLocalizedString("restricted_account", comment: "")
-        case .cantFetchStatus:
-            return NSLocalizedString("cant_fetch_status", comment: "")
-        case .unknownError(let message):
-            return message
-        }
-    }
-}

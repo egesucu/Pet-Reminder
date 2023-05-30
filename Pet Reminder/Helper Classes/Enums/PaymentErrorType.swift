@@ -8,14 +8,13 @@
 
 import Foundation
 
-enum PaymentErrorType: String,Error{
-    case cantPay = ""
+enum PaymentErrorType: LocalizedError{
+    case cantPay
     
-    func localizedString() -> String {
-        return Strings.paymentCant
-    }
-    
-    static func getTitleFor(title:PaymentErrorType) -> String {
-        return title.localizedString()
+    var errorDescription: String? {
+        switch self {
+        case .cantPay:
+            return Strings.paymentCant
+        }
     }
 }
