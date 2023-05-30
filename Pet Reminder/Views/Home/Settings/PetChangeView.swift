@@ -36,7 +36,7 @@ struct PetChangeView: View {
                     ImagePickerView(imageData: $outputImageData)
                 })
                 .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
-            Toggle("default_photo_label", isOn: $defaultPhotoOn)
+            Toggle(Strings.defaultPhotoLabel, isOn: $defaultPhotoOn)
                 .onChange(of: defaultPhotoOn, perform: { _isOn in
                     if _isOn{
                         pet.image = nil
@@ -44,14 +44,14 @@ struct PetChangeView: View {
                     }
                 })
                 .padding()
-            Text("photo_upload_detail_title")
+            Text(Strings.photoUploadDetailTitle)
                 .font(.footnote)
                 .foregroundColor(Color(.systemGray2))
                 .multilineTextAlignment(.center)
                 .padding()
             Form{
                 Section{
-                    TextField("tap_to_change_text", text: $nameText)
+                    TextField(Strings.tapToChangeText, text: $nameText)
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
                                 Button("Done"){
@@ -62,36 +62,36 @@ struct PetChangeView: View {
                         .onSubmit({
                             self.changeName()
                         })
-                    DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
+                    DatePicker(Strings.birthdayTitle, selection: $birthday, displayedComponents: .date)
                         .onChange(of: birthday) { _ in
                             self.changeBirthday()
                         }
                 }
                 Section{
-                    Picker("feed_time_title", selection: $selection) {
-                        Text("feed_selection_both").tag(0)
-                        Text("feed_selection_morning").tag(1)
-                        Text("feed_selection_evening").tag(2)
+                    Picker(Strings.feedTimeTitle, selection: $selection) {
+                        Text(Strings.feedSelectionBoth).tag(0)
+                        Text(Strings.feedSelectionMorning).tag(1)
+                        Text(Strings.feedSelectionEvening).tag(2)
                         
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     
                     if selection == 0{
-                        DatePicker("feed_selection_morning", selection: $morningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(Strings.feedSelectionMorning, selection: $morningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
-                        DatePicker("feed_selection_evening", selection: $eveningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(Strings.feedSelectionEvening, selection: $eveningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }
                     } else if selection == 1 {
-                        DatePicker("feed_selection_morning", selection: $morningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(Strings.feedSelectionMorning, selection: $morningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
                     } else if selection == 2{
-                        DatePicker("feed_selection_evening", selection: $eveningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(Strings.feedSelectionEvening, selection: $eveningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }

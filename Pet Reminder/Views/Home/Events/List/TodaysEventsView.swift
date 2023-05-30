@@ -20,7 +20,7 @@ struct TodaysEventsView: View {
                     .listRowSeparator(.hidden)
             }
         } header: {
-            Text("today_title")
+            Text(Strings.todayTitle)
         }
     }
 }

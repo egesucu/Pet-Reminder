@@ -156,7 +156,7 @@ class EventManager : ObservableObject{
     
     func setupDateForFutureEvents(from event: EKEvent, allDay: Bool = false) -> String{
         if allDay {
-            return .allDayString
+            return Strings.allDayTitle
         } else {
             return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
@@ -164,7 +164,7 @@ class EventManager : ObservableObject{
     
     func setupDateForCurrentEvents(from event: EKEvent, allDay: Bool = false) -> String{
         if allDay {
-            return "\(event.startDate.printDate()) \(String.allDayString)"
+            return "\(event.startDate.printDate()) \(Strings.allDayTitle)"
         } else {
             return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
@@ -191,7 +191,7 @@ class EventManager : ObservableObject{
             
             let alarm = EKAlarm(relativeOffset: -60*10)
             newEvent.addAlarm(alarm)
-            newEvent.notes = NSLocalizedString("add_event_note", comment: "")
+            newEvent.notes = Strings.addEventNote
             
             do {
                 try eventStore.save(newEvent, span: .thisEvent)

@@ -31,7 +31,7 @@ struct FeedHistory: View {
                     }
                 }
             }
-        .navigationTitle(Text("feed_history_title"))
+            .navigationTitle(Text(Strings.feedHistoryTitle))
         }
     }
 }
@@ -43,19 +43,19 @@ struct CurrentFeedSection: View {
     var body: some View{
         Section {
             if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty{
-                Text("no_feed_today_content")
+                Text(Strings.noFeedTodayContent)
             } else {
                 ForEach(feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now) }), id: \.self) { feed in
                     if let morning = feed.morningFedStamp{
-                        Row(imageName: "sun.max.circle.fill",title: "feed_content", content: morning.formatted(date: .abbreviated, time: .shortened), type: .morning)
+                        Row(imageName: "sun.max.circle.fill",title: Strings.feedContent, content: morning.formatted(date: .abbreviated, time: .shortened), type: .morning)
                     }
                     if let evening = feed.eveningFedStamp{
-                        Row(imageName: "moon.circle.fill",title: "feed_content", content: evening.formatted(date: .abbreviated, time: .shortened), type: .evening)
+                        Row(imageName: "moon.circle.fill",title: Strings.feedContent, content: evening.formatted(date: .abbreviated, time: .shortened), type: .evening)
                     }
                 }
             }
         } header: {
-            Text("today")
+            Text(Strings.today)
         }
     }
 }
@@ -66,19 +66,19 @@ struct PreviousFeedsSection: View{
     var body: some View{
         Section {
             if feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty{
-                Text("no_feed_content")
+                Text(Strings.noFeedContent)
             } else {
                 ForEach(feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }), id: \.self) { feed in
                     if let morning = feed.morningFedStamp{
-                        Row(imageName: "sun.max.fill",title: "feed_content", content: morning.formatted(date: .abbreviated, time: .shortened),type: .morning)
+                        Row(imageName: "sun.max.fill",title: Strings.feedContent, content: morning.formatted(date: .abbreviated, time: .shortened),type: .morning)
                     }
                     if let evening = feed.eveningFedStamp{
-                        Row(imageName: "moon.circle.fill",title: "feed_content", content: evening.formatted(date: .abbreviated, time: .shortened), type: .evening)
+                        Row(imageName: "moon.circle.fill",title: Strings.feedContent, content: evening.formatted(date: .abbreviated, time: .shortened), type: .evening)
                     }
                 }
             }
         } header: {
-            Text("previous_title")
+            Text(Strings.previousTitle)
         }
     }
 }

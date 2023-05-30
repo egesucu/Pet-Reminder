@@ -15,7 +15,7 @@ class VetViewModel : NSObject,ObservableObject{
     @Published var userLocation = CLLocation()
     @Published var region = MKCoordinateRegion()
     @Published var permissionDenied = false
-    @Published var searchText : String = NSLocalizedString("default_vet_text", comment: "")
+    @Published var searchText : String = Strings.defaultVetText
     
     var locationManager = CLLocationManager()
     

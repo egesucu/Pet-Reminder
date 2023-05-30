@@ -45,19 +45,19 @@ struct MapWithSearchBarView: View {
                         }
                     }
                 }.edgesIgnoringSafeArea(.top)
-                TextField("location_search_title", text: $vetViewModel.searchText, onCommit: {
+                TextField(Strings.locationSearchTitle, text: $vetViewModel.searchText, onCommit: {
                     onReload()
                 })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .shadow(radius: 10)
                 .padding()
-                .alert("find_vet_open", isPresented: $showAlert) {
+                .alert(Strings.findVetOpen, isPresented: $showAlert) {
                     Button {
                         if let selectedItem{
                             selectedItem.openInMaps(launchOptions: nil)
                         }
                     } label: {
-                        Text("apple_maps")
+                        Text(Strings.appleMaps)
                     }
                     Button {
                         if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!){
@@ -75,7 +75,7 @@ struct MapWithSearchBarView: View {
                         
                         
                     } label: {
-                        Text("google_maps")
+                        Text(Strings.googleMaps)
                     }
                     Button {
                         if UIApplication.shared.canOpenURL(URL(string:"yandexnavi://")!){
@@ -93,12 +93,12 @@ struct MapWithSearchBarView: View {
                         
                         
                     } label: {
-                        Text("yandex_navi")
+                        Text(Strings.yandexNavi)
                     }
                     Button {
                         showAlert.toggle()
                     } label: {
-                        Text("cancel")
+                        Text(Strings.cancel)
                     }
                 }
             }

@@ -24,7 +24,7 @@ struct VaccineHistoryView: View {
                 if let vaccineSet = pet.vaccines,
                    let vaccines = vaccineSet.allObjects as? [Vaccine]{
                     if vaccines.count == 0 {
-                        Text("no_vaccine_title")
+                        Text(Strings.noVaccineTitle)
                     } else {
                         List{
                             ForEach(vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })) { vaccine in
@@ -44,7 +44,7 @@ struct VaccineHistoryView: View {
                     }
                     
                 } else{
-                    Text("no_vaccine_title")
+                    Text(Strings.noVaccineTitle)
                 }
             }
             .toolbar {
@@ -61,7 +61,7 @@ struct VaccineHistoryView: View {
                     }.disabled(shouldAddVaccine)
                 }
             }
-            .navigationTitle(Text("vaccine_history_title"))
+            .navigationTitle(Text(Strings.vaccineHistoryTitle))
             .popupView(isPresented: $shouldAddVaccine.animation()) {
                 AddPopupView(contentInput: $vaccineName, dateInput: $vaccineDate, onSave: saveVaccine, onCancel: cancelVaccine)
             }

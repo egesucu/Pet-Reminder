@@ -20,7 +20,7 @@ struct FutureEventsView: View {
                     .listRowSeparator(.hidden)
             }
         } header: {
-            Text("upcoming_title")
+            Text(Strings.upcomingTitle)
         }
     }
 }

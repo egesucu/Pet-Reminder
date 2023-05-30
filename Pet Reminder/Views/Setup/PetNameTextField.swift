@@ -14,7 +14,7 @@ struct PetNameTextField: View {
     
     var body: some View {
         VStack {
-            Text("start_name_label")
+            Text(Strings.startNameLabel)
                 .font(.title2)
                 .bold()
             TextField("Doggo", text: $name)

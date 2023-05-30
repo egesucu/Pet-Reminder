@@ -23,13 +23,13 @@ struct FindVetView: View {
         NavigationView{
             switch userAccess {
             case .notDetermined, .restricted, .denied:
-                Text("location_alert_context")
+                Text(Strings.locationAlertContext)
                     .onTapGesture {
                         showAlert.toggle()
                     }
                     .padding(.all)
                     .multilineTextAlignment(.center)
-                    .navigationTitle(Text("find_vet_title"))
+                    .navigationTitle(Text(Strings.findVetTitle))
             case .authorizedAlways, .authorizedWhenInUse:
                 MapWithSearchBarView(mapItems: $mapItems, region: $region, vetViewModel: vetViewModel) {
                     reloadMapView()
@@ -37,11 +37,11 @@ struct FindVetView: View {
                     
             @unknown default:
                 VStack {
-                    Text("location_alert_context")
+                    Text(Strings.locationAlertContext)
                         .onTapGesture {
                             showAlert.toggle()
                         }.padding(.all).multilineTextAlignment(.center)
-                }.navigationTitle(Text("find_vet_title"))
+                }.navigationTitle(Text(Strings.findVetTitle))
             }
         }
         .onAppear(perform: {
@@ -51,7 +51,7 @@ struct FindVetView: View {
         })
         .alert(isPresented: $showAlert, content: {
             
-            Alert(title: Text("location_alert_title"), message: Text("location_alert_context"), primaryButton: Alert.Button.default(Text("location_alert_change"), action: {
+            Alert(title: Text(Strings.locationAlertTitle), message: Text(Strings.locationAlertContext), primaryButton: Alert.Button.default(Text(Strings.locationAlertChange), action: {
                 self.changeLocationSettings()
             }), secondaryButton: Alert.Button.cancel())
             

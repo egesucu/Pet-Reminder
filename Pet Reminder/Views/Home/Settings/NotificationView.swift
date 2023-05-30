@@ -26,7 +26,7 @@ struct NotificationView: View {
                     ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}),id: \.self){ notification in
                         if notification.identifier.contains("morning"){
                             Label {
-                                Text("notification_to")
+                                Text(Strings.notificationTo)
                             } icon: {
                                 Image(systemName: "sun.max.circle.fill")
                                     .foregroundColor(.yellow)
@@ -34,7 +34,7 @@ struct NotificationView: View {
                             }
                         } else if notification.identifier.contains("evening"){
                             Label {
-                                Text("notification_to")
+                                Text(Strings.notificationTo)
                             } icon: {
                                 Image(systemName: "moon.stars.circle.fill")
                                     .foregroundColor(.blue)
@@ -42,7 +42,7 @@ struct NotificationView: View {
                             }
                         } else if notification.identifier.contains("birthday"){
                             Label {
-                                Text("notification_to")
+                                Text(Strings.notificationTo)
                             } icon: {
                                 if #available(iOS 16.0, *) {
                                     Image(systemName: "birthday.cake.fill")
@@ -65,9 +65,9 @@ struct NotificationView: View {
                 } footer: {
                     let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}).count
                     if count == 1 {
-                        Text("notification \(count)")
+                        Text(Strings.notificationLld(count))
                     } else {
-                        Text("notifications \(count)")
+                        Text(Strings.notificationsLld(count))
                     }
                     
                 }
@@ -79,7 +79,7 @@ struct NotificationView: View {
         .refreshable {
             notificationManager.getNotifications()
         }
-        .navigationTitle(Text("notifications_title"))
+        .navigationTitle(Text(Strings.notificationsTitle))
         .navigationViewStyle(.stack)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -87,7 +87,7 @@ struct NotificationView: View {
                     notificationManager.removeNotifications(pets: pets.compactMap({ $0 as Pet }))
                     notificationManager.getNotifications()
                 } label: {
-                    Text("remove_all")
+                    Text(Strings.removeAll)
                 }
             }
         }

@@ -26,15 +26,15 @@ struct HelloView: View {
     var body: some View {
         ZStack {
             VStack(alignment: .center) {
-                Image("pet-reminder")
+                Assets.petReminder.swiftUIImage
                     .resizable()
                     .scaledToFit()
                     .padding([.top,.bottom])
-                Text("welcome_title")
+                Text(Strings.welcomeTitle)
                     .padding([.top,.bottom])
                     .font(.title)
                 Spacer()
-                Text("welcome_context")
+                Text(Strings.welcomeContext)
                     .padding([.top,.bottom])
                     .font(.body)
                 Spacer()
@@ -43,7 +43,7 @@ struct HelloView: View {
                     Button {
                         self.showSetup.toggle()
                     } label: {
-                        Text("welcome_add_pet")
+                        Text(Strings.welcomeAddPet)
                             .font(.title)
                             .foregroundColor(.white)
                     }

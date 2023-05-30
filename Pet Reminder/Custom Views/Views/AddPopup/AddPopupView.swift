@@ -26,7 +26,7 @@ struct AddPopupView: View {
                     .fill(Color.white)
                 VStack(alignment: .center) {
                     HStack {
-                        Text("Add")
+                        Text(Strings.add)
                             .bold()
                         TextField("Pulvarin", text: $contentInput)
                             .multilineTextAlignment(.center)
@@ -35,18 +35,18 @@ struct AddPopupView: View {
                     .padding(.bottom, 10)
                     
                     DatePicker(selection: $dateInput) {
-                        Text("Date")
+                        Text(Strings.date)
                             .bold()
                     }.padding([.leading, .trailing])
                     
                     HStack {
                         Button(action: onCancel) {
-                            Text("Cancel")
+                            Text(Strings.cancel)
                         }
                         .buttonStyle(.bordered)
                         Spacer()
                         Button(action: onSave) {
-                            Text("Add")
+                            Text(Strings.add)
                         }
                         .buttonStyle(.borderedProminent)
                     }

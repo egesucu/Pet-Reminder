@@ -101,7 +101,7 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines , content: {
             VaccineHistoryView(pet: pet, context: context)
         })
-        .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
+        .navigationTitle(Text(Strings.petNameTitle(pet.name ?? "")))
     }
     
     func filterFeeds() -> [Feed]{

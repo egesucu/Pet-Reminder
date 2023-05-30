@@ -20,16 +20,16 @@ struct AddEventView : View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("add_event_info")) {
-                    TextField("add_event_name", text: $eventVM.eventName)
+                Section(header: Text(Strings.addEventInfo)) {
+                    TextField(Strings.addEventName, text: $eventVM.eventName)
                 }
-                Section(header: Text("add_event_time")) {
-                    Toggle("all_day_title", isOn: $eventVM.isAllDay)
+                Section(header: Text(Strings.addEventTime)) {
+                    Toggle(Strings.allDayTitle, isOn: $eventVM.isAllDay)
                     eventDateView()
                 }
             }
             .accentColor(tintColor)
-            .navigationTitle(Text("add_event_title"))
+            .navigationTitle(Text(Strings.addEventTitle))
             .toolbar(content: addEventToolbar)
         }
     }
@@ -37,11 +37,11 @@ struct AddEventView : View {
     @ViewBuilder
     func eventDateView() -> some View {
         if eventVM.isAllDay{
-            DatePicker("add_event_date", selection: $eventVM.allDayDate, displayedComponents: .date)
+            DatePicker(Strings.addEventDate, selection: $eventVM.allDayDate, displayedComponents: .date)
         } else {
-            DatePicker("add_event_start", selection: $eventVM.eventStartDate)
+            DatePicker(Strings.addEventStart, selection: $eventVM.eventStartDate)
                 .onChange(of: eventVM.eventStartDate, perform: changeEventMinimumDate(_:))
-            DatePicker(NSLocalizedString("add_event_end", comment: "") , selection: $eventVM.eventEndDate)
+            DatePicker(Strings.addEventEnd , selection: $eventVM.eventEndDate)
         }
     }
     
@@ -58,7 +58,7 @@ struct AddEventView : View {
     
     func SaveButton() -> some View {
         Button(action: saveEvent) {
-            Text("add_event_save")
+            Text(Strings.addEventSave)
                 .foregroundColor(tintColor)
                 .bold()
         }

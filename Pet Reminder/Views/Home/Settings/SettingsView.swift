@@ -18,25 +18,25 @@ struct SettingsView: View {
     var body: some View {
         NavigationView{
             Form{
-                Section(header: Text("app_settings")) {
-                    NavigationLink("manage_pet_title", destination: PetListView().environment(\.managedObjectContext, viewContext))
-                    ColorPicker("settings_tint_color", selection: $tintColor)
-                    NavigationLink("notifications_manage_title", destination:
+                Section(header: Text(Strings.appSettings)) {
+                    NavigationLink(Strings.managePetTitle, destination: PetListView().environment(\.managedObjectContext, viewContext))
+                    ColorPicker(Strings.settingsTintColor, selection: $tintColor)
+                    NavigationLink(Strings.notificationsManageTitle, destination:
                         NotificationView().environment(\.managedObjectContext, viewContext))
-                    NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())
+                    NavigationLink(Strings.privacyPolicyTitle, destination: PrivacyPolicyView())
                 }
                 Section {
-                    NavigationLink("donate_us_title") {
+                    NavigationLink(Strings.donateUsTitle) {
                         DonateView(storeManager: storeManager)
                     }
                 } header: {
-                    Text("buy_coffee_title")
+                    Text(Strings.buyCoffeeTitle)
                 } footer: {
                     Text("© Ege Sucu \(Date.now.formatted(.dateTime.year()))")
                 }
             }
             
-            .navigationTitle(Text("settings_tab_title"))
+            .navigationTitle(Text(Strings.settingsTabTitle))
             
         }.navigationViewStyle(StackNavigationViewStyle())
     }

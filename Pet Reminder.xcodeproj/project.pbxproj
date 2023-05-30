@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */; };
 		7224CB9429F7B23D009B0ADC /* ICloudResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9329F7B23D009B0ADC /* ICloudResult.swift */; };
 		7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9629F7B45C009B0ADC /* AddPopupView.swift */; };
+		725F44C02A25E99C0096CCCB /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44BE2A25E99C0096CCCB /* Strings+Generated.swift */; };
+		725F44C12A25E99C0096CCCB /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44BF2A25E99C0096CCCB /* XCAssets+Generated.swift */; };
 		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
@@ -85,6 +87,8 @@
 		7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudErrorType.swift; sourceTree = "<group>"; };
 		7224CB9329F7B23D009B0ADC /* ICloudResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudResult.swift; sourceTree = "<group>"; };
 		7224CB9629F7B45C009B0ADC /* AddPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPopupView.swift; sourceTree = "<group>"; };
+		725F44BE2A25E99C0096CCCB /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
+		725F44BF2A25E99C0096CCCB /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeManagerView.swift; sourceTree = "<group>"; };
 		9D0C24E025D08177008F93CD /* FindVetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVetView.swift; sourceTree = "<group>"; };
 		9D0C24E225D08181008F93CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -187,6 +191,15 @@
 			path = AddPopup;
 			sourceTree = "<group>";
 		};
+		725F44BD2A25E99C0096CCCB /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				725F44BE2A25E99C0096CCCB /* Strings+Generated.swift */,
+				725F44BF2A25E99C0096CCCB /* XCAssets+Generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		9D2EF8F926C410C7009048C4 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,7 +263,6 @@
 				9D2EF8F926C410C7009048C4 /* Custom Views */,
 				9D34018C26DA7392005822DA /* Helper Classes */,
 				9DFF73F2248BAD7F004B4901 /* Models */,
-				9DFF73F5248BADBD004B4901 /* Strings */,
 				9DFF73F4248BADB2004B4901 /* Utilities */,
 				9D8E76FC248666C1004610C8 /* Preview Content */,
 			);
@@ -426,6 +438,8 @@
 		9DFF73F4248BADB2004B4901 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				725F44BD2A25E99C0096CCCB /* Generated */,
+				9DFEE1CF278A150400A41340 /* Localizable.strings */,
 				9D708A6C2569640E00A89ACB /* Persistence.swift */,
 				9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */,
 				9D8970A425681E9300B3C414 /* PetReminderApp.swift */,
@@ -437,14 +451,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		9DFF73F5248BADBD004B4901 /* Strings */ = {
-			isa = PBXGroup;
-			children = (
-				9DFEE1CF278A150400A41340 /* Localizable.strings */,
-			);
-			path = Strings;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -454,6 +460,7 @@
 			buildPhases = (
 				9D8E76EA248666BD004610C8 /* Sources */,
 				9D8E76EB248666BD004610C8 /* Frameworks */,
+				725F44C22A25ED970096CCCB /* SwiftGen */,
 				9D8E76EC248666BD004610C8 /* Resources */,
 			);
 			buildRules = (
@@ -518,11 +525,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		725F44C22A25ED970096CCCB /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftgen >/dev/null; then\n  swiftgen\nelse\n  echo \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D8E76EA248666BD004610C8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				725F44C12A25E99C0096CCCB /* XCAssets+Generated.swift in Sources */,
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
@@ -545,6 +575,7 @@
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
+				725F44C02A25E99C0096CCCB /* Strings+Generated.swift in Sources */,
 				7224CB8E29F7B20B009B0ADC /* PaymentErrorType.swift in Sources */,
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,

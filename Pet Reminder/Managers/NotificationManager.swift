@@ -59,13 +59,13 @@ extension NotificationManager{
                 
                 switch type {
                 case .birthday:
-                    content.body = String.localizedStringWithFormat(NSLocalizedString("notification_birthday_content", comment: "Pet's name with birthday content"), petName)
+                    content.body = Strings.notificationBirthdayContent(petName)
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
                     dateComponents.year = calendar.component(.year, from: calendar.date(byAdding: .year, value: 1, to: date) ?? .now)
                     dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
                 default:
-                    content.body = String.localizedStringWithFormat(NSLocalizedString("notification_content", comment: "Pet's name with content"), petName)
+                    content.body = Strings.notificationContent(petName)
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 }

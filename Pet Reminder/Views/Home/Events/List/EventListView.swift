@@ -18,7 +18,7 @@ struct EventListView : View {
         
         NavigationView{
             showEventView()
-                .navigationTitle(Text("event_title"))
+                .navigationTitle(Text(Strings.eventTitle))
                 .toolbar(content: eventToolBar)
             
         }
@@ -30,7 +30,7 @@ struct EventListView : View {
     func eventToolBar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: toggleAddEvent) {
-                Label("add_event_accessible_title", systemImage: "calendar.badge.plus")
+                Label(Strings.addEventAccessibleTitle, systemImage: "calendar.badge.plus")
                     .font(.title2)
                     .foregroundColor(tintColor)
             }

@@ -16,18 +16,18 @@ struct PetNotificationSelectionView: View {
     
     var body: some View {
         VStack {
-            Text("feed_time_title")
+            Text(Strings.feedTimeTitle)
                 .font(.title2).bold()
                 .padding([.top,.bottom])
-            Picker(selection: $dayType, label: Text("feed_time_title")) {
-                Text("feed_selection_both")
+            Picker(selection: $dayType, label: Text(Strings.feedTimeTitle)) {
+                Text(Strings.feedSelectionBoth)
                     .tag(DayTime.both)
-                Text("feed_selection_morning")
+                Text(Strings.feedSelectionMorning)
                     .tag(DayTime.morning)
-                Text("feed_selection_evening")
+                Text(Strings.feedSelectionEvening)
                     .tag(DayTime.evening)
             }
-            .pickerStyle(SegmentedPickerStyle())
+            .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: dayType)
             
             NotificationType()
@@ -50,12 +50,12 @@ struct PetNotificationSelectionView: View {
     
     var MorningView: some View {
         HStack {
-            Image("morning")
+            Assets.evening.swiftUIImage
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
             Spacer()
-            DatePicker("feed_selection_morning",
+            DatePicker(Strings.feedSelectionMorning,
                        selection: $morningFeed,
                        in: ...eveningFeed.addingTimeInterval(60),
                        displayedComponents: .hourAndMinute)
@@ -68,12 +68,12 @@ struct PetNotificationSelectionView: View {
     
     var EveningView: some View{
         HStack{
-            Image("evening")
+            Assets.evening.swiftUIImage
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
             Spacer()
-            DatePicker("feed_selection_evening",
+            DatePicker(Strings.feedSelectionEvening,
                        selection: $eveningFeed,
                        in: morningFeed.addingTimeInterval(60)...,
                        displayedComponents: .hourAndMinute)

@@ -12,10 +12,10 @@ struct PrivacyPolicyView: View {
     var body: some View {
         ScrollView{
             VStack{
-                Text("privacy_policy_content")
+                Text(Strings.privacyPolicyContent)
                     .padding(.all)
             }
-        }.navigationTitle(Text("privacy_policy_title"))
+        }.navigationTitle(Text(Strings.privacyPolicyTitle))
         
     }
 }

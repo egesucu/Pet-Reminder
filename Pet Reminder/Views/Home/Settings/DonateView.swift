@@ -17,19 +17,19 @@ struct DonateView: View {
     
     var body: some View{
         ScrollView{
-            Image("default-animal")
+            Assets.defaultAnimal.swiftUIImage
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
                 .padding([.top,.bottom],10)
-            Text("donate_us_context")
+            Text(Strings.donateUsContext)
                 .padding()
-            Text("donate_us_comment")
+            Text(Strings.donateUsComment)
                 .padding()
             ForEach(storeManager.products, id: \.localizedPrice){ product in
                 
                 if storeManager.userDidPurchase(product) {
-                    Text("donate_us_donated")
+                    Text(Strings.donateUsDonated)
                         .foregroundColor(tintColor)
                         .padding()
                 }
@@ -54,11 +54,11 @@ struct DonateView: View {
                 
                 self.generateHaptic()
                 
-                self.alertText = NSLocalizedString("donate_us_cleared_successfull", comment: "")
+                self.alertText = Strings.donateUsClearedSuccessfull
                 self.showAlert = true
                 
             } label: {
-                Text("donate_us_clear")
+                Text(Strings.donateUsClear)
                     .foregroundColor(Color(uiColor: .systemBackground))
             }
             .buttonStyle(.borderedProminent)
@@ -71,7 +71,7 @@ struct DonateView: View {
                 storeManager.getProducts()
             }
         }
-        .navigationTitle(Text("donate_us_title"))
+        .navigationTitle(Text(Strings.donateUsTitle))
     }
     
     func generateHaptic(){

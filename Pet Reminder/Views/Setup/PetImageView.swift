@@ -15,7 +15,7 @@ struct PetImageView: View {
     
     var body: some View {
         VStack {
-            Text("photo_set_label")
+            Text(Strings.photoSetLabel)
                 .font(.title2).bold()
             if let selectedImageData,
             let selectedImage = UIImage(data: selectedImageData) {
@@ -23,7 +23,7 @@ struct PetImageView: View {
             } else {
                 PetSelectImageView(selectedImageData: $selectedImageData)
             }
-            Text("photo_upload_detail_title")
+            Text(Strings.photoUploadDetailTitle)
                 .font(.footnote)
         }
     }

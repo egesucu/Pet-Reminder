@@ -20,7 +20,7 @@ struct PhotoImagePickerView : View {
         VStack{
             PhotosPicker(selection: $selectedPhoto,
                          matching: .images) {
-                Image("default-animal")
+                Assets.defaultAnimal.swiftUIImage
                     .resizable()
                     .scaledToFit()
                     .frame(width: 150, height: 150)

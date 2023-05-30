@@ -29,7 +29,7 @@ struct ESImageView: View {
                     .cornerRadius(25)
                     .shadow(radius: 10)
                     
-                Image("default-animal")
+                Assets.defaultAnimal.swiftUIImage
                     .resizable()
                     .scaledToFit()
                     .clipShape(Circle())
