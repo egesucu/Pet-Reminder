@@ -26,7 +26,7 @@ struct HelloView: View {
     var body: some View {
         ZStack {
             VStack(alignment: .center) {
-                Assets.petReminder.swiftUIImage
+                Image(.petReminder)
                     .resizable()
                     .scaledToFit()
                     .padding([.top,.bottom])

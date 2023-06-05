@@ -41,7 +41,8 @@ struct PetShowImageView: View {
 
 struct PetShowImageView_Previews: PreviewProvider {
     static var previews: some View {
-        PetShowImageView(selectedImage: Assets.defaultAnimal.image) {
+        let image = UIImage(resource: .defaultAnimal)
+        return PetShowImageView(selectedImage: image) {
             
         }
     }

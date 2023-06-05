@@ -50,7 +50,7 @@ struct PetNotificationSelectionView: View {
     
     var MorningView: some View {
         HStack {
-            Assets.morning.swiftUIImage
+            Image(.morning)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
@@ -68,7 +68,7 @@ struct PetNotificationSelectionView: View {
     
     var EveningView: some View{
         HStack{
-            Assets.evening.swiftUIImage
+            Image(.evening)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)

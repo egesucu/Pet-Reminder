@@ -17,7 +17,7 @@ struct DonateView: View {
     
     var body: some View{
         ScrollView{
-            Assets.defaultAnimal.swiftUIImage
+            Image(.defaultAnimal)
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
