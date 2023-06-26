@@ -30,9 +30,9 @@ struct PhotoImagePickerView: View {
                     .cornerRadius(50)
                     .shadow(radius: 10)
             }
-            .onChange(of: selectedPhoto, perform: { newValue in
+            .onChange(of: selectedPhoto, {
                 Task {
-                    if let data = try? await newValue?.loadTransferable(type: Data.self) {
+                    if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
                         onSelected(data)
                     }
                 }

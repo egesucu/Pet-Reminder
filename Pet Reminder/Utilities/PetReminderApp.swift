@@ -26,7 +26,7 @@ struct PetReminderApp: App {
                     storeManager.getProducts()
                 }
 
-        }.onChange(of: scenePhase) { _ in
+        }.onChange(of: scenePhase) {
             controller.save()
         }
 

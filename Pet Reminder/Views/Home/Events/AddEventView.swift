@@ -40,7 +40,7 @@ struct AddEventView: View {
             DatePicker("add_event_date", selection: $eventVM.allDayDate, displayedComponents: .date)
         } else {
             DatePicker("add_event_start", selection: $eventVM.eventStartDate)
-                .onChange(of: eventVM.eventStartDate, perform: changeEventMinimumDate(_:))
+                .onChange(of: eventVM.eventStartDate, changeEventMinimumDate(_:_:))
             DatePicker("add_event_end", selection: $eventVM.eventEndDate)
         }
     }
@@ -52,7 +52,7 @@ struct AddEventView: View {
         }
     }
 
-    private func changeEventMinimumDate(_ value: Date) {
+    private func changeEventMinimumDate(_ oldValue: Date, _ value: Date) {
         eventVM.eventEndDate = value.addingTimeInterval(60*60)
     }
 

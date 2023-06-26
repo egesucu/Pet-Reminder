@@ -45,8 +45,8 @@ struct PetChangeView: View {
                     alignment: .center
                 )
             Toggle("default_photo_label", isOn: $defaultPhotoOn)
-                .onChange(of: defaultPhotoOn, perform: { isOn in
-                    if isOn {
+                .onChange(of: defaultPhotoOn, {
+                    if defaultPhotoOn {
                         pet.image = nil
                         persistence.save()
                     }
@@ -71,7 +71,7 @@ struct PetChangeView: View {
                             self.changeName()
                         })
                     DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
-                        .onChange(of: birthday) { _ in
+                        .onChange(of: birthday) {
                             self.changeBirthday()
                         }
                 }
@@ -90,35 +90,35 @@ struct PetChangeView: View {
                             selection: $morningDate,
                             displayedComponents: .hourAndMinute
                         )
-                            .onChange(of: morningDate) { _ in
-                                self.changeNotification(for: .morning)
-                            }
+                        .onChange(of: morningDate) {
+                            self.changeNotification(for: .morning)
+                        }
                         DatePicker(
                             "feed_selection_evening",
                             selection: $eveningDate,
                             displayedComponents: .hourAndMinute
                         )
-                            .onChange(of: eveningDate) { _ in
-                                self.changeNotification(for: .evening)
-                            }
+                        .onChange(of: eveningDate) {
+                            self.changeNotification(for: .evening)
+                        }
                     } else if selection == 1 {
                         DatePicker(
                             "feed_selection_morning",
                             selection: $morningDate,
                             displayedComponents: .hourAndMinute
                         )
-                            .onChange(of: morningDate) { _ in
-                                self.changeNotification(for: .morning)
-                            }
+                        .onChange(of: morningDate, {
+                            self.changeNotification(for: .morning)
+                        })
                     } else if selection == 2 {
                         DatePicker(
                             "feed_selection_evening",
                             selection: $eveningDate,
                             displayedComponents: .hourAndMinute
                         )
-                            .onChange(of: eveningDate) { _ in
-                                self.changeNotification(for: .evening)
-                            }
+                        .onChange(of: eveningDate, {
+                            self.changeNotification(for: .evening)
+                        })
                     }
                 }
 

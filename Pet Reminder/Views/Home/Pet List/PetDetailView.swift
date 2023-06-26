@@ -40,9 +40,9 @@ struct PetDetailView: View {
                 switch pet.selection {
                 case .morning:
                     MorningCheckboxView(morningOn: $morningOn)
-                        .onChange(of: morningOn, perform: { value in
+                        .onChange(of: morningOn, {
                             feedback.notificationOccurred(.success)
-                            updateFeed(type: .morning, value: value)
+                            updateFeed(type: .morning, value: morningOn)
                             self.save()
                         })
                         .onTapGesture {
@@ -50,9 +50,9 @@ struct PetDetailView: View {
                         }
                 case .evening:
                     EveningCheckboxView(eveningOn: $eveningOn)
-                        .onChange(of: eveningOn, perform: { value in
+                        .onChange(of: eveningOn, {
                             feedback.notificationOccurred(.success)
-                            updateFeed(type: .evening, value: value)
+                            updateFeed(type: .evening, value: eveningOn)
                             self.save()
                         })
                         .onTapGesture {
@@ -60,18 +60,18 @@ struct PetDetailView: View {
                         }
                 case .both:
                     MorningCheckboxView(morningOn: $morningOn)
-                        .onChange(of: morningOn, perform: { value in
+                        .onChange(of: morningOn, {
                             feedback.notificationOccurred(.success)
-                            updateFeed(type: .morning, value: value)
+                            updateFeed(type: .morning, value: morningOn)
                             self.save()
                         })
                         .onTapGesture {
                             morningOn.toggle()
                         }
                     EveningCheckboxView(eveningOn: $eveningOn)
-                        .onChange(of: eveningOn, perform: { value in
+                        .onChange(of: eveningOn, {
                             feedback.notificationOccurred(.success)
-                            updateFeed(type: .evening, value: value)
+                            updateFeed(type: .evening, value: eveningOn)
                             self.save()
                         })
                         .onTapGesture {
