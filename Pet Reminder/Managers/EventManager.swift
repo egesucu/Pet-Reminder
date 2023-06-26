@@ -49,13 +49,13 @@ class EventManager: ObservableObject {
     }
 
     func requestEvents() {
-        eventStore.requestAccess(to: .event, completion: { success, error in
+        eventStore.requestFullAccessToEvents { success, error in
             if let error {
                 print(error)
             } else if success {
                 self.findCalendar()
             }
-        })
+        }
     }
 
     func findCalendar() {
@@ -89,7 +89,7 @@ class EventManager: ObservableObject {
     func loadEvents(from calendar: EKCalendar) {
         let status = EKEventStore.authorizationStatus(for: .event)
 
-        if status == .authorized {
+        if status == .fullAccess {
 
             let startDate = Date()
             //            86400 = tomowwow.
