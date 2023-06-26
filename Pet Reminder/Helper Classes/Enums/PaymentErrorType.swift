@@ -14,7 +14,7 @@ enum PaymentErrorType: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .cantPay:
-            return Strings.paymentCant
+            return String(localized: "payment_cant")
         }
     }
 }

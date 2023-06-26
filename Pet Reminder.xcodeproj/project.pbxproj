@@ -13,8 +13,6 @@
 		7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */; };
 		7224CB9429F7B23D009B0ADC /* ICloudResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9329F7B23D009B0ADC /* ICloudResult.swift */; };
 		7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9629F7B45C009B0ADC /* AddPopupView.swift */; };
-		725F44C02A25E99C0096CCCB /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44BE2A25E99C0096CCCB /* Strings+Generated.swift */; };
-		725F44C12A25E99C0096CCCB /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44BF2A25E99C0096CCCB /* XCAssets+Generated.swift */; };
 		725F44C42A260ABB0096CCCB /* URLDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C32A260ABB0096CCCB /* URLDefinitions.swift */; };
 		725F44C62A260ACA0096CCCB /* MapApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C52A260ACA0096CCCB /* MapApplication.swift */; };
 		725F44C82A260ADC0096CCCB /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C72A260ADC0096CCCB /* ViewExtensions.swift */; };
@@ -94,8 +92,6 @@
 		7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudErrorType.swift; sourceTree = "<group>"; };
 		7224CB9329F7B23D009B0ADC /* ICloudResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudResult.swift; sourceTree = "<group>"; };
 		7224CB9629F7B45C009B0ADC /* AddPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPopupView.swift; sourceTree = "<group>"; };
-		725F44BE2A25E99C0096CCCB /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
-		725F44BF2A25E99C0096CCCB /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		725F44C32A260ABB0096CCCB /* URLDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDefinitions.swift; sourceTree = "<group>"; };
 		725F44C52A260ACA0096CCCB /* MapApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApplication.swift; sourceTree = "<group>"; };
 		725F44C72A260ADC0096CCCB /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -202,15 +198,6 @@
 				7224CB9629F7B45C009B0ADC /* AddPopupView.swift */,
 			);
 			path = AddPopup;
-			sourceTree = "<group>";
-		};
-		725F44BD2A25E99C0096CCCB /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-				725F44BE2A25E99C0096CCCB /* Strings+Generated.swift */,
-				725F44BF2A25E99C0096CCCB /* XCAssets+Generated.swift */,
-			);
-			path = Generated;
 			sourceTree = "<group>";
 		};
 		9D2EF8F926C410C7009048C4 /* Custom Views */ = {
@@ -458,7 +445,6 @@
 		9DFF73F4248BADB2004B4901 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				725F44BD2A25E99C0096CCCB /* Generated */,
 				9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */,
 				9D708A6C2569640E00A89ACB /* Persistence.swift */,
 				9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */,
@@ -482,7 +468,6 @@
 				9D8E76EB248666BD004610C8 /* Frameworks */,
 				9D8E76EC248666BD004610C8 /* Resources */,
 				9D5D83E12A2F354E003563C8 /* SwiftLint */,
-				9D5D83E22A2F355C003563C8 /* SwiftGen */,
 			);
 			buildRules = (
 			);
@@ -564,26 +549,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\\\"$PATH:/opt/homebrew/bin\\\"\nif which swiftlint > /dev/null; then\n  swiftlint --autocorrect\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		9D5D83E22A2F355C003563C8 /* SwiftGen */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftGen;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\\\"$PATH:/opt/homebrew/bin\\\"\nif which swiftgen > /dev/null; then\n  swiftgen\nelse\n  echo \"warning: SwiftGen is not installed.\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\\\"$PATH:/opt/homebrew/bin\\\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -592,7 +558,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				725F44C12A25E99C0096CCCB /* XCAssets+Generated.swift in Sources */,
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
 				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
@@ -618,7 +583,6 @@
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
-				725F44C02A25E99C0096CCCB /* Strings+Generated.swift in Sources */,
 				7224CB8E29F7B20B009B0ADC /* PaymentErrorType.swift in Sources */,
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D708A6D2569640E00A89ACB /* Persistence.swift in Sources */,

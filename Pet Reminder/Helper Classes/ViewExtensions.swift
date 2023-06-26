@@ -5,13 +5,13 @@
 //  Created by Sucu, Ege on 30.05.2023.
 //  Copyright © 2023 Softhion. All rights reserved.
 //
-
+// swiftlint:disable switch_case_alignment
 import SwiftUI
 import MapKit
 import CoreLocation
 
 extension View {
-
+    // swiftlint:disable:next cyclomatic_complexity
     func openURLWithMap(latitude: CGFloat, longitude: CGFloat, application: MapApplication) {
         switch application {
             case .google:
@@ -52,3 +52,4 @@ extension VetViewModel: CLLocationManagerDelegate {
         askLocationPermission()
     }
 }
+// swiftlint:enable switch_case_alignment

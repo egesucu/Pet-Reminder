@@ -35,26 +35,34 @@ struct PetChangeView: View {
                 }, content: {
                     ImagePickerView(imageData: $outputImageData)
                 })
-                .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
-            Toggle(Strings.defaultPhotoLabel, isOn: $defaultPhotoOn)
-                .onChange(of: defaultPhotoOn, perform: { _isOn in
-                    if _isOn {
+                .frame(
+                    minWidth: 50,
+                    idealWidth: 100,
+                    maxWidth: 150,
+                    minHeight: 50,
+                    idealHeight: 100,
+                    maxHeight: 150,
+                    alignment: .center
+                )
+            Toggle("default_photo_label", isOn: $defaultPhotoOn)
+                .onChange(of: defaultPhotoOn, perform: { isOn in
+                    if isOn {
                         pet.image = nil
                         persistence.save()
                     }
                 })
                 .padding()
-            Text(Strings.photoUploadDetailTitle)
+            Text("photo_upload_detail_title")
                 .font(.footnote)
                 .foregroundColor(Color(.systemGray2))
                 .multilineTextAlignment(.center)
                 .padding()
             Form {
                 Section {
-                    TextField(Strings.tapToChangeText, text: $nameText)
+                    TextField("tap_to_change_text", text: $nameText)
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
-                                Button(Strings.done) {
+                                Button("done") {
                                     self.changeName()
                                 }
                             }
@@ -62,36 +70,52 @@ struct PetChangeView: View {
                         .onSubmit({
                             self.changeName()
                         })
-                    DatePicker(Strings.birthdayTitle, selection: $birthday, displayedComponents: .date)
+                    DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
                         .onChange(of: birthday) { _ in
                             self.changeBirthday()
                         }
                 }
                 Section {
-                    Picker(Strings.feedTimeTitle, selection: $selection) {
-                        Text(Strings.feedSelectionBoth).tag(0)
-                        Text(Strings.feedSelectionMorning).tag(1)
-                        Text(Strings.feedSelectionEvening).tag(2)
+                    Picker("feed_time_title", selection: $selection) {
+                        Text("feed_selection_both").tag(0)
+                        Text("feed_selection_morning").tag(1)
+                        Text("feed_selection_evening").tag(2)
 
                     }
-                    .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(.segmented)
 
                     if selection == 0 {
-                        DatePicker(Strings.feedSelectionMorning, selection: $morningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(
+                            "feed_selection_morning",
+                            selection: $morningDate,
+                            displayedComponents: .hourAndMinute
+                        )
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
-                        DatePicker(Strings.feedSelectionEvening, selection: $eveningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(
+                            "feed_selection_evening",
+                            selection: $eveningDate,
+                            displayedComponents: .hourAndMinute
+                        )
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }
                     } else if selection == 1 {
-                        DatePicker(Strings.feedSelectionMorning, selection: $morningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(
+                            "feed_selection_morning",
+                            selection: $morningDate,
+                            displayedComponents: .hourAndMinute
+                        )
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
                     } else if selection == 2 {
-                        DatePicker(Strings.feedSelectionEvening, selection: $eveningDate, displayedComponents: .hourAndMinute)
+                        DatePicker(
+                            "feed_selection_evening",
+                            selection: $eveningDate,
+                            displayedComponents: .hourAndMinute
+                        )
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }

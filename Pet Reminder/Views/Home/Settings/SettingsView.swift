@@ -18,27 +18,34 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text(Strings.appSettings)) {
-                    NavigationLink(Strings.managePetTitle, destination: PetListView().environment(\.managedObjectContext, viewContext))
-                    ColorPicker(Strings.settingsTintColor, selection: $tintColor)
-                    NavigationLink(Strings.notificationsManageTitle, destination:
+                Section(header: Text("app_settings")) {
+                    NavigationLink(
+                        "manage_pet_title",
+                        destination: PetListView(
+                        ).environment(
+                            \.managedObjectContext,
+                             viewContext
+                        )
+                    )
+                    ColorPicker("settings_tint_color", selection: $tintColor)
+                    NavigationLink("notifications_manage_title", destination:
                         NotificationView().environment(\.managedObjectContext, viewContext))
-                    NavigationLink(Strings.privacyPolicyTitle, destination: PrivacyPolicyView())
+                    NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())
                 }
                 Section {
-                    NavigationLink(Strings.donateUsTitle) {
+                    NavigationLink("donate_us_title") {
                         DonateView(storeManager: storeManager)
                     }
                 } header: {
-                    Text(Strings.buyCoffeeTitle)
+                    Text("buy_coffee_title")
                 } footer: {
                     Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
                 }
             }
 
-            .navigationTitle(Text(Strings.settingsTabTitle))
+            .navigationTitle(Text("settings_tab_title"))
 
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }.navigationViewStyle(.stack)
     }
 }
 

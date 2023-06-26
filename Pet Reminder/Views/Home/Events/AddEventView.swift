@@ -20,16 +20,16 @@ struct AddEventView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text(Strings.addEventInfo)) {
-                    TextField(Strings.addEventName, text: $eventVM.eventName)
+                Section(header: Text("add_event_info")) {
+                    TextField("add_event_name", text: $eventVM.eventName)
                 }
-                Section(header: Text(Strings.addEventTime)) {
-                    Toggle(Strings.allDayTitle, isOn: $eventVM.isAllDay)
+                Section(header: Text("add_event_time")) {
+                    Toggle("all_day_title", isOn: $eventVM.isAllDay)
                     eventDateView()
                 }
             }
             .accentColor(tintColor)
-            .navigationTitle(Text(Strings.addEventTitle))
+            .navigationTitle(Text("add_event_title"))
             .toolbar(content: addEventToolbar)
         }
     }
@@ -37,18 +37,18 @@ struct AddEventView: View {
     @ViewBuilder
     func eventDateView() -> some View {
         if eventVM.isAllDay {
-            DatePicker(Strings.addEventDate, selection: $eventVM.allDayDate, displayedComponents: .date)
+            DatePicker("add_event_date", selection: $eventVM.allDayDate, displayedComponents: .date)
         } else {
-            DatePicker(Strings.addEventStart, selection: $eventVM.eventStartDate)
+            DatePicker("add_event_start", selection: $eventVM.eventStartDate)
                 .onChange(of: eventVM.eventStartDate, perform: changeEventMinimumDate(_:))
-            DatePicker(Strings.addEventEnd, selection: $eventVM.eventEndDate)
+            DatePicker("add_event_end", selection: $eventVM.eventEndDate)
         }
     }
 
     @ToolbarContentBuilder
     func addEventToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            SaveButton()
+            saveButton()
         }
     }
 
@@ -56,9 +56,9 @@ struct AddEventView: View {
         eventVM.eventEndDate = value.addingTimeInterval(60*60)
     }
 
-    func SaveButton() -> some View {
+    func saveButton() -> some View {
         Button(action: saveEvent) {
-            Text(Strings.addEventSave)
+            Text("add_event_save")
                 .foregroundColor(tintColor)
                 .bold()
         }

@@ -40,8 +40,10 @@ struct AddPetView: View {
     }
 }
 
+// swiftlint: disable type_name
 struct AddPetView_Preview: PreviewProvider {
     static var previews: some View {
         AddPetView()
     }
 }
+// swiftlint: enable type_name

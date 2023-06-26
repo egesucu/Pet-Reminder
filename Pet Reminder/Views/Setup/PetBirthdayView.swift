@@ -16,11 +16,11 @@ struct PetBirthdayView: View {
     var body: some View {
         HStack {
             Spacer()
-            Text(Strings.birthdayTitle)
+            Text("birthday_title")
                 .font(.title2)
                 .bold()
                 .padding(.trailing, 20)
-            DatePicker(Strings.birthdayTitle, selection: $birthday, displayedComponents: .date)
+            DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
                 .labelsHidden()
                 .tint(tintColor)
             Spacer()

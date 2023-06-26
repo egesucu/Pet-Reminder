@@ -18,7 +18,7 @@ struct EventListView: View {
 
         NavigationView {
             showEventView()
-                .navigationTitle(Text(Strings.eventTitle))
+                .navigationTitle(Text("event_title"))
                 .toolbar(content: eventToolBar)
 
         }
@@ -30,7 +30,7 @@ struct EventListView: View {
     func eventToolBar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button(action: toggleAddEvent) {
-                Label(Strings.addEventAccessibleTitle, systemImage: SFSymbols.calendar)
+                Label("add_event_accessible_title", systemImage: SFSymbols.calendar)
                     .font(.title2)
                     .foregroundColor(tintColor)
             }

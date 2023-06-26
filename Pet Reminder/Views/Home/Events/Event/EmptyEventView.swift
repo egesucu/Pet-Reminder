@@ -17,11 +17,11 @@ struct EmptyEventView: View {
         VStack {
             HStack {
                 Spacer()
-                Text(Strings.eventNoTitle)
+                Text("event_no_title")
                     .font(.headline)
                     .padding()
                 Button(action: reloadEvents) {
-                    Text(Strings.refresh)
+                    Text("refresh")
                 }
                 .tint(tintColor)
                 Spacer()

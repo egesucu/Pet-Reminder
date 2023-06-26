@@ -24,7 +24,7 @@ struct VaccineHistoryView: View {
                 if let vaccineSet = pet.vaccines,
                    let vaccines = vaccineSet.allObjects as? [Vaccine] {
                     if vaccines.count == 0 {
-                        Text(Strings.noVaccineTitle)
+                        Text("no_vaccine_title")
                     } else {
                         List {
                             ForEach(vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })) { vaccine in
@@ -44,7 +44,7 @@ struct VaccineHistoryView: View {
                     }
 
                 } else {
-                    Text(Strings.noVaccineTitle)
+                    Text("no_vaccine_title")
                 }
             }
             .toolbar {
@@ -61,9 +61,14 @@ struct VaccineHistoryView: View {
                     }.disabled(shouldAddVaccine)
                 }
             }
-            .navigationTitle(Text(Strings.vaccineHistoryTitle))
+            .navigationTitle(Text("vaccine_history_title"))
             .popupView(isPresented: $shouldAddVaccine.animation()) {
-                AddPopupView(contentInput: $vaccineName, dateInput: $vaccineDate, onSave: saveVaccine, onCancel: cancelVaccine)
+                AddPopupView(
+                    contentInput: $vaccineName,
+                    dateInput: $vaccineDate,
+                    onSave: saveVaccine,
+                    onCancel: cancelVaccine
+                )
             }
         }
 
@@ -113,7 +118,26 @@ struct VaccineHistoryView_Previews: PreviewProvider {
         let pet = Pet(context: context)
         pet.name = Strings.viski
         for _ in 0..<titles.count {
-            let components = DateComponents(year: Int.random(in: 2018...2023), month: Int.random(in: 0...12), day: Int.random(in: 0...30), hour: Int.random(in: 0...23), minute: Int.random(in: 0...59), second: Int.random(in: 0...59))
+            let components = DateComponents(
+                year: Int.random(
+                    in: 2018...2023
+                ),
+                month: Int.random(
+                    in: 0...12
+                ),
+                day: Int.random(
+                    in: 0...30
+                ),
+                hour: Int.random(
+                    in: 0...23
+                ),
+                minute: Int.random(
+                    in: 0...59
+                ),
+                second: Int.random(
+                    in: 0...59
+                )
+            )
             let vaccine = Vaccine(context: context)
             vaccine.name = titles.randomElement() ?? ""
             vaccine.date = Calendar.current.date(from: components)

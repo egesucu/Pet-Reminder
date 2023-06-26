@@ -10,7 +10,7 @@ import Foundation
 import EventKit
 import SwiftUI
 
-extension Strings {
+struct Strings {
     internal static let demoVaccines = ["Pulvarin", "Alvarin", "Gagarin", "Aclor", "Silverin", "Volverine"]
     internal static let placeholderVaccine = "Pulvarin"
     internal static let simulationError = "Simulation does not support User Location"
@@ -22,15 +22,15 @@ extension Strings {
     internal static let donateTeaID = "pet_reminder_tea_donate"
     internal static let donateFoodID = "pet_reminder_food_donate"
 
-    internal static func footerLabel(_ p1: Any) -> String {
-        return "© Ege Sucu \(p1)"
+    internal static func footerLabel(_ first: Any) -> String {
+        return "© Ege Sucu \(first)"
     }
-    internal static func notificationIdenfier(_ p1: Any, _ p2: Any) -> String {
-      return "\(p1)-\(p2)-notification"
+    internal static func notificationIdenfier(_ first: Any, _ second: Any) -> String {
+      return "\(first)-\(second)-notification"
     }
 
-    internal static func demoEvent(_ p1: Any) -> String {
-        return "Demo Event \(p1)"
+    internal static func demoEvent(_ first: Any) -> String {
+        return "Demo Event \(first)"
     }
 
     internal static let petReminder = "Pet Reminder"
@@ -69,15 +69,26 @@ internal enum SFSymbols {
 extension String {
     static func formatEventDateTime(current: Bool, allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return current ? Strings.allDayTitle : String.futureDateTimeFormat(allDay: allDay, event: event)
+            return current ? String(
+                localized: "all_day_title"
+            ) : String.futureDateTimeFormat(
+                allDay: allDay,
+                event: event
+            )
         } else {
-            return current ? String.currentDateTimeFormat(allDay: allDay, event: event) : String.futureDateTimeFormat(allDay: allDay, event: event)
+            return current ? String.currentDateTimeFormat(
+                allDay: allDay,
+                event: event
+            ) : String.futureDateTimeFormat(
+                allDay: allDay,
+                event: event
+            )
         }
     }
 
     static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return "\(event.startDate.printDate()) \(Strings.allDayTitle)"
+            return "\(event.startDate.printDate()) \(String(localized: "all_day_title"))"
         } else {
             return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
@@ -85,7 +96,7 @@ extension String {
 
     static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return Strings.allDayTitle
+            return String(localized: "all_day_title")
         } else {
             return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
         }

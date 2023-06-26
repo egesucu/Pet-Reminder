@@ -18,13 +18,13 @@ enum IcloudErrorType: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .icloudUnavailable:
-            return Strings.cloudUnavailable
+            return String(localized: "cloud_unavailable")
         case .noIcloud:
-            return Strings.noAccount
+            return String(localized: "no_acount")
         case .restricted:
-            return Strings.restrictedAccount
+            return String(localized: "restricted_account")
         case .cantFetchStatus:
-            return Strings.cantFetchStatus
+            return String(localized: "cant_fetch_status")
         case .unknownError(let message):
             return message
         }

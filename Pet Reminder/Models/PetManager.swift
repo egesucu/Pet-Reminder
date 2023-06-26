@@ -22,7 +22,8 @@ class PetManager {
     var eveningTime: Date?
     var selection    = NotificationSelection.both
 
-    /// This function creates a Persistence Context to create a new Pet, transfers information that PetManager has been collecting from Setup Screens
+    /// This function creates a Persistence Context to create a new Pet,
+    /// transfers information that PetManager has been collecting from Setup Screens
     /// and sends the object to the persistence to save.
     func savePet(completion: () -> Void) {
         let newPet = Pet(context: persistence.container.viewContext)

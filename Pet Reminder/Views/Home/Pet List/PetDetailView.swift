@@ -26,7 +26,15 @@ struct PetDetailView: View {
         VStack {
             ESImageView(data: pet.image)
                 .padding([.top, .leading, .trailing], 20)
-                .frame(minWidth: 50, idealWidth: 100, maxWidth: 200, minHeight: 50, idealHeight: 100, maxHeight: 200, alignment: .center)
+                .frame(
+                    minWidth: 50,
+                    idealWidth: 100,
+                    maxWidth: 200,
+                    minHeight: 50,
+                    idealHeight: 100,
+                    maxHeight: 200,
+                    alignment: .center
+                )
             Spacer()
             HStack(spacing: 30) {
                 switch pet.selection {
@@ -101,17 +109,21 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines, content: {
             VaccineHistoryView(pet: pet, context: context)
         })
-        .navigationTitle(Text(Strings.petNameTitle(pet.name ?? "")))
+        .navigationTitle(Text("pet_name_title\(pet.name ?? "")"))
     }
-
+// swiftlint: disable trailing_whitespace
     func filterFeeds() -> [Feed] {
         let feedSet = pet.feeds
         if let feeds = feedSet?.allObjects as? [Feed] {
-            return feeds.filter({ $0.morningFedStamp != nil || $0.eveningFedStamp != nil }).sorted(by: { $0.feedDate ?? .now > $1.feedDate ?? .now })
+            return feeds.filter({
+                $0.morningFedStamp != nil || $0.eveningFedStamp != nil 
+            }).sorted(by: {
+                $0.feedDate ?? .now > $1.feedDate ?? .now 
+            })
         }
         return []
     }
-
+// swiftlint: enable trailing_whitespace
     func updateFeed(type: NotificationSelection, value: Bool) {
         if let feedSet = pet.feeds,
            let feeds = feedSet.allObjects as? [Feed] {

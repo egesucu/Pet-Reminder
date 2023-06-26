@@ -14,7 +14,16 @@ struct FindVetView: View {
 
     @StateObject var vetViewModel = VetViewModel()
     @State private var mapItems: [Pin] = []
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.925533, longitude: 32.866287), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: 39.925533,
+            longitude: 32.866287
+        ),
+        span: MKCoordinateSpan(
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05
+        )
+    )
     @State private var userAccess: CLAuthorizationStatus = .notDetermined
     @State private var showAlert = false
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
@@ -23,13 +32,13 @@ struct FindVetView: View {
         NavigationView {
             switch userAccess {
             case .notDetermined, .restricted, .denied:
-                Text(Strings.locationAlertContext)
+                Text("location_alert_context")
                     .onTapGesture {
                         showAlert.toggle()
                     }
                     .padding(.all)
                     .multilineTextAlignment(.center)
-                    .navigationTitle(Text(Strings.findVetTitle))
+                    .navigationTitle(Text("find_vet_title"))
             case .authorizedAlways, .authorizedWhenInUse:
                 MapWithSearchBarView(mapItems: $mapItems, region: $region, vetViewModel: vetViewModel) {
                     reloadMapView()
@@ -37,11 +46,11 @@ struct FindVetView: View {
 
             @unknown default:
                 VStack {
-                    Text(Strings.locationAlertContext)
+                    Text("location_alert_context")
                         .onTapGesture {
                             showAlert.toggle()
                         }.padding(.all).multilineTextAlignment(.center)
-                }.navigationTitle(Text(Strings.findVetTitle))
+                }.navigationTitle(Text("find_vet_title"))
             }
         }
         .onAppear(perform: {
@@ -49,11 +58,26 @@ struct FindVetView: View {
             userAccess = vetViewModel.locationManager.authorizationStatus
             reloadMapView()
         })
-        .alert(isPresented: $showAlert, content: {
+        .alert(isPresented: $showAlert,
+               content: {
 
-            Alert(title: Text(Strings.locationAlertTitle), message: Text(Strings.locationAlertContext), primaryButton: Alert.Button.default(Text(Strings.locationAlertChange), action: {
-                self.changeLocationSettings()
-            }), secondaryButton: Alert.Button.cancel())
+            Alert(
+                title: Text(
+                    "location_alert_title"
+                ),
+                message: Text(
+                    "ocation_alert_context"
+                ),
+                primaryButton: Alert.Button.default(Text(
+                    "location_alert_change"
+                ),
+                                                    action: {
+                                                        self.changeLocationSettings(
+                                                        )
+                                                    }),
+                secondaryButton: Alert.Button.cancel(
+                )
+            )
 
         })
     }

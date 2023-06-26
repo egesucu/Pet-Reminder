@@ -16,46 +16,46 @@ struct PetNotificationSelectionView: View {
 
     var body: some View {
         VStack {
-            Text(Strings.feedTimeTitle)
+            Text("feed_time_title")
                 .font(.title2).bold()
                 .padding([.top, .bottom])
-            Picker(selection: $dayType, label: Text(Strings.feedTimeTitle)) {
-                Text(Strings.feedSelectionBoth)
+            Picker(selection: $dayType, label: Text("feed_time_title")) {
+                Text("feed_selection_both")
                     .tag(DayTime.both)
-                Text(Strings.feedSelectionMorning)
+                Text("feed_selection_morning")
                     .tag(DayTime.morning)
-                Text(Strings.feedSelectionEvening)
+                Text("feed_selection_evening")
                     .tag(DayTime.evening)
             }
             .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: dayType)
 
-            NotificationType()
+            notificationType()
                 .animation(.easeOut(duration: 0.8), value: dayType)
                 .padding(.all)
         }
 
     }
 
-    @ViewBuilder func NotificationType() -> some View {
+    @ViewBuilder func notificationType() -> some View {
         switch dayType {
         case .morning:
-            MorningView
+            morningView
         case .evening:
-            EveningView
+            eveningView
         default:
-            BothView
+            bothView
         }
     }
 
-    var MorningView: some View {
+    var morningView: some View {
         HStack {
             Image(.morning)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
             Spacer()
-            DatePicker(Strings.feedSelectionMorning,
+            DatePicker("feed_selection_morning",
                        selection: $morningFeed,
                        in: ...eveningFeed.addingTimeInterval(60),
                        displayedComponents: .hourAndMinute)
@@ -66,14 +66,14 @@ struct PetNotificationSelectionView: View {
 
     }
 
-    var EveningView: some View {
+    var eveningView: some View {
         HStack {
             Image(.evening)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
                 .cornerRadius(15)
             Spacer()
-            DatePicker(Strings.feedSelectionEvening,
+            DatePicker("feed_selection_evening",
                        selection: $eveningFeed,
                        in: morningFeed.addingTimeInterval(60)...,
                        displayedComponents: .hourAndMinute)
@@ -82,11 +82,11 @@ struct PetNotificationSelectionView: View {
         .transition(.identity)
     }
 
-    var BothView: some View {
+    var bothView: some View {
         VStack {
-            MorningView
+            morningView
                 .padding([.top, .bottom])
-            EveningView
+            eveningView
         }
         .animation(.easeOut(duration: 0.8), value: dayType)
         .transition(.identity)
@@ -95,6 +95,16 @@ struct PetNotificationSelectionView: View {
 
 struct PetNotificationSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        PetNotificationSelectionView(dayType: .constant(.both), morningFeed: .constant(.now), eveningFeed: .constant(.now))
+        PetNotificationSelectionView(
+            dayType: .constant(
+                .both
+            ),
+            morningFeed: .constant(
+                .now
+            ),
+            eveningFeed: .constant(
+                .now
+            )
+        )
     }
 }

@@ -53,24 +53,38 @@ extension NotificationManager {
                 return
             } else {
                 let content = UNMutableNotificationContent()
-                content.title = Strings.notificationTitle
+                content.title = String(localized: "notification_title")
                 var dateComponents = DateComponents()
                 let calendar = Calendar.current
 
                 switch type {
                 case .birthday:
-                    content.body = Strings.notificationBirthdayContent(petName)
+                    content.body = String(localized: "notification_birthday_content\(petName)")
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
-                    dateComponents.year = calendar.component(.year, from: calendar.date(byAdding: .year, value: 1, to: date) ?? .now)
+                    dateComponents.year = calendar.component(
+                        .year,
+                        from: calendar.date(
+                            byAdding: .year,
+                            value: 1,
+                            to: date
+                        ) ?? .now
+                    )
                     dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
                 default:
-                    content.body = Strings.notificationContent(petName)
+                    content.body = String(localized: "notificationContent\(petName)")
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 }
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-                let request = UNNotificationRequest(identifier: Strings.notificationIdenfier(petName, type.rawValue), content: content, trigger: trigger)
+                let request = UNNotificationRequest(
+                    identifier: Strings.notificationIdenfier(
+                        petName,
+                        type.rawValue
+                    ),
+                    content: content,
+                    trigger: trigger
+                )
 
                 self.notificationCenter.add(request) { error in
                     if let error = error {

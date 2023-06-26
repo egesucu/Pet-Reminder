@@ -16,9 +16,21 @@ struct AddPetActionsView: View {
 
     var body: some View {
         HStack {
-            ActionButton(action: onCancel, content: .cancel, systemImage: SFSymbols.xmarkSealFill, isEnabled: true, tint: .red)
+            ActionButton(
+                action: onCancel,
+                content: .cancel,
+                systemImage: SFSymbols.xmarkSealFill,
+                isEnabled: true,
+                tint: .red
+            )
             .padding(.trailing, 50)
-            ActionButton(action: onSave, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: name.isEmpty, tint: .green)
+            ActionButton(
+                action: onSave,
+                content: .save,
+                systemImage: SFSymbols.pawprintCircleFill,
+                isEnabled: name.isEmpty,
+                tint: .green
+            )
         }
         .padding(.all)
     }

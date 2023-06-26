@@ -33,10 +33,10 @@ class EventManager: ObservableObject {
 
         var events = [EKEvent]()
 
-        for i in 0...4 {
+        for index in 0...4 {
 
             let event = EKEvent(eventStore: self.eventStore)
-            event.title = Strings.demoEvent(i+1)
+            event.title = Strings.demoEvent(index+1)
             event.startDate = Date()
             event.endDate = Date()
 
@@ -95,7 +95,11 @@ class EventManager: ObservableObject {
             //            86400 = tomowwow.
             let endDate = Date(timeIntervalSinceNow: 86400*3)
             DispatchQueue.main.async {
-                let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
+                let predicate = self.eventStore.predicateForEvents(
+                    withStart: startDate,
+                    end: endDate,
+                    calendars: [calendar]
+                )
                 self.events = self.eventStore.events(matching: predicate)
                 self.objectWillChange.send()
             }
@@ -164,7 +168,7 @@ class EventManager: ObservableObject {
 
             let alarm = EKAlarm(relativeOffset: -60*10)
             newEvent.addAlarm(alarm)
-            newEvent.notes = Strings.addEventNote
+            newEvent.notes = String(localized: "add_event_note")
 
             do {
                 try eventStore.save(newEvent, span: .thisEvent)

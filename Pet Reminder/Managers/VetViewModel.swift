@@ -15,7 +15,7 @@ class VetViewModel: NSObject, ObservableObject {
     @Published var userLocation = CLLocation()
     @Published var region = MKCoordinateRegion()
     @Published var permissionDenied = false
-    @Published var searchText: String = Strings.defaultVetText
+    @Published var searchText = String(localized: "default_vet_text")
 
     var locationManager = CLLocationManager()
 
@@ -34,7 +34,13 @@ class VetViewModel: NSObject, ObservableObject {
     }
 
     func setRegion() {
-        self.region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+        self.region = MKCoordinateRegion(
+            center: userLocation.coordinate,
+            span: MKCoordinateSpan(
+                latitudeDelta: 0.05,
+                longitudeDelta: 0.05
+            )
+        )
     }
 
     func searchPins(searchText: String, completion: @escaping (Result<[Pin], Error>) -> Void) {

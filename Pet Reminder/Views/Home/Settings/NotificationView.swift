@@ -18,30 +18,35 @@ struct NotificationView: View {
 
     @ObservedObject var notificationManager = NotificationManager.shared
 
+    func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
+        notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")})
+    }
+
     var body: some View {
         List {
             ForEach(pets, id: \.name) { pet in
                 Section {
-                    ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}), id: \.self) { notification in
-                        if notification.identifier.contains(NotificationType.morning.rawValue) {
+                    ForEach(filteredNotifications(pet: pet), id: \.self) { notification in
+                        switch notification.identifier {
+                        case let option where option.contains(NotificationType.morning.rawValue):
                             Label {
-                                Text(Strings.notificationTo)
+                                Text("notification_to")
                             } icon: {
                                 Image(systemName: SFSymbols.morning)
                                     .foregroundColor(.yellow)
                                     .font(.title)
                             }
-                        } else if notification.identifier.contains(NotificationType.evening.rawValue) {
+                        case let option where option.contains(NotificationType.evening.rawValue):
                             Label {
-                                Text(Strings.notificationTo)
+                                Text("notification_to")
                             } icon: {
                                 Image(systemName: SFSymbols.evening)
                                     .foregroundColor(.blue)
                                     .font(.title)
                             }
-                        } else if notification.identifier.contains(NotificationType.birthday.rawValue) {
+                        case let option where option.contains(NotificationType.birthday.rawValue):
                             Label {
-                                Text(Strings.notificationTo)
+                                Text("notification_to")
                             } icon: {
                                 if #available(iOS 16.0, *) {
                                     Image(systemName: SFSymbols.birthday)
@@ -55,8 +60,9 @@ struct NotificationView: View {
                                         .font(.title)
                                 }
                             }
-                        } else {
+                        default:
                             Text(notification.identifier)
+
                         }
                     }
                 } header: {
@@ -64,20 +70,21 @@ struct NotificationView: View {
                 } footer: {
                     let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}).count
                     if count == 1 {
-                        Text(Strings.notificationLld(count))
+                        Text("notification_lld\(count)")
                     } else {
-                        Text(Strings.notificationsLld(count))
+                        Text("notifications_lld\(count)")
                     }
 
                 }
 
-            }.onDelete(perform: remove)
+            }
+            .onDelete(perform: remove)
         }
         .listStyle(.insetGrouped)
         .refreshable {
             notificationManager.getNotifications()
         }
-        .navigationTitle(Text(Strings.notificationsTitle))
+        .navigationTitle(Text("notifications_title"))
         .navigationViewStyle(.stack)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -85,7 +92,7 @@ struct NotificationView: View {
                     notificationManager.removeNotifications(pets: pets.compactMap({ $0 as Pet }))
                     notificationManager.getNotifications()
                 } label: {
-                    Text(Strings.removeAll)
+                    Text("remove_all")
                 }
             }
         }

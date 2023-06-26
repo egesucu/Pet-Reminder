@@ -22,14 +22,14 @@ struct DonateView: View {
                 .scaledToFit()
                 .frame(height: 150)
                 .padding([.top, .bottom], 10)
-            Text(Strings.donateUsContext)
+            Text("donate_us_context")
                 .padding()
-            Text(Strings.donateUsComment)
+            Text("donate_us_comment")
                 .padding()
             ForEach(storeManager.products, id: \.localizedPrice) { product in
 
                 if storeManager.userDidPurchase(product) {
-                    Text(Strings.donateUsDonated)
+                    Text("donate_us_donated")
                         .foregroundColor(tintColor)
                         .padding()
                 }
@@ -54,11 +54,11 @@ struct DonateView: View {
 
                 self.generateHaptic()
 
-                self.alertText = Strings.donateUsClearedSuccessfull
+                self.alertText = String(localized: "donate_us_cleared_successfull")
                 self.showAlert = true
 
             } label: {
-                Text(Strings.donateUsClear)
+                Text("donate_us_clear")
                     .foregroundColor(Color(uiColor: .systemBackground))
             }
             .buttonStyle(.borderedProminent)
@@ -71,7 +71,7 @@ struct DonateView: View {
                 storeManager.getProducts()
             }
         }
-        .navigationTitle(Text(Strings.donateUsTitle))
+        .navigationTitle(Text("donate_us_title"))
     }
 
     func generateHaptic() {

@@ -15,7 +15,7 @@ struct MorningCheckboxView: View {
     var body: some View {
         VStack {
             Label {
-                Text(Strings.feedSelectionMorning)
+                Text("feed_selection_morning")
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {

@@ -24,7 +24,12 @@ struct MapWithSearchBarView: View {
         ZStack(alignment: .center) {
 #if !targetEnvironment(simulator)
             ZStack(alignment: .top) {
-                Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: true, annotationItems: mapItems) { annotation in
+                Map(
+                    coordinateRegion: $region,
+                    interactionModes: .all,
+                    showsUserLocation: true,
+                    annotationItems: mapItems
+                ) { annotation in
                     withAnimation {
                         MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
                             VStack {

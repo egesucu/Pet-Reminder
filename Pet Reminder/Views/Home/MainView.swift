@@ -19,13 +19,13 @@ struct MainView: View {
     let feedChecker = DailyFeedChecker.shared
 
     var body: some View {
-        PetView()
+        petView()
             .onAppear(perform: resetFeedTimes)
             .onChange(of: pets.count, perform: toggleSavedPet(count:))
     }
 
     @ViewBuilder
-    func PetView() -> some View {
+    func petView() -> some View {
         if petSaved {
             HomeManagerView(storeManager: storeManager)
         } else {

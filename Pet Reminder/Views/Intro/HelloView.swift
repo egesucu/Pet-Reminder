@@ -30,11 +30,11 @@ struct HelloView: View {
                     .resizable()
                     .scaledToFit()
                     .padding([.top, .bottom])
-                Text(Strings.welcomeTitle)
+                Text("welcome_title")
                     .padding([.top, .bottom])
                     .font(.title)
                 Spacer()
-                Text(Strings.welcomeContext)
+                Text("welcome_context")
                     .padding([.top, .bottom])
                     .font(.body)
                 Spacer()
@@ -43,7 +43,7 @@ struct HelloView: View {
                     Button {
                         self.showSetup.toggle()
                     } label: {
-                        Text(Strings.welcomeAddPet)
+                        Text("welcome_add_pet")
                             .font(.title)
                             .foregroundColor(.white)
                     }

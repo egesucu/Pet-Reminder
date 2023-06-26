@@ -26,27 +26,27 @@ struct AddPopupView: View {
                     .fill(Color.white)
                 VStack(alignment: .center) {
                     HStack {
-                        Text(Strings.add)
+                        Text("add")
                             .bold()
-                        TextField(Strings.placeholderVaccine, text: $contentInput)
+                        TextField("placeholder_vaccine", text: $contentInput)
                             .multilineTextAlignment(.center)
                     }
                     .padding([.leading, .trailing])
                     .padding(.bottom, 10)
 
                     DatePicker(selection: $dateInput) {
-                        Text(Strings.date)
+                        Text("date")
                             .bold()
                     }.padding([.leading, .trailing])
 
                     HStack {
                         Button(action: onCancel) {
-                            Text(Strings.cancel)
+                            Text("cancel")
                         }
                         .buttonStyle(.bordered)
                         Spacer()
                         Button(action: onSave) {
-                            Text(Strings.add)
+                            Text("add")
                         }
                         .buttonStyle(.borderedProminent)
                     }
@@ -86,7 +86,7 @@ struct PopupWrapper<PresentingView: View>: View {
 
 extension View {
   func popupView(isPresented: Binding<Bool>,
-                      content: @escaping () -> AddPopupView) -> some View {
+                 content: @escaping () -> AddPopupView) -> some View {
     PopupWrapper(isPresented: isPresented,
                      presentingView: self,
                      content: content)

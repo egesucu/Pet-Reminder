@@ -7,20 +7,25 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct TodaysEventsView: View {
 
     @ObservedObject var eventVM: EventManager
 
+    var filteredEvents: [EKEvent] {
+        eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)})
+    }
+
     var body: some View {
         Section {
-            ForEach(eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)}), id: \.eventIdentifier) { event in
+            ForEach(filteredEvents, id: \.eventIdentifier) { event in
                 EventView(event: event, eventVM: eventVM)
                     .padding([.leading, .trailing], 5)
                     .listRowSeparator(.hidden)
             }
         } header: {
-            Text(Strings.todayTitle)
+            Text("today_title")
         }
     }
 }

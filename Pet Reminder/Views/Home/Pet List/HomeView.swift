@@ -36,7 +36,7 @@ struct HomeView: View {
                             }
                         }
                         .onDelete(perform: delete)
-                        .navigationTitle(Strings.petNameTitle)
+                        .navigationTitle("pet_name_title")
                     }
                     .listStyle(.insetGrouped)
                     .sheet(isPresented: $addPet, onDismiss: {
@@ -51,18 +51,18 @@ struct HomeView: View {
                             Button(action: {
                                 self.addPet.toggle()
                             }, label: {
-                                Label(Strings.addAnimalAccessibleLabel, systemImage: SFSymbols.add)
+                                Label("add_animal_accessible_label", systemImage: SFSymbols.add)
                                     .foregroundColor(tintColor)
                                     .font(.title)
                             })
                         }
                 })
                 } else {
-                    Text(Strings.petNoPet)
+                    Text("pet_no_pet")
                 }
             }
-            .navigationTitle(Strings.petNameTitle)
-            Text(Strings.petSelect)
+            .navigationTitle("pet_name_title")
+            Text("pet_select")
         }.navigationViewStyle(.stack)
 
     }
