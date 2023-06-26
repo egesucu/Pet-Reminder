@@ -11,39 +11,38 @@ import CoreData
 
 struct MainView: View {
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name , ascending: true)])
-    var pets : FetchedResults<Pet>
-    @StateObject var storeManager : StoreManager
-    @AppStorage(Strings.petSaved) var petSaved : Bool = false
-    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    var pets: FetchedResults<Pet>
+    @StateObject var storeManager: StoreManager
+    @AppStorage(Strings.petSaved) var petSaved: Bool = false
+
     let feedChecker = DailyFeedChecker.shared
-    
-    var body: some View{
+
+    var body: some View {
         PetView()
             .onAppear(perform: resetFeedTimes)
             .onChange(of: pets.count, perform: toggleSavedPet(count:))
     }
-    
+
     @ViewBuilder
     func PetView() -> some View {
-        if petSaved{
+        if petSaved {
             HomeManagerView(storeManager: storeManager)
         } else {
             HelloView(storeManager: storeManager)
         }
     }
-    
+
     private func toggleSavedPet(count: Int) {
         petSaved = checkPetCount(count: count)
     }
-    
+
     private func checkPetCount(count: Int) -> Bool {
         count > 0 ? true : false
     }
-    
-    private func resetFeedTimes(){
+
+    private func resetFeedTimes() {
         petSaved = checkPetCount(count: pets.count)
         if petSaved { feedChecker.resetLogic(pets: pets, context: context) }
     }
 }
-

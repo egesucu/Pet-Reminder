@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-//MARK: - Color
+// MARK: - Color
 extension Color: RawRepresentable {
     public init?(rawValue: Int) {
         let red =   Double((rawValue & 0xFF0000) >> 16) / 0xFF
@@ -26,9 +26,8 @@ extension Color: RawRepresentable {
         return CIColor(color: UIColor(self))
     }
 }
-//MARK: UIColor Extension
-extension UIColor
-{
+// MARK: UIColor Extension
+extension UIColor {
     var isDarkColor: Bool {
         var r, g, b, a: CGFloat
         (r, g, b, a) = (0, 0, 0, 0)
@@ -38,8 +37,8 @@ extension UIColor
     }
 }
 
-extension Color{
-    var isDarkColor : Bool {
+extension Color {
+    var isDarkColor: Bool {
         return UIColor(self).isDarkColor
     }
     static let dynamicBlack = Color(.label)

@@ -9,33 +9,33 @@
 import SwiftUI
 
 struct HelloView: View {
-    @StateObject var storeManager : StoreManager
+    @StateObject var storeManager: StoreManager
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
-    var pets : FetchedResults<Pet>
+    var pets: FetchedResults<Pet>
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     let manager = DataManager.shared
-    
+
     @State private var showSetup = false
     @State private var showAlert = false
     @State private var alertText = ""
     @State private var petsAvailable = false
     @State private var navigateToHome = false
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .center) {
                 Image(.petReminder)
                     .resizable()
                     .scaledToFit()
-                    .padding([.top,.bottom])
+                    .padding([.top, .bottom])
                 Text(Strings.welcomeTitle)
-                    .padding([.top,.bottom])
+                    .padding([.top, .bottom])
                     .font(.title)
                 Spacer()
                 Text(Strings.welcomeContext)
-                    .padding([.top,.bottom])
+                    .padding([.top, .bottom])
                     .font(.body)
                 Spacer()
                 HStack {
@@ -59,11 +59,11 @@ struct HelloView: View {
                     .fullScreenCover(isPresented: $navigateToHome, content: {
                         HomeManagerView(storeManager: storeManager)
                     })
-                    
+
                     Spacer()
-                    
+
                 }
-                
+
             }.padding()
         }
         .onAppear {
@@ -75,11 +75,9 @@ struct HelloView: View {
 struct HelloView_Previews: PreviewProvider {
     static var previews: some View {
         let storeManager = StoreManager()
-        return Group{
+        return Group {
             HelloView(storeManager: storeManager)
         }
-        
+
     }
 }
-
-

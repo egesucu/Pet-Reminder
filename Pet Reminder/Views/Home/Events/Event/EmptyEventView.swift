@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct EmptyEventView: View {
-    
-    @ObservedObject var eventVM : EventManager
+
+    @ObservedObject var eventVM: EventManager
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -28,7 +28,7 @@ struct EmptyEventView: View {
             }
         }
     }
-    
+
     func reloadEvents() {
         Task {
             await eventVM.reloadEvents()

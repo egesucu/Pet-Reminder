@@ -9,16 +9,16 @@
 import SwiftUI
 
 struct PetNotificationSelectionView: View {
-    
+
     @Binding var dayType: DayTime
     @Binding var morningFeed: Date
     @Binding var eveningFeed: Date
-    
+
     var body: some View {
         VStack {
             Text(Strings.feedTimeTitle)
                 .font(.title2).bold()
-                .padding([.top,.bottom])
+                .padding([.top, .bottom])
             Picker(selection: $dayType, label: Text(Strings.feedTimeTitle)) {
                 Text(Strings.feedSelectionBoth)
                     .tag(DayTime.both)
@@ -29,14 +29,14 @@ struct PetNotificationSelectionView: View {
             }
             .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: dayType)
-            
+
             NotificationType()
                 .animation(.easeOut(duration: 0.8), value: dayType)
                 .padding(.all)
         }
-        
+
     }
-    
+
     @ViewBuilder func NotificationType() -> some View {
         switch dayType {
         case .morning:
@@ -47,7 +47,7 @@ struct PetNotificationSelectionView: View {
             BothView
         }
     }
-    
+
     var MorningView: some View {
         HStack {
             Image(.morning)
@@ -59,15 +59,15 @@ struct PetNotificationSelectionView: View {
                        selection: $morningFeed,
                        in: ...eveningFeed.addingTimeInterval(60),
                        displayedComponents: .hourAndMinute)
-            
+
         }
         .animation(.easeOut(duration: 0.8), value: dayType)
         .transition(.identity)
-        
+
     }
-    
-    var EveningView: some View{
-        HStack{
+
+    var EveningView: some View {
+        HStack {
             Image(.evening)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
@@ -81,11 +81,11 @@ struct PetNotificationSelectionView: View {
         .animation(.easeOut(duration: 0.8), value: dayType)
         .transition(.identity)
     }
-    
+
     var BothView: some View {
         VStack {
             MorningView
-                .padding([.top,.bottom])
+                .padding([.top, .bottom])
             EveningView
         }
         .animation(.easeOut(duration: 0.8), value: dayType)

@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum PaymentErrorType: LocalizedError{
+enum PaymentErrorType: LocalizedError {
     case cantPay
-    
+
     var errorDescription: String? {
         switch self {
         case .cantPay:

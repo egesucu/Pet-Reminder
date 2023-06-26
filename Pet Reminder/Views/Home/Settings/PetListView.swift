@@ -9,16 +9,16 @@
 import SwiftUI
 
 struct PetListView: View {
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
-    
+
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets : FetchedResults<Pet>
-    
+    private var pets: FetchedResults<Pet>
+
     var body: some View {
-        List{
-            ForEach(pets){ pet in
+        List {
+            ForEach(pets) { pet in
                 NavigationLink(
                     destination: PetChangeView(pet: pet),
                     label: {
@@ -30,9 +30,9 @@ struct PetListView: View {
         }
         .navigationTitle(Text(Strings.managePetTitle))
     }
-    
-    func deletePet(at indexSet: IndexSet){
-        for index in indexSet{
+
+    func deletePet(at indexSet: IndexSet) {
+        for index in indexSet {
             let pet = pets[index]
             viewContext.delete(pet)
         }

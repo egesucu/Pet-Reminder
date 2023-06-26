@@ -19,15 +19,13 @@ struct ImagePickerView: UIViewControllerRepresentable {
         return picker
     }
 
-
-    
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         let parent: ImagePickerView
 
         init(_ parent: ImagePickerView) {
             self.parent = parent
         }
-        
+
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
                if let uiImage = info[.editedImage] as? UIImage {
                    parent.imageData = uiImage.jpegData(compressionQuality: 0.8)
@@ -40,11 +38,8 @@ struct ImagePickerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePickerView>) {
 
     }
-    
-   
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
 }
-

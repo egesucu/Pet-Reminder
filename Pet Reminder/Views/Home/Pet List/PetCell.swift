@@ -10,10 +10,10 @@ import SwiftUI
 
 struct PetCell: View {
     @ObservedObject var pet: Pet
-    var body: some View{
-        HStack{
+    var body: some View {
+        HStack {
             ESImageView(data: pet.image)
-                .padding([.top,.trailing,.bottom],10)
+                .padding([.top, .trailing, .bottom], 10)
                 .frame(maxWidth: 150, maxHeight: 150)
             VStack {
                 Text(pet.name ?? Strings.viski)
@@ -24,17 +24,17 @@ struct PetCell: View {
                 if let feedSet = pet.feeds,
                    let feeds = feedSet.allObjects as? [Feed],
                    feeds.count > 0,
-                   let lastFeed = feeds.last{
+                   let lastFeed = feeds.last {
                     if lastFeed.eveningFed,
-                       let eveningTime = lastFeed.eveningFedStamp{
-                        VStack(alignment: .leading){
+                       let eveningTime = lastFeed.eveningFedStamp {
+                        VStack(alignment: .leading) {
                             Text(Strings.lastFeedTitle)
                                 .bold()
                             Text("\(eveningTime.formatted())")
                         }
                     } else if lastFeed.morningFed,
-                              let morningTime = lastFeed.morningFedStamp{
-                        VStack(alignment: .leading){
+                              let morningTime = lastFeed.morningFedStamp {
+                        VStack(alignment: .leading) {
                             Text(Strings.lastFeedTitle)
                                 .bold()
                             Text(morningTime.formatted())

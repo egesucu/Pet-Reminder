@@ -9,8 +9,8 @@
 import Foundation
 import MapKit
 
-struct VetPin: Identifiable{
-    
+struct VetPin: Identifiable {
+
     var id  = UUID().uuidString
     var place: CLPlacemark
 }

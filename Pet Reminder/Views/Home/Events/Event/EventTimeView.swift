@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct EventTimeView: View {
-    
+
     @Binding var dateString: String
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
-        ZStack(alignment: .center){
+        ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: 100).fill(tintColor)
             Text(dateString)
                 .multilineTextAlignment(.center)

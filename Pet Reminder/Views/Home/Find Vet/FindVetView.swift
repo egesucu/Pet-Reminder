@@ -11,16 +11,16 @@ import MapKit
 import CoreLocation
 
 struct FindVetView: View {
-    
+
     @StateObject var vetViewModel = VetViewModel()
-    @State private var mapItems : [Pin] = []
+    @State private var mapItems: [Pin] = []
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.925533, longitude: 32.866287), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-    @State private var userAccess : CLAuthorizationStatus = .notDetermined
+    @State private var userAccess: CLAuthorizationStatus = .notDetermined
     @State private var showAlert = false
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     var body: some View {
-        NavigationView{
+        NavigationView {
             switch userAccess {
             case .notDetermined, .restricted, .denied:
                 Text(Strings.locationAlertContext)
@@ -34,7 +34,7 @@ struct FindVetView: View {
                 MapWithSearchBarView(mapItems: $mapItems, region: $region, vetViewModel: vetViewModel) {
                     reloadMapView()
                 }
-                    
+
             @unknown default:
                 VStack {
                     Text(Strings.locationAlertContext)
@@ -50,43 +50,43 @@ struct FindVetView: View {
             reloadMapView()
         })
         .alert(isPresented: $showAlert, content: {
-            
+
             Alert(title: Text(Strings.locationAlertTitle), message: Text(Strings.locationAlertContext), primaryButton: Alert.Button.default(Text(Strings.locationAlertChange), action: {
                 self.changeLocationSettings()
             }), secondaryButton: Alert.Button.cancel())
-            
+
         })
     }
 }
 
 extension FindVetView {
-    func changeLocationSettings(){
+    func changeLocationSettings() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
-    
-    func reloadMapView(){
+
+    func reloadMapView() {
         self.region = vetViewModel.region
         vetViewModel.locationManager.startUpdatingLocation()
         setupPins()
-        
+
     }
-    
-    func setupPins(){
+
+    func setupPins() {
         self.mapItems.removeAll()
         DispatchQueue.main.async {
             self.vetViewModel.searchPins(searchText: vetViewModel.searchText) { result in
-                switch result{
+                switch result {
                 case .success(let pins):
                     self.mapItems = pins
                 case .failure(let error):
-                    print("Error: ",error.localizedDescription)
+                    print("Error: ", error.localizedDescription)
                 }
             }
         }
-        
+
     }
-    
-    func askUserLocation(){
+
+    func askUserLocation() {
         vetViewModel.askLocationPermission()
     }
 }

@@ -47,7 +47,7 @@ extension View {
     }
 }
 
-extension VetViewModel: CLLocationManagerDelegate{
+extension VetViewModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         askLocationPermission()
     }

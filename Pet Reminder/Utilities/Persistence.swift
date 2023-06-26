@@ -11,9 +11,9 @@ import Foundation
 import CloudKit
 
 struct PersistenceController {
-    
+
     static let shared = PersistenceController()
-    
+
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
@@ -24,10 +24,10 @@ struct PersistenceController {
             demoPet.image = nil
             demoPet.selection = .both
             demoPet.birthday = Date()
-            for i in 0..<5{
+            for i in 0..<5 {
                 let feed = Feed(context: viewContext)
                 let components = DateComponents(year: Int.random(in: 2018...2023), month: Int.random(in: 0...12), day: Int.random(in: 0...30), hour: Int.random(in: 0...23), minute: Int.random(in: 0...59), second: Int.random(in: 0...59))
-                if i % 2 == 0{
+                if i % 2 == 0 {
                     feed.morningFedStamp = Calendar.current.date(from: components)
                     feed.morningFed = true
                 } else {
@@ -45,27 +45,24 @@ struct PersistenceController {
         }
         return result
     }()
-    
-    
-    
+
     let container: NSPersistentCloudKitContainer
-    
-    
-    func seeCloudKitStatus(with error: Error?, block: @escaping () -> ()) -> Error?{
+
+    func seeCloudKitStatus(with error: Error?, block: @escaping () -> Void) -> Error? {
         guard let effectiveError = error as? CKError else {
             return error
         }
-        
+
         guard let retryAfter = effectiveError.retryAfterSeconds else {
             return effectiveError
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + retryAfter) {
             block()
         }
-        
+
         return nil
-        
+
     }
 
     init(inMemory: Bool = false) {
@@ -73,24 +70,23 @@ struct PersistenceController {
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
-    
-    func save(){
+
+    func save() {
         let context = container.viewContext
         context.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
-        
+
         do {
             try context.save()
         } catch {
             print("Error: \(error.localizedDescription)")
         }
     }
-    
 
 }

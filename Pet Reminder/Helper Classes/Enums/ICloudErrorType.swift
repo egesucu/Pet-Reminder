@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum IcloudErrorType: LocalizedError{
+enum IcloudErrorType: LocalizedError {
     case icloudUnavailable
     case noIcloud
     case restricted
     case cantFetchStatus
     case unknownError(String)
-    
+
     var errorDescription: String? {
         switch self {
         case .icloudUnavailable:
@@ -29,5 +29,5 @@ enum IcloudErrorType: LocalizedError{
             return message
         }
     }
-    
+
 }

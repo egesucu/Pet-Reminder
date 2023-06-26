@@ -9,31 +9,31 @@
 import SwiftUI
 
 struct DonateView: View {
-    
-    @StateObject var storeManager : StoreManager
+
+    @StateObject var storeManager: StoreManager
     @State private var showAlert = false
     @State private var alertText = ""
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
-    var body: some View{
-        ScrollView{
+
+    var body: some View {
+        ScrollView {
             Image(.defaultAnimal)
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
-                .padding([.top,.bottom],10)
+                .padding([.top, .bottom], 10)
             Text(Strings.donateUsContext)
                 .padding()
             Text(Strings.donateUsComment)
                 .padding()
-            ForEach(storeManager.products, id: \.localizedPrice){ product in
-                
+            ForEach(storeManager.products, id: \.localizedPrice) { product in
+
                 if storeManager.userDidPurchase(product) {
                     Text(Strings.donateUsDonated)
                         .foregroundColor(tintColor)
                         .padding()
                 }
-                HStack{
+                HStack {
                     Button {
                         self.generateHaptic()
                         storeManager.purchaseProduct(product)
@@ -41,43 +41,42 @@ struct DonateView: View {
                         Text(product.localizedPrice).foregroundColor(Color(uiColor: .systemBackground))
                     }
                     .buttonStyle(.borderedProminent)
-                    .padding([.trailing,.leading],5)
+                    .padding([.trailing, .leading], 5)
                     Text(product.localizedTitle)
                     Spacer()
                 }.padding()
-            }.onAppear{
+            }.onAppear {
                 storeManager.products.sort(by: { $0.price.doubleValue < $1.price.doubleValue })
             }
 
             Button {
                 self.storeManager.clearPreviousPurchases()
-                
+
                 self.generateHaptic()
-                
+
                 self.alertText = Strings.donateUsClearedSuccessfull
                 self.showAlert = true
-                
+
             } label: {
                 Text(Strings.donateUsClear)
                     .foregroundColor(Color(uiColor: .systemBackground))
             }
             .buttonStyle(.borderedProminent)
             .alert(alertText, isPresented: $showAlert) {
-                
+
             }
 
         }.onAppear {
-            if storeManager.userCanPurchase{
+            if storeManager.userCanPurchase {
                 storeManager.getProducts()
             }
         }
         .navigationTitle(Text(Strings.donateUsTitle))
     }
-    
-    func generateHaptic(){
+
+    func generateHaptic() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
             impactMed.impactOccurred()
     }
-    
-    
+
 }

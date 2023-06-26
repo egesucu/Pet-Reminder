@@ -9,17 +9,17 @@
 import SwiftUI
 import CoreData
 
-class DailyFeedChecker{
-    
+class DailyFeedChecker {
+
     static let shared = DailyFeedChecker()
-    
+
     func resetLogic(pets: FetchedResults<Pet>, context: NSManagedObjectContext) {
-        for pet in pets{
+        for pet in pets {
             if let feedSet = pet.feeds,
                let feeds = feedSet.allObjects as? [Feed],
                let lastFeed = feeds.last,
-               let date = lastFeed.feedDate{
-                if !Calendar.current.isDateInToday(date){
+               let date = lastFeed.feedDate {
+                if !Calendar.current.isDateInToday(date) {
                     let todaysFeed = Feed(context: context)
                     todaysFeed.feedDate = .now
                     todaysFeed.eveningFed = false
@@ -33,12 +33,7 @@ class DailyFeedChecker{
         } catch {
             print(error)
         }
-        
+
     }
-    
-    
-    
-    
-    
-    
+
 }

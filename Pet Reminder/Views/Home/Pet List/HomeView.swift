@@ -11,24 +11,24 @@ import CoreData
 import EventKit
 
 struct HomeView: View {
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
-    
+
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets : FetchedResults<Pet>
+    private var pets: FetchedResults<Pet>
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     @State private var addPet = false
-    
+
     var body: some View {
-        
-        NavigationView{
-            
-            VStack{
+
+        NavigationView {
+
+            VStack {
                 if pets.count > 0 {
-                    List{
-                        ForEach(pets, id: \.name){ pet in
+                    List {
+                        ForEach(pets, id: \.name) { pet in
                             NavigationLink {
                                 PetDetailView(pet: pet, context: viewContext)
                             } label: {
@@ -64,24 +64,24 @@ struct HomeView: View {
             .navigationTitle(Strings.petNameTitle)
             Text(Strings.petSelect)
         }.navigationViewStyle(.stack)
-        
+
     }
-    
-    func delete(at offsets: IndexSet){
-        
-        for index in offsets{
+
+    func delete(at offsets: IndexSet) {
+
+        for index in offsets {
             let pet = pets[index]
             viewContext.delete(pet)
         }
-        
+
         PersistenceController.shared.save()
-        
+
     }
 }
 
-struct HomeViewPreview: PreviewProvider{
-    
-    static var previews: some View{
+struct HomeViewPreview: PreviewProvider {
+
+    static var previews: some View {
         HomeView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

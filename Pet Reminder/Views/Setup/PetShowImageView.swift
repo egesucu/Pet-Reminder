@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct PetShowImageView: View {
-    
+
     var selectedImage: UIImage
-    var onImageDelete: () -> ()
-    
+    var onImageDelete: () -> Void
+
     var body: some View {
-        HStack{
+        HStack {
             Spacer()
-            ZStack(alignment: .topTrailing){
+            ZStack(alignment: .topTrailing) {
                 Image(uiImage: selectedImage)
                     .resizable()
                     .scaledToFit()
@@ -43,7 +43,7 @@ struct PetShowImageView_Previews: PreviewProvider {
     static var previews: some View {
         let image = UIImage(resource: .defaultAnimal)
         return PetShowImageView(selectedImage: image) {
-            
+
         }
     }
 }

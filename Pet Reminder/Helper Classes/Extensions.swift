@@ -8,25 +8,25 @@
 
 import SwiftUI
 
-//MARK: - Array
-extension Array{
-    static var empty : Self { [] }
+// MARK: - Array
+extension Array {
+    static var empty: Self { [] }
 }
 
 extension Array where Element: Hashable {
     func removeDuplicates() -> [Element] {
         var seen = Set<Element>()
-        return filter{ seen.insert($0).inserted }
+        return filter { seen.insert($0).inserted }
     }
 }
 
-//MARK: - Pet
-extension Pet{
+// MARK: - Pet
+extension Pet {
     var selection: NotificationSelection {
-        get{
+        get {
             return NotificationSelection(rawValue: self.choice) ?? .both
         }
-        set{
+        set {
             choice = newValue.rawValue
         }
     }

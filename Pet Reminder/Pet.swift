@@ -9,8 +9,6 @@
 import Foundation
 import CoreData
 
-
-
 struct Pet {
     var id: UUID
     var name: String

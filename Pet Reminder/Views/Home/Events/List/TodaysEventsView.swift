@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct TodaysEventsView: View {
-    
-    @ObservedObject var eventVM : EventManager
-    
+
+    @ObservedObject var eventVM: EventManager
+
     var body: some View {
-        Section{
+        Section {
             ForEach(eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)}), id: \.eventIdentifier) { event in
                 EventView(event: event, eventVM: eventVM)
-                    .padding([.leading, .trailing],5)
+                    .padding([.leading, .trailing], 5)
                     .listRowSeparator(.hidden)
             }
         } header: {

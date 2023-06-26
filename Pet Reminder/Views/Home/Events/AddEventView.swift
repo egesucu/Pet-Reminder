@@ -9,14 +9,14 @@
 import SwiftUI
 import EventKit
 
-struct AddEventView : View {
-    
+struct AddEventView: View {
+
     @StateObject var eventVM = EventManager()
     @Environment(\.dismiss) var dismiss
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
-    
+
     let feedback = UINotificationFeedbackGenerator()
-    
+
     var body: some View {
         NavigationView {
             Form {
@@ -33,29 +33,29 @@ struct AddEventView : View {
             .toolbar(content: addEventToolbar)
         }
     }
-    
+
     @ViewBuilder
     func eventDateView() -> some View {
-        if eventVM.isAllDay{
+        if eventVM.isAllDay {
             DatePicker(Strings.addEventDate, selection: $eventVM.allDayDate, displayedComponents: .date)
         } else {
             DatePicker(Strings.addEventStart, selection: $eventVM.eventStartDate)
                 .onChange(of: eventVM.eventStartDate, perform: changeEventMinimumDate(_:))
-            DatePicker(Strings.addEventEnd , selection: $eventVM.eventEndDate)
+            DatePicker(Strings.addEventEnd, selection: $eventVM.eventEndDate)
         }
     }
-    
+
     @ToolbarContentBuilder
     func addEventToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             SaveButton()
         }
     }
-    
+
     private func changeEventMinimumDate(_ value: Date) {
         eventVM.eventEndDate = value.addingTimeInterval(60*60)
     }
-    
+
     func SaveButton() -> some View {
         Button(action: saveEvent) {
             Text(Strings.addEventSave)
@@ -63,14 +63,14 @@ struct AddEventView : View {
                 .bold()
         }
     }
-    
+
     private func saveEvent() {
         feedback.notificationOccurred(.success)
         Task {
             await eventVM.saveEvent(onFinish: dismiss.callAsFunction)
         }
     }
-    
+
 }
 
 struct AddEvent_Previews: PreviewProvider {

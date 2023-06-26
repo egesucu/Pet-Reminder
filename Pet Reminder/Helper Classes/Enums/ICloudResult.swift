@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ICloudResultType{
+enum ICloudResultType {
     case success
     case error(IcloudErrorType)
 }

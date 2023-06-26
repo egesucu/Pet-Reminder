@@ -9,22 +9,21 @@
 import SwiftUI
 
 struct NotificationView: View {
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
-    
+
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets : FetchedResults<Pet>
-    
+    private var pets: FetchedResults<Pet>
+
     @ObservedObject var notificationManager = NotificationManager.shared
-    
-    
+
     var body: some View {
-        List{
+        List {
             ForEach(pets, id: \.name) { pet in
                 Section {
-                    ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}),id: \.self){ notification in
-                        if notification.identifier.contains(NotificationType.morning.rawValue){
+                    ForEach(notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}), id: \.self) { notification in
+                        if notification.identifier.contains(NotificationType.morning.rawValue) {
                             Label {
                                 Text(Strings.notificationTo)
                             } icon: {
@@ -32,7 +31,7 @@ struct NotificationView: View {
                                     .foregroundColor(.yellow)
                                     .font(.title)
                             }
-                        } else if notification.identifier.contains(NotificationType.evening.rawValue){
+                        } else if notification.identifier.contains(NotificationType.evening.rawValue) {
                             Label {
                                 Text(Strings.notificationTo)
                             } icon: {
@@ -40,7 +39,7 @@ struct NotificationView: View {
                                     .foregroundColor(.blue)
                                     .font(.title)
                             }
-                        } else if notification.identifier.contains(NotificationType.birthday.rawValue){
+                        } else if notification.identifier.contains(NotificationType.birthday.rawValue) {
                             Label {
                                 Text(Strings.notificationTo)
                             } icon: {
@@ -69,10 +68,9 @@ struct NotificationView: View {
                     } else {
                         Text(Strings.notificationsLld(count))
                     }
-                    
+
                 }
 
-                
             }.onDelete(perform: remove)
         }
         .listStyle(.insetGrouped)
@@ -96,9 +94,9 @@ struct NotificationView: View {
             notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
     }
-    
-    func remove(at offset: IndexSet){
-        for index in offset{
+
+    func remove(at offset: IndexSet) {
+        for index in offset {
             let notification = notificationManager.notifications[index]
             notificationManager.removeNotificationsIdentifiers(with: [notification.identifier])
             notificationManager.getNotifications()

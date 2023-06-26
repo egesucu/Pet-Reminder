@@ -9,22 +9,21 @@
 import SwiftUI
 
 class AddPetViewModel: ObservableObject {
-    
-    @AppStorage(Strings.petSaved) var petSaved : Bool?
-    
-    @Published var dayType : DayTime = .both
+
+    @AppStorage(Strings.petSaved) var petSaved: Bool?
+
+    @Published var dayType: DayTime = .both
     @Published var name = ""
-    @Published var birthday : Date = .now
-    @Published var morningFeed : Date = Date().eightAM()
-    @Published var eveningFeed : Date = Date().eightPM()
-    @Published var selectedImageData: Data? = nil
-    
-    
+    @Published var birthday: Date = .now
+    @Published var morningFeed: Date = Date().eightAM()
+    @Published var eveningFeed: Date = Date().eightPM()
+    @Published var selectedImageData: Data?
+
     func resetImageData() {
         selectedImageData = nil
     }
-    
-    func savePet(petManager: PetManager, onDismiss: () -> ()){
+
+    func savePet(petManager: PetManager, onDismiss: () -> Void) {
         petManager.name = name
         petManager.birthday = birthday
         if let selectedImageData {
@@ -42,13 +41,11 @@ class AddPetViewModel: ObservableObject {
             petManager.eveningTime = eveningFeed
             petManager.selection = .both
         }
-        
-        petManager.savePet() {
+
+        petManager.savePet {
             petSaved = true
             onDismiss()
         }
     }
-    
-    
-    
+
 }

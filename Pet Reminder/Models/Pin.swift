@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-struct Pin: Identifiable{
+struct Pin: Identifiable {
     var id = UUID()
     var item: MKMapItem
 }

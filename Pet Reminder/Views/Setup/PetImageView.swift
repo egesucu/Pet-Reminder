@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct PetImageView: View {
-    
+
     @Binding var selectedImageData: Data?
-    var onImageDelete: () -> ()
-    
+    var onImageDelete: () -> Void
+
     var body: some View {
         VStack {
             Text(Strings.photoSetLabel)
@@ -32,7 +32,7 @@ struct PetImageView: View {
 struct PetImageView_Previews: PreviewProvider {
     static var previews: some View {
         PetImageView(selectedImageData: .constant(nil)) {
-            
+
         }
     }
 }

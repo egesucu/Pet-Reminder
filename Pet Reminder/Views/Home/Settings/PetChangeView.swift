@@ -9,22 +9,22 @@
 import SwiftUI
 
 struct PetChangeView: View {
-    
+
     var pet: Pet
     let persistence = PersistenceController.shared
     let notificationManager = NotificationManager.shared
-    
+
     @State private var nameText = ""
-    @State private var petImage : Image? = nil
+    @State private var petImage: Image?
     @State private var birthday = Date()
     @State private var selection = 0
     @State private var morningDate = Date.now.eightAM()
     @State private var eveningDate = Date.now.eightPM()
     @State private var showImagePicker = false
-    @State private var outputImageData: Data? = nil
+    @State private var outputImageData: Data?
     @State private var defaultPhotoOn = false
     var body: some View {
-        
+
         VStack {
             ESImageView(data: outputImageData)
                 .onTapGesture {
@@ -38,7 +38,7 @@ struct PetChangeView: View {
                 .frame(minWidth: 50, idealWidth: 100, maxWidth: 150, minHeight: 50, idealHeight: 100, maxHeight: 150, alignment: .center)
             Toggle(Strings.defaultPhotoLabel, isOn: $defaultPhotoOn)
                 .onChange(of: defaultPhotoOn, perform: { _isOn in
-                    if _isOn{
+                    if _isOn {
                         pet.image = nil
                         persistence.save()
                     }
@@ -49,12 +49,12 @@ struct PetChangeView: View {
                 .foregroundColor(Color(.systemGray2))
                 .multilineTextAlignment(.center)
                 .padding()
-            Form{
-                Section{
+            Form {
+                Section {
                     TextField(Strings.tapToChangeText, text: $nameText)
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
-                                Button(Strings.done){
+                                Button(Strings.done) {
                                     self.changeName()
                                 }
                             }
@@ -67,16 +67,16 @@ struct PetChangeView: View {
                             self.changeBirthday()
                         }
                 }
-                Section{
+                Section {
                     Picker(Strings.feedTimeTitle, selection: $selection) {
                         Text(Strings.feedSelectionBoth).tag(0)
                         Text(Strings.feedSelectionMorning).tag(1)
                         Text(Strings.feedSelectionEvening).tag(2)
-                        
+
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    
-                    if selection == 0{
+
+                    if selection == 0 {
                         DatePicker(Strings.feedSelectionMorning, selection: $morningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
@@ -90,25 +90,25 @@ struct PetChangeView: View {
                             .onChange(of: morningDate) { _ in
                                 self.changeNotification(for: .morning)
                             }
-                    } else if selection == 2{
+                    } else if selection == 2 {
                         DatePicker(Strings.feedSelectionEvening, selection: $eveningDate, displayedComponents: .hourAndMinute)
                             .onChange(of: eveningDate) { _ in
                                 self.changeNotification(for: .evening)
                             }
                     }
                 }
-                
+
             }
             .navigationTitle(pet.name ?? "")
         }
-        .onAppear{
+        .onAppear {
             getPetData()
         }
-        
+
     }
-    
-    func loadImage(){
-        if let outputImageData{
+
+    func loadImage() {
+        if let outputImageData {
             petImage = Image(uiImage: UIImage(data: outputImageData) ?? UIImage())
             pet.image = outputImageData
             persistence.save()
@@ -118,8 +118,8 @@ struct PetChangeView: View {
             defaultPhotoOn = true
         }
     }
-    
-    func getPetData(){
+
+    func getPetData() {
         self.birthday = pet.birthday ?? Date()
         self.nameText = pet.name!
         let selection = pet.selection
@@ -131,24 +131,24 @@ struct PetChangeView: View {
         case .evening:
             self.selection = 2
         }
-        if let morning = pet.morningTime{
+        if let morning = pet.morningTime {
             self.morningDate = morning
         }
-        if let evening = pet.eveningTime{
+        if let evening = pet.eveningTime {
             self.eveningDate = evening
         }
-        
-        if let image = pet.image{
+
+        if let image = pet.image {
             outputImageData = image
             defaultPhotoOn = false
         } else {
             defaultPhotoOn = true
         }
     }
-    
-    func changeName(){
+
+    func changeName() {
         pet.name = nameText
-        switch selection{
+        switch selection {
         case 0:
             changeNotification(for: .both)
         case 1:
@@ -160,13 +160,13 @@ struct PetChangeView: View {
         }
         persistence.save()
     }
-    
-    func changeBirthday(){
+
+    func changeBirthday() {
         pet.birthday = birthday
         persistence.save()
     }
-    
-    func changeNotification(for selection: NotificationSelection){
+
+    func changeNotification(for selection: NotificationSelection) {
         switch selection {
         case .both:
             notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
@@ -180,8 +180,8 @@ struct PetChangeView: View {
             notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
             notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
         }
-        let (morningTime, eveningTime) = (pet.morningTime,pet.eveningTime)
-        
+        let (morningTime, eveningTime) = (pet.morningTime, pet.eveningTime)
+
         if morningTime != nil {
             pet.morningTime = morningDate
         }

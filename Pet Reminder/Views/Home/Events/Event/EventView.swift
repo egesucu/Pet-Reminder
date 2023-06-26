@@ -9,22 +9,22 @@
 import SwiftUI
 import EventKit
 
-struct EventView : View {
-    
-    var event : EKEvent
+struct EventView: View {
+
+    var event: EKEvent
     @State private var eventTitle = ""
     @State private var dateString = ""
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
-    
-    @ObservedObject var eventVM : EventManager
-    
-    var body: some View{
+
+    @ObservedObject var eventVM: EventManager
+
+    var body: some View {
         ZStack(alignment: .center) {
             Rectangle()
                 .fill(Color(.clear))
                 .shadow(radius: 8)
-            VStack(alignment: .center){
+            VStack(alignment: .center) {
                 EventTitleView(eventTitle: $eventTitle)
                 EventTimeView(dateString: $dateString)
             }
@@ -36,22 +36,22 @@ struct EventView : View {
                content: showEventDetail)
         .padding(10)
     }
-    
+
     private func showEventDetail() -> some View {
         ESEventDetailView(event: event)
     }
-    
+
     private func onSheetDismiss() {
         fillData()
         Task {
             await eventVM.reloadEvents()
         }
     }
-    
+
     private func showWarning() {
         self.showWarningForCalendar = true
     }
-    
+
     private func fillData() {
         self.eventTitle = event.title
         eventVM.fillEventData(event: event) { content in

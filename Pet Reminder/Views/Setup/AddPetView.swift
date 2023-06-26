@@ -8,19 +8,19 @@
 
 import SwiftUI
 
-struct AddPetView : View {
-    
+struct AddPetView: View {
+
     @StateObject private var manager = AddPetViewModel()
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var managedObjectContext
-    
+
     var petManager = PetManager.shared
-    
-    var body: some View{
+
+    var body: some View {
         ScrollView {
-            VStack{
+            VStack {
                 PetNameTextField(name: $manager.name)
-                    .padding(.bottom,30)
+                    .padding(.bottom, 30)
                 PetBirthdayView(birthday: $manager.birthday)
                 PetImageView(selectedImageData: $manager.selectedImageData,
                              onImageDelete: manager.resetImageData)
@@ -36,11 +36,12 @@ struct AddPetView : View {
             .padding()
         }
         .interactiveDismissDisabled(!manager.name.isEmpty)
+        .sensoryFeedback(.alignment, trigger: true)
     }
 }
 
-struct AddPetView_Preview: PreviewProvider{
-    static var previews: some View{
+struct AddPetView_Preview: PreviewProvider {
+    static var previews: some View {
         AddPetView()
     }
 }

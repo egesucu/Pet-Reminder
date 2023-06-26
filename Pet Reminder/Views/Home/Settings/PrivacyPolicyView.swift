@@ -10,14 +10,14 @@ import SwiftUI
 
 struct PrivacyPolicyView: View {
     var body: some View {
-        ScrollView{
-            VStack{
+        ScrollView {
+            VStack {
                 Text(Strings.privacyPolicyContent)
                     .padding(.all)
             }
         }
         .navigationTitle(Text(Strings.privacyPolicyTitle))
-        
+
     }
 }
 

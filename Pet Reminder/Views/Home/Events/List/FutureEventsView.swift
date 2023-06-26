@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct FutureEventsView: View {
-    
-    @ObservedObject var eventVM : EventManager
-    
+
+    @ObservedObject var eventVM: EventManager
+
     var body: some View {
-        Section{
-            ForEach(eventVM.events.filter({ Calendar.current.isDateLater(date: $0.startDate) }),id: \.eventIdentifier) { event in
-                EventView(event: event,eventVM: eventVM)
-                    .padding([.leading, .trailing],5)
+        Section {
+            ForEach(eventVM.events.filter({ Calendar.current.isDateLater(date: $0.startDate) }), id: \.eventIdentifier) { event in
+                EventView(event: event, eventVM: eventVM)
+                    .padding([.leading, .trailing], 5)
                     .listRowSeparator(.hidden)
             }
         } header: {

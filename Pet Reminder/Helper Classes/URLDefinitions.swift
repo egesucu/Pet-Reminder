@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct URLDefinitions {
     static let googleMapsAppStoreURL = URL(string: "https://apps.apple.com/us/app/google-maps/id585027354")
     static let googleMapsDeeplinkURL = URL(string: "comgooglemaps://")

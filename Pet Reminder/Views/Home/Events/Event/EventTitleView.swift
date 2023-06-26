@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct EventTitleView: View {
-    
+
     @Binding var eventTitle: String
-    
+
     var body: some View {
         Text(eventTitle)
             .font(.headline)

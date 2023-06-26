@@ -11,7 +11,7 @@ import EventKit
 import SwiftUI
 
 extension Strings {
-    internal static let demoVaccines = ["Pulvarin","Alvarin","Gagarin","Aclor","Silverin", "Volverine"]
+    internal static let demoVaccines = ["Pulvarin", "Alvarin", "Gagarin", "Aclor", "Silverin", "Volverine"]
     internal static let placeholderVaccine = "Pulvarin"
     internal static let simulationError = "Simulation does not support User Location"
     internal static let demo = "Demo"
@@ -21,20 +21,20 @@ extension Strings {
     internal static let viski = "Viski"
     internal static let donateTeaID = "pet_reminder_tea_donate"
     internal static let donateFoodID = "pet_reminder_food_donate"
-    
+
     internal static func footerLabel(_ p1: Any) -> String {
         return "© Ege Sucu \(p1)"
     }
     internal static func notificationIdenfier(_ p1: Any, _ p2: Any) -> String {
       return "\(p1)-\(p2)-notification"
     }
-    
+
     internal static func demoEvent(_ p1: Any) -> String {
         return "Demo Event \(p1)"
     }
-    
+
     internal static let petReminder = "Pet Reminder"
-    
+
 }
 
 internal enum SFSymbols {
@@ -63,7 +63,7 @@ internal enum SFSymbols {
     internal static let notChecked = "square"
     internal static let morningToggle = "sun.max.circle"
     internal static let morningToggleSelected = "sun.max.circle.fill"
-    
+
 }
 
 extension String {
@@ -74,7 +74,7 @@ extension String {
             return current ? String.currentDateTimeFormat(allDay: allDay, event: event) : String.futureDateTimeFormat(allDay: allDay, event: event)
         }
     }
-    
+
     static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
             return "\(event.startDate.printDate()) \(Strings.allDayTitle)"
@@ -82,7 +82,7 @@ extension String {
             return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
     }
-    
+
     static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
             return Strings.allDayTitle

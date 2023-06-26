@@ -10,37 +10,37 @@ import SwiftUI
 import MapKit
 
 struct MapWithSearchBarView: View {
-    
-    @Binding var mapItems : [Pin]
-    @Binding var region : MKCoordinateRegion
+
+    @Binding var mapItems: [Pin]
+    @Binding var region: MKCoordinateRegion
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    @State private var selectedItem : MKMapItem? = nil
+    @State private var selectedItem: MKMapItem?
     @ObservedObject var vetViewModel: VetViewModel
     @State private var showAlert = false
-    
-    var onReload : () -> (Void)
-    
+
+    var onReload: () -> Void
+
     var body: some View {
-        ZStack(alignment: .center){
+        ZStack(alignment: .center) {
 #if !targetEnvironment(simulator)
             ZStack(alignment: .top) {
-                Map(coordinateRegion: $region,interactionModes: .all,showsUserLocation: true, annotationItems: mapItems) { annotation in
+                Map(coordinateRegion: $region, interactionModes: .all, showsUserLocation: true, annotationItems: mapItems) { annotation in
                     withAnimation {
                         MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
-                            VStack{
+                            VStack {
                                 Image(systemName: SFSymbols.pawprintCircleFill)
                                     .font(.largeTitle)
                                     .padding(2)
                             }.background(tintColor)
                                 .cornerRadius(15)
-                                .shadow(radius:8)
+                                .shadow(radius: 8)
                                 .scaleEffect(1)
                                 .onTapGesture {
                                     selectedItem = annotation.item
                                     showAlert.toggle()
-                                    
+
                                 }
-                                
+
                                 .animation(.easeInOut, value: 1)
                         }
                     }
@@ -52,7 +52,7 @@ struct MapWithSearchBarView: View {
                 .shadow(radius: 10)
                 .padding()
                 .alert(Strings.findVetOpen, isPresented: $showAlert) {
-                    
+
                     ForEach(MapApplication.allCases, id: \.self) { item in
                         Button(item.rawValue) {
                             if let selectedItem {
@@ -72,7 +72,7 @@ struct MapWithSearchBarView: View {
 #else
             Text(Strings.simulationError)
 #endif
-                
+
         }
     }
 }

@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct ESImageView: View {
-    
+
     var data: Data?
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     var body: some View {
         if let data = data,
-        let image = UIImage(data: data){
+        let image = UIImage(data: data) {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()
@@ -28,7 +28,7 @@ struct ESImageView: View {
                     .fill(tintColor)
                     .cornerRadius(25)
                     .shadow(radius: 10)
-                    
+
                 Image(.defaultAnimal)
                     .resizable()
                     .scaledToFit()

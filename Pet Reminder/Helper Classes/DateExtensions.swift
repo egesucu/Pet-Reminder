@@ -8,43 +8,43 @@
 
 import Foundation
 
-extension Date{
-    static let tomorrow : Date = {
+extension Date {
+    static let tomorrow: Date = {
         var today = Calendar.current.startOfDay(for: Date.now)
         var tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today) ?? Date()
         return tomorrow
     }()
-    
+
     func eightAM() -> Self {
         return Calendar.current.startOfDay(for: self).addingTimeInterval(60*60*8)
     }
-    
+
     func eightPM() -> Self {
         return Calendar.current.startOfDay(for: self).addingTimeInterval(60*60*20)
     }
-    func convertDateToString()->String{
+    func convertDateToString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MM yyyy"
         return formatter.string(from: self)
     }
-    func convertStringToDate(string: String)->Date{
+    func convertStringToDate(string: String) -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MM yyyy"
         return formatter.date(from: string) ?? Date()
     }
-    
+
     func printTime() -> String {
         return self.formatted(.dateTime.hour().minute())
     }
-    
+
     func printDate() -> String {
         return self.formatted(.dateTime.day()
             .month(.twoDigits).year())
     }
 }
-//MARK: - Calendar
-extension Calendar{
-    func isDateLater(date: Date) -> Bool{
+// MARK: - Calendar
+extension Calendar {
+    func isDateLater(date: Date) -> Bool {
         return date >= Date.tomorrow
     }
 }

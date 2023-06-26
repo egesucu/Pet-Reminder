@@ -8,24 +8,24 @@
 
 import SwiftUI
 
-struct EventListView : View {
-    
+struct EventListView: View {
+
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
-    
-    var body: some View{
-        
-        NavigationView{
+
+    var body: some View {
+
+        NavigationView {
             showEventView()
                 .navigationTitle(Text(Strings.eventTitle))
                 .toolbar(content: eventToolBar)
-            
+
         }
         .navigationViewStyle(.stack)
         .onAppear(perform: reloadEvents)
     }
-    
+
     @ToolbarContentBuilder
     func eventToolBar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -37,26 +37,26 @@ struct EventListView : View {
             .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView() })
         }
     }
-    
+
     private func reloadEvents() {
         Task {
             await eventVM.reloadEvents()
         }
     }
-    
+
     private func toggleAddEvent() {
         showAddEvent.toggle()
     }
-    
+
     @ViewBuilder
     func showEventView() -> some View {
-        if eventVM.events.isEmpty{
+        if eventVM.events.isEmpty {
             EmptyEventView(eventVM: eventVM)
         } else {
             EventsView(eventVM: eventVM)
         }
     }
-    
+
 }
 
 struct EventListView_Previews: PreviewProvider {

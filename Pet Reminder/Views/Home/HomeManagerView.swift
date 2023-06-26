@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct HomeManagerView: View {
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
-    @State private var currentTab : PetReminderTabs = .home
-    @StateObject var storeManager : StoreManager
-    
+    @State private var currentTab: PetReminderTabs = .home
+    @StateObject var storeManager: StoreManager
+
     var body: some View {
-        
+
         TabView(selection: $currentTab) {
             HomeView()
                 .environment(\.managedObjectContext, viewContext)
@@ -42,13 +42,12 @@ struct HomeManagerView: View {
                 .tag(PetReminderTabs.settings)
         }
         .accentColor(.dynamicBlack)
-        
-        
+
     }
 }
 
-struct HomeManager_Previews: PreviewProvider{
-    static var previews: some View{
+struct HomeManager_Previews: PreviewProvider {
+    static var previews: some View {
         HomeManagerView(storeManager: StoreManager())
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }

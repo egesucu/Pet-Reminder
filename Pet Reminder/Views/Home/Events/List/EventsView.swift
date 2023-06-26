@@ -10,34 +10,29 @@ import SwiftUI
 import Foundation
 
 struct EventsView: View {
-    
-    @ObservedObject var eventVM : EventManager
-    
+
+    @ObservedObject var eventVM: EventManager
+
     @State private var dates = [Date]()
-    
+
     var body: some View {
-        List{
+        List {
             TodaysEventsView(eventVM: eventVM)
             FutureEventsView(eventVM: eventVM)
         }
         .onAppear(perform: getEventDates)
         .refreshable(action: eventVM.reloadEvents)
     }
-    
-    private func getEventDates(){
+
+    private func getEventDates() {
         let events = eventVM.events
         let eventDates = events.compactMap(\.startDate)
         self.dates = eventDates.removeDuplicates().sorted()
     }
 }
 
-
 struct EventsView_Previews: PreviewProvider {
     static var previews: some View {
         EventsView(eventVM: .init(isDemo: true))
     }
 }
-
-
-
-

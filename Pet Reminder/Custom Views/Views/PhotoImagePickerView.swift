@@ -10,14 +10,14 @@ import SwiftUI
 import PhotosUI
 
 @available (iOS 16.0, *)
-struct PhotoImagePickerView : View {
-    @State private var selectedPhoto: PhotosPickerItem? = nil
+struct PhotoImagePickerView: View {
+    @State private var selectedPhoto: PhotosPickerItem?
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
-    var onSelected : (Data) -> ()
-    
-    var body: some View{
-        VStack{
+
+    var onSelected: (Data) -> Void
+
+    var body: some View {
+        VStack {
             PhotosPicker(selection: $selectedPhoto,
                          matching: .images) {
                 Image(.defaultAnimal)
@@ -31,15 +31,14 @@ struct PhotoImagePickerView : View {
                     .shadow(radius: 10)
             }
             .onChange(of: selectedPhoto, perform: { newValue in
-                Task{
-                    if let data = try? await newValue?.loadTransferable(type: Data.self){
+                Task {
+                    if let data = try? await newValue?.loadTransferable(type: Data.self) {
                         onSelected(data)
                     }
                 }
             })
-            .padding([.top,.bottom])
+            .padding([.top, .bottom])
         }
     }
-    
-    
+
 }

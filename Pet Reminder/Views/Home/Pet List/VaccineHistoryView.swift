@@ -10,25 +10,25 @@ import SwiftUI
 import CoreData
 
 struct VaccineHistoryView: View {
-    
+
     var pet: Pet
     var context: NSManagedObjectContext
     @Environment(\.dismiss) var dismiss
     @State private var vaccineName = ""
     @State private var vaccineDate = Date.now
     @State private var shouldAddVaccine = false
-    
+
     var body: some View {
-        NavigationView{
-            VStack{
+        NavigationView {
+            VStack {
                 if let vaccineSet = pet.vaccines,
-                   let vaccines = vaccineSet.allObjects as? [Vaccine]{
+                   let vaccines = vaccineSet.allObjects as? [Vaccine] {
                     if vaccines.count == 0 {
                         Text(Strings.noVaccineTitle)
                     } else {
-                        List{
+                        List {
                             ForEach(vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })) { vaccine in
-                                HStack{
+                                HStack {
                                     Label {
                                         Text(vaccine.name ?? "")
                                             .bold()
@@ -42,8 +42,8 @@ struct VaccineHistoryView: View {
                         }
                         .listStyle(.automatic)
                     }
-                    
-                } else{
+
+                } else {
                     Text(Strings.noVaccineTitle)
                 }
             }
@@ -66,21 +66,21 @@ struct VaccineHistoryView: View {
                 AddPopupView(contentInput: $vaccineName, dateInput: $vaccineDate, onSave: saveVaccine, onCancel: cancelVaccine)
             }
         }
-        
+
     }
-    
+
     func cancelVaccine() {
         togglePopup()
         resetTemporaryData()
     }
-    
+
     func togglePopup() {
         withAnimation {
             shouldAddVaccine.toggle()
         }
     }
-    
-    func saveVaccine(){
+
+    func saveVaccine() {
         let vaccine = Vaccine(context: context)
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
@@ -89,16 +89,16 @@ struct VaccineHistoryView: View {
         resetTemporaryData()
         togglePopup()
     }
-    
+
     func resetTemporaryData() {
         vaccineName = ""
         vaccineDate = .now
     }
-    
-    func deleteVaccines(_at offsets: IndexSet){
+
+    func deleteVaccines(_at offsets: IndexSet) {
         if let vaccineSet = pet.vaccines,
-           let vaccines = vaccineSet.allObjects as? [Vaccine]{
-            for offset in offsets{
+           let vaccines = vaccineSet.allObjects as? [Vaccine] {
+            for offset in offsets {
                 context.delete(vaccines[offset])
             }
         }
@@ -106,20 +106,20 @@ struct VaccineHistoryView: View {
 }
 
 struct VaccineHistoryView_Previews: PreviewProvider {
-    
+
     static var previews: some View {
         let titles = Strings.demoVaccines
         let context = PersistenceController.preview.container.viewContext
         let pet = Pet(context: context)
         pet.name = Strings.viski
-        for _ in 0..<titles.count{
+        for _ in 0..<titles.count {
             let components = DateComponents(year: Int.random(in: 2018...2023), month: Int.random(in: 0...12), day: Int.random(in: 0...30), hour: Int.random(in: 0...23), minute: Int.random(in: 0...59), second: Int.random(in: 0...59))
             let vaccine = Vaccine(context: context)
             vaccine.name = titles.randomElement() ?? ""
             vaccine.date = Calendar.current.date(from: components)
             pet.addToVaccines(vaccine)
         }
-        return NavigationView{
+        return NavigationView {
             VaccineHistoryView(pet: pet, context: context)
         }
     }

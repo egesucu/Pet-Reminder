@@ -8,47 +8,47 @@
 
 import EventKit
 
-class EventManager : ObservableObject{
-    
-    @Published var events : [EKEvent] = [EKEvent]()
+class EventManager: ObservableObject {
+
+    @Published var events: [EKEvent] = [EKEvent]()
     @Published var eventName = ""
     @Published var allDayDate = Date()
     @Published var eventStartDate = Date()
     @Published var eventEndDate = Date().addingTimeInterval(60*60)
     @Published var isAllDay = false
-    
+
     let eventStore = EKEventStore()
-    
+
     init() {
         requestEvents()
     }
-    
-    init(isDemo: Bool = false){
-        if isDemo{
+
+    init(isDemo: Bool = false) {
+        if isDemo {
             events = exampleEvents
         }
     }
-    
-    var exampleEvents : [EKEvent] {
-        
+
+    var exampleEvents: [EKEvent] {
+
         var events = [EKEvent]()
-        
+
         for i in 0...4 {
-            
+
             let event = EKEvent(eventStore: self.eventStore)
             event.title = Strings.demoEvent(i+1)
             event.startDate = Date()
             event.endDate = Date()
-            
+
             events.append(event)
-            
+
         }
-        
+
         return events
-        
+
     }
-    
-    func requestEvents(){
+
+    func requestEvents() {
         eventStore.requestAccess(to: .event, completion: { success, error in
             if let error {
                 print(error)
@@ -57,40 +57,40 @@ class EventManager : ObservableObject{
             }
         })
     }
-    
-    func findCalendar(){
+
+    func findCalendar() {
         let calendars = self.eventStore.calendars(for: .event)
-        
-        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}){
+
+        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}) {
             self.loadEvents(from: petCalendar)
         } else {
             self.createCalendar()
-            
+
         }
     }
-    
+
     func createCalendar() {
-        
+
         let calendar = EKCalendar(for: .event, eventStore: eventStore)
         calendar.title = Strings.petReminder
-        
-        if let defaultCalendar = eventStore.defaultCalendarForNewEvents{
+
+        if let defaultCalendar = eventStore.defaultCalendarForNewEvents {
             calendar.source = defaultCalendar.source
         }
-        
+
         do {
             try eventStore.saveCalendar(calendar, commit: true)
         } catch {
             print(error.localizedDescription)
         }
-        
+
     }
-    
-    func loadEvents(from calendar : EKCalendar) {
+
+    func loadEvents(from calendar: EKCalendar) {
         let status = EKEventStore.authorizationStatus(for: .event)
-        
+
         if status == .authorized {
-            
+
             let startDate = Date()
             //            86400 = tomowwow.
             let endDate = Date(timeIntervalSinceNow: 86400*3)
@@ -103,27 +103,26 @@ class EventManager : ObservableObject{
             requestEvents()
         }
     }
-    
-    func fillEventData(event: EKEvent, onCreated: (String) -> ()){
-        if Calendar.current.isDateInToday(event.startDate){
+
+    func fillEventData(event: EKEvent, onCreated: (String) -> Void) {
+        if Calendar.current.isDateInToday(event.startDate) {
             onCreated(String.formatEventDateTime(current: true, allDay: event.isAllDay, event: event))
         } else {
             onCreated(String.formatEventDateTime(current: false, allDay: event.isAllDay, event: event))
         }
     }
-    
-    
+
     @Sendable
     func reloadEvents() async {
         let calendars = self.eventStore.calendars(for: .event)
-        
-        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}){
+
+        if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}) {
             self.loadEvents(from: petCalendar)
         }
     }
-    
-    func convertDateToString(startDate: Date?, endDate: Date?)->String{
-        
+
+    func convertDateToString(startDate: Date?, endDate: Date?) -> String {
+
         if let startDate = startDate {
             let start = startDate.formatted(date: .numeric, time: .standard)
             if let endDate = endDate {
@@ -134,25 +133,25 @@ class EventManager : ObservableObject{
         }
         return ""
     }
-    
+
     func removeEvent(event: EKEvent) {
         do {
             try self.eventStore.remove(event, span: .thisEvent, commit: true)
         } catch {
             print(error.localizedDescription)
         }
-        
+
     }
-    
-    func saveEvent(onFinish: () -> ()) async {
-        
+
+    func saveEvent(onFinish: () -> Void) async {
+
         let calendars = eventStore.calendars(for: .event)
-        
+
         if let petCalendar = calendars.first(where: {$0.title == Strings.petReminder}) {
             let newEvent = EKEvent(eventStore: eventStore)
             newEvent.title = eventName
             newEvent.isAllDay = isAllDay
-            
+
             if isAllDay {
                 newEvent.startDate = eventStartDate
                 newEvent.endDate = eventStartDate
@@ -160,13 +159,13 @@ class EventManager : ObservableObject{
                 newEvent.startDate = eventStartDate
                 newEvent.endDate = eventEndDate
             }
-            
+
             newEvent.calendar = petCalendar
-            
+
             let alarm = EKAlarm(relativeOffset: -60*10)
             newEvent.addAlarm(alarm)
             newEvent.notes = Strings.addEventNote
-            
+
             do {
                 try eventStore.save(newEvent, span: .thisEvent)
                 await reloadEvents(onFinish: onFinish)
@@ -175,8 +174,8 @@ class EventManager : ObservableObject{
             }
         }
     }
-    
-    func reloadEvents(onFinish: () -> ()) async {
+
+    func reloadEvents(onFinish: () -> Void) async {
         objectWillChange.send()
         await reloadEvents()
         onFinish()

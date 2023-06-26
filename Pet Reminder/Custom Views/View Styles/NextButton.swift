@@ -8,12 +8,11 @@
 
 import SwiftUI
 
+struct NextButton: ButtonStyle {
 
-struct NextButton : ButtonStyle {
-    
     var conditionMet: Bool
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.largeTitle)
@@ -24,5 +23,5 @@ struct NextButton : ButtonStyle {
             .shadow(radius: 10)
             .disabled(conditionMet)
     }
-    
+
 }

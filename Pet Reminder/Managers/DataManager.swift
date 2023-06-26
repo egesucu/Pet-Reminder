@@ -9,17 +9,16 @@
 import Foundation
 import CloudKit
 
+class DataManager {
 
-class DataManager{
-    
     static let shared = DataManager()
-    
-    func checkIcloudAvailability(completion: @escaping (ICloudResultType) -> Void){
-        
+
+    func checkIcloudAvailability(completion: @escaping (ICloudResultType) -> Void) {
+
         CKContainer.default().accountStatus { status, error in
             guard error == nil else { completion(.error(.unknownError(error!.localizedDescription))) ; return }
-            
-            switch status{
+
+            switch status {
             case .available:
                 completion(.success)
             case .noAccount:
@@ -35,5 +34,5 @@ class DataManager{
             }
         }
     }
-    
+
 }

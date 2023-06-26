@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct EveningCheckboxView : View {
-    
-    @Binding var eveningOn : Bool
-    
-    var body: some View{
-        VStack{
+struct EveningCheckboxView: View {
+
+    @Binding var eveningOn: Bool
+
+    var body: some View {
+        VStack {
             Label {
                 Text(Strings.feedSelectionEvening)
                     .foregroundColor(Color(uiColor: .label))
@@ -23,7 +23,7 @@ struct EveningCheckboxView : View {
                     .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.blue)
                     .font(.largeTitle.bold())
-                    .animation(.easeInOut,value: eveningOn)
+                    .animation(.easeInOut, value: eveningOn)
             }
             .padding(.bottom)
             withAnimation {
@@ -33,8 +33,8 @@ struct EveningCheckboxView : View {
             }
         }
         .cornerRadius(20)
-        .frame(width:150,height:150)
-        
+        .frame(width: 150, height: 150)
+
     }
 }
 

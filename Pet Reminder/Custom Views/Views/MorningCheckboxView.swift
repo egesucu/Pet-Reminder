@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct MorningCheckboxView : View {
-    
-    @Binding var morningOn : Bool
-    
-    var body: some View{
-        VStack{
+struct MorningCheckboxView: View {
+
+    @Binding var morningOn: Bool
+
+    var body: some View {
+        VStack {
             Label {
                 Text(Strings.feedSelectionMorning)
                     .foregroundColor(Color(uiColor: .label))
@@ -23,17 +23,17 @@ struct MorningCheckboxView : View {
                     .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.yellow)
                     .font(.largeTitle.bold())
-                    .animation(.easeInOut,value: morningOn)
+                    .animation(.easeInOut, value: morningOn)
             }.font(.title.bold())
                 .padding(.bottom)
-            withAnimation{
+            withAnimation {
                 Image(systemName: morningOn ? SFSymbols.checked : SFSymbols.notChecked)
                     .font(.system(size: 50))
                     .animation(.easeInOut, value: morningOn)
             }
         }
         .cornerRadius(20)
-        .frame(width:150,height:150)
+        .frame(width: 150, height: 150)
     }
 }
 

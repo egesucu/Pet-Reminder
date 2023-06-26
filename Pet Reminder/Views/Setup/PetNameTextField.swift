@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct PetNameTextField: View {
-    
+
     @Binding var name: String
-    
+
     var body: some View {
         VStack {
             Text(Strings.startNameLabel)

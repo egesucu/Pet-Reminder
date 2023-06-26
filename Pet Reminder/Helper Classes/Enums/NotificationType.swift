@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NotificationType: String{
+enum NotificationType: String {
     case morning
     case evening
     case birthday

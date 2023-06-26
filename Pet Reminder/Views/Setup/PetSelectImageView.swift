@@ -10,16 +10,16 @@ import SwiftUI
 import PhotosUI
 
 struct PetSelectImageView: View {
-    
+
     @Binding var selectedImageData: Data?
-    
+
     var body: some View {
-        if #available(iOS 16, *){
+        if #available(iOS 16, *) {
             PhotoImagePickerView { data in
                 selectedImageData = data
-            }.padding([.top,.bottom])
+            }.padding([.top, .bottom])
         } else {
-            ImagePickerView(imageData: $selectedImageData).padding([.top,.bottom])
+            ImagePickerView(imageData: $selectedImageData).padding([.top, .bottom])
         }
     }
 }

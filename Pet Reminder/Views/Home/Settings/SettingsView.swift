@@ -9,15 +9,15 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
-    @StateObject var storeManager : StoreManager
+    @StateObject var storeManager: StoreManager
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     var body: some View {
-        NavigationView{
-            Form{
+        NavigationView {
+            Form {
                 Section(header: Text(Strings.appSettings)) {
                     NavigationLink(Strings.managePetTitle, destination: PetListView().environment(\.managedObjectContext, viewContext))
                     ColorPicker(Strings.settingsTintColor, selection: $tintColor)
@@ -35,9 +35,9 @@ struct SettingsView: View {
                     Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
                 }
             }
-            
+
             .navigationTitle(Text(Strings.settingsTabTitle))
-            
+
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

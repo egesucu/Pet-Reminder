@@ -9,31 +9,30 @@
 import Foundation
 import StoreKit
 
-
-//MARK: - SKProducts Delegate
-extension StoreManager: SKProductsRequestDelegate{
+// MARK: - SKProducts Delegate
+extension StoreManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        
-        if response.products.isEmpty{
+
+        if response.products.isEmpty {
             print("No Product is present.")
         } else {
-            for product in response.products{
+            for product in response.products {
                 DispatchQueue.main.async {
                     self.products.append(product)
                 }
             }
         }
-        response.invalidProductIdentifiers.forEach({ print("This ID is invalid: ",$0)})
+        response.invalidProductIdentifiers.forEach({ print("This ID is invalid: ", $0)})
     }
     func request(_ request: SKRequest, didFailWithError error: Error) {
-        print("Error occured: ",error)
+        print("Error occured: ", error)
     }
 }
-//MARK: - SKPayment Observer
-extension StoreManager: SKPaymentTransactionObserver{
+// MARK: - SKPayment Observer
+extension StoreManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
-            switch transaction.transactionState{
+            switch transaction.transactionState {
             case .purchasing:
                 state = .purchasing
             case .purchased:
@@ -57,7 +56,7 @@ extension StoreManager: SKPaymentTransactionObserver{
         objectWillChange.send()
     }
 }
-//MARK: - SKProduct
+// MARK: - SKProduct
 extension SKProduct {
     var localizedPrice: String {
         let formatter = NumberFormatter()

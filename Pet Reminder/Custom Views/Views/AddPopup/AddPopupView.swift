@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct AddPopupView: View {
-    
+
     @Binding var contentInput: String
     @Binding var dateInput: Date
-    var onSave: () -> ()
-    var onCancel: () -> ()
+    var onSave: () -> Void
+    var onCancel: () -> Void
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    
+
     var body: some View {
         ZStack {
             Color(.black)
@@ -33,12 +33,12 @@ struct AddPopupView: View {
                     }
                     .padding([.leading, .trailing])
                     .padding(.bottom, 10)
-                    
+
                     DatePicker(selection: $dateInput) {
                         Text(Strings.date)
                             .bold()
                     }.padding([.leading, .trailing])
-                    
+
                     HStack {
                         Button(action: onCancel) {
                             Text(Strings.cancel)
@@ -59,9 +59,7 @@ struct AddPopupView: View {
         .zIndex(2)
         .ignoresSafeArea()
     }
-    
-    
-    
+
 }
 
 struct AddPopupView_Previews: PreviewProvider {
@@ -73,19 +71,18 @@ struct AddPopupView_Previews: PreviewProvider {
 }
 
 struct PopupWrapper<PresentingView: View>: View {
-    
+
     @Binding var isPresented: Bool
     let presentingView: PresentingView
     let content: () -> AddPopupView
-    
+
     var body: some View {
         ZStack {
-            if (isPresented) { content() }
+            if isPresented { content() }
             presentingView
         }
     }
 }
-
 
 extension View {
   func popupView(isPresented: Binding<Bool>,

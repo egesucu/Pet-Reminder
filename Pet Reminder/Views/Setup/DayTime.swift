@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum DayTime : Hashable {
+enum DayTime: Hashable {
     case morning, evening, both
 }

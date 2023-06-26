@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct AddPetActionsView: View {
-    
+
     @Binding var name: String
-    var onSave: () -> ()
-    var onCancel: () -> ()
-    
+    var onSave: () -> Void
+    var onCancel: () -> Void
+
     var body: some View {
         HStack {
             ActionButton(action: onCancel, content: .cancel, systemImage: SFSymbols.xmarkSealFill, isEnabled: true, tint: .red)
@@ -24,14 +24,12 @@ struct AddPetActionsView: View {
     }
 }
 
-
-
 struct AddPetActionsView_Previews: PreviewProvider {
     static var previews: some View {
         AddPetActionsView(name: .constant(Strings.viski)) {
-            
+
         } onCancel: {
-            
+
         }
 
     }
