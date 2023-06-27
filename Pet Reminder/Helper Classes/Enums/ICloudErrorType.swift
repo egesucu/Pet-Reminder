@@ -20,7 +20,7 @@ enum IcloudErrorType: LocalizedError {
         case .icloudUnavailable:
             return String(localized: "cloud_unavailable")
         case .noIcloud:
-            return String(localized: "no_acount")
+            return String(localized: "no_account")
         case .restricted:
             return String(localized: "restricted_account")
         case .cantFetchStatus:

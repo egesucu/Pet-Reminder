@@ -21,13 +21,13 @@ extension Array where Element: Hashable {
 }
 
 // MARK: - Pet
-extension Pet {
-    var selection: NotificationSelection {
-        get {
-            return NotificationSelection(rawValue: self.choice) ?? .both
-        }
-        set {
-            choice = newValue.rawValue
-        }
-    }
-}
+// extension Pet {
+//    var selection: NotificationSelection {
+//        get {
+//            return NotificationSelection(rawValue: self.choice) ?? .both
+//        }
+//        set {
+//            choice = newValue.rawValue
+//        }
+//    }
+// }

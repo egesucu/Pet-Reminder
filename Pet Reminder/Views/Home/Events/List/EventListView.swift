@@ -12,7 +12,7 @@ struct EventListView: View {
 
     @StateObject var eventVM = EventManager()
     @State private var showAddEvent = false
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
 
@@ -32,7 +32,7 @@ struct EventListView: View {
             Button(action: toggleAddEvent) {
                 Label("add_event_accessible_title", systemImage: SFSymbols.calendar)
                     .font(.title2)
-                    .foregroundColor(tintColor)
+                    .foregroundColor(.accentColor)
             }
             .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView() })
         }
@@ -59,11 +59,16 @@ struct EventListView: View {
 
 }
 
-struct EventListView_Previews: PreviewProvider {
+struct EventListDemo: PreviewProvider {
     static var previews: some View {
-        Group {
-            EventListView(eventVM: EventManager(isDemo: true))
-                .previewDisplayName(Strings.demo)
-        }
+        EventListView(eventVM: .init(isDemo: true))
+            .modelContainer(for: Pet.self)
     }
 }
+//
+// #Preview {
+//    MainActor.assumeIsolated {
+//        EventListView(eventVM: EventManager(isDemo: true))
+//    }
+//    
+// }

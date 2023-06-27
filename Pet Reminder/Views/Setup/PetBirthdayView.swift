@@ -11,7 +11,7 @@ import SwiftUI
 struct PetBirthdayView: View {
 
     @Binding var birthday: Date
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         HStack {
@@ -22,7 +22,7 @@ struct PetBirthdayView: View {
                 .padding(.trailing, 20)
             DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
                 .labelsHidden()
-                .tint(tintColor)
+                .tint(.accentColor)
             Spacer()
         }
         .padding(.all)

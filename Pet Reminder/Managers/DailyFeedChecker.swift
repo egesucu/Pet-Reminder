@@ -8,30 +8,25 @@
 
 import SwiftUI
 import CoreData
+import SwiftData
 
 class DailyFeedChecker {
 
     static let shared = DailyFeedChecker()
 
-    func resetLogic(pets: FetchedResults<Pet>, context: NSManagedObjectContext) {
+    func resetLogic(pets: [Pet]) {
         for pet in pets {
-            if let feedSet = pet.feeds,
-               let feeds = feedSet.allObjects as? [Feed],
+            if let feeds = pet.feeds,
                let lastFeed = feeds.last,
                let date = lastFeed.feedDate {
                 if !Calendar.current.isDateInToday(date) {
-                    let todaysFeed = Feed(context: context)
+                    let todaysFeed = Feed()
                     todaysFeed.feedDate = .now
                     todaysFeed.eveningFed = false
                     todaysFeed.morningFed = false
-                    pet.addToFeeds(todaysFeed)
+                    pet.feeds?.append(todaysFeed)
                 }
             }
-        }
-        do {
-            try context.save()
-        } catch {
-            print(error)
         }
 
     }

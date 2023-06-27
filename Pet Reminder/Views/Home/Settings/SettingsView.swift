@@ -13,7 +13,7 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
     @StateObject var storeManager: StoreManager
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         NavigationView {
@@ -27,7 +27,7 @@ struct SettingsView: View {
                              viewContext
                         )
                     )
-                    ColorPicker("settings_tint_color", selection: $tintColor)
+//                    ColorPicker("settings_tint_color", selection: $tintColor)
                     NavigationLink("notifications_manage_title", destination:
                         NotificationView().environment(\.managedObjectContext, viewContext))
                     NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())

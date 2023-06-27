@@ -7,14 +7,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NotificationView: View {
 
-    @Environment(\.managedObjectContext)
+    @Environment(\.modelContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets: FetchedResults<Pet>
+    @Query var pets: [Pet]
 
     @ObservedObject var notificationManager = NotificationManager.shared
 
@@ -24,7 +24,7 @@ struct NotificationView: View {
 
     var body: some View {
         List {
-            ForEach(pets, id: \.name) { pet in
+            ForEach(pets, id: \.id) { pet in
                 Section {
                     ForEach(filteredNotifications(pet: pet), id: \.self) { notification in
                         switch notification.identifier {
@@ -48,17 +48,10 @@ struct NotificationView: View {
                             Label {
                                 Text("notification_to")
                             } icon: {
-                                if #available(iOS 16.0, *) {
-                                    Image(systemName: SFSymbols.birthday)
-                                        .symbolRenderingMode(.multicolor)
-                                        .foregroundStyle(Color.green.gradient, Color.blue.gradient)
-                                        .font(.title)
-                                } else {
-                                    Image(systemName: SFSymbols.birthday)
-                                        .symbolRenderingMode(.palette)
-                                        .foregroundColor(.green)
-                                        .font(.title)
-                                }
+                                Image(systemName: SFSymbols.birthday)
+                                    .symbolRenderingMode(.multicolor)
+                                    .foregroundStyle(Color.green.gradient, Color.blue.gradient)
+                                    .font(.title)
                             }
                         default:
                             Text(notification.identifier)
@@ -69,11 +62,7 @@ struct NotificationView: View {
                     Text(pet.name ?? "")
                 } footer: {
                     let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}).count
-                    if count == 1 {
-                        Text("notification_lld\(count)")
-                    } else {
-                        Text("notifications_lld\(count)")
-                    }
+                    Text("notification \(count)")
 
                 }
 
@@ -98,7 +87,7 @@ struct NotificationView: View {
         }
         .onAppear {
             notificationManager.getNotifications()
-            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name }))
+            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name ?? "" }))
         }
     }
 

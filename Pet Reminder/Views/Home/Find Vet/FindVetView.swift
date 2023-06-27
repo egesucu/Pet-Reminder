@@ -26,7 +26,7 @@ struct FindVetView: View {
     )
     @State private var userAccess: CLAuthorizationStatus = .notDetermined
     @State private var showAlert = false
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         NavigationView {
@@ -66,7 +66,7 @@ struct FindVetView: View {
                     "location_alert_title"
                 ),
                 message: Text(
-                    "ocation_alert_context"
+                    "location_alert_context"
                 ),
                 primaryButton: Alert.Button.default(Text(
                     "location_alert_change"

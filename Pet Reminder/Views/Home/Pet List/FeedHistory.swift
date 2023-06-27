@@ -8,13 +8,15 @@
 
 import SwiftUI
 import CoreData
+import SwiftData
 
 struct FeedHistory: View {
 
     var feeds: [Feed]
-    var context: NSManagedObjectContext
+
     @Environment(\.dismiss) var dismiss
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
 
@@ -27,7 +29,7 @@ struct FeedHistory: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
-                            .tint(tintColor)
+                            .tint(Color.tintColor)
                     }
                 }
             }
@@ -140,50 +142,16 @@ struct Row: View {
     }
 }
 
-struct FeedHistory_Previews: PreviewProvider {
+// #Preview {
+//    FeedHistory(feeds: [.demo])
+//        .modelContainer(for: Pet.self)
+// }
+
+struct FeedHistoryDemo: PreviewProvider {
     static var previews: some View {
-        let previewContext = PersistenceController.preview.container.viewContext
-        let pet = Pet(context: previewContext)
-        for index in 0..<5 {
-            let feed = Feed(context: previewContext)
-            let components = DateComponents(
-                year: Int.random(
-                    in: 2018...2023
-                ),
-                month: Int.random(
-                    in: 0...12
-                ),
-                day: Int.random(
-                    in: 0...30
-                ),
-                hour: Int.random(
-                    in: 0...23
-                ),
-                minute: Int.random(
-                    in: 0...59
-                ),
-                second: Int.random(
-                    in: 0...59
-                )
-            )
-            if index % 2 == 0 {
-                feed.morningFedStamp = Calendar.current.date(from: components)
-                feed.morningFed = true
-            } else {
-                feed.eveningFedStamp = Calendar.current.date(from: components)
-                feed.eveningFed = true
-            }
-            feed.feedDate = Calendar.current.date(from: components)
-            pet.addToFeeds(feed)
-        }
         return NavigationView {
-            FeedHistory(
-                feeds: (
-                    pet.feeds?.allObjects as? [Feed] ?? []
-                )
-                .sorted(by: { $0.feedDate ?? .now > $1.feedDate ?? .now }),
-                context: previewContext
-            )
+            FeedHistory(feeds: [.demo])
+                .modelContainer(for: Feed.self)
         }
     }
 }

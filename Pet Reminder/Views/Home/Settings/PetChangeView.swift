@@ -11,7 +11,6 @@ import SwiftUI
 struct PetChangeView: View {
 
     var pet: Pet
-    let persistence = PersistenceController.shared
     let notificationManager = NotificationManager.shared
 
     @State private var nameText = ""
@@ -48,7 +47,6 @@ struct PetChangeView: View {
                 .onChange(of: defaultPhotoOn, {
                     if defaultPhotoOn {
                         pet.image = nil
-                        persistence.save()
                     }
                 })
                 .padding()
@@ -135,7 +133,6 @@ struct PetChangeView: View {
         if let outputImageData {
             petImage = Image(uiImage: UIImage(data: outputImageData) ?? UIImage())
             pet.image = outputImageData
-            persistence.save()
             defaultPhotoOn = false
         } else {
             outputImageData = nil
@@ -145,16 +142,16 @@ struct PetChangeView: View {
 
     func getPetData() {
         self.birthday = pet.birthday ?? Date()
-        self.nameText = pet.name!
-        let selection = pet.selection
-        switch selection {
-        case .both:
-            self.selection = 0
-        case .morning:
-            self.selection = 1
-        case .evening:
-            self.selection = 2
-        }
+        self.nameText = pet.name ?? ""
+//        let selection = pet.choice
+//        switch selection {
+//        case .both:
+//            self.selection = 0
+//        case .morning:
+//            self.selection = 1
+//        case .evening:
+//            self.selection = 2
+//        }
         if let morning = pet.morningTime {
             self.morningDate = morning
         }
@@ -182,12 +179,10 @@ struct PetChangeView: View {
         default:
             break
         }
-        persistence.save()
     }
 
     func changeBirthday() {
         pet.birthday = birthday
-        persistence.save()
     }
 
     func changeNotification(for selection: NotificationSelection) {
@@ -212,15 +207,20 @@ struct PetChangeView: View {
         if eveningTime != nil {
             pet.eveningTime = eveningDate
         }
-        persistence.save()
     }
 }
 
-struct PetChangeView_Previews: PreviewProvider {
+// #Preview {
+//    MainActor.assumeIsolated {
+//        PetChangeView(pet: PreviewSampleData.previewPet)
+//            .modelContainer(PreviewSampleData.container)
+//    }
+//    
+// }
+
+struct PetChangeDemo: PreviewProvider {
     static var previews: some View {
-        let pet = Pet(context: PersistenceController.preview.container.viewContext)
-        NavigationView {
-            PetChangeView(pet: pet)
-        }
+        PetChangeView(pet: PreviewSampleData.previewPet)
+            .modelContainer(for: Pet.self)
     }
 }

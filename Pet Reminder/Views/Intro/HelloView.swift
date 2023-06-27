@@ -7,13 +7,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HelloView: View {
     @StateObject var storeManager: StoreManager
-    @Environment(\.managedObjectContext) private var context
-    @FetchRequest(entity: Pet.entity(), sortDescriptors: [])
-    var pets: FetchedResults<Pet>
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @Query var pets: [Pet]
+
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     let manager = DataManager.shared
 
@@ -48,7 +48,7 @@ struct HelloView: View {
                             .foregroundColor(.white)
                     }
                     .padding()
-                    .background(tintColor)
+                    .background(Color.tintColor)
                     .cornerRadius(5)
                     .shadow(radius: 3)
                     .sheet(isPresented: $showSetup, onDismiss: {
@@ -64,10 +64,8 @@ struct HelloView: View {
 
                 }
 
-            }.padding()
-        }
-        .onAppear {
-            context.refreshAllObjects()
+            }
+            .padding()
         }
     }
 }

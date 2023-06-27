@@ -59,7 +59,7 @@ extension NotificationManager {
 
                 switch type {
                 case .birthday:
-                    content.body = String(localized: "notification_birthday_content\(petName)")
+                    content.body = String.localizedStringWithFormat("notification_birthday_content", petName)
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
                     dateComponents.year = calendar.component(
@@ -72,7 +72,7 @@ extension NotificationManager {
                     )
                     dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
                 default:
-                    content.body = String(localized: "notificationContent\(petName)")
+                    content.body = String.localizedStringWithFormat("notificationContent", petName)
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 }
@@ -131,15 +131,15 @@ extension NotificationManager {
     func removeNotifications(pets: [Pet]) {
         notificationCenter.removeAllPendingNotificationRequests()
         for pet in pets {
-            switch pet.selection {
-            case .both:
-                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
-                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
-            case .evening:
-                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
-            case .morning:
-                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
-            }
+//            switch pet.choice {
+//            case .both:
+//                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
+//                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
+//            case .evening:
+//                createNotification(of: pet.name, with: .evening, date: pet.morningTime ?? .now)
+//            case .morning:
+//                createNotification(of: pet.name, with: .morning, date: pet.eveningTime ?? .now)
+//            }
             createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
         }
     }

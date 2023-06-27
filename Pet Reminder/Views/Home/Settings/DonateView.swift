@@ -13,7 +13,7 @@ struct DonateView: View {
     @StateObject var storeManager: StoreManager
     @State private var showAlert = false
     @State private var alertText = ""
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         ScrollView {
@@ -30,7 +30,7 @@ struct DonateView: View {
 
                 if storeManager.userDidPurchase(product) {
                     Text("donate_us_donated")
-                        .foregroundColor(tintColor)
+                        .foregroundColor(.accentColor)
                         .padding()
                 }
                 HStack {

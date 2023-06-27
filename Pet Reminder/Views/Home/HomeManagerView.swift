@@ -9,9 +9,6 @@
 import SwiftUI
 
 struct HomeManagerView: View {
-
-    @Environment(\.managedObjectContext)
-    private var viewContext
     @State private var currentTab: PetReminderTabs = .home
     @StateObject var storeManager: StoreManager
 
@@ -19,7 +16,6 @@ struct HomeManagerView: View {
 
         TabView(selection: $currentTab) {
             HomeView()
-                .environment(\.managedObjectContext, viewContext)
                 .tabItem {
                     Image(systemName: currentTab != .home ? SFSymbols.person : SFSymbols.personSelected)
                 }
@@ -35,7 +31,6 @@ struct HomeManagerView: View {
                 }
                 .tag(PetReminderTabs.vet)
             SettingsView(storeManager: storeManager)
-                .environment(\.managedObjectContext, viewContext)
                 .tabItem {
                     Image(systemName: currentTab != .settings ? SFSymbols.settings : SFSymbols.settingsSelected)
                 }
@@ -49,6 +44,5 @@ struct HomeManagerView: View {
 struct HomeManager_Previews: PreviewProvider {
     static var previews: some View {
         HomeManagerView(storeManager: StoreManager())
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

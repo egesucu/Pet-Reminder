@@ -27,7 +27,7 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCalendarsUsageDescription</key>
+	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>We need to access your calendar to create specific events for your friend</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To add location to your event</string>

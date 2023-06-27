@@ -11,14 +11,14 @@ import SwiftUI
 struct NextButton: ButtonStyle {
 
     var conditionMet: Bool
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.largeTitle)
             .foregroundColor(.white)
             .padding()
-            .background(conditionMet ? Color.gray.opacity(0.4) : tintColor)
+            .background(conditionMet ? Color.gray.opacity(0.4) : .accentColor)
             .cornerRadius(15)
             .shadow(radius: 10)
             .disabled(conditionMet)

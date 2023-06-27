@@ -14,7 +14,7 @@ struct AddPopupView: View {
     @Binding var dateInput: Date
     var onSave: () -> Void
     var onCancel: () -> Void
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         ZStack {
@@ -28,7 +28,7 @@ struct AddPopupView: View {
                     HStack {
                         Text("add")
                             .bold()
-                        TextField("placeholder_vaccine", text: $contentInput)
+                        TextField(Strings.placeholderVaccine, text: $contentInput)
                             .multilineTextAlignment(.center)
                     }
                     .padding([.leading, .trailing])
@@ -52,7 +52,7 @@ struct AddPopupView: View {
                     }
                     .padding(.all)
                 }
-                .tint(tintColor)
+                .tint(.accentColor)
             }
         .frame(width: 300, height: 200)
         }

@@ -7,14 +7,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddPetView: View {
 
     @StateObject private var manager = AddPetViewModel()
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) var managedObjectContext
-
-    var petManager = PetManager.shared
 
     var body: some View {
         ScrollView {
@@ -29,8 +27,7 @@ struct AddPetView: View {
                                              eveningFeed: $manager.eveningFeed)
                 AddPetActionsView(name: $manager.name,
                                   onSave: {
-                    manager.savePet(petManager: petManager,
-                                    onDismiss: dismiss.callAsFunction)
+                    manager.savePet(onDismiss: dismiss.callAsFunction)
                 }, onCancel: dismiss.callAsFunction)
             }
             .padding()
@@ -40,10 +37,16 @@ struct AddPetView: View {
     }
 }
 
-// swiftlint: disable type_name
-struct AddPetView_Preview: PreviewProvider {
+struct AddPetDemo: PreviewProvider {
     static var previews: some View {
         AddPetView()
+            .modelContainer(for: Pet.self)
     }
 }
-// swiftlint: enable type_name
+
+// #Preview {
+//    MainActor.assumeIsolated {
+//        AddPetView()
+//            .modelContainer(PreviewSampleData.container)
+//    }
+// }

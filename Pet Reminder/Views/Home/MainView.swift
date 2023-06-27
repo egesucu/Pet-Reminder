@@ -7,12 +7,11 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct MainView: View {
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    var pets: FetchedResults<Pet>
+    @Environment(\.modelContext) var context
+    @Query var pets: [Pet]
     @StateObject var storeManager: StoreManager
     @AppStorage(Strings.petSaved) var petSaved: Bool = false
 
@@ -21,7 +20,9 @@ struct MainView: View {
     var body: some View {
         petView()
             .onAppear(perform: resetFeedTimes)
-            .onChange(of: pets.count, perform: toggleSavedPet(count:))
+            .onChange(of: pets.count, { _, newValue in
+                toggleSavedPet(count: newValue)
+            })
     }
 
     @ViewBuilder
@@ -43,6 +44,6 @@ struct MainView: View {
 
     private func resetFeedTimes() {
         petSaved = checkPetCount(count: pets.count)
-        if petSaved { feedChecker.resetLogic(pets: pets, context: context) }
+        if petSaved { feedChecker.resetLogic(pets: pets) }
     }
 }

@@ -7,17 +7,16 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 import EventKit
 
 struct HomeView: View {
 
-    @Environment(\.managedObjectContext)
+    @Environment(\.modelContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets: FetchedResults<Pet>
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @Query var pets: [Pet]
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     @State private var addPet = false
 
@@ -30,7 +29,7 @@ struct HomeView: View {
                     List {
                         ForEach(pets, id: \.name) { pet in
                             NavigationLink {
-                                PetDetailView(pet: pet, context: viewContext)
+                                PetDetailView(pet: pet)
                             } label: {
                                 PetCell(pet: pet)
                             }
@@ -40,9 +39,7 @@ struct HomeView: View {
                     }
                     .listStyle(.insetGrouped)
                     .sheet(isPresented: $addPet, onDismiss: {
-                        DispatchQueue.main.async {
-                            viewContext.refreshAllObjects()
-                        }
+
                     }, content: {
                         AddPetView()
                     })
@@ -52,7 +49,7 @@ struct HomeView: View {
                                 self.addPet.toggle()
                             }, label: {
                                 Label("add_animal_accessible_label", systemImage: SFSymbols.add)
-                                    .foregroundColor(tintColor)
+                                    .foregroundColor(.accentColor)
                                     .font(.title)
                             })
                         }
@@ -74,14 +71,12 @@ struct HomeView: View {
             viewContext.delete(pet)
         }
 
-        PersistenceController.shared.save()
-
     }
 }
 
 struct HomeViewPreview: PreviewProvider {
 
     static var previews: some View {
-        HomeView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        HomeView()
     }
 }

@@ -9,30 +9,31 @@
 import SwiftUI
 
 struct PetCell: View {
-    @ObservedObject var pet: Pet
+
+    var pet: Pet
+
     var body: some View {
         HStack {
             ESImageView(data: pet.image)
                 .padding([.top, .trailing, .bottom], 10)
                 .frame(maxWidth: 150, maxHeight: 150)
             VStack {
-                Text(pet.name ?? Strings.viski)
+                Text(pet.name ?? "")
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
                     .minimumScaleFactor(0.5)
                     .padding()
-                if let feedSet = pet.feeds,
-                   let feeds = feedSet.allObjects as? [Feed],
+                if let feeds = pet.feeds,
                    feeds.count > 0,
                    let lastFeed = feeds.last {
-                    if lastFeed.eveningFed,
+                    if lastFeed.eveningFed ?? false,
                        let eveningTime = lastFeed.eveningFedStamp {
                         VStack(alignment: .leading) {
                             Text("last_feed_title")
                                 .bold()
                             Text("\(eveningTime.formatted())")
                         }
-                    } else if lastFeed.morningFed,
+                    } else if lastFeed.morningFed ?? false,
                               let morningTime = lastFeed.morningFedStamp {
                         VStack(alignment: .leading) {
                             Text("last_feed_title")
@@ -46,14 +47,20 @@ struct PetCell: View {
     }
 }
 
-struct PetCell_Previews: PreviewProvider {
+// #Preview {
+//    MainActor.assumeIsolated {
+//        PetCell(pet: PreviewSampleData.previewPet)
+//            .modelContainer(PreviewSampleData.container)
+//    }
+//    
+// }
+
+struct PetCellDemo: PreviewProvider {
     static var previews: some View {
-        let pet = Pet(context: PersistenceController.preview.container.viewContext)
-        pet.name = Strings.viski
-        return PetCell(pet: pet)
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            .preferredColorScheme(.light)
-            .previewLayout(.sizeThatFits)
-            .padding()
+
+        return NavigationView {
+            PetCell(pet: .demo)
+                .modelContainer(for: Pet.self)
+        }
     }
 }

@@ -7,14 +7,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PetListView: View {
 
-    @Environment(\.managedObjectContext)
+    @Environment(\.modelContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets: FetchedResults<Pet>
+    @Query var pets: [Pet]
 
     var body: some View {
         List {
@@ -22,7 +22,8 @@ struct PetListView: View {
                 NavigationLink(
                     destination: PetChangeView(pet: pet),
                     label: {
-                        PetCell(pet: pet).padding()
+                        PetCell(pet: pet)
+                            .padding()
                     })
             }.onDelete { indexSet in
                 deletePet(at: indexSet)
@@ -36,15 +37,20 @@ struct PetListView: View {
             let pet = pets[index]
             viewContext.delete(pet)
         }
-        PersistenceController.shared.save()
     }
 }
 
-struct PetListView_Previews: PreviewProvider {
+// #Preview {
+//    MainActor.assumeIsolated {
+//        PetListView()
+//            .modelContainer(PreviewSampleData.container)
+//    }
+//    
+// }
+
+struct PetListDemo: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            PetListView()
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-        }
+        PetListView()
+            .modelContainer(for: Pet.self)
     }
 }

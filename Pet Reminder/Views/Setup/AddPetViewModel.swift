@@ -12,6 +12,8 @@ class AddPetViewModel: ObservableObject {
 
     @AppStorage(Strings.petSaved) var petSaved: Bool?
 
+    @Environment(\.modelContext) var modelContext
+
     @Published var dayType: DayTime = .both
     @Published var name = ""
     @Published var birthday: Date = .now
@@ -23,29 +25,34 @@ class AddPetViewModel: ObservableObject {
         selectedImageData = nil
     }
 
-    func savePet(petManager: PetManager, onDismiss: () -> Void) {
-        petManager.name = name
-        petManager.birthday = birthday
+    func savePet(onDismiss: () -> Void) {
+        let pet = Pet(name: name)
+        pet.birthday = birthday
+        pet.name = name
+        pet.birthday = birthday
         if let selectedImageData {
-            petManager.imageData = selectedImageData
+            pet.image = selectedImageData
         }
-        switch dayType {
-        case .morning:
-            petManager.morningTime = morningFeed
-            petManager.selection = .morning
-        case .evening:
-            petManager.eveningTime = eveningFeed
-            petManager.selection = .evening
-        case .both:
-            petManager.morningTime = morningFeed
-            petManager.eveningTime = eveningFeed
-            petManager.selection = .both
+//        switch dayType {
+//        case .morning:
+//            pet.morningTime = morningFeed
+//            pet.choice = .morning
+//        case .evening:
+//            pet.eveningTime = eveningFeed
+//            pet.choice = .evening
+//        case .both:
+//            pet.morningTime = morningFeed
+//            pet.eveningTime = eveningFeed
+//            pet.choice = .both
+//        }
+
+        do {
+            try modelContext.save()
+            onDismiss()
+        } catch let error {
+            print(error)
         }
 
-        petManager.savePet {
-            petSaved = true
-            onDismiss()
-        }
     }
 
 }

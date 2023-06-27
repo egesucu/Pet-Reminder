@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NotificationSelection: Int64 {
+enum NotificationSelection: Int {
     case both
     case morning
     case evening

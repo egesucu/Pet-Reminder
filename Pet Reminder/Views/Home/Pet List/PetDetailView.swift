@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct PetDetailView: View {
 
@@ -17,10 +17,10 @@ struct PetDetailView: View {
     @State private var eveningOn = false
     @State private var showFeedHistory = false
     @State private var showVaccines = false
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+
+//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     let feedback = UINotificationFeedbackGenerator()
-    var context: NSManagedObjectContext
 
     var body: some View {
         VStack {
@@ -37,47 +37,47 @@ struct PetDetailView: View {
                 )
             Spacer()
             HStack(spacing: 30) {
-                switch pet.selection {
-                case .morning:
-                    MorningCheckboxView(morningOn: $morningOn)
-                        .onChange(of: morningOn, {
-                            feedback.notificationOccurred(.success)
-                            updateFeed(type: .morning, value: morningOn)
-                            self.save()
-                        })
-                        .onTapGesture {
-                            morningOn.toggle()
-                        }
-                case .evening:
-                    EveningCheckboxView(eveningOn: $eveningOn)
-                        .onChange(of: eveningOn, {
-                            feedback.notificationOccurred(.success)
-                            updateFeed(type: .evening, value: eveningOn)
-                            self.save()
-                        })
-                        .onTapGesture {
-                            eveningOn.toggle()
-                        }
-                case .both:
-                    MorningCheckboxView(morningOn: $morningOn)
-                        .onChange(of: morningOn, {
-                            feedback.notificationOccurred(.success)
-                            updateFeed(type: .morning, value: morningOn)
-                            self.save()
-                        })
-                        .onTapGesture {
-                            morningOn.toggle()
-                        }
-                    EveningCheckboxView(eveningOn: $eveningOn)
-                        .onChange(of: eveningOn, {
-                            feedback.notificationOccurred(.success)
-                            updateFeed(type: .evening, value: eveningOn)
-                            self.save()
-                        })
-                        .onTapGesture {
-                            eveningOn.toggle()
-                        }
-                }
+//                switch pet.selection {
+//                case .morning:
+//                    MorningCheckboxView(morningOn: $morningOn)
+//                        .onChange(of: morningOn, {
+//                            feedback.notificationOccurred(.success)
+//                            updateFeed(type: .morning, value: morningOn)
+//                            self.save()
+//                        })
+//                        .onTapGesture {
+//                            morningOn.toggle()
+//                        }
+//                case .evening:
+//                    EveningCheckboxView(eveningOn: $eveningOn)
+//                        .onChange(of: eveningOn, {
+//                            feedback.notificationOccurred(.success)
+//                            updateFeed(type: .evening, value: eveningOn)
+//                            self.save()
+//                        })
+//                        .onTapGesture {
+//                            eveningOn.toggle()
+//                        }
+//                case .both:
+//                    MorningCheckboxView(morningOn: $morningOn)
+//                        .onChange(of: morningOn, {
+//                            feedback.notificationOccurred(.success)
+//                            updateFeed(type: .morning, value: morningOn)
+//                            self.save()
+//                        })
+//                        .onTapGesture {
+//                            morningOn.toggle()
+//                        }
+//                    EveningCheckboxView(eveningOn: $eveningOn)
+//                        .onChange(of: eveningOn, {
+//                            feedback.notificationOccurred(.success)
+//                            updateFeed(type: .evening, value: eveningOn)
+//                            self.save()
+//                        })
+//                        .onTapGesture {
+//                            eveningOn.toggle()
+//                        }
+//                }
             }
             .padding(.bottom, 50)
 
@@ -88,7 +88,7 @@ struct PetDetailView: View {
                     Label("feeds_title", systemImage: "fork.knife.circle.fill")
                 }
                 .buttonStyle(.bordered)
-                .tint(tintColor)
+                .tint(Color.accentColor)
                 Button {
                     showVaccines.toggle()
                 } label: {
@@ -104,31 +104,27 @@ struct PetDetailView: View {
             getLatestFeed()
         }
         .fullScreenCover(isPresented: $showFeedHistory, content: {
-            FeedHistory(feeds: filterFeeds(), context: context)
+            FeedHistory(feeds: filterFeeds())
         })
         .fullScreenCover(isPresented: $showVaccines, content: {
-            VaccineHistoryView(pet: pet, context: context)
+            VaccineHistoryView(pet: pet)
         })
-        .navigationTitle(Text("pet_name_title\(pet.name ?? "")"))
+        .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
     }
 // swiftlint: disable trailing_whitespace
     func filterFeeds() -> [Feed] {
-        let feedSet = pet.feeds
-        if let feeds = feedSet?.allObjects as? [Feed] {
-            return feeds.filter({
-                $0.morningFedStamp != nil || $0.eveningFedStamp != nil 
-            }).sorted(by: {
-                $0.feedDate ?? .now > $1.feedDate ?? .now 
-            })
-        }
-        return []
+        return pet.feeds?.filter({ feed in
+            feed.morningFedStamp != nil || feed.eveningFedStamp != nil
+        }).sorted(by: {
+            $0.feedDate ?? .now > $1.feedDate ?? .now
+        }) ?? []
+        
     }
 // swiftlint: enable trailing_whitespace
     func updateFeed(type: NotificationSelection, value: Bool) {
-        if let feedSet = pet.feeds,
-           let feeds = feedSet.allObjects as? [Feed] {
+        if let feeds = pet.feeds {
             if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now)}).count == 0 {
-                let feed = Feed(context: context)
+                let feed = Feed()
                 switch type {
                 case .morning:
                     feed.morningFedStamp = value ? .now : nil
@@ -139,8 +135,7 @@ struct PetDetailView: View {
                 default:
                     break
                 }
-                pet.addToFeeds(feed)
-                save()
+                pet.feeds?.append(feed)
             } else {
                 if let lastFeed = feeds.last {
                     switch type {
@@ -156,44 +151,39 @@ struct PetDetailView: View {
                     if value {
                         lastFeed.feedDate = .now
                     }
-                    save()
                 }
             }
         }
     }
 
     func getLatestFeed() {
-        if let feedSet = pet.feeds,
-           let feeds = feedSet.allObjects as? [Feed] {
+        if let feeds = pet.feeds {
             if let lastFeed = feeds.last {
                 if let date = lastFeed.feedDate {
                     if Calendar.current.isDateInToday(date) {
                         // We have a feed.
-                        morningOn = lastFeed.morningFed
-                        eveningOn = lastFeed.eveningFed
+                        morningOn = lastFeed.morningFed ?? false
+                        eveningOn = lastFeed.eveningFed ?? false
                     }
                 }
             }
         }
     }
-
-    func save() {
-        PersistenceController.shared.save()
-    }
 }
+
+// #Preview {
+//    MainActor.assumeIsolated {
+//        PetDetailView(pet: PreviewSampleData.previewPet)
+//            .modelContainer(PreviewSampleData.container)
+//    }
+//    
+// }
 
 struct PetDetailView_Previews: PreviewProvider {
     static var previews: some View {
 
-        let persistence = PersistenceController.preview
-
-        let demo = Pet(context: persistence.container.viewContext)
-        demo.name = Strings.viski
-        let feed = Feed(context: persistence.container.viewContext)
-        demo.addToFeeds(feed)
-
         return NavigationView {
-            PetDetailView(pet: demo, context: persistence.container.viewContext)
+            PetDetailView(pet: PreviewSampleData.previewPet)
         }.navigationViewStyle(.stack)
             .previewInterfaceOrientation(.portrait)
     }
