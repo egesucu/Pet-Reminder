@@ -11,7 +11,10 @@ import SwiftData
 
 struct AddPetView: View {
 
-    @StateObject private var manager = AddPetViewModel()
+    @State private var manager = AddPetViewModel()
+    @AppStorage(Strings.petSaved) var petSaved: Bool?
+    @Environment(\.modelContext) private var modelContext
+
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -27,7 +30,7 @@ struct AddPetView: View {
                                              eveningFeed: $manager.eveningFeed)
                 AddPetActionsView(name: $manager.name,
                                   onSave: {
-                    manager.savePet(onDismiss: dismiss.callAsFunction)
+                    manager.savePet(modelContext: modelContext, onDismiss: dismiss.callAsFunction)
                 }, onCancel: dismiss.callAsFunction)
             }
             .padding()

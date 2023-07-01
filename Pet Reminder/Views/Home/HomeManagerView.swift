@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
-    @StateObject var storeManager: StoreManager
+    var storeManager: StoreManager
 
     var body: some View {
 

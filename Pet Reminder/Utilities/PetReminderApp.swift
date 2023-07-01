@@ -12,7 +12,7 @@ import SwiftUI
 struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
-    @StateObject var storeManager = StoreManager()
+    var storeManager = StoreManager()
 //    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some Scene {

@@ -17,7 +17,7 @@ struct EventView: View {
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
 
-    @ObservedObject var eventVM: EventManager
+    var eventVM: EventManager
 
     var body: some View {
         ZStack(alignment: .center) {

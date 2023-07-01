@@ -11,7 +11,7 @@ import EventKit
 
 struct AddEventView: View {
 
-    @StateObject var eventVM = EventManager()
+    @State var eventVM = EventManager()
     @Environment(\.dismiss) var dismiss
 //    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 

@@ -9,13 +9,15 @@
 import MapKit
 import CoreLocation
 import SwiftUI
+import Observation
 
-class VetViewModel: NSObject, ObservableObject {
+@Observable
+class VetViewModel: NSObject {
 
-    @Published var userLocation = CLLocation()
-    @Published var region = MKCoordinateRegion()
-    @Published var permissionDenied = false
-    @Published var searchText = String(localized: "default_vet_text")
+    var userLocation = CLLocation()
+    var region = MKCoordinateRegion()
+    var permissionDenied = false
+    var searchText = String(localized: "default_vet_text")
 
     var locationManager = CLLocationManager()
 

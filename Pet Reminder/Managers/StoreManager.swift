@@ -8,14 +8,17 @@
 
 import Foundation
 import StoreKit
+import Observation
 
-class StoreManager: NSObject, ObservableObject {
+@Observable
+class StoreManager: NSObject {
 
-    @Published var products: [SKProduct] = []
-    @Published var state: SKPaymentTransactionState?
-    var request: SKProductsRequest!
-    var userCanPurchase = SKPaymentQueue.canMakePayments()
-    let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
+    var products: [SKProduct] = []
+    var state: SKPaymentTransactionState = .failed
+
+    @ObservationIgnored var request: SKProductsRequest = .init()
+    @ObservationIgnored var userCanPurchase = SKPaymentQueue.canMakePayments()
+    @ObservationIgnored let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
 
     func addManagerToPayment(manager: StoreManager) {
         SKPaymentQueue.default().add(manager)
@@ -53,6 +56,5 @@ class StoreManager: NSObject, ObservableObject {
         productIDs.forEach { id in
             UserDefaults.standard.removeObject(forKey: id)
         }
-        objectWillChange.send()
     }
 }

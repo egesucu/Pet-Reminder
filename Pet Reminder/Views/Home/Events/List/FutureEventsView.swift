@@ -11,7 +11,7 @@ import EventKit
 
 struct FutureEventsView: View {
 
-    @ObservedObject var eventVM: EventManager
+    var eventVM: EventManager
 
     var filteredEvents: [EKEvent] {
         eventVM.events.filter({ Calendar.current.isDateLater(date: $0.startDate) })

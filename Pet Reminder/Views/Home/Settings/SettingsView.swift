@@ -12,7 +12,7 @@ struct SettingsView: View {
 
     @Environment(\.managedObjectContext)
     private var viewContext
-    @StateObject var storeManager: StoreManager
+    var storeManager: StoreManager
 //    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {

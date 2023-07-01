@@ -53,7 +53,6 @@ extension StoreManager: SKPaymentTransactionObserver {
                 queue.finishTransaction(transaction)
             }
         }
-        objectWillChange.send()
     }
 }
 // MARK: - SKProduct

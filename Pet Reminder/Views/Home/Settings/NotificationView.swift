@@ -16,7 +16,7 @@ struct NotificationView: View {
 
     @Query var pets: [Pet]
 
-    @ObservedObject var notificationManager = NotificationManager.shared
+    var notificationManager = NotificationManager.shared
 
     func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
         notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")})

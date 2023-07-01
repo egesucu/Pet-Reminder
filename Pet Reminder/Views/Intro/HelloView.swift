@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct HelloView: View {
-    @StateObject var storeManager: StoreManager
+    var storeManager: StoreManager
     @Query var pets: [Pet]
 
 //    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)

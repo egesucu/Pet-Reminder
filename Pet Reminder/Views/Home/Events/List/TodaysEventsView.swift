@@ -11,7 +11,7 @@ import EventKit
 
 struct TodaysEventsView: View {
 
-    @ObservedObject var eventVM: EventManager
+    var eventVM: EventManager
 
     var filteredEvents: [EKEvent] {
         eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)})

@@ -12,7 +12,7 @@ import SwiftData
 struct MainView: View {
     @Environment(\.modelContext) var context
     @Query var pets: [Pet]
-    @StateObject var storeManager: StoreManager
+    var storeManager: StoreManager
     @AppStorage(Strings.petSaved) var petSaved: Bool = false
 
     let feedChecker = DailyFeedChecker.shared

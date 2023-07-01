@@ -8,17 +8,19 @@
 
 import Foundation
 import UserNotifications
+import Observation
 
-class NotificationManager: ObservableObject {
+@Observable
+class NotificationManager {
 
     static let shared = NotificationManager()
-    let notificationCenter = UNUserNotificationCenter.current()
+    @ObservationIgnored let notificationCenter = UNUserNotificationCenter.current()
 
     func accessRequest(completion: @escaping (Bool, Error?) -> Void) {
         notificationCenter.requestAuthorization(options: [.alert, .badge, .sound], completionHandler: completion)
     }
 
-    @Published var notifications: [UNNotificationRequest] = .empty
+    var notifications: [UNNotificationRequest] = .empty
 
     func getNotifications() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in

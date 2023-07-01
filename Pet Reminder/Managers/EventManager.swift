@@ -5,17 +5,18 @@
 //  Created by Ege Sucu on 20.12.2020.
 //  Copyright © 2020 Ege Sucu. All rights reserved.
 //
-
+import Observation
 import EventKit
 
-class EventManager: ObservableObject {
+@Observable
+class EventManager {
 
-    @Published var events: [EKEvent] = [EKEvent]()
-    @Published var eventName = ""
-    @Published var allDayDate = Date()
-    @Published var eventStartDate = Date()
-    @Published var eventEndDate = Date().addingTimeInterval(60*60)
-    @Published var isAllDay = false
+   var events: [EKEvent] = [EKEvent]()
+   var eventName = ""
+   var allDayDate = Date()
+   var eventStartDate = Date()
+   var eventEndDate = Date().addingTimeInterval(60*60)
+   var isAllDay = false
 
     let eventStore = EKEventStore()
 
@@ -101,7 +102,6 @@ class EventManager: ObservableObject {
                     calendars: [calendar]
                 )
                 self.events = self.eventStore.events(matching: predicate)
-                self.objectWillChange.send()
             }
         } else {
             requestEvents()
@@ -180,7 +180,6 @@ class EventManager: ObservableObject {
     }
 
     func reloadEvents(onFinish: () -> Void) async {
-        objectWillChange.send()
         await reloadEvents()
         onFinish()
     }

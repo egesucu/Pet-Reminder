@@ -7,25 +7,26 @@
 //
 
 import SwiftUI
+import Observation
+import SwiftData
 
-class AddPetViewModel: ObservableObject {
+@Observable
+class AddPetViewModel {
 
-    @AppStorage(Strings.petSaved) var petSaved: Bool?
-
-    @Environment(\.modelContext) var modelContext
-
-    @Published var dayType: DayTime = .both
-    @Published var name = ""
-    @Published var birthday: Date = .now
-    @Published var morningFeed: Date = Date().eightAM()
-    @Published var eveningFeed: Date = Date().eightPM()
-    @Published var selectedImageData: Data?
+    var dayType: DayTime = .both
+    var name = ""
+    var birthday: Date = .now
+    var morningFeed: Date = Date().eightAM()
+    var eveningFeed: Date = Date().eightPM()
+    // swiftlint: disable redundant_optional_initialization
+    var selectedImageData: Data? = nil
+    // swiftlint: enable redundant_optional_initialization
 
     func resetImageData() {
         selectedImageData = nil
     }
 
-    func savePet(onDismiss: () -> Void) {
+    func savePet(modelContext: ModelContext, onDismiss: () -> Void) {
         let pet = Pet(name: name)
         pet.birthday = birthday
         pet.name = name

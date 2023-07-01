@@ -11,7 +11,7 @@ import Foundation
 
 struct EventsView: View {
 
-    @ObservedObject var eventVM: EventManager
+    var eventVM: EventManager
 
     @State private var dates = [Date]()
 

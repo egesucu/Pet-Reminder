@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EventListView: View {
 
-    @StateObject var eventVM = EventManager()
+    var eventVM = EventManager()
     @State private var showAddEvent = false
 //    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 

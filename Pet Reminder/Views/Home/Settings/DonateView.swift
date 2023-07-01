@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DonateView: View {
 
-    @StateObject var storeManager: StoreManager
+    var storeManager: StoreManager
     @State private var showAlert = false
     @State private var alertText = ""
 //    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)

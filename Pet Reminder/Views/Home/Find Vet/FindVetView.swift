@@ -12,7 +12,7 @@ import CoreLocation
 
 struct FindVetView: View {
 
-    @StateObject var vetViewModel = VetViewModel()
+    var vetViewModel = VetViewModel()
     @State private var mapItems: [Pin] = []
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
