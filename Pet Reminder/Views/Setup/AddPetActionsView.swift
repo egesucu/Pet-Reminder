@@ -16,21 +16,18 @@ struct AddPetActionsView: View {
 
     var body: some View {
         HStack {
-            ActionButton(
-                action: onCancel,
-                content: .cancel,
-                systemImage: SFSymbols.xmarkSealFill,
-                isEnabled: true,
-                tint: .red
-            )
+            Button(action: onCancel) {
+                Label("Cancel", systemImage: SFSymbols.xmarkSealFill)
+            }
+            .buttonStyle(.bordered)
+            .tint(.red)
             .padding(.trailing, 50)
-            ActionButton(
-                action: onSave,
-                content: .save,
-                systemImage: SFSymbols.pawprintCircleFill,
-                isEnabled: name.isEmpty,
-                tint: .green
-            )
+            Button(action: onSave) {
+                Label("Save", systemImage: SFSymbols.pawprintCircleFill)
+            }
+            .buttonStyle(.bordered)
+            .tint(.green)
+            .disabled(name.isEmpty)
         }
         .padding(.all)
     }
@@ -39,9 +36,9 @@ struct AddPetActionsView: View {
 struct AddPetActionsView_Previews: PreviewProvider {
     static var previews: some View {
         AddPetActionsView(name: .constant(Strings.viski)) {
-
+            print("Saved")
         } onCancel: {
-
+            print("Cancelled")
         }
 
     }

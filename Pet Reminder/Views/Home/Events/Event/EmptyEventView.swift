@@ -11,7 +11,7 @@ import SwiftUI
 struct EmptyEventView: View {
 
     var eventVM: EventManager
-//    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var body: some View {
         VStack {

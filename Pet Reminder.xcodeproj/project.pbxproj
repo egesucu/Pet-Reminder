@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */; };
 		7224CB8E29F7B20B009B0ADC /* PaymentErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB8D29F7B20B009B0ADC /* PaymentErrorType.swift */; };
-		7224CB9029F7B218009B0ADC /* NotificationSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB8F29F7B218009B0ADC /* NotificationSelection.swift */; };
+		7224CB9029F7B218009B0ADC /* FeedTimeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB8F29F7B218009B0ADC /* FeedTimeSelection.swift */; };
 		7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */; };
 		7224CB9429F7B23D009B0ADC /* ICloudResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9329F7B23D009B0ADC /* ICloudResult.swift */; };
 		7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9629F7B45C009B0ADC /* AddPopupView.swift */; };
@@ -45,7 +45,6 @@
 		9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */; };
 		9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */; };
 		9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */; };
-		9D5DC0ED29F58412007A444D /* DayTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EC29F58412007A444D /* DayTime.swift */; };
 		9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EE29F58860007A444D /* ActionButton.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
@@ -71,7 +70,6 @@
 		9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */; };
 		9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */; };
 		9DB2BDD02A4A6C8100908070 /* PreviewSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB2BDCF2A4A6C8100908070 /* PreviewSampleData.swift */; };
-		9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C6264EC81A00F8561A /* PetManager.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
 		9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC8262626FF697200EA2423 /* StoreManager.swift */; };
@@ -90,7 +88,7 @@
 /* Begin PBXFileReference section */
 		7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		7224CB8D29F7B20B009B0ADC /* PaymentErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentErrorType.swift; sourceTree = "<group>"; };
-		7224CB8F29F7B218009B0ADC /* NotificationSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSelection.swift; sourceTree = "<group>"; };
+		7224CB8F29F7B218009B0ADC /* FeedTimeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeSelection.swift; sourceTree = "<group>"; };
 		7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudErrorType.swift; sourceTree = "<group>"; };
 		7224CB9329F7B23D009B0ADC /* ICloudResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudResult.swift; sourceTree = "<group>"; };
 		7224CB9629F7B45C009B0ADC /* AddPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPopupView.swift; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 		9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetNotificationSelectionView.swift; sourceTree = "<group>"; };
 		9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetActionsView.swift; sourceTree = "<group>"; };
 		9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewModel.swift; sourceTree = "<group>"; };
-		9D5DC0EC29F58412007A444D /* DayTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTime.swift; sourceTree = "<group>"; };
 		9D5DC0EE29F58860007A444D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
@@ -155,7 +152,6 @@
 		9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningCheckboxView.swift; sourceTree = "<group>"; };
 		9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningCheckboxView.swift; sourceTree = "<group>"; };
 		9DB2BDCF2A4A6C8100908070 /* PreviewSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewSampleData.swift; sourceTree = "<group>"; };
-		9DC1B9C6264EC81A00F8561A /* PetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManager.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9DC8262626FF697200EA2423 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -189,7 +185,7 @@
 			children = (
 				7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */,
 				7224CB8D29F7B20B009B0ADC /* PaymentErrorType.swift */,
-				7224CB8F29F7B218009B0ADC /* NotificationSelection.swift */,
+				7224CB8F29F7B218009B0ADC /* FeedTimeSelection.swift */,
 				7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */,
 				7224CB9329F7B23D009B0ADC /* ICloudResult.swift */,
 			);
@@ -353,7 +349,6 @@
 			isa = PBXGroup;
 			children = (
 				9DC849F728CB954A00776197 /* AddPetView.swift */,
-				9D5DC0EC29F58412007A444D /* DayTime.swift */,
 				9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */,
 				9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */,
 				9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */,
@@ -443,7 +438,6 @@
 				9D3AC3122A4A4B3F005C799A /* Vaccine.swift */,
 				9D3AC3132A4A4B3F005C799A /* Feed.swift */,
 				9D3AC3142A4A4B3F005C799A /* Pet.swift */,
-				9DC1B9C6264EC81A00F8561A /* PetManager.swift */,
 				9DCDA06026E3C34600DF290F /* Pin.swift */,
 				9DB2BDCF2A4A6C8100908070 /* PreviewSampleData.swift */,
 			);
@@ -571,7 +565,6 @@
 				9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */,
 				7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */,
 				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,
-				9DC1B9C7264EC81A00F8561A /* PetManager.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
 				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
@@ -603,7 +596,7 @@
 				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
 				9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */,
-				7224CB9029F7B218009B0ADC /* NotificationSelection.swift in Sources */,
+				7224CB9029F7B218009B0ADC /* FeedTimeSelection.swift in Sources */,
 				725F44C42A260ABB0096CCCB /* URLDefinitions.swift in Sources */,
 				9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */,
 				9DC87F1A29FAC074008AB720 /* FutureEventsView.swift in Sources */,
@@ -629,7 +622,6 @@
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
 				7224CB9429F7B23D009B0ADC /* ICloudResult.swift in Sources */,
-				9D5DC0ED29F58412007A444D /* DayTime.swift in Sources */,
 				9D5DC0E529F58098007A444D /* PetSelectImageView.swift in Sources */,
 				9DC8262726FF697200EA2423 /* StoreManager.swift in Sources */,
 				9D9F55392905711D007E014B /* FeedHistory.swift in Sources */,

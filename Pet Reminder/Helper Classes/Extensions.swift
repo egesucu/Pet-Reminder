@@ -19,15 +19,3 @@ extension Array where Element: Hashable {
         return filter { seen.insert($0).inserted }
     }
 }
-
-// MARK: - Pet
-// extension Pet {
-//    var selection: NotificationSelection {
-//        get {
-//            return NotificationSelection(rawValue: self.choice) ?? .both
-//        }
-//        set {
-//            choice = newValue.rawValue
-//        }
-//    }
-// }

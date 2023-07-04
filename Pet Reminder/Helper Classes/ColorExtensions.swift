@@ -7,40 +7,35 @@
 //
 
 import SwiftUI
-// swiftlint: disable todo
-// FIXME: Check color extension issues on a newer Xcode version.
-// swiftlint: enable todo
-// extension Color: RawRepresentable {
-//    
-//    public typealias RawValue = String
-//    
-//    public var rawValue: String {
-//        
-//        do {
-//            let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor.self, requiringSecureCoding: true)
-//            return data.base64EncodedString()
-//        } catch let error {
-//            print(error)
-//            return ""
-//        }
-//    }
-//    
-//    public init?(rawValue: String) {
-//        guard let data = Data(base64Encoded: rawValue) else {
-//            self = .black
-//            return
-//        }
-//        do {
-//            let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)
-//            if let color = color {
-//                self = Color(uiColor: color)
-//            }
-//        } catch let error {
-//            print(error)
-//            self = .black
-//        }
-//    }
-// }
+
+extension Color: RawRepresentable {
+
+    public typealias RawValue = String
+
+    public init?(rawValue: String) {
+        guard let data = Data(base64Encoded: rawValue) else {
+            self = .green
+            return
+        }
+        do {
+            let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) ?? .green
+            self = Color(uiColor: color)
+        } catch let error {
+            print(error.localizedDescription)
+            self = .green
+        }
+    }
+
+    public var rawValue: String {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false)
+            return data.base64EncodedString()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        return ""
+    }
+}
 
 // MARK: UIColor Extension
 extension UIColor {

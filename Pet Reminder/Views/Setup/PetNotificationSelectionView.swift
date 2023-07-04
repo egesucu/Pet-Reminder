@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PetNotificationSelectionView: View {
 
-    @Binding var dayType: DayTime
+    @Binding var dayType: FeedTimeSelection
     @Binding var morningFeed: Date
     @Binding var eveningFeed: Date
 
@@ -18,14 +18,14 @@ struct PetNotificationSelectionView: View {
         VStack {
             Text("feed_time_title")
                 .font(.title2).bold()
-                .padding([.top, .bottom])
+                .padding(.vertical)
             Picker(selection: $dayType, label: Text("feed_time_title")) {
                 Text("feed_selection_both")
-                    .tag(DayTime.both)
+                    .tag(FeedTimeSelection.both)
                 Text("feed_selection_morning")
-                    .tag(DayTime.morning)
+                    .tag(FeedTimeSelection.morning)
                 Text("feed_selection_evening")
-                    .tag(DayTime.evening)
+                    .tag(FeedTimeSelection.evening)
             }
             .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: dayType)
@@ -85,7 +85,7 @@ struct PetNotificationSelectionView: View {
     var bothView: some View {
         VStack {
             morningView
-                .padding([.top, .bottom])
+                .padding(.vertical)
             eveningView
         }
         .animation(.easeOut(duration: 0.8), value: dayType)

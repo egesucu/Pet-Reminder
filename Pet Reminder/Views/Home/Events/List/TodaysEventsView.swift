@@ -21,7 +21,7 @@ struct TodaysEventsView: View {
         Section {
             ForEach(filteredEvents, id: \.eventIdentifier) { event in
                 EventView(event: event, eventVM: eventVM)
-                    .padding([.leading, .trailing], 5)
+                    .padding(.horizontal, 5)
                     .listRowSeparator(.hidden)
             }
         } header: {

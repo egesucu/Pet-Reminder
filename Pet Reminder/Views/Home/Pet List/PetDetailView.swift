@@ -18,14 +18,15 @@ struct PetDetailView: View {
     @State private var showFeedHistory = false
     @State private var showVaccines = false
 
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     let feedback = UINotificationFeedbackGenerator()
 
     var body: some View {
         VStack {
             ESImageView(data: pet.image)
-                .padding([.top, .leading, .trailing], 20)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
                 .frame(
                     minWidth: 50,
                     idealWidth: 100,
@@ -109,7 +110,7 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines, content: {
             VaccineHistoryView(pet: pet)
         })
-        .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
+        .navigationTitle(Text("pet_name_title \(pet.name)"))
     }
 // swiftlint: disable trailing_whitespace
     func filterFeeds() -> [Feed] {
@@ -121,7 +122,7 @@ struct PetDetailView: View {
         
     }
 // swiftlint: enable trailing_whitespace
-    func updateFeed(type: NotificationSelection, value: Bool) {
+    func updateFeed(type: FeedTimeSelection, value: Bool) {
         if let feeds = pet.feeds {
             if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now)}).count == 0 {
                 let feed = Feed()

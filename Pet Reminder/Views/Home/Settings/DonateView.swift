@@ -13,7 +13,7 @@ struct DonateView: View {
     var storeManager: StoreManager
     @State private var showAlert = false
     @State private var alertText = ""
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         ScrollView {
@@ -21,7 +21,7 @@ struct DonateView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
-                .padding([.top, .bottom], 10)
+                .padding(.vertical, 10)
             Text("donate_us_context")
                 .padding()
             Text("donate_us_comment")
@@ -41,7 +41,7 @@ struct DonateView: View {
                         Text(product.localizedPrice).foregroundColor(Color(uiColor: .systemBackground))
                     }
                     .buttonStyle(.borderedProminent)
-                    .padding([.trailing, .leading], 5)
+                    .padding(.horizontal, 5)
                     Text(product.localizedTitle)
                     Spacer()
                 }.padding()

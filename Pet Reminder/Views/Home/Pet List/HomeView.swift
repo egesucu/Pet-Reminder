@@ -16,7 +16,7 @@ struct HomeView: View {
     private var viewContext
 
     @Query var pets: [Pet]
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     @State private var addPet = false
 

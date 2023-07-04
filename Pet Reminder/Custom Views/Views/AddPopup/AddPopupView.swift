@@ -14,7 +14,7 @@ struct AddPopupView: View {
     @Binding var dateInput: Date
     var onSave: () -> Void
     var onCancel: () -> Void
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         ZStack {
@@ -31,13 +31,13 @@ struct AddPopupView: View {
                         TextField(Strings.placeholderVaccine, text: $contentInput)
                             .multilineTextAlignment(.center)
                     }
-                    .padding([.leading, .trailing])
+                    .padding(.horizontal)
                     .padding(.bottom, 10)
 
                     DatePicker(selection: $dateInput) {
                         Text("date")
                             .bold()
-                    }.padding([.leading, .trailing])
+                    }.padding(.horizontal)
 
                     HStack {
                         Button(action: onCancel) {

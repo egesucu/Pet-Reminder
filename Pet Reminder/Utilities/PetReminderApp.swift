@@ -13,7 +13,7 @@ struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
     var storeManager = StoreManager()
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some Scene {
         WindowGroup {

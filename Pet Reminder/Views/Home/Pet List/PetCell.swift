@@ -15,10 +15,11 @@ struct PetCell: View {
     var body: some View {
         HStack {
             ESImageView(data: pet.image)
-                .padding([.top, .trailing, .bottom], 10)
+                .padding(.vertical, 10)
+                .padding(.trailing, 10)
                 .frame(maxWidth: 150, maxHeight: 150)
             VStack {
-                Text(pet.name ?? "")
+                Text(pet.name)
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
                     .minimumScaleFactor(0.5)

@@ -17,9 +17,11 @@ struct PetSelectImageView: View {
         if #available(iOS 16, *) {
             PhotoImagePickerView { data in
                 selectedImageData = data
-            }.padding([.top, .bottom])
+            }
+            .padding(.vertical)
         } else {
-            ImagePickerView(imageData: $selectedImageData).padding([.top, .bottom])
+            ImagePickerView(imageData: $selectedImageData)
+                .padding(.vertical)
         }
     }
 }

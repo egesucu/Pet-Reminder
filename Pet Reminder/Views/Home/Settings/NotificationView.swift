@@ -19,7 +19,7 @@ struct NotificationView: View {
     var notificationManager = NotificationManager.shared
 
     func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
-        notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")})
+        notificationManager.notifications.filter({$0.identifier.contains(pet.name)})
     }
 
     var body: some View {
@@ -59,9 +59,9 @@ struct NotificationView: View {
                         }
                     }
                 } header: {
-                    Text(pet.name ?? "")
+                    Text(pet.name)
                 } footer: {
-                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}).count
+                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name)}).count
                     Text("notification \(count)")
 
                 }
@@ -87,7 +87,7 @@ struct NotificationView: View {
         }
         .onAppear {
             notificationManager.getNotifications()
-            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name ?? "" }))
+            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name}))
         }
     }
 

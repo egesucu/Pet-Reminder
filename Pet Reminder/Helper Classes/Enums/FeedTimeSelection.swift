@@ -1,5 +1,5 @@
 //
-//  NotificationSelection.swift
+//  FeedTimeSelection.swift
 //  Pet Reminder
 //
 //  Created by Sucu, Ege on 25.04.2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NotificationSelection: Int {
+enum FeedTimeSelection: String, Codable {
     case both
     case morning
     case evening

@@ -13,7 +13,7 @@ struct HelloView: View {
     var storeManager: StoreManager
     @Query var pets: [Pet]
 
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     let manager = DataManager.shared
 
@@ -29,13 +29,13 @@ struct HelloView: View {
                 Image(.petReminder)
                     .resizable()
                     .scaledToFit()
-                    .padding([.top, .bottom])
+                    .padding(.vertical)
                 Text("welcome_title")
-                    .padding([.top, .bottom])
+                    .padding(.vertical)
                     .font(.title)
                 Spacer()
                 Text("welcome_context")
-                    .padding([.top, .bottom])
+                    .padding(.vertical)
                     .font(.body)
                 Spacer()
                 HStack {

@@ -11,7 +11,7 @@ import SwiftUI
 struct PetBirthdayView: View {
 
     @Binding var birthday: Date
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         HStack {

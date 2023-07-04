@@ -12,7 +12,7 @@ import PhotosUI
 @available (iOS 16.0, *)
 struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var onSelected: (Data) -> Void
 
@@ -37,7 +37,7 @@ struct PhotoImagePickerView: View {
                     }
                 }
             }
-            .padding([.top, .bottom])
+            .padding(.vertical)
         }
     }
 

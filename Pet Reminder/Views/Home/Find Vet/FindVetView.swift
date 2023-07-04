@@ -26,7 +26,7 @@ struct FindVetView: View {
     )
     @State private var userAccess: CLAuthorizationStatus = .notDetermined
     @State private var showAlert = false
-//    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
         NavigationView {

@@ -3,7 +3,7 @@
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 27.06.2023.
-//  Copyright © 2023 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 //
 
@@ -16,18 +16,14 @@ class Pet {
     var id = UUID()
 
     var birthday: Date?
-    // swiftlint: disable todo
-    // Figure the custom types(enums) in swift data,
-    // FIXME: currently it has a problem https://developer.apple.com/forums/thread/731538
-    // swiftlint: enable todo
-    // var choice: NotificationSelection = .both
+    var selection: FeedTimeSelection = FeedTimeSelection.both
     var createdAt: Date?
     var eveningFed: Bool?
     var eveningTime: Date?
     var image: Data?
     var morningFed: Bool?
     var morningTime: Date?
-    var name: String?
+    var name: String
 
     @Relationship(.cascade, inverse: \Feed.pet)
     var feeds: [Feed]?
@@ -36,16 +32,17 @@ class Pet {
 
     init(
         birthday: Date? = nil,
+        selection: FeedTimeSelection = FeedTimeSelection.both,
         createdAt: Date? = nil,
         eveningFed: Bool? = nil,
         eveningTime: Date? = nil,
         image: Data? = nil,
         morningFed: Bool? = nil,
         morningTime: Date? = nil,
-        name: String? = nil
+        name: String = ""
     ) {
         self.birthday = birthday
-        // self.choice = choice
+        self.selection = selection
         self.createdAt = createdAt
         self.eveningFed = eveningFed
         self.eveningTime = eveningTime
@@ -54,19 +51,22 @@ class Pet {
         self.morningTime = morningTime
         self.name = name
     }
-
 }
 
 extension Pet {
     static var demo: Pet {
         Pet(birthday: .now,
-//            choice: .both,
             createdAt: .now,
             eveningFed: false,
             eveningTime: .now.eightPM(),
-            image: UIImage(named: "default-animal")?.jpegData(compressionQuality: 0.8),
+            image: convertDefaulImage(),
             morningFed: true,
             morningTime: .now.eightAM(),
             name: Strings.viski)
+    }
+
+    static func convertDefaulImage() -> Data {
+        guard let image = UIImage(named: "default-animal") else { return .init() }
+        return image.jpegData(compressionQuality: 0.8) ?? .init()
     }
 }
