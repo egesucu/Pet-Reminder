@@ -133,7 +133,7 @@ extension NotificationManager {
     func removeNotifications(pets: [Pet]) {
         notificationCenter.removeAllPendingNotificationRequests()
         for pet in pets {
-            switch pet.selection {
+            switch pet.choice {
             case .both:
                 createNotification(of: pet.name, with: .morning, date: pet.eveningTime ?? .now)
                 createNotification(of: pet.name, with: .evening, date: pet.morningTime ?? .now)

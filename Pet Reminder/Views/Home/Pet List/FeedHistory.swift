@@ -29,7 +29,7 @@ struct FeedHistory: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
-                            .tint(Color.tintColor)
+                            .tint(tintColor)
                     }
                 }
             }

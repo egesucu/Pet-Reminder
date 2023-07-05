@@ -30,7 +30,7 @@ struct DonateView: View {
 
                 if storeManager.userDidPurchase(product) {
                     Text("donate_us_donated")
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(tintColor)
                         .padding()
                 }
                 HStack {

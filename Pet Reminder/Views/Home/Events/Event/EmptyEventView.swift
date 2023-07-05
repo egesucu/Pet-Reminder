@@ -23,7 +23,7 @@ struct EmptyEventView: View {
                 Button(action: reloadEvents) {
                     Text("refresh")
                 }
-                .tint(.accentColor)
+                .tint(tintColor)
                 Spacer()
             }
         }

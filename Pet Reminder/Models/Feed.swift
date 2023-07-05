@@ -12,8 +12,6 @@ import SwiftData
 
 @Model
 class Feed {
-    @Attribute(.unique)
-    var id = UUID()
 
     var eveningFed: Bool?
     var eveningFedStamp: Date?
@@ -24,14 +22,12 @@ class Feed {
     var pet: Pet?
 
     init(
-        id: UUID = UUID(),
         eveningFed: Bool? = nil,
         eveningFedStamp: Date? = nil,
         feedDate: Date? = nil,
         morningFed: Bool? = nil,
         morningFedStamp: Date? = nil
     ) {
-        self.id = id
         self.eveningFed = eveningFed
         self.eveningFedStamp = eveningFedStamp
         self.feedDate = feedDate

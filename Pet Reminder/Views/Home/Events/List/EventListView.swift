@@ -32,7 +32,7 @@ struct EventListView: View {
             Button(action: toggleAddEvent) {
                 Label("add_event_accessible_title", systemImage: SFSymbols.calendar)
                     .font(.title2)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(tintColor)
             }
             .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView() })
         }

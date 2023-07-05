@@ -26,7 +26,7 @@ struct PetBirthdayView: View {
                 displayedComponents: .date
             )
                 .labelsHidden()
-                .tint(.accentColor)
+                .tint(tintColor)
             Spacer()
         }
         .padding(.all)

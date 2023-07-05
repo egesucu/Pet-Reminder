@@ -28,7 +28,6 @@
 		9D279843257ABE710078B668 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* IndicatorView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
-		9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018F26DA7392005822DA /* DailyFeedChecker.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
 		9D3AC3152A4A4B3F005C799A /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3AC3122A4A4B3F005C799A /* Vaccine.swift */; };
@@ -107,7 +106,6 @@
 		9D279842257ABE710078B668 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		9D34018F26DA7392005822DA /* DailyFeedChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyFeedChecker.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
 		9D3AC3122A4A4B3F005C799A /* Vaccine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
@@ -297,7 +295,6 @@
 		9D98B13D28D606570018C7A6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9D34018F26DA7392005822DA /* DailyFeedChecker.swift */,
 				9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */,
 				9DC8262626FF697200EA2423 /* StoreManager.swift */,
 				9D34018D26DA7392005822DA /* NotificationManager.swift */,
@@ -561,7 +558,6 @@
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
 				9D3AC3162A4A4B3F005C799A /* Feed.swift in Sources */,
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
-				9D34019226DA7392005822DA /* DailyFeedChecker.swift in Sources */,
 				9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */,
 				7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */,
 				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,

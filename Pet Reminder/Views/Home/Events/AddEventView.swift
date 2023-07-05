@@ -28,7 +28,7 @@ struct AddEventView: View {
                     eventDateView()
                 }
             }
-            .accentColor(.accentColor)
+            .tint(tintColor)
             .navigationTitle(Text("add_event_title"))
             .toolbar(content: addEventToolbar)
         }
@@ -59,7 +59,7 @@ struct AddEventView: View {
     func saveButton() -> some View {
         Button(action: saveEvent) {
             Text("add_event_save")
-                .foregroundColor(.accentColor)
+                .foregroundColor(tintColor)
                 .bold()
         }
     }

@@ -15,11 +15,11 @@ struct EventTimeView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 100).fill(Color.accentColor)
+            RoundedRectangle(cornerRadius: 100).fill(tintColor)
             Text(dateString)
                 .multilineTextAlignment(.center)
                 .font(.body)
-                .foregroundColor(Color.accentColor.isDarkColor ? .white : .black)
+                .foregroundColor(tintColor.isDarkColor ? .white : .black)
         }
     }
 }

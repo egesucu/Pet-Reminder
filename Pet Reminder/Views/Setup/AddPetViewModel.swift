@@ -30,6 +30,7 @@ class AddPetViewModel {
 
     func savePet(modelContext: ModelContext, onDismiss: () -> Void) {
         let pet = Pet(name: name)
+        pet.createdAt = .now
         pet.birthday = birthday
         pet.name = name
         pet.birthday = birthday
@@ -40,20 +41,20 @@ class AddPetViewModel {
         case .morning:
             createNotification(type: .morning)
             pet.morningTime = morningFeed
-            pet.selection = .morning
+            pet.choice = .morning
         case .evening:
             createNotification(type: .evening)
             pet.eveningTime = eveningFeed
-            pet.selection = .evening
+            pet.choice = .evening
         case .both:
             createNotification(type: .both)
             pet.morningTime = morningFeed
             pet.eveningTime = eveningFeed
-            pet.selection = .both
+            pet.choice = .both
         }
 
         do {
-            try modelContext.save()
+            try modelContext.insert(pet)
             onDismiss()
         } catch let error {
             print(error)

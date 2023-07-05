@@ -55,7 +55,4 @@ extension Color {
     static let dynamicBlack = Color(.label)
     static let systemGreen = Color(.systemGreen)
 
-    static var tintColor: Color {
-        .accentColor
-    }
 }

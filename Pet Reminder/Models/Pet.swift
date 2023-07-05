@@ -12,18 +12,15 @@ import UIKit
 
 @Model
 class Pet {
-    @Attribute(.unique)
-    var id = UUID()
-
     var birthday: Date?
-    var selection: FeedTimeSelection = FeedTimeSelection.both
+    var selection: String?
     var createdAt: Date?
     var eveningFed: Bool?
     var eveningTime: Date?
     var image: Data?
     var morningFed: Bool?
     var morningTime: Date?
-    var name: String
+    var name: String = ""
 
     @Relationship(.cascade, inverse: \Feed.pet)
     var feeds: [Feed]?
@@ -32,7 +29,7 @@ class Pet {
 
     init(
         birthday: Date? = nil,
-        selection: FeedTimeSelection = FeedTimeSelection.both,
+        selection: String? = nil,
         createdAt: Date? = nil,
         eveningFed: Bool? = nil,
         eveningTime: Date? = nil,
@@ -54,6 +51,21 @@ class Pet {
 }
 
 extension Pet {
+    
+    var choice: FeedTimeSelection {
+        
+        get {
+            return FeedTimeSelection(rawValue: self.selection ?? "") ?? .both
+        }
+        
+        set {
+            selection = newValue.rawValue
+        }
+        
+        
+    }
+    
+    
     static var demo: Pet {
         Pet(birthday: .now,
             createdAt: .now,

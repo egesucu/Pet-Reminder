@@ -52,7 +52,7 @@ struct AddPopupView: View {
                     }
                     .padding(.all)
                 }
-                .tint(.accentColor)
+                .tint(tintColor)
             }
         .frame(width: 300, height: 200)
         }

@@ -18,7 +18,7 @@ struct NextButton: ButtonStyle {
             .font(.largeTitle)
             .foregroundColor(.white)
             .padding()
-            .background(conditionMet ? Color.gray.opacity(0.4) : .accentColor)
+            .background(conditionMet ? Color.gray.opacity(0.4) : tintColor)
             .cornerRadius(15)
             .shadow(radius: 10)
             .disabled(conditionMet)

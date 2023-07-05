@@ -25,7 +25,7 @@ struct ESImageView: View {
         } else {
             ZStack {
                 Rectangle()
-                    .fill(Color.accentColor)
+                    .fill(tintColor)
                     .cornerRadius(25)
                     .shadow(radius: 10)
 

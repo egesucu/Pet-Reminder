@@ -10,16 +10,12 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-    @Environment(\.modelContext) var context
     @Query var pets: [Pet]
     var storeManager: StoreManager
     @AppStorage(Strings.petSaved) var petSaved: Bool = false
 
-    let feedChecker = DailyFeedChecker.shared
-
     var body: some View {
         petView()
-            .onAppear(perform: resetFeedTimes)
             .onChange(of: pets.count, { _, newValue in
                 toggleSavedPet(count: newValue)
             })
@@ -40,10 +36,5 @@ struct MainView: View {
 
     private func checkPetCount(count: Int) -> Bool {
         count > 0 ? true : false
-    }
-
-    private func resetFeedTimes() {
-        petSaved = checkPetCount(count: pets.count)
-        if petSaved { feedChecker.resetLogic(pets: pets) }
     }
 }

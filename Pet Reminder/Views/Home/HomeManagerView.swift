@@ -36,7 +36,7 @@ struct HomeManagerView: View {
                 }
                 .tag(PetReminderTabs.settings)
         }
-        .accentColor(.dynamicBlack)
+        .tint(.dynamicBlack)
 
     }
 }

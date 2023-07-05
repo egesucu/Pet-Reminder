@@ -20,7 +20,6 @@ struct PetDetailView: View {
 
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
-    let feedback = UINotificationFeedbackGenerator()
 
     var body: some View {
         VStack {
@@ -37,49 +36,11 @@ struct PetDetailView: View {
                     alignment: .center
                 )
             Spacer()
-            HStack(spacing: 30) {
-//                switch pet.selection {
-//                case .morning:
-//                    MorningCheckboxView(morningOn: $morningOn)
-//                        .onChange(of: morningOn, {
-//                            feedback.notificationOccurred(.success)
-//                            updateFeed(type: .morning, value: morningOn)
-//                            self.save()
-//                        })
-//                        .onTapGesture {
-//                            morningOn.toggle()
-//                        }
-//                case .evening:
-//                    EveningCheckboxView(eveningOn: $eveningOn)
-//                        .onChange(of: eveningOn, {
-//                            feedback.notificationOccurred(.success)
-//                            updateFeed(type: .evening, value: eveningOn)
-//                            self.save()
-//                        })
-//                        .onTapGesture {
-//                            eveningOn.toggle()
-//                        }
-//                case .both:
-//                    MorningCheckboxView(morningOn: $morningOn)
-//                        .onChange(of: morningOn, {
-//                            feedback.notificationOccurred(.success)
-//                            updateFeed(type: .morning, value: morningOn)
-//                            self.save()
-//                        })
-//                        .onTapGesture {
-//                            morningOn.toggle()
-//                        }
-//                    EveningCheckboxView(eveningOn: $eveningOn)
-//                        .onChange(of: eveningOn, {
-//                            feedback.notificationOccurred(.success)
-//                            updateFeed(type: .evening, value: eveningOn)
-//                            self.save()
-//                        })
-//                        .onTapGesture {
-//                            eveningOn.toggle()
-//                        }
-//                }
-            }
+            FeedListView(
+                morningOn: $morningOn,
+                eveningOn: $eveningOn,
+                pet: pet
+            )
             .padding(.bottom, 50)
 
             HStack {
@@ -89,7 +50,7 @@ struct PetDetailView: View {
                     Label("feeds_title", systemImage: "fork.knife.circle.fill")
                 }
                 .buttonStyle(.bordered)
-                .tint(Color.accentColor)
+                .tint(tintColor)
                 Button {
                     showVaccines.toggle()
                 } label: {
@@ -122,40 +83,7 @@ struct PetDetailView: View {
         
     }
 // swiftlint: enable trailing_whitespace
-    func updateFeed(type: FeedTimeSelection, value: Bool) {
-        if let feeds = pet.feeds {
-            if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now)}).count == 0 {
-                let feed = Feed()
-                switch type {
-                case .morning:
-                    feed.morningFedStamp = value ? .now : nil
-                    feed.morningFed = value
-                case .evening:
-                    feed.eveningFedStamp = value ? .now : nil
-                    feed.eveningFed = value
-                default:
-                    break
-                }
-                pet.feeds?.append(feed)
-            } else {
-                if let lastFeed = feeds.last {
-                    switch type {
-                    case .morning:
-                        lastFeed.morningFedStamp = value ? .now : nil
-                        lastFeed.morningFed = value
-                    case .evening:
-                        lastFeed.eveningFedStamp = value ? .now : nil
-                        lastFeed.eveningFed = value
-                    default:
-                        break
-                    }
-                    if value {
-                        lastFeed.feedDate = .now
-                    }
-                }
-            }
-        }
-    }
+
 
     func getLatestFeed() {
         if let feeds = pet.feeds {
@@ -179,6 +107,107 @@ struct PetDetailView: View {
 //    }
 //    
 // }
+
+struct FeedListView: View {
+
+    @Binding var morningOn: Bool
+    @Binding var eveningOn: Bool
+
+    var pet: Pet = .init()
+
+    let feedback = UINotificationFeedbackGenerator()
+
+    var body: some View {
+        HStack(spacing: 30) {
+            switch pet.choice {
+            case .morning:
+                MorningCheckboxView(morningOn: $morningOn)
+                    .onChange(of: morningOn, {
+                        feedback.notificationOccurred(.success)
+                        updateFeed(type: .morning, value: morningOn)
+                    })
+                    .onTapGesture {
+                        morningOn.toggle()
+                    }
+            case .evening:
+                EveningCheckboxView(eveningOn: $eveningOn)
+                    .onChange(of: eveningOn, {
+                        feedback.notificationOccurred(.success)
+                        updateFeed(type: .evening, value: eveningOn)
+                    })
+                    .onTapGesture {
+                        eveningOn.toggle()
+                    }
+            case .both:
+                MorningCheckboxView(morningOn: $morningOn)
+                    .onChange(of: morningOn, {
+                        feedback.notificationOccurred(.success)
+                        updateFeed(type: .morning, value: morningOn)
+                    })
+                    .onTapGesture {
+                        morningOn.toggle()
+                    }
+                EveningCheckboxView(eveningOn: $eveningOn)
+                    .onChange(of: eveningOn, {
+                        feedback.notificationOccurred(.success)
+                        updateFeed(type: .evening, value: eveningOn)
+                    })
+                    .onTapGesture {
+                        eveningOn.toggle()
+                    }
+            }
+        }
+    }
+
+    var todaysFeeds: [Feed] {
+        pet.feeds.filter { feed in
+            Calendar.current.isDateInToday(feed.feedDate ?? .now)
+        }
+
+    }
+
+    func updateFeed(type: FeedTimeSelection, value: Bool) {
+
+        if todaysFeeds.isEmpty {
+            addFeedForToday(value: value)
+        } else {
+            if let feeds = pet.feeds,
+               let lastFeed = feeds.last {
+                switch type {
+                case .morning:
+                    lastFeed.morningFedStamp = value ? .now : nil
+                    lastFeed.morningFed = value
+                case .evening:
+                    lastFeed.eveningFedStamp = value ? .now : nil
+                    lastFeed.eveningFed = value
+                default:
+                    break
+                }
+                if value {
+                    lastFeed.feedDate = .now
+                }
+            }
+        }
+    }
+
+    func addFeedForToday(value: Bool) {
+        let feed = Feed()
+
+        switch pet.choice {
+        case .both:
+            break
+        case .morning:
+            feed.morningFedStamp = value ? .now : nil
+            feed.morningFed = value
+        case .evening:
+            feed.eveningFedStamp = value ? .now : nil
+            feed.eveningFed = value
+        }
+
+        pet.feeds?.append(feed)
+    }
+
+}
 
 struct PetDetailView_Previews: PreviewProvider {
     static var previews: some View {

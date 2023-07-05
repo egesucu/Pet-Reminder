@@ -143,7 +143,7 @@ struct PetChangeView: View {
     func getPetData() {
         self.birthday = pet.birthday ?? Date()
         self.nameText = pet.name
-        let selection = pet.selection
+        let selection = pet.choice
         switch selection {
         case .both:
             self.selection = 0

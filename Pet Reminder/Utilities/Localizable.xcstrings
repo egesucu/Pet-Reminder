@@ -1196,6 +1196,16 @@
         }
       }
     },
+    "OK" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
     "payment_cant" : {
       "comment" : "PAYMENT",
       "extractionState" : "manual",
@@ -1210,6 +1220,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kullanıcı satın alma yapamıyor."
+          }
+        }
+      }
+    },
+    "pet_name_found" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have a pet with this name."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu isimle bir evcil hayvanınız mevcut."
           }
         }
       }

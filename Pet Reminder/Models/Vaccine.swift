@@ -15,9 +15,6 @@ class Vaccine: Identifiable {
     var date: Date?
     var name: String?
 
-    @Attribute(.unique)
-    public var id = UUID()
-
     var pet: Pet?
 
     init(date: Date? = nil, name: String? = nil) {

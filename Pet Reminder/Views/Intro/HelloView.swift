@@ -48,7 +48,7 @@ struct HelloView: View {
                             .foregroundColor(.white)
                     }
                     .padding()
-                    .background(Color.tintColor)
+                    .background(tintColor)
                     .cornerRadius(5)
                     .shadow(radius: 3)
                     .sheet(isPresented: $showSetup, onDismiss: {

@@ -26,7 +26,7 @@ struct PhotoImagePickerView: View {
                     .frame(width: 150, height: 150)
                     .cornerRadius(50)
                     .padding()
-                    .background(Color.tintColor)
+                    .background(tintColor)
                     .cornerRadius(50)
                     .shadow(radius: 10)
             }

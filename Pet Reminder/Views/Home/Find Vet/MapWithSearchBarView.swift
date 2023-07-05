@@ -24,32 +24,49 @@ struct MapWithSearchBarView: View {
         ZStack(alignment: .center) {
 #if !targetEnvironment(simulator)
             ZStack(alignment: .top) {
-                Map(
-                    coordinateRegion: $region,
-                    interactionModes: .all,
-                    showsUserLocation: true,
-                    annotationItems: mapItems
-                ) { annotation in
+                Map(bounds: MapCameraBounds(centerCoordinateBounds: region) , interactionModes: .all) {
                     withAnimation {
-                        MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
-                            VStack {
+                        ForEach(mapItems) { pin in                            
+                            Annotation(pin.item.name ?? "", coordinate: pin.item.placemark.coordinate) {
                                 Image(systemName: SFSymbols.pawprintCircleFill)
-                                    .font(.largeTitle)
+                                    .font(.title)
                                     .padding(2)
-                            }.background(tintColor)
-                                .cornerRadius(15)
-                                .shadow(radius: 8)
-                                .scaleEffect(1)
-                                .onTapGesture {
-                                    selectedItem = annotation.item
-                                    showAlert.toggle()
-
-                                }
-
-                                .animation(.easeInOut, value: 1)
+                                    .onTapGesture {
+                                        selectedItem = pin.item
+                                        showAlert.toggle()
+                                    }
+                            }
                         }
                     }
-                }.edgesIgnoringSafeArea(.top)
+                }
+                .edgesIgnoringSafeArea(.top)
+
+//                Map(
+//                    coordinateRegion: $region,
+//                    interactionModes: .all,
+//                    showsUserLocation: true,
+//                    annotationItems: mapItems
+//                ) { annotation in
+//                    withAnimation {
+//                        MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
+//                            VStack {
+//                                Image(systemName: SFSymbols.pawprintCircleFill)
+//                                    .font(.largeTitle)
+//                                    .padding(2)
+//                            }.background(tintColor)
+//                                .cornerRadius(15)
+//                                .shadow(radius: 8)
+//                                .scaleEffect(1)
+//                                .onTapGesture {
+//                                    selectedItem = annotation.item
+//                                    showAlert.toggle()
+//
+//                                }
+//
+//                                .animation(.easeInOut, value: 1)
+//                        }
+//                    }
+//                }.edgesIgnoringSafeArea(.top)
                 TextField("location_search_title", text: $vetViewModel.searchText, onCommit: {
                     onReload()
                 })

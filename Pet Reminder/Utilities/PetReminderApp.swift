@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct PetReminderApp: App {
@@ -18,8 +19,8 @@ struct PetReminderApp: App {
     var body: some Scene {
         WindowGroup {
             MainView(storeManager: storeManager)
-                .modelContainer(for: Pet.self)
-                .accentColor(.accentColor)
+                .modelContainer(for: [Pet.self, Feed.self, Vaccine.self])
+                .tint(tintColor)
                 .onAppear {
                     storeManager.addManagerToPayment(manager: storeManager)
                     storeManager.getProducts()

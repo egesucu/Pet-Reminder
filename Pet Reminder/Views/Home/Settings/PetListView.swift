@@ -18,7 +18,7 @@ struct PetListView: View {
 
     var body: some View {
         List {
-            ForEach(pets) { pet in
+            ForEach(pets, id: \.name) { pet in
                 NavigationLink(
                     destination: PetChangeView(pet: pet),
                     label: {
