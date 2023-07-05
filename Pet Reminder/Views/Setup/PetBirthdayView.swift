@@ -20,7 +20,11 @@ struct PetBirthdayView: View {
                 .font(.title2)
                 .bold()
                 .padding(.trailing, 20)
-            DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
+            DatePicker(
+                "birthday_title",
+                selection: $birthday,
+                displayedComponents: .date
+            )
                 .labelsHidden()
                 .tint(.accentColor)
             Spacer()

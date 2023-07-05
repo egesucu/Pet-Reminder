@@ -17,13 +17,13 @@ struct AddPetActionsView: View {
     var body: some View {
         HStack {
             Button(action: onCancel) {
-                Label("Cancel", systemImage: SFSymbols.xmarkSealFill)
+                Label("cancel", systemImage: SFSymbols.xmarkSealFill)
             }
             .buttonStyle(.bordered)
             .tint(.red)
             .padding(.trailing, 50)
             Button(action: onSave) {
-                Label("Save", systemImage: SFSymbols.pawprintCircleFill)
+                Label("save", systemImage: SFSymbols.pawprintCircleFill)
             }
             .buttonStyle(.bordered)
             .tint(.green)

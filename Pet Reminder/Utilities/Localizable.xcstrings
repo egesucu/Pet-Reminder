@@ -350,9 +350,6 @@
         }
       }
     },
-    "Cancel" : {
-
-    },
     "cant_fetch_status" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1454,9 +1451,6 @@
           }
         }
       }
-    },
-    "Save" : {
-
     },
     "select_date" : {
       "extractionState" : "manual",

@@ -15,7 +15,7 @@ struct MapWithSearchBarView: View {
     @Binding var region: MKCoordinateRegion
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     @State private var selectedItem: MKMapItem?
-    var vetViewModel: VetViewModel
+    @State var vetViewModel: VetViewModel
     @State private var showAlert = false
 
     var onReload: () -> Void
@@ -50,13 +50,13 @@ struct MapWithSearchBarView: View {
                         }
                     }
                 }.edgesIgnoringSafeArea(.top)
-                TextField(Strings.locationSearchTitle, text: $vetViewModel.searchText, onCommit: {
+                TextField("location_search_title", text: $vetViewModel.searchText, onCommit: {
                     onReload()
                 })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .shadow(radius: 10)
                 .padding()
-                .alert(Strings.findVetOpen, isPresented: $showAlert) {
+                .alert("find_vet_open", isPresented: $showAlert) {
 
                     ForEach(MapApplication.allCases, id: \.self) { item in
                         Button(item.rawValue) {
@@ -70,7 +70,7 @@ struct MapWithSearchBarView: View {
                     Button {
                         showAlert.toggle()
                     } label: {
-                        Text(Strings.cancel)
+                        Text("cancel")
                     }
                 }
             }
