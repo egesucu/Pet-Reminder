@@ -51,21 +51,15 @@ class Pet {
 }
 
 extension Pet {
-    
     var choice: FeedTimeSelection {
-        
         get {
             return FeedTimeSelection(rawValue: self.selection ?? "") ?? .both
         }
-        
         set {
             selection = newValue.rawValue
         }
-        
-        
     }
-    
-    
+
     static var demo: Pet {
         Pet(birthday: .now,
             createdAt: .now,

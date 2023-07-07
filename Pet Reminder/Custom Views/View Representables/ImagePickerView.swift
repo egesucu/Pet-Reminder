@@ -2,7 +2,7 @@
 //  ImagePickerView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 6.06.2020.
+//  Created by Ege Sucu on 6.06.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 

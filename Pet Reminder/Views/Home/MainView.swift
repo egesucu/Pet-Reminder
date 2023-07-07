@@ -2,7 +2,7 @@
 //  MainView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 15.08.2021.
+//  Created by Ege Sucu on 15.08.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
@@ -11,7 +11,6 @@ import SwiftData
 
 struct MainView: View {
     @Query var pets: [Pet]
-    var storeManager: StoreManager
     @AppStorage(Strings.petSaved) var petSaved: Bool = false
 
     var body: some View {
@@ -24,9 +23,9 @@ struct MainView: View {
     @ViewBuilder
     func petView() -> some View {
         if petSaved {
-            HomeManagerView(storeManager: storeManager)
+            HomeManagerView()
         } else {
-            HelloView(storeManager: storeManager)
+            HelloView()
         }
     }
 

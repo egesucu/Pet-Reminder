@@ -53,12 +53,7 @@ class AddPetViewModel {
             pet.choice = .both
         }
 
-        do {
-            try modelContext.insert(pet)
-            onDismiss()
-        } catch let error {
-            print(error)
-        }
+        modelContext.insert(pet)
 
     }
 

@@ -2,7 +2,7 @@
 //  EventsView.swift
 //  EventsView
 //
-//  Created by Ege Sucu on 11.09.2021.
+//  Created by Ege Sucu on 11.09.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 

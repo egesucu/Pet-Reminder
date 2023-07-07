@@ -2,7 +2,7 @@
 //  PetDetailView.swift
 //  Pet Reminder
 //
-//  Created by egesucu on 31.07.2021.
+//  Created by Ege Sucu on 31.07.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
@@ -19,7 +19,6 @@ struct PetDetailView: View {
     @State private var showVaccines = false
 
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-
 
     var body: some View {
         VStack {
@@ -83,7 +82,6 @@ struct PetDetailView: View {
         
     }
 // swiftlint: enable trailing_whitespace
-
 
     func getLatestFeed() {
         if let feeds = pet.feeds {
@@ -160,9 +158,9 @@ struct FeedListView: View {
     }
 
     var todaysFeeds: [Feed] {
-        pet.feeds.filter { feed in
+        pet.feeds?.filter { feed in
             Calendar.current.isDateInToday(feed.feedDate ?? .now)
-        }
+        } ?? []
 
     }
 

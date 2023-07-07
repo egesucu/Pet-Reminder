@@ -2,7 +2,7 @@
 //  HomeManagerView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 7.02.2021.
+//  Created by Ege Sucu on 7.02.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
@@ -10,7 +10,6 @@ import SwiftUI
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
-    var storeManager: StoreManager
 
     var body: some View {
 
@@ -30,7 +29,7 @@ struct HomeManagerView: View {
                     Image(systemName: currentTab != .vet ? SFSymbols.map : SFSymbols.mapSelected)
                 }
                 .tag(PetReminderTabs.vet)
-            SettingsView(storeManager: storeManager)
+            SettingsView()
                 .tabItem {
                     Image(systemName: currentTab != .settings ? SFSymbols.settings : SFSymbols.settingsSelected)
                 }
@@ -43,6 +42,6 @@ struct HomeManagerView: View {
 
 struct HomeManager_Previews: PreviewProvider {
     static var previews: some View {
-        HomeManagerView(storeManager: StoreManager())
+        HomeManagerView()
     }
 }

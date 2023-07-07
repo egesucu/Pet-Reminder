@@ -2,15 +2,14 @@
 //  HelloView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 2.06.2020.
-//  Copyright © 2020 Ege Sucu. All rights reserved.
+//  Created by Ege Sucu on 2.06.2023.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
 import SwiftData
 
 struct HelloView: View {
-    var storeManager: StoreManager
     @Query var pets: [Pet]
 
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
@@ -57,7 +56,7 @@ struct HelloView: View {
                         AddPetView()
                     })
                     .fullScreenCover(isPresented: $navigateToHome, content: {
-                        HomeManagerView(storeManager: storeManager)
+                        HomeManagerView()
                     })
 
                     Spacer()
@@ -72,10 +71,7 @@ struct HelloView: View {
 
 struct HelloView_Previews: PreviewProvider {
     static var previews: some View {
-        let storeManager = StoreManager()
-        return Group {
-            HelloView(storeManager: storeManager)
-        }
+        HelloView()
 
     }
 }

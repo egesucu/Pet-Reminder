@@ -2,8 +2,8 @@
 //  EventManager.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 20.12.2020.
-//  Copyright © 2020 Ege Sucu. All rights reserved.
+//  Created by Ege Sucu on 20.12.2023.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 import Observation
 import EventKit

@@ -2,7 +2,7 @@
 //  HomeView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 4.12.2020.
+//  Created by Ege Sucu on 4.12.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  PetCell.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 2.01.2022.
+//  Created by Ege Sucu on 2.01.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 

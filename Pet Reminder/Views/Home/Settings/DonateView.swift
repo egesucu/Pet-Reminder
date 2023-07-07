@@ -2,18 +2,21 @@
 //  DonateView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 25.12.2021.
+//  Created by Ege Sucu on 25.12.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
+import StoreKit
 
 struct DonateView: View {
 
-    var storeManager: StoreManager
     @State private var showAlert = false
     @State private var alertText = ""
+    @State private var loading = false
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+
+    let store = StoreManager()
 
     var body: some View {
         ScrollView {
@@ -26,57 +29,54 @@ struct DonateView: View {
                 .padding()
             Text("donate_us_comment")
                 .padding()
-            ForEach(storeManager.products, id: \.localizedPrice) { product in
-
-                if storeManager.userDidPurchase(product) {
-                    Text("donate_us_donated")
-                        .foregroundColor(tintColor)
-                        .padding()
-                }
-                HStack {
-                    Button {
-                        self.generateHaptic()
-                        storeManager.purchaseProduct(product)
-                    } label: {
-                        Text(product.localizedPrice).foregroundColor(Color(uiColor: .systemBackground))
+            ForEach(store.consumables, id: \.self) { product in
+                ProductView(product)
+                    .onInAppPurchaseCompletion { product, result in
+                        purcahaseCompleted(product: product, result: result)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.horizontal, 5)
-                    Text(product.localizedTitle)
-                    Spacer()
-                }.padding()
-            }.onAppear {
-                storeManager.products.sort(by: { $0.price.doubleValue < $1.price.doubleValue })
+                    .onInAppPurchaseStart { product in
+                        let text = "Purchasing the product: \(product.displayName)"
+                        print(text)
+                    }
             }
-
-            Button {
-                self.storeManager.clearPreviousPurchases()
-
-                self.generateHaptic()
-
-                self.alertText = String(localized: "donate_us_cleared_successfull")
-                self.showAlert = true
-
-            } label: {
-                Text("donate_us_clear")
-                    .foregroundColor(Color(uiColor: .systemBackground))
-            }
-            .buttonStyle(.borderedProminent)
-            .alert(alertText, isPresented: $showAlert) {
-
-            }
-
-        }.onAppear {
-            if storeManager.userCanPurchase {
-                storeManager.getProducts()
-            }
+            .navigationTitle(Text("donate_us_title"))
         }
-        .navigationTitle(Text("donate_us_title"))
     }
-
     func generateHaptic() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
-            impactMed.impactOccurred()
+        impactMed.impactOccurred()
     }
 
+    func purcahaseCompleted(product: Product, result: Result<Product.PurchaseResult, Error>) {
+        switch result {
+        case .success(let result):
+            switch result {
+            case .success(let res):
+                switch res {
+                case .verified(let transaction):
+                    print("Verified Transaction: ", transaction)
+                    Task {
+                        await transaction.finish()
+                    }
+                case .unverified(let transaction, let error):
+                    print("Unverified Transaction: ", transaction)
+                    print("Unverified Transaction Error: ", error.localizedDescription)
+                }
+            case .pending:
+                print("Pending transaction")
+            case .userCancelled:
+                print("User cancelled the pop-up")
+            @unknown default:
+                print("Unknown Case occured")
+            }
+            print("Result of the process is: ", result)
+        case .failure(let failure):
+            print("Purchase failed: ", failure.localizedDescription)
+        }
+        loading.toggle()
+    }
+}
+
+#Preview {
+    DonateView()
 }

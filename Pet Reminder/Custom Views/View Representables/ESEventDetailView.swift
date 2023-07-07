@@ -2,7 +2,7 @@
 //  ESEventDetailView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 3.01.2022.
+//  Created by Ege Sucu on 3.01.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 

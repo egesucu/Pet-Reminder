@@ -2,7 +2,7 @@
 //  NotificationManager.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 28.08.2021.
+//  Created by Ege Sucu on 28.08.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
@@ -74,7 +74,7 @@ extension NotificationManager {
                     )
                     dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
                 default:
-                    content.body = String.localizedStringWithFormat("notificationContent", petName)
+                    content.body = String.localizedStringWithFormat("notification_content", petName)
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 }

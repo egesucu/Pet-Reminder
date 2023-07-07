@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 7.02.2021.
+//  Created by Ege Sucu on 7.02.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
@@ -12,7 +12,6 @@ struct SettingsView: View {
 
     @Environment(\.managedObjectContext)
     private var viewContext
-    var storeManager: StoreManager
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
@@ -34,7 +33,7 @@ struct SettingsView: View {
                 }
                 Section {
                     NavigationLink("donate_us_title") {
-                        DonateView(storeManager: storeManager)
+                        DonateView()
                     }
                 } header: {
                     Text("buy_coffee_title")
@@ -51,6 +50,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(storeManager: StoreManager())
+        SettingsView()
     }
 }
