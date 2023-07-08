@@ -61,7 +61,7 @@ extension NotificationManager {
 
                 switch type {
                 case .birthday:
-                    content.body = String.localizedStringWithFormat("notification_birthday_content", petName)
+                    content.body = String(localized: "notification_birthday_content \(petName)")
                     dateComponents.day = calendar.component(.day, from: date)
                     dateComponents.month = calendar.component(.month, from: date)
                     dateComponents.year = calendar.component(
@@ -74,7 +74,7 @@ extension NotificationManager {
                     )
                     dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
                 default:
-                    content.body = String.localizedStringWithFormat("notification_content", petName)
+                    content.body = String(localized: "notification_content \(petName)")
                     dateComponents.hour = calendar.component(.hour, from: date)
                     dateComponents.minute = calendar.component(.minute, from: date)
                 }
