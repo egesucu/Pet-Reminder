@@ -1093,7 +1093,7 @@
         }
       }
     },
-    "notification_content" : {
+    "notification_content %@" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
