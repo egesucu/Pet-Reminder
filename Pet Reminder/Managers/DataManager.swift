@@ -16,7 +16,13 @@ class DataManager {
     func checkIcloudAvailability(completion: @escaping (ICloudResultType) -> Void) {
 
         CKContainer.default().accountStatus { status, error in
-            guard error == nil else { completion(.error(.unknownError(error!.localizedDescription))) ; return }
+            guard error == nil else { completion(
+                .error(
+                    .unknownError(
+                        error!.localizedDescription
+                    )
+                )
+            ) ; return }
 
             switch status {
             case .available:
@@ -30,7 +36,13 @@ class DataManager {
             case .temporarilyUnavailable:
                 completion(.error(.icloudUnavailable))
             @unknown default:
-                completion(.error(.unknownError(error?.localizedDescription ?? "")))
+                completion(
+                    .error(
+                        .unknownError(
+                            error?.localizedDescription ?? ""
+                        )
+                    )
+                )
             }
         }
     }

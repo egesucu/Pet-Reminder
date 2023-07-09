@@ -8,7 +8,6 @@
 
 import SwiftUI
 import SwiftData
-import CloudKit
 
 @main
 struct PetReminderApp: App {
@@ -24,29 +23,27 @@ struct PetReminderApp: App {
                 .tint(tintColor)
                 .onAppear(perform: checkIcloud)
         }
-
     }
 
     func checkIcloud() {
-        let container = CKContainer(identifier: "iCloud.com.softhion.Pet-Reminder")
-        container.accountStatus(completionHandler: { status, error in
-            if let error {
-                print(error.localizedDescription)
+        DataManager.shared.checkIcloudAvailability { result in
+            switch result {
+            case .success:
+                print("No Error")
+            case .error(let icloudErrorType):
+                switch icloudErrorType {
+                case .icloudUnavailable:
+                    print("Error: iCloud is not available")
+                case .noIcloud:
+                    print("Error: no iCloud found")
+                case .restricted:
+                    print("Error: Restricted")
+                case .cantFetchStatus:
+                    print("Error: Can't fetch Status")
+                case .unknownError(let string):
+                    print("Custom Error: \(string)")
+                }
             }
-            switch status {
-            case .couldNotDetermine:
-                print("couldNotDetermine Errors")
-            case .available:
-                print("available Errors")
-            case .restricted:
-                print("restricted Errors")
-            case .noAccount:
-                print("noAccount Errors")
-            case .temporarilyUnavailable:
-                print("temporarilyUnavailable Errors")
-            @unknown default:
-                print("Unknown CloudKit Errors")
-            }
-        })
+        }
     }
 }
