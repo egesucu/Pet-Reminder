@@ -48,7 +48,8 @@ struct HomeView: View {
                             Button(action: {
                                 self.addPet.toggle()
                             }, label: {
-                                Label("add_animal_accessible_label", systemImage: SFSymbols.add)
+                                Image(systemName: SFSymbols.add)
+                                    .accessibilityLabel(Text("add_animal_accessible_label"))
                                     .foregroundColor(tintColor)
                                     .font(.title)
                             })
