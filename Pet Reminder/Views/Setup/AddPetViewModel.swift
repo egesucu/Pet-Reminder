@@ -54,6 +54,7 @@ class AddPetViewModel {
         }
 
         modelContext.insert(pet)
+        onDismiss()
 
     }
 
