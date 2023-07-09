@@ -51,7 +51,8 @@ struct HelloView: View {
                     .cornerRadius(5)
                     .shadow(radius: 3)
                     .sheet(isPresented: $showSetup, onDismiss: {
-                        navigateToHome.toggle()
+                        checkPetStatus()
+
                     }, content: {
                         AddPetView()
                     })
@@ -65,6 +66,12 @@ struct HelloView: View {
 
             }
             .padding()
+        }
+    }
+
+    private func checkPetStatus() {
+        if pets.count > 0 {
+            navigateToHome.toggle()
         }
     }
 }
