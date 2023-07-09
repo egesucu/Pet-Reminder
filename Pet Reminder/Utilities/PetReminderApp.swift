@@ -14,7 +14,6 @@ struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    @State private var cloudEnabled = false
 
     var body: some Scene {
         WindowGroup {
