@@ -13,15 +13,20 @@ struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    let persistence = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environment(\.managedObjectContext,
+                              persistence.container.viewContext)
                 .tint(tintColor)
                 .onAppear(perform: checkIcloud)
         }
     }
+}
 
+extension PetReminderApp {
     func checkIcloud() {
         DataManager.shared.checkIcloudAvailability { result in
             switch result {

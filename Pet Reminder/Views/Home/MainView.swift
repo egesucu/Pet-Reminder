@@ -7,34 +7,47 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct MainView: View {
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets: FetchedResults<Pet>
+    @State private var loading = true
+    @State private var viewModel = MainViewModel()
 
-    @AppStorage(Strings.petSaved) var petSaved: Bool = false
+    // Capture NOTIFICATION changes
+    var didRemoteChange = NotificationCenter
+        .default
+        .publisher(for: .NSPersistentStoreRemoteChange)
+        .receive(on: RunLoop.main)
 
     var body: some View {
         petView()
-            .onChange(of: pets.count, { _, newValue in
-                toggleSavedPet(count: newValue)
-            })
+            .onReceive(self.didRemoteChange) { _ in
+                viewModel.getPets()
+                checkPets()
+            }
+            .onChange(of: $viewModel.pets.count) { _, _ in
+                checkPets()
+            }
+    }
+
+    func checkPets() {
+        if $viewModel.pets.count > 0 {
+            self.loading = false
+        } else {
+            print(viewModel.pets.count)
+        }
     }
 
     @ViewBuilder
     func petView() -> some View {
-        if petSaved {
-            HomeManagerView()
+        if loading {
+            ProgressView()
         } else {
-            HelloView()
+            if $viewModel.pets.count > 0 {
+                HomeManagerView()
+            } else {
+                HelloView()
+            }
         }
-    }
-
-    private func toggleSavedPet(count: Int) {
-        petSaved = checkPetCount(count: count)
-    }
-
-    private func checkPetCount(count: Int) -> Bool {
-        count > 0 ? true : false
     }
 }
