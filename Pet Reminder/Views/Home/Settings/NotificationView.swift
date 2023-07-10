@@ -78,30 +78,45 @@ struct NotificationView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    notificationManager.removeNotifications(pets: pets.compactMap({ $0 as Pet }))
-                    notificationManager.getNotifications()
+                    notificationManager
+                        .removeNotifications(pets: pets)
+                    notificationManager
+                        .getNotifications()
                 } label: {
                     Text("remove_all")
                 }
             }
         }
         .onAppear {
-            notificationManager.getNotifications()
-            notificationManager.removeOtherNotifications(beside: pets.compactMap({ $0.name}))
+            notificationManager
+                .getNotifications()
+            notificationManager
+                .removeOtherNotifications(beside: pets.map(\.name))
         }
     }
 
     func remove(at offset: IndexSet) {
         for index in offset {
             let notification = notificationManager.notifications[index]
-            notificationManager.removeNotificationsIdentifiers(with: [notification.identifier])
-            notificationManager.getNotifications()
+            notificationManager
+                .removeNotificationsIdentifiers(with: [notification.identifier])
+            notificationManager
+                .getNotifications()
         }
     }
 }
 
-struct NotificationView_Previews: PreviewProvider {
+/// There's a known bug in the SwiftData with #Preview as of
+/// Xcode 15 Beta 3. https://github.com/feedback-assistant/reports/issues/407
+// #Preview {
+//    MainActor.assumeIsolated {
+//        NotificationView()
+//
+//    }
+// }
+
+ struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
         NotificationView()
     }
-}
+ }

@@ -17,17 +17,23 @@ class NotificationManager {
     @ObservationIgnored let notificationCenter = UNUserNotificationCenter.current()
 
     func accessRequest(completion: @escaping (Bool, Error?) -> Void) {
-        notificationCenter.requestAuthorization(options: [.alert, .badge, .sound], completionHandler: completion)
+        notificationCenter
+            .requestAuthorization(
+                options: [.alert, .badge, .sound],
+                completionHandler: completion
+            )
     }
 
     var notifications: [UNNotificationRequest] = .empty
 
     func getNotifications() {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-            DispatchQueue.main.async {
-                self.notifications = requests
+        UNUserNotificationCenter
+            .current()
+            .getPendingNotificationRequests { requests in
+                DispatchQueue.main.async {
+                    self.notifications = requests
+                }
             }
-        }
     }
 
     func changeNotificationTime(of petName: String, with date: Date, for type: NotificationType) {
@@ -100,6 +106,8 @@ extension NotificationManager {
 
 // MARK: - DELETING NOTIFICATIONS
 extension NotificationManager {
+    /// Checks all pending notifications that does not belong any registered pets and removes them.
+    /// - Parameter names: Names of the registered pets.
     func removeOtherNotifications(beside names: [String]) {
         notificationCenter.getPendingNotificationRequests { requests in
             var identifiers = requests.compactMap { $0.identifier }
