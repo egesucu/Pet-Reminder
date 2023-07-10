@@ -29,10 +29,8 @@ struct PetImageView: View {
     }
 }
 
-struct PetImageView_Previews: PreviewProvider {
-    static var previews: some View {
-        PetImageView(selectedImageData: .constant(nil)) {
+#Preview {
+    PetImageView(selectedImageData: .constant(nil)) {
 
-        }
     }
 }

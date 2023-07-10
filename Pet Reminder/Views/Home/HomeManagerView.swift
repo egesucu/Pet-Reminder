@@ -40,8 +40,6 @@ struct HomeManagerView: View {
     }
 }
 
-struct HomeManager_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeManagerView()
-    }
+#Preview {
+    HomeManagerView()
 }

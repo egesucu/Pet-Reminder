@@ -21,8 +21,6 @@ struct EventTitleView: View {
     }
 }
 
-struct EventTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        EventTitleView(eventTitle: .constant(""))
-    }
+#Preview {
+    EventTitleView(eventTitle: .constant(""))
 }

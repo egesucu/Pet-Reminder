@@ -38,8 +38,6 @@ struct EveningCheckboxView: View {
     }
 }
 
-struct EveningView_Previews: PreviewProvider {
-    static var previews: some View {
-        EveningCheckboxView(eveningOn: .constant(true))
-    }
+#Preview {
+    EveningCheckboxView(eveningOn: .constant(true))
 }

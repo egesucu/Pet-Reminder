@@ -59,15 +59,6 @@ struct EventListView: View {
 
 }
 
-struct EventListDemo: PreviewProvider {
-    static var previews: some View {
-        EventListView(eventVM: .init(isDemo: true))
-    }
+#Preview {
+    EventListView(eventVM: .init(isDemo: true))
 }
-//
-// #Preview {
-//    MainActor.assumeIsolated {
-//        EventListView(eventVM: EventManager(isDemo: true))
-//    }
-//    
-// }

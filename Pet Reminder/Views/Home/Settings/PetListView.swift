@@ -41,16 +41,6 @@ struct PetListView: View {
     }
 }
 
-// #Preview {
-//    MainActor.assumeIsolated {
-//        PetListView()
-//            .modelContainer(PreviewSampleData.container)
-//    }
-//    
-// }
-
-struct PetListDemo: PreviewProvider {
-    static var previews: some View {
-        PetListView()
-    }
+#Preview {
+    PetListView()
 }

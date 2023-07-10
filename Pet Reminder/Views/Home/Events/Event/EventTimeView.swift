@@ -24,15 +24,6 @@ struct EventTimeView: View {
     }
 }
 
-// #Preview {
-//    MainActor.assumeIsolated {
-//        EventTimeView(dateString: .constant(Strings.demo))
-//    }
-//    
-// }
-
-struct EventTimeViewDemo: PreviewProvider {
-    static var previews: some View {
-        EventTimeView(dateString: .constant(Strings.demo))
-    }
+#Preview {
+    EventTimeView(dateString: .constant(Strings.demo))
 }

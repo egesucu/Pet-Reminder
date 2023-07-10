@@ -36,8 +36,6 @@ struct EmptyEventView: View {
     }
 }
 
-struct EmptyEventView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyEventView(eventVM: .init(isDemo: true))
-    }
+#Preview {
+    EmptyEventView(eventVM: .init(isDemo: true))
 }

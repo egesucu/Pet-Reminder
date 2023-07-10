@@ -49,19 +49,8 @@ struct PetCell: View {
     }
 }
 
-// #Preview {
-//    MainActor.assumeIsolated {
-//        PetCell(pet: PreviewSampleData.previewPet)
-//            .modelContainer(PreviewSampleData.container)
-//    }
-//    
-// }
-
-struct PetCellDemo: PreviewProvider {
-    static var previews: some View {
-
-        return NavigationView {
-            PetCell(pet: .init())
-        }
+#Preview {
+    return NavigationView {
+        PetCell(pet: .init())
     }
 }

@@ -60,15 +60,11 @@ struct AddPetView: View {
     }
 }
 
-struct AddPetDemo: PreviewProvider {
-    static var previews: some View {
-        AddPetView()
-    }
+#Preview {
+    let context = PersistenceController
+        .preview
+        .container
+        .viewContext
+    return AddPetView()
+        .environment(\.managedObjectContext, context)
 }
-
-// #Preview {
-//    MainActor.assumeIsolated {
-//        AddPetView()
-//            .modelContainer(PreviewSampleData.container)
-//    }
-// }

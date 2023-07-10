@@ -26,10 +26,8 @@ struct ActionButton: View {
     }
 }
 
-struct ActionButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ActionButton(action: {
+#Preview {
+    ActionButton(action: {
 
-        }, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: true, tint: .green)
-    }
+    }, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: true, tint: .green)
 }

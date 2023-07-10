@@ -77,9 +77,6 @@ struct HelloView: View {
     }
 }
 
-struct HelloView_Previews: PreviewProvider {
-    static var previews: some View {
-        HelloView()
-
-    }
+#Preview {
+    HelloView()
 }

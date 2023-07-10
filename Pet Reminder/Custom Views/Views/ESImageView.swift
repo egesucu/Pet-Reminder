@@ -38,8 +38,6 @@ struct ESImageView: View {
     }
 }
 
-struct ESImageView_Previews: PreviewProvider {
-    static var previews: some View {
-        ESImageView()
-    }
+#Preview {
+    ESImageView()
 }

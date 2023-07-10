@@ -30,8 +30,6 @@ struct TodaysEventsView: View {
     }
 }
 
-struct TodaysEventsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodaysEventsView(eventVM: .init(isDemo: true))
-    }
+#Preview {
+    TodaysEventsView(eventVM: .init(isDemo: true))
 }

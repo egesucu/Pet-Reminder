@@ -115,8 +115,6 @@ extension FindVetView {
     }
 }
 
-struct FindVetView_Previews: PreviewProvider {
-    static var previews: some View {
-        FindVetView()
-    }
+#Preview {
+    FindVetView()
 }

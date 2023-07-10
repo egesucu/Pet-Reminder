@@ -29,8 +29,6 @@ struct PetNameTextField: View {
     }
 }
 
-struct PetNameTextField_Previews: PreviewProvider {
-    static var previews: some View {
-        PetNameTextField(name: .constant(Strings.viski))
-    }
+#Preview {
+    PetNameTextField(name: .constant(Strings.viski))
 }

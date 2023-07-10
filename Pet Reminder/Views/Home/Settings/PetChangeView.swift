@@ -210,16 +210,6 @@ struct PetChangeView: View {
     }
 }
 
-// #Preview {
-//    MainActor.assumeIsolated {
-//        PetChangeView(pet: PreviewSampleData.previewPet)
-//            .modelContainer(PreviewSampleData.container)
-//    }
-//    
-// }
-
-struct PetChangeDemo: PreviewProvider {
-    static var previews: some View {
-        PetChangeView(pet: .init())
-    }
+#Preview {
+    PetChangeView(pet: .init())
 }

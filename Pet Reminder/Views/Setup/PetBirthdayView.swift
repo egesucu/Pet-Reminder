@@ -33,8 +33,6 @@ struct PetBirthdayView: View {
     }
 }
 
-struct PetBirthdayView_Previews: PreviewProvider {
-    static var previews: some View {
-        PetBirthdayView(birthday: .constant(.now))
-    }
+#Preview {
+    PetBirthdayView(birthday: .constant(.now))
 }

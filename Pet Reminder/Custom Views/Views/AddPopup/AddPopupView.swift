@@ -62,12 +62,10 @@ struct AddPopupView: View {
 
 }
 
-struct AddPopupView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddPopupView(contentInput: .constant(""), dateInput: .constant(.now), onSave: { }, onCancel: { })
+#Preview {
+    AddPopupView(contentInput: .constant(""), dateInput: .constant(.now), onSave: { }, onCancel: { })
         .ignoresSafeArea()
         .padding(.all)
-    }
 }
 
 struct PopupWrapper<PresentingView: View>: View {

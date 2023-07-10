@@ -141,15 +141,8 @@ struct Row: View {
     }
 }
 
-// #Preview {
-//    FeedHistory(feeds: [.demo])
-//        .modelContainer(for: Pet.self)
-// }
-
-struct FeedHistoryDemo: PreviewProvider {
-    static var previews: some View {
-        return NavigationView {
-            FeedHistory(feeds: [])
-        }
+#Preview {
+    return NavigationView {
+        FeedHistory(feeds: [])
     }
 }

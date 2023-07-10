@@ -61,14 +61,10 @@ struct EventView: View {
         }
     }
 }
-
-struct EventView_Previews: PreviewProvider {
-    static var previews: some View {
-        let manager = EventManager(isDemo: true)
-        let event = manager.exampleEvents[0]
-        return EventView(event: event, eventVM: manager)
-            .frame(height: 100)
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
+#Preview(traits: .sizeThatFitsLayout) {
+    let manager = EventManager(isDemo: true)
+    let event = manager.exampleEvents[0]
+    return EventView(event: event, eventVM: manager)
+        .frame(height: 100)
+        .padding()
 }

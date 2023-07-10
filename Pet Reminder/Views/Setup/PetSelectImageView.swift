@@ -26,8 +26,6 @@ struct PetSelectImageView: View {
     }
 }
 
-struct PetSelectImageView_Previews: PreviewProvider {
-    static var previews: some View {
-        PetSelectImageView(selectedImageData: .constant(nil))
-    }
+#Preview {
+    PetSelectImageView(selectedImageData: .constant(nil))
 }

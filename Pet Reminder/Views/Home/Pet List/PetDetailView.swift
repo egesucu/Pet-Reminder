@@ -98,14 +98,6 @@ struct PetDetailView: View {
     }
 }
 
-// #Preview {
-//    MainActor.assumeIsolated {
-//        PetDetailView(pet: PreviewSampleData.previewPet)
-//            .modelContainer(PreviewSampleData.container)
-//    }
-//    
-// }
-
 struct FeedListView: View {
 
     @Binding var morningOn: Bool
@@ -207,12 +199,8 @@ struct FeedListView: View {
 
 }
 
-struct PetDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-
-        return NavigationView {
-            PetDetailView(pet: .init())
-        }.navigationViewStyle(.stack)
-            .previewInterfaceOrientation(.portrait)
-    }
+#Preview(traits: .portrait) {
+    return NavigationView {
+        PetDetailView(pet: .init())
+    }.navigationViewStyle(.stack)
 }

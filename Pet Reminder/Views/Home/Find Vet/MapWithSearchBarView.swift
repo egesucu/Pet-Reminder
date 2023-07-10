@@ -97,8 +97,6 @@ struct MapWithSearchBarView: View {
     }
 }
 
-struct MapWithSearchBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapWithSearchBarView(mapItems: .constant([]), region: .constant(.init()), vetViewModel: .init(), onReload: { })
-    }
+#Preview {
+    MapWithSearchBarView(mapItems: .constant([]), region: .constant(.init()), vetViewModel: .init(), onReload: { })
 }

@@ -93,18 +93,16 @@ struct PetNotificationSelectionView: View {
     }
 }
 
-struct PetNotificationSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        PetNotificationSelectionView(
-            dayType: .constant(
-                .both
-            ),
-            morningFeed: .constant(
-                .now
-            ),
-            eveningFeed: .constant(
-                .now
-            )
+#Preview {
+    PetNotificationSelectionView(
+        dayType: .constant(
+            .both
+        ),
+        morningFeed: .constant(
+            .now
+        ),
+        eveningFeed: .constant(
+            .now
         )
-    }
+    )
 }

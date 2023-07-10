@@ -73,8 +73,6 @@ struct AddEventView: View {
 
 }
 
-struct AddEvent_Previews: PreviewProvider {
-    static var previews: some View {
-        AddEventView()
-    }
+#Preview {
+    AddEventView()
 }

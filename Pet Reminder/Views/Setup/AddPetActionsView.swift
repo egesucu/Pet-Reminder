@@ -33,13 +33,11 @@ struct AddPetActionsView: View {
     }
 }
 
-struct AddPetActionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddPetActionsView(name: .constant(Strings.viski)) {
-            print("Saved")
-        } onCancel: {
-            print("Cancelled")
-        }
-
+#Preview {
+    AddPetActionsView(name: .constant(Strings.viski)) {
+        print("Saved")
+    } onCancel: {
+        print("Cancelled")
     }
+
 }

@@ -76,9 +76,6 @@ struct HomeView: View {
     }
 }
 
-struct HomeViewPreview: PreviewProvider {
-
-    static var previews: some View {
-        HomeView()
-    }
+#Preview {
+    HomeView()
 }

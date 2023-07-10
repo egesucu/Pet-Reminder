@@ -37,8 +37,6 @@ struct MorningCheckboxView: View {
     }
 }
 
-struct MorningView_Previews: PreviewProvider {
-    static var previews: some View {
-        MorningCheckboxView(morningOn: .constant(true))
-    }
+#Preview {
+    MorningCheckboxView(morningOn: .constant(true))
 }

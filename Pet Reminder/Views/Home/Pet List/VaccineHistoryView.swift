@@ -114,10 +114,8 @@ struct VaccineHistoryView: View {
     }
 }
 
-struct VaccineHistoryDemo: PreviewProvider {
-    static var previews: some View {
-        return NavigationView {
-            VaccineHistoryView(pet: .init())
-        }
+#Preview {
+    return NavigationView {
+        VaccineHistoryView(pet: .init())
     }
 }
