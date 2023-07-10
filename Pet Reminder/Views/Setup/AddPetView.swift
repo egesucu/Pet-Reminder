@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct AddPetView: View {
 
@@ -15,8 +15,9 @@ struct AddPetView: View {
     @State private var showAlert = false
     @State private var customAlertText = ""
     @AppStorage(Strings.petSaved) var petSaved: Bool?
-    @Environment(\.modelContext) private var modelContext
-    @Query var pets: [Pet]
+    @Environment(\.managedObjectContext) private var modelContext
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+        private var pets : FetchedResults<Pet>
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -54,7 +55,7 @@ struct AddPetView: View {
         if filteredPets.count > 0 {
             showAlert(text: String(localized: "pet_name_found"))
         } else {
-            manager.savePet(modelContext: modelContext, onDismiss: dismiss.callAsFunction)
+            manager.savePet(managedObjectContext: modelContext, onDismiss: dismiss.callAsFunction)
         }
     }
 }
@@ -62,7 +63,6 @@ struct AddPetView: View {
 struct AddPetDemo: PreviewProvider {
     static var previews: some View {
         AddPetView()
-            .modelContainer(for: Pet.self)
     }
 }
 

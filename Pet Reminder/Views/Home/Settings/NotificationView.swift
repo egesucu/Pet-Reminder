@@ -7,19 +7,20 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct NotificationView: View {
 
-    @Environment(\.modelContext)
+    @Environment(\.managedObjectContext)
     private var viewContext
 
-    @Query var pets: [Pet]
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+        private var pets : FetchedResults<Pet>
+
 
     var notificationManager = NotificationManager.shared
 
     func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
-        notificationManager.notifications.filter({$0.identifier.contains(pet.name)})
+        notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")})
     }
 
     var body: some View {
@@ -59,9 +60,9 @@ struct NotificationView: View {
                         }
                     }
                 } header: {
-                    Text(pet.name)
+                    Text(pet.name ?? "")
                 } footer: {
-                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name)}).count
+                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}).count
                     Text("notification \(count)")
 
                 }
@@ -79,7 +80,7 @@ struct NotificationView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     notificationManager
-                        .removeNotifications(pets: pets)
+                        .removeNotifications(pets: pets.compactMap({ $0 as Pet }))
                     notificationManager
                         .getNotifications()
                 } label: {
@@ -91,7 +92,7 @@ struct NotificationView: View {
             notificationManager
                 .getNotifications()
             notificationManager
-                .removeOtherNotifications(beside: pets.map(\.name))
+                .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
     }
 

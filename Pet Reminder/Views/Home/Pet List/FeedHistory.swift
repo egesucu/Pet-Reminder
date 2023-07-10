@@ -8,7 +8,6 @@
 
 import SwiftUI
 import CoreData
-import SwiftData
 
 struct FeedHistory: View {
 
@@ -150,8 +149,7 @@ struct Row: View {
 struct FeedHistoryDemo: PreviewProvider {
     static var previews: some View {
         return NavigationView {
-            FeedHistory(feeds: [.demo])
-                .modelContainer(for: Feed.self)
+            FeedHistory(feeds: [])
         }
     }
 }

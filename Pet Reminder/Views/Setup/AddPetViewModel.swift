@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Observation
-import SwiftData
+import CoreData
 
 @Observable
 class AddPetViewModel {
@@ -28,8 +28,9 @@ class AddPetViewModel {
         selectedImageData = nil
     }
 
-    func savePet(modelContext: ModelContext, onDismiss: () -> Void) {
-        let pet = Pet(name: name)
+    func savePet(managedObjectContext: NSManagedObjectContext, onDismiss: () -> Void) {
+        let pet = Pet(context: managedObjectContext)
+        pet.name = name
         pet.createdAt = .now
         pet.birthday = birthday
         pet.name = name
@@ -41,21 +42,24 @@ class AddPetViewModel {
         case .morning:
             createNotification(type: .morning)
             pet.morningTime = morningFeed
-            pet.choice = .morning
+            pet.selection = .morning
         case .evening:
             createNotification(type: .evening)
             pet.eveningTime = eveningFeed
-            pet.choice = .evening
+            pet.selection = .evening
         case .both:
             createNotification(type: .both)
             pet.morningTime = morningFeed
             pet.eveningTime = eveningFeed
-            pet.choice = .both
+            pet.selection = .both
         }
 
-        modelContext.insert(pet)
+        do {
+            try managedObjectContext.save()
+        } catch let error {
+            print(error.localizedDescription)
+        }
         onDismiss()
-
     }
 
     private func createNotification(type: FeedTimeSelection) {

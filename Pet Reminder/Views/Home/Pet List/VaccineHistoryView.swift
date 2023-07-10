@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct VaccineHistoryView: View {
 
@@ -16,7 +16,7 @@ struct VaccineHistoryView: View {
     @State private var vaccineName = ""
     @State private var vaccineDate = Date.now
     @State private var shouldAddVaccine = false
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.managedObjectContext) private var modelContext
 
     func sortedVaccines(_ vaccines: [Vaccine]) -> [Vaccine] {
         vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })
@@ -25,12 +25,13 @@ struct VaccineHistoryView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if let vaccines = pet.vaccines {
-                    if vaccines.count == 0 {
+                if let vaccines = pet.vaccines,
+                   let vaccineArray = vaccines.allObjects as? [Vaccine] {
+                    if vaccineArray.count == 0 {
                         Text("no_vaccine_title")
                     } else {
                         List {
-                            ForEach(sortedVaccines(vaccines)) { vaccine in
+                            ForEach(sortedVaccines(vaccineArray)) { vaccine in
                                 HStack {
                                     Label {
                                         Text(vaccine.name ?? "")
@@ -92,7 +93,7 @@ struct VaccineHistoryView: View {
         let vaccine = Vaccine()
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
-        pet.vaccines?.append(vaccine)
+        pet.addToVaccines(vaccine)
 
         resetTemporaryData()
         togglePopup()
@@ -104,7 +105,8 @@ struct VaccineHistoryView: View {
     }
 
     func deleteVaccines(_at offsets: IndexSet) {
-        if let vaccines = pet.vaccines {
+        if let vaccineSet = pet.vaccines,
+           let vaccines = vaccineSet.allObjects as? [Vaccine]{
             for offset in offsets {
                 modelContext.delete(vaccines[offset])
             }
@@ -115,51 +117,7 @@ struct VaccineHistoryView: View {
 struct VaccineHistoryDemo: PreviewProvider {
     static var previews: some View {
         return NavigationView {
-            VaccineHistoryView(pet: PreviewSampleData.previewPet)
-                .modelContainer(for: Pet.self)
+            VaccineHistoryView(pet: .init())
         }
     }
 }
-
-// #Preview {
-//    let titles = Strings.demoVaccines
-//    let pet = Pet(birthday: .now,
-//                  //choice: .both,
-//                  createdAt: .now,
-//                  eveningFed: false,
-//                  eveningTime: .now,
-//                  image: nil,
-//                  morningFed: false,
-//                  morningTime: .now,
-//                  name: "")
-//    
-//    for _ in 0..<titles.count {
-//        let components = DateComponents(
-//            year: Int.random(
-//                in: 2018...2023
-//            ),
-//            month: Int.random(
-//                in: 0...12
-//            ),
-//            day: Int.random(
-//                in: 0...30
-//            ),
-//            hour: Int.random(
-//                in: 0...23
-//            ),
-//            minute: Int.random(
-//                in: 0...59
-//            ),
-//            second: Int.random(
-//                in: 0...59
-//            )
-//        )
-//        let vaccine = Vaccine()
-//        vaccine.name = titles.randomElement() ?? ""
-//        vaccine.date = Calendar.current.date(from: components)
-//        pet.vaccines?.append(vaccine)
-//    }
-//    
-//    return VaccineHistoryView(pet: pet)
-//        .modelContainer(for: Pet.self)
-// }

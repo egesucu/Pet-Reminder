@@ -28,9 +28,6 @@
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
-		9D3AC3152A4A4B3F005C799A /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3AC3122A4A4B3F005C799A /* Vaccine.swift */; };
-		9D3AC3162A4A4B3F005C799A /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3AC3132A4A4B3F005C799A /* Feed.swift */; };
-		9D3AC3172A4A4B3F005C799A /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3AC3142A4A4B3F005C799A /* Pet.swift */; };
 		9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */; };
 		9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */; };
 		9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56661A29F6D50100324DCC /* PetReminderTabs.swift */; };
@@ -52,7 +49,6 @@
 		9D7C252B2A5948D300DDB027 /* Pet_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */; };
 		9D7C25322A594B2F00DDB027 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D7E9A582A5644D70024B2C5 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E9A572A5644D70024B2C5 /* StoreManager.swift */; };
-		9D7E9A5A2A5651820024B2C5 /* Donation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E9A592A5651820024B2C5 /* Donation.swift */; };
 		9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D845D0429698D800032063C /* VaccineHistoryView.swift */; };
 		9D849050277748CB005EAC5B /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84904F277748CB005EAC5B /* DonateView.swift */; };
 		9D87C5AB26C9668D006BEF59 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87C5AA26C9668D006BEF59 /* MainView.swift */; };
@@ -70,7 +66,6 @@
 		9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0512778BC870089E9B0 /* ESImageView.swift */; };
 		9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */; };
 		9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */; };
-		9DB2BDD02A4A6C8100908070 /* PreviewSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB2BDCF2A4A6C8100908070 /* PreviewSampleData.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
 		9DC849F828CB954A00776197 /* AddPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC849F728CB954A00776197 /* AddPetView.swift */; };
@@ -82,6 +77,9 @@
 		9DCDA06326E3C72400DF290F /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06226E3C72400DF290F /* EventView.swift */; };
 		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
 		9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD754A1278266FA002E2768 /* ESEventDetailView.swift */; };
+		9DF969372A5C8E6E0029E59A /* PetReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9DF969352A5C8E6E0029E59A /* PetReminder.xcdatamodeld */; };
+		9DF9693F2A5C8EC90029E59A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9693C2A5C8EC90029E59A /* Persistence.swift */; };
+		9DF969412A5C8EF90029E59A /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF969402A5C8EF90029E59A /* Pet.swift */; };
 		9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,9 +115,6 @@
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
-		9D3AC3122A4A4B3F005C799A /* Vaccine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
-		9D3AC3132A4A4B3F005C799A /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
-		9D3AC3142A4A4B3F005C799A /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		9D56661A29F6D50100324DCC /* PetReminderTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderTabs.swift; sourceTree = "<group>"; };
@@ -143,7 +138,6 @@
 		9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_ReminderTests.swift; sourceTree = "<group>"; };
 		9D7C25312A594AEC00DDB027 /* Pet Reminder.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Pet Reminder.xctestplan"; sourceTree = "<group>"; };
 		9D7E9A572A5644D70024B2C5 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
-		9D7E9A592A5651820024B2C5 /* Donation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Donation.swift; sourceTree = "<group>"; };
 		9D845D0429698D800032063C /* VaccineHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineHistoryView.swift; sourceTree = "<group>"; };
 		9D84904F277748CB005EAC5B /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		9D87C5AA26C9668D006BEF59 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -163,7 +157,6 @@
 		9DB0E0512778BC870089E9B0 /* ESImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESImageView.swift; sourceTree = "<group>"; };
 		9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningCheckboxView.swift; sourceTree = "<group>"; };
 		9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningCheckboxView.swift; sourceTree = "<group>"; };
-		9DB2BDCF2A4A6C8100908070 /* PreviewSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewSampleData.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9DC849F728CB954A00776197 /* AddPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetView.swift; sourceTree = "<group>"; };
@@ -175,6 +168,9 @@
 		9DCDA06226E3C72400DF290F /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		9DCDA06426E3C84000DF290F /* EmptyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEventView.swift; sourceTree = "<group>"; };
 		9DD754A1278266FA002E2768 /* ESEventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESEventDetailView.swift; sourceTree = "<group>"; };
+		9DF969362A5C8E6E0029E59A /* PetReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetReminder.xcdatamodel; sourceTree = "<group>"; };
+		9DF9693C2A5C8EC90029E59A /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		9DF969402A5C8EF90029E59A /* Pet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -461,12 +457,8 @@
 		9DFF73F2248BAD7F004B4901 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9D3AC3122A4A4B3F005C799A /* Vaccine.swift */,
-				9D3AC3132A4A4B3F005C799A /* Feed.swift */,
-				9D3AC3142A4A4B3F005C799A /* Pet.swift */,
-				9D7E9A592A5651820024B2C5 /* Donation.swift */,
+				9DF969402A5C8EF90029E59A /* Pet.swift */,
 				9DCDA06026E3C34600DF290F /* Pin.swift */,
-				9DB2BDCF2A4A6C8100908070 /* PreviewSampleData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -474,6 +466,8 @@
 		9DFF73F4248BADB2004B4901 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9DF9693C2A5C8EC90029E59A /* Persistence.swift */,
+				9DF969352A5C8E6E0029E59A /* PetReminder.xcdatamodeld */,
 				9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */,
 				9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */,
 				9D8970A425681E9300B3C414 /* PetReminderApp.swift */,
@@ -625,14 +619,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */,
-				9D3AC3162A4A4B3F005C799A /* Feed.swift in Sources */,
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
 				9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */,
+				9DF969412A5C8EF90029E59A /* Pet.swift in Sources */,
 				7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */,
 				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D279849257ABFDD0078B668 /* HomeView.swift in Sources */,
 				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
+				9DF9693F2A5C8EC90029E59A /* Persistence.swift in Sources */,
 				7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */,
 				725F44CA2A260B020096CCCB /* StringExtensions.swift in Sources */,
 				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,
@@ -647,16 +642,14 @@
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
-				9D3AC3152A4A4B3F005C799A /* Vaccine.swift in Sources */,
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
+				9DF969372A5C8E6E0029E59A /* PetReminder.xcdatamodeld in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
 				9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */,
-				9D7E9A5A2A5651820024B2C5 /* Donation.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
 				9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */,
-				9D3AC3172A4A4B3F005C799A /* Pet.swift in Sources */,
 				9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */,
 				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
@@ -676,7 +669,6 @@
 				9DC87F1D29FAC8A6008AB720 /* EventTimeView.swift in Sources */,
 				9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */,
 				7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */,
-				9DB2BDD02A4A6C8100908070 /* PreviewSampleData.swift in Sources */,
 				725F44C62A260ACA0096CCCB /* MapApplication.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
 				9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */,
@@ -964,6 +956,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9DF969352A5C8E6E0029E59A /* PetReminder.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9DF969362A5C8E6E0029E59A /* PetReminder.xcdatamodel */,
+			);
+			currentVersion = 9DF969362A5C8E6E0029E59A /* PetReminder.xcdatamodel */;
+			name = PetReminder.xcdatamodeld;
+			path = ../../../../../Downloads/PetReminder.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9D8E76E6248666BD004610C8 /* Project object */;
 }

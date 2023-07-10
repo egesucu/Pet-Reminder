@@ -62,7 +62,6 @@ struct EventListView: View {
 struct EventListDemo: PreviewProvider {
     static var previews: some View {
         EventListView(eventVM: .init(isDemo: true))
-            .modelContainer(for: Pet.self)
     }
 }
 //

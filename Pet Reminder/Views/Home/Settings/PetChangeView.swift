@@ -121,7 +121,7 @@ struct PetChangeView: View {
                 }
 
             }
-            .navigationTitle(pet.name)
+            .navigationTitle(pet.name ?? "")
         }
         .onAppear {
             getPetData()
@@ -142,8 +142,8 @@ struct PetChangeView: View {
 
     func getPetData() {
         self.birthday = pet.birthday ?? Date()
-        self.nameText = pet.name
-        let selection = pet.choice
+        self.nameText = pet.name ?? ""
+        let selection = pet.selection
         switch selection {
         case .both:
             self.selection = 0
@@ -188,16 +188,16 @@ struct PetChangeView: View {
     func changeNotification(for selection: FeedTimeSelection) {
         switch selection {
         case .both:
-            notificationManager.removeNotification(of: pet.name, with: .morning)
-            notificationManager.removeNotification(of: pet.name, with: .evening)
-            notificationManager.createNotification(of: pet.name, with: .morning, date: morningDate)
-            notificationManager.createNotification(of: pet.name, with: .evening, date: eveningDate)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
+            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: morningDate)
+            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
         case .morning:
-            notificationManager.removeNotification(of: pet.name, with: .morning)
-            notificationManager.createNotification(of: pet.name, with: .morning, date: morningDate)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
+            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: morningDate)
         case .evening:
-            notificationManager.removeNotification(of: pet.name, with: .evening)
-            notificationManager.createNotification(of: pet.name, with: .evening, date: eveningDate)
+            notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
+            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
         }
         let (morningTime, eveningTime) = (pet.morningTime, pet.eveningTime)
 
@@ -220,7 +220,6 @@ struct PetChangeView: View {
 
 struct PetChangeDemo: PreviewProvider {
     static var previews: some View {
-        PetChangeView(pet: PreviewSampleData.previewPet)
-            .modelContainer(for: Pet.self)
+        PetChangeView(pet: .init())
     }
 }

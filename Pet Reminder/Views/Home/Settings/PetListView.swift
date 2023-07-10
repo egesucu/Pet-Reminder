@@ -7,14 +7,16 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct PetListView: View {
 
-    @Environment(\.modelContext)
+    @Environment(\.managedObjectContext)
     private var viewContext
 
-    @Query var pets: [Pet]
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+        private var pets : FetchedResults<Pet>
+
 
     var body: some View {
         List {
@@ -51,6 +53,5 @@ struct PetListView: View {
 struct PetListDemo: PreviewProvider {
     static var previews: some View {
         PetListView()
-            .modelContainer(for: Pet.self)
     }
 }

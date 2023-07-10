@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct PetReminderApp: App {
@@ -18,7 +17,6 @@ struct PetReminderApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .modelContainer(for: [Pet.self, Feed.self, Vaccine.self])
                 .tint(tintColor)
                 .onAppear(perform: checkIcloud)
         }

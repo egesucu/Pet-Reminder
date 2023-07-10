@@ -7,10 +7,11 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct MainView: View {
-    @Query var pets: [Pet]
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+        private var pets : FetchedResults<Pet>
+
     @AppStorage(Strings.petSaved) var petSaved: Bool = false
 
     var body: some View {

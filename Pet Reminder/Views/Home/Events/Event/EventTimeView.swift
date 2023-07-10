@@ -34,6 +34,5 @@ struct EventTimeView: View {
 struct EventTimeViewDemo: PreviewProvider {
     static var previews: some View {
         EventTimeView(dateString: .constant(Strings.demo))
-            .modelContainer(for: Pet.self)
     }
 }
