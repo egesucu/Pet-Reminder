@@ -19,10 +19,12 @@ struct FutureEventsView: View {
 
     var body: some View {
         Section {
-            ForEach(filteredEvents, id: \.eventIdentifier) { event in
-                EventView(event: event, eventVM: eventVM)
-                    .padding(.horizontal, 5)
-                    .listRowSeparator(.hidden)
+            if !filteredEvents.isEmpty {
+                ForEach(filteredEvents, id: \.eventIdentifier) { event in
+                    EventView(event: event, eventVM: eventVM)
+                        .padding(.horizontal, 5)
+                        .listRowSeparator(.hidden)
+                }
             }
         } header: {
             Text("upcoming_title")
