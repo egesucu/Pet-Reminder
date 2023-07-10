@@ -19,7 +19,9 @@ struct TodaysEventsView: View {
 
     var body: some View {
         Section {
-            if !filteredEvents.isEmpty {
+            if filteredEvents.isEmpty {
+                Text("event_no_title")
+            } else {
                 ForEach(filteredEvents, id: \.eventIdentifier) { event in
                     EventView(event: event, eventVM: eventVM)
                         .padding(.horizontal, 5)
