@@ -16,7 +16,7 @@ struct HomeView: View {
     private var viewContext
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets : FetchedResults<Pet>
+        private var pets: FetchedResults<Pet>
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     @State private var addPet = false

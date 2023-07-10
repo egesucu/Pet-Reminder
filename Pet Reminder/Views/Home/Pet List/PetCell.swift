@@ -28,14 +28,14 @@ struct PetCell: View {
                    feeds.count > 0,
                    let feedArray = feeds.allObjects as? [Feed],
                    let lastFeed = feedArray.last {
-                    if lastFeed.eveningFed ,
+                    if lastFeed.eveningFed,
                        let eveningTime = lastFeed.eveningFedStamp {
                         VStack(alignment: .leading) {
                             Text("last_feed_title")
                                 .bold()
                             Text("\(eveningTime.formatted())")
                         }
-                    } else if lastFeed.morningFed ,
+                    } else if lastFeed.morningFed,
                               let morningTime = lastFeed.morningFedStamp {
                         VStack(alignment: .leading) {
                             Text("last_feed_title")

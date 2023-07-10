@@ -106,7 +106,7 @@ struct VaccineHistoryView: View {
 
     func deleteVaccines(_at offsets: IndexSet) {
         if let vaccineSet = pet.vaccines,
-           let vaccines = vaccineSet.allObjects as? [Vaccine]{
+           let vaccines = vaccineSet.allObjects as? [Vaccine] {
             for offset in offsets {
                 modelContext.delete(vaccines[offset])
             }

@@ -14,8 +14,7 @@ struct NotificationView: View {
     private var viewContext
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets : FetchedResults<Pet>
-
+        private var pets: FetchedResults<Pet>
 
     var notificationManager = NotificationManager.shared
 
@@ -106,15 +105,6 @@ struct NotificationView: View {
         }
     }
 }
-
-/// There's a known bug in the SwiftData with #Preview as of
-/// Xcode 15 Beta 3. https://github.com/feedback-assistant/reports/issues/407
-// #Preview {
-//    MainActor.assumeIsolated {
-//        NotificationView()
-//
-//    }
-// }
 
  struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {

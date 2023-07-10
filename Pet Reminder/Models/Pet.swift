@@ -8,13 +8,13 @@
 
 import Foundation
 
-//MARK: - Pet
-extension Pet{
+// MARK: - Pet
+extension Pet {
     var selection: FeedTimeSelection {
-        get{
-            return FeedTimeSelection(rawValue: self.selection.rawValue) ?? .both
+        get {
+            return FeedTimeSelection(rawValue: self.choice) ?? .both
         }
-        set{
+        set {
             choice = newValue.rawValue
         }
     }

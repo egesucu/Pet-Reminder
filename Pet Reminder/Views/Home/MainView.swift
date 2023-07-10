@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets : FetchedResults<Pet>
+        private var pets: FetchedResults<Pet>
 
     @AppStorage(Strings.petSaved) var petSaved: Bool = false
 

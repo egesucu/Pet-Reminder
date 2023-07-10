@@ -22,7 +22,7 @@ struct SettingsView: View {
                     NavigationLink(
                         "manage_pet_title",
                         destination: PetListView()
-                            .environment(\.managedObjectContext,viewContext)
+                            .environment(\.managedObjectContext, viewContext)
                     )
                     ColorPicker("settings_tint_color", selection: $tintColor)
                     NavigationLink("notifications_manage_title", destination:

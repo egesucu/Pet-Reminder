@@ -84,13 +84,13 @@ struct PetDetailView: View {
 
     func getLatestFeed() {
         if let feeds = pet.feeds,
-        let feedArray = feeds.allObjects as? [Feed]{
+        let feedArray = feeds.allObjects as? [Feed] {
             if let lastFeed = feedArray.last {
                 if let date = lastFeed.feedDate {
                     if Calendar.current.isDateInToday(date) {
                         // We have a feed.
-                        morningOn = lastFeed.morningFed 
-                        eveningOn = lastFeed.eveningFed 
+                        morningOn = lastFeed.morningFed
+                        eveningOn = lastFeed.eveningFed
                     }
                 }
             }
