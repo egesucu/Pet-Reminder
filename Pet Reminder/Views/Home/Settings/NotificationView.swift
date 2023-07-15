@@ -24,40 +24,75 @@ struct NotificationView: View {
 
     var body: some View {
         List {
-            ForEach(pets, id: \.id) { pet in
+            ForEach(pets, id: \.name) { pet in
                 Section {
-                    ForEach(filteredNotifications(pet: pet), id: \.self) { notification in
-                        switch notification.identifier {
-                        case let option where option.contains(NotificationType.morning.rawValue):
-                            Label {
-                                Text("notification_to")
-                            } icon: {
-                                Image(systemName: SFSymbols.morning)
-                                    .foregroundColor(.yellow)
-                                    .font(.title)
-                            }
-                        case let option where option.contains(NotificationType.evening.rawValue):
-                            Label {
-                                Text("notification_to")
-                            } icon: {
-                                Image(systemName: SFSymbols.evening)
-                                    .foregroundColor(.blue)
-                                    .font(.title)
-                            }
-                        case let option where option.contains(NotificationType.birthday.rawValue):
-                            Label {
-                                Text("notification_to")
-                            } icon: {
-                                Image(systemName: SFSymbols.birthday)
-                                    .symbolRenderingMode(.multicolor)
-                                    .foregroundStyle(Color.green.gradient, Color.blue.gradient)
-                                    .font(.title)
-                            }
-                        default:
-                            Text(notification.identifier)
+                    if filteredNotifications(pet: pet).isEmpty {
+                        Button("Create default notifications for your pet.",
+                               action: { createNotifications(for: pet) })
+                    } else {
+                        ForEach(filteredNotifications(pet: pet), id: \.self) { notification in
+                            switch notification.identifier {
+                            case let option where option.contains(NotificationType.morning.rawValue):
+                                VStack(alignment: .leading) {
+                                    Label {
+                                        Text("notification_to")
+                                    } icon: {
+                                        Image(systemName: SFSymbols.morning)
+                                            .foregroundColor(.yellow)
+                                            .font(.title)
+                                    }
+                                    Text(notification.content.body)
+                                        .font(.footnote)
+                                        .foregroundStyle(Color.gray)
+                                }
 
+                            case let option where option.contains(NotificationType.evening.rawValue):
+                                VStack(alignment: .leading) {
+                                    Label {
+                                        Text("notification_to")
+                                    } icon: {
+                                        Image(systemName: SFSymbols.evening)
+                                            .foregroundColor(.blue)
+                                            .font(.title)
+                                    }
+                                    Text(notification.content.body)
+                                        .font(.footnote)
+                                        .foregroundStyle(Color.gray)
+                                }
+
+                            case let option where option.contains(NotificationType.birthday.rawValue):
+
+                                VStack(alignment: .leading) {
+                                    Label {
+                                        Text("notification_to")
+                                    } icon: {
+                                        Image(systemName: SFSymbols.birthday)
+                                            .symbolRenderingMode(.multicolor)
+                                            .foregroundStyle(Color.green.gradient, Color.blue.gradient)
+                                            .font(.title)
+                                    }
+                                    Text(notification.content.body)
+                                        .font(.footnote)
+                                        .foregroundStyle(Color.gray)
+                                    HStack {
+                                        Text("birthday_title")
+                                        Text(pet.birthday.formatted(.dateTime.day().month(.wide).year()))
+                                        Spacer()
+                                    }
+                                    .font(.footnote)
+                                    .foregroundStyle(Color.green)
+                                }
+                            default:
+                                VStack(alignment: .leading) {
+                                    Text(notification.identifier)
+                                    Text(notification.content.body)
+                                        .font(.footnote)
+                                        .foregroundStyle(Color.gray)
+                                }
+                            }
                         }
                     }
+
                 } header: {
                     Text(pet.name)
                 } footer: {
@@ -92,6 +127,21 @@ struct NotificationView: View {
                 .getNotifications()
             notificationManager
                 .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
+        }
+    }
+
+    func createNotifications(for pet: Pet) {
+        switch pet.selection {
+        case .both:
+            notificationManager.createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .now)
+            notificationManager.createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .now)
+            notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+        case .morning:
+            notificationManager.createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .now)
+            notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+        case .evening:
+            notificationManager.createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .now)
+            notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
         }
     }
 

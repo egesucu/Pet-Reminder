@@ -402,6 +402,16 @@
         }
       }
     },
+    "Create default notifications for your pet." : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evcil Hayvanın için varsayılan bildirimleri yarat."
+          }
+        }
+      }
+    },
     "date" : {
       "extractionState" : "manual",
       "localizations" : {
