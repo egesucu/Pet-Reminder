@@ -58,7 +58,8 @@ class VetViewModel: NSObject {
                 completion(.failure(error))
             } else if let response = response {
                 for item in response.mapItems {
-                    pins.append(Pin(item: item))
+                    let pin = Pin(item: item)
+                    pins.append(pin)
                 }
                 completion(.success(pins))
             }

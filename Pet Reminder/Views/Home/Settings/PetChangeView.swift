@@ -16,22 +16,20 @@ struct PetChangeView: View {
     @State private var nameText = ""
     @State private var petImage: Image?
     @State private var birthday = Date()
-    @State private var selection = 0
-    @State private var morningDate = Date.now.eightAM()
-    @State private var eveningDate = Date.now.eightPM()
+    @State private var selection: FeedTimeSelection = .both
+    @State private var morningDate: Date = .now.eightAM()
+    @State private var eveningDate: Date = .now.eightPM()
     @State private var showImagePicker = false
     @State private var outputImageData: Data?
     @State private var defaultPhotoOn = false
-    var body: some View {
 
+    var body: some View {
         VStack {
             ESImageView(data: outputImageData)
                 .onTapGesture {
                     self.showImagePicker = defaultPhotoOn ? false : true
                 }
-                .sheet(isPresented: $showImagePicker, onDismiss: {
-                    self.loadImage()
-                }, content: {
+                .sheet(isPresented: $showImagePicker, onDismiss: self.loadImage, content: {
                     ImagePickerView(imageData: $outputImageData)
                 })
                 .frame(
@@ -60,78 +58,78 @@ struct PetChangeView: View {
                     TextField("tap_to_change_text", text: $nameText)
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
-                                Button("done") {
-                                    self.changeName()
-                                }
+                                Button("done", action: self.changeName)
                             }
                         }
-                        .onSubmit({
-                            self.changeName()
-                        })
+                        .onSubmit(self.changeName)
                     DatePicker("birthday_title", selection: $birthday, displayedComponents: .date)
-                        .onChange(of: birthday) {
-                            self.changeBirthday()
-                        }
+                        .onChange(of: birthday, self.changeBirthday)
                 }
                 Section {
-                    Picker("feed_time_title", selection: $selection) {
-                        Text("feed_selection_both").tag(0)
-                        Text("feed_selection_morning").tag(1)
-                        Text("feed_selection_evening").tag(2)
-
-                    }
-                    .pickerStyle(.segmented)
-
-                    if selection == 0 {
-                        DatePicker(
-                            "feed_selection_morning",
-                            selection: $morningDate,
-                            displayedComponents: .hourAndMinute
-                        )
-                        .onChange(of: morningDate) {
-                            self.changeNotification(for: .morning)
-                        }
-                        DatePicker(
-                            "feed_selection_evening",
-                            selection: $eveningDate,
-                            displayedComponents: .hourAndMinute
-                        )
-                        .onChange(of: eveningDate) {
-                            self.changeNotification(for: .evening)
-                        }
-                    } else if selection == 1 {
-                        DatePicker(
-                            "feed_selection_morning",
-                            selection: $morningDate,
-                            displayedComponents: .hourAndMinute
-                        )
-                        .onChange(of: morningDate, {
-                            self.changeNotification(for: .morning)
-                        })
-                    } else if selection == 2 {
-                        DatePicker(
-                            "feed_selection_evening",
-                            selection: $eveningDate,
-                            displayedComponents: .hourAndMinute
-                        )
-                        .onChange(of: eveningDate, {
-                            self.changeNotification(for: .evening)
-                        })
-                    }
+                    pickerView
+                    setupPickerView()
                 }
-
             }
             .navigationTitle(pet.name ?? "")
         }
-        .onAppear {
-            getPetData()
-        }
+        .onAppear(perform: getPetData)
 
+    }
+
+    var pickerView: some View {
+        Picker(selection: $selection) {
+            Text("feed_selection_both")
+                .tag(FeedTimeSelection.both)
+            Text("feed_selection_morning")
+                .tag(FeedTimeSelection.morning)
+            Text("feed_selection_evening")
+                .tag(FeedTimeSelection.evening)
+        } label: {
+            Text("feed_time_title")
+        }
+        .pickerStyle(.segmented)
+    }
+
+    @ViewBuilder
+    func setupPickerView() -> some View {
+        switch selection {
+        case .both:
+            morningView
+            eveningView
+        case .morning:
+            morningView
+        case .evening:
+            eveningView
+        }
+    }
+
+    var eveningView: some View {
+        DatePicker(
+            "feed_selection_evening",
+            selection: $eveningDate,
+            displayedComponents: .hourAndMinute
+        )
+        .onChange(of: eveningDate, {
+            self.changeNotification(for: .evening)
+        })
+    }
+
+    var morningView: some View {
+        DatePicker(
+            "feed_selection_morning",
+            selection: $morningDate,
+            displayedComponents: .hourAndMinute
+        )
+        .onChange(of: morningDate, {
+            self.changeNotification(for: .morning)
+        })
     }
 
     func loadImage() {
         if let outputImageData {
-            petImage = Image(uiImage: UIImage(data: outputImageData) ?? UIImage())
+            if let uiImage = UIImage(data: outputImageData) {
+                petImage = Image(uiImage: uiImage)
+            }
             pet.image = outputImageData
             defaultPhotoOn = false
         } else {
@@ -141,17 +139,9 @@ struct PetChangeView: View {
     }
 
     func getPetData() {
-        self.birthday = pet.birthday ?? Date()
+        self.birthday = pet.birthday ?? .now
         self.nameText = pet.name ?? ""
-        let selection = pet.selection
-        switch selection {
-        case .both:
-            self.selection = 0
-        case .morning:
-            self.selection = 1
-        case .evening:
-            self.selection = 2
-        }
+        self.selection = pet.selection
         if let morning = pet.morningTime {
             self.morningDate = morning
         }
@@ -169,16 +159,7 @@ struct PetChangeView: View {
 
     func changeName() {
         pet.name = nameText
-        switch selection {
-        case 0:
-            changeNotification(for: .both)
-        case 1:
-            changeNotification(for: .morning)
-        case 2:
-            changeNotification(for: .evening)
-        default:
-            break
-        }
+        changeNotification(for: selection)
     }
 
     func changeBirthday() {

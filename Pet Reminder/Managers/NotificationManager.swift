@@ -8,13 +8,11 @@
 
 import Foundation
 import UserNotifications
-import Observation
 
-@Observable
 class NotificationManager {
 
     static let shared = NotificationManager()
-    @ObservationIgnored let notificationCenter = UNUserNotificationCenter.current()
+    let notificationCenter = UNUserNotificationCenter.current()
 
     func accessRequest(completion: @escaping (Bool, Error?) -> Void) {
         notificationCenter

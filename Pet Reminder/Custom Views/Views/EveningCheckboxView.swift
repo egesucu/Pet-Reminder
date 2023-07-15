@@ -19,18 +19,19 @@ struct EveningCheckboxView: View {
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: eveningOn ? SFSymbols.eveningToggleSelected : SFSymbols.eveningToggle)
+                Image(systemName: SFSymbols.eveningToggleSelected)
                     .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.blue)
                     .font(.largeTitle.bold())
-                    .animation(.easeInOut, value: eveningOn)
+                    .symbolEffect(.bounce, value: eveningOn)
             }
             .padding(.bottom)
-            withAnimation {
-                Image(systemName: eveningOn ? SFSymbols.checked : SFSymbols.notChecked)
-                    .font(.system(size: 50))
-                    .animation(.easeInOut, value: eveningOn)
-            }
+            Image(systemName: eveningOn ? SFSymbols.checked : SFSymbols.notChecked)
+                .contentTransition(.symbolEffect(.replace))
+                .font(.system(size: 50))
+                .onTapGesture {
+                    eveningOn.toggle()
+                }
         }
         .cornerRadius(20)
         .frame(width: 150, height: 150)

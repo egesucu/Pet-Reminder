@@ -19,18 +19,21 @@ struct MorningCheckboxView: View {
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: morningOn ? SFSymbols.morningToggleSelected : SFSymbols.morningToggle)
+                Image(systemName: SFSymbols.morningToggleSelected)
                     .symbolRenderingMode(.hierarchical)
+                    .symbolEffect(.bounce, value: morningOn)
                     .foregroundColor(.yellow)
                     .font(.largeTitle.bold())
-                    .animation(.easeInOut, value: morningOn)
-            }.font(.title.bold())
-                .padding(.bottom)
-            withAnimation {
-                Image(systemName: morningOn ? SFSymbols.checked : SFSymbols.notChecked)
-                    .font(.system(size: 50))
-                    .animation(.easeInOut, value: morningOn)
             }
+            .font(.title.bold())
+            .padding(.bottom)
+
+            Image(systemName: morningOn ? SFSymbols.checked : SFSymbols.notChecked)
+                .font(.system(size: 50))
+                .contentTransition(.symbolEffect(.replace))
+                .onTapGesture {
+                    morningOn.toggle()
+                }
         }
         .cornerRadius(20)
         .frame(width: 150, height: 150)

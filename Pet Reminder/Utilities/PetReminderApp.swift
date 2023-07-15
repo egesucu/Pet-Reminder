@@ -15,6 +15,9 @@ struct PetReminderApp: App {
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
     let persistence = PersistenceController.shared
 
+    /// Previews are crashing with SwiftData  (see 111657477 ) and as of Beta 4,
+    /// Apple recommends against #Preview with SwiftUI, so CoreData for now.
+    /// https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes
     var body: some Scene {
         WindowGroup {
             MainView()

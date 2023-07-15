@@ -26,13 +26,20 @@ struct AddPetView: View {
                 PetNameTextField(name: $manager.name)
                     .padding(.bottom, 30)
                 PetBirthdayView(birthday: $manager.birthday)
-                PetImageView(selectedImageData: $manager.selectedImageData,
-                             onImageDelete: manager.resetImageData)
-                PetNotificationSelectionView(dayType: $manager.dayType,
-                                             morningFeed: $manager.morningFeed,
-                                             eveningFeed: $manager.eveningFeed)
-                AddPetActionsView(name: $manager.name,
-                                  onSave: checkPetName, onCancel: dismiss.callAsFunction)
+                PetImageView(
+                    selectedImageData: $manager.selectedImageData,
+                    onImageDelete: manager.resetImageData
+                )
+                PetNotificationSelectionView(
+                    dayType: $manager.dayType,
+                    morningFeed: $manager.morningFeed,
+                    eveningFeed: $manager.eveningFeed
+                )
+                AddPetActionsView(
+                    name: $manager.name,
+                    onSave: checkPetName,
+                    onCancel: dismiss.callAsFunction
+                )
             }
             .padding()
         }
@@ -55,7 +62,11 @@ struct AddPetView: View {
         if filteredPets.count > 0 {
             showAlert(text: String(localized: "pet_name_found"))
         } else {
-            manager.savePet(managedObjectContext: modelContext, onDismiss: dismiss.callAsFunction)
+            manager
+                .savePet(
+                    managedObjectContext: modelContext,
+                    onDismiss: dismiss.callAsFunction
+                )
         }
     }
 }

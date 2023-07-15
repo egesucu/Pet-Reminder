@@ -24,6 +24,7 @@
 		9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E425D081B4008F93CD /* EventListView.swift */; };
 		9D13B2312A5C9FEB00E6C598 /* PetReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D13B22F2A5C9FEB00E6C598 /* PetReminder.xcdatamodeld */; };
 		9D13B2332A5CA15700E6C598 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D13B2322A5CA15700E6C598 /* MainViewModel.swift */; };
+		9D13B2352A5CDE9400E6C598 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D13B2342A5CDE9400E6C598 /* FeedListView.swift */; };
 		9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */; };
 		9D279843257ABE710078B668 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* IndicatorView.swift */; };
 		9D279849257ABFDD0078B668 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279848257ABFDD0078B668 /* HomeView.swift */; };
@@ -112,6 +113,7 @@
 		9D0C24E425D081B4008F93CD /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		9D13B2302A5C9FEB00E6C598 /* PetReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetReminder.xcdatamodel; sourceTree = "<group>"; };
 		9D13B2322A5CA15700E6C598 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		9D13B2342A5CDE9400E6C598 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		9D279842257ABE710078B668 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		9D279848257ABFDD0078B668 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				9D70F67226B4B6BC007D37EF /* PetDetailView.swift */,
+				9D13B2342A5CDE9400E6C598 /* FeedListView.swift */,
 				9D9F55382905711D007E014B /* FeedHistory.swift */,
 				9D845D0429698D800032063C /* VaccineHistoryView.swift */,
 				9D279848257ABFDD0078B668 /* HomeView.swift */,
@@ -641,6 +644,7 @@
 				9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */,
 				9D9F59B325E18228007672E8 /* HelloView.swift in Sources */,
 				9D5DC0E329F58088007A444D /* PetShowImageView.swift in Sources */,
+				9D13B2352A5CDE9400E6C598 /* FeedListView.swift in Sources */,
 				725F44CC2A260B3D0096CCCB /* DateExtensions.swift in Sources */,
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,

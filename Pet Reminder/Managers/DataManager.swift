@@ -22,7 +22,8 @@ class DataManager {
                         error!.localizedDescription
                     )
                 )
-            ) ; return }
+            )
+                return }
 
             switch status {
             case .available:

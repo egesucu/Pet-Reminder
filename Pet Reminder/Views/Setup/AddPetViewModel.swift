@@ -18,9 +18,7 @@ class AddPetViewModel {
     var birthday: Date = .now
     var morningFeed: Date = Date().eightAM()
     var eveningFeed: Date = Date().eightPM()
-    // swiftlint: disable redundant_optional_initialization
-    var selectedImageData: Data? = nil
-    // swiftlint: enable redundant_optional_initialization
+    var selectedImageData: Data?
 
     let manager = NotificationManager.shared
 

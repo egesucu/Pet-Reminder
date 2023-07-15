@@ -142,7 +142,8 @@ struct Row: View {
 }
 
 #Preview {
+    let viewContext = PersistenceController.preview.container.viewContext
     return NavigationView {
-        FeedHistory(feeds: [])
+        FeedHistory(feeds: [Feed(context: viewContext)])
     }
 }

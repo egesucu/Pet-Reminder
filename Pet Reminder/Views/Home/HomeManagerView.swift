@@ -16,22 +16,22 @@ struct HomeManagerView: View {
         TabView(selection: $currentTab) {
             HomeView()
                 .tabItem {
-                    Image(systemName: currentTab != .home ? SFSymbols.person : SFSymbols.personSelected)
+                    Image(systemName: SFSymbols.person)
                 }
                 .tag(PetReminderTabs.home)
             EventListView()
                 .tabItem {
-                    Image(systemName: currentTab != .events ? SFSymbols.list : SFSymbols.listSelected)
+                    Image(systemName: SFSymbols.list)
                 }
                 .tag(PetReminderTabs.events)
             FindVetView()
                 .tabItem {
-                    Image(systemName: currentTab != .vet ? SFSymbols.map : SFSymbols.mapSelected)
+                    Image(systemName: SFSymbols.map)
                 }
                 .tag(PetReminderTabs.vet)
             SettingsView()
                 .tabItem {
-                    Image(systemName: currentTab != .settings ? SFSymbols.settings : SFSymbols.settingsSelected)
+                    Image(systemName: SFSymbols.settings)
                 }
                 .tag(PetReminderTabs.settings)
         }

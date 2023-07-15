@@ -90,7 +90,7 @@ struct VaccineHistoryView: View {
     }
 
     func saveVaccine() {
-        let vaccine = Vaccine()
+        let vaccine = Vaccine(context: modelContext)
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
         pet.addToVaccines(vaccine)
