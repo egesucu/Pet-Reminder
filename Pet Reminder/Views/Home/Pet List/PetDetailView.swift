@@ -69,11 +69,11 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines, content: {
             VaccineHistoryView(pet: pet)
         })
-        .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
+        .navigationTitle(Text("pet_name_title \(pet.name)"))
     }
 // swiftlint: disable trailing_whitespace
     func filterFeeds() -> [Feed] {
-        return (pet.feeds?.allObjects as? [Feed])?.filter({ feed in
+        return pet.feeds?.filter({ feed in
             feed.morningFedStamp != nil || feed.eveningFedStamp != nil
         }).sorted(by: {
             $0.feedDate ?? .now > $1.feedDate ?? .now
@@ -83,14 +83,13 @@ struct PetDetailView: View {
 // swiftlint: enable trailing_whitespace
 
     func getLatestFeed() {
-        if let feeds = pet.feeds,
-        let feedArray = feeds.allObjects as? [Feed] {
-            if let lastFeed = feedArray.last {
+        if let feeds = pet.feeds {
+            if let lastFeed = feeds.last {
                 if let date = lastFeed.feedDate {
                     if Calendar.current.isDateInToday(date) {
                         // We have a feed.
-                        morningOn = lastFeed.morningFed
-                        eveningOn = lastFeed.eveningFed
+                        morningOn = lastFeed.morningFed ?? false
+                        eveningOn = lastFeed.eveningFed ?? false
                     }
                 }
             }
@@ -99,8 +98,7 @@ struct PetDetailView: View {
 }
 
 #Preview(traits: .portrait) {
-    let context = PersistenceController.preview.container.viewContext
-    return NavigationView {
-        PetDetailView(pet: Pet(context: context))
+    NavigationView {
+        PetDetailView(pet: .demo)
     }.navigationViewStyle(.stack)
 }

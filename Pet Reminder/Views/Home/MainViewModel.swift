@@ -7,24 +7,19 @@
 //
 
 import Observation
-import CoreData
+import SwiftData
 import SwiftUI
 
 @Observable
 class MainViewModel {
     var pets: [Pet] = []
-    let persistence = PersistenceController.shared
 
-    init() {
-        getPets()
-    }
+    func getPets(context: ModelContext) {
+//        let sort = SortDescriptor(\Pet.name)
+        let request = FetchDescriptor<Pet>()
 
-    func getPets() {
-            let request = NSFetchRequest<Pet>(entityName: "Pet")
-            let sort = NSSortDescriptor(keyPath: \Pet.name, ascending: true)
-            request.sortDescriptors = [sort]
             do {
-                pets =  try persistence.container.viewContext.fetch(request)
+                pets = try context.fetch(request)
             } catch let error {
                 print("Error fetching cars. \(error.localizedDescription)")
             }

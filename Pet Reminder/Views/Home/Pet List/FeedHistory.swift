@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct FeedHistory: View {
 
@@ -142,8 +142,7 @@ struct Row: View {
 }
 
 #Preview {
-    let viewContext = PersistenceController.preview.container.viewContext
-    return NavigationView {
-        FeedHistory(feeds: [Feed(context: viewContext)])
+    NavigationView {
+        FeedHistory(feeds: [.demo, .demo])
     }
 }

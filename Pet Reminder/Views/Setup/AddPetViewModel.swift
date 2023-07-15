@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Observation
-import CoreData
+import SwiftData
 
 @Observable
 class AddPetViewModel {
@@ -26,8 +26,8 @@ class AddPetViewModel {
         selectedImageData = nil
     }
 
-    func savePet(managedObjectContext: NSManagedObjectContext, onDismiss: () -> Void) {
-        let pet = Pet(context: managedObjectContext)
+    func savePet(modelContext: ModelContext, onDismiss: () -> Void) {
+        let pet = Pet()
         pet.name = name
         pet.createdAt = .now
         pet.birthday = birthday
@@ -52,11 +52,12 @@ class AddPetViewModel {
             pet.selection = .both
         }
 
-        do {
-            try managedObjectContext.save()
-        } catch let error {
-            print(error.localizedDescription)
-        }
+        modelContext.insert(pet)
+//        do {
+//            try managedObjectContext.save()
+//        } catch let error {
+//            print(error.localizedDescription)
+//        }
         onDismiss()
     }
 

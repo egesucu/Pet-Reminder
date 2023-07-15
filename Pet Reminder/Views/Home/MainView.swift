@@ -12,6 +12,7 @@ import CoreData
 struct MainView: View {
     @State private var loading = true
     @State private var viewModel = MainViewModel()
+    @Environment(\.modelContext) var modelContext
 
     // Capture NOTIFICATION changes
     var didRemoteChange = NotificationCenter
@@ -22,7 +23,7 @@ struct MainView: View {
     var body: some View {
         petView()
             .onReceive(self.didRemoteChange) { _ in
-                viewModel.getPets()
+                viewModel.getPets(context: modelContext)
                 checkPets()
             }
             .onChange(of: $viewModel.pets.count) { _, _ in

@@ -8,15 +8,14 @@
 
 import SwiftUI
 import EventKit
-import CoreData
+import SwiftData
 
 struct HomeView: View {
 
-    @Environment(\.managedObjectContext)
+    @Environment(\.modelContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets: FetchedResults<Pet>
+    @Query var pets: [Pet]
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     @State private var addPet = false

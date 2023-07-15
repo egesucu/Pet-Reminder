@@ -7,13 +7,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-    let persistence = PersistenceController.shared
+//    let persistence = PersistenceController.shared
 
     /// Previews are crashing with SwiftData  (see 111657477 ) and as of Beta 4,
     /// Apple recommends against #Preview with SwiftUI, so CoreData for now.
@@ -21,8 +22,7 @@ struct PetReminderApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environment(\.managedObjectContext,
-                              persistence.container.viewContext)
+                .modelContainer(for: [Pet.self, Feed.self, Vaccine.self])
                 .tint(tintColor)
                 .onAppear(perform: checkIcloud)
         }

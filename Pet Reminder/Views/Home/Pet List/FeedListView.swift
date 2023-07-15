@@ -12,7 +12,7 @@ struct FeedListView: View {
 
     @Binding var morningOn: Bool
     @Binding var eveningOn: Bool
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.modelContext) var modelContext
 
     var pet: Pet = .init()
 
@@ -61,7 +61,7 @@ struct FeedListView: View {
     }
 
     var todaysFeeds: [Feed] {
-        (pet.feeds?.allObjects as? [Feed])?.filter { feed in
+        pet.feeds?.filter { feed in
             Calendar.current.isDateInToday(feed.feedDate ?? .now)
         } ?? []
 
@@ -72,8 +72,7 @@ struct FeedListView: View {
         if todaysFeeds.isEmpty {
             addFeedForToday(value: value)
         } else {
-            if let feedSet = pet.feeds,
-               let feeds = feedSet.allObjects as? [Feed],
+            if let feeds = pet.feeds,
                let lastFeed = feeds.last {
                 switch type {
                 case .morning:
@@ -93,7 +92,7 @@ struct FeedListView: View {
     }
 
     func addFeedForToday(value: Bool) {
-        let feed = Feed(context: managedObjectContext)
+        let feed = Feed()
 
         switch pet.selection {
         case .both:
@@ -105,12 +104,16 @@ struct FeedListView: View {
             feed.eveningFedStamp = value ? .now : nil
             feed.eveningFed = value
         }
-        pet.addToFeeds(feed)
+        pet.feeds?.append(feed)
+        do {
+            try modelContext.save()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
-    return FeedListView(morningOn: .constant(true), eveningOn: .constant(false), pet: Pet(context: context))
+    FeedListView(morningOn: .constant(true), eveningOn: .constant(false), pet: Pet())
 }

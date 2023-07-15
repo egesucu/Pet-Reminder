@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct AddPetView: View {
 
@@ -15,9 +15,8 @@ struct AddPetView: View {
     @State private var showAlert = false
     @State private var customAlertText = ""
     @AppStorage(Strings.petSaved) var petSaved: Bool?
-    @Environment(\.managedObjectContext) private var modelContext
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets: FetchedResults<Pet>
+    @Environment(\.modelContext) private var modelContext
+    @Query var pets: [Pet]
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -64,7 +63,7 @@ struct AddPetView: View {
         } else {
             manager
                 .savePet(
-                    managedObjectContext: modelContext,
+                    modelContext: modelContext,
                     onDismiss: dismiss.callAsFunction
                 )
         }
@@ -72,10 +71,6 @@ struct AddPetView: View {
 }
 
 #Preview {
-    let context = PersistenceController
-        .preview
-        .container
-        .viewContext
-    return AddPetView()
-        .environment(\.managedObjectContext, context)
+   AddPetView()
+        .modelContainer(for: Pet.self)
 }

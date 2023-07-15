@@ -7,11 +7,10 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct HelloView: View {
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets: FetchedResults<Pet>
+    @Query var pets: [Pet]
 
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 

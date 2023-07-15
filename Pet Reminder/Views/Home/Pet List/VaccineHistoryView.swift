@@ -16,7 +16,7 @@ struct VaccineHistoryView: View {
     @State private var vaccineName = ""
     @State private var vaccineDate = Date.now
     @State private var shouldAddVaccine = false
-    @Environment(\.managedObjectContext) private var modelContext
+    @Environment(\.modelContext) private var modelContext
 
     func sortedVaccines(_ vaccines: [Vaccine]) -> [Vaccine] {
         vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })
@@ -25,13 +25,12 @@ struct VaccineHistoryView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if let vaccines = pet.vaccines,
-                   let vaccineArray = vaccines.allObjects as? [Vaccine] {
-                    if vaccineArray.count == 0 {
+                if let vaccines = pet.vaccines {
+                    if vaccines.count == 0 {
                         Text("no_vaccine_title")
                     } else {
                         List {
-                            ForEach(sortedVaccines(vaccineArray)) { vaccine in
+                            ForEach(sortedVaccines(vaccines)) { vaccine in
                                 HStack {
                                     Label {
                                         Text(vaccine.name ?? "")
@@ -90,10 +89,15 @@ struct VaccineHistoryView: View {
     }
 
     func saveVaccine() {
-        let vaccine = Vaccine(context: modelContext)
+        let vaccine = Vaccine()
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
-        pet.addToVaccines(vaccine)
+        pet.vaccines?.append(vaccine)
+        do {
+            try modelContext.save()
+        } catch let error {
+            print(error.localizedDescription)
+        }
 
         resetTemporaryData()
         togglePopup()
@@ -105,8 +109,7 @@ struct VaccineHistoryView: View {
     }
 
     func deleteVaccines(_at offsets: IndexSet) {
-        if let vaccineSet = pet.vaccines,
-           let vaccines = vaccineSet.allObjects as? [Vaccine] {
+        if let vaccines = pet.vaccines {
             for offset in offsets {
                 modelContext.delete(vaccines[offset])
             }

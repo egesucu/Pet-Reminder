@@ -19,23 +19,22 @@ struct PetCell: View {
                 .padding(.trailing, 10)
                 .frame(maxWidth: 150, maxHeight: 150)
             VStack {
-                Text(pet.name ?? "")
+                Text(pet.name)
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
                     .minimumScaleFactor(0.5)
                     .padding()
                 if let feeds = pet.feeds,
                    feeds.count > 0,
-                   let feedArray = feeds.allObjects as? [Feed],
-                   let lastFeed = feedArray.last {
-                    if lastFeed.eveningFed,
+                   let lastFeed = feeds.last {
+                    if lastFeed.eveningFed ?? false,
                        let eveningTime = lastFeed.eveningFedStamp {
                         VStack(alignment: .leading) {
                             Text("last_feed_title")
                                 .bold()
                             Text("\(eveningTime.formatted())")
                         }
-                    } else if lastFeed.morningFed,
+                    } else if lastFeed.morningFed ?? false,
                               let morningTime = lastFeed.morningFedStamp {
                         VStack(alignment: .leading) {
                             Text("last_feed_title")

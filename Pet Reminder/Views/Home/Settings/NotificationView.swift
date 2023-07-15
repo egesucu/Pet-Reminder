@@ -7,19 +7,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NotificationView: View {
 
-    @Environment(\.managedObjectContext)
+    @Environment(\.modelContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-        private var pets: FetchedResults<Pet>
+    @Query var pets: [Pet]
 
     var notificationManager = NotificationManager.shared
 
     func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
-        notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")})
+        notificationManager.notifications.filter({$0.identifier.contains(pet.name)})
     }
 
     var body: some View {
@@ -59,9 +59,9 @@ struct NotificationView: View {
                         }
                     }
                 } header: {
-                    Text(pet.name ?? "")
+                    Text(pet.name)
                 } footer: {
-                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "")}).count
+                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name)}).count
                     Text("notification \(count)")
 
                 }
