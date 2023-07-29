@@ -17,7 +17,7 @@ struct MainView: View {
     // Capture NOTIFICATION changes
     var didRemoteChange = NotificationCenter
         .default
-        .publisher(for: .NSPersistentStoreRemoteChange)
+        .publisher(for: persistentStoreChange)
         .receive(on: RunLoop.main)
 
     var body: some View {
@@ -32,7 +32,8 @@ struct MainView: View {
     }
 
     func checkPets() {
-        if $viewModel.pets.count > 0 {
+        if $viewModel.pets.count > 0 &&
+            ((viewModel.pets.first?.name.isEmpty) == nil) {
             self.loading = false
         } else {
             print(viewModel.pets.count)

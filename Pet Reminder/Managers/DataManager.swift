@@ -49,3 +49,5 @@ class DataManager {
     }
 
 }
+
+let persistentStoreChange: NSNotification.Name  = NSNotification.Name.NSPersistentStoreRemoteChange
