@@ -18,11 +18,24 @@
             "state" : "new",
             "value" : "%1$@, %2$@ \n%3$@, %4$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@ \n%3$@, %4$@"
+          }
         }
       }
     },
     "%lf" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lf"
+          }
+        }
+      }
     },
     "add" : {
       "extractionState" : "manual",
@@ -426,7 +439,14 @@
       }
     },
     "Data found in CloudKit, fetching data" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CloudKit'de veri bulundu, çekiliyor"
+          }
+        }
+      }
     },
     "date" : {
       "extractionState" : "manual",
@@ -1677,7 +1697,14 @@
       }
     },
     "Undo Last Change" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son Değişikliği Geri Al"
+          }
+        }
+      }
     },
     "upcoming_title" : {
       "extractionState" : "manual",
