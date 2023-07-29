@@ -19,21 +19,25 @@ struct HomeManagerView: View {
                     Image(systemName: SFSymbols.person)
                 }
                 .tag(PetReminderTabs.home)
+                .toolbarBackground(Color(.systemBackground), for: .tabBar)
             EventListView()
                 .tabItem {
                     Image(systemName: SFSymbols.list)
                 }
                 .tag(PetReminderTabs.events)
+                .toolbarBackground(Color(.systemBackground), for: .tabBar)
             FindVetView()
                 .tabItem {
                     Image(systemName: SFSymbols.map)
                 }
                 .tag(PetReminderTabs.vet)
+                .toolbarBackground(Color(.systemBackground), for: .tabBar)
             SettingsView()
                 .tabItem {
                     Image(systemName: SFSymbols.settings)
                 }
                 .tag(PetReminderTabs.settings)
+                .toolbarBackground(Color(.systemBackground), for: .tabBar)
         }
         .tint(.dynamicBlack)
 

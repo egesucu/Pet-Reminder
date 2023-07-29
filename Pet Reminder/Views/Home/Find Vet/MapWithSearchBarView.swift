@@ -21,7 +21,6 @@ struct MapWithSearchBarView: View {
     var onReload: () -> Void
 
     var body: some View {
-        ZStack(alignment: .center) {
 #if !targetEnvironment(simulator)
             ZStack(alignment: .top) {
                 Map(bounds: MapCameraBounds(centerCoordinateBounds: region), interactionModes: .all) {
@@ -39,33 +38,6 @@ struct MapWithSearchBarView: View {
                         }
                     }
                 }
-                .edgesIgnoringSafeArea(.top)
-                //                Map(
-                //                    coordinateRegion: $region,
-                //                    interactionModes: .all,
-                //                    showsUserLocation: true,
-                //                    annotationItems: mapItems
-                //                ) { annotation in
-                //                    withAnimation {
-                //                        MapAnnotation(coordinate: annotation.item.placemark.coordinate) {
-                //                            VStack {
-                //                                Image(systemName: SFSymbols.pawprintCircleFill)
-                //                                    .font(.largeTitle)
-                //                                    .padding(2)
-                //                            }.background(tintColor)
-                //                                .cornerRadius(15)
-                //                                .shadow(radius: 8)
-                //                                .scaleEffect(1)
-                //                                .onTapGesture {
-                //                                    selectedItem = annotation.item
-                //                                    showAlert.toggle()
-                //
-                //                                }
-                //
-                //                                .animation(.easeInOut, value: 1)
-                //                        }
-                //                    }
-                //                }.edgesIgnoringSafeArea(.top)
                 TextField("location_search_title", text: $vetViewModel.searchText, onCommit: {
                     onReload()
                 })
@@ -88,12 +60,11 @@ struct MapWithSearchBarView: View {
                         Text("cancel")
                     }
                 }
+
             }
 #else
             Text(Strings.simulationError)
 #endif
-
-        }
     }
 }
 

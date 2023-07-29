@@ -9,13 +9,13 @@
 import Observation
 import SwiftData
 import SwiftUI
+import CloudKit
 
 @Observable
 class MainViewModel {
     var pets: [Pet] = []
 
     func getPets(context: ModelContext) {
-//        let sort = SortDescriptor(\Pet.name)
         let request = FetchDescriptor<Pet>()
 
             do {

@@ -42,7 +42,15 @@ struct MainView: View {
     @ViewBuilder
     func petView() -> some View {
         if loading {
-            ProgressView()
+            VStack {
+                Text("Data found in CloudKit, fetching data")
+                    .bold()
+                    .foregroundStyle(Color(.label))
+                ProgressView()
+                    .tint(Color(.label))
+                    .font(.title)
+            }
+
         } else {
             if $viewModel.pets.count > 0 {
                 HomeManagerView()

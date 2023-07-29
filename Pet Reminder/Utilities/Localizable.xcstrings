@@ -11,6 +11,19 @@
         }
       }
     },
+    "%@, %@ \n%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@ \n%3$@, %4$@"
+          }
+        }
+      }
+    },
+    "%lf" : {
+
+    },
     "add" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -411,6 +424,9 @@
           }
         }
       }
+    },
+    "Data found in CloudKit, fetching data" : {
+
     },
     "date" : {
       "extractionState" : "manual",
@@ -1659,6 +1675,9 @@
           }
         }
       }
+    },
+    "Undo Last Change" : {
+
     },
     "upcoming_title" : {
       "extractionState" : "manual",
