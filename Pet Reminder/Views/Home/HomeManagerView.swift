@@ -16,7 +16,7 @@ struct HomeManagerView: View {
         TabView(selection: $currentTab) {
             HomeView()
                 .tabItem {
-                    Image(systemName: SFSymbols.person)
+                    Image(systemName: SFSymbols.pawPrint)
                 }
                 .tag(PetReminderTabs.home)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)

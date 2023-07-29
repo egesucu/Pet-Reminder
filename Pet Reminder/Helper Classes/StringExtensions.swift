@@ -38,6 +38,7 @@ struct Strings {
 }
 
 internal enum SFSymbols {
+    internal static let pawPrint = "pawprint"
     internal static let sun = "Sun"
     internal static let xmarkSealFill = "xmark.seal.fill"
     internal static let pawprintCircleFill = "pawprint.circle.fill"
