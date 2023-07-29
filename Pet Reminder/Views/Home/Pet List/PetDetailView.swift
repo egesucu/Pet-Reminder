@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PetDetailView: View {
 
@@ -98,7 +99,10 @@ struct PetDetailView: View {
 }
 
 #Preview(traits: .portrait) {
-    NavigationView {
-        PetDetailView(pet: .demo)
-    }.navigationViewStyle(.stack)
+    MainActor.assumeIsolated {
+        NavigationView {
+            PetDetailView(pet: PreviewSampleData.previewPet)
+                .modelContainer(PreviewSampleData.container)
+        }.navigationViewStyle(.stack)
+    }
 }

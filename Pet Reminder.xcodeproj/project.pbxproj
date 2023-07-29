@@ -83,6 +83,7 @@
 		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
 		9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD754A1278266FA002E2768 /* ESEventDetailView.swift */; };
 		9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */; };
+		9DFFDAAF2A75469F0059A035 /* PreviewSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFDAAE2A75469F0059A035 /* PreviewSampleData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,7 @@
 		9DCDA06426E3C84000DF290F /* EmptyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEventView.swift; sourceTree = "<group>"; };
 		9DD754A1278266FA002E2768 /* ESEventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESEventDetailView.swift; sourceTree = "<group>"; };
 		9DFF73ED248B9BB5004B4901 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		9DFFDAAE2A75469F0059A035 /* PreviewSampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewSampleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +326,7 @@
 		9D98B13D28D606570018C7A6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				9DFFDAAE2A75469F0059A035 /* PreviewSampleData.swift */,
 				9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */,
 				9D34018D26DA7392005822DA /* NotificationManager.swift */,
 				9D7E9A572A5644D70024B2C5 /* StoreManager.swift */,
@@ -650,6 +653,7 @@
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
+				9DFFDAAF2A75469F0059A035 /* PreviewSampleData.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
 				9DB669782A62EC2100A7573C /* Feed.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,

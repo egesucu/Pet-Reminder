@@ -192,5 +192,9 @@ struct PetChangeView: View {
 }
 
 #Preview {
-    PetChangeView(pet: .init())
+    MainActor.assumeIsolated {
+        PetChangeView(pet: PreviewSampleData.previewPet)
+            .modelContainer(PreviewSampleData.container)
+    }
+    
 }

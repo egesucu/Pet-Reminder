@@ -50,6 +50,9 @@ struct PetCell: View {
 
 #Preview {
     return NavigationView {
-        PetCell(pet: .init())
+        MainActor.assumeIsolated {
+            PetCell(pet: PreviewSampleData.previewPet)
+                .modelContainer(PreviewSampleData.container)
+        }
     }
 }

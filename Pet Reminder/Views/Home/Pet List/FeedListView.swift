@@ -115,5 +115,9 @@ struct FeedListView: View {
 }
 
 #Preview {
-    FeedListView(morningOn: .constant(true), eveningOn: .constant(false), pet: Pet())
+    MainActor.assumeIsolated {
+        FeedListView(morningOn: .constant(true), eveningOn: .constant(false), pet: PreviewSampleData.previewPet)
+            .modelContainer(PreviewSampleData.container)
+    }
+    
 }

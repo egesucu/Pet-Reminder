@@ -119,6 +119,10 @@ struct VaccineHistoryView: View {
 
 #Preview {
     return NavigationView {
-        VaccineHistoryView(pet: .init())
+        MainActor.assumeIsolated {
+            VaccineHistoryView(pet: PreviewSampleData.previewPet)
+                        .modelContainer(PreviewSampleData.container)
+        }
+        
     }
 }
