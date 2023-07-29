@@ -510,9 +510,9 @@
 			buildConfigurationList = 9D8E7705248666C1004610C8 /* Build configuration list for PBXNativeTarget "Pet Reminder" */;
 			buildPhases = (
 				9D8E76EA248666BD004610C8 /* Sources */,
+				9D5D83E12A2F354E003563C8 /* SwiftLint */,
 				9D8E76EB248666BD004610C8 /* Frameworks */,
 				9D8E76EC248666BD004610C8 /* Resources */,
-				9D5D83E12A2F354E003563C8 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -592,7 +592,6 @@
 /* Begin PBXShellScriptBuildPhase section */
 		9D5D83E12A2F354E003563C8 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -604,6 +603,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/testOutput.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
