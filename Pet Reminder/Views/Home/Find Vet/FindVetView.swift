@@ -165,10 +165,15 @@ extension FindVetView {
     }
 
     func reloadMapView() {
-        self.region = vetViewModel.region
-        vetViewModel.locationManager.startUpdatingLocation()
-        setupPins()
-        showSheet = true
+        switch userAccess {
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.region = vetViewModel.region
+            vetViewModel.locationManager.startUpdatingLocation()
+            setupPins()
+            showSheet = true
+        default: break
+        }
+       
 
     }
 
