@@ -9,36 +9,38 @@
 import SwiftUI
 import PhotosUI
 
-@available (iOS 16.0, *)
 struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
-    var onSelected: (Data) -> Void
+    @Binding var photoData: Data?
 
     var body: some View {
         VStack {
-            PhotosPicker(selection: $selectedPhoto,
-                         matching: .images) {
-                Image(.defaultAnimal)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 150)
-                    .cornerRadius(50)
-                    .padding()
-                    .background(tintColor)
-                    .cornerRadius(50)
-                    .shadow(radius: 10)
-            }
-            .onChange(of: selectedPhoto) {
-                Task {
-                    if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
-                        onSelected(data)
+            PhotosPicker(
+                selection: $selectedPhoto,
+                matching: .images) {
+                    Label(
+                        "Select a photo",
+                        systemImage: "photo.fill"
+                    )
+                    .font(.title)
+                }
+                .tint(tintColor)
+                .onChange(of: selectedPhoto) {
+                    Task {
+                        if let data = try? await selectedPhoto?
+                            .loadTransferable(type: Data.self) {
+                            photoData = data
+                        }
                     }
                 }
-            }
-            .padding(.vertical)
+                .padding(.vertical)
         }
     }
 
+}
+
+#Preview {
+    PhotoImagePickerView(photoData: .constant(nil))
 }

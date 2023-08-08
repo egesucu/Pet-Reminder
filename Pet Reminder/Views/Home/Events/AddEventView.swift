@@ -18,7 +18,7 @@ struct AddEventView: View {
     let feedback = UINotificationFeedbackGenerator()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("add_event_info")) {
                     TextField("add_event_name", text: $eventVM.eventName)

@@ -141,14 +141,14 @@ extension NotificationManager {
         for pet in pets {
             switch pet.selection {
             case .both:
-                createNotification(of: pet.name, with: .morning, date: pet.eveningTime ?? .now)
-                createNotification(of: pet.name, with: .evening, date: pet.morningTime ?? .now)
+                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
+                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
             case .evening:
-                createNotification(of: pet.name, with: .evening, date: pet.morningTime ?? .now)
+                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
             case .morning:
-                createNotification(of: pet.name, with: .morning, date: pet.eveningTime ?? .now)
+                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
             }
-            createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+            createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
         }
     }
 }

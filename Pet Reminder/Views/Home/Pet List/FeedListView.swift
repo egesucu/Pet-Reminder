@@ -7,12 +7,13 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct FeedListView: View {
 
     @Binding var morningOn: Bool
     @Binding var eveningOn: Bool
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.managedObjectContext) var viewContext
 
     var pet: Pet = .init()
 
@@ -61,19 +62,21 @@ struct FeedListView: View {
     }
 
     var todaysFeeds: [Feed] {
-        pet.feeds?.filter { feed in
-            Calendar.current.isDateInToday(feed.feedDate ?? .now)
-        } ?? []
-
+        if let feedSet = pet.feeds?.allObjects as? [Feed] {
+            return feedSet.filter( { feed in
+                Calendar.current.isDateInToday(feed.feedDate ?? .now) } )
+        }
+        return []
     }
 
     func updateFeed(type: FeedTimeSelection, value: Bool) {
 
         if todaysFeeds.isEmpty {
-            addFeedForToday(value: value)
+            addFeedForToday(viewContext: viewContext, value: value)
         } else {
             if let feeds = pet.feeds,
-               let lastFeed = feeds.last {
+               let feedSet = feeds.allObjects as? [Feed],
+               let lastFeed = feedSet.last {
                 switch type {
                 case .morning:
                     lastFeed.morningFedStamp = value ? .now : nil
@@ -91,8 +94,8 @@ struct FeedListView: View {
         }
     }
 
-    func addFeedForToday(value: Bool) {
-        let feed = Feed()
+    func addFeedForToday(viewContext: NSManagedObjectContext, value: Bool) {
+        let feed = Feed(context: viewContext)
 
         switch pet.selection {
         case .both:
@@ -104,20 +107,15 @@ struct FeedListView: View {
             feed.eveningFedStamp = value ? .now : nil
             feed.eveningFed = value
         }
-        pet.feeds?.append(feed)
-        do {
-            try modelContext.save()
-        } catch let error {
-            print(error.localizedDescription)
+        if var feeds = pet.feeds?.allObjects as? [Feed] {
+            feeds.append(feed)
         }
+        PersistenceController.shared.save()
     }
 
 }
 
 #Preview {
-    MainActor.assumeIsolated {
-        FeedListView(morningOn: .constant(true), eveningOn: .constant(false), pet: PreviewSampleData.previewPet)
-            .modelContainer(PreviewSampleData.container)
-    }
-    
+    FeedListView(morningOn: .constant(true), eveningOn: .constant(false))
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

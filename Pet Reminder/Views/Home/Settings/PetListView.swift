@@ -7,15 +7,16 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct PetListView: View {
 
-    @Environment(\.modelContext)
+    @Environment(\.managedObjectContext)
     private var viewContext
     @Environment(\.undoManager) var undoManager
 
-    @Query var pets: [Pet]
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    var pets: FetchedResults<Pet>
     @State private var showUndoButton = false
 
     var body: some View {
@@ -52,20 +53,16 @@ struct PetListView: View {
         for index in indexSet {
             let pet = pets[index]
             viewContext.delete(pet)
-            do {
-                try viewContext.save()
-                showUndoButton.toggle()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                    showUndoButton.toggle()
-                }
-            } catch let error {
-                print(error.localizedDescription)
-            }
-
+            PersistenceController.shared.save()
+            showUndoButton.toggle()
         }
     }
 }
 
 #Preview {
     PetListView()
+        .environment(
+            \.managedObjectContext,
+             PersistenceController.preview.container.viewContext
+        )
 }

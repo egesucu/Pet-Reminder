@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct PetDetailView: View {
 
@@ -70,27 +69,30 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines, content: {
             VaccineHistoryView(pet: pet)
         })
-        .navigationTitle(Text("pet_name_title \(pet.name)"))
+        .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
     }
 // swiftlint: disable trailing_whitespace
     func filterFeeds() -> [Feed] {
-        return pet.feeds?.filter({ feed in
-            feed.morningFedStamp != nil || feed.eveningFedStamp != nil
-        }).sorted(by: {
-            $0.feedDate ?? .now > $1.feedDate ?? .now
-        }) ?? []
+        if let feeds = pet.feeds?.allObjects as? [Feed] {
+            return feeds.filter({ feed in
+                feed.morningFedStamp != nil || feed.eveningFedStamp != nil
+            }).sorted(by: {
+                $0.feedDate ?? .now > $1.feedDate ?? .now
+            })
+        }
+        return []
         
     }
 // swiftlint: enable trailing_whitespace
 
     func getLatestFeed() {
-        if let feeds = pet.feeds {
+        if let feeds = pet.feeds?.allObjects as? [Feed] {
             if let lastFeed = feeds.last {
                 if let date = lastFeed.feedDate {
                     if Calendar.current.isDateInToday(date) {
                         // We have a feed.
-                        morningOn = lastFeed.morningFed ?? false
-                        eveningOn = lastFeed.eveningFed ?? false
+                        morningOn = lastFeed.morningFed
+                        eveningOn = lastFeed.eveningFed
                     }
                 }
             }
@@ -99,10 +101,8 @@ struct PetDetailView: View {
 }
 
 #Preview(traits: .portrait) {
-    MainActor.assumeIsolated {
-        NavigationView {
-            PetDetailView(pet: PreviewSampleData.previewPet)
-                .modelContainer(PreviewSampleData.container)
-        }.navigationViewStyle(.stack)
+    NavigationStack {
+        PetDetailView(pet: .init())
     }
+    .navigationViewStyle(.stack)
 }

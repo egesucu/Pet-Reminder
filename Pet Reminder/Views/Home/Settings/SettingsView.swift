@@ -16,7 +16,7 @@ struct SettingsView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("app_settings")) {
                     NavigationLink(

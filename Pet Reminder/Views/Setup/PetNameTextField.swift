@@ -12,23 +12,45 @@ struct PetNameTextField: View {
 
     @Binding var name: String
 
+    @FocusState var isFocused
+    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+
     var body: some View {
         VStack {
             Text("start_name_label")
                 .font(.title2)
                 .bold()
-            TextField(Strings.doggo, text: $name)
+                .padding(.bottom, 20)
+            ZStack {
+                Rectangle()
+                    .fill(
+                        isFocused ? tintColor
+                            .opacity(0.1) :
+                            Color
+                                .black
+                                .opacity(0.1)
+
+                    )
+                    .animation(.easeInOut, value: isFocused)
+                    .shadow(radius: 8)
+                TextField(
+                    Strings.doggo,
+                    text: $name
+                )
+                .focused($isFocused)
                 .font(.title)
                 .padding()
                 .autocorrectionDisabled()
                 .multilineTextAlignment(.center)
-                .background(Color.black.opacity(0.1))
-                .cornerRadius(5)
-                .shadow(radius: 8)
+            }
+            .cornerRadius(5)
+            .frame(height: 50)
         }
+
     }
 }
 
 #Preview {
     PetNameTextField(name: .constant(Strings.viski))
+        .padding(.all)
 }

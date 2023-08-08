@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct FeedHistory: View {
 
@@ -15,11 +14,11 @@ struct FeedHistory: View {
 
     @Environment(\.dismiss) var dismiss
 
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color.green
 
     var body: some View {
 
-        NavigationView {
+        NavigationStack {
             List {
                 CurrentFeedSection(feeds: feeds)
                 PreviousFeedsSection(feeds: feeds)
@@ -142,7 +141,7 @@ struct Row: View {
 }
 
 #Preview {
-    NavigationView {
-        FeedHistory(feeds: [.demo, .demo])
+    NavigationStack {
+        FeedHistory(feeds: [.init()])
     }
 }

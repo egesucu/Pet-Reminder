@@ -11,26 +11,26 @@ import SwiftUI
 struct PetImageView: View {
 
     @Binding var selectedImageData: Data?
-    var onImageDelete: () -> Void
 
     var body: some View {
         VStack {
-            Text("photo_set_label")
-                .font(.title2).bold()
             if let selectedImageData,
             let selectedImage = UIImage(data: selectedImageData) {
-                PetShowImageView(selectedImage: selectedImage, onImageDelete: onImageDelete)
+                PetShowImageView(selectedImage: selectedImage, onImageDelete: removeImage)
             } else {
-                PetSelectImageView(selectedImageData: $selectedImageData)
+                PhotoImagePickerView(photoData: $selectedImageData)
+                    .padding(.vertical)
             }
             Text("photo_upload_detail_title")
                 .font(.footnote)
         }
     }
+
+    func removeImage() {
+        selectedImageData = nil
+    }
 }
 
 #Preview {
-    PetImageView(selectedImageData: .constant(nil)) {
-
-    }
+    PetImageView(selectedImageData: .constant(nil))
 }

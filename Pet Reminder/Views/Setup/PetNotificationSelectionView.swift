@@ -19,7 +19,10 @@ struct PetNotificationSelectionView: View {
             Text("feed_time_title")
                 .font(.title2).bold()
                 .padding(.vertical)
-            Picker(selection: $dayType, label: Text("feed_time_title")) {
+            Picker(
+                selection: $dayType,
+                label: Text("feed_time_title")
+            ) {
                 Text("feed_selection_both")
                     .tag(FeedTimeSelection.both)
                 Text("feed_selection_morning")

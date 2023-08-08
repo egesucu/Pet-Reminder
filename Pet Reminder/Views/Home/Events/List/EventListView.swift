@@ -16,7 +16,7 @@ struct EventListView: View {
 
     var body: some View {
 
-        NavigationView {
+        NavigationStack {
             showEventView()
                 .navigationTitle(Text("event_title"))
                 .toolbar(content: eventToolBar)

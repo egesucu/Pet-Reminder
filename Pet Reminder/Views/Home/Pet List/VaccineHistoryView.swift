@@ -16,16 +16,17 @@ struct VaccineHistoryView: View {
     @State private var vaccineName = ""
     @State private var vaccineDate = Date.now
     @State private var shouldAddVaccine = false
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.managedObjectContext) private var modelContext
 
     func sortedVaccines(_ vaccines: [Vaccine]) -> [Vaccine] {
         vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                if let vaccines = pet.vaccines {
+                if let vaccineSet = pet.vaccines,
+                   let vaccines = vaccineSet.allObjects as? [Vaccine] {
                     if vaccines.count == 0 {
                         Text("no_vaccine_title")
                     } else {
@@ -92,12 +93,10 @@ struct VaccineHistoryView: View {
         let vaccine = Vaccine()
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
-        pet.vaccines?.append(vaccine)
-        do {
-            try modelContext.save()
-        } catch let error {
-            print(error.localizedDescription)
+        if var vaccines = pet.vaccines?.allObjects as? [Vaccine] {
+            vaccines.append(vaccine)
         }
+        PersistenceController.shared.save()
 
         resetTemporaryData()
         togglePopup()
@@ -109,7 +108,8 @@ struct VaccineHistoryView: View {
     }
 
     func deleteVaccines(_at offsets: IndexSet) {
-        if let vaccines = pet.vaccines {
+        if let vaccineSet = pet.vaccines,
+           let vaccines = vaccineSet.allObjects as? [Vaccine] {
             for offset in offsets {
                 modelContext.delete(vaccines[offset])
             }
@@ -118,11 +118,8 @@ struct VaccineHistoryView: View {
 }
 
 #Preview {
-    return NavigationView {
-        MainActor.assumeIsolated {
-            VaccineHistoryView(pet: PreviewSampleData.previewPet)
-                        .modelContainer(PreviewSampleData.container)
-        }
-        
+    return NavigationStack {
+        VaccineHistoryView(pet: .init())
+
     }
 }

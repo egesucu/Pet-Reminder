@@ -10,14 +10,18 @@ import SwiftUI
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
+    @State private var tappedTwice = false
 
     var body: some View {
 
         TabView(selection: $currentTab) {
-            HomeView()
+            HomeView(tappedTwice: $tappedTwice)
                 .tabItem {
                     Image(systemName: SFSymbols.pawPrint)
                 }
+                .onTapGesture(count: 2, perform: {
+                    tappedTwice.toggle()
+                })
                 .tag(PetReminderTabs.home)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
             EventListView()

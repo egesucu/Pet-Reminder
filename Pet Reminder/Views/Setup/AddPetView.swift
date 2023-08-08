@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct AddPetView: View {
 
@@ -15,8 +15,12 @@ struct AddPetView: View {
     @State private var showAlert = false
     @State private var customAlertText = ""
     @AppStorage(Strings.petSaved) var petSaved: Bool?
-    @Environment(\.modelContext) private var modelContext
-    @Query var pets: [Pet]
+    
+    @Environment(\.managedObjectContext)
+    private var modelContext
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    private var pets: FetchedResults<Pet>
+    
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -25,10 +29,7 @@ struct AddPetView: View {
                 PetNameTextField(name: $manager.name)
                     .padding(.bottom, 30)
                 PetBirthdayView(birthday: $manager.birthday)
-                PetImageView(
-                    selectedImageData: $manager.selectedImageData,
-                    onImageDelete: manager.resetImageData
-                )
+                PetImageView(selectedImageData: $manager.selectedImageData)
                 PetNotificationSelectionView(
                     dayType: $manager.dayType,
                     morningFeed: $manager.morningFeed,
@@ -71,6 +72,6 @@ struct AddPetView: View {
 }
 
 #Preview {
-   AddPetView()
-        .modelContainer(for: Pet.self)
+    AddPetView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

@@ -8,61 +8,69 @@
 
 import SwiftUI
 import EventKit
-import SwiftData
+import CoreData
 
 struct HomeView: View {
 
-    @Environment(\.modelContext)
+    
+    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @Binding var tappedTwice: Bool
+    @State private var addPet = false
+    
+    @Environment(\.managedObjectContext)
     private var viewContext
 
-    @Query var pets: [Pet]
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
-
-    @State private var addPet = false
-
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    private var pets: FetchedResults<Pet>
+    
     var body: some View {
-
-        NavigationView {
-
+        NavigationStack {
             VStack {
                 if pets.count > 0 {
-                    List {
-                        ForEach(pets, id: \.name) { pet in
-                            NavigationLink {
-                                PetDetailView(pet: pet)
-                            } label: {
-                                PetCell(pet: pet)
+                    ScrollViewReader(content: { proxy in
+                        List {
+                            ForEach(pets, id: \.name) { pet in
+                                NavigationLink {
+                                    PetDetailView(pet: pet)
+                                } label: {
+                                    PetCell(pet: pet)
+                                }
+                            }
+                            .onDelete(perform: delete)
+                            .onChange(of: tappedTwice) {
+                                withAnimation {
+                                    proxy.scrollTo(1)
+                                }
                             }
                         }
-                        .onDelete(perform: delete)
-                        .navigationTitle("pet_name_title")
-                    }
-                    .listStyle(.insetGrouped)
-                    .sheet(isPresented: $addPet, onDismiss: {
-
-                    }, content: {
-                        AddPetView()
+                        .listStyle(.insetGrouped)
                     })
-                    .toolbar(content: {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                self.addPet.toggle()
-                            }, label: {
-                                Image(systemName: SFSymbols.add)
-                                    .accessibilityLabel(Text("add_animal_accessible_label"))
-                                    .foregroundColor(tintColor)
-                                    .font(.title)
-                            })
-                        }
-                })
                 } else {
                     Text("pet_no_pet")
                 }
             }
-            .navigationTitle("pet_name_title")
-            Text("pet_select")
-        }.navigationViewStyle(.stack)
+            .toolbar(content: addButtonToolbar)
+            .sheet(isPresented: $addPet, onDismiss: { }, content: {
+                AddPetView()
+            })
+        }
+        .navigationViewStyle(.stack)
 
+    }
+    
+    
+    @ToolbarContentBuilder
+    func addButtonToolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button(action: {
+                self.addPet.toggle()
+            }, label: {
+                Image(systemName: SFSymbols.add)
+                    .accessibilityLabel(Text("add_animal_accessible_label"))
+                    .foregroundColor(tintColor)
+                    .font(.title)
+            })
+        }
     }
 
     func delete(at offsets: IndexSet) {
@@ -75,6 +83,13 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
+struct HomeViewPreview: PreviewProvider{
+    
+    static var previews: some View{
+        HomeView(tappedTwice: .constant(false))
+            .environment(
+                \.managedObjectContext,
+                 PersistenceController.preview.container.viewContext
+            )
+    }
 }

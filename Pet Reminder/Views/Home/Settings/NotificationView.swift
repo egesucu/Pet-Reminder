@@ -7,19 +7,23 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 struct NotificationView: View {
 
-    @Environment(\.modelContext)
+    @Environment(\.managedObjectContext)
     private var viewContext
 
-    @Query var pets: [Pet]
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    private var pets: FetchedResults<Pet>
 
     var notificationManager = NotificationManager.shared
 
     func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
-        notificationManager.notifications.filter({$0.identifier.contains(pet.name)})
+        notificationManager.notifications.filter { notification in
+            print(notification.identifier)
+            return notification.identifier.contains(pet.name ?? "")
+        }
     }
 
     var body: some View {
@@ -33,55 +37,13 @@ struct NotificationView: View {
                         ForEach(filteredNotifications(pet: pet), id: \.self) { notification in
                             switch notification.identifier {
                             case let option where option.contains(NotificationType.morning.rawValue):
-                                VStack(alignment: .leading) {
-                                    Label {
-                                        Text("notification_to")
-                                    } icon: {
-                                        Image(systemName: SFSymbols.morning)
-                                            .foregroundColor(.yellow)
-                                            .font(.title)
-                                    }
-                                    Text(notification.content.body)
-                                        .font(.footnote)
-                                        .foregroundStyle(Color.gray)
-                                }
+                                morningNotificationView(notification: notification)
 
                             case let option where option.contains(NotificationType.evening.rawValue):
-                                VStack(alignment: .leading) {
-                                    Label {
-                                        Text("notification_to")
-                                    } icon: {
-                                        Image(systemName: SFSymbols.evening)
-                                            .foregroundColor(.blue)
-                                            .font(.title)
-                                    }
-                                    Text(notification.content.body)
-                                        .font(.footnote)
-                                        .foregroundStyle(Color.gray)
-                                }
+                                eveningNotificationView(notification: notification)
 
                             case let option where option.contains(NotificationType.birthday.rawValue):
-
-                                VStack(alignment: .leading) {
-                                    Label {
-                                        Text("notification_to")
-                                    } icon: {
-                                        Image(systemName: SFSymbols.birthday)
-                                            .symbolRenderingMode(.multicolor)
-                                            .foregroundStyle(Color.green.gradient, Color.blue.gradient)
-                                            .font(.title)
-                                    }
-                                    Text(notification.content.body)
-                                        .font(.footnote)
-                                        .foregroundStyle(Color.gray)
-                                    HStack {
-                                        Text("birthday_title")
-                                        Text(pet.birthday.formatted(.dateTime.day().month(.wide).year()))
-                                        Spacer()
-                                    }
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.green)
-                                }
+                                birthdayNotificationsView(notification: notification, pet: pet)
                             default:
                                 VStack(alignment: .leading) {
                                     Text(notification.identifier)
@@ -94,9 +56,9 @@ struct NotificationView: View {
                     }
 
                 } header: {
-                    Text(pet.name)
+                    Text(pet.name ?? "-")
                 } footer: {
-                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name)}).count
+                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "-")}).count
                     Text("notification \(count)")
 
                 }
@@ -130,18 +92,71 @@ struct NotificationView: View {
         }
     }
 
+    private func morningNotificationView(notification: UNNotificationRequest) -> some View {
+        VStack(alignment: .leading) {
+            Label {
+                Text("notification_to")
+            } icon: {
+                Image(systemName: SFSymbols.morning)
+                    .foregroundColor(.yellow)
+                    .font(.title)
+            }
+            Text(notification.content.body)
+                .font(.footnote)
+                .foregroundStyle(Color.gray)
+        }
+    }
+
+    private func eveningNotificationView(notification: UNNotificationRequest) -> some View {
+        VStack(alignment: .leading) {
+            Label {
+                Text("notification_to")
+            } icon: {
+                Image(systemName: SFSymbols.evening)
+                    .foregroundColor(.blue)
+                    .font(.title)
+            }
+            Text(notification.content.body)
+                .font(.footnote)
+                .foregroundStyle(Color.gray)
+        }
+    }
+
+    private func birthdayNotificationsView(notification: UNNotificationRequest, pet: Pet) -> some View {
+        VStack(alignment: .leading) {
+            Label {
+                Text("notification_to")
+            } icon: {
+                Image(systemName: SFSymbols.birthday)
+                    .symbolRenderingMode(.multicolor)
+                    .foregroundStyle(Color.green.gradient, Color.blue.gradient)
+                    .font(.title)
+            }
+            Text(notification.content.body)
+                .font(.footnote)
+                .foregroundStyle(Color.gray)
+            HStack {
+                Text("birthday_title")
+                Text((pet.birthday ?? .now).formatted(.dateTime.day().month(.wide).year()))
+                Spacer()
+            }
+            .font(.footnote)
+            .foregroundStyle(Color.green)
+        }
+    }
+
     func createNotifications(for pet: Pet) {
         switch pet.selection {
         case .both:
-            notificationManager.createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .now)
-            notificationManager.createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .now)
-            notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: pet.morningTime ?? .now)
+            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: pet.eveningTime ?? .now)
+            notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
         case .morning:
-            notificationManager.createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .now)
-            notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: pet.morningTime ?? .now)
+            notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
         case .evening:
-            notificationManager.createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .now)
-            notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: pet.eveningTime ?? .now)
+            notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
         }
     }
 
@@ -158,4 +173,8 @@ struct NotificationView: View {
 
 #Preview {
     NotificationView()
+        .environment(
+            \.managedObjectContext, 
+             PersistenceController.preview.container.viewContext
+        )
 }
