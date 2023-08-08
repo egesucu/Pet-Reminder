@@ -17,13 +17,10 @@ struct NotificationView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     private var pets: FetchedResults<Pet>
 
-    var notificationManager = NotificationManager.shared
+    @State private var notificationManager = NotificationManager()
 
     func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
-        notificationManager.notifications.filter { notification in
-            print(notification.identifier)
-            return notification.identifier.contains(pet.name ?? "")
-        }
+        notificationManager.filterNotifications(of: pet)
     }
 
     var body: some View {
@@ -68,7 +65,10 @@ struct NotificationView: View {
         }
         .listStyle(.insetGrouped)
         .refreshable {
-            notificationManager.getNotifications()
+            Task {
+                await notificationManager.getNotifications()
+            }
+            
         }
         .navigationTitle(Text("notifications_title"))
         .navigationViewStyle(.stack)
@@ -77,18 +77,22 @@ struct NotificationView: View {
                 Button {
                     notificationManager
                         .removeNotifications(pets: pets.compactMap({ $0 as Pet }))
-                    notificationManager
-                        .getNotifications()
+                    fetchNotificiations()
                 } label: {
                     Text("remove_all")
                 }
             }
         }
         .onAppear {
-            notificationManager
-                .getNotifications()
+            fetchNotificiations()
             notificationManager
                 .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
+        }
+    }
+    
+    private func fetchNotificiations() {
+        Task {
+            await notificationManager.getNotifications()
         }
     }
 
@@ -165,8 +169,7 @@ struct NotificationView: View {
             let notification = notificationManager.notifications[index]
             notificationManager
                 .removeNotificationsIdentifiers(with: [notification.identifier])
-            notificationManager
-                .getNotifications()
+            fetchNotificiations()
         }
     }
 }

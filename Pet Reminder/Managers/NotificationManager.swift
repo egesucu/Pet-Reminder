@@ -8,10 +8,11 @@
 
 import Foundation
 import UserNotifications
+import Observation
 
+@Observable
 class NotificationManager {
 
-    static let shared = NotificationManager()
     let notificationCenter = UNUserNotificationCenter.current()
 
     func accessRequest(completion: @escaping (Bool, Error?) -> Void) {
@@ -21,17 +22,18 @@ class NotificationManager {
                 completionHandler: completion
             )
     }
+    
+    func filterNotifications(of pet: Pet) -> [UNNotificationRequest] {
+        notifications.filter { notification in
+            print(notification.identifier)
+            return notification.identifier.contains(pet.name ?? "")
+        }
+    }
 
     var notifications: [UNNotificationRequest] = .empty
 
-    func getNotifications() {
-        UNUserNotificationCenter
-            .current()
-            .getPendingNotificationRequests { requests in
-                DispatchQueue.main.async {
-                    self.notifications = requests
-                }
-            }
+    func getNotifications() async {
+        notifications = await UNUserNotificationCenter.current().pendingNotificationRequests()
     }
 
     func changeNotificationTime(of petName: String, with date: Date, for type: NotificationType) {
@@ -39,12 +41,8 @@ class NotificationManager {
         createNotification(of: petName, with: type, date: date)
     }
 
-    func checkAllAppNotifications() {
-        notificationCenter.getPendingNotificationRequests { requests in
-            for request in requests {
-                print(request.identifier)
-            }
-        }
+    func checkAllAppNotifications() async {
+        notifications = await notificationCenter.pendingNotificationRequests()
     }
 
 }

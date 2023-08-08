@@ -20,7 +20,7 @@ class AddPetViewModel {
     var eveningFeed: Date = Date().eightPM()
     var selectedImageData: Data?
 
-    let manager = NotificationManager.shared
+    let manager = NotificationManager()
 
     func resetImageData() {
         selectedImageData = nil
