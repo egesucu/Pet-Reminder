@@ -53,3 +53,16 @@ extension VetViewModel: CLLocationManagerDelegate {
     }
 }
 // swiftlint:enable switch_case_alignment
+
+extension DateComponents {
+    static func generateRandomDateComponent() -> Self {
+        DateComponents(
+            year: Int.random(in: 2018...2023),
+            month: Int.random(in: 0...12),
+            day: Int.random(in: 0...30),
+            hour: Int.random(in: 0...23),
+            minute: Int.random(in: 0...59),
+            second: Int.random(in: 0...59)
+        )
+    }
+}

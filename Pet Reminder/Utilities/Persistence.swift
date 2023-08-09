@@ -24,10 +24,10 @@ struct PersistenceController {
             demoPet.image = nil
             demoPet.selection = .both
             demoPet.birthday = Date()
-            for i in 0..<5 {
+            for index in 0..<5 {
                 let feed = Feed(context: viewContext)
-                let components = DateComponents(year: Int.random(in: 2018...2023), month: Int.random(in: 0...12), day: Int.random(in: 0...30), hour: Int.random(in: 0...23), minute: Int.random(in: 0...59), second: Int.random(in: 0...59))
-                if i % 2 == 0 {
+                let components: DateComponents = .generateRandomDateComponent()
+                if index % 2 == 0 {
                     feed.morningFedStamp = Calendar.current.date(from: components)
                     feed.morningFed = true
                 } else {
