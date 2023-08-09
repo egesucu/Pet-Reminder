@@ -68,7 +68,7 @@ struct NotificationView: View {
             Task {
                 await notificationManager.getNotifications()
             }
-            
+
         }
         .navigationTitle(Text("notifications_title"))
         .navigationViewStyle(.stack)
@@ -89,7 +89,7 @@ struct NotificationView: View {
                 .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
     }
-    
+
     private func fetchNotificiations() {
         Task {
             await notificationManager.getNotifications()
@@ -177,7 +177,7 @@ struct NotificationView: View {
 #Preview {
     NotificationView()
         .environment(
-            \.managedObjectContext, 
+            \.managedObjectContext,
              PersistenceController.preview.container.viewContext
         )
 }

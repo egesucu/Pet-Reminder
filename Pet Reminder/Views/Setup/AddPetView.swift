@@ -15,12 +15,12 @@ struct AddPetView: View {
     @State private var showAlert = false
     @State private var customAlertText = ""
     @AppStorage(Strings.petSaved) var petSaved: Bool?
-    
+
     @Environment(\.managedObjectContext)
     private var modelContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     private var pets: FetchedResults<Pet>
-    
+
     @Environment(\.dismiss) var dismiss
 
     var body: some View {

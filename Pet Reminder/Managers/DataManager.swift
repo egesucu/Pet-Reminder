@@ -10,11 +10,11 @@ import Foundation
 import CloudKit
 
 class DataManager {
-    
+
     static let shared = DataManager()
-    
+
     func checkIcloudAvailability(completion: @escaping (ICloudResultType) -> Void) {
-        
+
         CKContainer
             .default()
             .accountStatus { status, error in
@@ -27,7 +27,7 @@ class DataManager {
                 )
                     return
                 }
-                
+
                 switch status {
                 case .available:
                     completion(.success)
@@ -50,7 +50,7 @@ class DataManager {
                 }
             }
     }
-    
+
 }
 
 let persistentStoreChange: NSNotification.Name = NSNotification.Name.NSPersistentStoreRemoteChange

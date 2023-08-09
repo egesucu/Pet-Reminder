@@ -63,8 +63,8 @@ struct FeedListView: View {
 
     var todaysFeeds: [Feed] {
         if let feedSet = pet.feeds?.allObjects as? [Feed] {
-            return feedSet.filter( { feed in
-                Calendar.current.isDateInToday(feed.feedDate ?? .now) } )
+            return feedSet.filter({ feed in
+                Calendar.current.isDateInToday(feed.feedDate ?? .now) })
         }
         return []
     }

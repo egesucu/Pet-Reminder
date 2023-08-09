@@ -12,17 +12,16 @@ import CoreData
 
 struct HomeView: View {
 
-    
     @AppStorage(Strings.tintColor) var tintColor = Color.green
     @Binding var tappedTwice: Bool
     @State private var addPet = false
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     private var pets: FetchedResults<Pet>
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -57,8 +56,7 @@ struct HomeView: View {
         .navigationViewStyle(.stack)
 
     }
-    
-    
+
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -83,9 +81,9 @@ struct HomeView: View {
     }
 }
 
-struct HomeViewPreview: PreviewProvider{
-    
-    static var previews: some View{
+struct HomeViewPreview: PreviewProvider {
+
+    static var previews: some View {
         HomeView(tappedTwice: .constant(false))
             .environment(
                 \.managedObjectContext,

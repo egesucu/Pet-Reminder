@@ -22,7 +22,7 @@ class NotificationManager {
                 completionHandler: completion
             )
     }
-    
+
     func filterNotifications(of pet: Pet) -> [UNNotificationRequest] {
         notifications.filter { notification in
             print(notification.identifier)

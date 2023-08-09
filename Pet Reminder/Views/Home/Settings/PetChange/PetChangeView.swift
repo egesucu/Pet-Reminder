@@ -11,7 +11,7 @@ import SwiftUI
 struct PetChangeView: View {
 
     var pet: Pet
-    
+
     @State private var viewModel = PetChangeViewModel()
 
     var body: some View {

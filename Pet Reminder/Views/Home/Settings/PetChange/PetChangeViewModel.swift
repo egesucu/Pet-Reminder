@@ -11,7 +11,7 @@ import SwiftUI
 
 @Observable
 class PetChangeViewModel {
-    
+
     var nameText = ""
     var petImage: Image?
     var birthday = Date()
@@ -21,10 +21,9 @@ class PetChangeViewModel {
     var showImagePicker = false
     var outputImageData: Data?
     var defaultPhotoOn = false
-    
+
     var notificationManager = NotificationManager()
-    
-    
+
     func loadImage(pet: Pet) {
         if let outputImageData {
             if let uiImage = UIImage(data: outputImageData) {
@@ -37,7 +36,7 @@ class PetChangeViewModel {
             defaultPhotoOn = true
         }
     }
-    
+
     func getPetData(pet: Pet) {
         self.birthday = pet.birthday ?? .now
         self.nameText = pet.name ?? ""
@@ -48,7 +47,7 @@ class PetChangeViewModel {
         if let evening = pet.eveningTime {
             self.eveningDate = evening
         }
-        
+
         if let image = pet.image {
             outputImageData = image
             defaultPhotoOn = false
@@ -56,18 +55,18 @@ class PetChangeViewModel {
             defaultPhotoOn = true
         }
     }
-    
+
     func changeName(pet: Pet) {
         pet.name = nameText
         changeNotification(pet: pet, for: selection)
     }
-    
+
     func changeBirthday(pet: Pet) {
         pet.birthday = birthday
         notificationManager.removeNotification(of: pet.name ?? "", with: .birthday)
         notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: birthday)
     }
-    
+
     func changeNotification(pet: Pet, for selection: FeedTimeSelection) {
         switch selection {
         case .both:
@@ -91,5 +90,5 @@ class PetChangeViewModel {
             pet.eveningTime = eveningDate
         }
     }
-    
+
 }

@@ -15,7 +15,7 @@ struct HelloView: View {
     @State private var imageTimer: Timer?
     @State private var buttonOpacity = 0.0
     @State private var imageOffset: CGFloat = -200
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 20) {
@@ -24,7 +24,7 @@ struct HelloView: View {
                 Image(uiImage: UIImage(named: "AppIcon") ?? .init())
                     .resizable()
                     .frame(width: 200, height: 200)
-                    .offset(x: imageOffset ,y: 0)
+                    .offset(x: imageOffset, y: 0)
                     .animation(.easeInOut, value: imageOffset)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Text("welcome_context")
@@ -55,7 +55,7 @@ struct HelloView: View {
         }
         .onAppear(perform: showGoButton)
     }
-    
+
     private func showGoButton() {
         imageTimer = Timer.scheduledTimer(
             withTimeInterval: 0.1, repeats: true, block: { timer in
