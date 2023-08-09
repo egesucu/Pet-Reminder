@@ -39,9 +39,8 @@ struct PersistenceController {
         }
         do {
             try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        } catch let error{
+            fatalError("Unresolved error: \(error.localizedDescription)")
         }
         return result
     }()
@@ -80,8 +79,7 @@ struct PersistenceController {
 
     func save() {
         let context = container.viewContext
-        context.mergePolicy = NSMergePolicy(merge: .overwriteMergePolicyType)
-
+        
         do {
             try context.save()
         } catch {
