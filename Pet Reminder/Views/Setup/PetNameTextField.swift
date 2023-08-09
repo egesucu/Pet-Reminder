@@ -13,7 +13,7 @@ struct PetNameTextField: View {
     @Binding var name: String
 
     @FocusState var isFocused
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var body: some View {
         VStack {

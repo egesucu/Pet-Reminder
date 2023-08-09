@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HelloView: View {
-    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     @AppStorage("seenHello") var helloSeen = false
     @State private var navigateToHome = false
     @State private var buttonTimer: Timer?

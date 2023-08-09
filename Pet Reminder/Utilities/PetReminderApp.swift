@@ -13,7 +13,7 @@ import CoreData
 struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     @AppStorage("seenHello") var helloSeen = false
 
     let persistence = PersistenceController.shared

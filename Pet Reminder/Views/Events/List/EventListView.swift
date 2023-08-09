@@ -12,7 +12,7 @@ struct EventListView: View {
 
     var eventVM = EventManager()
     @State private var showAddEvent = false
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var body: some View {
 

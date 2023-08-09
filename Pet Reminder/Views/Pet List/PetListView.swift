@@ -17,7 +17,7 @@ struct PetListView: View {
     private var viewContext
     @Environment(\.undoManager) var undoManager
     @State private var addPet = false
-    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     var pets: FetchedResults<Pet>

@@ -28,7 +28,7 @@ struct FindVetView: View {
     @State private var showAlert = false
     @State private var showSheet = false
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var body: some View {
         NavigationStack {

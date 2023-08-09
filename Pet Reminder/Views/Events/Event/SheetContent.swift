@@ -11,7 +11,7 @@ import EventKit
 
 struct SheetContent: View {
     @Environment(\.dismiss) var dismiss
-    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     
     var event: EKEvent
     

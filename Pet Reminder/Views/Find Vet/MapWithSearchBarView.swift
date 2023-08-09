@@ -13,7 +13,7 @@ struct MapWithSearchBarView: View {
 
     @Binding var mapItems: [Pin]
     @Binding var region: MKCoordinateRegion
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     @State private var selectedItem: MKMapItem?
     @State var vetViewModel: VetViewModel
     @State private var showAlert = false

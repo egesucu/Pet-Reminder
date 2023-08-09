@@ -11,7 +11,7 @@ import MapKit
 
 struct MapItemView: View {
     
-    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     
     var item: Pin
     

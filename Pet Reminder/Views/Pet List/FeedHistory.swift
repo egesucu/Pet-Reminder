@@ -14,7 +14,7 @@ struct FeedHistory: View {
 
     @Environment(\.dismiss) var dismiss
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var body: some View {
 

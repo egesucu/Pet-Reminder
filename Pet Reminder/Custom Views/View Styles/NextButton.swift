@@ -11,7 +11,7 @@ import SwiftUI
 struct NextButton: ButtonStyle {
 
     var conditionMet: Bool
-    @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
