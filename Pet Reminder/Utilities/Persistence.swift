@@ -17,29 +17,34 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
+        for index in 0..<10 {
             let demoPet = Pet(context: viewContext)
-            demoPet.name = "Viski"
+            demoPet.name = Strings.demoPets[safe: index] ?? "-"
             demoPet.id = UUID()
             demoPet.image = nil
             demoPet.selection = .both
             demoPet.birthday = Date()
             for index in 0..<5 {
                 let feed = Feed(context: viewContext)
-                let components: DateComponents = .generateRandomDateComponent()
+
                 if index % 2 == 0 {
-                    feed.morningFedStamp = Calendar.current.date(from: components)
+                    feed.morningFedStamp = .randomDate()
                     feed.morningFed = true
                 } else {
-                    feed.eveningFedStamp = Calendar.current.date(from: components)
+                    feed.eveningFedStamp = .randomDate()
                     feed.eveningFed = true
                 }
                 demoPet.addToFeeds(feed)
+
+                let vaccine = Vaccine(context: viewContext)
+                vaccine.date = .randomDate()
+                vaccine.name = Strings.demoVaccines.randomElement() ?? ""
+                demoPet.addToVaccines(vaccine)
             }
         }
         do {
             try viewContext.save()
-        } catch let error{
+        } catch let error {
             fatalError("Unresolved error: \(error.localizedDescription)")
         }
         return result
@@ -79,7 +84,7 @@ struct PersistenceController {
 
     func save() {
         let context = container.viewContext
-        
+
         do {
             try context.save()
         } catch {

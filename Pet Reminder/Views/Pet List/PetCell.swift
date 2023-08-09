@@ -15,15 +15,14 @@ struct PetCell: View {
     var body: some View {
         HStack {
             ESImageView(data: pet.image)
-                .padding(.vertical, 10)
                 .padding(.trailing, 10)
-                .frame(maxWidth: 150, maxHeight: 150)
+                .frame(width: 150, height: 150)
             VStack {
                 Text(pet.name ?? "")
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
-                    .minimumScaleFactor(0.5)
-                    .padding()
+                    .minimumScaleFactor(0.2)
+                    .lineLimit(3)
                 if let feeds = pet.feeds,
                    feeds.count > 0,
                    let feedSet = feeds.allObjects as? [Feed],

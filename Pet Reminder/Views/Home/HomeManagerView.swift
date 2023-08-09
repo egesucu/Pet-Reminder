@@ -15,7 +15,7 @@ struct HomeManagerView: View {
     var body: some View {
 
         TabView(selection: $currentTab) {
-            HomeView(tappedTwice: $tappedTwice)
+            PetListView(reference: .petList)
                 .tabItem {
                     Image(systemName: SFSymbols.pawPrint)
                 }
@@ -49,5 +49,8 @@ struct HomeManagerView: View {
 }
 
 #Preview {
-    HomeManagerView()
+    NavigationStack {
+        HomeManagerView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
 }

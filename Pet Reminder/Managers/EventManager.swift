@@ -12,6 +12,9 @@ import EventKit
 class EventManager {
 
     var events: [EKEvent] = []
+    var calendars: [EKCalendar] = []
+    var selectedCalendar = EKCalendar(for: .event, eventStore: .init())
+    var petCalendar: EKCalendar?
     var eventName = ""
     var allDayDate: Date = .now
     var eventStartDate: Date = .now
@@ -47,15 +50,20 @@ class EventManager {
             if let error {
                 print(error)
             } else if success {
-                self.findCalendar()
+                self.fetchCalendars()
             }
         }
     }
+    
+    func fetchCalendars() {
+        self.calendars = eventStore.calendars(for: .event)
+        setPetCalendar()
+    }
 
-    func findCalendar() {
-        let calendars = self.eventStore.calendars(for: .event)
+    func setPetCalendar() {
         if let petCalendar = calendars.first(where: { $0.title == Strings.petReminder }) {
-            self.loadEvents(from: petCalendar)
+            self.petCalendar = petCalendar
+            self.loadEvents()
         } else {
             self.createCalendar()
         }
@@ -74,17 +82,16 @@ class EventManager {
         }
     }
 
-    func loadEvents(from calendar: EKCalendar) {
+    func loadEvents() {
         let status = EKEventStore.authorizationStatus(for: .event)
         if status == .fullAccess {
             let startDate: Date = .now
-            // 86400 = tomorrow.
-            let endDate = Date(timeIntervalSinceNow: 86400*3)
+            let endDate = Date(timeIntervalSinceNow: oneMonthInMilliSeconds)
             DispatchQueue.main.async {
                 let predicate = self.eventStore.predicateForEvents(
                     withStart: startDate,
                     end: endDate,
-                    calendars: [calendar]
+                    calendars: self.calendars
                 )
                 self.events = self.eventStore.events(matching: predicate)
             }
@@ -103,10 +110,7 @@ class EventManager {
 
     @Sendable
     func reloadEvents() async {
-        let calendars = self.eventStore.calendars(for: .event)
-        if let petCalendar = calendars.first(where: { $0.title == Strings.petReminder }) {
-            self.loadEvents(from: petCalendar)
-        }
+        self.loadEvents()
     }
 
     func convertDateToString(startDate: Date?, endDate: Date?) -> String {
@@ -139,14 +143,14 @@ class EventManager {
             newEvent.isAllDay = isAllDay
 
             if isAllDay {
-                newEvent.startDate = eventStartDate
-                newEvent.endDate = eventStartDate
+                newEvent.startDate = allDayDate
+                newEvent.endDate = allDayDate
             } else {
                 newEvent.startDate = eventStartDate
                 newEvent.endDate = eventEndDate
             }
 
-            newEvent.calendar = petCalendar
+            newEvent.calendar = selectedCalendar
 
             let alarm = EKAlarm(relativeOffset: -60 * 10)
             newEvent.addAlarm(alarm)

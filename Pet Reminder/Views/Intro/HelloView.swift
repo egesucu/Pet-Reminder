@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelloView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.green
+    @AppStorage("seenHello") var helloSeen = false
     @State private var navigateToHome = false
     @State private var buttonTimer: Timer?
     @State private var imageTimer: Timer?
@@ -34,6 +35,7 @@ struct HelloView: View {
                 HStack {
                     Spacer()
                     Button {
+                        helloSeen = true
                         navigateToHome.toggle()
                     } label: {
                         Text("welcome_go_button")

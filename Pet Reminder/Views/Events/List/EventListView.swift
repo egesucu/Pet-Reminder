@@ -51,7 +51,7 @@ struct EventListView: View {
     @ViewBuilder
     func showEventView() -> some View {
         if eventVM.events.isEmpty {
-            EmptyEventView(eventVM: eventVM)
+            EmptyPageView(onRefreshEvents: reloadEvents, emptyPageReference: .events)
         } else {
             EventsView(eventVM: eventVM)
         }

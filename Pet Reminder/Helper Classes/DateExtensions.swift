@@ -41,6 +41,11 @@ extension Date {
         return self.formatted(.dateTime.day()
             .month(.twoDigits).year())
     }
+
+    static func randomDate() -> Self {
+        let components: DateComponents = .generateRandomDateComponent()
+        return Calendar.current.date(from: components) ?? .now
+    }
 }
 // MARK: - Calendar
 extension Calendar {
@@ -48,3 +53,6 @@ extension Calendar {
         return date >= Date.tomorrow
     }
 }
+
+/// 60(sec) * 60(min) * 24(hours) * 30(days) = 2_592_000
+let oneMonthInMilliSeconds: Double = 2_592_000

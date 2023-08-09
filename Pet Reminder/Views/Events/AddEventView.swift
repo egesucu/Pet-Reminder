@@ -16,12 +16,22 @@ struct AddEventView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     let feedback = UINotificationFeedbackGenerator()
+    
+    var filteredCalendars: [EKCalendar] {
+        return eventVM.calendars
+            .filter { $0.allowsContentModifications }
+    }
 
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("add_event_info")) {
                     TextField("add_event_name", text: $eventVM.eventName)
+                    Picker("add_event_calendar", selection: $eventVM.selectedCalendar) {
+                        ForEach(filteredCalendars, id: \.calendarIdentifier) {
+                            Text($0.title)
+                        }
+                    }
                 }
                 Section(header: Text("add_event_time")) {
                     Toggle("all_day_title", isOn: $eventVM.isAllDay)

@@ -1,5 +1,5 @@
 //
-//  TodaysEventsView.swift
+//  FutureEventsView.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 27.04.2023.
@@ -9,12 +9,23 @@
 import SwiftUI
 import EventKit
 
-struct TodaysEventsView: View {
+struct FutureEventsView: View {
 
     var eventVM: EventManager
+    @Binding var filteredCalendar: EKCalendar?
 
     var filteredEvents: [EKEvent] {
-        eventVM.events.filter({ Calendar.current.isDateInToday($0.startDate)})
+        withAnimation {
+            eventVM.events.filter {
+                if let filteredCalendar {
+                    return Calendar.current.isDateLater(date: $0.startDate) &&
+                    $0.calendar == filteredCalendar
+                } else {
+                    return Calendar.current.isDateLater(date: $0.startDate)
+                }
+            }
+        }
+        
     }
 
     var body: some View {
@@ -29,11 +40,11 @@ struct TodaysEventsView: View {
                 }
             }
         } header: {
-            Text("today_title")
+            Text("upcoming_title")
         }
     }
 }
 
 #Preview {
-    TodaysEventsView(eventVM: .init(isDemo: true))
+    FutureEventsView(eventVM: .init(isDemo: true), filteredCalendar: .constant(nil))
 }

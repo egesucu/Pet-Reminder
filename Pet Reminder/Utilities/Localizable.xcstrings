@@ -1,11 +1,27 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
+    },
     "\n%@, %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "\n%1$@, %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "\n%1$@, %2$@"
           }
         }
@@ -21,12 +37,18 @@
         }
       }
     },
-    "%@, %@ " : {
+    "%@, %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@, %2$@ "
+            "value" : "%1$@, %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@"
           }
         }
       }
@@ -105,6 +127,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etkinlik Ekle"
+          }
+        }
+      }
+    },
+    "add_event_calendar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takvim"
           }
         }
       }
@@ -258,6 +296,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yeni Etkinlik"
+          }
+        }
+      }
+    },
+    "All" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tümü"
           }
         }
       }
@@ -438,17 +486,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Evcil Hayvanın için varsayılan bildirimleri yarat."
-          }
-        }
-      }
-    },
-    "Data found in CloudKit, fetching data" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CloudKit'de veri bulundu, çekiliyor"
           }
         }
       }
@@ -1275,6 +1312,22 @@
         }
       }
     },
+    "pet_add_pet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let's add one."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haydi brini ekleyelim."
+          }
+        }
+      }
+    },
     "pet_name_found" : {
       "localizations" : {
         "en" : {
@@ -1331,13 +1384,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Pets added yet. Let's add one."
+            "value" : "No Pets added yet."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Henüz evcil hayvan eklemedin. Hadi bir tane ekle."
+            "value" : "Henüz evcil hayvan eklemedin."
           }
         }
       }

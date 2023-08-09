@@ -22,5 +22,5 @@ struct EventTitleView: View {
 }
 
 #Preview {
-    EventTitleView(eventTitle: .constant(""))
+    EventTitleView(eventTitle: .constant("Event"))
 }

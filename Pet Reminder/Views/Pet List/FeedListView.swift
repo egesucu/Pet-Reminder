@@ -15,7 +15,7 @@ struct FeedListView: View {
     @Binding var eveningOn: Bool
     @Environment(\.managedObjectContext) var viewContext
 
-    var pet: Pet = .init()
+    var pet: Pet
 
     let feedback = UINotificationFeedbackGenerator()
 
@@ -62,9 +62,11 @@ struct FeedListView: View {
     }
 
     var todaysFeeds: [Feed] {
-        if let feedSet = pet.feeds?.allObjects as? [Feed] {
-            return feedSet.filter({ feed in
-                Calendar.current.isDateInToday(feed.feedDate ?? .now) })
+        if let feedSet = pet.feeds,
+           let feeds = feedSet.allObjects as? [Feed] {
+            return feeds.filter { feed in
+                Calendar.current.isDateInToday(feed.feedDate ?? .now)
+            }
         }
         return []
     }
@@ -116,6 +118,6 @@ struct FeedListView: View {
 }
 
 #Preview {
-    FeedListView(morningOn: .constant(true), eveningOn: .constant(false))
+    FeedListView(morningOn: .constant(true), eveningOn: .constant(false), pet: .init())
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

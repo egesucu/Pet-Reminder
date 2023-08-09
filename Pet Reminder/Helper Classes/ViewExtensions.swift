@@ -11,6 +11,12 @@ import MapKit
 import CoreLocation
 
 extension View {
+    
+    func Print(_ variables: Any...) -> some View {
+        for variable in variables { print(variable) }
+        return EmptyView()
+    }
+    
     // swiftlint:disable:next cyclomatic_complexity
     func openURLWithMap(latitude: CGFloat, longitude: CGFloat, application: MapApplication) {
         switch application {

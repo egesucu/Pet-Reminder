@@ -14,15 +14,24 @@ struct PetReminderApp: App {
 
     @Environment(\.scenePhase) var scenePhase
     @AppStorage(Strings.tintColor) var tintColor = Color(uiColor: .systemGreen)
+    @AppStorage("seenHello") var helloSeen = false
 
     let persistence = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            HelloView()
-                .environment(\.managedObjectContext, persistence.container.viewContext)
-                .tint(tintColor)
-                .onAppear(perform: checkIcloud)
+            if helloSeen {
+                HelloView()
+                    .environment(\.managedObjectContext, persistence.container.viewContext)
+                    .tint(tintColor)
+                    .onAppear(perform: checkIcloud)
+            } else {
+                HomeManagerView()
+                    .environment(\.managedObjectContext, persistence.container.viewContext)
+                    .tint(tintColor)
+                    .onAppear(perform: checkIcloud)
+            }
+            
         }
     }
 }
