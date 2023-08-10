@@ -14,7 +14,7 @@ struct PetBirthdayView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var body: some View {
-        HStack {
+        VStack {
             Spacer()
             Text("birthday_title")
                 .font(.title2)

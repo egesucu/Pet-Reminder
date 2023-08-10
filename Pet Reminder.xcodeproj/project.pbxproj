@@ -25,6 +25,7 @@
 		9D13B2352A5CDE9400E6C598 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D13B2342A5CDE9400E6C598 /* FeedListView.swift */; };
 		9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */; };
 		9D279843257ABE710078B668 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D279842257ABE710078B668 /* IndicatorView.swift */; };
+		9D326E732A8549B400C1AC8D /* NewAddPetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D326E722A8549B400C1AC8D /* NewAddPetView.swift */; };
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
@@ -115,6 +116,7 @@
 		9D13B2342A5CDE9400E6C598 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		9D279842257ABE710078B668 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		9D326E722A8549B400C1AC8D /* NewAddPetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAddPetView.swift; sourceTree = "<group>"; };
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				9D5DC0E029F58074007A444D /* PetBirthdayView.swift */,
 				9D5DC0DE29F58061007A444D /* PetNameTextField.swift */,
 				9D5DC0DC29F5804E007A444D /* PetImageView.swift */,
+				9D326E722A8549B400C1AC8D /* NewAddPetView.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
+				9D326E732A8549B400C1AC8D /* NewAddPetView.swift in Sources */,
 				7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */,
 				725F44CA2A260B020096CCCB /* StringExtensions.swift in Sources */,
 				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,

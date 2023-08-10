@@ -361,6 +361,9 @@
         }
       }
     },
+    "Back" : {
+
+    },
     "birthday_ask_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1054,6 +1057,9 @@
           }
         }
       }
+    },
+    "Next" : {
+
     },
     "no_account" : {
       "extractionState" : "manual",
