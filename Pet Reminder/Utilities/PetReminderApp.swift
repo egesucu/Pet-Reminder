@@ -21,12 +21,12 @@ struct PetReminderApp: App {
     var body: some Scene {
         WindowGroup {
             if helloSeen {
-                HelloView()
+                HomeManagerView()
                     .environment(\.managedObjectContext, persistence.container.viewContext)
                     .tint(tintColor)
                     .onAppear(perform: checkIcloud)
             } else {
-                HomeManagerView()
+                HelloView()
                     .environment(\.managedObjectContext, persistence.container.viewContext)
                     .tint(tintColor)
                     .onAppear(perform: checkIcloud)

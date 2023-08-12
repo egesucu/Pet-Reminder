@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import OSLog
 
 struct SettingsView: View {
 
@@ -38,6 +39,9 @@ struct SettingsView: View {
                 } footer: {
                     Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
                 }
+                #if DEBUG
+                debugMenu
+                #endif
             }
 
             .navigationTitle(Text("settings_tab_title"))
@@ -45,6 +49,26 @@ struct SettingsView: View {
         }.navigationViewStyle(.stack)
     }
 }
+
+#if DEBUG
+private var debugMenu: some View {
+    Section {
+        Button("remove_userdefaults", action: {
+            let domainName = Bundle.main.bundleIdentifier ?? ""
+            UserDefaults.standard.removePersistentDomain(forName: domainName)
+            UserDefaults.standard.synchronize()
+            Logger.viewCycle.notice("App crashed for resetting UserDefaults.")
+            Logger.viewCycle.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
+            //assert(false)
+        })
+    } header: {
+        Text("debug_menu_title")
+    } footer: {
+        Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
+    }
+}
+#endif
+
 
 #Preview {
     SettingsView()

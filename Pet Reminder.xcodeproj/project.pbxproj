@@ -42,6 +42,9 @@
 		9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */; };
 		9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */; };
 		9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EE29F58860007A444D /* ActionButton.swift */; };
+		9D62936E2A87CDFA00BA577A /* HelloViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936D2A87CDFA00BA577A /* HelloViewViewModel.swift */; };
+		9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */; };
+		9D6293722A87D46300BA577A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
@@ -132,6 +135,9 @@
 		9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetActionsView.swift; sourceTree = "<group>"; };
 		9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewModel.swift; sourceTree = "<group>"; };
 		9D5DC0EE29F58860007A444D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		9D62936D2A87CDFA00BA577A /* HelloViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloViewViewModel.swift; sourceTree = "<group>"; };
+		9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
+		9D6293712A87D46300BA577A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */,
+				9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */,
 				725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */,
 				725F44CB2A260B3D0096CCCB /* DateExtensions.swift */,
 				725F44C92A260B020096CCCB /* StringExtensions.swift */,
@@ -240,6 +247,7 @@
 				725F44C52A260ACA0096CCCB /* MapApplication.swift */,
 				725F44C32A260ABB0096CCCB /* URLDefinitions.swift */,
 				7224CB8A29F7B1C0009B0ADC /* Enums */,
+				9D6293712A87D46300BA577A /* Logger.swift */,
 			);
 			path = "Helper Classes";
 			sourceTree = "<group>";
@@ -666,6 +674,7 @@
 				9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
 				9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */,
+				9D6293722A87D46300BA577A /* Logger.swift in Sources */,
 				9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */,
 				9DF9A4AC2A8419780004CB8E /* EmptyPageView.swift in Sources */,
 				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
@@ -694,6 +703,7 @@
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
 				9D4114AB2A82F7CD00C21D87 /* Persistence.swift in Sources */,
+				9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
@@ -703,6 +713,7 @@
 				9DF9A4AE2A842B470004CB8E /* MapItemView.swift in Sources */,
 				9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */,
 				9DCDA06126E3C34600DF290F /* Pin.swift in Sources */,
+				9D62936E2A87CDFA00BA577A /* HelloViewViewModel.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,10 +12,7 @@ struct HelloView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
     @AppStorage("seenHello") var helloSeen = false
     @State private var navigateToHome = false
-    @State private var buttonTimer: Timer?
-    @State private var imageTimer: Timer?
-    @State private var buttonOpacity = 0.0
-    @State private var imageOffset: CGFloat = -200
+    @State private var shouldAnimate = false
 
     var body: some View {
         ZStack {
@@ -25,8 +22,6 @@ struct HelloView: View {
                 Image(uiImage: UIImage(named: "AppIcon") ?? .init())
                     .resizable()
                     .frame(width: 200, height: 200)
-                    .offset(x: imageOffset, y: 0)
-                    .animation(.easeInOut, value: imageOffset)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Text("welcome_context")
                     .padding(.vertical)
@@ -46,7 +41,6 @@ struct HelloView: View {
                     .background(tintColor)
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
                     .shadow(radius: 3)
-                    .opacity(buttonOpacity)
                     .fullScreenCover(isPresented: $navigateToHome, content: {
                         HomeManagerView()
                     })
@@ -54,34 +48,17 @@ struct HelloView: View {
                 }
             }
             .padding()
+            .opacity(shouldAnimate ? 1.0 : 0.0)
         }
-        .onAppear(perform: showGoButton)
+        .onAppear(perform: animateView)
+    }
+    
+    private func animateView() {
+        withAnimation(.spring().speed(0.2)) {
+            shouldAnimate.toggle()
+        }
     }
 
-    private func showGoButton() {
-        imageTimer = Timer.scheduledTimer(
-            withTimeInterval: 0.1, repeats: true, block: { timer in
-                if imageOffset == 0 {
-                    timer.invalidate()
-                } else {
-                    imageOffset += 10
-                }
-            })
-        DispatchQueue
-            .main
-            .asyncAfter(deadline: .now() + 2.0) {
-                buttonTimer = Timer
-                    .scheduledTimer(
-                        withTimeInterval: 0.1,
-                        repeats: true) { timer in
-                            if buttonOpacity == 1.0 {
-                                timer.invalidate()
-                            } else {
-                                buttonOpacity += 0.1
-                            }
-                        }
-            }
-    }
 }
 
 #Preview {

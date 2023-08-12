@@ -527,6 +527,9 @@
         }
       }
     },
+    "debug_menu_title" : {
+
+    },
     "default_photo_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1291,6 +1294,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1335,6 +1339,7 @@
       }
     },
     "pet_name_found" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1554,6 +1559,9 @@
           }
         }
       }
+    },
+    "remove_userdefaults" : {
+
     },
     "restricted_account" : {
       "extractionState" : "manual",
