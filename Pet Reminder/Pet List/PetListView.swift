@@ -82,7 +82,7 @@ struct PetListView: View {
             })
             .navigationTitle(petListTitle)
             .sheet(isPresented: $addPet, onDismiss: { }, content: {
-                AddPetView()
+                NewAddPetView()
             })
         }
     }
