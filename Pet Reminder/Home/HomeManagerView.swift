@@ -7,21 +7,29 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
     @State private var tappedTwice = false
 
+    var handler: Binding<PetReminderTabs> { Binding(
+            get: { self.currentTab },
+            set: {
+                if $0 == self.currentTab {
+                    tappedTwice.toggle()
+                }
+                self.currentTab = $0
+            }
+        )}
+
     var body: some View {
 
-        TabView(selection: $currentTab) {
-            PetListView(reference: .petList)
+        TabView(selection: handler) {
+            PetListView(reference: .petList, tappedTwice: $tappedTwice)
                 .tabItem {
                     Image(systemName: SFSymbols.pawPrint)
                 }
-                .onTapGesture(count: 2, perform: {
-                    tappedTwice.toggle()
-                })
                 .tag(PetReminderTabs.home)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
             EventListView()
@@ -49,8 +57,6 @@ struct HomeManagerView: View {
 }
 
 #Preview {
-    NavigationStack {
         HomeManagerView()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
 }

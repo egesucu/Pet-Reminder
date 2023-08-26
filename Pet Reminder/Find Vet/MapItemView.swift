@@ -10,13 +10,13 @@ import SwiftUI
 import MapKit
 
 struct MapItemView: View {
-    
+
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
-    
+
     var item: Pin
-    
+
     var onSetRegion: (MKMapItem) -> Void
-    
+
     var body: some View {
         VStack {
             Text(item.item.name ?? "")
@@ -72,7 +72,7 @@ struct MapItemView: View {
 }
 #Preview {
     MapItemView(item: .init(item: .init())) { _ in
-        
+
     }
 }
 #endif

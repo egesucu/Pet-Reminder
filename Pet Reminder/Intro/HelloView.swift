@@ -52,7 +52,7 @@ struct HelloView: View {
         }
         .onAppear(perform: animateView)
     }
-    
+
     private func animateView() {
         withAnimation(.spring().speed(0.2)) {
             shouldAnimate.toggle()

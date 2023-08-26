@@ -31,7 +31,7 @@ struct PetReminderApp: App {
                     .tint(tintColor)
                     .onAppear(perform: checkIcloud)
             }
-            
+
         }
     }
 }

@@ -9,12 +9,16 @@
 import SwiftUI
 
 struct NewAddPetView: View {
-    
+
     @State private var manager = AddPetViewModel()
     @State private var position = 0
     @State private var step: SetupSteps = .name
     @State private var feedTime: FeedTimeSelection = .both
-    
+    @Environment(\.dismiss)
+    var dismiss
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -34,14 +38,14 @@ struct NewAddPetView: View {
             actionView
         }
     }
-    
+
     private var actionView: some View {
         HStack {
-            Button("Back") {
+            Button(step != .name ? "Back" : "Cancel") {
                 withAnimation {
                     switch step {
                     case .name:
-                        break
+                        dismiss()
                     case .birthday:
                         step = .name
                     case .photo:
@@ -53,10 +57,10 @@ struct NewAddPetView: View {
                     }
                 }
             }
-            .disabled(step == .name)
             .buttonStyle(.bordered)
+            .tint(step == .name ? .red : .black)
             Spacer()
-            Button("Next") {
+            Button(step != .feedTime ? "Next" : "Save") {
                 withAnimation {
                     switch step {
                     case .name:
@@ -68,12 +72,17 @@ struct NewAddPetView: View {
                     case .feedSelection:
                         step = .feedTime
                     case .feedTime:
-                        break
+                        manager
+                            .savePet(
+                                modelContext: viewContext) {
+                                    dismiss()
+                                }
                     }
                 }
             }
-            .disabled(step == .feedTime)
             .buttonStyle(.bordered)
+            .tint(step == .feedTime ? .green : .black)
+            .disabled(manager.name.isEmpty)
         }
         .padding(50)
     }
@@ -87,12 +96,12 @@ enum SetupSteps: Int, CaseIterable {
     var id: String {
         UUID().uuidString
     }
-    
+
     case name, birthday, photo, feedSelection, feedTime
 }
 
 struct PageView: View {
-    
+
     @Binding var selectedPage: SetupSteps
     @Binding var name: String
     @Binding var birthday: Date
@@ -100,7 +109,7 @@ struct PageView: View {
     @Binding var feedTime: FeedTimeSelection
     @Binding var morningFeed: Date
     @Binding var eveningFeed: Date
-    
+
     var body: some View {
         TabView(selection: $selectedPage) {
             PetNameTextField(name: $name)
@@ -118,7 +127,7 @@ struct PageView: View {
             PetNotificationSelectionView(dayType: $feedTime, morningFeed: $morningFeed, eveningFeed: $eveningFeed)
                 .padding(.all)
                 .tag(SetupSteps.feedTime)
-            
+
         }
         .frame(width: UIScreen.main.bounds.width, height: 300)
         .tabViewStyle(.page(indexDisplayMode: .never))
@@ -126,9 +135,9 @@ struct PageView: View {
 }
 
 struct NotificationSelectView: View {
-    
+
     @Binding var dayType: FeedTimeSelection
-    
+
     var body: some View {
         VStack {
             Text("feed_time_title")

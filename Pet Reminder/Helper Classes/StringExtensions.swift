@@ -11,7 +11,11 @@ import EventKit
 import SwiftUI
 
 struct Strings {
-    internal static let demoPets = ["Viski", "Dolly", "Mısır", "Boncuk", "Pop", "Rocky", "Bunny", "Spur", "Lully", "Baggy"]
+    internal static let demoPets = [
+        "Viski", "Dolly", "Mısır", "Boncuk",
+        "Pop", "Rocky", "Bunny", "Spur", "Lully",
+        "Baggy"
+    ]
     internal static let demoVaccines = ["Pulvarin", "Alvarin", "Gagarin", "Aclor", "Silverin", "Volverine"]
     internal static let placeholderVaccine = "Pulvarin"
     internal static let simulationError = "Simulation does not support User Location"

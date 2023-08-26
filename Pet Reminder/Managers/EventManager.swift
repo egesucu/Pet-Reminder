@@ -54,7 +54,7 @@ class EventManager {
             }
         }
     }
-    
+
     func fetchCalendars() {
         self.calendars = eventStore.calendars(for: .event)
         setPetCalendar()
@@ -136,32 +136,29 @@ class EventManager {
 
     func saveEvent(onFinish: () -> Void) async {
 
-        let calendars = eventStore.calendars(for: .event)
-        if let petCalendar = calendars.first(where: { $0.title == Strings.petReminder }) {
-            let newEvent = EKEvent(eventStore: eventStore)
-            newEvent.title = eventName
-            newEvent.isAllDay = isAllDay
+        let newEvent = EKEvent(eventStore: eventStore)
+        newEvent.title = eventName
+        newEvent.isAllDay = isAllDay
 
-            if isAllDay {
-                newEvent.startDate = allDayDate
-                newEvent.endDate = allDayDate
-            } else {
-                newEvent.startDate = eventStartDate
-                newEvent.endDate = eventEndDate
-            }
+        if isAllDay {
+            newEvent.startDate = allDayDate
+            newEvent.endDate = allDayDate
+        } else {
+            newEvent.startDate = eventStartDate
+            newEvent.endDate = eventEndDate
+        }
 
-            newEvent.calendar = selectedCalendar
+        newEvent.calendar = selectedCalendar
 
-            let alarm = EKAlarm(relativeOffset: -60 * 10)
-            newEvent.addAlarm(alarm)
-            newEvent.notes = String(localized: "add_event_note")
+        let alarm = EKAlarm(relativeOffset: -60 * 10)
+        newEvent.addAlarm(alarm)
+        newEvent.notes = String(localized: "add_event_note")
 
-            do {
-                try eventStore.save(newEvent, span: .thisEvent)
-                await reloadEvents(onFinish: onFinish)
-            } catch {
-                print(error.localizedDescription)
-            }
+        do {
+            try eventStore.save(newEvent, span: .thisEvent)
+            await reloadEvents(onFinish: onFinish)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 

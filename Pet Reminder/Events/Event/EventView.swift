@@ -10,15 +10,15 @@ import SwiftUI
 import EventKit
 
 struct EventView: View {
-    
+
     var event: EKEvent
     @State private var eventTitle = ""
     @State private var dateString = ""
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
-    
+
     var eventVM: EventManager
-    
+
     var body: some View {
         HStack {
             if event.isAllDay {
@@ -31,7 +31,7 @@ struct EventView: View {
                onDismiss: onSheetDismiss,
                content: showEventDetail)
     }
-    
+
     @ViewBuilder
     private func allDayEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
@@ -49,7 +49,7 @@ struct EventView: View {
                 .onTapGesture(perform: showWarning)
         }
     }
-    
+
     @ViewBuilder
     private func futureEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
@@ -68,7 +68,7 @@ struct EventView: View {
                 .onTapGesture(perform: showWarning)
         }
     }
-    
+
     private func showEventDetail() -> some View {
         SheetContent(event: event)
             .presentationDetents([.medium])
@@ -84,11 +84,11 @@ extension EventView {
             await eventVM.reloadEvents()
         }
     }
-    
+
     private func showWarning() {
         self.showWarningForCalendar.toggle()
     }
-    
+
     private func fillData() {
         self.eventTitle = event.title
         eventVM.fillEventData(event: event) { content in

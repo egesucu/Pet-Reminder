@@ -42,7 +42,6 @@
 		9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */; };
 		9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */; };
 		9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EE29F58860007A444D /* ActionButton.swift */; };
-		9D62936E2A87CDFA00BA577A /* HelloViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936D2A87CDFA00BA577A /* HelloViewViewModel.swift */; };
 		9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */; };
 		9D6293722A87D46300BA577A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
@@ -225,6 +224,14 @@
 			path = AddPopup;
 			sourceTree = "<group>";
 		};
+		9D0E010E2A8BD21D0034AF76 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				9D62936D2A87CDFA00BA577A /* HelloViewViewModel.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		9D2EF8F926C410C7009048C4 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +311,7 @@
 				9D71CEF2248836BD00AA1458 /* Frameworks */,
 				9D8E76F0248666BD004610C8 /* Pet Reminder */,
 				9D8E76EF248666BD004610C8 /* Products */,
+				9D0E010E2A8BD21D0034AF76 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -400,13 +408,13 @@
 			isa = PBXGroup;
 			children = (
 				9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */,
+				9D326E722A8549B400C1AC8D /* NewAddPetView.swift */,
 				9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */,
 				9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */,
 				9D5DC0E229F58088007A444D /* PetShowImageView.swift */,
 				9D5DC0E029F58074007A444D /* PetBirthdayView.swift */,
 				9D5DC0DE29F58061007A444D /* PetNameTextField.swift */,
 				9D5DC0DC29F5804E007A444D /* PetImageView.swift */,
-				9D326E722A8549B400C1AC8D /* NewAddPetView.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -713,7 +721,6 @@
 				9DF9A4AE2A842B470004CB8E /* MapItemView.swift in Sources */,
 				9D98B14128D60FFF0018C7A6 /* MapWithSearchBarView.swift in Sources */,
 				9DCDA06126E3C34600DF290F /* Pin.swift in Sources */,
-				9D62936E2A87CDFA00BA577A /* HelloViewViewModel.swift in Sources */,
 				9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

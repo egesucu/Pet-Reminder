@@ -362,7 +362,14 @@
       }
     },
     "Back" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        }
+      }
     },
     "birthday_ask_label" : {
       "extractionState" : "manual",
@@ -427,6 +434,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İptal Et"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vazgeç"
           }
         }
       }
@@ -528,7 +545,20 @@
       }
     },
     "debug_menu_title" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug Menu"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug Menu"
+          }
+        }
+      }
     },
     "default_photo_label" : {
       "extractionState" : "manual",
@@ -1062,7 +1092,14 @@
       }
     },
     "Next" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İleri"
+          }
+        }
+      }
     },
     "no_account" : {
       "extractionState" : "manual",
@@ -1293,17 +1330,6 @@
         }
       }
     },
-    "OK" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        }
-      }
-    },
     "payment_cant" : {
       "comment" : "PAYMENT",
       "extractionState" : "manual",
@@ -1334,23 +1360,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Haydi brini ekleyelim."
-          }
-        }
-      }
-    },
-    "pet_name_found" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You have a pet with this name."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu isimle bir evcil hayvanınız mevcut."
           }
         }
       }
@@ -1463,13 +1472,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your friends photo belongs to you. It can not be use for a commercial purpose."
+            "value" : "Your photo belongs to you. It cant' be use for a commercial purpose. You can also continue without selecting anything."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dostunuzun resmi size aittir. Herhangi bir ticari faaliyet için kullanılamaz."
+            "value" : "Fotoğrafınız size aittir. Ticari amaçlarla kullanılamaz. Ayrıca fotoğraf seçmeden devam edebilirsiniz."
           }
         }
       }
@@ -1543,6 +1552,16 @@
         }
       }
     },
+    "Remove" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sil"
+          }
+        }
+      }
+    },
     "remove_all" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1561,7 +1580,20 @@
       }
     },
     "remove_userdefaults" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove UserDefaults"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UserDefaults'u Sil"
+          }
+        }
+      }
     },
     "restricted_account" : {
       "extractionState" : "manual",
@@ -1588,6 +1620,16 @@
             "value" : "Save"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydet"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

@@ -8,16 +8,18 @@
 
 import SwiftUI
 import CoreData
+import OSLog
 
 struct PetListView: View {
 
     var reference: PetListViewReference = .petList
-    
+
     @Environment(\.managedObjectContext)
     private var viewContext
     @Environment(\.undoManager) var undoManager
     @State private var addPet = false
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @Binding var tappedTwice: Bool
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     var pets: FetchedResults<Pet>
@@ -28,28 +30,24 @@ struct PetListView: View {
             ZStack(alignment: .bottom) {
                 VStack {
                     if pets.count > 0 {
-                        List {
-                            ForEach(pets, id: \.name) { pet in
-                                NavigationLink {
-                                    switch reference {
-                                    case .petList:
-                                        PetDetailView(pet: pet)
-                                    case .settings:
-                                        PetChangeView(pet: pet)
+                        ScrollViewReader { proxy in
+                            petsView
+                                .onChange(of: tappedTwice) { oldValue, newValue in
+                                    if newValue != oldValue {
+                                        if newValue {
+                                            withAnimation {
+                                                proxy.scrollTo(pets.first?.name, anchor: .top)
+                                            }
+                                            tappedTwice.toggle()
+                                        } else {
+                                            Logger
+                                                .viewCycle
+                                                .debug("Not scrolled, TapTwice Value: \(tappedTwice.description)")
+                                        }
                                     }
-                                } label: {
-                                    PetCell(pet: pet)
-                                        .padding()
-                                        .transition(.slide)
                                 }
-                            }.onDelete { indexSet in
-                                withAnimation {
-                                    deletePet(at: indexSet)
-                                }
-                                
-                            }
-
                         }
+
                     } else {
                         switch reference {
                         case .petList:
@@ -86,11 +84,37 @@ struct PetListView: View {
             })
         }
     }
-    
+
+    private var petsView: some View {
+        List {
+            ForEach(pets, id: \.name) { pet in
+                NavigationLink {
+                    switch reference {
+                    case .petList:
+                        PetDetailView(pet: pet)
+                            .id(pet.name)
+                    case .settings:
+                        PetChangeView(pet: pet)
+                            .id(pet.name)
+                    }
+                } label: {
+                    PetCell(pet: pet)
+                        .padding()
+                        .transition(.slide)
+                }
+            }.onDelete { indexSet in
+                withAnimation {
+                    deletePet(at: indexSet)
+                }
+
+            }
+        }
+    }
+
     private var petListTitle: Text {
         Text(reference == .settings ? "manage_pet_title" : "pet_name_title")
     }
-    
+
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -119,11 +143,11 @@ struct PetListView: View {
 
 #Preview {
     NavigationStack {
-        PetListView()
+        PetListView(tappedTwice: .constant(false))
             .environment(
                 \.managedObjectContext,
                  PersistenceController.preview.container.viewContext
-        )
+            )
     }
 }
 

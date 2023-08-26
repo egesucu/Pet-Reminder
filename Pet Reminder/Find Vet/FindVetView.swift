@@ -78,7 +78,7 @@ struct FindVetView: View {
 
         })
     }
-    
+
     private var bottomMapItemsView: some View {
         VStack {
 #if !targetEnvironment(simulator)

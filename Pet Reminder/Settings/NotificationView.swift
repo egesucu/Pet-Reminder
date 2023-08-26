@@ -55,7 +55,7 @@ struct NotificationView: View {
                 } header: {
                     Text(pet.name ?? "-")
                 } footer: {
-                    let count = notificationManager.notifications.filter({$0.identifier.contains(pet.name ?? "-")}).count
+                    let count = notificationAmount(for: pet.name)
                     Text("notification \(count)")
 
                 }
@@ -88,6 +88,13 @@ struct NotificationView: View {
             notificationManager
                 .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
+    }
+
+    func notificationAmount(for name: String?) -> Int {
+        return notificationManager
+            .notifications
+            .filter({$0.identifier.contains(name ?? "-")})
+            .count
     }
 
     private func fetchNotificiations() {

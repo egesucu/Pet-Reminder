@@ -22,7 +22,7 @@ struct SettingsView: View {
                 Section(header: Text("app_settings")) {
                     NavigationLink(
                         "manage_pet_title",
-                        destination: PetListView(reference: .settings)
+                        destination: PetListView(reference: .settings, tappedTwice: .constant(false))
                             .environment(\.managedObjectContext, viewContext)
                     )
                     ColorPicker("settings_tint_color", selection: $tintColor)
@@ -59,7 +59,7 @@ private var debugMenu: some View {
             UserDefaults.standard.synchronize()
             Logger.viewCycle.notice("App crashed for resetting UserDefaults.")
             Logger.viewCycle.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
-            //assert(false)
+            // assert(false)
         })
     } header: {
         Text("debug_menu_title")
@@ -68,7 +68,6 @@ private var debugMenu: some View {
     }
 }
 #endif
-
 
 #Preview {
     SettingsView()

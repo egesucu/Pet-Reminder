@@ -11,44 +11,55 @@ import MapKit
 import CoreLocation
 
 extension View {
-    
-    func Print(_ variables: Any...) -> some View {
+
+    func printVariable(_ variables: Any...) -> some View {
         for variable in variables { print(variable) }
         return EmptyView()
     }
-    
-    // swiftlint:disable:next cyclomatic_complexity
+
     func openURLWithMap(latitude: CGFloat, longitude: CGFloat, application: MapApplication) {
         switch application {
             case .google:
-                guard let deeplink = URLDefinitions.googleMapsDeeplinkURL else { return }
-                if UIApplication.shared.canOpenURL(deeplink) {
-                    let url = URL(string: String(format: URLDefinitions.googleMapsLocationString, latitude, longitude))
-                    if let url {
-                        UIApplication.shared.open(url)
-                    }
-                } else {
-                    if let url = URLDefinitions.googleMapsAppStoreURL {
-                        UIApplication.shared.open(url)
-                    }
-                }
+                handleGoogleMaps(latitude: latitude, longitude: longitude)
             case .apple:
-                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                let placemark = MKPlacemark(coordinate: coordinate)
-                let item = MKMapItem(placemark: placemark)
-                item.openInMaps()
+                handleAppleMaps(latitude: latitude, longitude: longitude)
             case .yandex:
-                guard let deeplink = URLDefinitions.yandexMapsDeeplinkURL else { return }
-                if UIApplication.shared.canOpenURL(deeplink) {
-                    let url = URL(string: String(format: URLDefinitions.yandexMapsLocationString, latitude, longitude))
-                    if let url {
-                        UIApplication.shared.open(url)
-                    }
-                } else {
-                    if let url = URLDefinitions.yandexMapsAppStoreURL {
-                        UIApplication.shared.open(url)
-                    }
-                }
+                handleYandexMap(latitude: latitude, longitude: longitude)
+        }
+    }
+
+    private func handleGoogleMaps(latitude: CGFloat, longitude: CGFloat) {
+        guard let deeplink = URLDefinitions.googleMapsDeeplinkURL else { return }
+        if UIApplication.shared.canOpenURL(deeplink) {
+            let url = URL(string: String(format: URLDefinitions.googleMapsLocationString, latitude, longitude))
+            if let url {
+                UIApplication.shared.open(url)
+            }
+        } else {
+            if let url = URLDefinitions.googleMapsAppStoreURL {
+                UIApplication.shared.open(url)
+            }
+        }
+    }
+
+    private func handleAppleMaps(latitude: CGFloat, longitude: CGFloat) {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let item = MKMapItem(placemark: placemark)
+        item.openInMaps()
+    }
+
+    private func handleYandexMap(latitude: CGFloat, longitude: CGFloat) {
+        guard let deeplink = URLDefinitions.yandexMapsDeeplinkURL else { return }
+        if UIApplication.shared.canOpenURL(deeplink) {
+            let url = URL(string: String(format: URLDefinitions.yandexMapsLocationString, latitude, longitude))
+            if let url {
+                UIApplication.shared.open(url)
+            }
+        } else {
+            if let url = URLDefinitions.yandexMapsAppStoreURL {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }

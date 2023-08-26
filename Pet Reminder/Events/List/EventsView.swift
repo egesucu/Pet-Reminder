@@ -15,7 +15,7 @@ struct EventsView: View {
     var eventVM: EventManager
 
     @State private var dates = [Date]()
-    @State private var filteredCalendar: EKCalendar? = nil
+    @State private var filteredCalendar: EKCalendar?
 
     var body: some View {
         List {
@@ -26,7 +26,7 @@ struct EventsView: View {
             FutureEventsView(eventVM: eventVM, filteredCalendar: $filteredCalendar)
                 .transition(.slide)
         }
-        
+
         .onAppear(perform: getEventDates)
         .refreshable(action: eventVM.reloadEvents)
     }
@@ -37,7 +37,7 @@ struct EventsView: View {
         self.dates = eventDates.removeDuplicates().sorted()
         makePetCalendarDefault()
     }
-    
+
     private func makePetCalendarDefault() {
         if let petCalendar = eventVM.calendars.first(where: { $0.title == Strings.petReminder }) {
             filteredCalendar = petCalendar

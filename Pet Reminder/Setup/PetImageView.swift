@@ -18,9 +18,12 @@ struct PetImageView: View {
             let selectedImage = UIImage(data: selectedImageData) {
                 PetShowImageView(selectedImage: selectedImage, onImageDelete: removeImage)
             } else {
-                PhotoImagePickerView(photoData: $selectedImageData)
-                    .padding(.vertical)
+                Image(.defaultAnimal)
+                    .frame(width: 200, height: 200)
             }
+
+            PhotoImagePickerView(photoData: $selectedImageData)
+                .padding(.vertical)
             Text("photo_upload_detail_title")
                 .font(.footnote)
         }

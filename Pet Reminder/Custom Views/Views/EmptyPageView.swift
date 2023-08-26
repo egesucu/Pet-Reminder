@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct EmptyPageView: View {
-    
+
     var onAddPet: (() -> Void)?
     var onRefreshEvents: (() -> Void)?
     var emptyPageReference: EmptyPageReference = .none
-    
+
     var body: some View {
         switch emptyPageReference {
         case .petList:

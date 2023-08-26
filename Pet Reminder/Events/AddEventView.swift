@@ -16,7 +16,7 @@ struct AddEventView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     let feedback = UINotificationFeedbackGenerator()
-    
+
     var filteredCalendars: [EKCalendar] {
         return eventVM.calendars
             .filter { $0.allowsContentModifications }

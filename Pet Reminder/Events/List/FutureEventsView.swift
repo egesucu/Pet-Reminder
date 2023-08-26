@@ -25,7 +25,7 @@ struct FutureEventsView: View {
                 }
             }
         }
-        
+
     }
 
     var body: some View {

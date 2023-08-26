@@ -10,10 +10,10 @@ import SwiftUI
 import EventKit
 
 struct EventFilterView: View {
-    
+
     var eventVM: EventManager
     @Binding var filteredCalendar: EKCalendar?
-    
+
     var body: some View {
         LazyVGrid(columns: [.init(.adaptive(minimum: 150, maximum: 300))]) {
             ZStack {
@@ -30,7 +30,7 @@ struct EventFilterView: View {
                 withAnimation {
                     filteredCalendar = nil
                 }
-                
+
             }
             ForEach(eventVM.calendars, id: \.calendarIdentifier) { calendar in
                 ZStack {
@@ -54,8 +54,8 @@ struct EventFilterView: View {
             }
         }
     }
-    
-    func isCalendarSelected(calendar: EKCalendar) -> Bool{
+
+    func isCalendarSelected(calendar: EKCalendar) -> Bool {
         return calendar == filteredCalendar
     }
 }

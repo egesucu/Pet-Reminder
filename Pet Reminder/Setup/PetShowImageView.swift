@@ -16,24 +16,21 @@ struct PetShowImageView: View {
     var body: some View {
         HStack {
             Spacer()
-            ZStack(alignment: .topTrailing) {
-                Image(uiImage: selectedImage)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .frame(maxHeight: 150)
-                    .shadow(radius: 10)
-                Button {
-                    onImageDelete()
-                } label: {
-                    Image(systemName: SFSymbols.xcircleFill)
-                        .font(.title2)
-                        .foregroundColor(.red)
-                        .background(Color.black)
-                        .cornerRadius(100)
-                        .offset(x: -10, y: 10)
-                }
+            Image(uiImage: selectedImage)
+                .resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .frame(maxHeight: 150)
+                .shadow(radius: 10)
+                .padding(.trailing, 10)
+            Button {
+                onImageDelete()
+            } label: {
+                Text("Remove")
+                    .font(.title)
             }
+            .buttonStyle(.bordered)
+            .tint(.red)
             Spacer()
         }
     }

@@ -12,9 +12,9 @@ import EventKit
 struct SheetContent: View {
     @Environment(\.dismiss) var dismiss
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
-    
+
     var event: EKEvent
-    
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ESEventDetailView(event: event)
@@ -26,7 +26,7 @@ struct SheetContent: View {
                     .tint(tintColor)
             })
             .offset(x: -10, y: 10)
-            
+
         }
     }
 }
