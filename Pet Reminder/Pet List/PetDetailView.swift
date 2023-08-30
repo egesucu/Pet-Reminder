@@ -7,13 +7,12 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct PetDetailView: View {
 
-    var pet: Pet
+    @Binding var pet: Pet?
     var feed: Feed?
-    @State private var morningOn = false
-    @State private var eveningOn = false
     @State private var showFeedHistory = false
     @State private var showVaccines = false
 
@@ -21,47 +20,47 @@ struct PetDetailView: View {
 
     var body: some View {
         VStack {
-            ESImageView(data: pet.image)
-                .padding(.horizontal, 20)
-                .padding(.top, 20)
-                .frame(
-                    minWidth: 50,
-                    idealWidth: 100,
-                    maxWidth: 200,
-                    minHeight: 50,
-                    idealHeight: 100,
-                    maxHeight: 200,
-                    alignment: .center
-                )
-            Spacer()
-            FeedListView(
-                morningOn: $morningOn,
-                eveningOn: $eveningOn,
-                pet: pet
-            )
-            .padding(.bottom, 50)
+            if let pet {
+                ESImageView(data: pet.image)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .frame(
+                        minWidth: 50,
+                        idealWidth: 100,
+                        maxWidth: 200,
+                        minHeight: 50,
+                        idealHeight: 100,
+                        maxHeight: 200,
+                        alignment: .center
+                    )
+                Spacer()
+                FeedListView(pet: $pet)
+                .padding(.bottom, 50)
+                HStack {
+                    Button {
+                        Logger
+                            .viewCycle
+                            .info("PR: Feed History Tapped, pet name: \(pet.name ?? "")")
+                        showFeedHistory.toggle()
+                    } label: {
+                        Label("feeds_title", systemImage: "fork.knife.circle.fill")
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(tintColor)
+                    Button {
+                        Logger
+                            .viewCycle
+                            .info("PR: Vaccine History Tapped")
+                        showVaccines.toggle()
+                    } label: {
+                        Label("vaccines_title", systemImage: "syringe.fill")
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.blue)
+                }
 
-            HStack {
-                Button {
-                    showFeedHistory.toggle()
-                } label: {
-                    Label("feeds_title", systemImage: "fork.knife.circle.fill")
-                }
-                .buttonStyle(.bordered)
-                .tint(tintColor)
-                Button {
-                    showVaccines.toggle()
-                } label: {
-                    Label("vaccines_title", systemImage: "syringe.fill")
-                }
-                .buttonStyle(.bordered)
-                .tint(.blue)
+                Spacer()
             }
-
-            Spacer()
-        }
-        .onAppear {
-            getLatestFeed()
         }
         .fullScreenCover(isPresented: $showFeedHistory, content: {
             FeedHistory(feeds: filterFeeds())
@@ -69,11 +68,12 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines, content: {
             VaccineHistoryView(pet: pet)
         })
-        .navigationTitle(Text("pet_name_title \(pet.name ?? "")"))
+        .navigationTitle(Text("pet_name_title \(pet?.name ?? "")"))
     }
-// swiftlint: disable trailing_whitespace
+
     func filterFeeds() -> [Feed] {
-        if let feeds = pet.feeds?.allObjects as? [Feed] {
+        if let pet,
+            let feeds = pet.feeds?.allObjects as? [Feed] {
             return feeds.filter({ feed in
                 feed.morningFedStamp != nil || feed.eveningFedStamp != nil
             }).sorted(by: {
@@ -81,28 +81,14 @@ struct PetDetailView: View {
             })
         }
         return []
-        
-    }
-// swiftlint: enable trailing_whitespace
-
-    func getLatestFeed() {
-        if let feeds = pet.feeds?.allObjects as? [Feed] {
-            if let lastFeed = feeds.last {
-                if let date = lastFeed.feedDate {
-                    if Calendar.current.isDateInToday(date) {
-                        // We have a feed.
-                        morningOn = lastFeed.morningFed
-                        eveningOn = lastFeed.eveningFed
-                    }
-                }
-            }
-        }
     }
 }
 
 #Preview(traits: .portrait) {
-    NavigationStack {
-        PetDetailView(pet: .init())
+    let preview = PersistenceController.preview.container.viewContext
+    return NavigationStack {
+        PetDetailView(pet: .constant(Pet(context: preview)))
+            .environment(\.managedObjectContext, preview)
     }
     .navigationViewStyle(.stack)
 }

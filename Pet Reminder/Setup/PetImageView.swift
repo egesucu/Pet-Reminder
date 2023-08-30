@@ -7,10 +7,12 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct PetImageView: View {
 
     @Binding var selectedImageData: Data?
+    @Binding var selectedPage: SetupSteps
 
     var body: some View {
         VStack {
@@ -27,6 +29,11 @@ struct PetImageView: View {
             Text("photo_upload_detail_title")
                 .font(.footnote)
         }
+        .onChange(of: selectedImageData) { _, _ in
+            Logger
+                .viewCycle
+                .info("Selected Page is: \(selectedPage.text)")
+        }
     }
 
     func removeImage() {
@@ -35,5 +42,5 @@ struct PetImageView: View {
 }
 
 #Preview {
-    PetImageView(selectedImageData: .constant(nil))
+    PetImageView(selectedImageData: .constant(nil), selectedPage: .constant(.birthday))
 }

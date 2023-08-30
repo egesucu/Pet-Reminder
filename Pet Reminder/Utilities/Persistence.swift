@@ -17,7 +17,7 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for index in 0..<20 {
+        for index in 0..<10 {
             let demoPet = Pet(context: viewContext)
             demoPet.name = Strings.demoPets[safe: index] ?? "-"
             demoPet.id = UUID()

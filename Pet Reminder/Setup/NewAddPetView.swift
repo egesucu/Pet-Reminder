@@ -21,19 +21,15 @@ struct NewAddPetView: View {
 
     var body: some View {
         VStack {
-            ScrollView(.horizontal) {
-                LazyHStack {
-                    PageView(
-                        selectedPage: $step,
-                        name: $manager.name,
-                        birthday: $manager.birthday,
-                        selectedImageData: $manager.selectedImageData,
-                        feedTime: $feedTime,
-                        morningFeed: $manager.morningFeed,
-                        eveningFeed: $manager.eveningFeed
-                    )
-                }
-            }
+            PageView(
+                selectedPage: $step,
+                name: $manager.name,
+                birthday: $manager.birthday,
+                selectedImageData: $manager.selectedImageData,
+                feedTime: $feedTime,
+                morningFeed: $manager.morningFeed,
+                eveningFeed: $manager.eveningFeed
+            )
             Spacer()
             actionView
         }
@@ -92,14 +88,6 @@ struct NewAddPetView: View {
     NewAddPetView()
 }
 
-enum SetupSteps: Int, CaseIterable {
-    var id: String {
-        UUID().uuidString
-    }
-
-    case name, birthday, photo, feedSelection, feedTime
-}
-
 struct PageView: View {
 
     @Binding var selectedPage: SetupSteps
@@ -118,7 +106,7 @@ struct PageView: View {
             PetBirthdayView(birthday: $birthday)
                 .padding(.all)
                 .tag(SetupSteps.birthday)
-            PetImageView(selectedImageData: $selectedImageData)
+            PetImageView(selectedImageData: $selectedImageData, selectedPage: $selectedPage)
                 .padding(.all)
                 .tag(SetupSteps.photo)
             NotificationSelectView(dayType: $feedTime)
@@ -131,31 +119,5 @@ struct PageView: View {
         }
         .frame(width: UIScreen.main.bounds.width, height: 300)
         .tabViewStyle(.page(indexDisplayMode: .never))
-    }
-}
-
-struct NotificationSelectView: View {
-
-    @Binding var dayType: FeedTimeSelection
-
-    var body: some View {
-        VStack {
-            Text("feed_time_title")
-                .font(.title2).bold()
-                .padding(.vertical)
-            Picker(
-                selection: $dayType,
-                label: Text("feed_time_title")
-            ) {
-                Text("feed_selection_both")
-                    .tag(FeedTimeSelection.both)
-                Text("feed_selection_morning")
-                    .tag(FeedTimeSelection.morning)
-                Text("feed_selection_evening")
-                    .tag(FeedTimeSelection.evening)
-            }
-            .pickerStyle(.segmented)
-            .animation(.easeOut(duration: 0.8), value: dayType)
-        }
     }
 }

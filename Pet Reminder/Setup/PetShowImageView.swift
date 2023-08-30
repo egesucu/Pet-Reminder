@@ -14,13 +14,12 @@ struct PetShowImageView: View {
     var onImageDelete: () -> Void
 
     var body: some View {
-        HStack {
-            Spacer()
+        VStack {
             Image(uiImage: selectedImage)
                 .resizable()
                 .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                .frame(maxHeight: 150)
+                .frame(maxHeight: 180)
                 .shadow(radius: 10)
                 .padding(.trailing, 10)
             Button {
@@ -31,7 +30,6 @@ struct PetShowImageView: View {
             }
             .buttonStyle(.bordered)
             .tint(.red)
-            Spacer()
         }
     }
 }

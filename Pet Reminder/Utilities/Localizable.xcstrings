@@ -713,6 +713,16 @@
         }
       }
     },
+    "Done" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
+          }
+        }
+      }
+    },
     "event_no_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1816,16 +1826,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bugün"
-          }
-        }
-      }
-    },
-    "Undo Last Change" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son Değişikliği Geri Al"
           }
         }
       }

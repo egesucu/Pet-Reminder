@@ -19,35 +19,23 @@ struct PetListView: View {
     @Environment(\.undoManager) var undoManager
     @State private var addPet = false
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
-    @Binding var tappedTwice: Bool
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     var pets: FetchedResults<Pet>
     @State private var showUndoButton = false
+    @State private var selectedPet: Pet?
+    @State private var isEditing = false
+
+    @State private var buttonTimer: Timer?
+    @State private var time = 0
 
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 VStack {
                     if pets.count > 0 {
-                        ScrollViewReader { proxy in
-                            petsView
-                                .onChange(of: tappedTwice) { oldValue, newValue in
-                                    if newValue != oldValue {
-                                        if newValue {
-                                            withAnimation {
-                                                proxy.scrollTo(pets.first?.name, anchor: .top)
-                                            }
-                                            tappedTwice.toggle()
-                                        } else {
-                                            Logger
-                                                .viewCycle
-                                                .debug("Not scrolled, TapTwice Value: \(tappedTwice.description)")
-                                        }
-                                    }
-                                }
-                        }
-
+                        petList
+                        PetDetailView(pet: $selectedPet)
                     } else {
                         switch reference {
                         case .petList:
@@ -59,55 +47,80 @@ struct PetListView: View {
                         }
                     }
                 }
-                if showUndoButton {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.systemGroupedBackground))
-                            .padding(.horizontal, 10)
-                        Button("Undo Last Change") {
-                            withAnimation {
-                                undoManager?.undo()
-                                showUndoButton.toggle()
-                            }
-                        }
-                    }
-                    .frame(height: 40)
-                }
             }
             .toolbar(content: addButtonToolbar)
-            .onAppear(perform: {
+
+            .onAppear {
+                selectedPet = pets.first ?? Pet(context: viewContext)
                 viewContext.undoManager = undoManager
-            })
+            }
             .navigationTitle(petListTitle)
-            .sheet(isPresented: $addPet, onDismiss: { }, content: {
+            .fullScreenCover(isPresented: $addPet, content: {
                 NewAddPetView()
             })
         }
     }
 
-    private var petsView: some View {
-        List {
-            ForEach(pets, id: \.name) { pet in
-                NavigationLink {
-                    switch reference {
-                    case .petList:
-                        PetDetailView(pet: pet)
-                            .id(pet.name)
-                    case .settings:
-                        PetChangeView(pet: pet)
-                            .id(pet.name)
-                    }
-                } label: {
-                    PetCell(pet: pet)
-                        .padding()
-                        .transition(.slide)
-                }
-            }.onDelete { indexSet in
-                withAnimation {
-                    deletePet(at: indexSet)
-                }
+    private var petList: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 20) {
+                ForEach(pets, id: \.name) { pet in
+                    VStack {
+                        if isEditing {
+                            ZStack(alignment: .topTrailing) {
+                                VStack {
+                                    ESImageView(data: pet.image)
+                                        .clipShape(Circle())
+                                        .frame(width: 80, height: 80)
+                                        .overlay(
+                                                    RoundedRectangle(cornerRadius: 40)
+                                                        .stroke(
+                                                            selectedPet?.name == pet.name ? Color.yellow : Color.clear,
+                                                            lineWidth: 5
+                                                        )
+                                                )
+                                        .wiggling()
+                                    Text(pet.name ?? "")
+                                }
+                                Button {
+                                    deletePet(pet: pet)
+                                    isEditing = false
+                                } label: {
+                                    Image(systemName: "circle.badge.xmark.fill")
+                                        .foregroundStyle(Color.red)
+                                }
 
+                            }
+                        } else {
+                            ESImageView(data: pet.image)
+                                .clipShape(Circle())
+                                .frame(width: 80, height: 80)
+                                .overlay(
+                                            RoundedRectangle(cornerRadius: 40)
+                                                .stroke(
+                                                    selectedPet?.name == pet.name ? Color.yellow : Color.clear,
+                                                    lineWidth: 5
+                                                )
+                                        )
+
+                            Text(pet.name ?? "")
+                        }
+
+                    }
+                    .onTapGesture {
+                        selectedPet = pet
+                        Logger
+                            .viewCycle
+                            .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
+                    }
+                    .onLongPressGesture {
+                        isEditing = true
+                    }
+                    .padding([.top, .leading])
+
+                }
             }
+
         }
     }
 
@@ -117,7 +130,24 @@ struct PetListView: View {
 
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .navigationBarTrailing) {
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            if isEditing {
+                Button {
+                    isEditing = false
+                } label: {
+                    Text("Done")
+                }
+            }
+            if showUndoButton {
+                Button {
+                    undoManager?.undo()
+                } label: {
+                    Image(systemName: "arrow.uturn.backward.circle.fill")
+                        .foregroundColor(tintColor)
+                        .font(.title)
+                }
+
+            }
             if reference == .petList && pets.count > 0 {
                 Button(action: {
                     self.addPet.toggle()
@@ -139,15 +169,29 @@ struct PetListView: View {
             showUndoButton.toggle()
         }
     }
+
+    func deletePet(pet: Pet) {
+        viewContext.delete(pet)
+        PersistenceController.shared.save()
+        showUndoButton.toggle()
+        buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
+            if time == 10 {
+                withAnimation {
+                    showUndoButton = false
+                    timer.invalidate()
+                }
+            } else {
+                time += 1
+            }
+        })
+    }
 }
 
 #Preview {
     NavigationStack {
-        PetListView(tappedTwice: .constant(false))
-            .environment(
-                \.managedObjectContext,
-                 PersistenceController.preview.container.viewContext
-            )
+        let preview = PersistenceController.preview.container.viewContext
+        PetListView()
+            .environment(\.managedObjectContext, preview)
     }
 }
 

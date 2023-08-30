@@ -11,7 +11,7 @@ import CoreData
 
 struct VaccineHistoryView: View {
 
-    var pet: Pet
+    var pet: Pet?
     @Environment(\.dismiss) var dismiss
     @State private var vaccineName = ""
     @State private var vaccineDate = Date.now
@@ -25,7 +25,8 @@ struct VaccineHistoryView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let vaccineSet = pet.vaccines,
+                if let pet,
+                   let vaccineSet = pet.vaccines,
                    let vaccines = vaccineSet.allObjects as? [Vaccine] {
                     if vaccines.count == 0 {
                         Text("no_vaccine_title")
@@ -93,9 +94,7 @@ struct VaccineHistoryView: View {
         let vaccine = Vaccine()
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
-        if var vaccines = pet.vaccines?.allObjects as? [Vaccine] {
-            vaccines.append(vaccine)
-        }
+        pet?.addToVaccines(vaccine)
         PersistenceController.shared.save()
 
         resetTemporaryData()
@@ -108,7 +107,8 @@ struct VaccineHistoryView: View {
     }
 
     func deleteVaccines(_at offsets: IndexSet) {
-        if let vaccineSet = pet.vaccines,
+        if let pet,
+           let vaccineSet = pet.vaccines,
            let vaccines = vaccineSet.allObjects as? [Vaccine] {
             for offset in offsets {
                 modelContext.delete(vaccines[offset])

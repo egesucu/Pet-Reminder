@@ -29,6 +29,8 @@
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
+		9D3ED57A2A9F8D6500940AA4 /* SetupSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */; };
+		9D3ED57C2A9F8D7D00940AA4 /* NotificationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED57B2A9F8D7D00940AA4 /* NotificationSelectView.swift */; };
 		9D4114AB2A82F7CD00C21D87 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4114AA2A82F7CD00C21D87 /* Persistence.swift */; };
 		9D4114AD2A83050500C21D87 /* PetChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4114AC2A83050500C21D87 /* PetChangeViewModel.swift */; };
 		9D44ACC8279C5FAA007EB5B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */; };
@@ -121,6 +123,8 @@
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
+		9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSteps.swift; sourceTree = "<group>"; };
+		9D3ED57B2A9F8D7D00940AA4 /* NotificationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSelectView.swift; sourceTree = "<group>"; };
 		9D4114AA2A82F7CD00C21D87 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D4114AC2A83050500C21D87 /* PetChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeViewModel.swift; sourceTree = "<group>"; };
 		9D44ACC7279C5FAA007EB5B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -409,6 +413,8 @@
 			children = (
 				9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */,
 				9D326E722A8549B400C1AC8D /* NewAddPetView.swift */,
+				9D3ED57B2A9F8D7D00940AA4 /* NotificationSelectView.swift */,
+				9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */,
 				9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */,
 				9D5DC0E629F580B0007A444D /* PetNotificationSelectionView.swift */,
 				9D5DC0E229F58088007A444D /* PetShowImageView.swift */,
@@ -662,6 +668,7 @@
 				7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */,
 				725F44CA2A260B020096CCCB /* StringExtensions.swift in Sources */,
 				9D279843257ABE710078B668 /* IndicatorView.swift in Sources */,
+				9D3ED57A2A9F8D6500940AA4 /* SetupSteps.swift in Sources */,
 				9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */,
 				9D4114AD2A83050500C21D87 /* PetChangeViewModel.swift in Sources */,
 				9D5DC0E129F58074007A444D /* PetBirthdayView.swift in Sources */,
@@ -707,6 +714,7 @@
 				9DD6CE302A840E71005ECBC3 /* PetReminder.xcdatamodeld in Sources */,
 				725F44C62A260ACA0096CCCB /* MapApplication.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
+				9D3ED57C2A9F8D7D00940AA4 /* NotificationSelectView.swift in Sources */,
 				9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
