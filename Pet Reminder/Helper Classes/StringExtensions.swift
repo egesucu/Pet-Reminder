@@ -18,7 +18,6 @@ struct Strings {
     ]
     internal static let demoVaccines = ["Pulvarin", "Alvarin", "Gagarin", "Aclor", "Silverin", "Volverine"]
     internal static let placeholderVaccine = "Pulvarin"
-    internal static let simulationError = "Simulation does not support User Location"
     internal static let demo = "Demo"
     internal static let petSaved = "petSaved"
     internal static let tintColor = "tint_color"

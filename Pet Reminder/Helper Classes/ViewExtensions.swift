@@ -5,7 +5,6 @@
 //  Created by Sucu, Ege on 30.05.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
-// swiftlint:disable switch_case_alignment
 import SwiftUI
 import MapKit
 import CoreLocation
@@ -19,12 +18,12 @@ extension View {
 
     func openURLWithMap(latitude: CGFloat, longitude: CGFloat, application: MapApplication) {
         switch application {
-            case .google:
-                handleGoogleMaps(latitude: latitude, longitude: longitude)
-            case .apple:
-                handleAppleMaps(latitude: latitude, longitude: longitude)
-            case .yandex:
-                handleYandexMap(latitude: latitude, longitude: longitude)
+        case .google:
+            handleGoogleMaps(latitude: latitude, longitude: longitude)
+        case .apple:
+            handleAppleMaps(latitude: latitude, longitude: longitude)
+        case .yandex:
+            handleYandexMap(latitude: latitude, longitude: longitude)
         }
     }
 
@@ -63,13 +62,6 @@ extension View {
         }
     }
 }
-
-extension VetViewModel: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        askLocationPermission()
-    }
-}
-// swiftlint:enable switch_case_alignment
 
 extension DateComponents {
     static func generateRandomDateComponent() -> Self {

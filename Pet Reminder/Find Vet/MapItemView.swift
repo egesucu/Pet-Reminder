@@ -5,7 +5,6 @@
 //  Created by Ege Sucu on 9.08.2023.
 //  Copyright © 2023 Softhion. All rights reserved.
 //
-#if !targetEnvironment(simulator)
 import SwiftUI
 import MapKit
 
@@ -14,18 +13,17 @@ struct MapItemView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
     var item: Pin
-
-    var onSetRegion: (MKMapItem) -> Void
+    var onSetRegion: (Pin) -> Void
 
     var body: some View {
         VStack {
-            Text(item.item.name ?? "")
+            Text(item.name)
                 .bold()
                 .font(.title3)
                 .padding(.bottom, 10)
             HStack {
                 VStack(alignment: .leading) {
-                    if let phoneNumber = item.item.phoneNumber {
+                    if let phoneNumber = item.phoneNumber {
                         HStack {
                             Image(systemName: "phone.fill")
                                 .foregroundStyle(tintColor)
@@ -43,10 +41,10 @@ struct MapItemView: View {
                         }
                         .tint(tintColor)
                     }
-                    if let subThoroughfare = item.item.placemark.subThoroughfare,
-                       let thoroughfare = item.item.placemark.thoroughfare,
-                       let locality = item.item.placemark.locality,
-                       let postalCode = item.item.placemark.postalCode {
+                    if let subThoroughfare = item.subThoroughfare,
+                       let thoroughfare = item.thoroughfare,
+                       let locality = item.locality,
+                       let postalCode = item.postalCode {
                         HStack {
                             Image(systemName: "building.fill")
                                 .foregroundStyle(tintColor)
@@ -59,7 +57,7 @@ struct MapItemView: View {
                 }
                 Spacer()
                 Button(action: {
-                    onSetRegion(item.item)
+                    onSetRegion(item)
                 }, label: {
                     Image(systemName: "mappin.circle.fill")
                         .font(.title)
@@ -70,9 +68,3 @@ struct MapItemView: View {
         }
     }
 }
-#Preview {
-    MapItemView(item: .init(item: .init())) { _ in
-
-    }
-}
-#endif

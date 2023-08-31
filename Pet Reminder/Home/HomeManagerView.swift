@@ -13,19 +13,9 @@ struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
     @State private var tappedTwice = false
 
-    var handler: Binding<PetReminderTabs> { Binding(
-            get: { self.currentTab },
-            set: {
-                if $0 == self.currentTab {
-                    tappedTwice.toggle()
-                }
-                self.currentTab = $0
-            }
-        )}
-
     var body: some View {
 
-        TabView(selection: handler) {
+        TabView(selection: $currentTab) {
             PetListView(reference: .petList)
                 .tabItem {
                     Image(systemName: SFSymbols.pawPrint)

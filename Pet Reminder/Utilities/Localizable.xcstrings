@@ -910,6 +910,23 @@
         }
       }
     },
+    "find_vet_simulation_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulation does not support User Location"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kullanıcı konumu simülasyon tarafından desteklenmiyor."
+          }
+        }
+      }
+    },
     "find_vet_title" : {
       "comment" : "VET",
       "extractionState" : "manual",

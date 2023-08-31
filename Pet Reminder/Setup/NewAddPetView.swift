@@ -47,7 +47,11 @@ struct NewAddPetView: View {
                                 .padding(.all)
                                 .id(SetupSteps.feedSelection)
                                 .frame(width: geometry.size.width)
-                            PetNotificationSelectionView(dayType: $feedTime, morningFeed: $manager.morningFeed, eveningFeed: $manager.eveningFeed)
+                            PetNotificationSelectionView(
+                                dayType: $feedTime,
+                                morningFeed: $manager.morningFeed,
+                                eveningFeed: $manager.eveningFeed
+                            )
                                 .scrollTargetLayout()
                                 .padding(.all)
                                 .id(SetupSteps.feedTime)
@@ -66,13 +70,13 @@ struct NewAddPetView: View {
 
         }
         .onChange(of: step) {
-            Logger
-                .viewCycle
-                .info("Page Value: \(step.text)")
+            Logger.viewCycle.info("Page Value: \(step.text)")
         }
     }
-
-    private func actionView(proxy: ScrollViewProxy) -> some View {
+// swiftlint: disable function_body_length
+    private func actionView(
+        proxy: ScrollViewProxy
+    ) -> some View {
         HStack {
             Button(step != .name ? "Back" : "Cancel") {
                 withAnimation {
@@ -93,7 +97,7 @@ struct NewAddPetView: View {
                         proxy.scrollTo(SetupSteps.feedSelection)
                     }
                 }
-            }
+            } // swiftlint: enable function_body_length
             .buttonStyle(.bordered)
             .tint(step == .name ? .red : .black)
             Spacer()

@@ -363,7 +363,6 @@
 				9D34018D26DA7392005822DA /* NotificationManager.swift */,
 				9D7E9A572A5644D70024B2C5 /* StoreManager.swift */,
 				9D98B13B28D606460018C7A6 /* EventManager.swift */,
-				9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -451,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				9D0C24E025D08177008F93CD /* FindVetView.swift */,
+				9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */,
 				9DF9A4AD2A842B470004CB8E /* MapItemView.swift */,
 				9D98B14028D60FFF0018C7A6 /* MapWithSearchBarView.swift */,
 			);
