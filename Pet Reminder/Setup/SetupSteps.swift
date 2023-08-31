@@ -8,9 +8,24 @@
 
 import Foundation
 
-enum SetupSteps: String, CaseIterable {
-    var text: String {
+public enum SetupSteps: String, CaseIterable {
+    public var text: String {
         return self.rawValue
     }
     case name, birthday, photo, feedSelection, feedTime
+
+    public var index: Int {
+        switch self {
+        case .name:
+            return 0
+        case .birthday:
+            return 1
+        case .photo:
+            return 2
+        case .feedSelection:
+            return 3
+        case .feedTime:
+            return 4
+        }
+    }
 }
