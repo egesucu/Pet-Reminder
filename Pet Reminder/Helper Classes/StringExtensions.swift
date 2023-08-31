@@ -107,6 +107,10 @@ extension String {
             return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
     }
+
+    var isNotEmpty: Bool {
+        !self.isEmpty
+    }
 }
 
 extension LocalizedStringKey {
