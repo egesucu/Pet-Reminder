@@ -18,7 +18,7 @@ struct PetCell: View {
                 .padding(.trailing, 10)
                 .frame(width: 150, height: 150)
             VStack {
-                Text(pet.name ?? "")
+                Text(pet.wrappedName)
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
                     .minimumScaleFactor(0.2)

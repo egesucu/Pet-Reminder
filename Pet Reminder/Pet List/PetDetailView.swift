@@ -40,7 +40,7 @@ struct PetDetailView: View {
                     Button {
                         Logger
                             .viewCycle
-                            .info("PR: Feed History Tapped, pet name: \(pet.name ?? "")")
+                            .info("PR: Feed History Tapped, pet name: \(pet.wrappedName)")
                         showFeedHistory.toggle()
                     } label: {
                         Label("feeds_title", systemImage: "fork.knife.circle.fill")

@@ -19,4 +19,12 @@ extension Pet {
             choice = newValue.rawValue
         }
     }
+
+    var wrappedName: String {
+        self.name ?? ""
+    }
+
+    var wrappedBirthday: Date {
+        self.birthday ?? .now
+    }
 }

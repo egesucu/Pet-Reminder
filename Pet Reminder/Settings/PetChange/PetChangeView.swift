@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PetChangeView: View {
 
-    var pet: Pet
+    @Binding var pet: Pet?
 
     @State private var viewModel = PetChangeViewModel()
 
@@ -37,7 +37,7 @@ struct PetChangeView: View {
             Toggle("default_photo_label", isOn: $viewModel.defaultPhotoOn)
                 .onChange(of: viewModel.defaultPhotoOn, {
                     if viewModel.defaultPhotoOn {
-                        pet.image = nil
+                        pet?.image = nil
                     }
                 })
                 .padding()
@@ -71,10 +71,10 @@ struct PetChangeView: View {
                     setupPickerView()
                 }
             }
-            .navigationTitle(pet.name ?? "")
+            .navigationTitle(pet?.wrappedName ?? "")
         }
-        .onAppear {
-            viewModel.getPetData(pet: pet)
+        .task {
+            await viewModel.getPetData(pet: pet)
         }
     }
 
@@ -129,5 +129,7 @@ struct PetChangeView: View {
 }
 
 #Preview {
-    PetChangeView(pet: .init())
+    let preview = PersistenceController.preview.container.viewContext
+    return PetChangeView(pet: .constant(Pet(context: preview)))
+        .environment(\.managedObjectContext, preview)
 }

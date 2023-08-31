@@ -20,7 +20,7 @@ struct PetListView: View {
     @State private var addPet = false
     @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.wrappedName, ascending: true)])
     var pets: FetchedResults<Pet>
     @State private var showUndoButton = false
     @State private var selectedPet: Pet?
@@ -35,7 +35,13 @@ struct PetListView: View {
                 VStack {
                     if pets.count > 0 {
                         petList
-                        PetDetailView(pet: $selectedPet)
+                        switch reference {
+                        case .petList:
+                            PetDetailView(pet: $selectedPet)
+                        case .settings:
+                            PetChangeView(pet: $selectedPet)
+                        }
+                        
                     } else {
                         switch reference {
                         case .petList:
@@ -75,12 +81,12 @@ struct PetListView: View {
                                         .overlay(
                                                     RoundedRectangle(cornerRadius: 40)
                                                         .stroke(
-                                                            selectedPet?.name == pet.name ? Color.yellow : Color.clear,
+                                                            selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear, // swiftlint:disable:this line_length
                                                             lineWidth: 5
                                                         )
                                                 )
                                         .wiggling()
-                                    Text(pet.name ?? "")
+                                    Text(pet.wrappedName)
                                 }
                                 Button {
                                     deletePet(pet: pet)
@@ -98,12 +104,12 @@ struct PetListView: View {
                                 .overlay(
                                             RoundedRectangle(cornerRadius: 40)
                                                 .stroke(
-                                                    selectedPet?.name == pet.name ? Color.yellow : Color.clear,
+                                                    selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear,
                                                     lineWidth: 5
                                                 )
                                         )
 
-                            Text(pet.name ?? "")
+                            Text(pet.wrappedName)
                         }
 
                     }
@@ -161,15 +167,6 @@ struct PetListView: View {
         }
     }
 
-    func deletePet(at indexSet: IndexSet) {
-        for index in indexSet {
-            let pet = pets[index]
-            viewContext.delete(pet)
-            PersistenceController.shared.save()
-            showUndoButton.toggle()
-        }
-    }
-
     func deletePet(pet: Pet) {
         viewContext.delete(pet)
         PersistenceController.shared.save()
@@ -193,8 +190,4 @@ struct PetListView: View {
         PetListView()
             .environment(\.managedObjectContext, preview)
     }
-}
-
-enum PetListViewReference {
-    case petList, settings
 }

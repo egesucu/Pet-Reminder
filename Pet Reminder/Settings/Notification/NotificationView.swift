@@ -14,7 +14,7 @@ struct NotificationView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.wrappedName, ascending: true)])
     private var pets: FetchedResults<Pet>
 
     @State private var notificationManager = NotificationManager()
@@ -53,9 +53,9 @@ struct NotificationView: View {
                     }
 
                 } header: {
-                    Text(pet.name ?? "-")
+                    Text(pet.wrappedName)
                 } footer: {
-                    let count = notificationAmount(for: pet.name)
+                    let count = notificationAmount(for: pet.wrappedName)
                     Text("notification \(count)")
 
                 }
@@ -77,14 +77,16 @@ struct NotificationView: View {
                 Button {
                     notificationManager
                         .removeNotifications(pets: pets.compactMap({ $0 as Pet }))
-                    fetchNotificiations()
+                    Task {
+                        await fetchNotificiations()
+                    }
                 } label: {
                     Text("remove_all")
                 }
             }
         }
+        .task(fetchNotificiations)
         .onAppear {
-            fetchNotificiations()
             notificationManager
                 .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
         }
@@ -97,10 +99,8 @@ struct NotificationView: View {
             .count
     }
 
-    private func fetchNotificiations() {
-        Task {
-            await notificationManager.getNotifications()
-        }
+    @Sendable func fetchNotificiations() async {
+        await notificationManager.getNotifications()
     }
 
     private func morningNotificationView(notification: UNNotificationRequest) -> some View {
@@ -148,7 +148,7 @@ struct NotificationView: View {
                 .foregroundStyle(Color.gray)
             HStack {
                 Text("birthday_title")
-                Text((pet.birthday ?? .now).formatted(.dateTime.day().month(.wide).year()))
+                Text((pet.wrappedBirthday).formatted(.dateTime.day().month(.wide).year()))
                 Spacer()
             }
             .font(.footnote)
@@ -159,15 +159,15 @@ struct NotificationView: View {
     func createNotifications(for pet: Pet) {
         switch pet.selection {
         case .both:
-            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: pet.morningTime ?? .now)
-            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: pet.eveningTime ?? .now)
-            notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: pet.morningTime ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
         case .morning:
-            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: pet.morningTime ?? .now)
-            notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: pet.morningTime ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
         case .evening:
-            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: pet.eveningTime ?? .now)
-            notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .now)
+            notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
         }
     }
 
@@ -176,7 +176,9 @@ struct NotificationView: View {
             let notification = notificationManager.notifications[index]
             notificationManager
                 .removeNotificationsIdentifiers(with: [notification.identifier])
-            fetchNotificiations()
+            Task {
+                await fetchNotificiations()
+            }
         }
     }
 }

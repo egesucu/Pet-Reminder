@@ -24,7 +24,8 @@ class PetChangeViewModel {
 
     var notificationManager = NotificationManager()
 
-    func loadImage(pet: Pet) {
+    func loadImage(pet: Pet?) {
+        guard let pet else { return }
         if let outputImageData {
             if let uiImage = UIImage(data: outputImageData) {
                 petImage = Image(uiImage: uiImage)
@@ -37,9 +38,10 @@ class PetChangeViewModel {
         }
     }
 
-    func getPetData(pet: Pet) {
-        self.birthday = pet.birthday ?? .now
-        self.nameText = pet.name ?? ""
+    func getPetData(pet: Pet?) async {
+        guard let pet else { return }
+        self.birthday = pet.wrappedBirthday
+        self.nameText = pet.wrappedName
         self.selection = pet.selection
         if let morning = pet.morningTime {
             self.morningDate = morning
@@ -56,30 +58,33 @@ class PetChangeViewModel {
         }
     }
 
-    func changeName(pet: Pet) {
+    func changeName(pet: Pet?) {
+        guard let pet else { return }
         pet.name = nameText
         changeNotification(pet: pet, for: selection)
     }
 
-    func changeBirthday(pet: Pet) {
+    func changeBirthday(pet: Pet?) {
+        guard let pet else { return }
         pet.birthday = birthday
-        notificationManager.removeNotification(of: pet.name ?? "", with: .birthday)
-        notificationManager.createNotification(of: pet.name ?? "", with: .birthday, date: birthday)
+        notificationManager.removeNotification(of: pet.wrappedName, with: .birthday)
+        notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: birthday)
     }
 
-    func changeNotification(pet: Pet, for selection: FeedTimeSelection) {
+    func changeNotification(pet: Pet?, for selection: FeedTimeSelection) {
+        guard let pet else { return }
         switch selection {
         case .both:
-            notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
-            notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
-            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: morningDate)
-            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
+            notificationManager.removeNotification(of: pet.wrappedName, with: .morning)
+            notificationManager.removeNotification(of: pet.wrappedName, with: .evening)
+            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
+            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
         case .morning:
-            notificationManager.removeNotification(of: pet.name ?? "", with: .morning)
-            notificationManager.createNotification(of: pet.name ?? "", with: .morning, date: morningDate)
+            notificationManager.removeNotification(of: pet.wrappedName, with: .morning)
+            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
         case .evening:
-            notificationManager.removeNotification(of: pet.name ?? "", with: .evening)
-            notificationManager.createNotification(of: pet.name ?? "", with: .evening, date: eveningDate)
+            notificationManager.removeNotification(of: pet.wrappedName, with: .evening)
+            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
         }
         let (morningTime, eveningTime) = (pet.morningTime, pet.eveningTime)
 

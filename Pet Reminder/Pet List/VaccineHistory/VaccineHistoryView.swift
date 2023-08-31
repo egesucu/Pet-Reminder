@@ -13,10 +13,8 @@ struct VaccineHistoryView: View {
 
     var pet: Pet?
     @Environment(\.dismiss) var dismiss
-    @State private var vaccineName = ""
-    @State private var vaccineDate = Date.now
-    @State private var shouldAddVaccine = false
     @Environment(\.managedObjectContext) private var modelContext
+    @State private var viewModel = VaccineHistoryViewModel()
 
     func sortedVaccines(_ vaccines: [Vaccine]) -> [Vaccine] {
         vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })
@@ -43,7 +41,9 @@ struct VaccineHistoryView: View {
                                     Spacer()
                                     Text((vaccine.date ?? Date.now).formatted())
                                 }
-                            }.onDelete(perform: deleteVaccines)
+                            }.onDelete { indexSet in
+                                viewModel.deleteVaccines(pet: pet, at: indexSet, modelContext: modelContext)
+                            }
                         }
                         .listStyle(.automatic)
                     }
@@ -57,69 +57,35 @@ struct VaccineHistoryView: View {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: SFSymbols.close)
                             .tint(.blue)
-                    }.disabled(shouldAddVaccine)
+                            .font(.title)
+                    }.disabled(viewModel.shouldAddVaccine)
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button(action: togglePopup) {
+                    Button(action: viewModel.togglePopup) {
                         Image(systemName: SFSymbols.add)
                             .tint(.blue)
-                    }.disabled(shouldAddVaccine)
+                            .font(.title)
+                    }.disabled(viewModel.shouldAddVaccine)
                 }
             }
             .navigationTitle(Text("vaccine_history_title"))
-            .popupView(isPresented: $shouldAddVaccine.animation()) {
+            .popupView(isPresented: $viewModel.shouldAddVaccine.animation()) {
                 AddPopupView(
-                    contentInput: $vaccineName,
-                    dateInput: $vaccineDate,
-                    onSave: saveVaccine,
-                    onCancel: cancelVaccine
+                    contentInput: $viewModel.vaccineName,
+                    dateInput: $viewModel.vaccineDate,
+                    onSave: { viewModel.saveVaccine(pet: pet) },
+                    onCancel: viewModel.cancelVaccine
                 )
-            }
-        }
-
-    }
-
-    func cancelVaccine() {
-        togglePopup()
-        resetTemporaryData()
-    }
-
-    func togglePopup() {
-        withAnimation {
-            shouldAddVaccine.toggle()
-        }
-    }
-
-    func saveVaccine() {
-        let vaccine = Vaccine()
-        vaccine.name = vaccineName
-        vaccine.date = vaccineDate
-        pet?.addToVaccines(vaccine)
-        PersistenceController.shared.save()
-
-        resetTemporaryData()
-        togglePopup()
-    }
-
-    func resetTemporaryData() {
-        vaccineName = ""
-        vaccineDate = .now
-    }
-
-    func deleteVaccines(_at offsets: IndexSet) {
-        if let pet,
-           let vaccineSet = pet.vaccines,
-           let vaccines = vaccineSet.allObjects as? [Vaccine] {
-            for offset in offsets {
-                modelContext.delete(vaccines[offset])
             }
         }
     }
 }
 
 #Preview {
+    let preview = PersistenceController.preview.container.viewContext
     return NavigationStack {
-        VaccineHistoryView(pet: .init())
+        VaccineHistoryView(pet: Pet(context: preview))
+            .environment(\.managedObjectContext, preview)
 
     }
 }

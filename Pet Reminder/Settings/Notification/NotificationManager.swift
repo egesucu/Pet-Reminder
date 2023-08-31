@@ -26,7 +26,7 @@ class NotificationManager {
     func filterNotifications(of pet: Pet) -> [UNNotificationRequest] {
         notifications.filter { notification in
             print(notification.identifier)
-            return notification.identifier.contains(pet.name ?? "")
+            return notification.identifier.contains(pet.wrappedName)
         }
     }
 
@@ -139,14 +139,14 @@ extension NotificationManager {
         for pet in pets {
             switch pet.selection {
             case .both:
-                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
-                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
+                createNotification(of: pet.wrappedName, with: .morning, date: pet.eveningTime ?? .now)
+                createNotification(of: pet.wrappedName, with: .evening, date: pet.morningTime ?? .now)
             case .evening:
-                createNotification(of: pet.name ?? "", with: .evening, date: pet.morningTime ?? .now)
+                createNotification(of: pet.wrappedName, with: .evening, date: pet.morningTime ?? .now)
             case .morning:
-                createNotification(of: pet.name ?? "", with: .morning, date: pet.eveningTime ?? .now)
+                createNotification(of: pet.wrappedName, with: .morning, date: pet.eveningTime ?? .now)
             }
-            createNotification(of: pet.name ?? "", with: .birthday, date: pet.birthday ?? .now)
+            createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
         }
     }
 }
