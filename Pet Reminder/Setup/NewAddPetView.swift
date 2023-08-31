@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct NewAddPetView: View {
 
@@ -21,21 +22,57 @@ struct NewAddPetView: View {
 
     var body: some View {
         VStack {
-            PageView(
-                selectedPage: $step,
-                name: $manager.name,
-                birthday: $manager.birthday,
-                selectedImageData: $manager.selectedImageData,
-                feedTime: $feedTime,
-                morningFeed: $manager.morningFeed,
-                eveningFeed: $manager.eveningFeed
-            )
-            Spacer()
-            actionView
+            GeometryReader(content: { geometry in
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal) {
+                        LazyHStack {
+                            PetNameTextField(name: $manager.name)
+                                .scrollTargetLayout()
+                                .id(SetupSteps.name)
+                                .padding(.all)
+                                .frame(width: geometry.size.width)
+
+                            PetBirthdayView(birthday: $manager.birthday)
+                                .scrollTargetLayout()
+                                .padding(.all)
+                                .id(SetupSteps.birthday)
+                                .frame(width: geometry.size.width)
+                            PetImageView(selectedImageData: $manager.selectedImageData, selectedPage: $step)
+                                .scrollTargetLayout()
+                                .padding(.all)
+                                .id(SetupSteps.photo)
+                                .frame(width: geometry.size.width)
+                            NotificationSelectView(dayType: $feedTime)
+                                .scrollTargetLayout()
+                                .padding(.all)
+                                .id(SetupSteps.feedSelection)
+                                .frame(width: geometry.size.width)
+                            PetNotificationSelectionView(dayType: $feedTime, morningFeed: $manager.morningFeed, eveningFeed: $manager.eveningFeed)
+                                .scrollTargetLayout()
+                                .padding(.all)
+                                .id(SetupSteps.feedTime)
+                                .frame(width: geometry.size.width)
+                        }
+
+                    }
+                    .scrollDisabled(true)
+                    .scrollTargetBehavior(.viewAligned)
+                    .scrollIndicators(.never)
+
+                    Spacer()
+                    actionView(proxy: proxy)
+                }
+            })
+
+        }
+        .onChange(of: step) {
+            Logger
+                .viewCycle
+                .info("Page Value: \(step.text)")
         }
     }
 
-    private var actionView: some View {
+    private func actionView(proxy: ScrollViewProxy) -> some View {
         HStack {
             Button(step != .name ? "Back" : "Cancel") {
                 withAnimation {
@@ -44,12 +81,16 @@ struct NewAddPetView: View {
                         dismiss()
                     case .birthday:
                         step = .name
+                        proxy.scrollTo(SetupSteps.name)
                     case .photo:
                         step = .birthday
+                        proxy.scrollTo(SetupSteps.birthday)
                     case .feedSelection:
                         step = .photo
+                        proxy.scrollTo(SetupSteps.photo)
                     case .feedTime:
                         step = .feedSelection
+                        proxy.scrollTo(SetupSteps.feedSelection)
                     }
                 }
             }
@@ -61,12 +102,16 @@ struct NewAddPetView: View {
                     switch step {
                     case .name:
                         step = .birthday
+                        proxy.scrollTo(SetupSteps.birthday)
                     case .birthday:
                         step = .photo
+                        proxy.scrollTo(SetupSteps.photo)
                     case .photo:
                         step = .feedSelection
+                        proxy.scrollTo(SetupSteps.feedSelection)
                     case .feedSelection:
                         step = .feedTime
+                        proxy.scrollTo(SetupSteps.feedTime)
                     case .feedTime:
                         manager
                             .savePet(
@@ -78,7 +123,8 @@ struct NewAddPetView: View {
             }
             .buttonStyle(.bordered)
             .tint(step == .feedTime ? .green : .black)
-            .disabled(manager.name.isEmpty)
+            .disabled(manager.name.isEmpty
+                      || (manager.name.replacingOccurrences(of: " ", with: "").isEmpty))
         }
         .padding(50)
     }
@@ -86,38 +132,4 @@ struct NewAddPetView: View {
 
 #Preview {
     NewAddPetView()
-}
-
-struct PageView: View {
-
-    @Binding var selectedPage: SetupSteps
-    @Binding var name: String
-    @Binding var birthday: Date
-    @Binding var selectedImageData: Data?
-    @Binding var feedTime: FeedTimeSelection
-    @Binding var morningFeed: Date
-    @Binding var eveningFeed: Date
-
-    var body: some View {
-        TabView(selection: $selectedPage) {
-            PetNameTextField(name: $name)
-                .tag(SetupSteps.name)
-                .padding(.all)
-            PetBirthdayView(birthday: $birthday)
-                .padding(.all)
-                .tag(SetupSteps.birthday)
-            PetImageView(selectedImageData: $selectedImageData, selectedPage: $selectedPage)
-                .padding(.all)
-                .tag(SetupSteps.photo)
-            NotificationSelectView(dayType: $feedTime)
-                .padding(.all)
-                .tag(SetupSteps.feedSelection)
-            PetNotificationSelectionView(dayType: $feedTime, morningFeed: $morningFeed, eveningFeed: $eveningFeed)
-                .padding(.all)
-                .tag(SetupSteps.feedTime)
-
-        }
-        .frame(width: UIScreen.main.bounds.width, height: 300)
-        .tabViewStyle(.page(indexDisplayMode: .never))
-    }
 }
