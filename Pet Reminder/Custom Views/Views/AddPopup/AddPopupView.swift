@@ -14,7 +14,7 @@ struct AddPopupView: View {
     @Binding var dateInput: Date
     var onSave: () -> Void
     var onCancel: () -> Void
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     var body: some View {
         ZStack {

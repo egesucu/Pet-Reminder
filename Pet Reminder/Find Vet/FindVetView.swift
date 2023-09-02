@@ -13,7 +13,7 @@ import CoreLocation
 struct FindVetView: View {
 
     @State private var viewModel = VetViewModel()
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     var body: some View {
         NavigationStack {

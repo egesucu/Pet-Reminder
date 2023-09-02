@@ -14,7 +14,7 @@ struct DonateView: View {
     @State private var showAlert = false
     @State private var alertText = ""
     @State private var loading = false
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     let store = StoreManager()
 

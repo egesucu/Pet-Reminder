@@ -18,7 +18,7 @@ struct PetListView: View {
     private var viewContext
     @Environment(\.undoManager) var undoManager
     @State private var addPet = false
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.wrappedName, ascending: true)])
     var pets: FetchedResults<Pet>
@@ -41,7 +41,7 @@ struct PetListView: View {
                         case .settings:
                             PetChangeView(pet: $selectedPet)
                         }
-                        
+
                     } else {
                         switch reference {
                         case .petList:

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HelloView: View {
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @AppStorage("seenHello") var helloSeen = false
     @State private var navigateToHome = false
     @State private var shouldAnimate = false

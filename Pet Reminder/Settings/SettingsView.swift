@@ -14,7 +14,7 @@ struct SettingsView: View {
 
     @Environment(\.managedObjectContext)
     private var viewContext
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     var body: some View {
         NavigationStack {

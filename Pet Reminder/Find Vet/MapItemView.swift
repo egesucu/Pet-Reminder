@@ -10,7 +10,7 @@ import MapKit
 
 struct MapItemView: View {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     var item: Pin
     var onSetRegion: (Pin) -> Void

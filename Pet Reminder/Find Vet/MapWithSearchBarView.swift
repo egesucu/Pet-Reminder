@@ -11,7 +11,7 @@ import MapKit
 
 struct MapWithSearchBarView: View {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @Binding var viewModel: VetViewModel
 
     var body: some View {

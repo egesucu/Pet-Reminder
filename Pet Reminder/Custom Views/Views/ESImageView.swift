@@ -11,7 +11,7 @@ import SwiftUI
 struct ESImageView: View {
 
     var data: Data?
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     var body: some View {
         if let data = data,

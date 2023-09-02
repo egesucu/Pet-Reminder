@@ -11,7 +11,7 @@ import PhotosUI
 
 struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     @Binding var photoData: Data?
 

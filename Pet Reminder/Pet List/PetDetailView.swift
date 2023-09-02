@@ -16,7 +16,7 @@ struct PetDetailView: View {
     @State private var showFeedHistory = false
     @State private var showVaccines = false
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.systemGreen
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     var body: some View {
         VStack {
