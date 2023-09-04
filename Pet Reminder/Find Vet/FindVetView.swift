@@ -62,9 +62,10 @@ struct FindVetView: View {
                 viewModel.selectedLocation = nil
             }, content: {
                 MapItemView(location: viewModel.selectedLocation)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-                .presentationCornerRadius(25)
+                    .presentationDetents([.height(180)])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(25)
+                    .padding(.horizontal)
             })
             
             .navigationTitle(Text("find_vet_title"))
@@ -72,36 +73,6 @@ struct FindVetView: View {
         }
 
     }
-
-#if !targetEnvironment(simulator)
-
-//    @ViewBuilder
-//    private func alertActions() -> some View {
-//        Button(action: {
-//            Task {
-//               await viewModel.openAppSettings()
-//            }
-//        }, label: { Text("location_alert_change") })
-//        Button(action: {}, label: { Text("cancel") })
-//    }
-
-//    private var bottomMapItemsView: some View {
-//        VStack {
-//            List {
-//                ForEach(viewModel.searchedLocations) { location in
-//                    MapItemView(item: location) { item in
-//                        Task(priority: .userInitiated) {
-//                            await viewModel.setRegion(item: item)
-//                        }
-//                    }
-//                }
-//            }
-//            .listItemTint(.clear)
-//            .listRowInsets(.none)
-//            .listStyle(.inset)
-//        }
-//    }
-#endif
 }
 
 #Preview {

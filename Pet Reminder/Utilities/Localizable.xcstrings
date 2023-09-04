@@ -1118,7 +1118,20 @@
       }
     },
     "map_open_in" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aç"
+          }
+        }
+      }
     },
     "name" : {
       "extractionState" : "manual",
