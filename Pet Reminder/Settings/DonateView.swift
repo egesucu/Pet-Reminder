@@ -11,12 +11,8 @@ import StoreKit
 
 struct DonateView: View {
 
-    @State private var showAlert = false
-    @State private var alertText = ""
-    @State private var loading = false
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-
-    let store = StoreManager()
+    @State private var viewModel = StoreManager()
 
     var body: some View {
         ScrollView {
@@ -29,24 +25,21 @@ struct DonateView: View {
                 .padding()
             Text("donate_us_comment")
                 .padding()
-            ForEach(store.consumables, id: \.self) { product in
-                ProductView(product)
-                    .onInAppPurchaseCompletion { product, result in
-                        purcahaseCompleted(product: product, result: result)
-                    }
-                    .onInAppPurchaseStart { product in
-                        let text = "Purchasing the product: \(product.displayName)"
-                        print(text)
-                    }
+            VStack(alignment: .leading) {
+                ForEach(viewModel.consumables, id: \.self) { product in
+                    ProductView(product, prefersPromotionalIcon: false)
+                        .onInAppPurchaseCompletion { product, result in
+                            purcahaseCompleted(product: product, result: result)
+                        }
+                        .onInAppPurchaseStart { product in
+                            let text = "Purchasing the product: \(product.displayName)"
+                            print(text)
+                        }
+                }
             }
-            .navigationTitle(Text("donate_us_title"))
-        }
+        }.navigationTitle(Text("donate_us_title"))
     }
-    func generateHaptic() {
-        let impactMed = UIImpactFeedbackGenerator(style: .medium)
-        impactMed.impactOccurred()
-    }
-
+    
     func purcahaseCompleted(product: Product, result: Result<Product.PurchaseResult, Error>) {
         switch result {
         case .success(let result):
@@ -73,7 +66,6 @@ struct DonateView: View {
         case .failure(let failure):
             print("Purchase failed: ", failure.localizedDescription)
         }
-        loading.toggle()
     }
 }
 

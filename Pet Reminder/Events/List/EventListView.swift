@@ -20,7 +20,6 @@ struct EventListView: View {
             showEventView()
                 .navigationTitle(Text("event_title"))
                 .toolbar(content: eventToolBar)
-
         }
         .navigationViewStyle(.stack)
         .onAppear(perform: reloadEvents)
@@ -32,8 +31,7 @@ struct EventListView: View {
             Button(action: toggleAddEvent) {
                 Label("add_event_accessible_title", systemImage: SFSymbols.calendar)
                     .font(.title2)
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(Color.dynamicBlack, tintColor, tintColor.isDarkColor ? .white : .black)
+                    .foregroundStyle(tintColor)
             }
             .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView() })
         }

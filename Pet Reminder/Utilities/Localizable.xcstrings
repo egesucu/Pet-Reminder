@@ -1194,6 +1194,23 @@
         }
       }
     },
+    "name_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already have a pet with this name"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaten bu isme sahip bir evcil hayvan bulunuyor"
+          }
+        }
+      }
+    },
     "Next" : {
       "localizations" : {
         "tr" : {

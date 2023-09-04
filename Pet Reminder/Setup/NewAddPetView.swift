@@ -15,6 +15,7 @@ struct NewAddPetView: View {
     @State private var position = 0
     @State private var step: SetupSteps = .name
     @State private var feedTime: FeedTimeSelection = .both
+    @State private var nameIsFilledCorrectly = false
     @Environment(\.dismiss)
     var dismiss
     @Environment(\.managedObjectContext)
@@ -26,7 +27,7 @@ struct NewAddPetView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
                         LazyHStack {
-                            PetNameTextField(name: $manager.name)
+                            PetNameTextField(name: $manager.name, nameIsFilledCorrectly: $nameIsFilledCorrectly)
                                 .scrollTargetLayout()
                                 .id(SetupSteps.name)
                                 .padding(.all)
@@ -99,7 +100,7 @@ struct NewAddPetView: View {
                 }
             } // swiftlint: enable function_body_length
             .buttonStyle(.bordered)
-            .tint(step == .name ? .red : .black)
+            .tint(step == .name ? .red : Color(uiColor: .label))
             Spacer()
             Button(step != .feedTime ? "Next" : "Save") {
                 withAnimation {
@@ -126,9 +127,8 @@ struct NewAddPetView: View {
                 }
             }
             .buttonStyle(.bordered)
-            .tint(step == .feedTime ? .green : .black)
-            .disabled(manager.name.isEmpty
-                      || (manager.name.replacingOccurrences(of: " ", with: "").isEmpty))
+            .tint(step == .feedTime ? .green : Color(uiColor: .label))
+            .disabled(!nameIsFilledCorrectly)
         }
         .padding(50)
     }
