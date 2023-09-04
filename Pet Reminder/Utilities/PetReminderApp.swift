@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import CloudKit
 
 @main
 struct PetReminderApp: App {
@@ -24,38 +25,12 @@ struct PetReminderApp: App {
                 HomeManagerView()
                     .environment(\.managedObjectContext, persistence.container.viewContext)
                     .tint(tintColor)
-                    .onAppear(perform: checkIcloud)
             } else {
                 HelloView()
                     .environment(\.managedObjectContext, persistence.container.viewContext)
                     .tint(tintColor)
-                    .onAppear(perform: checkIcloud)
             }
 
-        }
-    }
-}
-
-extension PetReminderApp {
-    func checkIcloud() {
-        DataManager.shared.checkIcloudAvailability { result in
-            switch result {
-            case .success:
-                print("No Error")
-            case .error(let icloudErrorType):
-                switch icloudErrorType {
-                case .icloudUnavailable:
-                    print("Error: iCloud is not available")
-                case .noIcloud:
-                    print("Error: no iCloud found")
-                case .restricted:
-                    print("Error: Restricted")
-                case .cantFetchStatus:
-                    print("Error: Can't fetch Status")
-                case .unknownError(let string):
-                    print("Custom Error: \(string)")
-                }
-            }
         }
     }
 }

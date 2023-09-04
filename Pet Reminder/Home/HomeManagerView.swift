@@ -11,7 +11,6 @@ import OSLog
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
-    @State private var tappedTwice = false
 
     var body: some View {
 

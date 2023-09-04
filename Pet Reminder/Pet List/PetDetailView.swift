@@ -12,7 +12,6 @@ import OSLog
 struct PetDetailView: View {
 
     @Binding var pet: Pet?
-    var feed: Feed?
     @State private var showFeedHistory = false
     @State private var showVaccines = false
 
@@ -62,25 +61,15 @@ struct PetDetailView: View {
                 Spacer()
             }
         }
-        .fullScreenCover(isPresented: $showFeedHistory, content: {
-            FeedHistory(feeds: filterFeeds())
-        })
-        .fullScreenCover(isPresented: $showVaccines, content: {
-            VaccineHistoryView(pet: pet)
-        })
-        .navigationTitle(Text("pet_name_title \(pet?.name ?? "")"))
-    }
-
-    func filterFeeds() -> [Feed] {
-        if let pet,
-            let feeds = pet.feeds?.allObjects as? [Feed] {
-            return feeds.filter({ feed in
-                feed.morningFedStamp != nil || feed.eveningFedStamp != nil
-            }).sorted(by: {
-                $0.feedDate ?? .now > $1.feedDate ?? .now
-            })
+        .fullScreenCover(isPresented: $showFeedHistory) {
+            if let pet {
+                FeedHistory(feeds: pet.feedsArray)
+            }
         }
-        return []
+        .fullScreenCover(isPresented: $showVaccines) {
+            VaccineHistoryView(pet: pet)
+        }
+        .navigationTitle(Text("pet_name_title \(pet?.wrappedName ?? "")"))
     }
 }
 

@@ -18,31 +18,25 @@ class StoreManager {
 
     init() {
         Task {
-            // During store initialization, request products from the App Store.
             await requestProducts()
         }
     }
 
-    @MainActor
     func requestProducts() async {
         do {
-            // Request products from the App Store using the identifiers
             let storeProducts = try await Product.products(for: productIDs)
 
             var newConsumables: [Product] = []
 
-            // Filter the products into categories based on their type.
             for product in storeProducts {
                 switch product.type {
                 case .consumable:
                     newConsumables.append(product)
                 default:
-                    // Ignore this product.
                     print("Unknown product")
                 }
             }
 
-            // Sort each product category by price, lowest to highest, to update the store.
             consumables = sortByPrice(newConsumables)
         } catch {
             print("Failed product request from the App Store server: \(error)")

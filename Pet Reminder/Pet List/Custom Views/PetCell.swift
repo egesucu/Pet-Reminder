@@ -23,10 +23,8 @@ struct PetCell: View {
                     .font(.title)
                     .minimumScaleFactor(0.2)
                     .lineLimit(3)
-                if let feeds = pet.feeds,
-                   feeds.count > 0,
-                   let feedSet = feeds.allObjects as? [Feed],
-                   let lastFeed = feedSet.last {
+                if pet.feedsArray.count > 0,
+                   let lastFeed = pet.feedsArray.last {
                     if lastFeed.eveningFed,
                        let eveningTime = lastFeed.eveningFedStamp {
                         VStack(alignment: .leading) {
@@ -49,7 +47,9 @@ struct PetCell: View {
 }
 
 #Preview {
+    let preview = PersistenceController.preview.container.viewContext
     return NavigationStack {
-        PetCell(pet: .init())
+        PetCell(pet: .init(context: preview))
+            .environment(\.managedObjectContext, preview)
     }
 }

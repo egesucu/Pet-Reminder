@@ -55,7 +55,6 @@
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70F67226B4B6BC007D37EF /* PetDetailView.swift */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
-		9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */; };
 		9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */; };
 		9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */; };
 		9D7C252B2A5948D300DDB027 /* Pet_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */; };
@@ -161,7 +160,6 @@
 		9D70F67226B4B6BC007D37EF /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		9D73AAD426ECFCD1002DFFD1 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		9D73AAD626ECFEFC002DFFD1 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		9D7C25282A5948D300DDB027 /* Pet ReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pet ReminderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,7 +391,6 @@
 		9D98B13D28D606570018C7A6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9D7283BD26ECE2B5001BDDD5 /* DataManager.swift */,
 				9D7E9A572A5644D70024B2C5 /* StoreManager.swift */,
 				9D98B13B28D606460018C7A6 /* EventManager.swift */,
 			);
@@ -742,7 +739,6 @@
 				7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */,
 				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
-				9D7283BE26ECE2B5001BDDD5 /* DataManager.swift in Sources */,
 				9D326E732A8549B400C1AC8D /* NewAddPetView.swift in Sources */,
 				9D0C92412AA64FEE009BF51C /* SFSymbols.swift in Sources */,
 				7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */,
