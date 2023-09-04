@@ -41,8 +41,6 @@ struct Strings {
 
 }
 
-
-
 extension String {
     static func formatEventDateTime(current: Bool, allDay: Bool, event: EKEvent) -> Self {
         if allDay {

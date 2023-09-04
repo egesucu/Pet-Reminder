@@ -23,12 +23,12 @@ struct FindVetView: View {
                     if viewModel.permissionDenied {
                         EmptyPageView(emptyPageReference: .map)
                             .padding(.all)
-                        
+
                     } else {
                         Map(selection: $viewModel.selectedLocation) {
                             withAnimation {
                                 ForEach(viewModel.searchedLocations) { location in
-                                    Marker(location.name, systemImage: SFSymbols.pawprintCircleFill , coordinate: location.coordinate)
+                                    Marker(location.name, systemImage: SFSymbols.pawprintCircleFill, coordinate: location.coordinate)
                                         .tint(tintColor)
                                         .tag(location)
                                     UserAnnotation()
@@ -41,7 +41,7 @@ struct FindVetView: View {
                             MapCompass()
                         }
                         .searchable(text: $viewModel.searchText)
-                        
+
                     }
                 }
                 .task(viewModel.getUserLocation)
@@ -52,7 +52,7 @@ struct FindVetView: View {
                 }
                 .onChange(of: viewModel.selectedLocation) {
                     viewModel.showItem = viewModel.selectedLocation != nil
-                    
+
                 }
 #else
                 Text("find_vet_simulation_error")
@@ -67,9 +67,9 @@ struct FindVetView: View {
                     .presentationCornerRadius(25)
                     .padding(.horizontal)
             })
-            
+
             .navigationTitle(Text("find_vet_title"))
-            
+
         }
 
     }

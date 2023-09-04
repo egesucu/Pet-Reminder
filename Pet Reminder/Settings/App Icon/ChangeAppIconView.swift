@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct ChangeAppIconView: View {
-    
+
     @State private var viewModel = AppIconManager()
     @State private var logoChanged = false
-    
+
     var body: some View {
         VStack {
             ScrollView {
@@ -44,7 +44,7 @@ struct ChangeAppIconView: View {
                             Spacer()
                         }
                         .padding()
-                        
+
                     }
                 }
                 .padding()
@@ -52,7 +52,7 @@ struct ChangeAppIconView: View {
         }
         .navigationTitle(Text("settings_change_icon"))
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
-        
+
     }
 }
 

@@ -92,7 +92,7 @@ struct FeedListView: View {
             }
         }
     }
-    
+
     @Sendable
     func getFeeds() async {
         await viewModel.getLatestFeed(pet: pet)

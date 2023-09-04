@@ -26,14 +26,14 @@ extension Pet {
     var wrappedBirthday: Date {
         self.birthday ?? .now
     }
-    
+
     var feedsArray: [Feed] {
         let feedSet = self.feeds as? Set<Feed> ?? []
         return feedSet.sorted { first, second in
             first.wrappedFeedDate < second.wrappedFeedDate
         }
     }
-    
+
     var vaccinesArray: [Vaccine] {
         let vaccineSet = self.vaccines as? Set<Vaccine> ?? []
         return vaccineSet.sorted { first, second in
@@ -41,7 +41,3 @@ extension Pet {
         }
     }
 }
-
-
-
-

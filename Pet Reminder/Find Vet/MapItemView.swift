@@ -14,7 +14,7 @@ struct MapItemView: View {
 
     var location: Pin?
     @State private var showOpenMapAlert = false
-    
+
     var body: some View {
         VStack {
             if let location {
@@ -53,7 +53,7 @@ struct MapItemView: View {
                                 Text("\n\(postalCode), \(locality)")
                                 Spacer()
                             }
-                            
+
                         }
                     }
                 }

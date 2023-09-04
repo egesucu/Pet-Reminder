@@ -21,7 +21,7 @@ class VetViewModel: NSObject {
     var showItem = false
     var searchedLocations: [Pin] = []
     var locationManager = CLLocationManager()
-    var selectedLocation: Pin? = nil
+    var selectedLocation: Pin?
 
     override init() {
         super.init()
@@ -59,7 +59,7 @@ class VetViewModel: NSObject {
             )
         )
     }
-    
+
     func clearPreviousSearches() {
         DispatchQueue.main.async {
             self.searchedLocations.removeAll()
@@ -68,7 +68,7 @@ class VetViewModel: NSObject {
 
     func searchPins() async {
         clearPreviousSearches()
-        
+
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchText
         searchRequest.region = region
@@ -82,7 +82,7 @@ class VetViewModel: NSObject {
                 DispatchQueue.main.async {
                     self.searchedLocations.append(pin)
                 }
-               
+
             }
         } catch let error {
             print(error)
@@ -108,7 +108,7 @@ extension VetViewModel: CLLocationManagerDelegate {
             Task {
                 self.permissionDenied = true
             }
-            
+
         }
     }
 }

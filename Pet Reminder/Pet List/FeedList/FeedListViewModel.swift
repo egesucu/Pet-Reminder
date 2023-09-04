@@ -15,7 +15,7 @@ class FeedListViewModel {
 
     var morningOn = false
     var eveningOn = false
-    
+
     func todaysFeeds(pet: Pet?) -> [Feed] {
         guard let pet else { return [] }
         return pet.feedsArray.filter({ Calendar.current.isDateInToday($0.wrappedFeedDate) })
@@ -23,7 +23,7 @@ class FeedListViewModel {
 
     func updateFeed(pet: Pet?, type: FeedTimeSelection, viewContext: NSManagedObjectContext) {
         let todaysFeed = todaysFeeds(pet: pet)
-        
+
         if todaysFeed.isEmpty {
             // We don't have any feed history for today
             let feed = Feed(context: viewContext)
@@ -39,7 +39,7 @@ class FeedListViewModel {
             }
             feed.feedDate = .now
             pet?.addToFeeds(feed)
-            
+
         } else {
             // We have a feed, let's update inside of it.
             guard let feed = todaysFeed.first else { return }
@@ -53,7 +53,7 @@ class FeedListViewModel {
                 feed.eveningFedStamp = eveningOn ? .now : nil
                 feed.eveningFed = eveningOn
             }
-            
+
             feed.feedDate = .now
         }
         PersistenceController.shared.save()
@@ -61,7 +61,7 @@ class FeedListViewModel {
 
     func getLatestFeed(pet: Pet?) async {
         let todaysFeed = todaysFeeds(pet: pet)
-        
+
         if todaysFeed.isEmpty {
             morningOn = false
             eveningOn = false

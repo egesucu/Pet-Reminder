@@ -12,11 +12,11 @@ extension Feed {
     var wrappedFeedDate: Date {
         self.feedDate ?? .now
     }
-    
+
     var wrappedMorningFedStamp: Date {
         self.morningFedStamp ?? .now
     }
-    
+
     var wrappedEveningFedStamp: Date {
         self.eveningFedStamp ?? .now
     }

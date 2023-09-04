@@ -63,7 +63,7 @@ struct SettingsView: View {
 
         }.navigationViewStyle(.stack)
     }
-    
+
     private func showAlert(content: LocalizedStringKey) {
         alertMessage = content
         showAlert.toggle()

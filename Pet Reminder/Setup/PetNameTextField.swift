@@ -54,14 +54,14 @@ struct PetNameTextField: View {
         }
         .alert(isPresented: $showAlert, error: PetError.name) {
             Button(action: {
-                
+
             }, label: {
                 Text("OK")
             })
         }
 
     }
-    
+
     func controlName() {
         let pet = pets.filter({ $0.wrappedName == name })
         if pet.isNotEmpty {
@@ -80,7 +80,7 @@ struct PetNameTextField: View {
 
 enum PetError: LocalizedError {
     case name
-    
+
     var errorDescription: String? {
         switch self {
         case .name:

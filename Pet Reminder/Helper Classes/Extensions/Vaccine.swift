@@ -9,7 +9,7 @@
 import Foundation
 
 extension Vaccine {
-    
+
     var wrappedName: String {
         self.name ?? ""
     }
