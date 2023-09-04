@@ -20,7 +20,7 @@ struct PetListView: View {
     @State private var addPet = false
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.wrappedName, ascending: true)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     var pets: FetchedResults<Pet>
     @State private var showUndoButton = false
     @State private var selectedPet: Pet?

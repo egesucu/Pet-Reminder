@@ -17,63 +17,90 @@ struct FindVetView: View {
 
     var body: some View {
         NavigationStack {
-#if !targetEnvironment(simulator)
             VStack {
-                if viewModel.permissionDenied {
-                    EmptyPageView(emptyPageReference: .map)
-                        .onTapGesture {
-                            viewModel.showAlert.toggle()
+#if !targetEnvironment(simulator)
+                VStack {
+                    if viewModel.permissionDenied {
+                        EmptyPageView(emptyPageReference: .map)
+                            .padding(.all)
+                        
+                    } else {
+                        Map(selection: $viewModel.selectedLocation) {
+                            withAnimation {
+                                ForEach(viewModel.searchedLocations) { location in
+                                    Marker(location.name, systemImage: SFSymbols.pawprintCircleFill , coordinate: location.coordinate)
+                                        .tint(tintColor)
+                                        .tag(location)
+                                    UserAnnotation()
+                                }
+                            }
                         }
-                        .padding(.all)
-                        .navigationTitle(Text("find_vet_title"))
-                } else {
-                    VStack(spacing: 0) {
-                        MapWithSearchBarView(viewModel: $viewModel)
-                        .frame(height: UIScreen.main.bounds.height / 2)
-                        bottomMapItemsView
+                        .mapControls {
+                            MapPitchToggle()
+                            MapUserLocationButton()
+                            MapCompass()
+                        }
+                        .searchable(text: $viewModel.searchText)
+                        
                     }
                 }
-            }
-            .task(viewModel.getUserLocation)
-            .alert("location_alert_title", isPresented: $viewModel.showAlert, actions: alertActions, message: {
-                Text("location_alert_context")
-            })
+                .task(viewModel.getUserLocation)
+                .onSubmit(of: .search) {
+                    Task {
+                        await viewModel.searchPins()
+                    }
+                }
+                .onChange(of: viewModel.selectedLocation) {
+                    viewModel.showItem = viewModel.selectedLocation != nil
+                    
+                }
 #else
-            Text("find_vet_simulation_error")
+                Text("find_vet_simulation_error")
 #endif
-
+            }
+            .sheet(isPresented: $viewModel.showItem, onDismiss: {
+                viewModel.selectedLocation = nil
+            }, content: {
+                MapItemView(location: viewModel.selectedLocation)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(25)
+            })
+            
+            .navigationTitle(Text("find_vet_title"))
+            
         }
 
     }
 
 #if !targetEnvironment(simulator)
 
-    @ViewBuilder
-    private func alertActions() -> some View {
-        Button(action: {
-            Task {
-               await viewModel.openAppSettings()
-            }
-        }, label: { Text("location_alert_change") })
-        Button(action: {}, label: { Text("cancel") })
-    }
+//    @ViewBuilder
+//    private func alertActions() -> some View {
+//        Button(action: {
+//            Task {
+//               await viewModel.openAppSettings()
+//            }
+//        }, label: { Text("location_alert_change") })
+//        Button(action: {}, label: { Text("cancel") })
+//    }
 
-    private var bottomMapItemsView: some View {
-        VStack {
-            List {
-                ForEach(viewModel.searchedLocations) { location in
-                    MapItemView(item: location) { item in
-                        Task(priority: .userInitiated) {
-                            await viewModel.setRegion(item: item)
-                        }
-                    }
-                }
-            }
-            .listItemTint(.clear)
-            .listRowInsets(.none)
-            .listStyle(.inset)
-        }
-    }
+//    private var bottomMapItemsView: some View {
+//        VStack {
+//            List {
+//                ForEach(viewModel.searchedLocations) { location in
+//                    MapItemView(item: location) { item in
+//                        Task(priority: .userInitiated) {
+//                            await viewModel.setRegion(item: item)
+//                        }
+//                    }
+//                }
+//            }
+//            .listItemTint(.clear)
+//            .listRowInsets(.none)
+//            .listStyle(.inset)
+//        }
+//    }
 #endif
 }
 

@@ -29,6 +29,9 @@
 		9D34019026DA7392005822DA /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34018D26DA7392005822DA /* NotificationManager.swift */; };
 		9D34019526DA7950005822DA /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019426DA7950005822DA /* PetListView.swift */; };
 		9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D34019626DA7AAD005822DA /* PetChangeView.swift */; };
+		9D38130E2AA359DC0080F412 /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D38130D2AA359DC0080F412 /* AppIconManager.swift */; };
+		9D3813112AA35A6A0080F412 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3813102AA35A6A0080F412 /* AppIcon.swift */; };
+		9D3813132AA35CD40080F412 /* ChangeAppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3813122AA35CD40080F412 /* ChangeAppIconView.swift */; };
 		9D3ED57A2A9F8D6500940AA4 /* SetupSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */; };
 		9D3ED57C2A9F8D7D00940AA4 /* NotificationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED57B2A9F8D7D00940AA4 /* NotificationSelectView.swift */; };
 		9D4114AB2A82F7CD00C21D87 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4114AA2A82F7CD00C21D87 /* Persistence.swift */; };
@@ -129,6 +132,9 @@
 		9D34018D26DA7392005822DA /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		9D34019426DA7950005822DA /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		9D34019626DA7AAD005822DA /* PetChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeView.swift; sourceTree = "<group>"; };
+		9D38130D2AA359DC0080F412 /* AppIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconManager.swift; sourceTree = "<group>"; };
+		9D3813102AA35A6A0080F412 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
+		9D3813122AA35CD40080F412 /* ChangeAppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAppIconView.swift; sourceTree = "<group>"; };
 		9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSteps.swift; sourceTree = "<group>"; };
 		9D3ED57B2A9F8D7D00940AA4 /* NotificationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSelectView.swift; sourceTree = "<group>"; };
 		9D4114AA2A82F7CD00C21D87 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -266,6 +272,15 @@
 			path = "Helper Classes";
 			sourceTree = "<group>";
 		};
+		9D38130F2AA35A450080F412 /* App Icon */ = {
+			isa = PBXGroup;
+			children = (
+				9D38130D2AA359DC0080F412 /* AppIconManager.swift */,
+				9D3813102AA35A6A0080F412 /* AppIcon.swift */,
+			);
+			path = "App Icon";
+			sourceTree = "<group>";
+		};
 		9D4114AE2A83079700C21D87 /* PetChange */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +348,7 @@
 		9D8E76F0248666BD004610C8 /* Pet Reminder */ = {
 			isa = PBXGroup;
 			children = (
+				9D38130F2AA35A450080F412 /* App Icon */,
 				9D9F59B125E18228007672E8 /* Intro */,
 				9DCDA05626E3BFE800DF290F /* Home */,
 				9DCDA05926E3BFFF00DF290F /* Find Vet */,
@@ -509,6 +525,7 @@
 			isa = PBXGroup;
 			children = (
 				9D0C24E225D08181008F93CD /* SettingsView.swift */,
+				9D3813122AA35CD40080F412 /* ChangeAppIconView.swift */,
 				9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */,
 				9DBB67FF2AA133EC0031B5F0 /* Notification */,
 				9D84904F277748CB005EAC5B /* DonateView.swift */,
@@ -734,6 +751,7 @@
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
 				9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */,
+				9D3813112AA35A6A0080F412 /* AppIcon.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
 				9D9B9C1A2AA12D610002F4AE /* PreviousFeedsSection.swift in Sources */,
 				9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */,
@@ -741,6 +759,7 @@
 				9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */,
 				9D6293722A87D46300BA577A /* Logger.swift in Sources */,
 				9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */,
+				9D38130E2AA359DC0080F412 /* AppIconManager.swift in Sources */,
 				9DF9A4AC2A8419780004CB8E /* EmptyPageView.swift in Sources */,
 				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
 				9DB669772A62EC2100A7573C /* Pet.swift in Sources */,
@@ -760,6 +779,7 @@
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
 				9D9B9C122AA122EC0002F4AE /* PetListViewReference.swift in Sources */,
 				9DC87F1D29FAC8A6008AB720 /* EventTimeView.swift in Sources */,
+				9D3813132AA35CD40080F412 /* ChangeAppIconView.swift in Sources */,
 				9DF9A4B22A84546C0004CB8E /* SheetContent.swift in Sources */,
 				9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */,
 				7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */,
@@ -970,6 +990,7 @@
 		9D8E7706248666C1004610C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -999,6 +1020,7 @@
 		9D8E7707248666C1004610C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";

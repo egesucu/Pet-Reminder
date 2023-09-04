@@ -14,7 +14,7 @@ struct NotificationView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.wrappedName, ascending: true)])
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     private var pets: FetchedResults<Pet>
 
     @State private var notificationManager = NotificationManager()

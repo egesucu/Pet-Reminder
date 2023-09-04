@@ -12,59 +12,76 @@ struct MapItemView: View {
 
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    var item: Pin
-    var onSetRegion: (Pin) -> Void
-
+    var location: Pin?
+    @State private var showOpenMapAlert = false
+    
     var body: some View {
         VStack {
-            Text(item.name)
-                .bold()
-                .font(.title3)
-                .padding(.bottom, 10)
-            HStack {
-                VStack(alignment: .leading) {
-                    if let phoneNumber = item.phoneNumber {
-                        HStack {
-                            Image(systemName: "phone.fill")
-                                .foregroundStyle(tintColor)
-                            Text(phoneNumber)
-                                .foregroundStyle(tintColor)
-                                .onTapGesture {
-                                    let url = URL(
-                                        string: "tel:\(phoneNumber)"
-                                    ) ?? URL(
-                                        string: "https://www.google.com"
-                                    )!
-                                    UIApplication.shared.open(url)
-                                }
-                            Spacer()
+            if let location {
+                Text(location.name)
+                    .bold()
+                    .font(.title3)
+                    .padding(.bottom, 10)
+                HStack {
+                    VStack(alignment: .leading) {
+                        if let phoneNumber = location.phoneNumber {
+                            HStack {
+                                Image(systemName: "phone.fill")
+                                    .foregroundStyle(tintColor)
+                                Text(phoneNumber)
+                                    .foregroundStyle(tintColor)
+                                    .onTapGesture {
+                                        let url = URL(
+                                            string: "tel:\(phoneNumber)"
+                                        ) ?? URL(
+                                            string: "https://www.google.com"
+                                        )!
+                                        UIApplication.shared.open(url)
+                                    }
+                                Spacer()
+                            }
+                            .tint(tintColor)
                         }
-                        .tint(tintColor)
-                    }
-                    if let subThoroughfare = item.subThoroughfare,
-                       let thoroughfare = item.thoroughfare,
-                       let locality = item.locality,
-                       let postalCode = item.postalCode {
-                        HStack {
-                            Image(systemName: "building.fill")
-                                .foregroundStyle(tintColor)
-                            Text("\(thoroughfare), \(subThoroughfare)")
-                            Text("\n\(postalCode), \(locality)")
-                            Spacer()
+                        if let subThoroughfare = location.subThoroughfare,
+                           let thoroughfare = location.thoroughfare,
+                           let locality = location.locality,
+                           let postalCode = location.postalCode {
+                            HStack {
+                                Image(systemName: "building.fill")
+                                    .foregroundStyle(tintColor)
+                                Text("\(thoroughfare), \(subThoroughfare)")
+                                Text("\n\(postalCode), \(locality)")
+                                Spacer()
+                            }
+                            
                         }
-
                     }
                 }
-                Spacer()
                 Button(action: {
-                    onSetRegion(item)
+                    showOpenMapAlert.toggle()
                 }, label: {
-                    Image(systemName: "mappin.circle.fill")
-                        .font(.title)
+                    Text("map_open_in")
                 })
+                .buttonStyle(.bordered)
                 .padding(.trailing, 10)
             }
-
+        }
+        .alert("find_vet_open", isPresented: $showOpenMapAlert) {
+            ForEach(MapApplication.allCases, id: \.self) { app in
+                Button(app.rawValue) {
+                    if let location {
+                        openURLWithMap(
+                            latitude: location.latitude,
+                            longitude: location.longitude,
+                            application: app
+                        )
+                    }
+                }
+            }
+            Button {
+            } label: {
+                Text("Cancel")
+            }
         }
     }
 }

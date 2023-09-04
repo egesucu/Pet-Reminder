@@ -15,6 +15,8 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @State private var alertMessage: LocalizedStringKey = ""
+    @State private var showAlert = false
 
     var body: some View {
         NavigationStack {
@@ -26,6 +28,16 @@ struct SettingsView: View {
                             .environment(\.managedObjectContext, viewContext)
                     )
                     ColorPicker("settings_tint_color", selection: $tintColor)
+                    if tintColor != Color.accentColor {
+                        Button {
+                            tintColor = Color.accent
+                            showAlert(content: "color_reset_cuccessfull")
+                        } label: {
+                            Text("settings_reset_color")
+                        }
+                        .sensoryFeedback(.success, trigger: showAlert)
+                    }
+                    NavigationLink("settings_change_icon", destination: ChangeAppIconView())
                     NavigationLink("notifications_manage_title", destination:
                         NotificationView().environment(\.managedObjectContext, viewContext))
                     NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())
@@ -43,10 +55,18 @@ struct SettingsView: View {
                 debugMenu
                 #endif
             }
+            .alert(alertMessage, isPresented: $showAlert, actions: {
+                Button("OK", role: .cancel) {}
 
+            })
             .navigationTitle(Text("settings_tab_title"))
 
         }.navigationViewStyle(.stack)
+    }
+    
+    private func showAlert(content: LocalizedStringKey) {
+        alertMessage = content
+        showAlert.toggle()
     }
 }
 
@@ -59,7 +79,6 @@ private var debugMenu: some View {
             UserDefaults.standard.synchronize()
             Logger.viewCycle.notice("App crashed for resetting UserDefaults.")
             Logger.viewCycle.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
-            // assert(false)
         })
     } header: {
         Text("debug_menu_title")

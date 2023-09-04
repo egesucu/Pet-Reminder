@@ -26,16 +26,25 @@ struct EveningCheckboxView: View {
                     .symbolEffect(.bounce, value: eveningOn)
             }
             .padding(.bottom)
-            Image(systemName: eveningOn ? SFSymbols.checked : SFSymbols.notChecked)
-                .contentTransition(.symbolEffect(.replace))
-                .font(.system(size: 50))
-                .onTapGesture {
-                    eveningOn.toggle()
-                }
+            CheckBoxView(isChecked: $eveningOn)
         }
         .cornerRadius(20)
         .frame(width: 150, height: 150)
 
+    }
+}
+
+struct CheckBoxView: View {
+
+    @Binding var isChecked: Bool
+
+    var body: some View {
+        Image(systemName: isChecked ? SFSymbols.checked : SFSymbols.notChecked)
+            .contentTransition(.symbolEffect(.replace))
+            .font(.system(size: 50))
+            .onTapGesture {
+                isChecked.toggle()
+            }
     }
 }
 

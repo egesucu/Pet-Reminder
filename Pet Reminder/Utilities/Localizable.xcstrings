@@ -483,6 +483,22 @@
         }
       }
     },
+    "color_reset_cuccessfull" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Color is removed successfully"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel renk başarıyla silindi"
+          }
+        }
+      }
+    },
     "continue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1101,6 +1117,9 @@
         }
       }
     },
+    "map_open_in" : {
+
+    },
     "name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1353,6 +1372,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bildirimler"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
@@ -1688,6 +1717,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir tarih seç"
+          }
+        }
+      }
+    },
+    "settings_change_icon" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logo"
+          }
+        }
+      }
+    },
+    "settings_reset_color" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset Custom Color"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Rengi Sıfırla"
           }
         }
       }

@@ -27,4 +27,25 @@ extension Pet {
     var wrappedBirthday: Date {
         self.birthday ?? .now
     }
+    
+    var feedsArray: [Feed] {
+        let feedSet = self.feeds as? Set<Feed> ?? []
+        return feedSet.sorted { first, second in
+            first.wrappedFeedDate < second.wrappedFeedDate
+        }
+    }
+}
+
+extension Feed {
+    var wrappedFeedDate: Date {
+        self.feedDate ?? .now
+    }
+    
+    var wrappedMorningFedStamp: Date {
+        self.morningFedStamp ?? .now
+    }
+    
+    var wrappedEveningFedStamp: Date {
+        self.eveningFedStamp ?? .now
+    }
 }

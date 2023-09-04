@@ -53,6 +53,7 @@ struct EventFilterView: View {
                 }
             }
         }
+        
     }
 
     func isCalendarSelected(calendar: EKCalendar) -> Bool {

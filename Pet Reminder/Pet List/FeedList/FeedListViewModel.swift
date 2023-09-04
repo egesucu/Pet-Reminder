@@ -15,70 +15,60 @@ class FeedListViewModel {
 
     var morningOn = false
     var eveningOn = false
-
-    func updateFeed(pet: Pet?, feeds: [Feed], type: FeedTimeSelection, viewContext: NSManagedObjectContext) {
-        if feeds.isEmpty {
-            addFeedForToday(pet: pet, viewContext: viewContext)
-        } else {
-            if let pet,
-               let feeds = pet.feeds,
-               let feedSet = feeds.allObjects as? [Feed],
-               let lastFeed = feedSet.last {
-                switch type {
-                case .morning:
-                    lastFeed.morningFedStamp = morningOn ? .now : nil
-                    lastFeed.morningFed = morningOn
-                case .evening:
-                    lastFeed.eveningFedStamp = eveningOn ? .now : nil
-                    lastFeed.eveningFed = eveningOn
-                default:
-                    break
-                }
-                lastFeed.feedDate = .now
-            }
-        }
+    
+    func todaysFeeds(pet: Pet?) -> [Feed] {
+        guard let pet else { return [] }
+        return pet.feedsArray.filter({ Calendar.current.isDateInToday($0.wrappedFeedDate) })
     }
 
-    func getLatestFeed(pet: Pet?) async {
-        if let pet,
-           let feedSet = pet.feeds,
-           let feeds = feedSet.allObjects as? [Feed] {
-            if let lastFeed = feeds.last {
-                if let date = lastFeed.feedDate {
-                    if Calendar.current.isDateInToday(date) {
-                        // We have a feed.
-                        morningOn = lastFeed.morningFed
-                        eveningOn = lastFeed.eveningFed
-                    } else {
-                        morningOn = false
-                        eveningOn = false
-                    }
-                }
-            }
-        } else {
-            morningOn = false
-            eveningOn = false
-        }
-    }
-
-    func addFeedForToday(pet: Pet?, viewContext: NSManagedObjectContext) {
-        let feed = Feed(context: viewContext)
-
-        if let pet {
-            switch pet.selection {
+    func updateFeed(pet: Pet?, type: FeedTimeSelection, viewContext: NSManagedObjectContext) {
+        let todaysFeed = todaysFeeds(pet: pet)
+        
+        if todaysFeed.isEmpty {
+            // We don't have any feed history for today
+            let feed = Feed(context: viewContext)
+            switch type {
             case .both:
-                break
+                break // We won't pass this to update feed.
             case .morning:
-                feed.morningFedStamp = morningOn ? .now : nil
                 feed.morningFed = morningOn
+                feed.morningFedStamp = morningOn ? .now : nil
             case .evening:
                 feed.eveningFedStamp = eveningOn ? .now : nil
                 feed.eveningFed = eveningOn
             }
-            pet.addToFeeds(feed)
-            PersistenceController.shared.save()
+            feed.feedDate = .now
+            pet?.addToFeeds(feed)
+            
+        } else {
+            // We have a feed, let's update inside of it.
+            guard let feed = todaysFeed.first else { return }
+            switch type {
+            case .both:
+                break // We won't pass this to update feed.
+            case .morning:
+                feed.morningFed = morningOn
+                feed.morningFedStamp = morningOn ? .now : nil
+            case .evening:
+                feed.eveningFedStamp = eveningOn ? .now : nil
+                feed.eveningFed = eveningOn
+            }
+            
+            feed.feedDate = .now
         }
-
+        PersistenceController.shared.save()
     }
 
+    func getLatestFeed(pet: Pet?) async {
+        let todaysFeed = todaysFeeds(pet: pet)
+        
+        if todaysFeed.isEmpty {
+            morningOn = false
+            eveningOn = false
+        } else {
+            guard let feed = todaysFeed.first else { return }
+            morningOn = feed.morningFed
+            eveningOn = feed.eveningFed
+        }
+    }
 }

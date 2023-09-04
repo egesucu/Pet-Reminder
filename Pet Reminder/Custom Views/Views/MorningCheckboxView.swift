@@ -27,13 +27,7 @@ struct MorningCheckboxView: View {
             }
             .font(.title.bold())
             .padding(.bottom)
-
-            Image(systemName: morningOn ? SFSymbols.checked : SFSymbols.notChecked)
-                .font(.system(size: 50))
-                .contentTransition(.symbolEffect(.replace))
-                .onTapGesture {
-                    morningOn.toggle()
-                }
+            CheckBoxView(isChecked: $morningOn)
         }
         .cornerRadius(20)
         .frame(width: 150, height: 150)

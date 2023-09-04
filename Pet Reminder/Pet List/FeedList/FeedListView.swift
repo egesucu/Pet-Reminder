@@ -18,19 +18,6 @@ struct FeedListView: View {
 
     @State private var viewModel = FeedListViewModel()
 
-    let feedback = UINotificationFeedbackGenerator()
-
-    var todaysFeeds: [Feed] {
-        if let pet,
-           let feedSet = pet.feeds,
-           let feeds = feedSet.allObjects as? [Feed] {
-            return feeds.filter { feed in
-                Calendar.current.isDateInToday(feed.feedDate ?? .now)
-            }
-        }
-        return []
-    }
-
     var body: some View {
         HStack(spacing: 30) {
             if let pet {
@@ -41,9 +28,9 @@ struct FeedListView: View {
                             Logger
                                 .viewCycle
                                 .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.wrappedName)")
-                            feedback.notificationOccurred(.success)
-                            viewModel.updateFeed(pet: pet, feeds: todaysFeeds, type: .morning, viewContext: viewContext)
+                            viewModel.updateFeed(pet: pet, type: .morning, viewContext: viewContext)
                         })
+                        .sensoryFeedback(.selection, trigger: viewModel.morningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
@@ -56,9 +43,9 @@ struct FeedListView: View {
                             Logger
                                 .viewCycle
                                 .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.wrappedName)")
-                            feedback.notificationOccurred(.success)
-                            viewModel.updateFeed(pet: pet, feeds: todaysFeeds, type: .evening, viewContext: viewContext)
+                            viewModel.updateFeed(pet: pet, type: .evening, viewContext: viewContext)
                         })
+                        .sensoryFeedback(.selection, trigger: viewModel.eveningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
@@ -71,9 +58,9 @@ struct FeedListView: View {
                             Logger
                                 .viewCycle
                                 .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.wrappedName)")
-                            feedback.notificationOccurred(.success)
-                            viewModel.updateFeed(pet: pet, feeds: todaysFeeds, type: .morning, viewContext: viewContext)
+                            viewModel.updateFeed(pet: pet, type: .morning, viewContext: viewContext)
                         })
+                        .sensoryFeedback(.selection, trigger: viewModel.morningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
@@ -85,9 +72,9 @@ struct FeedListView: View {
                             Logger
                                 .viewCycle
                                 .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.wrappedName)")
-                            feedback.notificationOccurred(.success)
-                            viewModel.updateFeed(pet: pet, feeds: todaysFeeds, type: .evening, viewContext: viewContext)
+                            viewModel.updateFeed(pet: pet, type: .evening, viewContext: viewContext)
                         })
+                        .sensoryFeedback(.selection, trigger: viewModel.eveningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
@@ -98,14 +85,17 @@ struct FeedListView: View {
             }
 
         }
-        .task {
-            await viewModel.getLatestFeed(pet: pet)
-        }
+        .task(getFeeds)
         .onChange(of: pet) {
             Task {
-                await viewModel.getLatestFeed(pet: pet)
+                await getFeeds()
             }
         }
+    }
+    
+    @Sendable
+    func getFeeds() async {
+        await viewModel.getLatestFeed(pet: pet)
     }
 }
 

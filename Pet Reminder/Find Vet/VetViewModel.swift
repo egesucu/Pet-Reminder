@@ -18,10 +18,10 @@ class VetViewModel: NSObject {
     var region = MKCoordinateRegion()
     var permissionDenied = false
     var searchText = String(localized: "default_vet_text")
-    var showAlert = false
+    var showItem = false
     var searchedLocations: [Pin] = []
     var locationManager = CLLocationManager()
-    var selectedItem: Pin = Pin(item: .init())
+    var selectedLocation: Pin? = nil
 
     override init() {
         super.init()
@@ -47,6 +47,7 @@ class VetViewModel: NSObject {
                 longitudeDelta: 0.05
             )
         )
+        await searchPins()
     }
 
     func setRegion(item: Pin) async {
@@ -58,8 +59,16 @@ class VetViewModel: NSObject {
             )
         )
     }
+    
+    func clearPreviousSearches() {
+        DispatchQueue.main.async {
+            self.searchedLocations.removeAll()
+        }
+    }
 
     func searchPins() async {
+        clearPreviousSearches()
+        
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchText
         searchRequest.region = region
@@ -70,7 +79,10 @@ class VetViewModel: NSObject {
             let response = try await localSearch.start()
             for item in response.mapItems {
                 let pin = Pin(item: item)
-                searchedLocations.append(pin)
+                DispatchQueue.main.async {
+                    self.searchedLocations.append(pin)
+                }
+               
             }
         } catch let error {
             print(error)
@@ -88,12 +100,15 @@ class VetViewModel: NSObject {
 extension VetViewModel: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedWhenInUse {
-            self.permissionDenied = false
             Task {
+                self.permissionDenied = false
                 await getUserLocation()
             }
         } else {
-            self.permissionDenied = true
+            Task {
+                self.permissionDenied = true
+            }
+            
         }
     }
 }
