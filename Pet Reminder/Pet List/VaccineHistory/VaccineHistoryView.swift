@@ -16,30 +16,24 @@ struct VaccineHistoryView: View {
     @Environment(\.managedObjectContext) private var modelContext
     @State private var viewModel = VaccineHistoryViewModel()
 
-    func sortedVaccines(_ vaccines: [Vaccine]) -> [Vaccine] {
-        vaccines.sorted(by: { $0.date ?? .now > $1.date ?? .now })
-    }
-
     var body: some View {
         NavigationStack {
             VStack {
-                if let pet,
-                   let vaccineSet = pet.vaccines,
-                   let vaccines = vaccineSet.allObjects as? [Vaccine] {
-                    if vaccines.count == 0 {
+                if let pet {
+                    if pet.vaccinesArray.isEmpty {
                         Text("no_vaccine_title")
                     } else {
                         List {
-                            ForEach(sortedVaccines(vaccines)) { vaccine in
+                            ForEach(pet.vaccinesArray) { vaccine in
                                 HStack {
                                     Label {
-                                        Text(vaccine.name ?? "")
+                                        Text(vaccine.wrappedName)
                                             .bold()
                                     } icon: {
                                         Image(systemName: SFSymbols.vaccine)
                                     }
                                     Spacer()
-                                    Text((vaccine.date ?? Date.now).formatted())
+                                    Text((vaccine.wrappedDate).formatted())
                                 }
                             }.onDelete { indexSet in
                                 viewModel.deleteVaccines(pet: pet, at: indexSet, modelContext: modelContext)
@@ -73,7 +67,7 @@ struct VaccineHistoryView: View {
                 AddPopupView(
                     contentInput: $viewModel.vaccineName,
                     dateInput: $viewModel.vaccineDate,
-                    onSave: { viewModel.saveVaccine(pet: pet) },
+                    onSave: { viewModel.saveVaccine(pet: pet, viewContext: modelContext) },
                     onCancel: viewModel.cancelVaccine
                 )
             }

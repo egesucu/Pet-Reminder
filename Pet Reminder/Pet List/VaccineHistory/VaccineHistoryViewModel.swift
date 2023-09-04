@@ -29,8 +29,8 @@ class VaccineHistoryViewModel {
         }
     }
 
-    func saveVaccine(pet: Pet?) {
-        let vaccine = Vaccine()
+    func saveVaccine(pet: Pet?, viewContext: NSManagedObjectContext) {
+        let vaccine = Vaccine(context: viewContext)
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
         pet?.addToVaccines(vaccine)

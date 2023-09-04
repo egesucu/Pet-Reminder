@@ -18,12 +18,12 @@ struct AddPopupView: View {
 
     var body: some View {
         ZStack {
-            Color(.black)
+            Color(uiColor: .label)
                 .opacity(0.8)
                 .onTapGesture(perform: onCancel)
             ZStack(alignment: .center) {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
+                    .fill(Color(uiColor: .systemBackground))
                 VStack(alignment: .center) {
                     HStack {
                         Text("add")

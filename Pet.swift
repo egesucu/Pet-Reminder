@@ -34,6 +34,13 @@ extension Pet {
             first.wrappedFeedDate < second.wrappedFeedDate
         }
     }
+    
+    var vaccinesArray: [Vaccine] {
+        let vaccineSet = self.vaccines as? Set<Vaccine> ?? []
+        return vaccineSet.sorted { first, second in
+            first.wrappedDate < second.wrappedDate
+        }
+    }
 }
 
 extension Feed {
@@ -47,5 +54,15 @@ extension Feed {
     
     var wrappedEveningFedStamp: Date {
         self.eveningFedStamp ?? .now
+    }
+}
+
+extension Vaccine {
+    
+    var wrappedName: String {
+        self.name ?? ""
+    }
+    var wrappedDate: Date {
+        self.date ?? .now
     }
 }
