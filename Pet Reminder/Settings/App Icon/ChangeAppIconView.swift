@@ -19,7 +19,7 @@ struct ChangeAppIconView: View {
                 ForEach(AppIcon.allCases) { icon in
                     ZStack {
                         Capsule()
-                            .fill(Color.white)
+                            .fill(Color(uiColor: .secondarySystemBackground))
                             .frame(height: 100)
                             .overlay {
                                 Capsule()
@@ -32,13 +32,13 @@ struct ChangeAppIconView: View {
                                 }
                             }
                             .sensoryFeedback(.success, trigger: logoChanged)
-                        HStack {
+                        HStack(spacing: 10) {
                             Image(uiImage: icon.preview)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 80, height: 80)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .padding(.trailing, 10)
+                                .padding(.leading, 10)
                             Text(icon.description)
                                 .font(.title)
                             Spacer()

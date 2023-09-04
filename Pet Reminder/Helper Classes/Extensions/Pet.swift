@@ -9,7 +9,6 @@
 
 import Foundation
 
-// MARK: - Pet Extension
 extension Pet {
     var selection: FeedTimeSelection {
         get {
@@ -43,26 +42,6 @@ extension Pet {
     }
 }
 
-extension Feed {
-    var wrappedFeedDate: Date {
-        self.feedDate ?? .now
-    }
-    
-    var wrappedMorningFedStamp: Date {
-        self.morningFedStamp ?? .now
-    }
-    
-    var wrappedEveningFedStamp: Date {
-        self.eveningFedStamp ?? .now
-    }
-}
 
-extension Vaccine {
-    
-    var wrappedName: String {
-        self.name ?? ""
-    }
-    var wrappedDate: Date {
-        self.date ?? .now
-    }
-}
+
+

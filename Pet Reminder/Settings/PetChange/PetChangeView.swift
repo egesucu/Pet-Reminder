@@ -16,63 +16,67 @@ struct PetChangeView: View {
 
     var body: some View {
         VStack {
-            ESImageView(data: viewModel.outputImageData)
-                .onTapGesture {
-                    viewModel.showImagePicker = viewModel.defaultPhotoOn ? false : true
-                }
-                .sheet(isPresented: $viewModel.showImagePicker, onDismiss: {
-                    viewModel.loadImage(pet: pet)
-                }, content: {
-                    ImagePickerView(imageData: $viewModel.outputImageData)
-                })
-                .frame(
-                    minWidth: 50,
-                    idealWidth: 100,
-                    maxWidth: 150,
-                    minHeight: 50,
-                    idealHeight: 100,
-                    maxHeight: 150,
-                    alignment: .center
-                )
-            Toggle("default_photo_label", isOn: $viewModel.defaultPhotoOn)
-                .onChange(of: viewModel.defaultPhotoOn, {
-                    if viewModel.defaultPhotoOn {
-                        pet?.image = nil
+            ScrollView {
+                ESImageView(data: viewModel.outputImageData)
+                    .onTapGesture {
+                        viewModel.showImagePicker = viewModel.defaultPhotoOn ? false : true
                     }
-                })
-                .padding()
-            Text("photo_upload_detail_title")
-                .font(.footnote)
-                .foregroundColor(Color(.systemGray2))
-                .multilineTextAlignment(.center)
-                .padding()
-            Form {
-                Section {
-                    TextField("tap_to_change_text", text: $viewModel.nameText)
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Button {
-                                    viewModel.changeName(pet: pet)
-                                } label: {
-                                    Text("done")
+                    .sheet(isPresented: $viewModel.showImagePicker, onDismiss: {
+                        viewModel.loadImage(pet: pet)
+                    }, content: {
+                        ImagePickerView(imageData: $viewModel.outputImageData)
+                    })
+                    .frame(
+                        minWidth: 50,
+                        idealWidth: 100,
+                        maxWidth: 150,
+                        minHeight: 50,
+                        idealHeight: 100,
+                        maxHeight: 150,
+                        alignment: .center
+                    )
+                Toggle("default_photo_label", isOn: $viewModel.defaultPhotoOn)
+                    .tint(Color.accent)
+                    .onChange(of: viewModel.defaultPhotoOn, {
+                        if viewModel.defaultPhotoOn {
+                            pet?.image = nil
+                        }
+                    })
+                    .padding()
+                Text("photo_upload_detail_title")
+                    .font(.footnote)
+                    .foregroundColor(Color(.systemGray2))
+                    .multilineTextAlignment(.center)
+                    .padding()
+                Form {
+                    Section {
+                        TextField("tap_to_change_text", text: $viewModel.nameText)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Button {
+                                        viewModel.changeName(pet: pet)
+                                    } label: {
+                                        Text("done")
+                                    }
                                 }
                             }
-                        }
-                        .onSubmit {
-                            viewModel.changeName(pet: pet)
-                        }
-                    DatePicker("birthday_title", selection: $viewModel.birthday, displayedComponents: .date)
-                        .onChange(of: viewModel.birthday) {
-                            viewModel.changeBirthday(pet: pet)
-                        }
+                            .onSubmit {
+                                viewModel.changeName(pet: pet)
+                            }
+                        DatePicker("birthday_title", selection: $viewModel.birthday, displayedComponents: .date)
+                            .onChange(of: viewModel.birthday) {
+                                viewModel.changeBirthday(pet: pet)
+                            }
+                    }
+                    Section {
+                        pickerView
+                        setupPickerView()
+                    }
                 }
-                Section {
-                    pickerView
-                    setupPickerView()
-                }
+                .frame(height: 400)
             }
-            .navigationTitle(pet?.wrappedName ?? "")
         }
+        .navigationTitle(pet?.wrappedName ?? "")
         .task {
             await viewModel.getPetData(pet: pet)
         }

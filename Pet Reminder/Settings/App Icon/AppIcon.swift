@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum AppIcon: String, CaseIterable, Identifiable {
 
@@ -24,7 +25,7 @@ enum AppIcon: String, CaseIterable, Identifiable {
         }
     }
 
-    var description: String {
+    var description: LocalizedStringKey {
         switch self {
         case .primary:
             return "Logo 1(Default)"

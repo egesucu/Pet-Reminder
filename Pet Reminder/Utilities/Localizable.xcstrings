@@ -518,6 +518,12 @@
     },
     "Create default notifications for your pet." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create default notifications for your pet."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -731,6 +737,12 @@
     },
     "Done" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1100,6 +1112,38 @@
         }
       }
     },
+    "Logo 1(Default)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Logo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsayılan Logo"
+          }
+        }
+      }
+    },
+    "Logo 2" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alternative Logo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alternatif Logo"
+          }
+        }
+      }
+    },
     "manage_pet_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1391,6 +1435,12 @@
     },
     "OK" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1623,6 +1673,12 @@
     },
     "Remove" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1699,6 +1755,12 @@
     },
     "Save" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1709,6 +1771,12 @@
     },
     "Select a photo" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a photo"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
