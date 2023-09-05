@@ -71,8 +71,7 @@ struct MapItemView: View {
                 Button(app.rawValue) {
                     if let location {
                         openURLWithMap(
-                            latitude: location.latitude,
-                            longitude: location.longitude,
+                            location: location,
                             application: app
                         )
                     }

@@ -16,16 +16,20 @@ struct DonateView: View {
 
     var body: some View {
         ScrollView {
-            Image(.defaultAnimal)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 150)
-                .padding(.vertical, 10)
-            Text("donate_us_context")
-                .padding()
-            Text("donate_us_comment")
-                .padding()
             VStack(alignment: .leading) {
+                HStack {
+                    Spacer()
+                    Image(.defaultAnimal)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 150)
+                        .padding(.vertical, 10)
+                    Spacer()
+                }
+                Text("donate_us_context")
+                    .padding()
+                Text("donate_us_comment")
+                    .padding()
                 ForEach(viewModel.consumables, id: \.self) { product in
                     ProductView(product, prefersPromotionalIcon: false)
                         .onInAppPurchaseCompletion { product, result in
@@ -36,7 +40,7 @@ struct DonateView: View {
                             print(text)
                         }
                 }
-            }
+            }.padding(.horizontal)
         }.navigationTitle(Text("donate_us_title"))
     }
 

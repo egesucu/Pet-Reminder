@@ -22,6 +22,7 @@ struct PetChangeView: View {
                     if let outputImageData = viewModel.outputImageData,
                        let selectedImage = UIImage(data: outputImageData) {
                         PetShowImageView(selectedImage: selectedImage, onImageDelete: viewModel.removeImage)
+                            .padding(.horizontal)
                     } else {
                         Image(.defaultAnimal)
                             .frame(width: 200, height: 200)

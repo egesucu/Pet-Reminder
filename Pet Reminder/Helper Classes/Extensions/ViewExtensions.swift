@@ -16,21 +16,21 @@ extension View {
         return EmptyView()
     }
 
-    func openURLWithMap(latitude: CGFloat, longitude: CGFloat, application: MapApplication) {
+    func openURLWithMap(location: Pin, application: MapApplication) {
         switch application {
         case .google:
-            handleGoogleMaps(latitude: latitude, longitude: longitude)
+            handleGoogleMaps(location: location)
         case .apple:
-            handleAppleMaps(latitude: latitude, longitude: longitude)
+            handleAppleMaps(location: location)
         case .yandex:
-            handleYandexMap(latitude: latitude, longitude: longitude)
+            handleYandexMap(location: location)
         }
     }
 
-    private func handleGoogleMaps(latitude: CGFloat, longitude: CGFloat) {
+    private func handleGoogleMaps(location: Pin) {
         guard let deeplink = URLDefinitions.googleMapsDeeplinkURL else { return }
         if UIApplication.shared.canOpenURL(deeplink) {
-            let url = URL(string: String(format: URLDefinitions.googleMapsLocationString, latitude, longitude))
+            let url = URL(string: String(format: URLDefinitions.googleMapsLocationString,location.latitude, location.longitude))
             if let url {
                 UIApplication.shared.open(url)
             }
@@ -41,17 +41,14 @@ extension View {
         }
     }
 
-    private func handleAppleMaps(latitude: CGFloat, longitude: CGFloat) {
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let placemark = MKPlacemark(coordinate: coordinate)
-        let item = MKMapItem(placemark: placemark)
-        item.openInMaps()
+    private func handleAppleMaps(location: Pin) {
+        location.item.openInMaps()
     }
 
-    private func handleYandexMap(latitude: CGFloat, longitude: CGFloat) {
+    private func handleYandexMap(location: Pin) {
         guard let deeplink = URLDefinitions.yandexMapsDeeplinkURL else { return }
         if UIApplication.shared.canOpenURL(deeplink) {
-            let url = URL(string: String(format: URLDefinitions.yandexMapsLocationString, latitude, longitude))
+            let url = URL(string: String(format: URLDefinitions.yandexMapsLocationString, location.latitude, location.longitude))
             if let url {
                 UIApplication.shared.open(url)
             }

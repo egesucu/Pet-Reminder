@@ -62,7 +62,7 @@ struct FindVetView: View {
                 viewModel.selectedLocation = nil
             }, content: {
                 MapItemView(location: viewModel.selectedLocation)
-                    .presentationDetents([.height(180)])
+                    .presentationDetents([.height(200)])
                     .presentationDragIndicator(.visible)
                     .presentationCornerRadius(25)
                     .padding(.horizontal)

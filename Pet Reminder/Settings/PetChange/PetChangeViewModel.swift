@@ -115,6 +115,12 @@ class PetChangeViewModel {
         nameText = pet.wrappedName
         birthday = pet.wrappedBirthday
         defaultPhotoOn = pet.image == nil
+        
+        if let data = pet.image {
+            outputImageData = data
+        } else {
+            outputImageData = nil
+        }
     }
 
 }
