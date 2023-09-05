@@ -803,6 +803,22 @@
         }
       }
     },
+    "feed_change_feedtime" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Feed Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besleme Zamanını Değiştir"
+          }
+        }
+      }
+    },
     "feed_content" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -27,11 +27,11 @@ struct NotificationView: View {
         List {
             ForEach(pets, id: \.name) { pet in
                 Section {
-                    if filteredNotifications(pet: pet).isEmpty {
+                    if notificationManager.filterNotifications(of: pet).isEmpty {
                         Button("Create default notifications for your pet.",
                                action: { createNotifications(for: pet) })
                     } else {
-                        ForEach(filteredNotifications(pet: pet), id: \.self) { notification in
+                        ForEach(notificationManager.filterNotifications(of: pet), id: \.identifier) { notification in
                             switch notification.identifier {
                             case let option where option.contains(NotificationType.morning.rawValue):
                                 morningNotificationView(notification: notification)
@@ -49,6 +49,8 @@ struct NotificationView: View {
                                         .foregroundStyle(Color.gray)
                                 }
                             }
+                        }.onDelete { indexSet in
+                            remove(pet: pet, at: indexSet)
                         }
                     }
 
@@ -61,7 +63,7 @@ struct NotificationView: View {
                 }
 
             }
-            .onDelete(perform: remove)
+            
         }
         .listStyle(.insetGrouped)
         .refreshable {
@@ -169,16 +171,20 @@ struct NotificationView: View {
             notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .now)
             notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
         }
+        
+        Task {
+            await fetchNotificiations()
+        }
+        
     }
 
-    func remove(at offset: IndexSet) {
+    func remove(pet: Pet, at offset: IndexSet) {
+        
         for index in offset {
-            let notification = notificationManager.notifications[index]
+            let notification = notificationManager.filterNotifications(of: pet)[index]
+            print(notification.identifier)
             notificationManager
                 .removeNotificationsIdentifiers(with: [notification.identifier])
-            Task {
-                await fetchNotificiations()
-            }
         }
     }
 }

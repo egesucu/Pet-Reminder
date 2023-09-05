@@ -25,7 +25,6 @@ class NotificationManager {
 
     func filterNotifications(of pet: Pet) -> [UNNotificationRequest] {
         notifications.filter { notification in
-            print(notification.identifier)
             return notification.identifier.contains(pet.wrappedName)
         }
     }

@@ -11,34 +11,31 @@ import SwiftUI
 struct PetChangeView: View {
 
     @Binding var pet: Pet?
+    @State private var selectedImageData: Data?
 
     @State private var viewModel = PetChangeViewModel()
 
     var body: some View {
         VStack {
             ScrollView {
-                ESImageView(data: viewModel.outputImageData)
-                    .onTapGesture {
-                        viewModel.showImagePicker = viewModel.defaultPhotoOn ? false : true
+                HStack {
+                    if let outputImageData = viewModel.outputImageData,
+                       let selectedImage = UIImage(data: outputImageData) {
+                        PetShowImageView(selectedImage: selectedImage, onImageDelete: viewModel.removeImage)
+                    } else {
+                        Image(.defaultAnimal)
+                            .frame(width: 200, height: 200)
                     }
-                    .sheet(isPresented: $viewModel.showImagePicker, onDismiss: {
-                        viewModel.loadImage(pet: pet)
-                    }, content: {
-                        ImagePickerView(imageData: $viewModel.outputImageData)
-                    })
-                    .frame(
-                        minWidth: 50,
-                        idealWidth: 100,
-                        maxWidth: 150,
-                        minHeight: 50,
-                        idealHeight: 100,
-                        maxHeight: 150,
-                        alignment: .center
-                    )
+                    if !viewModel.defaultPhotoOn {
+                        PhotoImagePickerView(photoData: $viewModel.outputImageData)
+                            .padding(.vertical)
+                    }
+                }
                 Toggle("default_photo_label", isOn: $viewModel.defaultPhotoOn)
                     .tint(Color.accent)
                     .onChange(of: viewModel.defaultPhotoOn, {
                         if viewModel.defaultPhotoOn {
+                            viewModel.outputImageData = nil
                             pet?.image = nil
                         }
                     })
@@ -80,20 +77,34 @@ struct PetChangeView: View {
         .task {
             await viewModel.getPetData(pet: pet)
         }
+        .onChange(of: pet) {
+            viewModel.updateView(pet: pet)
+        }
     }
 
     var pickerView: some View {
-        Picker(selection: $viewModel.selection) {
-            Text("feed_selection_both")
-                .tag(FeedTimeSelection.both)
-            Text("feed_selection_morning")
-                .tag(FeedTimeSelection.morning)
-            Text("feed_selection_evening")
-                .tag(FeedTimeSelection.evening)
-        } label: {
-            Text("feed_time_title")
+        VStack {
+            Toggle(isOn: $viewModel.shouldChangeFeedSelection) {
+                Text("feed_change_feedtime")
+            }
+            Picker(selection: $viewModel.selection) {
+                Text("feed_selection_both")
+                    .tag(FeedTimeSelection.both)
+                Text("feed_selection_morning")
+                    .tag(FeedTimeSelection.morning)
+                Text("feed_selection_evening")
+                    .tag(FeedTimeSelection.evening)
+            } label: {
+                Text("feed_time_title")
+            }
+            .pickerStyle(.segmented)
+            .disabled(!viewModel.shouldChangeFeedSelection)
         }
-        .pickerStyle(.segmented)
+        .onChange(of: viewModel.selection) {
+            if viewModel.shouldChangeFeedSelection {
+                viewModel.changeNotification(pet: pet, for: viewModel.selection)
+            }
+        }
     }
 
     @ViewBuilder
@@ -115,8 +126,11 @@ struct PetChangeView: View {
             selection: $viewModel.eveningDate,
             displayedComponents: .hourAndMinute
         )
+        .disabled(!viewModel.shouldChangeFeedSelection)
         .onChange(of: viewModel.eveningDate, {
-            viewModel.changeNotification(pet: pet, for: .evening)
+            if viewModel.shouldChangeFeedSelection {
+                viewModel.changeNotification(pet: pet, for: .evening)
+            }
         })
     }
 
@@ -126,10 +140,15 @@ struct PetChangeView: View {
             selection: $viewModel.morningDate,
             displayedComponents: .hourAndMinute
         )
+        .disabled(!viewModel.shouldChangeFeedSelection)
         .onChange(of: viewModel.morningDate, {
-            viewModel.changeNotification(pet: pet, for: .morning)
+            if viewModel.shouldChangeFeedSelection {
+                viewModel.changeNotification(pet: pet, for: .morning)
+            }
         })
     }
+    
+    
 }
 
 #Preview {
