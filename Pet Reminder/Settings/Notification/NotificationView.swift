@@ -19,36 +19,22 @@ struct NotificationView: View {
 
     @State private var notificationManager = NotificationManager()
 
-    func filteredNotifications(pet: Pet) -> [UNNotificationRequest] {
-        notificationManager.filterNotifications(of: pet)
-    }
-
     var body: some View {
         List {
             ForEach(pets, id: \.name) { pet in
                 Section {
                     if notificationManager.filterNotifications(of: pet).isEmpty {
-                        Button("Create default notifications for your pet.",
-                               action: { createNotifications(for: pet) })
+                        Button {
+                            Task {
+                                await notificationManager
+                                    .createNotifications(for: pet)
+                            }
+                        } label: {
+                            Text("Create default notifications for your pet.")
+                        }
                     } else {
                         ForEach(notificationManager.filterNotifications(of: pet), id: \.identifier) { notification in
-                            switch notification.identifier {
-                            case let option where option.contains(NotificationType.morning.rawValue):
-                                morningNotificationView(notification: notification)
-
-                            case let option where option.contains(NotificationType.evening.rawValue):
-                                eveningNotificationView(notification: notification)
-
-                            case let option where option.contains(NotificationType.birthday.rawValue):
-                                birthdayNotificationsView(notification: notification, pet: pet)
-                            default:
-                                VStack(alignment: .leading) {
-                                    Text(notification.identifier)
-                                    Text(notification.content.body)
-                                        .font(.footnote)
-                                        .foregroundStyle(Color.gray)
-                                }
-                            }
+                            notificationView(notification: notification)
                         }.onDelete { indexSet in
                             remove(pet: pet, at: indexSet)
                         }
@@ -62,23 +48,24 @@ struct NotificationView: View {
 
                 }
 
-            }
-            
-        }
-        .listStyle(.insetGrouped)
-        .refreshable {
-            Task {
-                await notificationManager.getNotifications()
+                .onChange(of: notificationManager.notifications) {
+                    Task {
+                        await fetchNotificiations()
+                    }
+                }
+
             }
 
         }
+        .listStyle(.insetGrouped)
+        .refreshable(action: notificationManager.getNotifications)
         .navigationTitle(Text("notifications_title"))
         .navigationViewStyle(.stack)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    notificationManager
-                        .removeNotifications(pets: pets.compactMap({ $0 as Pet }))
+                    notificationManager.notificationCenter.removeAllPendingNotificationRequests()
+                    notificationManager.notifications.removeAll()
                     Task {
                         await fetchNotificiations()
                     }
@@ -88,10 +75,6 @@ struct NotificationView: View {
             }
         }
         .task(fetchNotificiations)
-        .onAppear {
-            notificationManager
-                .removeOtherNotifications(beside: pets.compactMap({ $0.name }))
-        }
     }
 
     func notificationAmount(for name: String?) -> Int {
@@ -105,81 +88,42 @@ struct NotificationView: View {
         await notificationManager.getNotifications()
     }
 
-    private func morningNotificationView(notification: UNNotificationRequest) -> some View {
+    private func notificationView(notification: UNNotificationRequest) -> some View {
         VStack(alignment: .leading) {
             Label {
                 Text("notification_to")
             } icon: {
-                Image(systemName: SFSymbols.morning)
-                    .foregroundColor(.yellow)
-                    .font(.title)
+                if notification.identifier.contains("morning") {
+                    Image(systemName: SFSymbols.morning)
+                        .foregroundColor(.yellow)
+                        .font(.title)
+                } else if notification.identifier.contains("evening") {
+                    Image(systemName: SFSymbols.evening)
+                        .foregroundColor(.blue)
+                        .font(.title)
+                } else {
+                    Image(systemName: SFSymbols.birthday)
+                        .foregroundColor(.green)
+                        .font(.title)
+                }
+
             }
             Text(notification.content.body)
                 .font(.footnote)
                 .foregroundStyle(Color.gray)
-        }
-    }
-
-    private func eveningNotificationView(notification: UNNotificationRequest) -> some View {
-        VStack(alignment: .leading) {
-            Label {
-                Text("notification_to")
-            } icon: {
-                Image(systemName: SFSymbols.evening)
-                    .foregroundColor(.blue)
-                    .font(.title)
+            if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
+               let date = trigger.nextTriggerDate() {
+                if notification.identifier.contains("birthday") {
+                    Text(date.formatted(.dateTime.day().month().year()))
+                } else {
+                    Text(date.formatted(.dateTime.hour().minute()))
+                }
             }
-            Text(notification.content.body)
-                .font(.footnote)
-                .foregroundStyle(Color.gray)
         }
-    }
-
-    private func birthdayNotificationsView(notification: UNNotificationRequest, pet: Pet) -> some View {
-        VStack(alignment: .leading) {
-            Label {
-                Text("notification_to")
-            } icon: {
-                Image(systemName: SFSymbols.birthday)
-                    .symbolRenderingMode(.multicolor)
-                    .foregroundStyle(Color.green.gradient, Color.blue.gradient)
-                    .font(.title)
-            }
-            Text(notification.content.body)
-                .font(.footnote)
-                .foregroundStyle(Color.gray)
-            HStack {
-                Text("birthday_title")
-                Text((pet.wrappedBirthday).formatted(.dateTime.day().month(.wide).year()))
-                Spacer()
-            }
-            .font(.footnote)
-            .foregroundStyle(Color.green)
-        }
-    }
-
-    func createNotifications(for pet: Pet) {
-        switch pet.selection {
-        case .both:
-            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: pet.morningTime ?? .now)
-            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .now)
-            notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
-        case .morning:
-            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: pet.morningTime ?? .now)
-            notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
-        case .evening:
-            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .now)
-            notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
-        }
-        
-        Task {
-            await fetchNotificiations()
-        }
-        
     }
 
     func remove(pet: Pet, at offset: IndexSet) {
-        
+
         for index in offset {
             let notification = notificationManager.filterNotifications(of: pet)[index]
             print(notification.identifier)

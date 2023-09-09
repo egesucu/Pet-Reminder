@@ -118,11 +118,13 @@ struct NewAddPetView: View {
                         step = .feedTime
                         proxy.scrollTo(SetupSteps.feedTime)
                     case .feedTime:
-                        manager
-                            .savePet(
-                                modelContext: viewContext) {
-                                    dismiss()
-                                }
+                        Task {
+                            await manager
+                                .savePet(
+                                    modelContext: viewContext) {
+                                        dismiss()
+                                    }
+                        }
                     }
                 }
             }

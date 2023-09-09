@@ -28,7 +28,11 @@ struct FindVetView: View {
                         Map(selection: $viewModel.selectedLocation) {
                             withAnimation {
                                 ForEach(viewModel.searchedLocations) { location in
-                                    Marker(location.name, systemImage: SFSymbols.pawprintCircleFill, coordinate: location.coordinate)
+                                    Marker(
+                                        location.name,
+                                        systemImage: SFSymbols.pawprintCircleFill,
+                                        coordinate: location.coordinate
+                                    )
                                         .tint(tintColor)
                                         .tag(location)
                                     UserAnnotation()

@@ -16,8 +16,8 @@ class PetChangeViewModel {
     var petImage: Image?
     var birthday = Date()
     var selection: FeedTimeSelection = .both
-    var morningDate: Date = .now.eightAM()
-    var eveningDate: Date = .now.eightPM()
+    var morningDate: Date = .eightAM
+    var eveningDate: Date = .eightPM
     var showImagePicker = false
     var outputImageData: Data?
     var defaultPhotoOn = false
@@ -25,8 +25,7 @@ class PetChangeViewModel {
 
     var notificationManager = NotificationManager()
 
-    func loadImage(pet: Pet?) {
-        guard let pet else { return }
+    func loadImage(pet: Pet) {
         if let outputImageData {
             if let uiImage = UIImage(data: outputImageData) {
                 petImage = Image(uiImage: uiImage)
@@ -39,8 +38,12 @@ class PetChangeViewModel {
         }
     }
 
-    func getPetData(pet: Pet?) async {
-        guard let pet else { return }
+    func deleteImageData(pet: Pet) async {
+        pet.image = nil
+        outputImageData = nil
+    }
+
+    func getPetData(pet: Pet) async {
         DispatchQueue.main.async {
             self.birthday = pet.wrappedBirthday
             self.nameText = pet.wrappedName
@@ -51,7 +54,7 @@ class PetChangeViewModel {
             if let evening = pet.eveningTime {
                 self.eveningDate = evening
             }
-            
+
             if let image = pet.image {
                 self.outputImageData = image
                 self.defaultPhotoOn = false
@@ -61,61 +64,73 @@ class PetChangeViewModel {
         }
     }
 
-    func changeName(pet: Pet?) {
-        guard let pet else { return }
+    func changeName(pet: Pet) async {
         pet.name = nameText
-        changeNotification(pet: pet, for: selection)
+        await changeNotification(pet: pet, for: selection)
     }
 
-    func changeBirthday(pet: Pet?) {
-        guard let pet else { return }
+    func changeBirthday(pet: Pet) async {
         pet.birthday = birthday
         notificationManager.removeNotification(of: pet.wrappedName, with: .birthday)
-        notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: birthday)
+        await notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: birthday)
     }
 
-    func changeNotification(pet: Pet?, for selection: FeedTimeSelection) {
-        guard let pet else { return }
+    func changeNotification(pet: Pet, for selection: FeedTimeSelection) async {
         pet.selection = selection
+
         switch selection {
         case .both:
-            notificationManager.removeAllNotifications(of: pet.wrappedName)
-            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
-            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
-        case .morning:
-            notificationManager.removeAllNotifications(of: pet.wrappedName)
-            notificationManager.removeNotification(of: pet.wrappedName, with: .morning)
-            notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
-        case .evening:
-            notificationManager.removeAllNotifications(of: pet.wrappedName)
-            notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
-        }
-        let (morningTime, eveningTime) = (pet.morningTime, pet.eveningTime)
-
-        if morningTime != nil {
-           pet.morningTime = morningDate
-        }
-        if eveningTime != nil {
+            notificationManager.removeAllDailyNotifications(of: pet.wrappedName)
+            await notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
+            await notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
+            pet.morningTime = morningDate
             pet.eveningTime = eveningDate
+        case .morning:
+            notificationManager.removeAllDailyNotifications(of: pet.wrappedName)
+            await notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
+            pet.morningTime = morningDate
+            pet.eveningTime = nil
+        case .evening:
+            notificationManager.removeAllDailyNotifications(of: pet.wrappedName)
+            await notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
+            pet.eveningTime = eveningDate
+            pet.morningTime = nil
         }
-        
-        PersistenceController.shared.save()
     }
-    
+
     func removeImage() {
         outputImageData = nil
     }
-    
-    func updateView(pet: Pet?) {
-        shouldChangeFeedSelection = false
+
+    func cancelEditing(of pet: Pet?) {
+        morningDate = .eightAM
+        eveningDate = .eightPM
         guard let pet else { return }
-        selection = pet.selection
-        morningDate = pet.morningTime ?? Date().eightAM()
-        eveningDate = pet.eveningTime ?? Date().eightPM()
-        nameText = pet.wrappedName
-        birthday = pet.wrappedBirthday
-        defaultPhotoOn = pet.image == nil
-        
+        Task {
+            await getPetData(pet: pet)
+        }
+
+    }
+
+    func savePet(pet: Pet) async {
+        await changeName(pet: pet)
+        await changeBirthday(pet: pet)
+        if defaultPhotoOn {
+            await deleteImageData(pet: pet)
+        } else {
+            pet.image = outputImageData
+        }
+        await changeNotification(pet: pet, for: selection)
+        PersistenceController.shared.save()
+
+        morningDate = .eightAM
+        eveningDate = .eightPM
+
+    }
+
+    func updateView(pet: Pet) {
+        shouldChangeFeedSelection = false
+
         if let data = pet.image {
             outputImageData = data
         } else {

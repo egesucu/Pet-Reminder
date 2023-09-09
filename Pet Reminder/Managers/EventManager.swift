@@ -23,10 +23,6 @@ class EventManager {
 
     @ObservationIgnored let eventStore = EKEventStore()
 
-    init() {
-        requestEvents()
-    }
-
     init(isDemo: Bool = false) {
         if isDemo {
             events = exampleEvents
@@ -45,13 +41,14 @@ class EventManager {
         return events
     }
 
-    func requestEvents() {
-        eventStore.requestFullAccessToEvents { success, error in
-            if let error {
-                print(error)
-            } else if success {
+    func requestEvents() async {
+        do {
+            let result = try await eventStore.requestFullAccessToEvents()
+            if result {
                 self.fetchCalendars()
             }
+        } catch let error {
+            print(error)
         }
     }
 
@@ -96,7 +93,9 @@ class EventManager {
                 self.events = self.eventStore.events(matching: predicate)
             }
         } else {
-            requestEvents()
+            Task {
+                await requestEvents()
+            }
         }
     }
 

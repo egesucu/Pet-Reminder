@@ -310,6 +310,9 @@
         }
       }
     },
+    "All Notifications" : {
+
+    },
     "all_day_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -464,6 +467,9 @@
           }
         }
       }
+    },
+    "Choose Friend" : {
+
     },
     "cloud_unavailable" : {
       "comment" : "CLOUD",
@@ -804,6 +810,7 @@
       }
     },
     "feed_change_feedtime" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

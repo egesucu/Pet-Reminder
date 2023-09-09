@@ -16,8 +16,8 @@ class AddPetViewModel {
     var dayType: FeedTimeSelection = .both
     var name = ""
     var birthday: Date = .now
-    var morningFeed: Date = Date().eightAM()
-    var eveningFeed: Date = Date().eightPM()
+    var morningFeed: Date = .eightAM
+    var eveningFeed: Date = .eightPM
     var selectedImageData: Data?
 
     let manager = NotificationManager()
@@ -26,7 +26,7 @@ class AddPetViewModel {
         selectedImageData = nil
     }
 
-    func savePet(modelContext: NSManagedObjectContext, onDismiss: () -> Void) {
+    func savePet(modelContext: NSManagedObjectContext, onDismiss: () -> Void) async {
         let pet = Pet(context: modelContext)
         pet.createdAt = .now
         pet.birthday = birthday
@@ -37,15 +37,15 @@ class AddPetViewModel {
         }
         switch dayType {
         case .morning:
-            createNotification(type: .morning)
+            await createNotification(type: .morning)
             pet.morningTime = morningFeed
             pet.selection = .morning
         case .evening:
-            createNotification(type: .evening)
+            await createNotification(type: .evening)
             pet.eveningTime = eveningFeed
             pet.selection = .evening
         case .both:
-            createNotification(type: .both)
+            await createNotification(type: .both)
             pet.morningTime = morningFeed
             pet.eveningTime = eveningFeed
             pet.selection = .both
@@ -55,19 +55,19 @@ class AddPetViewModel {
         onDismiss()
     }
 
-    private func createNotification(type: FeedTimeSelection) {
+    private func createNotification(type: FeedTimeSelection) async {
 
         switch type {
         case .both:
-            manager.createNotification(of: name, with: NotificationType.morning, date: morningFeed)
-            manager.createNotification(of: name, with: NotificationType.evening, date: eveningFeed)
+            await manager.createNotification(of: name, with: NotificationType.morning, date: morningFeed)
+            await manager.createNotification(of: name, with: NotificationType.evening, date: eveningFeed)
         case .morning:
-            manager.createNotification(of: name, with: NotificationType.morning, date: morningFeed)
+            await manager.createNotification(of: name, with: NotificationType.morning, date: morningFeed)
         case .evening:
-            manager.createNotification(of: name, with: NotificationType.evening, date: eveningFeed)
+            await manager.createNotification(of: name, with: NotificationType.evening, date: eveningFeed)
         }
 
-        manager.createNotification(of: name, with: .birthday, date: birthday)
+        await manager.createNotification(of: name, with: .birthday, date: birthday)
     }
 
 }

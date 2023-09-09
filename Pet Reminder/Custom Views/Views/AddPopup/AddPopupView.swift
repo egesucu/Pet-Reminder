@@ -68,15 +68,15 @@ struct AddPopupView: View {
         .padding(.all)
 }
 
-struct PopupWrapper<PresentingView: View>: View {
+struct PopupWrapper<PresentingView: View, Content: View>: View {
 
     @Binding var isPresented: Bool
     let presentingView: PresentingView
-    let content: () -> AddPopupView
+    let content: Content
 
     var body: some View {
         ZStack {
-            if isPresented { content() }
+            if isPresented { content }
             presentingView
         }
     }
@@ -84,7 +84,7 @@ struct PopupWrapper<PresentingView: View>: View {
 
 extension View {
   func popupView(isPresented: Binding<Bool>,
-                 content: @escaping () -> AddPopupView) -> some View {
+                 content: AddPopupView) -> some View {
     PopupWrapper(isPresented: isPresented,
                      presentingView: self,
                      content: content)

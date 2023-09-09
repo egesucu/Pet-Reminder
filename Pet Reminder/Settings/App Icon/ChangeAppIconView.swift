@@ -23,7 +23,11 @@ struct ChangeAppIconView: View {
                             .frame(height: 100)
                             .overlay {
                                 Capsule()
-                                    .stroke(viewModel.selectedAppIcon == icon ? Color.yellow : Color.clear, lineWidth: 2)
+                                    .stroke(
+                                        selectedIcon(icon) ? Color.yellow : Color.clear,
+                                        lineWidth: 2
+                                    )
+
                             }
                             .onTapGesture {
                                 withAnimation {
@@ -53,6 +57,10 @@ struct ChangeAppIconView: View {
         .navigationTitle(Text("settings_change_icon"))
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
 
+    }
+
+    private func selectedIcon(_ icon: AppIcon) -> Bool {
+        viewModel.selectedAppIcon == icon
     }
 }
 

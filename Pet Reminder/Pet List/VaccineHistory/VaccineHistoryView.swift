@@ -63,14 +63,20 @@ struct VaccineHistoryView: View {
                 }
             }
             .navigationTitle(Text("vaccine_history_title"))
-            .popupView(isPresented: $viewModel.shouldAddVaccine.animation()) {
-                AddPopupView(
+            .popupView(
+                isPresented: $viewModel.shouldAddVaccine.animation(),
+                content: AddPopupView(
                     contentInput: $viewModel.vaccineName,
                     dateInput: $viewModel.vaccineDate,
-                    onSave: { viewModel.saveVaccine(pet: pet, viewContext: modelContext) },
+                    onSave: {
+                        viewModel.saveVaccine(
+                            pet: pet,
+                            viewContext: modelContext
+                        )
+                    },
                     onCancel: viewModel.cancelVaccine
                 )
-            }
+            )
         }
     }
 }

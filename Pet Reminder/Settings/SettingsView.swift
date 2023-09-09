@@ -24,7 +24,7 @@ struct SettingsView: View {
                 Section(header: Text("app_settings")) {
                     NavigationLink(
                         "manage_pet_title",
-                        destination: PetListView(reference: .settings)
+                        destination: PetChangeListView()
                             .environment(\.managedObjectContext, viewContext)
                     )
                     ColorPicker("settings_tint_color", selection: $tintColor)
@@ -53,6 +53,9 @@ struct SettingsView: View {
                 }
                 #if DEBUG
                 debugMenu
+                NavigationLink(destination: AllNotificationsView()) {
+                    Text("All Notifications")
+                }
                 #endif
             }
             .alert(alertMessage, isPresented: $showAlert, actions: {
