@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EventListView: View {
 
-    var eventVM = EventManager()
+    @State private var eventVM = EventManager()
     @State private var showAddEvent = false
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
@@ -52,12 +52,12 @@ struct EventListView: View {
         if eventVM.events.isEmpty {
             EmptyPageView(onRefreshEvents: reloadEvents, emptyPageReference: .events)
         } else {
-            EventsView(eventVM: eventVM)
+            EventsView(eventVM: $eventVM)
         }
     }
 
 }
 
 #Preview {
-    EventListView(eventVM: .init(isDemo: true))
+    EventListView()
 }

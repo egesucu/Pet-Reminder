@@ -52,6 +52,7 @@ class EventManager {
         }
     }
 
+    @Sendable
     func fetchCalendars() {
         self.calendars = eventStore.calendars(for: .event)
         setPetCalendar()

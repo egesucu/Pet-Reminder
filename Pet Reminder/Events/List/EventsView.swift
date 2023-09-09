@@ -12,7 +12,7 @@ import EventKit
 
 struct EventsView: View {
 
-    var eventVM: EventManager
+    @Binding var eventVM: EventManager
 
     @State private var dates = [Date]()
     @State private var filteredCalendar: EKCalendar?
@@ -26,7 +26,7 @@ struct EventsView: View {
             FutureEventsView(eventVM: eventVM, filteredCalendar: $filteredCalendar)
                 .transition(.slide)
         }
-
+        .task(eventVM.fetchCalendars)
         .onAppear(perform: getEventDates)
         .refreshable(action: eventVM.reloadEvents)
     }
@@ -46,5 +46,5 @@ struct EventsView: View {
 }
 
 #Preview {
-    EventsView(eventVM: .init(isDemo: true))
+    EventsView(eventVM: .constant(.init(isDemo: true)))
 }
