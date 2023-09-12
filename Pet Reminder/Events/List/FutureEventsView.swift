@@ -11,7 +11,7 @@ import EventKit
 
 struct FutureEventsView: View {
 
-    var eventVM: EventManager
+    @Binding var eventVM: EventManager
     @Binding var filteredCalendar: EKCalendar?
 
     var filteredEvents: [EKEvent] {
@@ -33,7 +33,7 @@ struct FutureEventsView: View {
             if filteredEvents.isEmpty {
                 Text("event_no_title")
             } else {
-                ForEach(filteredEvents, id: \.eventIdentifier) { event in
+                ForEach(filteredEvents, id: \.self) { event in
                     EventView(event: event, eventVM: eventVM)
                         .padding(.horizontal, 5)
                         .listRowSeparator(.hidden)
@@ -46,5 +46,5 @@ struct FutureEventsView: View {
 }
 
 #Preview {
-    FutureEventsView(eventVM: .init(isDemo: true), filteredCalendar: .constant(nil))
+    FutureEventsView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(nil))
 }

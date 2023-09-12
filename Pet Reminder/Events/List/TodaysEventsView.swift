@@ -11,20 +11,22 @@ import EventKit
 
 struct TodaysEventsView: View {
 
-    var eventVM: EventManager
+    @Binding var eventVM: EventManager
 
     @Binding var filteredCalendar: EKCalendar?
 
     var filteredEvents: [EKEvent] {
         withAnimation {
-            eventVM.events.filter {
-                if let filteredCalendar {
-                    return Calendar.current.isDateInToday($0.startDate) &&
-                    $0.calendar == filteredCalendar
-                } else {
-                    return Calendar.current.isDateInToday($0.startDate)
+            return eventVM
+                .events
+                .filter {
+                    if let filteredCalendar {
+                        return Calendar.current.isDateInToday($0.startDate) &&
+                        $0.calendar == filteredCalendar
+                    } else {
+                        return Calendar.current.isDateInToday($0.startDate)
+                    }
                 }
-            }
         }
     }
 
@@ -33,7 +35,7 @@ struct TodaysEventsView: View {
             if filteredEvents.isEmpty {
                 Text("event_no_title")
             } else {
-                ForEach(filteredEvents, id: \.eventIdentifier) { event in
+                ForEach(filteredEvents, id: \.self) { event in
                     EventView(event: event, eventVM: eventVM)
                         .padding(.horizontal, 5)
                         .listRowSeparator(.hidden)
@@ -46,5 +48,5 @@ struct TodaysEventsView: View {
 }
 
 #Preview {
-    TodaysEventsView(eventVM: .init(isDemo: true), filteredCalendar: .constant(nil))
+    TodaysEventsView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(nil))
 }

@@ -11,7 +11,7 @@ import EventKit
 
 struct EventFilterView: View {
 
-    var eventVM: EventManager
+    @Binding var eventVM: EventManager
     @Binding var filteredCalendar: EKCalendar?
 
     var body: some View {
@@ -62,5 +62,5 @@ struct EventFilterView: View {
 }
 
 #Preview {
-    EventFilterView(eventVM: .init(isDemo: true), filteredCalendar: .constant(.init(for: .event, eventStore: .init())))
+    EventFilterView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(.init(for: .event, eventStore: .init())))
 }

@@ -19,11 +19,11 @@ struct EventsView: View {
 
     var body: some View {
         List {
-            EventFilterView(eventVM: eventVM, filteredCalendar: $filteredCalendar)
+            EventFilterView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
                 .transition(.slide)
-            TodaysEventsView(eventVM: eventVM, filteredCalendar: $filteredCalendar)
+            TodaysEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
                 .transition(.slide)
-            FutureEventsView(eventVM: eventVM, filteredCalendar: $filteredCalendar)
+            FutureEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
                 .transition(.slide)
         }
         .task(eventVM.fetchCalendars)
