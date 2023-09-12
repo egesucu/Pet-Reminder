@@ -9,44 +9,44 @@
 import SwiftUI
 
 struct AddPopupView: View {
-    
+
     @Binding var contentInput: String
     @Binding var dateInput: Date
-    var onSave: () -> ()
-    var onCancel: () -> ()
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
-    
+    var onSave: () -> Void
+    var onCancel: () -> Void
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+
     var body: some View {
         ZStack {
-            Color(.black)
+            Color(uiColor: .label)
                 .opacity(0.8)
                 .onTapGesture(perform: onCancel)
             ZStack(alignment: .center) {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
+                    .fill(Color(uiColor: .systemBackground))
                 VStack(alignment: .center) {
                     HStack {
-                        Text("Add")
+                        Text("add")
                             .bold()
-                        TextField("Pulvarin", text: $contentInput)
+                        TextField(Strings.placeholderVaccine, text: $contentInput)
                             .multilineTextAlignment(.center)
                     }
-                    .padding([.leading, .trailing])
+                    .padding(.horizontal)
                     .padding(.bottom, 10)
-                    
+
                     DatePicker(selection: $dateInput) {
-                        Text("Date")
+                        Text("date")
                             .bold()
-                    }.padding([.leading, .trailing])
-                    
+                    }.padding(.horizontal)
+
                     HStack {
                         Button(action: onCancel) {
-                            Text("Cancel")
+                            Text("cancel")
                         }
                         .buttonStyle(.bordered)
                         Spacer()
                         Button(action: onSave) {
-                            Text("Add")
+                            Text("add")
                         }
                         .buttonStyle(.borderedProminent)
                     }
@@ -59,37 +59,32 @@ struct AddPopupView: View {
         .zIndex(2)
         .ignoresSafeArea()
     }
-    
-    
-    
+
 }
 
-struct AddPopupView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddPopupView(contentInput: .constant(""), dateInput: .constant(.now), onSave: { }, onCancel: { })
+#Preview {
+    AddPopupView(contentInput: .constant(""), dateInput: .constant(.now), onSave: { }, onCancel: { })
         .ignoresSafeArea()
         .padding(.all)
-    }
 }
 
-struct PopupWrapper<PresentingView: View>: View {
-    
+struct PopupWrapper<PresentingView: View, Content: View>: View {
+
     @Binding var isPresented: Bool
     let presentingView: PresentingView
-    let content: () -> AddPopupView
-    
+    let content: Content
+
     var body: some View {
         ZStack {
-            if (isPresented) { content() }
+            if isPresented { content }
             presentingView
         }
     }
 }
 
-
 extension View {
   func popupView(isPresented: Binding<Bool>,
-                      content: @escaping () -> AddPopupView) -> some View {
+                 content: AddPopupView) -> some View {
     PopupWrapper(isPresented: isPresented,
                      presentingView: self,
                      content: content)

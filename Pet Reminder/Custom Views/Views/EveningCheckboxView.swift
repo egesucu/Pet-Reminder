@@ -2,44 +2,52 @@
 //  EveningCheckboxView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 26.12.2021.
+//  Created by Ege Sucu on 26.12.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
 
-struct EveningCheckboxView : View {
-    
-    @Binding var eveningOn : Bool
-    
-    var body: some View{
-        VStack{
+struct EveningCheckboxView: View {
+
+    @Binding var eveningOn: Bool
+
+    var body: some View {
+        VStack {
             Label {
                 Text("feed_selection_evening")
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title2.bold())
             } icon: {
-                Image(systemName: eveningOn ? "moon.circle.fill" : "moon.circle")
+                Image(systemName: SFSymbols.eveningToggleSelected)
                     .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.blue)
                     .font(.largeTitle.bold())
-                    .animation(.easeInOut,value: eveningOn)
+                    .symbolEffect(.bounce, value: eveningOn)
             }
             .padding(.bottom)
-            withAnimation {
-                Image(systemName: eveningOn ? "checkmark.square" : "square")
-                    .font(.system(size: 50))
-                    .animation(.easeInOut, value: eveningOn)
-            }
+            CheckBoxView(isChecked: $eveningOn)
         }
         .cornerRadius(20)
-        .frame(width:150,height:150)
-        
+        .frame(width: 150, height: 150)
+
     }
 }
 
-struct EveningView_Previews: PreviewProvider {
-    static var previews: some View {
-        EveningCheckboxView(eveningOn: .constant(true))
+struct CheckBoxView: View {
+
+    @Binding var isChecked: Bool
+
+    var body: some View {
+        Image(systemName: isChecked ? SFSymbols.checked : SFSymbols.notChecked)
+            .contentTransition(.symbolEffect(.replace))
+            .font(.system(size: 50))
+            .onTapGesture {
+                isChecked.toggle()
+            }
     }
+}
+
+#Preview {
+    EveningCheckboxView(eveningOn: .constant(true))
 }

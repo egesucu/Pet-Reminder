@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct ActionButton: View {
-    var action: () -> ()
+    var action: () -> Void
     var content: LocalizedStringKey
     var systemImage: String
     var isEnabled: Bool
     var tint: Color?
-     
+
     var body: some View {
         Button(action: action) {
             Label(content, systemImage: systemImage)
@@ -22,14 +22,12 @@ struct ActionButton: View {
         .font(.title)
         .tint(tint)
         .buttonStyle(.borderedProminent)
-        
+
     }
 }
 
-struct ActionButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ActionButton(action: {
-            
-        }, content: "save", systemImage: "pawprint.fill", isEnabled: true, tint: .green)
-    }
+#Preview {
+    ActionButton(action: {
+
+    }, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: true, tint: .green)
 }

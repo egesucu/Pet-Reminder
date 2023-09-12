@@ -2,57 +2,48 @@
 //  StoreManager.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 25.09.2021.
-//  Copyright © 2023 Ege Sucu. All rights reserved.
+//  Created by Ege Sucu on 6.07.2023.
+//  Copyright © 2023 Softhion. All rights reserved.
 //
 
 import Foundation
 import StoreKit
+import Observation
 
-class StoreManager : NSObject, ObservableObject{
-    
-    @Published var products : [SKProduct] = []
-    @Published var state : SKPaymentTransactionState?
-    var request : SKProductsRequest!
-    var userCanPurchase = SKPaymentQueue.canMakePayments()
-    let productIDs = ["pet_reminder_tea_donate","pet_reminder_food_donate"]
-    
-    func addManagerToPayment(manager: StoreManager){
-        SKPaymentQueue.default().add(manager)
-    }
-    
-    func userDidPurchase(_ product: SKProduct) -> Bool {
-        let productID = product.productIdentifier
-        let purchased = UserDefaults.standard.bool(forKey: productID)
-        return purchased
-    }
-    
-    func getProducts() {
-        products.removeAll()
-        let request = SKProductsRequest(productIdentifiers: Set(productIDs))
-        request.delegate = self
-        request.start()
-    }
-    
-    func checkAvailability(completion: @escaping (Result<Bool,PaymentErrorType>) -> Void){
-        if userCanPurchase{
-            completion(.success(true))
-        } else {
-            completion(.failure(.cantPay))
+@Observable
+class StoreManager {
+    var consumables: [Product] = []
+
+    @ObservationIgnored let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
+
+    init() {
+        Task {
+            await requestProducts()
         }
     }
-    
-    func purchaseProduct(_ product: SKProduct){
-        if userCanPurchase{
-            let payment = SKPayment(product: product)
-            SKPaymentQueue.default().add(payment)
+
+    func requestProducts() async {
+        do {
+            let storeProducts = try await Product.products(for: productIDs)
+
+            var newConsumables: [Product] = []
+
+            for product in storeProducts {
+                switch product.type {
+                case .consumable:
+                    newConsumables.append(product)
+                default:
+                    print("Unknown product")
+                }
+            }
+
+            consumables = sortByPrice(newConsumables)
+        } catch {
+            print("Failed product request from the App Store server: \(error)")
         }
     }
-    
-    func clearPreviousPurchases(){
-        productIDs.forEach { id in
-            UserDefaults.standard.removeObject(forKey: id)
-        }
-        objectWillChange.send()
+
+    func sortByPrice(_ products: [Product]) -> [Product] {
+        products.sorted(by: { return $0.price < $1.price })
     }
 }

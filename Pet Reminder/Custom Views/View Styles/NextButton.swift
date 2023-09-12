@@ -2,18 +2,17 @@
 //  NextButton.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 14.05.2021.
+//  Created by Ege Sucu on 14.05.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
 
+struct NextButton: ButtonStyle {
 
-struct NextButton : ButtonStyle {
-    
     var conditionMet: Bool
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
-    
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.largeTitle)
@@ -24,5 +23,5 @@ struct NextButton : ButtonStyle {
             .shadow(radius: 10)
             .disabled(conditionMet)
     }
-    
+
 }

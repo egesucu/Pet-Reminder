@@ -2,20 +2,20 @@
 //  ESImageView.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 26.12.2021.
+//  Created by Ege Sucu on 26.12.2023.
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
 
 struct ESImageView: View {
-    
+
     var data: Data?
-    @AppStorage("tint_color") var tintColor = Color(uiColor: .systemGreen)
-    
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+
     var body: some View {
         if let data = data,
-        let image = UIImage(data: data){
+        let image = UIImage(data: data) {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()
@@ -28,8 +28,8 @@ struct ESImageView: View {
                     .fill(tintColor)
                     .cornerRadius(25)
                     .shadow(radius: 10)
-                    
-                Image("default-animal")
+
+                Image(.defaultAnimal)
                     .resizable()
                     .scaledToFit()
                     .clipShape(Circle())
@@ -38,8 +38,6 @@ struct ESImageView: View {
     }
 }
 
-struct ESImageView_Previews: PreviewProvider {
-    static var previews: some View {
-        ESImageView()
-    }
+#Preview {
+    ESImageView()
 }
