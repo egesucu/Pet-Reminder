@@ -8,17 +8,19 @@
 
 import SwiftUI
 import EventKit
+import OSLog
 
 struct AddEventView: View {
 
-    @State var eventVM = EventManager()
+    @Binding var eventVM: EventManager
     @Environment(\.dismiss) var dismiss
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     let feedback = UINotificationFeedbackGenerator()
 
     var filteredCalendars: [EKCalendar] {
-        return eventVM.calendars
+        return eventVM
+            .calendars
             .filter { $0.allowsContentModifications }
     }
 
@@ -30,7 +32,13 @@ struct AddEventView: View {
                     Picker("add_event_calendar", selection: $eventVM.selectedCalendar) {
                         ForEach(filteredCalendars, id: \.calendarIdentifier) {
                             Text($0.title)
+                                .tag($0)
                         }
+                    }
+                    .onChange(of: eventVM.selectedCalendar) {
+                        Logger
+                            .viewCycle
+                            .info("Selected Calendar: \(eventVM.selectedCalendar.title)")
                     }
                 }
                 Section(header: Text("add_event_time")) {
@@ -77,12 +85,13 @@ struct AddEventView: View {
     private func saveEvent() {
         feedback.notificationOccurred(.success)
         Task {
-            await eventVM.saveEvent(onFinish: dismiss.callAsFunction)
+            await eventVM.saveEvent()
+            dismiss()
         }
     }
 
 }
 
 #Preview {
-    AddEventView()
+    AddEventView(eventVM: .constant(.init(isDemo: true)))
 }

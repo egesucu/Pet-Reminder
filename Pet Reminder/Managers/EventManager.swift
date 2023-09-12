@@ -7,6 +7,7 @@
 //
 import Observation
 import EventKit
+import OSLog
 
 @Observable
 class EventManager {
@@ -17,8 +18,8 @@ class EventManager {
     var petCalendar: EKCalendar?
     var eventName = ""
     var allDayDate: Date = .now
-    var eventStartDate: Date = .now
-    var eventEndDate: Date = .now.addingTimeInterval(60*60)
+    var eventStartDate: Date = .now.addingTimeInterval(60*60)
+    var eventEndDate: Date = .now.addingTimeInterval(60*60*2)
     var isAllDay = false
 
     @ObservationIgnored let eventStore = EKEventStore()
@@ -134,8 +135,7 @@ class EventManager {
 
     }
 
-    func saveEvent(onFinish: () -> Void) async {
-
+    func saveEvent() async {
         let newEvent = EKEvent(eventStore: eventStore)
         newEvent.title = eventName
         newEvent.isAllDay = isAllDay
@@ -156,14 +156,13 @@ class EventManager {
 
         do {
             try eventStore.save(newEvent, span: .thisEvent)
-            await reloadEvents(onFinish: onFinish)
-        } catch {
-            print(error.localizedDescription)
+            await reloadEvents()
+        } catch let error {
+            if let error = error as? EKError {
+                Logger
+                    .viewCycle
+                    .error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
+            }
         }
-    }
-
-    func reloadEvents(onFinish: () -> Void) async {
-        await reloadEvents()
-        onFinish()
     }
 }

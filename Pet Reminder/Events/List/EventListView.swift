@@ -33,7 +33,7 @@ struct EventListView: View {
                     .font(.title2)
                     .foregroundStyle(tintColor)
             }
-            .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView() })
+            .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView(eventVM: $eventVM) })
         }
     }
 
