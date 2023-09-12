@@ -26,7 +26,7 @@ struct PetShowImageView: View {
                 onImageDelete()
             } label: {
                 Text("Remove")
-                    .font(.title)
+                    .font(.title3)
             }
             .buttonStyle(.bordered)
             .tint(.red)

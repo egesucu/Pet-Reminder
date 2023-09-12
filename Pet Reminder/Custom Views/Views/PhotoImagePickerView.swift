@@ -24,7 +24,7 @@ struct PhotoImagePickerView: View {
                         "Select a photo",
                         systemImage: "photo.fill"
                     )
-                    .font(.title)
+                    .font(.title3)
                 }
                 .tint(tintColor)
                 .onChange(of: selectedPhoto) {
