@@ -11,13 +11,23 @@ import SwiftUI
 struct CurrentFeedSection: View {
 
     var feeds: [Feed]
+    
+    var filteredFeeds: [Feed] {
+        feeds
+            .filter {
+                if let date =  $0.feedDate {
+                    return Calendar.current.isDateInToday(date)
+                }
+                return false
+            }
+    }
 
     var body: some View {
         Section {
-            if feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty {
+            if filteredFeeds.isEmpty {
                 Text("no_feed_today_content")
             } else {
-                ForEach(feeds.filter({ Calendar.current.isDateInToday($0.feedDate ?? .now) }), id: \.self) { feed in
+                ForEach(filteredFeeds, id: \.self) { feed in
                     if let morning = feed.morningFedStamp {
                         Row(
                             imageName: "sun.max.circle.fill",
