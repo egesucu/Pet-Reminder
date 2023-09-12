@@ -28,6 +28,7 @@ struct NotificationView: View {
                             Task {
                                 await notificationManager
                                     .createNotifications(for: pet)
+                                await fetchNotificiations()
                             }
                         } label: {
                             Text("Create default notifications for your pet.")
