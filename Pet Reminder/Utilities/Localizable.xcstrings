@@ -311,7 +311,14 @@
       }
     },
     "All Notifications" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Bildirimler"
+          }
+        }
+      }
     },
     "all_day_title" : {
       "extractionState" : "manual",
@@ -469,7 +476,14 @@
       }
     },
     "Choose Friend" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arkadaşını Seç"
+          }
+        }
+      }
     },
     "cloud_unavailable" : {
       "comment" : "CLOUD",
@@ -805,23 +819,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sıradaki"
-          }
-        }
-      }
-    },
-    "feed_change_feedtime" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change Feed Time"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Besleme Zamanını Değiştir"
           }
         }
       }
