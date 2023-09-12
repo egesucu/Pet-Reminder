@@ -45,6 +45,7 @@ struct FindVetView: View {
                             MapCompass()
                         }
                         .searchable(text: $viewModel.searchText)
+                        .disableAutocorrection(true)
 
                     }
                 }
