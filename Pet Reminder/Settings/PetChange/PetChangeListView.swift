@@ -27,6 +27,24 @@ struct PetChangeListView: View {
 
     var body: some View {
         petList
+            .onTapGesture {
+                Logger
+                    .viewCycle
+                    .info("Surface tapped.")
+                isEditing = false
+                Logger
+                    .viewCycle
+                    .info("Editing status: \(isEditing)")
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isEditing.toggle()
+                    } label: {
+                        Text(isEditing ? "Done" : "Edit")
+                    }
+                }
+            }
             .navigationTitle(Text("Choose Friend"))
     }
 

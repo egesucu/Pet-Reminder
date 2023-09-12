@@ -771,6 +771,16 @@
         }
       }
     },
+    "Edit" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenle"
+          }
+        }
+      }
+    },
     "event_no_title" : {
       "extractionState" : "manual",
       "localizations" : {
