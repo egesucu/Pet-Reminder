@@ -46,6 +46,11 @@ struct FindVetView: View {
                         }
                         .searchable(text: $viewModel.searchText)
                         .disableAutocorrection(true)
+                        .onChange(of: viewModel.searchText) {
+                            if viewModel.searchText.isEmpty {
+                                viewModel.searchedLocations.removeAll()
+                            }
+                        }
 
                     }
                 }
