@@ -90,6 +90,7 @@
 		9DCDA06126E3C34600DF290F /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06026E3C34600DF290F /* Pin.swift */; };
 		9DCDA06326E3C72400DF290F /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06226E3C72400DF290F /* EventView.swift */; };
 		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
+		9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */; };
 		9DD6CE302A840E71005ECBC3 /* PetReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6CE2E2A840E71005ECBC3 /* PetReminder.xcdatamodeld */; };
 		9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD754A1278266FA002E2768 /* ESEventDetailView.swift */; };
 		9DD8C2D22AAC6C4D00756AE8 /* AllNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */; };
@@ -199,6 +200,7 @@
 		9DCDA06026E3C34600DF290F /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		9DCDA06226E3C72400DF290F /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		9DCDA06426E3C84000DF290F /* EmptyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEventView.swift; sourceTree = "<group>"; };
+		9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Ankara.gpx; sourceTree = "<group>"; };
 		9DD6CE2F2A840E71005ECBC3 /* PetReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetReminder.xcdatamodel; sourceTree = "<group>"; };
 		9DD754A1278266FA002E2768 /* ESEventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESEventDetailView.swift; sourceTree = "<group>"; };
 		9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotificationsView.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 		9DFF73F4248BADB2004B4901 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */,
 				9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */,
 				9DD6CE2E2A840E71005ECBC3 /* PetReminder.xcdatamodeld */,
 				9D4114AA2A82F7CD00C21D87 /* Persistence.swift */,
@@ -700,6 +703,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */,
 				9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */,
 				9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
