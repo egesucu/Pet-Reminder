@@ -9,6 +9,7 @@
 import Foundation
 import UserNotifications
 import Observation
+import OSLog
 
 @Observable
 class NotificationManager {
@@ -27,6 +28,9 @@ class NotificationManager {
 
     func filterNotifications(of pet: Pet) -> [UNNotificationRequest] {
         notifications.filter { notification in
+            Logger
+                .viewCycle
+                .info("Pet \(pet.wrappedName): notifications \(notification.identifier)")
             return notification.identifier.contains(pet.wrappedName)
         }
     }
@@ -79,10 +83,6 @@ extension NotificationManager {
                 content.body = String(localized: "notification_birthday_content \(petName)")
                 dateComponents.day = calendar.component(.day, from: date)
                 dateComponents.month = calendar.component(.month, from: date)
-                dateComponents.year = calendar.component(
-                    .year,
-                    from: calendar.date(byAdding: .year, value: 1, to: date) ?? .now
-                )
                 dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
             default:
                 content.body = String(localized: "notification_content \(petName)")
