@@ -27,6 +27,7 @@ struct FeedHistory: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
+                            .font(.title)
                             .tint(tintColor)
                     }
                 }
