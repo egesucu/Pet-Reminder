@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="Pet Reminder">
+<metadata>
+    <name>Ankara</name>
+</metadata>
+<wpt lat="40.72268937145068" lon="-73.99262897339348">
+    <time>2019-12-06T14:19:36Z</time>
+    <name>Ankara</name>
+    <desc>Ankara</desc>
+</wpt>
+</gpx>
