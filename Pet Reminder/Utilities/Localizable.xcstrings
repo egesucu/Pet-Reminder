@@ -2053,6 +2053,12 @@
         }
       }
     },
+    "V5" : {
+
+    },
+    "V5.5" : {
+
+    },
     "vaccine_history_title" : {
       "extractionState" : "manual",
       "localizations" : {

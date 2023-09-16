@@ -13,6 +13,8 @@ enum AppIcon: String, CaseIterable, Identifiable {
 
     case primary = "AppIcon"
     case darkMode = "AppIcon-Dark"
+    case fivepointfive = "AppIcon-5-5"
+    case five = "AppIcon-5-1"
 
     var id: String { rawValue }
 
@@ -20,7 +22,7 @@ enum AppIcon: String, CaseIterable, Identifiable {
         switch self {
         case .primary:
             return nil
-        case .darkMode:
+        default:
             return rawValue
         }
     }
@@ -31,6 +33,10 @@ enum AppIcon: String, CaseIterable, Identifiable {
             return "Logo 1(Default)"
         case .darkMode:
             return "Logo 2"
+        case .fivepointfive:
+            return "V5.5"
+        case .five:
+            return "V5"
         }
     }
 
