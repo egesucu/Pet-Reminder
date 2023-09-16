@@ -115,7 +115,7 @@ struct NotificationView: View {
             if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
                let date = trigger.nextTriggerDate() {
                 if notification.identifier.contains("birthday") {
-                    Text(date.formatted(.dateTime.day().month().year()))
+                    Text(date.formatted(.dateTime.day().month(.wide).year()))
                 } else {
                     Text(date.formatted(.dateTime.hour().minute()))
                 }
