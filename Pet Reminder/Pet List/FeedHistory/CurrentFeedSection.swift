@@ -11,7 +11,7 @@ import SwiftUI
 struct CurrentFeedSection: View {
 
     var feeds: [Feed]
-    
+
     var filteredFeeds: [Feed] {
         feeds
             .filter {

@@ -62,5 +62,15 @@ struct EventFilterView: View {
 }
 
 #Preview {
-    EventFilterView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(.init(for: .event, eventStore: .init())))
+    EventFilterView(
+        eventVM: .constant(
+            .init(isDemo: true)
+        ),
+        filteredCalendar: .constant(
+            .init(
+                for: .event,
+                eventStore: .init()
+            )
+        )
+    )
 }
