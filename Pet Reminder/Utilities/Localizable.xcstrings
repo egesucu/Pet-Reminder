@@ -1174,6 +1174,26 @@
         }
       }
     },
+    "Logo V5" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logo V5"
+          }
+        }
+      }
+    },
+    "Logo V5.5" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logo V5.5"
+          }
+        }
+      }
+    },
     "manage_pet_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2052,12 +2072,6 @@
           }
         }
       }
-    },
-    "V5" : {
-
-    },
-    "V5.5" : {
-
     },
     "vaccine_history_title" : {
       "extractionState" : "manual",

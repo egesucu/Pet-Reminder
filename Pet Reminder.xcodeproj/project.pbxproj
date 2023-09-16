@@ -63,7 +63,6 @@
 		9D849050277748CB005EAC5B /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D84904F277748CB005EAC5B /* DonateView.swift */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
 		9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */; };
-		9D8E76FB248666C1004610C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FA248666C1004610C8 /* Assets.xcassets */; };
 		9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */; };
 		9D98B13C28D606460018C7A6 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13B28D606460018C7A6 /* EventManager.swift */; };
 		9D98B13F28D606F70018C7A6 /* PhotoImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D98B13E28D606F70018C7A6 /* PhotoImagePickerView.swift */; };
@@ -91,6 +90,7 @@
 		9DCDA06326E3C72400DF290F /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06226E3C72400DF290F /* EventView.swift */; };
 		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
 		9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */; };
+		9DD6A2712AB5CF28005312D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FA248666C1004610C8 /* Assets.xcassets */; };
 		9DD6CE302A840E71005ECBC3 /* PetReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6CE2E2A840E71005ECBC3 /* PetReminder.xcdatamodeld */; };
 		9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD754A1278266FA002E2768 /* ESEventDetailView.swift */; };
 		9DD8C2D22AAC6C4D00756AE8 /* AllNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */; };
@@ -707,7 +707,7 @@
 				9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */,
 				9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
-				9D8E76FB248666C1004610C8 /* Assets.xcassets in Resources */,
+				9DD6A2712AB5CF28005312D3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,7 +1018,7 @@
 		9D8E7706248666C1004610C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark AppIcon-Oldest AppIcon-Old";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1050,7 +1050,7 @@
 		9D8E7707248666C1004610C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark AppIcon-Oldest AppIcon-Old";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
