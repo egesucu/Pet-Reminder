@@ -25,6 +25,7 @@ struct PetListView: View {
     @State private var showUndoButton = false
     @State private var selectedPet: Pet?
     @State private var isEditing = false
+    @State private var notificationManager = NotificationManager()
 
     @State private var buttonTimer: Timer?
     @State private var time = 0
@@ -174,6 +175,7 @@ struct PetListView: View {
         buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             if time == 10 {
                 withAnimation {
+                    self.notificationManager.removeAllNotifications(of: pet.wrappedName)
                     showUndoButton = false
                     timer.invalidate()
                 }
