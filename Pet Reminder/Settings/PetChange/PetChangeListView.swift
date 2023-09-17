@@ -24,6 +24,7 @@ struct PetChangeListView: View {
     @State private var isEditing = false
     @State private var selectedPet: Pet?
     @State private var showSelectedPet = false
+    @State private var showEditButton = false
     @State private var notificationManager = NotificationManager()
 
     var body: some View {
@@ -38,90 +39,99 @@ struct PetChangeListView: View {
                     .info("Editing status: \(isEditing)")
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        isEditing.toggle()
-                    } label: {
-                        Text(isEditing ? "Done" : "Edit")
+                if showEditButton {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isEditing.toggle()
+                        } label: {
+                            Text(isEditing ? "Done" : "Edit")
+                        }
                     }
                 }
             }
             .navigationTitle(Text("Choose Friend"))
     }
 
+    @ViewBuilder
     private var petList: some View {
-        LazyVGrid(columns: [.init(), .init()]) {
-            ForEach(pets, id: \.name) { pet in
-                VStack {
-                    if isEditing {
-                        ZStack(alignment: .topTrailing) {
-                            VStack {
-                                ESImageView(data: pet.image)
-                                    .clipShape(Circle())
-                                    .frame(width: 80, height: 80)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 40)
-                                            .stroke(
-                                                selectedPet == pet ? Color.yellow : Color.clear,
-                                                lineWidth: 5
-                                            )
-                                    )
-                                    .wiggling()
-                                Text(pet.wrappedName)
-                            }
-                            Button {
-                                withAnimation {
-                                    deletePet(pet: pet)
-                                    isEditing = false
+        if pets.isEmpty {
+            EmptyPageView(emptyPageReference: .petList)
+        } else {
+            LazyVGrid(columns: [.init(), .init()]) {
+                ForEach(pets, id: \.name) { pet in
+                    VStack {
+                        if isEditing {
+                            ZStack(alignment: .topTrailing) {
+                                VStack {
+                                    ESImageView(data: pet.image)
+                                        .clipShape(Circle())
+                                        .frame(width: 80, height: 80)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 40)
+                                                .stroke(
+                                                    selectedPet == pet ? Color.yellow : Color.clear,
+                                                    lineWidth: 5
+                                                )
+                                        )
+                                        .wiggling()
+                                    Text(pet.wrappedName)
                                 }
-                            } label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.title)
-                                    .foregroundStyle(Color.red)
-                                    .offset(x: 15, y: 0)
+                                Button {
+                                    withAnimation {
+                                        deletePet(pet: pet)
+                                        isEditing = false
+                                    }
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .font(.title)
+                                        .foregroundStyle(Color.red)
+                                        .offset(x: 15, y: 0)
+                                }
+                                
                             }
-
+                        } else {
+                            ESImageView(data: pet.image)
+                                .clipShape(Circle())
+                                .frame(width: 80, height: 80)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 40)
+                                        .stroke(
+                                            selectedPet == pet ? Color.yellow : Color.clear,
+                                            lineWidth: 5
+                                        )
+                                )
+                            
+                            Text(pet.wrappedName)
                         }
-                    } else {
-                        ESImageView(data: pet.image)
-                            .clipShape(Circle())
-                            .frame(width: 80, height: 80)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 40)
-                                    .stroke(
-                                        selectedPet == pet ? Color.yellow : Color.clear,
-                                        lineWidth: 5
-                                    )
-                            )
-
-                        Text(pet.wrappedName)
+                        
                     }
-
+                    .onTapGesture {
+                        selectedPet = pet
+                        showSelectedPet.toggle()
+                        Logger
+                            .viewCycle
+                            .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
+                    }
+                    .sheet(isPresented: $showSelectedPet, onDismiss: {
+                        selectedPet = nil
+                    }, content: {
+                        PetChangeView(pet: $selectedPet)
+                            .presentationCornerRadius(25)
+                            .presentationDragIndicator(.hidden)
+                            .interactiveDismissDisabled()
+                    })
+                    .onLongPressGesture {
+                        isEditing = true
+                    }
+                    .padding([.top, .leading])
                 }
-                .onTapGesture {
-                    selectedPet = pet
-                    showSelectedPet.toggle()
-                    Logger
-                        .viewCycle
-                        .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
-                }
-                .sheet(isPresented: $showSelectedPet, onDismiss: {
-                    selectedPet = nil
-                }, content: {
-                    PetChangeView(pet: $selectedPet)
-                        .presentationCornerRadius(25)
-                        .presentationDragIndicator(.hidden)
-                        .interactiveDismissDisabled()
-                })
-                .onLongPressGesture {
-                    isEditing = true
-                }
-                .padding([.top, .leading])
             }
         }
+       
     }
 
     func deletePet(pet: Pet) {
+        let tempPetName = pet.wrappedName
         if pet == selectedPet {
             selectedPet = nil
         }
@@ -131,7 +141,7 @@ struct PetChangeListView: View {
         buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             if time == 10 {
                 withAnimation {
-                    self.notificationManager.removeAllNotifications(of: pet.wrappedName)
+                    self.notificationManager.removeAllNotifications(of: tempPetName)
                     showUndoButton = false
                     timer.invalidate()
                 }

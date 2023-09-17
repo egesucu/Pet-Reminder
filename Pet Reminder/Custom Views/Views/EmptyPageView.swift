@@ -19,9 +19,11 @@ struct EmptyPageView: View {
         case .petList:
             VStack {
                 Text("pet_no_pet")
-                Button("pet_add_pet", action: onAddPet ?? {})
-                    .buttonStyle(.bordered)
-                    .tint(tintColor)
+                if onAddPet != nil {
+                    Button("pet_add_pet", action: onAddPet ?? {})
+                        .buttonStyle(.bordered)
+                        .tint(tintColor)
+                }
             }
         case .settings:
             Text("pet_no_pet")

@@ -35,7 +35,9 @@ struct PetListView: View {
             ScrollView {
                 VStack {
                     if pets.count > 0 {
-                        petList
+                        if let selectedPet {
+                            petList
+                        }
                         switch reference {
                         case .petList:
                             PetDetailView(pet: $selectedPet)
@@ -58,7 +60,7 @@ struct PetListView: View {
             .toolbar(content: addButtonToolbar)
 
             .onAppear {
-                selectedPet = pets.first ?? Pet(context: viewContext)
+                selectedPet = pets.first
                 viewContext.undoManager = undoManager
             }
             .navigationTitle(petListTitle)
@@ -169,13 +171,14 @@ struct PetListView: View {
     }
 
     func deletePet(pet: Pet) {
+        let tempPetName = pet.wrappedName
         viewContext.delete(pet)
         PersistenceController.shared.save()
         showUndoButton.toggle()
         buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             if time == 10 {
                 withAnimation {
-                    self.notificationManager.removeAllNotifications(of: pet.wrappedName)
+                    self.notificationManager.removeAllNotifications(of: tempPetName)
                     showUndoButton = false
                     timer.invalidate()
                 }

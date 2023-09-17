@@ -20,59 +20,68 @@ struct NotificationView: View {
     @State private var notificationManager = NotificationManager()
 
     var body: some View {
-        List {
-            ForEach(pets, id: \.name) { pet in
-                Section {
-                    if notificationManager.filterNotifications(of: pet).isEmpty {
-                        Button {
+        VStack {
+            if pets.isEmpty {
+                EmptyPageView(emptyPageReference: .petList)
+            } else {
+                List {
+                    ForEach(pets, id: \.name) { pet in
+                        Section {
+                            if notificationManager.filterNotifications(of: pet).isEmpty {
+                                Button {
+                                    Task {
+                                        await notificationManager
+                                            .createNotifications(for: pet)
+                                        await fetchNotificiations()
+                                    }
+                                } label: {
+                                    Text("Create default notifications for your pet.")
+                                }
+                            } else {
+                                ForEach(notificationManager.filterNotifications(of: pet), id: \.identifier) { notification in
+                                    notificationView(notification: notification)
+                                }.onDelete { indexSet in
+                                    remove(pet: pet, at: indexSet)
+                                }
+                            }
+                            
+                        } header: {
+                            Text(pet.wrappedName)
+                        } footer: {
+                            let count = notificationAmount(for: pet.wrappedName)
+                            Text("notification \(count)")
+                            
+                        }
+                        
+                        .onChange(of: notificationManager.notifications) {
                             Task {
-                                await notificationManager
-                                    .createNotifications(for: pet)
                                 await fetchNotificiations()
                             }
-                        } label: {
-                            Text("Create default notifications for your pet.")
                         }
-                    } else {
-                        ForEach(notificationManager.filterNotifications(of: pet), id: \.identifier) { notification in
-                            notificationView(notification: notification)
-                        }.onDelete { indexSet in
-                            remove(pet: pet, at: indexSet)
-                        }
+                        
                     }
-
-                } header: {
-                    Text(pet.wrappedName)
-                } footer: {
-                    let count = notificationAmount(for: pet.wrappedName)
-                    Text("notification \(count)")
-
+                    
                 }
-
-                .onChange(of: notificationManager.notifications) {
-                    Task {
-                        await fetchNotificiations()
-                    }
-                }
-
+                .listStyle(.insetGrouped)
+                .refreshable(action: notificationManager.getNotifications)
             }
-
         }
-        .listStyle(.insetGrouped)
-        .refreshable(action: notificationManager.getNotifications)
         .navigationTitle(Text("notifications_title"))
         .navigationViewStyle(.stack)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    notificationManager.notificationCenter.removeAllPendingNotificationRequests()
-                    notificationManager.notifications.removeAll()
-                    Task {
-                        await fetchNotificiations()
+            if pets.isNotEmpty {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        notificationManager.notificationCenter.removeAllPendingNotificationRequests()
+                        notificationManager.notifications.removeAll()
+                        Task {
+                            await fetchNotificiations()
+                        }
+                    } label: {
+                        Text("remove_all")
                     }
-                } label: {
-                    Text("remove_all")
                 }
+
             }
         }
         .task(fetchNotificiations)

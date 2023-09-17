@@ -14,9 +14,7 @@ struct AllNotificationsView: View {
 
     var body: some View {
         List {
-            ForEach(notificationManager.notifications.filter({ request in
-                !request.identifier.contains("birthday")
-            }), id: \.identifier) { notification in
+            ForEach(notificationManager.notifications, id: \.identifier) { notification in
                 VStack {
                     Text(notification.debugDescription)
                 }
