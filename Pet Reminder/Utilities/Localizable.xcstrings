@@ -798,6 +798,22 @@
         }
       }
     },
+    "event_not_allowed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You did not give us the permission to access your calendar. You can change this in the app settings."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takvimlerine erişmemiz için izin vermediniz. Bunu ayarlarda değiştirebilirsiniz."
+          }
+        }
+      }
+    },
     "event_tab_title" : {
       "comment" : "EVENT",
       "extractionState" : "manual",
@@ -1516,6 +1532,23 @@
         }
       }
     },
+    "open_settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayarları Aç"
+          }
+        }
+      }
+    },
     "payment_cant" : {
       "comment" : "PAYMENT",
       "extractionState" : "manual",
@@ -1948,7 +1981,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aayarlar"
+            "value" : "Ayarlar"
           }
         }
       }

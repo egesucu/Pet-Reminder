@@ -21,6 +21,7 @@ class EventManager {
     var eventStartDate: Date = .now.addingTimeInterval(60*60)
     var eventEndDate: Date = .now.addingTimeInterval(60*60*2)
     var isAllDay = false
+    var authorizationGiven = false
 
     @ObservationIgnored let eventStore = EKEventStore()
 
@@ -47,9 +48,11 @@ class EventManager {
             let result = try await eventStore.requestFullAccessToEvents()
             if result {
                 self.fetchCalendars()
+                self.authorizationGiven = true
             }
         } catch let error {
             print(error)
+            self.authorizationGiven = false
         }
     }
 
@@ -86,14 +89,12 @@ class EventManager {
         if status == .fullAccess {
             let startDate: Date = .now
             let endDate = Date(timeIntervalSinceNow: oneMonthInMilliSeconds)
-            DispatchQueue.main.async {
-                let predicate = self.eventStore.predicateForEvents(
-                    withStart: startDate,
-                    end: endDate,
-                    calendars: self.calendars
-                )
-                self.events = self.eventStore.events(matching: predicate)
-            }
+            let predicate = self.eventStore.predicateForEvents(
+                withStart: startDate,
+                end: endDate,
+                calendars: self.calendars
+            )
+            events = eventStore.events(matching: predicate)
         } else {
             Task {
                 await requestEvents()

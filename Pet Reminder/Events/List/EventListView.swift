@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct EventListView: View {
 
@@ -22,7 +23,7 @@ struct EventListView: View {
                 .toolbar(content: eventToolBar)
         }
         .navigationViewStyle(.stack)
-        .onAppear(perform: reloadEvents)
+        .task(eventVM.reloadEvents)
     }
 
     @ToolbarContentBuilder
@@ -33,13 +34,11 @@ struct EventListView: View {
                     .font(.title2)
                     .foregroundStyle(tintColor)
             }
-            .sheet(isPresented: $showAddEvent, onDismiss: reloadEvents, content: { AddEventView(eventVM: $eventVM) })
-        }
-    }
-
-    private func reloadEvents() {
-        Task {
-            await eventVM.reloadEvents()
+            .sheet(isPresented: $showAddEvent, onDismiss: {
+                Task {
+                   await eventVM.reloadEvents()
+                }
+            }, content: { AddEventView(eventVM: $eventVM) })
         }
     }
 
@@ -49,10 +48,10 @@ struct EventListView: View {
 
     @ViewBuilder
     func showEventView() -> some View {
-        if eventVM.events.isEmpty {
-            EmptyPageView(onRefreshEvents: reloadEvents, emptyPageReference: .events)
-        } else {
+        if eventVM.authorizationGiven {
             EventsView(eventVM: $eventVM)
+        } else {
+            EmptyPageView(emptyPageReference: .events)
         }
     }
 

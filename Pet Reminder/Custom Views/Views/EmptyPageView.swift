@@ -11,7 +11,6 @@ import SwiftUI
 struct EmptyPageView: View {
 
     var onAddPet: (() -> Void)?
-    var onRefreshEvents: (() -> Void)?
     var emptyPageReference: EmptyPageReference = .none
 
     var body: some View {
@@ -29,10 +28,15 @@ struct EmptyPageView: View {
             EmptyView()
         case .events:
             VStack {
-                Text("event_no_title")
-                Button("refresh", action: onRefreshEvents ?? {})
-                    .buttonStyle(.bordered)
-                    .tint(.green)
+                Text("event_not_allowed")
+                Button {
+                    if let url = URL(string: UIApplication.openSettingsURLString),
+                       UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    Text("open_settings")
+                }
             }
         case .map:
             Text("location_alert_context")
