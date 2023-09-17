@@ -112,6 +112,7 @@ class EventManager {
 
     @Sendable
     func reloadEvents() async {
+        authorizationGiven = EKEventStore.authorizationStatus(for: .event) == .fullAccess
         self.loadEvents()
     }
 

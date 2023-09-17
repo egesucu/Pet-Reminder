@@ -10,6 +10,7 @@ import SwiftUI
 
 struct EmptyPageView: View {
 
+    @AppStorage(Strings.tintColor) var tintColor = Color.accent
     var onAddPet: (() -> Void)?
     var emptyPageReference: EmptyPageReference = .none
 
@@ -20,7 +21,7 @@ struct EmptyPageView: View {
                 Text("pet_no_pet")
                 Button("pet_add_pet", action: onAddPet ?? {})
                     .buttonStyle(.bordered)
-                    .tint(.green)
+                    .tint(tintColor)
             }
         case .settings:
             Text("pet_no_pet")
@@ -37,6 +38,8 @@ struct EmptyPageView: View {
                 } label: {
                     Text("open_settings")
                 }
+                .buttonStyle(.bordered)
+                .tint(tintColor)
             }
         case .map:
             Text("location_alert_context")
