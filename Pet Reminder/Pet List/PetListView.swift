@@ -31,7 +31,7 @@ struct PetListView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
+            ScrollView {
                 VStack {
                     if pets.count > 0 {
                         petList
