@@ -114,15 +114,20 @@ extension NotificationManager {
 extension NotificationManager {
     /// Checks all pending notifications that does not belong any registered pets and removes them.
     /// - Parameter names: Names of the registered pets.
-    func removeOtherNotifications(beside names: [String]) async {
+    func removeOtherNotifications(of pets: [Pet]) async {
 
-        var notifications = await notificationCenter.pendingNotificationRequests()
-
-        for name in names {
-            notifications = notifications.filter({ !$0.identifier.contains(name) })
+        let allNotifications = await notificationCenter.pendingNotificationRequests()
+        
+        let names = pets.map(\.wrappedName)
+        
+        var unknownIdentifiers = allNotifications.map(\.identifier)
+        
+        names.forEach { name in
+            unknownIdentifiers.removeAll(where: { identifier in
+                identifier.contains(name)
+            })
         }
 
-        let unknownIdentifiers = notifications.map(\.identifier)
         self.removeNotificationsIdentifiers(with: unknownIdentifiers)
     }
 
