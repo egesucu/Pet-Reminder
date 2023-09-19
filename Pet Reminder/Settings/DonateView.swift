@@ -8,6 +8,7 @@
 
 import SwiftUI
 import StoreKit
+import OSLog
 
 struct DonateView: View {
 
@@ -36,8 +37,9 @@ struct DonateView: View {
                             purcahaseCompleted(product: product, result: result)
                         }
                         .onInAppPurchaseStart { product in
-                            let text = "Purchasing the product: \(product.displayName)"
-                            print(text)
+                            Logger
+                                .viewCycle
+                                .info("Purchasing the product: \(product.displayName)")
                         }
                 }
             }.padding(.horizontal)
@@ -51,24 +53,37 @@ struct DonateView: View {
             case .success(let res):
                 switch res {
                 case .verified(let transaction):
-                    print("Verified Transaction: ", transaction)
+                    Logger
+                        .viewCycle
+                        .info("Verified Transaction: \(transaction.debugDescription)")
                     Task {
                         await transaction.finish()
                     }
                 case .unverified(let transaction, let error):
-                    print("Unverified Transaction: ", transaction)
-                    print("Unverified Transaction Error: ", error.localizedDescription)
+                    Logger
+                        .viewCycle
+                        .info("Unverified Transaction: \(transaction.debugDescription)")
+                    Logger
+                        .viewCycle
+                        .error("Unverified Transaction Error: \(error.localizedDescription)")
                 }
             case .pending:
-                print("Pending transaction")
+                Logger
+                    .viewCycle
+                    .info("Pending transaction")
             case .userCancelled:
-                print("User cancelled the pop-up")
+                Logger
+                    .viewCycle
+                    .info("User cancelled the pop-up")
             @unknown default:
-                print("Unknown Case occured")
+                Logger
+                    .viewCycle
+                    .info("Unknown Case occured")
             }
-            print("Result of the process is: ", result)
         case .failure(let failure):
-            print("Purchase failed: ", failure.localizedDescription)
+            Logger
+                .viewCycle
+                .error("Purchase failed: \(failure.localizedDescription)")
         }
     }
 }

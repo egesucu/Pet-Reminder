@@ -9,6 +9,7 @@
 import MapKit
 import CoreLocation
 import SwiftUI
+import OSLog
 import Observation
 
 @Observable
@@ -85,7 +86,9 @@ class VetViewModel: NSObject {
 
             }
         } catch let error {
-            print(error)
+            Logger
+                .viewCycle
+                .error("\(error)")
         }
     }
 

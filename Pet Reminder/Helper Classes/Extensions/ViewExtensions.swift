@@ -11,11 +11,6 @@ import CoreLocation
 
 extension View {
 
-    func printVariable(_ variables: Any...) -> some View {
-        for variable in variables { print(variable) }
-        return EmptyView()
-    }
-
     func openURLWithMap(location: Pin, application: MapApplication) {
         switch application {
         case .google:

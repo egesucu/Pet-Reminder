@@ -35,7 +35,7 @@ struct PetListView: View {
             ScrollView {
                 VStack {
                     if pets.count > 0 {
-                        if let selectedPet {
+                        if selectedPet != nil {
                             petList
                         }
                         switch reference {

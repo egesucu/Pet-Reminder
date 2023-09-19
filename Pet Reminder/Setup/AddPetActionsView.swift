@@ -7,13 +7,14 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct AddPetActionsView: View {
-
+    
     @Binding var name: String
     var onSave: () -> Void
     var onCancel: () -> Void
-
+    
     var body: some View {
         HStack {
             Button(action: onCancel) {
@@ -35,9 +36,13 @@ struct AddPetActionsView: View {
 
 #Preview {
     AddPetActionsView(name: .constant(Strings.viski)) {
-        print("Saved")
+        Logger
+            .viewCycle
+            .info("Saved")
     } onCancel: {
-        print("Cancelled")
+        Logger
+            .viewCycle
+            .info("Cancelled")
     }
-
+    
 }

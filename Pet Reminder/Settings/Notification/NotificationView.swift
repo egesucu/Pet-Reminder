@@ -84,7 +84,7 @@ struct NotificationView: View {
 
             }
         }
-        .task(fetchNotificiations)
+        .task(notificationManager.getNotifications)
     }
 
     func notificationAmount(for name: String?) -> Int {
@@ -136,7 +136,6 @@ struct NotificationView: View {
 
         for index in offset {
             let notification = notificationManager.filterNotifications(of: pet)[index]
-            print(notification.identifier)
             notificationManager
                 .removeNotificationsIdentifiers(with: [notification.identifier])
         }
