@@ -87,7 +87,7 @@ struct PetChangeListView: View {
                                         .foregroundStyle(Color.red)
                                         .offset(x: 15, y: 0)
                                 }
-                                
+
                             }
                         } else {
                             ESImageView(data: pet.image)
@@ -100,10 +100,10 @@ struct PetChangeListView: View {
                                             lineWidth: 5
                                         )
                                 )
-                            
+
                             Text(pet.wrappedName)
                         }
-                        
+
                     }
                     .onTapGesture {
                         selectedPet = pet
@@ -127,7 +127,7 @@ struct PetChangeListView: View {
                 }
             }
         }
-       
+
     }
 
     func deletePet(pet: Pet) {

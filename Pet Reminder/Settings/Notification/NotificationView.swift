@@ -44,23 +44,23 @@ struct NotificationView: View {
                                     remove(pet: pet, at: indexSet)
                                 }
                             }
-                            
+
                         } header: {
                             Text(pet.wrappedName)
                         } footer: {
                             let count = notificationAmount(for: pet.wrappedName)
                             Text("notification \(count)")
-                            
+
                         }
-                        
+
                         .onChange(of: notificationManager.notifications) {
                             Task {
                                 await fetchNotificiations()
                             }
                         }
-                        
+
                     }
-                    
+
                 }
                 .listStyle(.insetGrouped)
                 .refreshable(action: notificationManager.getNotifications)
