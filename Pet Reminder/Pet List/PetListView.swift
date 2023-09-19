@@ -97,6 +97,7 @@ struct PetListView: View {
                                 } label: {
                                     Image(systemName: "circle.badge.xmark.fill")
                                         .foregroundStyle(Color.red)
+                                        .font(.title)
                                 }
 
                             }
