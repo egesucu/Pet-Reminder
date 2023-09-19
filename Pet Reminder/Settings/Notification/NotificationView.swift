@@ -84,7 +84,7 @@ struct NotificationView: View {
 
             }
         }
-        .task(fetchNotificiations)
+        .task(notificationManager.getNotifications)
     }
 
     func notificationAmount(for name: String?) -> Int {
