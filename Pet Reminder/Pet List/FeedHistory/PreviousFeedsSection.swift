@@ -52,8 +52,7 @@ struct PreviousFeedsSection: View {
 }
 
 #Preview {
-    let preview = PersistenceController.preview.container.viewContext
-    let feeds = Pet(context: preview).feeds?.allObjects as? [Feed] ?? []
+    let feeds: [Feed] = Pet().feeds ?? []
     return PreviousFeedsSection(feeds: feeds)
-        .environment(\.managedObjectContext, preview)
+        .modelContainer(for: Feed.self)
 }

@@ -7,17 +7,18 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 import OSLog
 
 struct PetChangeListView: View {
 
-    @Environment(\.managedObjectContext)
-    private var viewContext
+    @Environment(\.modelContext)
+    private var modelContext
     @Environment(\.undoManager) var undoManager
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    var pets: FetchedResults<Pet>
+
+    @Query(sort: \Pet.name) var pets: [Pet]
+
     @State private var showUndoButton = false
     @State private var buttonTimer: Timer?
     @State private var time = 0
@@ -74,7 +75,7 @@ struct PetChangeListView: View {
                                                 )
                                         )
                                         .wiggling()
-                                    Text(pet.wrappedName)
+                                    Text(pet.name)
                                 }
                                 Button {
                                     withAnimation {
@@ -101,7 +102,7 @@ struct PetChangeListView: View {
                                         )
                                 )
 
-                            Text(pet.wrappedName)
+                            Text(pet.name)
                         }
 
                     }
@@ -131,12 +132,11 @@ struct PetChangeListView: View {
     }
 
     func deletePet(pet: Pet) {
-        let tempPetName = pet.wrappedName
+        let tempPetName = pet.name
         if pet == selectedPet {
             selectedPet = nil
         }
-        viewContext.delete(pet)
-        PersistenceController.shared.save()
+        modelContext.delete(pet)
         showUndoButton.toggle()
         buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             if time == 10 {
@@ -150,17 +150,16 @@ struct PetChangeListView: View {
             }
         })
     }
-    
+
     private func defineColor(pet: Pet) -> Color {
-        selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear
+        selectedPet?.name == pet.name ? Color.yellow : Color.clear
     }
 }
 
 #Preview {
     NavigationStack {
-        let preview = PersistenceController.preview.container.viewContext
         PetChangeListView()
-            .environment(\.managedObjectContext, preview)
+            .modelContainer(for: Pet.self)
     }
 
 }

@@ -32,8 +32,8 @@ class NotificationManager {
         notifications.filter { notification in
             Logger
                 .viewCycle
-                .info("Pet \(pet.wrappedName): notifications \(notification.identifier)")
-            return notification.identifier.contains(pet.wrappedName)
+                .info("Pet \(pet.name): notifications \(notification.identifier)")
+            return notification.identifier.contains(pet.name)
         }
     }
 
@@ -56,15 +56,15 @@ class NotificationManager {
     func createNotifications(for pet: Pet) async {
         switch pet.selection {
         case .both:
-            await createNotification(of: pet.wrappedName, with: .morning, date: pet.morningTime ?? .eightAM)
-            await createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .eightPM)
-            await createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
+            await createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .eightAM)
+            await createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .eightPM)
+            await createNotification(of: pet.name, with: .birthday, date: pet.birthday)
         case .morning:
-            await createNotification(of: pet.wrappedName, with: .morning, date: pet.morningTime ?? .eightAM)
-            await createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
+            await createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .eightAM)
+            await createNotification(of: pet.name, with: .birthday, date: pet.birthday)
         case .evening:
-            await createNotification(of: pet.wrappedName, with: .evening, date: pet.eveningTime ?? .eightPM)
-            await createNotification(of: pet.wrappedName, with: .birthday, date: pet.wrappedBirthday)
+            await createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .eightPM)
+            await createNotification(of: pet.name, with: .birthday, date: pet.birthday)
         }
     }
 }
@@ -122,7 +122,7 @@ extension NotificationManager {
 
         let allNotifications = await notificationCenter.pendingNotificationRequests()
 
-        let names = pets.map(\.wrappedName)
+        let names = pets.map(\.name)
 
         var unknownIdentifiers = allNotifications.map(\.identifier)
 
@@ -167,7 +167,7 @@ extension NotificationManager {
     func removeNotifications(pets: [Pet]) {
         notificationCenter.removeAllPendingNotificationRequests()
         for pet in pets {
-            removeAllNotifications(of: pet.wrappedName)
+            removeAllNotifications(of: pet.name)
         }
     }
 }

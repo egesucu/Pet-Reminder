@@ -7,12 +7,10 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 import OSLog
 
 struct FeedListView: View {
-
-    @Environment(\.managedObjectContext) var viewContext
 
     @Binding var pet: Pet?
 
@@ -27,14 +25,14 @@ struct FeedListView: View {
                         .onChange(of: viewModel.morningOn, {
                             Logger
                                 .viewCycle
-                                .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.wrappedName)")
-                            viewModel.updateFeed(pet: pet, type: .morning, viewContext: viewContext)
+                                .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.name)")
+                            viewModel.updateFeed(pet: pet, type: .morning)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.morningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
-                                .info("PR: Morning Tapped, pet: \(pet.wrappedName)")
+                                .info("PR: Morning Tapped, pet: \(pet.name)")
                             viewModel.morningOn.toggle()
                         }
                 case .evening:
@@ -42,14 +40,14 @@ struct FeedListView: View {
                         .onChange(of: viewModel.eveningOn, {
                             Logger
                                 .viewCycle
-                                .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.wrappedName)")
-                            viewModel.updateFeed(pet: pet, type: .evening, viewContext: viewContext)
+                                .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.name)")
+                            viewModel.updateFeed(pet: pet, type: .evening)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.eveningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
-                                .info("PR: Evening Tapped, pet: \(pet.wrappedName)")
+                                .info("PR: Evening Tapped, pet: \(pet.name)")
                             viewModel.eveningOn.toggle()
                         }
                 case .both:
@@ -57,28 +55,28 @@ struct FeedListView: View {
                         .onChange(of: viewModel.morningOn, {
                             Logger
                                 .viewCycle
-                                .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.wrappedName)")
-                            viewModel.updateFeed(pet: pet, type: .morning, viewContext: viewContext)
+                                .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.name)")
+                            viewModel.updateFeed(pet: pet, type: .morning)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.morningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
-                                .info("PR: Morning Tapped, pet: \(pet.wrappedName)")
+                                .info("PR: Morning Tapped, pet: \(pet.name)")
                             viewModel.morningOn.toggle()
                         }
                     EveningCheckboxView(eveningOn: $viewModel.eveningOn)
                         .onChange(of: viewModel.eveningOn, {
                             Logger
                                 .viewCycle
-                                .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.wrappedName)")
-                            viewModel.updateFeed(pet: pet, type: .evening, viewContext: viewContext)
+                                .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.name)")
+                            viewModel.updateFeed(pet: pet, type: .evening)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.eveningOn)
                         .onTapGesture {
                             Logger
                                 .viewCycle
-                                .info("PR: Evening Tapped, pet: \(pet.wrappedName)")
+                                .info("PR: Evening Tapped, pet: \(pet.name)")
                             viewModel.eveningOn.toggle()
                         }
                 }
@@ -100,7 +98,7 @@ struct FeedListView: View {
 }
 
 #Preview {
-    let preview = PersistenceController.preview.container.viewContext
-    return FeedListView(pet: .constant(Pet(context: preview)))
-        .environment(\.managedObjectContext, preview)
+    return FeedListView(pet: .constant(Pet()))
+        .modelContainer(for: Pet.self)
+
 }

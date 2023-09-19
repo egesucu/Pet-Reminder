@@ -7,13 +7,10 @@
 //
 
 import SwiftUI
-import CoreData
 import OSLog
 
 struct SettingsView: View {
 
-    @Environment(\.managedObjectContext)
-    private var viewContext
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @State private var alertMessage: LocalizedStringKey = ""
     @State private var showAlert = false
@@ -25,7 +22,6 @@ struct SettingsView: View {
                     NavigationLink(
                         "manage_pet_title",
                         destination: PetChangeListView()
-                            .environment(\.managedObjectContext, viewContext)
                     )
                     ColorPicker("settings_tint_color", selection: $tintColor)
                     if tintColor != Color.accentColor {
@@ -39,7 +35,7 @@ struct SettingsView: View {
                     }
                     NavigationLink("settings_change_icon", destination: ChangeAppIconView())
                     NavigationLink("notifications_manage_title", destination:
-                        NotificationView().environment(\.managedObjectContext, viewContext))
+                        NotificationView())
                     NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())
                 }
                 Section {
@@ -80,7 +76,6 @@ private var debugMenu: some View {
             let domainName = Bundle.main.bundleIdentifier ?? ""
             UserDefaults.standard.removePersistentDomain(forName: domainName)
             UserDefaults.standard.synchronize()
-            Logger.viewCycle.notice("App crashed for resetting UserDefaults.")
             Logger.viewCycle.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
         })
     } header: {

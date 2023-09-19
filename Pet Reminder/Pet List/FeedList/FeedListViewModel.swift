@@ -8,7 +8,8 @@
 
 import Foundation
 import Observation
-import CoreData
+import SwiftData
+import OSLog
 
 @Observable
 class FeedListViewModel {
@@ -18,15 +19,15 @@ class FeedListViewModel {
 
     func todaysFeeds(pet: Pet?) -> [Feed] {
         guard let pet else { return [] }
-        return pet.feedsArray.filter({ Calendar.current.isDateInToday($0.wrappedFeedDate) })
+        return pet.feedsArray.filter { Calendar.current.isDateInToday($0.wrappedFeedDate) }
     }
 
-    func updateFeed(pet: Pet?, type: FeedTimeSelection, viewContext: NSManagedObjectContext) {
+    func updateFeed(pet: Pet?, type: FeedTimeSelection) {
         let todaysFeed = todaysFeeds(pet: pet)
 
         if todaysFeed.isEmpty {
             // We don't have any feed history for today
-            let feed = Feed(context: viewContext)
+            let feed = Feed()
             switch type {
             case .both:
                 break // We won't pass this to update feed.
@@ -38,7 +39,7 @@ class FeedListViewModel {
                 feed.eveningFed = eveningOn
             }
             feed.feedDate = .now
-            pet?.addToFeeds(feed)
+            pet?.feeds?.append(feed)
 
         } else {
             // We have a feed, let's update inside of it.
@@ -56,7 +57,6 @@ class FeedListViewModel {
 
             feed.feedDate = .now
         }
-        PersistenceController.shared.save()
     }
 
     func getLatestFeed(pet: Pet?) async {

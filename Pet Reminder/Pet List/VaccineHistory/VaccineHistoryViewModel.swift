@@ -9,7 +9,8 @@
 import Foundation
 import SwiftUI
 import Observation
-import CoreData
+import SwiftData
+import OSLog
 
 @Observable
 class VaccineHistoryViewModel {
@@ -29,12 +30,12 @@ class VaccineHistoryViewModel {
         }
     }
 
-    func saveVaccine(pet: Pet?, viewContext: NSManagedObjectContext) {
-        let vaccine = Vaccine(context: viewContext)
+    func saveVaccine(pet: Pet?){
+        guard let pet else { return }
+        let vaccine = Vaccine()
         vaccine.name = vaccineName
         vaccine.date = vaccineDate
-        pet?.addToVaccines(vaccine)
-        PersistenceController.shared.save()
+        pet.vaccines?.append(vaccine)
 
         resetTemporaryData()
         togglePopup()
@@ -45,12 +46,11 @@ class VaccineHistoryViewModel {
         vaccineDate = .now
     }
 
-    func deleteVaccines(pet: Pet?, at offsets: IndexSet, modelContext: NSManagedObjectContext) {
+    func deleteVaccines(pet: Pet?, at offsets: IndexSet) {
         if let pet,
-           let vaccineSet = pet.vaccines,
-           let vaccines = vaccineSet.allObjects as? [Vaccine] {
+           let vaccines = pet.vaccines {
             for offset in offsets {
-                modelContext.delete(vaccines[offset])
+                pet.modelContext?.delete(vaccines[offset])
             }
         }
     }

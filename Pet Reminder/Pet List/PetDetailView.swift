@@ -39,7 +39,7 @@ struct PetDetailView: View {
                     Button {
                         Logger
                             .viewCycle
-                            .info("PR: Feed History Tapped, pet name: \(pet.wrappedName)")
+                            .info("PR: Feed History Tapped, pet name: \(pet.name)")
                         showFeedHistory.toggle()
                     } label: {
                         Label("feeds_title", systemImage: "fork.knife.circle.fill")
@@ -69,15 +69,14 @@ struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines) {
             VaccineHistoryView(pet: pet)
         }
-        .navigationTitle(Text("pet_name_title \(pet?.wrappedName ?? "")"))
+        .navigationTitle(Text("pet_name_title \(pet?.name ?? "")"))
     }
 }
 
 #Preview(traits: .portrait) {
-    let preview = PersistenceController.preview.container.viewContext
-    return NavigationStack {
-        PetDetailView(pet: .constant(Pet(context: preview)))
-            .environment(\.managedObjectContext, preview)
+    NavigationStack {
+        PetDetailView(pet: .constant(Pet()))
+            .modelContainer(for: Pet.self)
     }
     .navigationViewStyle(.stack)
 }

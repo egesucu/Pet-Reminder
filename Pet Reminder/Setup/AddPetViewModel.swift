@@ -8,7 +8,8 @@
 
 import SwiftUI
 import Observation
-import CoreData
+import SwiftData
+import OSLog
 
 @Observable
 class AddPetViewModel {
@@ -26,8 +27,8 @@ class AddPetViewModel {
         selectedImageData = nil
     }
 
-    func savePet(modelContext: NSManagedObjectContext, onDismiss: () -> Void) async {
-        let pet = Pet(context: modelContext)
+    func savePet() async -> Pet {
+        let pet = Pet()
         pet.createdAt = .now
         pet.birthday = birthday
         pet.name = name
@@ -50,9 +51,7 @@ class AddPetViewModel {
             pet.eveningTime = eveningFeed
             pet.selection = .both
         }
-
-        PersistenceController.shared.save()
-        onDismiss()
+        return pet
     }
 
     private func createNotification(type: FeedTimeSelection) async {

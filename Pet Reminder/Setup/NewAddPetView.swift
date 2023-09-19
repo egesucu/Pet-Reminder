@@ -8,6 +8,7 @@
 
 import SwiftUI
 import OSLog
+import SwiftData
 
 struct NewAddPetView: View {
 
@@ -18,8 +19,8 @@ struct NewAddPetView: View {
     @State private var nameIsFilledCorrectly = false
     @Environment(\.dismiss)
     var dismiss
-    @Environment(\.managedObjectContext)
-    private var viewContext
+    @Environment(\.modelContext)
+    private var modelContext
 
     var body: some View {
         VStack {
@@ -74,65 +75,71 @@ struct NewAddPetView: View {
             Logger.viewCycle.info("Page Value: \(step.text)")
         }
     }
-// swiftlint: disable function_body_length
+
     private func actionView(
         proxy: ScrollViewProxy
     ) -> some View {
         HStack {
-            Button(step != .name ? "Back" : "Cancel") {
-                withAnimation {
-                    switch step {
-                    case .name:
-                        dismiss()
-                    case .birthday:
-                        step = .name
-                        proxy.scrollTo(SetupSteps.name)
-                    case .photo:
-                        step = .birthday
-                        proxy.scrollTo(SetupSteps.birthday)
-                    case .feedSelection:
-                        step = .photo
-                        proxy.scrollTo(SetupSteps.photo)
-                    case .feedTime:
-                        step = .feedSelection
-                        proxy.scrollTo(SetupSteps.feedSelection)
-                    }
-                }
-            } // swiftlint: enable function_body_length
+            previousButton(proxy: proxy)
             .buttonStyle(.bordered)
             .tint(step == .name ? .red : Color(uiColor: .label))
             Spacer()
-            Button(step != .feedTime ? "Next" : "Save") {
-                withAnimation {
-                    switch step {
-                    case .name:
-                        step = .birthday
-                        proxy.scrollTo(SetupSteps.birthday)
-                    case .birthday:
-                        step = .photo
-                        proxy.scrollTo(SetupSteps.photo)
-                    case .photo:
-                        step = .feedSelection
-                        proxy.scrollTo(SetupSteps.feedSelection)
-                    case .feedSelection:
-                        step = .feedTime
-                        proxy.scrollTo(SetupSteps.feedTime)
-                    case .feedTime:
-                        Task {
-                            await manager
-                                .savePet(
-                                    modelContext: viewContext) {
-                                        dismiss()
-                                    }
-                        }
+            nextButton(proxy: proxy)
+        }
+        .padding(50)
+    }
+
+    private func previousButton(proxy: ScrollViewProxy) -> some View {
+        Button(step != .name ? "Back" : "Cancel") {
+            withAnimation {
+                switch step {
+                case .name:
+                    dismiss()
+                case .birthday:
+                    step = .name
+                    proxy.scrollTo(SetupSteps.name)
+                case .photo:
+                    step = .birthday
+                    proxy.scrollTo(SetupSteps.birthday)
+                case .feedSelection:
+                    step = .photo
+                    proxy.scrollTo(SetupSteps.photo)
+                case .feedTime:
+                    step = .feedSelection
+                    proxy.scrollTo(SetupSteps.feedSelection)
+                }
+            }
+        }
+    }
+
+    private func nextButton(proxy: ScrollViewProxy) -> some View {
+        Button(step != .feedTime ? "Next" : "Save") {
+            withAnimation {
+                switch step {
+                case .name:
+                    step = .birthday
+                    proxy.scrollTo(SetupSteps.birthday)
+                case .birthday:
+                    step = .photo
+                    proxy.scrollTo(SetupSteps.photo)
+                case .photo:
+                    step = .feedSelection
+                    proxy.scrollTo(SetupSteps.feedSelection)
+                case .feedSelection:
+                    step = .feedTime
+                    proxy.scrollTo(SetupSteps.feedTime)
+                case .feedTime:
+                    Task {
+                        let pet = await manager.savePet()
+                        modelContext.insert(pet)
+                        dismiss()
                     }
                 }
             }
-            .buttonStyle(.bordered)
-            .tint(step == .feedTime ? .green : Color(uiColor: .label))
-            .disabled(!nameIsFilledCorrectly)
         }
-        .padding(50)
+        .buttonStyle(.bordered)
+        .tint(step == .feedTime ? .green : Color(uiColor: .label))
+        .disabled(!nameIsFilledCorrectly)
     }
 }
 

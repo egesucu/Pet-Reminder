@@ -46,6 +46,6 @@ struct HomeManagerView: View {
 }
 
 #Preview {
-        HomeManagerView()
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    HomeManagerView()
+        .modelContainer(for: Pet.self)
 }

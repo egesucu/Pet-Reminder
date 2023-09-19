@@ -7,10 +7,13 @@
 //
 
 import SwiftUI
+import SwiftData
+import OSLog
 
 struct PetChangeView: View {
 
     @Binding var pet: Pet?
+    @Environment(\.modelContext) var modelContext
     @State private var selectedImageData: Data?
     @Environment(\.dismiss) var dismiss
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
@@ -61,7 +64,7 @@ struct PetChangeView: View {
                         .frame(height: 400)
                     }
                 }
-                .navigationTitle(pet.wrappedName)
+                .navigationTitle(pet.name)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
@@ -139,7 +142,6 @@ struct PetChangeView: View {
 }
 
 #Preview {
-    let preview = PersistenceController.preview.container.viewContext
-    return PetChangeView(pet: .constant(Pet(context: preview)))
-        .environment(\.managedObjectContext, preview)
+    PetChangeView(pet: .constant(Pet()))
+        .modelContainer(for: Pet.self)
 }

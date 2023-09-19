@@ -7,12 +7,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PetNameTextField: View {
+    @Query(sort: \Pet.name) var pets: [Pet]
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    var pets: FetchedResults<Pet>
-    @Environment(\.managedObjectContext) var viewContext
     @Binding var name: String
     @State private var showAlert = false
     @Binding var nameIsFilledCorrectly: Bool
@@ -63,7 +62,7 @@ struct PetNameTextField: View {
     }
 
     func controlName() {
-        let pet = pets.filter({ $0.wrappedName == name })
+        let pet = pets.filter({ $0.name == name })
         if pet.isNotEmpty {
             name = ""
             showAlert.toggle()
@@ -76,6 +75,7 @@ struct PetNameTextField: View {
 #Preview {
     PetNameTextField(name: .constant(Strings.viski), nameIsFilledCorrectly: .constant(false))
         .padding(.all)
+        .modelContainer(for: Pet.self)
 }
 
 enum PetError: LocalizedError {
