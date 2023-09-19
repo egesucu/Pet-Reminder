@@ -9,6 +9,7 @@
 import Foundation
 import StoreKit
 import Observation
+import OSLog
 
 @Observable
 class StoreManager {
@@ -33,13 +34,17 @@ class StoreManager {
                 case .consumable:
                     newConsumables.append(product)
                 default:
-                    print("Unknown product")
+                    Logger
+                        .viewCycle
+                        .error("Unknwon product")
                 }
             }
 
             consumables = sortByPrice(newConsumables)
         } catch {
-            print("Failed product request from the App Store server: \(error)")
+            Logger
+                .viewCycle
+                .error("Failed product request from the App Store server: \(error.localizedDescription)")
         }
     }
 

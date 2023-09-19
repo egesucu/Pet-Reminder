@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 extension Color: RawRepresentable {
 
@@ -21,7 +22,9 @@ extension Color: RawRepresentable {
             let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) ?? .green
             self = Color(uiColor: color)
         } catch let error {
-            print(error.localizedDescription)
+            Logger
+                .viewCycle
+                .error("\(error)")
             self = .green
         }
     }
@@ -31,7 +34,9 @@ extension Color: RawRepresentable {
             let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false)
             return data.base64EncodedString()
         } catch let error {
-            print(error.localizedDescription)
+            Logger
+                .viewCycle
+                .error("\(error)")
         }
         return ""
     }

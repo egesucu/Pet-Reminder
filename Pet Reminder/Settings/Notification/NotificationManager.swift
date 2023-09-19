@@ -21,7 +21,9 @@ class NotificationManager {
         do {
             return try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
         } catch let error {
-            print(error)
+            Logger
+                .viewCycle
+                .error("\(error)")
         }
         return false
     }
@@ -103,7 +105,9 @@ extension NotificationManager {
             do {
                 try await notificationCenter.add(request)
             } catch let error {
-                print(error)
+                Logger
+                    .viewCycle
+                    .error("\(error)")
             }
 
         }

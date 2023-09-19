@@ -136,7 +136,6 @@ struct NotificationView: View {
 
         for index in offset {
             let notification = notificationManager.filterNotifications(of: pet)[index]
-            print(notification.identifier)
             notificationManager
                 .removeNotificationsIdentifiers(with: [notification.identifier])
         }

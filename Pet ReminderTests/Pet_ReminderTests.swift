@@ -41,7 +41,6 @@ final class Pet_ReminderTests: XCTestCase {
         
         async let notifications = notificationManager.notificationCenter.pendingNotificationRequests()
         let identifiers = await notifications.map(\.identifier)
-        print("Test Notification Identifiers: ", identifiers)
         
         XCTAssertFalse(identifiers.contains("Bud"))
     }

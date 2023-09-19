@@ -51,7 +51,9 @@ class EventManager {
                 self.authorizationGiven = true
             }
         } catch let error {
-            print(error)
+            Logger
+                .viewCycle
+                .error("\(error)")
             self.authorizationGiven = false
         }
     }
@@ -80,7 +82,9 @@ class EventManager {
         do {
             try eventStore.saveCalendar(calendar, commit: true)
         } catch {
-            print(error.localizedDescription)
+            Logger
+                .viewCycle
+                .error("\(error)")
         }
     }
 
@@ -132,7 +136,9 @@ class EventManager {
         do {
             try self.eventStore.remove(event, span: .thisEvent, commit: true)
         } catch {
-            print(error.localizedDescription)
+            Logger
+                .viewCycle
+                .error("\(error)")
         }
 
     }

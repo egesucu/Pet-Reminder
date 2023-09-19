@@ -9,6 +9,7 @@
 import Foundation
 import Observation
 import UIKit
+import OSLog
 
 @Observable
 class AppIconManager {
@@ -35,7 +36,9 @@ class AppIconManager {
             do {
                 try await UIApplication.shared.setAlternateIconName(icon.iconName)
             } catch {
-                print("Updating icon to \(String(describing: icon.iconName)) failed.")
+                Logger
+                    .viewCycle
+                    .error("Updating icon to \(String(describing: icon.iconName)) failed.")
                 selectedAppIcon = previousAppIcon
             }
 

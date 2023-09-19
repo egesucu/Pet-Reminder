@@ -8,6 +8,7 @@
 
 import CoreData
 import Foundation
+import OSLog
 import CloudKit
 
 struct PersistenceController {
@@ -71,7 +72,9 @@ struct PersistenceController {
         do {
             try context.save()
         } catch {
-            print("Error: \(error.localizedDescription)")
+            Logger
+                .viewCycle
+                .error("Error: \(error.localizedDescription)")
         }
     }
 
