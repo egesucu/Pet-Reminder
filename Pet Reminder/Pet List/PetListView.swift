@@ -11,25 +11,23 @@ import CoreData
 import OSLog
 
 struct PetListView: View {
-
-    var reference: PetListViewReference = .petList
-
+        
     @Environment(\.managedObjectContext)
     private var viewContext
     @Environment(\.undoManager) var undoManager
     @State private var addPet = false
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-
+    
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
     var pets: FetchedResults<Pet>
     @State private var showUndoButton = false
     @State private var selectedPet: Pet?
     @State private var isEditing = false
     @State private var notificationManager = NotificationManager()
-
+    
     @State private var buttonTimer: Timer?
     @State private var time = 0
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -42,27 +40,16 @@ struct PetListView: View {
                                 addPet.toggle()
                             }, emptyPageReference: .petList)
                         }
-                        switch reference {
-                        case .petList:
-                            PetDetailView(pet: $selectedPet)
-                        case .settings:
-                            PetChangeView(pet: $selectedPet)
-                        }
-
+                        PetDetailView(pet: $selectedPet)
                     } else {
-                        switch reference {
-                        case .petList:
-                            EmptyPageView(onAddPet: {
-                                addPet.toggle()
-                            }, emptyPageReference: .petList)
-                        case .settings:
-                            EmptyPageView(emptyPageReference: .settings)
-                        }
+                        EmptyPageView(onAddPet: {
+                            addPet.toggle()
+                        }, emptyPageReference: .petList)
                     }
                 }
             }
             .toolbar(content: addButtonToolbar)
-
+            
             .onAppear {
                 selectedPet = pets.first
                 viewContext.undoManager = undoManager
@@ -79,7 +66,7 @@ struct PetListView: View {
             })
         }
     }
-
+    
     private var petList: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 20) {
@@ -92,12 +79,12 @@ struct PetListView: View {
                                         .clipShape(Circle())
                                         .frame(width: 80, height: 80)
                                         .overlay(
-                                                    RoundedRectangle(cornerRadius: 40)
-                                                        .stroke(
-                                                            selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear, // swiftlint:disable:this line_length
-                                                            lineWidth: 5
-                                                        )
+                                            RoundedRectangle(cornerRadius: 40)
+                                                .stroke(
+                                                    defineColor(pet: pet),
+                                                    lineWidth: 5
                                                 )
+                                        )
                                         .wiggling()
                                     Text(pet.wrappedName)
                                 }
@@ -109,23 +96,23 @@ struct PetListView: View {
                                         .foregroundStyle(Color.red)
                                         .font(.title)
                                 }
-
+                                
                             }
                         } else {
                             ESImageView(data: pet.image)
                                 .clipShape(Circle())
                                 .frame(width: 80, height: 80)
                                 .overlay(
-                                            RoundedRectangle(cornerRadius: 40)
-                                                .stroke(
-                                                    selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear,
-                                                    lineWidth: 5
-                                                )
+                                    RoundedRectangle(cornerRadius: 40)
+                                        .stroke(
+                                            defineColor(pet: pet),
+                                            lineWidth: 5
                                         )
-
+                                )
+                            
                             Text(pet.wrappedName)
                         }
-
+                        
                     }
                     .onTapGesture {
                         selectedPet = pet
@@ -137,17 +124,21 @@ struct PetListView: View {
                         isEditing = true
                     }
                     .padding([.top, .leading])
-
+                    
                 }
             }
-
+            
         }
     }
-
-    private var petListTitle: Text {
-        Text(reference == .settings ? "manage_pet_title" : "pet_name_title")
+    
+    private func defineColor(pet: Pet) -> Color {
+        selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear
     }
-
+    
+    private var petListTitle: Text {
+        Text("pet_name_title")
+    }
+    
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarTrailing) {
@@ -166,9 +157,9 @@ struct PetListView: View {
                         .foregroundColor(tintColor)
                         .font(.title)
                 }
-
+                
             }
-            if reference == .petList && pets.count > 0 {
+            if pets.count > 0 {
                 Button(action: {
                     self.addPet.toggle()
                 }, label: {
@@ -180,7 +171,7 @@ struct PetListView: View {
             }
         }
     }
-
+    
     func deletePet(pet: Pet) {
         let tempPetName = pet.wrappedName
         viewContext.delete(pet)

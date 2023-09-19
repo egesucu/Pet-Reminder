@@ -65,11 +65,11 @@ struct PetChangeListView: View {
                                 VStack {
                                     ESImageView(data: pet.image)
                                         .clipShape(Circle())
-                                        .frame(width: 80, height: 80)
+                                        .frame(width: 120, height: 120)
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 40)
+                                            RoundedRectangle(cornerRadius: 60)
                                                 .stroke(
-                                                    selectedPet == pet ? Color.yellow : Color.clear,
+                                                    defineColor(pet: pet),
                                                     lineWidth: 5
                                                 )
                                         )
@@ -92,11 +92,11 @@ struct PetChangeListView: View {
                         } else {
                             ESImageView(data: pet.image)
                                 .clipShape(Circle())
-                                .frame(width: 80, height: 80)
+                                .frame(width: 120, height: 120)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 40)
+                                    RoundedRectangle(cornerRadius: 60)
                                         .stroke(
-                                            selectedPet == pet ? Color.yellow : Color.clear,
+                                            defineColor(pet: pet),
                                             lineWidth: 5
                                         )
                                 )
@@ -149,6 +149,10 @@ struct PetChangeListView: View {
                 time += 1
             }
         })
+    }
+    
+    private func defineColor(pet: Pet) -> Color {
+        selectedPet?.name == pet.wrappedName ? Color.yellow : Color.clear
     }
 }
 
