@@ -38,7 +38,10 @@ struct NotificationView: View {
                                     Text("Create default notifications for your pet.")
                                 }
                             } else {
-                                ForEach(notificationManager.filterNotifications(of: pet), id: \.identifier) { notification in
+                                ForEach(
+                                    notificationManager.filterNotifications(of: pet),
+                                    id: \.identifier
+                                ) { notification in
                                     notificationView(notification: notification)
                                 }.onDelete { indexSet in
                                     remove(pet: pet, at: indexSet)

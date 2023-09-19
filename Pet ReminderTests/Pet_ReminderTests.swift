@@ -20,28 +20,27 @@ final class Pet_ReminderTests: XCTestCase {
         let localization = String(localized: stringKey)
         XCTAssertTrue(localization != notExpectedOutput)
     }
-    
+
     func testOtherNotificationDeletion() async throws {
         let notificationManager = NotificationManager()
-        
+
         let fetchRequest: NSFetchRequest<Pet> = Pet.fetchRequest()
         let context = PersistenceController.preview.container.viewContext
         let pets = try context.fetch(fetchRequest)
-        
+
         for pet in pets {
             await notificationManager.createNotifications(for: pet)
         }
-        
+
         await notificationManager.createNotification(of: "Bud", with: .morning, date: .now)
         await notificationManager.createNotification(of: "Bud", with: .evening, date: .now)
         await notificationManager.createNotification(of: "Bud", with: .birthday, date: .now)
-        
-        
+
         await notificationManager.removeOtherNotifications(of: pets)
-        
+
         async let notifications = notificationManager.notificationCenter.pendingNotificationRequests()
         let identifiers = await notifications.map(\.identifier)
-        
+
         XCTAssertFalse(identifiers.contains("Bud"))
     }
 

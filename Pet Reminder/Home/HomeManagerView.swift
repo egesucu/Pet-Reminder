@@ -15,7 +15,7 @@ struct HomeManagerView: View {
     var body: some View {
 
         TabView(selection: $currentTab) {
-            PetListView(reference: .petList)
+            PetListView()
                 .tabItem {
                     Image(systemName: SFSymbols.pawPrint)
                 }
