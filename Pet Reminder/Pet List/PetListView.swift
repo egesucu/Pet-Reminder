@@ -37,6 +37,10 @@ struct PetListView: View {
                     if pets.count > 0 {
                         if selectedPet != nil {
                             petList
+                        } else {
+                            EmptyPageView(onAddPet: {
+                                addPet.toggle()
+                            }, emptyPageReference: .petList)
                         }
                         switch reference {
                         case .petList:
@@ -64,7 +68,13 @@ struct PetListView: View {
                 viewContext.undoManager = undoManager
             }
             .navigationTitle(petListTitle)
-            .fullScreenCover(isPresented: $addPet, content: {
+            .fullScreenCover(isPresented: $addPet, onDismiss: {
+                viewContext.refreshAllObjects()
+                selectedPet = pets.first
+                Logger
+                    .viewCycle
+                    .debug("Pet Amount: \(pets.count)")
+            }, content: {
                 NewAddPetView()
             })
         }

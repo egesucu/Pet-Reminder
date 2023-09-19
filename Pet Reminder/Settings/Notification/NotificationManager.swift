@@ -121,11 +121,11 @@ extension NotificationManager {
     func removeOtherNotifications(of pets: [Pet]) async {
 
         let allNotifications = await notificationCenter.pendingNotificationRequests()
-        
+
         let names = pets.map(\.wrappedName)
-        
+
         var unknownIdentifiers = allNotifications.map(\.identifier)
-        
+
         names.forEach { name in
             unknownIdentifiers.removeAll(where: { identifier in
                 identifier.contains(name)

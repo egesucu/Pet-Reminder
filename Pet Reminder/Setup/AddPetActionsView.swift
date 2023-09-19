@@ -10,11 +10,11 @@ import SwiftUI
 import OSLog
 
 struct AddPetActionsView: View {
-    
+
     @Binding var name: String
     var onSave: () -> Void
     var onCancel: () -> Void
-    
+
     var body: some View {
         HStack {
             Button(action: onCancel) {
@@ -44,5 +44,5 @@ struct AddPetActionsView: View {
             .viewCycle
             .info("Cancelled")
     }
-    
+
 }
