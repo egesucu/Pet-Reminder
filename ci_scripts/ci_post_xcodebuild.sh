@@ -8,4 +8,4 @@
 
 # Linting all files.
 set -e
-swiftlint --fix --strict $CI_WORKSPACE
+swiftlint --fix --strict $CI_PRIMARY_REPOSITORY_PATH
