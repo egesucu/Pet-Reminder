@@ -67,7 +67,7 @@ struct PetDetailView: View {
             }
         }
         .fullScreenCover(isPresented: $showVaccines) {
-            VaccineHistoryView(pet: pet)
+            VaccineHistoryView(pet: $pet)
         }
         .navigationTitle(Text("pet_name_title \(pet?.name ?? "")"))
     }

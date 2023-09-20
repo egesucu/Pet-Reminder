@@ -88,9 +88,10 @@ struct PetListView: View {
                                     deletePet(pet: pet)
                                     isEditing = false
                                 } label: {
-                                    Image(systemName: "circle.badge.xmark.fill")
-                                        .foregroundStyle(Color.red)
+                                    Image(systemName: "xmark.circle.fill")
                                         .font(.title)
+                                        .foregroundStyle(Color.red)
+                                        .offset(x: 15, y: 0)
                                 }
 
                             }

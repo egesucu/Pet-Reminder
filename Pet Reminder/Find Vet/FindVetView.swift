@@ -66,6 +66,7 @@ struct FindVetView: View {
                 }
 #else
                 Text("find_vet_simulation_error")
+                    .padding()
 #endif
             }
             .sheet(isPresented: $viewModel.showItem, onDismiss: {

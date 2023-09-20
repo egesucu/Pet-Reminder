@@ -11,7 +11,7 @@ import SwiftData
 
 struct VaccineHistoryView: View {
 
-    var pet: Pet?
+    @Binding var pet: Pet?
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = VaccineHistoryViewModel()
@@ -82,7 +82,7 @@ struct VaccineHistoryView: View {
 
 #Preview {
     return NavigationStack {
-        VaccineHistoryView(pet: Pet())
+        VaccineHistoryView(pet: .constant(.init()))
             .modelContainer(for: Pet.self)
 
     }
