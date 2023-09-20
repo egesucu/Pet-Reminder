@@ -7,4 +7,5 @@
 #  Copyright © 2023 Softhion. All rights reserved.
 
 # Linting all files.
-swiftlint --fix
+set -e
+swiftlint --fix --strict $CI_WORKSPACE
