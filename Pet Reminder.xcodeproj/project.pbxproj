@@ -51,6 +51,8 @@
 		9D5F5ABD2ABA498C00A3C8D3 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F5ABA2ABA498C00A3C8D3 /* Feed.swift */; };
 		9D5F5ABE2ABA498C00A3C8D3 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */; };
 		9D5F5ABF2ABA498C00A3C8D3 /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */; };
+		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
+		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
 		9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */; };
 		9D6293722A87D46300BA577A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
@@ -159,6 +161,8 @@
 		9D5F5ABA2ABA498C00A3C8D3 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
+		9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_xcodebuild.sh; sourceTree = "<group>"; };
 		9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 		9D6293712A87D46300BA577A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -313,6 +317,15 @@
 			path = PetChange;
 			sourceTree = "<group>";
 		};
+		9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */,
+				9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		9D62936C2A87CD2000BA577A /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +363,7 @@
 		9D8E76E5248666BD004610C8 = {
 			isa = PBXGroup;
 			children = (
+				9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */,
 				9D7C25312A594AEC00DDB027 /* Pet Reminder.xctestplan */,
 				9D7C25292A5948D300DDB027 /* Pet ReminderTests */,
 				9D71CEF2248836BD00AA1458 /* Frameworks */,
@@ -639,7 +653,6 @@
 			buildConfigurationList = 9D8E7705248666C1004610C8 /* Build configuration list for PBXNativeTarget "Pet Reminder" */;
 			buildPhases = (
 				9D8E76EA248666BD004610C8 /* Sources */,
-				9D5D83E12A2F354E003563C8 /* SwiftLint */,
 				9D8E76EB248666BD004610C8 /* Frameworks */,
 				9D8E76EC248666BD004610C8 /* Resources */,
 			);
@@ -711,6 +724,8 @@
 			files = (
 				9DA37A482AB6C2DA00874999 /* InfoPlist.xcstrings in Resources */,
 				9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */,
+				9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */,
+				9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */,
 				9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */,
 				9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
@@ -719,28 +734,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		9D5D83E12A2F354E003563C8 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/testOutput.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh scripts/swiftlint.sh\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9D7C25242A5948D300DDB027 /* Sources */ = {
