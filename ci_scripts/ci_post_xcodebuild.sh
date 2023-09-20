@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 #  ci_post_xcodebuild.sh
 #  Pet Reminder
@@ -7,4 +7,7 @@
 #  Copyright © 2023 Softhion. All rights reserved.
 set -e
 
+# Linting all files.
 swiftlint --fix
+
+echo("Linted All Files")
