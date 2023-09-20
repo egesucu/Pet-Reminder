@@ -7,8 +7,4 @@
 #  Copyright © 2023 Softhion. All rights reserved.
 
 # Installs swiftlint from homebrew
-set -e
-
 brew install swiftlint
-
-echo("Did you read me?")
