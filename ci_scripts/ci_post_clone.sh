@@ -1,4 +1,4 @@
-#!/bin/zsh.
+#!/bin/sh
 
 #  ci_post_clone.sh
 #  Pet Reminder
