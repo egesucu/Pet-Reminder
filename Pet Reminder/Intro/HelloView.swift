@@ -8,7 +8,6 @@
 
 import SwiftUI
 import CloudKit
-import CoreData
 
 struct HelloView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.accent

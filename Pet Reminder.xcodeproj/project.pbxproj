@@ -22,8 +22,7 @@
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
 		9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E425D081B4008F93CD /* EventListView.swift */; };
-		9D0C923C2AA64F54009BF51C /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C923B2AA64F54009BF51C /* Feed.swift */; };
-		9D0C923E2AA64F59009BF51C /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C923D2AA64F59009BF51C /* Vaccine.swift */; };
+		9D0C923C2AA64F54009BF51C /* FeedExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C923B2AA64F54009BF51C /* FeedExtensions.swift */; };
 		9D0C92412AA64FEE009BF51C /* SFSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C92402AA64FEE009BF51C /* SFSymbols.swift */; };
 		9D13B2352A5CDE9400E6C598 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D13B2342A5CDE9400E6C598 /* FeedListView.swift */; };
 		9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */; };
@@ -49,6 +48,12 @@
 		9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */; };
 		9D5DC0EB29F5826D007A444D /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */; };
 		9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0EE29F58860007A444D /* ActionButton.swift */; };
+		9D5F5ABD2ABA498C00A3C8D3 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F5ABA2ABA498C00A3C8D3 /* Feed.swift */; };
+		9D5F5ABE2ABA498C00A3C8D3 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */; };
+		9D5F5ABF2ABA498C00A3C8D3 /* Vaccine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */; };
+		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
+		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
+		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
 		9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */; };
 		9D6293722A87D46300BA577A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
@@ -80,7 +85,7 @@
 		9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0512778BC870089E9B0 /* ESImageView.swift */; };
 		9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */; };
 		9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */; };
-		9DB669772A62EC2100A7573C /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB669742A62EC2100A7573C /* Pet.swift */; };
+		9DB669772A62EC2100A7573C /* PetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB669742A62EC2100A7573C /* PetExtensions.swift */; };
 		9DC1B9CA264ED3D000F8561A /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC1B9C9264ED3D000F8561A /* NextButton.swift */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
 		9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC87F1729FAC05A008AB720 /* TodaysEventsView.swift */; };
@@ -92,10 +97,12 @@
 		9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06426E3C84000DF290F /* EmptyEventView.swift */; };
 		9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */; };
 		9DD6A2712AB5CF28005312D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FA248666C1004610C8 /* Assets.xcassets */; };
-		9DD6CE302A840E71005ECBC3 /* PetReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6CE2E2A840E71005ECBC3 /* PetReminder.xcdatamodeld */; };
 		9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD754A1278266FA002E2768 /* ESEventDetailView.swift */; };
 		9DD8C2D22AAC6C4D00756AE8 /* AllNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */; };
 		9DD8C2D52AAC77FC00756AE8 /* PetChangeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8C2D42AAC77FC00756AE8 /* PetChangeListView.swift */; };
+		9DE24A272ABEEB65008B91E2 /* VaccineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE24A262ABEEB65008B91E2 /* VaccineExtensions.swift */; };
+		9DE24A292ABEED38008B91E2 /* PreviewSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE24A282ABEED38008B91E2 /* PreviewSampleData.swift */; };
+		9DE24A2B2ABEED7C008B91E2 /* ModelContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE24A2A2ABEED7C008B91E2 /* ModelContainerView.swift */; };
 		9DF9A4AC2A8419780004CB8E /* EmptyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AB2A8419780004CB8E /* EmptyPageView.swift */; };
 		9DF9A4AE2A842B470004CB8E /* MapItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AD2A842B470004CB8E /* MapItemView.swift */; };
 		9DF9A4B02A8453EA0004CB8E /* EventFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AF2A8453EA0004CB8E /* EventFilterView.swift */; };
@@ -129,8 +136,7 @@
 		9D0C24E025D08177008F93CD /* FindVetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVetView.swift; sourceTree = "<group>"; };
 		9D0C24E225D08181008F93CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D0C24E425D081B4008F93CD /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
-		9D0C923B2AA64F54009BF51C /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
-		9D0C923D2AA64F59009BF51C /* Vaccine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
+		9D0C923B2AA64F54009BF51C /* FeedExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedExtensions.swift; sourceTree = "<group>"; };
 		9D0C92402AA64FEE009BF51C /* SFSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbols.swift; sourceTree = "<group>"; };
 		9D13B2342A5CDE9400E6C598 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		9D1D472E28D6340B0079175C /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
@@ -156,6 +162,12 @@
 		9D5DC0E829F580C0007A444D /* AddPetActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetActionsView.swift; sourceTree = "<group>"; };
 		9D5DC0EA29F5826D007A444D /* AddPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewModel.swift; sourceTree = "<group>"; };
 		9D5DC0EE29F58860007A444D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		9D5F5ABA2ABA498C00A3C8D3 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
+		9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vaccine.swift; sourceTree = "<group>"; };
+		9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_xcodebuild.sh; sourceTree = "<group>"; };
+		9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 		9D6293712A87D46300BA577A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -192,7 +204,7 @@
 		9DB0E0512778BC870089E9B0 /* ESImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESImageView.swift; sourceTree = "<group>"; };
 		9DB0E0532778BF680089E9B0 /* EveningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveningCheckboxView.swift; sourceTree = "<group>"; };
 		9DB0E0552778BF9B0089E9B0 /* MorningCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningCheckboxView.swift; sourceTree = "<group>"; };
-		9DB669742A62EC2100A7573C /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
+		9DB669742A62EC2100A7573C /* PetExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetExtensions.swift; sourceTree = "<group>"; };
 		9DC1B9C9264ED3D000F8561A /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9DC87F1729FAC05A008AB720 /* TodaysEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaysEventsView.swift; sourceTree = "<group>"; };
@@ -203,10 +215,12 @@
 		9DCDA06226E3C72400DF290F /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		9DCDA06426E3C84000DF290F /* EmptyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEventView.swift; sourceTree = "<group>"; };
 		9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Ankara.gpx; sourceTree = "<group>"; };
-		9DD6CE2F2A840E71005ECBC3 /* PetReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetReminder.xcdatamodel; sourceTree = "<group>"; };
 		9DD754A1278266FA002E2768 /* ESEventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESEventDetailView.swift; sourceTree = "<group>"; };
 		9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotificationsView.swift; sourceTree = "<group>"; };
 		9DD8C2D42AAC77FC00756AE8 /* PetChangeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeListView.swift; sourceTree = "<group>"; };
+		9DE24A262ABEEB65008B91E2 /* VaccineExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineExtensions.swift; sourceTree = "<group>"; };
+		9DE24A282ABEED38008B91E2 /* PreviewSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewSampleData.swift; sourceTree = "<group>"; };
+		9DE24A2A2ABEED7C008B91E2 /* ModelContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContainerView.swift; sourceTree = "<group>"; };
 		9DF9A4AB2A8419780004CB8E /* EmptyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageView.swift; sourceTree = "<group>"; };
 		9DF9A4AD2A842B470004CB8E /* MapItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemView.swift; sourceTree = "<group>"; };
 		9DF9A4AF2A8453EA0004CB8E /* EventFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFilterView.swift; sourceTree = "<group>"; };
@@ -256,9 +270,9 @@
 		9D0C923F2AA64F84009BF51C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9DB669742A62EC2100A7573C /* Pet.swift */,
-				9D0C923B2AA64F54009BF51C /* Feed.swift */,
-				9D0C923D2AA64F59009BF51C /* Vaccine.swift */,
+				9DB669742A62EC2100A7573C /* PetExtensions.swift */,
+				9DE24A262ABEEB65008B91E2 /* VaccineExtensions.swift */,
+				9D0C923B2AA64F54009BF51C /* FeedExtensions.swift */,
 				9D62936F2A87CF2B00BA577A /* Image+Extensions.swift */,
 				725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */,
 				725F44CB2A260B3D0096CCCB /* DateExtensions.swift */,
@@ -312,6 +326,16 @@
 			path = PetChange;
 			sourceTree = "<group>";
 		};
+		9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */,
+				9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */,
+				9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		9D62936C2A87CD2000BA577A /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +373,7 @@
 		9D8E76E5248666BD004610C8 = {
 			isa = PBXGroup;
 			children = (
+				9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */,
 				9D7C25312A594AEC00DDB027 /* Pet Reminder.xctestplan */,
 				9D7C25292A5948D300DDB027 /* Pet ReminderTests */,
 				9D71CEF2248836BD00AA1458 /* Frameworks */,
@@ -588,6 +613,9 @@
 		9DFF73F2248BAD7F004B4901 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9D5F5ABA2ABA498C00A3C8D3 /* Feed.swift */,
+				9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */,
+				9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */,
 				9DCDA06026E3C34600DF290F /* Pin.swift */,
 			);
 			path = Models;
@@ -598,7 +626,6 @@
 			children = (
 				9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */,
 				9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */,
-				9DD6CE2E2A840E71005ECBC3 /* PetReminder.xcdatamodeld */,
 				9D4114AA2A82F7CD00C21D87 /* Persistence.swift */,
 				9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */,
 				9D8970A425681E9300B3C414 /* PetReminderApp.swift */,
@@ -606,6 +633,8 @@
 				9D8E7702248666C1004610C8 /* Info.plist */,
 				9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */,
 				9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */,
+				9DE24A282ABEED38008B91E2 /* PreviewSampleData.swift */,
+				9DE24A2A2ABEED7C008B91E2 /* ModelContainerView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -636,7 +665,6 @@
 			buildConfigurationList = 9D8E7705248666C1004610C8 /* Build configuration list for PBXNativeTarget "Pet Reminder" */;
 			buildPhases = (
 				9D8E76EA248666BD004610C8 /* Sources */,
-				9D5D83E12A2F354E003563C8 /* SwiftLint */,
 				9D8E76EB248666BD004610C8 /* Frameworks */,
 				9D8E76EC248666BD004610C8 /* Resources */,
 			);
@@ -707,7 +735,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DA37A482AB6C2DA00874999 /* InfoPlist.xcstrings in Resources */,
+				9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */,
 				9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */,
+				9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */,
+				9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */,
 				9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */,
 				9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
@@ -716,28 +747,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		9D5D83E12A2F354E003563C8 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/testOutput.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh scripts/swiftlint.sh\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9D7C25242A5948D300DDB027 /* Sources */ = {
@@ -777,6 +786,8 @@
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
+				9DE24A272ABEEB65008B91E2 /* VaccineExtensions.swift in Sources */,
+				9DE24A292ABEED38008B91E2 /* PreviewSampleData.swift in Sources */,
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
@@ -785,6 +796,7 @@
 				9D3813112AA35A6A0080F412 /* AppIcon.swift in Sources */,
 				9DFF73EE248B9BB5004B4901 /* ImagePickerView.swift in Sources */,
 				9D9B9C1A2AA12D610002F4AE /* PreviousFeedsSection.swift in Sources */,
+				9D5F5ABE2ABA498C00A3C8D3 /* Pet.swift in Sources */,
 				9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */,
 				9D0C24E525D081B4008F93CD /* EventListView.swift in Sources */,
 				9D5DC0E929F580C0007A444D /* AddPetActionsView.swift in Sources */,
@@ -793,8 +805,8 @@
 				9D38130E2AA359DC0080F412 /* AppIconManager.swift in Sources */,
 				9DF9A4AC2A8419780004CB8E /* EmptyPageView.swift in Sources */,
 				9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */,
-				9DB669772A62EC2100A7573C /* Pet.swift in Sources */,
-				9D0C923C2AA64F54009BF51C /* Feed.swift in Sources */,
+				9DB669772A62EC2100A7573C /* PetExtensions.swift in Sources */,
+				9D0C923C2AA64F54009BF51C /* FeedExtensions.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
 				9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */,
 				7224CB9029F7B218009B0ADC /* FeedTimeSelection.swift in Sources */,
@@ -802,6 +814,7 @@
 				9DC87F1A29FAC074008AB720 /* FutureEventsView.swift in Sources */,
 				9D34019026DA7392005822DA /* NotificationManager.swift in Sources */,
 				9D34019726DA7AAD005822DA /* PetChangeView.swift in Sources */,
+				9D5F5ABF2ABA498C00A3C8D3 /* Vaccine.swift in Sources */,
 				9D44ACC8279C5FAA007EB5B6 /* ArrayExtensions.swift in Sources */,
 				9DF9A4B02A8453EA0004CB8E /* EventFilterView.swift in Sources */,
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
@@ -815,19 +828,19 @@
 				9DF9A4B22A84546C0004CB8E /* SheetContent.swift in Sources */,
 				9D845D0529698D800032063C /* VaccineHistoryView.swift in Sources */,
 				7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */,
-				9DD6CE302A840E71005ECBC3 /* PetReminder.xcdatamodeld in Sources */,
 				725F44C62A260ACA0096CCCB /* MapApplication.swift in Sources */,
 				9DD754A2278266FA002E2768 /* ESEventDetailView.swift in Sources */,
 				9D3ED57C2A9F8D7D00940AA4 /* NotificationSelectView.swift in Sources */,
-				9D0C923E2AA64F59009BF51C /* Vaccine.swift in Sources */,
 				9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
 				9D9B9C182AA12CEA0002F4AE /* CurrentFeedSection.swift in Sources */,
+				9DE24A2B2ABEED7C008B91E2 /* ModelContainerView.swift in Sources */,
 				9D9B9C1F2AA12E270002F4AE /* VaccineHistoryViewModel.swift in Sources */,
 				9D4114AB2A82F7CD00C21D87 /* Persistence.swift in Sources */,
 				9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */,
 				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
+				9D5F5ABD2ABA498C00A3C8D3 /* Feed.swift in Sources */,
 				9D70F67326B4B6BC007D37EF /* PetDetailView.swift in Sources */,
 				9D849050277748CB005EAC5B /* DonateView.swift in Sources */,
 				9D7E9A582A5644D70024B2C5 /* StoreManager.swift in Sources */,
@@ -1039,7 +1052,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.6;
+				MARKETING_VERSION = 5.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1071,7 +1084,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.6;
+				MARKETING_VERSION = 5.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1114,19 +1127,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		9DD6CE2E2A840E71005ECBC3 /* PetReminder.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9DD6CE2F2A840E71005ECBC3 /* PetReminder.xcdatamodel */,
-			);
-			currentVersion = 9DD6CE2F2A840E71005ECBC3 /* PetReminder.xcdatamodel */;
-			path = PetReminder.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9D8E76E6248666BD004610C8 /* Project object */;
 }

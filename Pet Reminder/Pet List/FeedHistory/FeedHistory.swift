@@ -38,9 +38,8 @@ struct FeedHistory: View {
 }
 
 #Preview {
-    let preview = PersistenceController.preview.container.viewContext
-    return NavigationStack {
-        FeedHistory(feeds: [.init(context: preview)])
-            .environment(\.managedObjectContext, preview)
+    NavigationStack {
+        FeedHistory(feeds: [.init()])
+            .modelContainer(PreviewSampleData.container)
     }
 }

@@ -7,30 +7,26 @@
 //
 
 import SwiftUI
-import CoreData
 import CloudKit
+import SwiftData
 
 @main
 struct PetReminderApp: App {
 
-    @Environment(\.scenePhase) var scenePhase
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @AppStorage("seenHello") var helloSeen = false
-
-    let persistence = PersistenceController.shared
+    @Environment(\.undoManager) var undoManager
 
     var body: some Scene {
         WindowGroup {
             if helloSeen {
                 HomeManagerView()
-                    .environment(\.managedObjectContext, persistence.container.viewContext)
                     .tint(tintColor)
             } else {
                 HelloView()
-                    .environment(\.managedObjectContext, persistence.container.viewContext)
                     .tint(tintColor)
             }
-
         }
+        .modelContainer(PreviewSampleData.container)
     }
 }

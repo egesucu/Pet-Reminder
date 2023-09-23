@@ -7,15 +7,14 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct NotificationView: View {
 
-    @Environment(\.managedObjectContext)
-    private var viewContext
+    @Environment(\.modelContext)
+    private var modelContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Pet.name, ascending: true)])
-    private var pets: FetchedResults<Pet>
+    @Query(sort: \Pet.name) var pets: [Pet]
 
     @State private var notificationManager = NotificationManager()
 
@@ -49,9 +48,9 @@ struct NotificationView: View {
                             }
 
                         } header: {
-                            Text(pet.wrappedName)
+                            Text(pet.name)
                         } footer: {
-                            let count = notificationAmount(for: pet.wrappedName)
+                            let count = notificationAmount(for: pet.name)
                             Text("notification \(count)")
 
                         }
@@ -136,7 +135,6 @@ struct NotificationView: View {
     }
 
     func remove(pet: Pet, at offset: IndexSet) {
-
         for index in offset {
             let notification = notificationManager.filterNotifications(of: pet)[index]
             notificationManager
@@ -147,8 +145,5 @@ struct NotificationView: View {
 
 #Preview {
     NotificationView()
-        .environment(
-            \.managedObjectContext,
-             PersistenceController.preview.container.viewContext
-        )
+        .modelContainer(PreviewSampleData.container)
 }

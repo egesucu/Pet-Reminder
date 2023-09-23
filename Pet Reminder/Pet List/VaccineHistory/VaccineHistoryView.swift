@@ -7,13 +7,13 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct VaccineHistoryView: View {
 
-    var pet: Pet?
+    @Binding var pet: Pet?
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) private var modelContext
+    @Environment(\.modelContext) private var modelContext
     @State private var viewModel = VaccineHistoryViewModel()
 
     var body: some View {
@@ -27,16 +27,16 @@ struct VaccineHistoryView: View {
                             ForEach(pet.vaccinesArray) { vaccine in
                                 HStack {
                                     Label {
-                                        Text(vaccine.wrappedName)
+                                        Text(vaccine.name)
                                             .bold()
                                     } icon: {
                                         Image(systemName: SFSymbols.vaccine)
                                     }
                                     Spacer()
-                                    Text((vaccine.wrappedDate).formatted())
+                                    Text((vaccine.date).formatted())
                                 }
                             }.onDelete { indexSet in
-                                viewModel.deleteVaccines(pet: pet, at: indexSet, modelContext: modelContext)
+                                viewModel.deleteVaccines(pet: pet, at: indexSet)
                             }
                         }
                         .listStyle(.automatic)
@@ -70,8 +70,7 @@ struct VaccineHistoryView: View {
                     dateInput: $viewModel.vaccineDate,
                     onSave: {
                         viewModel.saveVaccine(
-                            pet: pet,
-                            viewContext: modelContext
+                            pet: pet
                         )
                     },
                     onCancel: viewModel.cancelVaccine
@@ -82,10 +81,9 @@ struct VaccineHistoryView: View {
 }
 
 #Preview {
-    let preview = PersistenceController.preview.container.viewContext
     return NavigationStack {
-        VaccineHistoryView(pet: Pet(context: preview))
-            .environment(\.managedObjectContext, preview)
+        VaccineHistoryView(pet: .constant(.init()))
+            .modelContainer(PreviewSampleData.container)
 
     }
 }

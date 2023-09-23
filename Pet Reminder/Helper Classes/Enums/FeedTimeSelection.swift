@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FeedTimeSelection: Int64, Codable {
+enum FeedTimeSelection: Int, Codable {
     case both
     case morning
     case evening

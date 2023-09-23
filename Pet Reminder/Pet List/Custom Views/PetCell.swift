@@ -18,7 +18,7 @@ struct PetCell: View {
                 .padding(.trailing, 10)
                 .frame(width: 150, height: 150)
             VStack {
-                Text(pet.wrappedName)
+                Text(pet.name)
                     .foregroundColor(Color(uiColor: .label))
                     .font(.title)
                     .minimumScaleFactor(0.2)
@@ -47,9 +47,8 @@ struct PetCell: View {
 }
 
 #Preview {
-    let preview = PersistenceController.preview.container.viewContext
-    return NavigationStack {
-        PetCell(pet: .init(context: preview))
-            .environment(\.managedObjectContext, preview)
+    NavigationStack {
+        PetCell(pet: .init())
+            .modelContainer(PreviewSampleData.container)
     }
 }

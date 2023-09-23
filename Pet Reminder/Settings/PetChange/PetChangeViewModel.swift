@@ -8,6 +8,8 @@
 
 import Observation
 import SwiftUI
+import OSLog
+import SwiftData
 
 @Observable
 class PetChangeViewModel {
@@ -45,8 +47,8 @@ class PetChangeViewModel {
 
     func getPetData(pet: Pet) async {
         DispatchQueue.main.async {
-            self.birthday = pet.wrappedBirthday
-            self.nameText = pet.wrappedName
+            self.birthday = pet.birthday
+            self.nameText = pet.name
             self.selection = pet.selection
             if let morning = pet.morningTime {
                 self.morningDate = morning
@@ -71,8 +73,8 @@ class PetChangeViewModel {
 
     func changeBirthday(pet: Pet) async {
         pet.birthday = birthday
-        notificationManager.removeNotification(of: pet.wrappedName, with: .birthday)
-        await notificationManager.createNotification(of: pet.wrappedName, with: .birthday, date: birthday)
+        notificationManager.removeNotification(of: pet.name, with: .birthday)
+        await notificationManager.createNotification(of: pet.name, with: .birthday, date: birthday)
     }
 
     func changeNotification(pet: Pet, for selection: FeedTimeSelection) async {
@@ -80,19 +82,19 @@ class PetChangeViewModel {
 
         switch selection {
         case .both:
-            notificationManager.removeAllDailyNotifications(of: pet.wrappedName)
-            await notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
-            await notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
+            notificationManager.removeAllDailyNotifications(of: pet.name)
+            await notificationManager.createNotification(of: pet.name, with: .morning, date: morningDate)
+            await notificationManager.createNotification(of: pet.name, with: .evening, date: eveningDate)
             pet.morningTime = morningDate
             pet.eveningTime = eveningDate
         case .morning:
-            notificationManager.removeAllDailyNotifications(of: pet.wrappedName)
-            await notificationManager.createNotification(of: pet.wrappedName, with: .morning, date: morningDate)
+            notificationManager.removeAllDailyNotifications(of: pet.name)
+            await notificationManager.createNotification(of: pet.name, with: .morning, date: morningDate)
             pet.morningTime = morningDate
             pet.eveningTime = nil
         case .evening:
-            notificationManager.removeAllDailyNotifications(of: pet.wrappedName)
-            await notificationManager.createNotification(of: pet.wrappedName, with: .evening, date: eveningDate)
+            notificationManager.removeAllDailyNotifications(of: pet.name)
+            await notificationManager.createNotification(of: pet.name, with: .evening, date: eveningDate)
             pet.eveningTime = eveningDate
             pet.morningTime = nil
         }
@@ -121,11 +123,9 @@ class PetChangeViewModel {
             pet.image = outputImageData
         }
         await changeNotification(pet: pet, for: selection)
-        PersistenceController.shared.save()
 
         morningDate = .eightAM
         eveningDate = .eightPM
-
     }
 
     func updateView(pet: Pet) {
