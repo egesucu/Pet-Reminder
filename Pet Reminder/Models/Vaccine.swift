@@ -15,6 +15,12 @@ import SwiftData
     var name = ""
     var pet: Pet?
 
-    public init() { }
+    init(
+        date: Foundation.Date = Date.now,
+        name: String = ""
+    ) {
+        self.date = date
+        self.name = name
+    }
 
 }

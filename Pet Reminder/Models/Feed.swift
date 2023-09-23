@@ -18,6 +18,18 @@ import SwiftData
     var morningFedStamp: Date?
     var pet: Pet?
 
-    public init() { }
+    public init(
+        eveningFed: Bool = false,
+        eveningFedStamp: Date? = nil,
+        feedDate: Date? = nil,
+        morningFed: Bool = false,
+        morningFedStamp: Date? = nil
+    ) {
+        self.eveningFed = eveningFed
+        self.eveningFedStamp = eveningFedStamp
+        self.feedDate = feedDate
+        self.morningFed = morningFed
+        self.morningFedStamp = morningFedStamp
+    }
 
 }

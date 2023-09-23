@@ -24,7 +24,27 @@ import SwiftData
 
     @Relationship(inverse: \Feed.pet) var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) var vaccines: [Vaccine]?
-
-    public init() { }
+    
+    public init(
+        birthday: Date = Date(),
+        name: String = "",
+        choice: Int = 0,
+        createdAt: Date? = nil,
+        eveningFed: Bool = false,
+        eveningTime: Date? = nil,
+        image: Data? = nil,
+        morningFed: Bool = false,
+        morningTime: Date? = nil
+    ) {
+        self.birthday = birthday
+        self.name = name
+        self.choice = choice
+        self.createdAt = createdAt
+        self.eveningTime = eveningTime
+        self.eveningFed = eveningFed
+        self.morningTime = morningTime
+        self.morningFed = morningFed
+        self.image = image
+    }
 
 }
