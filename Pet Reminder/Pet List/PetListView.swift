@@ -154,7 +154,7 @@ struct PetListView: View {
                             .viewCycle
                             .info("Model can Undo? \(undoManager.canUndo)")
                     }
-                    
+
                 } label: {
                     Image(systemName: "arrow.uturn.backward.circle.fill")
                         .foregroundColor(tintColor)

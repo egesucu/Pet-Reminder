@@ -30,7 +30,7 @@ class VaccineHistoryViewModel {
         }
     }
 
-    func saveVaccine(pet: Pet?){
+    func saveVaccine(pet: Pet?) {
         guard let pet else { return }
         let vaccine = Vaccine()
         vaccine.name = vaccineName
