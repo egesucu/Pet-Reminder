@@ -47,5 +47,5 @@ struct HomeManagerView: View {
 
 #Preview {
     HomeManagerView()
-        .modelContainer(for: Pet.self)
+        .modelContainer(PreviewSampleData.container)
 }

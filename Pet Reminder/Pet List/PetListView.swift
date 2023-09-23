@@ -202,6 +202,6 @@ struct PetListView: View {
 #Preview {
     NavigationStack {
         PetListView()
-            .modelContainer(for: Pet.self)
+            .modelContainer(PreviewSampleData.container)
     }
 }

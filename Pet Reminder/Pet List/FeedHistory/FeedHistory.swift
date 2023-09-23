@@ -40,6 +40,6 @@ struct FeedHistory: View {
 #Preview {
     NavigationStack {
         FeedHistory(feeds: [.init()])
-            .modelContainer(for: Pet.self)
+            .modelContainer(PreviewSampleData.container)
     }
 }

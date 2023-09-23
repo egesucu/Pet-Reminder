@@ -27,6 +27,6 @@ struct PetReminderApp: App {
                     .tint(tintColor)
             }
         }
-        .modelContainer(for: Pet.self, isUndoEnabled: true)
+        .modelContainer(PreviewSampleData.container)
     }
 }

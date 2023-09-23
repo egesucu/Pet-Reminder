@@ -65,5 +65,5 @@ struct CurrentFeedSection: View {
 #Preview {
     let feeds: [Feed] = Pet().feeds ?? []
     return CurrentFeedSection(feeds: feeds)
-        .modelContainer(for: Feed.self)
+        .modelContainer(PreviewSampleData.container)
 }

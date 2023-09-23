@@ -145,5 +145,5 @@ struct NotificationView: View {
 
 #Preview {
     NotificationView()
-        .modelContainer(for: Pet.self)
+        .modelContainer(PreviewSampleData.container)
 }

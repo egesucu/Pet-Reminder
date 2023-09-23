@@ -101,6 +101,8 @@
 		9DD8C2D22AAC6C4D00756AE8 /* AllNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */; };
 		9DD8C2D52AAC77FC00756AE8 /* PetChangeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD8C2D42AAC77FC00756AE8 /* PetChangeListView.swift */; };
 		9DE24A272ABEEB65008B91E2 /* VaccineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE24A262ABEEB65008B91E2 /* VaccineExtensions.swift */; };
+		9DE24A292ABEED38008B91E2 /* PreviewSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE24A282ABEED38008B91E2 /* PreviewSampleData.swift */; };
+		9DE24A2B2ABEED7C008B91E2 /* ModelContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE24A2A2ABEED7C008B91E2 /* ModelContainerView.swift */; };
 		9DF9A4AC2A8419780004CB8E /* EmptyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AB2A8419780004CB8E /* EmptyPageView.swift */; };
 		9DF9A4AE2A842B470004CB8E /* MapItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AD2A842B470004CB8E /* MapItemView.swift */; };
 		9DF9A4B02A8453EA0004CB8E /* EventFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AF2A8453EA0004CB8E /* EventFilterView.swift */; };
@@ -217,6 +219,8 @@
 		9DD8C2D12AAC6C4D00756AE8 /* AllNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotificationsView.swift; sourceTree = "<group>"; };
 		9DD8C2D42AAC77FC00756AE8 /* PetChangeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeListView.swift; sourceTree = "<group>"; };
 		9DE24A262ABEEB65008B91E2 /* VaccineExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineExtensions.swift; sourceTree = "<group>"; };
+		9DE24A282ABEED38008B91E2 /* PreviewSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewSampleData.swift; sourceTree = "<group>"; };
+		9DE24A2A2ABEED7C008B91E2 /* ModelContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContainerView.swift; sourceTree = "<group>"; };
 		9DF9A4AB2A8419780004CB8E /* EmptyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageView.swift; sourceTree = "<group>"; };
 		9DF9A4AD2A842B470004CB8E /* MapItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemView.swift; sourceTree = "<group>"; };
 		9DF9A4AF2A8453EA0004CB8E /* EventFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFilterView.swift; sourceTree = "<group>"; };
@@ -629,6 +633,8 @@
 				9D8E7702248666C1004610C8 /* Info.plist */,
 				9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */,
 				9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */,
+				9DE24A282ABEED38008B91E2 /* PreviewSampleData.swift */,
+				9DE24A2A2ABEED7C008B91E2 /* ModelContainerView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -781,6 +787,7 @@
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DE24A272ABEEB65008B91E2 /* VaccineExtensions.swift in Sources */,
+				9DE24A292ABEED38008B91E2 /* PreviewSampleData.swift in Sources */,
 				9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */,
 				9DC87F1F29FAC8CB008AB720 /* EventTitleView.swift in Sources */,
 				9D34019526DA7950005822DA /* PetListView.swift in Sources */,
@@ -828,6 +835,7 @@
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
 				9D9B9C182AA12CEA0002F4AE /* CurrentFeedSection.swift in Sources */,
+				9DE24A2B2ABEED7C008B91E2 /* ModelContainerView.swift in Sources */,
 				9D9B9C1F2AA12E270002F4AE /* VaccineHistoryViewModel.swift in Sources */,
 				9D4114AB2A82F7CD00C21D87 /* Persistence.swift in Sources */,
 				9D6293702A87CF2B00BA577A /* Image+Extensions.swift in Sources */,

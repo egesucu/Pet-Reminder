@@ -83,7 +83,7 @@ struct VaccineHistoryView: View {
 #Preview {
     return NavigationStack {
         VaccineHistoryView(pet: .constant(.init()))
-            .modelContainer(for: Pet.self)
+            .modelContainer(PreviewSampleData.container)
 
     }
 }

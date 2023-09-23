@@ -49,6 +49,6 @@ struct PetCell: View {
 #Preview {
     NavigationStack {
         PetCell(pet: .init())
-            .modelContainer(for: Pet.self)
+            .modelContainer(PreviewSampleData.container)
     }
 }

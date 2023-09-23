@@ -99,6 +99,6 @@ struct FeedListView: View {
 
 #Preview {
     return FeedListView(pet: .constant(Pet()))
-        .modelContainer(for: Pet.self)
+        .modelContainer(PreviewSampleData.container)
 
 }

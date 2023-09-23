@@ -76,7 +76,7 @@ struct PetDetailView: View {
 #Preview(traits: .portrait) {
     NavigationStack {
         PetDetailView(pet: .constant(Pet()))
-            .modelContainer(for: Pet.self)
+            .modelContainer(PreviewSampleData.container)
     }
     .navigationViewStyle(.stack)
 }
