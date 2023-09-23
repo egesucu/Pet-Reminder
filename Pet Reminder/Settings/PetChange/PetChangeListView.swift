@@ -29,16 +29,18 @@ struct PetChangeListView: View {
     @State private var notificationManager = NotificationManager()
 
     var body: some View {
-        petList
-            .onTapGesture {
-                Logger
-                    .viewCycle
-                    .info("Surface tapped.")
-                isEditing = false
-                Logger
-                    .viewCycle
-                    .info("Editing status: \(isEditing)")
-            }
+        ScrollView {
+            petList
+                .onTapGesture {
+                    Logger
+                        .viewCycle
+                        .info("Surface tapped.")
+                    isEditing = false
+                    Logger
+                        .viewCycle
+                        .info("Editing status: \(isEditing)")
+                }
+        }
             .toolbar {
                 if showEditButton {
                     ToolbarItem(placement: .topBarTrailing) {
