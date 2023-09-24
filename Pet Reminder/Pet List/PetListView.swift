@@ -15,6 +15,7 @@ struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var addPet = false
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.demoDataOccured) var demoDataOccured = true
 
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
@@ -49,6 +50,7 @@ struct PetListView: View {
             .toolbar(content: addButtonToolbar)
 
             .onAppear {
+                performDemoDataDeletion()
                 selectedPet = pets.first
             }
             .navigationTitle(petListTitle)
@@ -172,6 +174,19 @@ struct PetListView: View {
                         .font(.title)
                 })
             }
+        }
+    }
+    
+    func performDemoDataDeletion() {
+        if demoDataOccured {
+            for name in Strings.demoPets {
+                let pet = pets.filter({ $0.name == name}).first
+                if let pet {
+                    deletePet(pet: pet)
+                    self.notificationManager.removeAllNotifications(of: pet.name)
+                }
+            }
+            demoDataOccured = false
         }
     }
 

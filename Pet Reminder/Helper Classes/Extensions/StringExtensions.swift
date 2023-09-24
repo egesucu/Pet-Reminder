@@ -37,6 +37,7 @@ struct Strings {
         return "Demo Event \(first)"
     }
 
+    static let demoDataOccured = "demoDataOccured"
      static let petReminder = "Pet Reminder"
 
 }

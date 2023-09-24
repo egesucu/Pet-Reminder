@@ -27,6 +27,6 @@ struct PetReminderApp: App {
                     .tint(tintColor)
             }
         }
-        .modelContainer(PreviewSampleData.container)
+        .modelContainer(for: Pet.self)
     }
 }
