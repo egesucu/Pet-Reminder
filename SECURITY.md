@@ -4,7 +4,7 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.6     | iOS 16             |
+| 5.6.2   | iOS 17             |
 
 ## Reporting a Vulnerability
 
