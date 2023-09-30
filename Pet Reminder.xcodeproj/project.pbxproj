@@ -688,7 +688,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = Softhion;
+				ORGANIZATIONNAME = "Ege Sucu";
 				TargetAttributes = {
 					9D7C25272A5948D300DDB027 = {
 						CreatedOnToolsVersion = 15.0;

@@ -3,7 +3,7 @@
 //  Pet ReminderTests
 //
 //  Created by Ege Sucu on 8.07.2023.
-//  Copyright © 2023 Softhion. All rights reserved.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
 import XCTest
