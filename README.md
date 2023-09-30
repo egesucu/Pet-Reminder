@@ -1,2 +1,2 @@
-# Pet-Reminder-SwiftUI
+# Pet-Reminder
 This is the official Pet Reminder app, available in the App Store. It's built 100% with SwiftUI.
