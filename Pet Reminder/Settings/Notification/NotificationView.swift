@@ -16,53 +16,53 @@ struct NotificationView: View {
 
     @Query(sort: \Pet.name) var pets: [Pet]
 
-    @State private var notificationManager = NotificationManager()
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         VStack {
             List {
                 ForEach(pets, id: \.name) { pet in
-                    Section {
-                        if notificationManager.filterNotifications(of: pet).isEmpty {
-                            Button {
-                                Task {
-                                    await notificationManager
-                                        .createNotifications(for: pet)
-                                    await fetchNotificiations()
+                    if let notificationManager {
+                        Section {
+                            if notificationManager.filterNotifications(of: pet).isEmpty {
+                                Button {
+                                    Task {
+                                        await notificationManager
+                                            .createNotifications(for: pet)
+                                        await fetchNotificiations()
+                                    }
+                                } label: {
+                                    Text("Create default notifications for your pet.")
                                 }
-                            } label: {
-                                Text("Create default notifications for your pet.")
+                            } else {
+                                ForEach(
+                                    notificationManager.filterNotifications(of: pet),
+                                    id: \.identifier
+                                ) { notification in
+                                    notificationView(notification: notification)
+                                }.onDelete { indexSet in
+                                    remove(pet: pet, at: indexSet)
+                                }
                             }
-                        } else {
-                            ForEach(
-                                notificationManager.filterNotifications(of: pet),
-                                id: \.identifier
-                            ) { notification in
-                                notificationView(notification: notification)
-                            }.onDelete { indexSet in
-                                remove(pet: pet, at: indexSet)
+                            
+                        } header: {
+                            Text(pet.name)
+                        } footer: {
+                            let count = notificationAmount(for: pet.name)
+                            Text("notification \(count)")
+                            
+                        }
+                        .onChange(of: notificationManager.notifications) {
+                            Task {
+                                await fetchNotificiations()
                             }
                         }
-                        
-                    } header: {
-                        Text(pet.name)
-                    } footer: {
-                        let count = notificationAmount(for: pet.name)
-                        Text("notification \(count)")
-                        
                     }
-                    
-                    .onChange(of: notificationManager.notifications) {
-                        Task {
-                            await fetchNotificiations()
-                        }
-                    }
-                    
                 }
                 
             }
             .listStyle(.insetGrouped)
-            .refreshable(action: notificationManager.getNotifications)
+            .refreshable(action: notificationManager?.getNotifications ?? fallbackFunction)
         }
         .overlay {
             if pets.isEmpty {
@@ -75,8 +75,8 @@ struct NotificationView: View {
             if pets.isNotEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        notificationManager.notificationCenter.removeAllPendingNotificationRequests()
-                        notificationManager.notifications.removeAll()
+                        notificationManager?.notificationCenter.removeAllPendingNotificationRequests()
+                        notificationManager?.notifications.removeAll()
                         Task {
                             await fetchNotificiations()
                         }
@@ -87,18 +87,21 @@ struct NotificationView: View {
 
             }
         }
-        .task(notificationManager.getNotifications)
+        .task(notificationManager?.getNotifications ?? fallbackFunction)
     }
+    
+    @Sendable
+    func fallbackFunction() async {}
 
     func notificationAmount(for name: String?) -> Int {
-        return notificationManager
+        return notificationManager?
             .notifications
             .filter({$0.identifier.contains(name ?? "-")})
-            .count
+            .count ?? 0
     }
 
     @Sendable func fetchNotificiations() async {
-        await notificationManager.getNotifications()
+        await notificationManager?.getNotifications()
     }
 
     private func notificationView(notification: UNNotificationRequest) -> some View {
@@ -136,10 +139,12 @@ struct NotificationView: View {
     }
 
     func remove(pet: Pet, at offset: IndexSet) {
-        for index in offset {
-            let notification = notificationManager.filterNotifications(of: pet)[index]
-            notificationManager
-                .removeNotificationsIdentifiers(with: [notification.identifier])
+        if let notificationManager {
+            for index in offset {
+                let notification = notificationManager.filterNotifications(of: pet)[index]
+                notificationManager
+                    .removeNotificationsIdentifiers(with: [notification.identifier])
+            }
         }
     }
 }
@@ -147,4 +152,5 @@ struct NotificationView: View {
 #Preview {
     NotificationView()
         .modelContainer(PreviewSampleData.container)
+        .environment(NotificationManager())
 }

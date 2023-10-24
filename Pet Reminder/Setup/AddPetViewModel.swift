@@ -21,40 +21,30 @@ class AddPetViewModel {
     var eveningFeed: Date = .eightPM
     var selectedImageData: Data?
 
-    let manager = NotificationManager()
-
     func resetImageData() {
         selectedImageData = nil
     }
 
-    func savePet() async -> Pet {
+    func savePet(notificationManager: NotificationManager) async -> Pet {
         let pet = Pet()
         pet.createdAt = .now
         pet.birthday = birthday
         pet.name = name
         pet.birthday = birthday
-        if let selectedImageData {
-            pet.image = selectedImageData
-        }
-        switch dayType {
-        case .morning:
-            await createNotification(type: .morning)
-            pet.morningTime = morningFeed
-            pet.selection = .morning
-        case .evening:
-            await createNotification(type: .evening)
-            pet.eveningTime = eveningFeed
-            pet.selection = .evening
-        case .both:
-            await createNotification(type: .both)
-            pet.morningTime = morningFeed
-            pet.eveningTime = eveningFeed
-            pet.selection = .both
-        }
+        pet.image = selectedImageData
+        
+        await createNotification(manager: notificationManager, type: dayType)
+        pet.selection = dayType
+        pet.morningTime = (dayType != .evening) ? morningFeed : nil
+        pet.eveningTime = (dayType != .morning) ? eveningFeed : nil
+        
         return pet
     }
 
-    private func createNotification(type: FeedTimeSelection) async {
+    private func createNotification(
+        manager: NotificationManager,
+        type: FeedTimeSelection
+    ) async {
 
         switch type {
         case .both:

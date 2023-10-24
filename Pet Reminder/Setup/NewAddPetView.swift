@@ -12,7 +12,9 @@ import SwiftData
 
 struct NewAddPetView: View {
 
-    @State private var manager = AddPetViewModel()
+    @State private var viewModel: AddPetViewModel
+    @State private var notificationManager: NotificationManager
+
     @State private var position = 0
     @State private var step: SetupSteps = .name
     @State private var feedTime: FeedTimeSelection = .both
@@ -21,6 +23,14 @@ struct NewAddPetView: View {
     var dismiss
     @Environment(\.modelContext)
     private var modelContext
+    
+    init(
+        notificationManager: NotificationManager,
+        viewModel: AddPetViewModel
+    ) {
+        _notificationManager = State(wrappedValue: notificationManager)
+        _viewModel = State(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack {
@@ -28,18 +38,18 @@ struct NewAddPetView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
                         LazyHStack {
-                            PetNameTextField(name: $manager.name, nameIsFilledCorrectly: $nameIsFilledCorrectly)
+                            PetNameTextField(name: $viewModel.name, nameIsFilledCorrectly: $nameIsFilledCorrectly)
                                 .scrollTargetLayout()
                                 .id(SetupSteps.name)
                                 .padding(.all)
                                 .frame(width: geometry.size.width)
 
-                            PetBirthdayView(birthday: $manager.birthday)
+                            PetBirthdayView(birthday: $viewModel.birthday)
                                 .scrollTargetLayout()
                                 .padding(.all)
                                 .id(SetupSteps.birthday)
                                 .frame(width: geometry.size.width)
-                            PetImageView(selectedImageData: $manager.selectedImageData, selectedPage: $step)
+                            PetImageView(selectedImageData: $viewModel.selectedImageData, selectedPage: $step)
                                 .scrollTargetLayout()
                                 .padding(.all)
                                 .id(SetupSteps.photo)
@@ -51,8 +61,8 @@ struct NewAddPetView: View {
                                 .frame(width: geometry.size.width)
                             PetNotificationSelectionView(
                                 dayType: $feedTime,
-                                morningFeed: $manager.morningFeed,
-                                eveningFeed: $manager.eveningFeed
+                                morningFeed: $viewModel.morningFeed,
+                                eveningFeed: $viewModel.eveningFeed
                             )
                                 .scrollTargetLayout()
                                 .padding(.all)
@@ -130,7 +140,7 @@ struct NewAddPetView: View {
                     proxy.scrollTo(SetupSteps.feedTime)
                 case .feedTime:
                     Task {
-                        let pet = await manager.savePet()
+                        let pet = await viewModel.savePet(notificationManager: notificationManager)
                         modelContext.insert(pet)
                         dismiss()
                     }
@@ -138,11 +148,14 @@ struct NewAddPetView: View {
             }
         }
         .buttonStyle(.bordered)
-        .tint(step == .feedTime ? .green : Color(uiColor: .label))
+        .tint(step == .feedTime ? .green : .label)
         .disabled(!nameIsFilledCorrectly)
     }
 }
 
 #Preview {
-    NewAddPetView()
+    NewAddPetView(
+        notificationManager: .init(),
+        viewModel: .init()
+    )
 }

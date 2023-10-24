@@ -26,7 +26,7 @@ struct PetChangeListView: View {
     @State private var selectedPet: Pet?
     @State private var showSelectedPet = false
     @State private var showEditButton = false
-    @State private var notificationManager = NotificationManager()
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         VStack {
@@ -155,7 +155,7 @@ struct PetChangeListView: View {
         buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             if time == 10 {
                 withAnimation {
-                    self.notificationManager.removeAllNotifications(of: tempPetName)
+                    self.notificationManager?.removeAllNotifications(of: tempPetName)
                     showUndoButton = false
                     timer.invalidate()
                 }
@@ -174,6 +174,6 @@ struct PetChangeListView: View {
     NavigationStack {
         PetChangeListView()
             .modelContainer(PreviewSampleData.container)
+            .environment(NotificationManager())
     }
-
 }

@@ -21,7 +21,8 @@ struct PetListView: View {
 
     @State private var selectedPet: Pet?
     @State private var addPet = false
-    @State private var notificationManager = NotificationManager()
+    
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         NavigationStack {
@@ -37,13 +38,18 @@ struct PetListView: View {
                 selectedPet = pets.first
             }
             .navigationTitle(petListTitle)
-            .fullScreenCover(isPresented: $addPet, onDismiss: {
+            .fullScreenCover(isPresented: $addPet,
+                             onDismiss: {
                 selectedPet = pets.first
                 Logger
                     .viewCycle
                     .debug("Pet Amount: \(pets.count)")
-            }, content: {
-                NewAddPetView()
+            },
+                             content: {
+                NewAddPetView(
+                    notificationManager: .init(),
+                    viewModel: .init()
+                )
             })
         }
         .overlay {
@@ -123,7 +129,7 @@ struct PetListView: View {
                 let pet = pets.filter({ $0.name == name}).first
                 if let pet {
                     deletePet(pet: pet)
-                    self.notificationManager.removeAllNotifications(of: pet.name)
+                    self.notificationManager?.removeAllNotifications(of: pet.name)
                 }
             }
             demoDataOccured = false
@@ -145,5 +151,6 @@ struct PetListView: View {
     NavigationStack {
         PetListView()
             .modelContainer(PreviewSampleData.container)
+            .environment(NotificationManager())
     }
 }

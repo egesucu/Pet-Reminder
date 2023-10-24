@@ -14,6 +14,7 @@ struct SettingsView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @State private var alertMessage: LocalizedStringKey = ""
     @State private var showAlert = false
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         NavigationStack {
@@ -23,7 +24,10 @@ struct SettingsView: View {
                         "manage_pet_title",
                         destination: PetChangeListView()
                     )
-                    ColorPicker("settings_tint_color", selection: $tintColor)
+                    ColorPicker(
+                        "settings_tint_color",
+                        selection: $tintColor
+                    )
                     if tintColor != Color.accentColor {
                         Button {
                             tintColor = Color.accent
@@ -33,10 +37,19 @@ struct SettingsView: View {
                         }
                         .sensoryFeedback(.success, trigger: showAlert)
                     }
-                    NavigationLink("settings_change_icon", destination: ChangeAppIconView())
-                    NavigationLink("notifications_manage_title", destination:
-                        NotificationView())
-                    NavigationLink("privacy_policy_title", destination: PrivacyPolicyView())
+                    NavigationLink(
+                        "settings_change_icon",
+                        destination: ChangeAppIconView()
+                    )
+                    NavigationLink(
+                        "notifications_manage_title",
+                        destination:
+                            NotificationView()
+                    )
+                    NavigationLink(
+                        "privacy_policy_title",
+                        destination: PrivacyPolicyView()
+                    )
                 }
                 Section {
                     NavigationLink("donate_us_title") {
@@ -49,7 +62,9 @@ struct SettingsView: View {
                 }
                 #if DEBUG
                 debugMenu
-                NavigationLink(destination: AllNotificationsView()) {
+                NavigationLink(
+                    destination: AllNotificationsView()
+                ) {
                     Text("All Notifications")
                 }
                 #endif
@@ -88,4 +103,5 @@ private var debugMenu: some View {
 
 #Preview {
     SettingsView()
+        .environment(NotificationManager())
 }

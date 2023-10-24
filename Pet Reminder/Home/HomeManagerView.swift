@@ -11,6 +11,7 @@ import OSLog
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
 
@@ -21,7 +22,7 @@ struct HomeManagerView: View {
                 }
                 .tag(PetReminderTabs.home)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            EventListView()
+            EventListView(eventVM: EventManager())
                 .tabItem {
                     Image(systemName: SFSymbols.list)
                 }
@@ -47,4 +48,5 @@ struct HomeManagerView: View {
 
 #Preview {
     HomeManagerView()
+        .environment(NotificationManager())
 }

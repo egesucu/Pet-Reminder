@@ -16,14 +16,17 @@ struct PetReminderApp: App {
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @AppStorage("seenHello") var helloSeen = false
     @Environment(\.undoManager) var undoManager
+    @State private var notificationManager = NotificationManager()
 
     var body: some Scene {
         WindowGroup {
             if helloSeen {
                 HomeManagerView()
+                    .environment(notificationManager)
                     .tint(tintColor)
             } else {
                 HelloView()
+                    .environment(notificationManager)
                     .tint(tintColor)
             }
         }

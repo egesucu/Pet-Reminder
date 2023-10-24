@@ -15,6 +15,7 @@ struct HelloView: View {
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
     @State private var shouldLoadView = false
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
@@ -62,4 +63,5 @@ struct HelloView: View {
 
 #Preview {
     HelloView()
+        .environment(NotificationManager())
 }
