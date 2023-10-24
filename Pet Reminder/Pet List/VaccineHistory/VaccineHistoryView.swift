@@ -15,6 +15,7 @@ struct VaccineHistoryView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = VaccineHistoryViewModel()
+    @State private var addVaccine = false
 
     var body: some View {
         NavigationStack {
@@ -47,15 +48,17 @@ struct VaccineHistoryView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: SFSymbols.close)
                             .tint(.blue)
                             .font(.title)
                     }.disabled(viewModel.shouldAddVaccine)
                 }
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button(action: viewModel.togglePopup) {
+                ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+                    Button(action: {
+                        addVaccine.toggle()
+                    }) {
                         Image(systemName: SFSymbols.add)
                             .tint(.blue)
                             .font(.title)
@@ -76,6 +79,14 @@ struct VaccineHistoryView: View {
                     onCancel: viewModel.cancelVaccine
                 )
             )
+            .alert("Add", isPresented: $addVaccine) {
+                TextField("Pulvarin", text: $viewModel.vaccineName)
+                DatePicker("Date", selection: $viewModel.vaccineDate)
+                Button("OK", action: {
+                    viewModel.saveVaccine(pet: pet)
+                })
+                Button("Cancel", role: .cancel) { }
+            }
         }
     }
 }

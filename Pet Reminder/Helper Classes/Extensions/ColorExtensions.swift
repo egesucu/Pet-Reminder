@@ -42,22 +42,15 @@ extension Color: RawRepresentable {
     }
 }
 
-// MARK: UIColor Extension
-extension UIColor {
+extension Color {
     var isDarkColor: Bool {
         var red, green, blue, alpha: CGFloat
         (red, green, blue, alpha) = (0, 0, 0, 0)
-        self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         let lum = 0.2126 * red + 0.7152 * green + 0.0722 * blue
         return  lum < 0.50
     }
-}
-
-extension Color {
-    var isDarkColor: Bool {
-        UIColor(self).isDarkColor
-    }
-    static let dynamicBlack = Color(.label)
-    static let systemGreen = Color(.systemGreen)
-
+    
+    /// Black on Light Mode, White on Dark Mode
+    static let label = Color(.label)
 }

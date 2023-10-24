@@ -80,6 +80,9 @@
         }
       }
     },
+    "Add" : {
+
+    },
     "add_animal_accessible_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -569,6 +572,9 @@
         }
       }
     },
+    "Date" : {
+
+    },
     "date_select_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -781,6 +787,22 @@
         }
       }
     },
+    "event_error_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Event Access Error"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkinlik Erişim Hatası"
+          }
+        }
+      }
+    },
     "event_no_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -845,6 +867,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sıradaki"
+          }
+        }
+      }
+    },
+    "event_wrong_allowence" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You give us \"write only access\" which we can't show you your event with that option. If you want to see your events, allow us in Settings."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bize \"Sadece yazma izni\" verdiniz. Bu izinde sizlere etkinliklerinizi gösteremiyoruz. Eğer etkinliklerinizi görmek istiyorsanız ayarlarda bize izin verin."
           }
         }
       }
@@ -963,6 +1001,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öğünler"
+          }
+        }
+      }
+    },
+    "find_vet_error_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Map Authentication Error"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harita İzin Hatası"
           }
         }
       }
@@ -1578,7 +1632,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Haydi brini ekleyelim."
+            "value" : "Haydi birini ekleyelim."
           }
         }
       }
@@ -1753,6 +1807,9 @@
           }
         }
       }
+    },
+    "Pulvarin" : {
+
     },
     "refresh" : {
       "extractionState" : "manual",

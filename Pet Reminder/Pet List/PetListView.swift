@@ -13,42 +13,25 @@ import OSLog
 struct PetListView: View {
 
     @Environment(\.modelContext) private var modelContext
-    @State private var addPet = false
+
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
     @AppStorage(Strings.demoDataOccured) var demoDataOccured = true
 
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
-    @State private var showUndoButton = false
     @State private var selectedPet: Pet?
-    @State private var isEditing = false
+    @State private var addPet = false
     @State private var notificationManager = NotificationManager()
-
-    @State private var buttonTimer: Timer?
-    @State private var time = 0
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    if pets.count > 0 {
-                        if selectedPet != nil {
-                            petList
-                        } else {
-                            EmptyPageView(onAddPet: {
-                                addPet.toggle()
-                            }, emptyPageReference: .petList)
-                        }
-                        PetDetailView(pet: $selectedPet)
-                    } else {
-                        EmptyPageView(onAddPet: {
-                            addPet.toggle()
-                        }, emptyPageReference: .petList)
-                    }
+                    petList
+                    PetDetailView(pet: $selectedPet)
                 }
             }
             .toolbar(content: addButtonToolbar)
-
             .onAppear {
                 performDemoDataDeletion()
                 selectedPet = pets.first
@@ -63,6 +46,19 @@ struct PetListView: View {
                 NewAddPetView()
             })
         }
+        .overlay {
+            if pets.isEmpty {
+                ContentUnavailableView(label: {
+                    Label("pet_no_pet", systemImage: "pawprint.circle")
+                }, actions: {
+                    Button("pet_add_pet", action: {
+                        addPet.toggle()
+                    })
+                    .buttonStyle(.bordered)
+                    .tint(tintColor)
+                })
+            }
+        }
     }
 
     private var petList: some View {
@@ -70,57 +66,23 @@ struct PetListView: View {
             HStack(spacing: 20) {
                 ForEach(pets, id: \.name) { pet in
                     VStack {
-                        if isEditing {
-                            ZStack(alignment: .topTrailing) {
-                                VStack {
-                                    ESImageView(data: pet.image)
-                                        .clipShape(Circle())
-                                        .frame(width: 80, height: 80)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 40)
-                                                .stroke(
-                                                    defineColor(pet: pet),
-                                                    lineWidth: 5
-                                                )
-                                        )
-                                        .wiggling()
-                                    Text(pet.name)
-                                }
-                                Button {
-                                    deletePet(pet: pet)
-                                    isEditing = false
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .font(.title)
-                                        .foregroundStyle(Color.red)
-                                        .offset(x: 15, y: 0)
-                                }
-
-                            }
-                        } else {
-                            ESImageView(data: pet.image)
-                                .clipShape(Circle())
-                                .frame(width: 80, height: 80)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 40)
-                                        .stroke(
-                                            defineColor(pet: pet),
-                                            lineWidth: 5
-                                        )
-                                )
-
-                            Text(pet.name)
-                        }
-
+                        ESImageView(data: pet.image)
+                            .clipShape(Circle())
+                            .frame(width: 80, height: 80)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 40)
+                                    .stroke(
+                                        defineColor(pet: pet),
+                                        lineWidth: 5
+                                    )
+                            )
+                        Text(pet.name)
                     }
                     .onTapGesture {
                         selectedPet = pet
                         Logger
                             .viewCycle
-                            .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
-                    }
-                    .onLongPressGesture {
-                        isEditing = true
+                            .info("PR: Pet Selected: \(pet.name)")
                     }
                     .padding([.top, .leading])
 
@@ -141,29 +103,6 @@ struct PetListView: View {
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarTrailing) {
-            if isEditing {
-                Button {
-                    isEditing = false
-                } label: {
-                    Text("Done")
-                }
-            }
-            if showUndoButton {
-                Button {
-                    if let undoManager = modelContext.undoManager {
-                        undoManager.undo()
-                        Logger
-                            .viewCycle
-                            .info("Model can Undo? \(undoManager.canUndo)")
-                    }
-
-                } label: {
-                    Image(systemName: "arrow.uturn.backward.circle.fill")
-                        .foregroundColor(tintColor)
-                        .font(.title)
-                }
-
-            }
             if pets.count > 0 {
                 Button(action: {
                     self.addPet.toggle()
@@ -176,7 +115,8 @@ struct PetListView: View {
             }
         }
     }
-    
+
+    @available(swift, deprecated: 6.0, message: "This is a hotfix function introduced in Pet Reminder 5.6.1 and will be removed in the 5.8 or newer release.")
     func performDemoDataDeletion() {
         if demoDataOccured {
             for name in Strings.demoPets {
@@ -190,27 +130,14 @@ struct PetListView: View {
         }
     }
 
+    @available(swift, deprecated: 6.0, message: "This is a hotfix function introduced in Pet Reminder 5.6.1 and will be removed in the 5.8 or newer release.")
     func deletePet(pet: Pet) {
-        let tempPetName = pet.name
         modelContext.delete(pet)
-        showUndoButton = true
         if pets.count > 0 {
             selectedPet = pets.first
         } else {
             selectedPet = nil
         }
-        buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-            if time == 10 {
-                withAnimation {
-                    self.notificationManager.removeAllNotifications(of: tempPetName)
-                    showUndoButton = false
-                    timer.invalidate()
-                    self.time = 0
-                }
-            } else {
-                time += 1
-            }
-        })
     }
 }
 

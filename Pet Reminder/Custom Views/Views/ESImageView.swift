@@ -19,7 +19,7 @@ struct ESImageView: View {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()
-                .cornerRadius(25)
+                .clipShape(Circle())
                 .shadow(radius: 10)
                 .padding(5)
         } else {

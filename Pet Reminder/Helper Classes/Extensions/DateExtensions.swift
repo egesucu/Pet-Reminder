@@ -15,12 +15,12 @@ extension Date {
         return tomorrow
     }()
 
-    /// 20:00 of the current day
+    /// 08:00 AM of the current day
     static let eightAM: Self = {
         return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*8)
     }()
 
-    /// 08:00 of the current day
+    /// 08:00 PM of the current day
     static let eightPM: Self = {
         return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*20)
     }()

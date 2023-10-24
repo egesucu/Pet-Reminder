@@ -40,12 +40,11 @@ struct HomeManagerView: View {
                 .tag(PetReminderTabs.settings)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
         }
-        .tint(.dynamicBlack)
+        .tint(Color.label)
 
     }
 }
 
 #Preview {
     HomeManagerView()
-        .modelContainer(PreviewSampleData.container)
 }

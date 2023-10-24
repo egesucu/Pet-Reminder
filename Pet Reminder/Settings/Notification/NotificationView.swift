@@ -20,59 +20,60 @@ struct NotificationView: View {
 
     var body: some View {
         VStack {
-            if pets.isEmpty {
-                EmptyPageView(emptyPageReference: .petList)
-            } else {
-                List {
-                    ForEach(pets, id: \.name) { pet in
-                        Section {
-                            if notificationManager.filterNotifications(of: pet).isEmpty {
-                                Button {
-                                    Task {
-                                        await notificationManager
-                                            .createNotifications(for: pet)
-                                        await fetchNotificiations()
-                                    }
-                                } label: {
-                                    Text("Create default notifications for your pet.")
+            List {
+                ForEach(pets, id: \.name) { pet in
+                    Section {
+                        if notificationManager.filterNotifications(of: pet).isEmpty {
+                            Button {
+                                Task {
+                                    await notificationManager
+                                        .createNotifications(for: pet)
+                                    await fetchNotificiations()
                                 }
-                            } else {
-                                ForEach(
-                                    notificationManager.filterNotifications(of: pet),
-                                    id: \.identifier
-                                ) { notification in
-                                    notificationView(notification: notification)
-                                }.onDelete { indexSet in
-                                    remove(pet: pet, at: indexSet)
-                                }
+                            } label: {
+                                Text("Create default notifications for your pet.")
                             }
-
-                        } header: {
-                            Text(pet.name)
-                        } footer: {
-                            let count = notificationAmount(for: pet.name)
-                            Text("notification \(count)")
-
-                        }
-
-                        .onChange(of: notificationManager.notifications) {
-                            Task {
-                                await fetchNotificiations()
+                        } else {
+                            ForEach(
+                                notificationManager.filterNotifications(of: pet),
+                                id: \.identifier
+                            ) { notification in
+                                notificationView(notification: notification)
+                            }.onDelete { indexSet in
+                                remove(pet: pet, at: indexSet)
                             }
                         }
-
+                        
+                    } header: {
+                        Text(pet.name)
+                    } footer: {
+                        let count = notificationAmount(for: pet.name)
+                        Text("notification \(count)")
+                        
                     }
-
+                    
+                    .onChange(of: notificationManager.notifications) {
+                        Task {
+                            await fetchNotificiations()
+                        }
+                    }
+                    
                 }
-                .listStyle(.insetGrouped)
-                .refreshable(action: notificationManager.getNotifications)
+                
+            }
+            .listStyle(.insetGrouped)
+            .refreshable(action: notificationManager.getNotifications)
+        }
+        .overlay {
+            if pets.isEmpty {
+                ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
             }
         }
         .navigationTitle(Text("notifications_title"))
         .navigationViewStyle(.stack)
         .toolbar {
             if pets.isNotEmpty {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         notificationManager.notificationCenter.removeAllPendingNotificationRequests()
                         notificationManager.notifications.removeAll()

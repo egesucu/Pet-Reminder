@@ -18,30 +18,26 @@ struct EventsView: View {
     @State private var filteredCalendar: EKCalendar?
 
     var body: some View {
-        List {
-            EventFilterView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
-                .transition(.slide)
-            TodaysEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
-                .transition(.slide)
-            FutureEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
-                .transition(.slide)
+        if eventVM.authStatus == .authorized {
+            List {
+                EventFilterView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
+                    .transition(.slide)
+                TodaysEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
+                    .transition(.slide)
+                FutureEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
+                    .transition(.slide)
+            }
+            .task(eventVM.fetchCalendars)
+            .onAppear(perform: getEventDates)
+            .refreshable(action: eventVM.reloadEvents)
         }
-        .task(eventVM.fetchCalendars)
-        .onAppear(perform: getEventDates)
-        .refreshable(action: eventVM.reloadEvents)
+        
     }
 
     private func getEventDates() {
         let events = eventVM.events
         let eventDates = events.compactMap(\.startDate)
         self.dates = eventDates.removeDuplicates().sorted()
-        makePetCalendarDefault()
-    }
-
-    private func makePetCalendarDefault() {
-        if let petCalendar = eventVM.calendars.first(where: { $0.title == Strings.petReminder }) {
-            filteredCalendar = petCalendar
-        }
     }
 }
 

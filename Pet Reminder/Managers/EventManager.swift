@@ -21,7 +21,7 @@ class EventManager {
     var eventStartDate: Date = .now.addingTimeInterval(60*60)
     var eventEndDate: Date = .now.addingTimeInterval(60*60*2)
     var isAllDay = false
-    var authorizationGiven = false
+    var authStatus: EventAuthenticationStatus = .notDetermined
 
     @ObservationIgnored let eventStore = EKEventStore()
 
@@ -36,32 +36,46 @@ class EventManager {
         (0...4).forEach { index in
             let event = EKEvent(eventStore: self.eventStore)
             event.title = Strings.demoEvent(index+1)
-            event.startDate = Date()
-            event.endDate = Date()
+            event.startDate = .now
+            event.endDate = .now.addingTimeInterval(60)
             events.append(event)
         }
         return events
     }
 
+    private func updateAuthStatus() {
+        DispatchQueue.main.async {
+            self.authStatus = .value(status: EKEventStore.authorizationStatus(for: .event))
+        }
+    }
+    
     func requestEvents() async {
         do {
             let result = try await eventStore.requestFullAccessToEvents()
             if result {
                 self.fetchCalendars()
-                self.authorizationGiven = true
+            } else {
+                self.authStatus = .denied
             }
+            self.updateAuthStatus()
+            Logger
+                .viewCycle
+                .info("Auth status is: \(self.authStatus.rawValue)")
         } catch let error {
             Logger
                 .viewCycle
                 .error("\(error)")
-            self.authorizationGiven = false
         }
     }
 
     @Sendable
     func fetchCalendars() {
-        self.calendars = eventStore.calendars(for: .event)
-        setPetCalendar()
+        if authStatus == .authorized {
+            self.calendars = eventStore.calendars(for: .event)
+            setPetCalendar()
+        } else {
+            calendars.removeAll()
+        }
     }
 
     func setPetCalendar() {
@@ -89,8 +103,9 @@ class EventManager {
     }
 
     func loadEvents() {
-        let status = EKEventStore.authorizationStatus(for: .event)
-        if status == .fullAccess {
+        self.updateAuthStatus()
+        events.removeAll()
+        if authStatus == .authorized {
             let startDate: Date = .now
             let endDate = Date(timeIntervalSinceNow: oneMonthInMilliSeconds)
             let predicate = self.eventStore.predicateForEvents(
@@ -116,8 +131,9 @@ class EventManager {
 
     @Sendable
     func reloadEvents() async {
-        authorizationGiven = EKEventStore.authorizationStatus(for: .event) == .fullAccess
+        self.updateAuthStatus()
         self.loadEvents()
+        self.fetchCalendars()
     }
 
     func convertDateToString(startDate: Date?, endDate: Date?) -> String {
@@ -164,13 +180,40 @@ class EventManager {
 
         do {
             try eventStore.save(newEvent, span: .thisEvent)
-            await reloadEvents()
         } catch let error {
             if let error = error as? EKError {
                 Logger
                     .viewCycle
                     .error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
             }
+        }
+        await reloadEvents()
+        
+    }
+}
+
+enum EventAuthenticationStatus: String {
+    case authorized
+    case readOnly
+    case denied
+    case notDetermined
+    
+    static func value(status: EKAuthorizationStatus) -> Self {
+        switch status {
+        case .notDetermined:
+            return .notDetermined
+        case .restricted:
+            return .denied
+        case .denied:
+            return .denied
+        case .fullAccess:
+            return .authorized
+        case .writeOnly:
+            return .readOnly
+        case .authorized:
+            return .authorized
+        @unknown default:
+            return .denied
         }
     }
 }

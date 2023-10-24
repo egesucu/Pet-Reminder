@@ -15,50 +15,37 @@ import Observation
 @Observable
 class VetViewModel: NSObject {
 
-    var userLocation = CLLocation()
-    var region = MKCoordinateRegion()
-    var permissionDenied = false
+    var userLocation: MapCameraPosition = .userLocation(fallback: .automatic)
     var searchText = String(localized: "default_vet_text")
-    var showItem = false
     var searchedLocations: [Pin] = []
     var locationManager = CLLocationManager()
     var selectedLocation: Pin?
-
-    override init() {
-        super.init()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-    }
-
+    var mapViewStatus: MapViewStatus = .none
+    
     @Sendable
-    func getUserLocation() async {
-        if locationManager.authorizationStatus == .authorizedWhenInUse {
-            if let location = locationManager.location {
-                userLocation = location
-                await setRegion()
-            }
+    func requestMap() async {
+        await updateAuthenticationStatus()
+        Logger
+            .viewCycle
+            .info("Location Auth Status: \(self.mapViewStatus.rawValue)")
+    }
+    
+    func updateAuthenticationStatus() async {
+        locationManager.requestWhenInUseAuthorization()
+        self.mapViewStatus = switch locationManager.authorizationStatus {
+        case .notDetermined:
+                .none
+        case .denied, .restricted:
+                .locationNotAllowed
+        case .authorizedAlways, .authorizedWhenInUse, .authorized:
+                .authorized
+        @unknown default:
+                .none
         }
-    }
-
-    private func setRegion() async {
-        self.region = MKCoordinateRegion(
-            center: userLocation.coordinate,
-            span: MKCoordinateSpan(
-                latitudeDelta: 0.05,
-                longitudeDelta: 0.05
-            )
-        )
-        await searchPins()
-    }
-
-    func setRegion(item: Pin) async {
-        self.region = MKCoordinateRegion(
-            center: item.coordinate,
-            span: MKCoordinateSpan(
-                latitudeDelta: 0.05,
-                longitudeDelta: 0.05
-            )
-        )
+        
+        if mapViewStatus == .authorized {
+            await searchPins()
+        }
     }
 
     func clearPreviousSearches() {
@@ -72,46 +59,25 @@ class VetViewModel: NSObject {
 
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchText
-        searchRequest.region = region
+        if let region = userLocation.region {
+            searchRequest.region = region
+        }
 
         let localSearch = MKLocalSearch(request: searchRequest)
 
         do {
             let response = try await localSearch.start()
-            for item in response.mapItems {
-                let pin = Pin(item: item)
-                DispatchQueue.main.async {
-                    self.searchedLocations.append(pin)
+            await MainActor.run {
+                response.mapItems.forEach {
+                    self.searchedLocations.append(Pin(item: $0))
                 }
-
+                userLocation = .userLocation(fallback: .automatic)
             }
         } catch let error {
             Logger
                 .viewCycle
                 .error("\(error)")
         }
-    }
-
-    func openAppSettings() async {
-        if let bundle = Bundle.main.bundleIdentifier,
-           let appSettings = await URL(string: UIApplication.openSettingsURLString + bundle) {
-            await UIApplication.shared.open(appSettings)
-        }
-    }
-}
-// MARK: - CLLocationManagerDelegate
-extension VetViewModel: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if manager.authorizationStatus == .authorizedWhenInUse {
-            Task {
-                self.permissionDenied = false
-                await getUserLocation()
-            }
-        } else {
-            Task {
-                self.permissionDenied = true
-            }
-
-        }
+        
     }
 }
