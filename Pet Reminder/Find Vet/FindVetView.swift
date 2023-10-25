@@ -29,7 +29,6 @@ struct FindVetView: View {
                 } actions: {
                     ESSettingsButton()
                 }
-                
             }
         }
         .task(viewModel.requestMap)
@@ -88,9 +87,5 @@ struct FindVetView: View {
     FindVetView()
 }
 
-enum MapViewStatus: String {
-    case locationNotAllowed
-    case none
-    case authorized
-}
+
     

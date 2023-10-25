@@ -34,11 +34,11 @@ struct PetChangeListView: View {
                 petList
                     .onTapGesture {
                         Logger
-                            .viewCycle
+                            .pets
                             .info("Surface tapped.")
                         isEditing = false
                         Logger
-                            .viewCycle
+                            .pets
                             .info("Editing status: \(isEditing)")
                     }
             }
@@ -126,7 +126,7 @@ struct PetChangeListView: View {
                     selectedPet = pet
                     showSelectedPet.toggle()
                     Logger
-                        .viewCycle
+                        .pets
                         .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
                 }
                 .sheet(isPresented: $showSelectedPet, onDismiss: {

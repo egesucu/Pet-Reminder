@@ -24,14 +24,14 @@ struct FeedListView: View {
                     MorningCheckboxView(morningOn: $viewModel.morningOn)
                         .onChange(of: viewModel.morningOn, {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.name)")
                             viewModel.updateFeed(pet: pet, type: .morning)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.morningOn)
                         .onTapGesture {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Morning Tapped, pet: \(pet.name)")
                             viewModel.morningOn.toggle()
                         }
@@ -39,14 +39,14 @@ struct FeedListView: View {
                     EveningCheckboxView(eveningOn: $viewModel.eveningOn)
                         .onChange(of: viewModel.eveningOn, {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.name)")
                             viewModel.updateFeed(pet: pet, type: .evening)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.eveningOn)
                         .onTapGesture {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Evening Tapped, pet: \(pet.name)")
                             viewModel.eveningOn.toggle()
                         }
@@ -54,28 +54,28 @@ struct FeedListView: View {
                     MorningCheckboxView(morningOn: $viewModel.morningOn)
                         .onChange(of: viewModel.morningOn, {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Morning Changed, new value: \(viewModel.morningOn), pet: \(pet.name)")
                             viewModel.updateFeed(pet: pet, type: .morning)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.morningOn)
                         .onTapGesture {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Morning Tapped, pet: \(pet.name)")
                             viewModel.morningOn.toggle()
                         }
                     EveningCheckboxView(eveningOn: $viewModel.eveningOn)
                         .onChange(of: viewModel.eveningOn, {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Evening Changed, new value: \(viewModel.eveningOn), pet: \(pet.name)")
                             viewModel.updateFeed(pet: pet, type: .evening)
                         })
                         .sensoryFeedback(.selection, trigger: viewModel.eveningOn)
                         .onTapGesture {
                             Logger
-                                .viewCycle
+                                .feed
                                 .info("PR: Evening Tapped, pet: \(pet.name)")
                             viewModel.eveningOn.toggle()
                         }

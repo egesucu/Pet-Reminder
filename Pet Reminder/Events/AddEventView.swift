@@ -37,7 +37,7 @@ struct AddEventView: View {
                     }
                     .onChange(of: eventVM.selectedCalendar) {
                         Logger
-                            .viewCycle
+                            .events
                             .info("Selected Calendar: \(eventVM.selectedCalendar.title)")
                     }
                 }

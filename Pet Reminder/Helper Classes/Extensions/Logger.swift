@@ -11,8 +11,17 @@ import OSLog
 
 extension Logger {
     private static var subsystem = Bundle.main.bundleIdentifier!
+    
+    static let events = Logger(subsystem: subsystem, category: "Event")
+    
+    static let vet = Logger(subsystem: subsystem, category: "Find Vet")
+    
+    static let pets = Logger(subsystem: subsystem, category: "Pet")
 
-    static let viewCycle = Logger(subsystem: subsystem, category: "viewcycle")
+    static let feed = Logger(subsystem: subsystem, category: "Feed")
+        
+    static let settings = Logger(subsystem: subsystem, category: "Settings")
+    
+    static let notifications = Logger(subsystem: subsystem, category: "Notifications")
 
-    static let statistics = Logger(subsystem: subsystem, category: "statistics")
 }

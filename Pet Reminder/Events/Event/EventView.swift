@@ -79,8 +79,8 @@ struct EventView: View {
 
 extension EventView {
     private func onSheetDismiss() {
-        fillData()
         Task {
+            await fillData()
             await eventVM.reloadEvents()
         }
     }
@@ -89,12 +89,11 @@ extension EventView {
         self.showWarningForCalendar.toggle()
     }
 
-    private func fillData() {
+    private func fillData() async {
         self.eventTitle = event.title
-        eventVM.fillEventData(event: event) { content in
-            DispatchQueue.main.async {
-                self.dateString = content
-            }
+        let content = eventVM.fillEventData(event: event)
+        await MainActor.run {
+            self.dateString = content
         }
     }
 }

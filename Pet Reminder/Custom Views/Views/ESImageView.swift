@@ -26,7 +26,7 @@ struct ESImageView: View {
             ZStack {
                 Rectangle()
                     .fill(tintColor)
-                    .cornerRadius(25)
+                    .clipShape(.rect(cornerRadius: 25))
                     .shadow(radius: 10)
 
                 Image(.defaultAnimal)

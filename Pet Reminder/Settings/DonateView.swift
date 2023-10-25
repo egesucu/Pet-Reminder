@@ -38,7 +38,7 @@ struct DonateView: View {
                         }
                         .onInAppPurchaseStart { product in
                             Logger
-                                .viewCycle
+                                .settings
                                 .info("Purchasing the product: \(product.displayName)")
                         }
                 }
@@ -54,35 +54,35 @@ struct DonateView: View {
                 switch res {
                 case .verified(let transaction):
                     Logger
-                        .viewCycle
+                        .settings
                         .info("Verified Transaction: \(transaction.debugDescription)")
                     Task {
                         await transaction.finish()
                     }
                 case .unverified(let transaction, let error):
                     Logger
-                        .viewCycle
+                        .settings
                         .info("Unverified Transaction: \(transaction.debugDescription)")
                     Logger
-                        .viewCycle
+                        .settings
                         .error("Unverified Transaction Error: \(error.localizedDescription)")
                 }
             case .pending:
                 Logger
-                    .viewCycle
+                    .settings
                     .info("Pending transaction")
             case .userCancelled:
                 Logger
-                    .viewCycle
+                    .settings
                     .info("User cancelled the pop-up")
             @unknown default:
                 Logger
-                    .viewCycle
+                    .settings
                     .info("Unknown Case occured")
             }
         case .failure(let failure):
             Logger
-                .viewCycle
+                .settings
                 .error("Purchase failed: \(failure.localizedDescription)")
         }
     }

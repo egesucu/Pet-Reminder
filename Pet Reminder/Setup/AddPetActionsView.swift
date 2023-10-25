@@ -37,11 +37,11 @@ struct AddPetActionsView: View {
 #Preview {
     AddPetActionsView(name: .constant(Strings.viski)) {
         Logger
-            .viewCycle
+            .pets
             .info("Saved")
     } onCancel: {
         Logger
-            .viewCycle
+            .pets
             .info("Cancelled")
     }
 

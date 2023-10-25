@@ -19,7 +19,7 @@ struct EventTimeView: View {
             Text(dateString)
                 .multilineTextAlignment(.center)
                 .font(.body)
-                .foregroundColor(tintColor.isDarkColor ? .white : .black)
+                .foregroundStyle(tintColor.isDarkColor ? .white : .black)
         }
     }
 }

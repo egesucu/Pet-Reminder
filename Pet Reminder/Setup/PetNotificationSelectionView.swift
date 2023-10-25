@@ -39,7 +39,7 @@ struct PetNotificationSelectionView: View {
             Image(.morning)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
-                .cornerRadius(15)
+                .clipShape(.rect(cornerRadius: 15))
             Spacer()
             DatePicker("feed_selection_morning",
                        selection: $morningFeed,
@@ -57,7 +57,7 @@ struct PetNotificationSelectionView: View {
             Image(.evening)
                 .resizable()
                 .frame(maxWidth: 100, maxHeight: 80)
-                .cornerRadius(15)
+                .clipShape(.rect(cornerRadius: 15))
             Spacer()
             DatePicker("feed_selection_evening",
                        selection: $eveningFeed,

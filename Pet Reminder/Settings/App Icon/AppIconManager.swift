@@ -37,7 +37,7 @@ class AppIconManager {
                 try await UIApplication.shared.setAlternateIconName(icon.iconName)
             } catch {
                 Logger
-                    .viewCycle
+                    .settings
                     .error("Updating icon to \(String(describing: icon.iconName)) failed.")
                 selectedAppIcon = previousAppIcon
             }

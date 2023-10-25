@@ -16,20 +16,20 @@ struct MorningCheckboxView: View {
         VStack {
             Label {
                 Text("feed_selection_morning")
-                    .foregroundColor(Color(uiColor: .label))
+                    .foregroundStyle(Color .label)
                     .font(.title2.bold())
             } icon: {
                 Image(systemName: SFSymbols.morningToggleSelected)
                     .symbolRenderingMode(.hierarchical)
                     .symbolEffect(.bounce, value: morningOn)
-                    .foregroundColor(.yellow)
+                    .foregroundStyle(.yellow)
                     .font(.largeTitle.bold())
             }
             .font(.title.bold())
             .padding(.bottom)
             CheckBoxView(isChecked: $morningOn)
         }
-        .cornerRadius(20)
+        .clipShape(.rect(cornerRadius: 20))
         .frame(width: 150, height: 150)
     }
 }

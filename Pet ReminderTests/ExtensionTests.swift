@@ -37,14 +37,14 @@ final class ExtensionTests: XCTestCase {
     }
     
     func testDateConversion() throws {
-        let now = Calendar.current.startOfDay(for: .now)
+        let testDate = Date().convertStringToDate(string: "24 Eki 2023")
         let nowString = "24 Eki 2023"
         let expectedDate = Calendar.current.startOfDay(
             for: Date().convertStringToDate(
                 string: nowString
             )
         )
-        XCTAssertEqual(expectedDate, now)
+        XCTAssertEqual(expectedDate, testDate)
     }
     
     func testPrintTime() throws {
@@ -56,8 +56,10 @@ final class ExtensionTests: XCTestCase {
     
     func testPrintDate() throws {
         let dateString = "24.10.2023"
-        let expectedDate = Date().convertStringToDate(string: dateString)
-        XCTAssertEqual(expectedDate.printDate(), dateString)
+        let expectedDate = Date()
+            .convertStringToDate(string: "24 Eki 2023")
+            .printDate()
+        XCTAssertEqual(expectedDate, dateString)
     }
     
     func testRandomDate() throws {

@@ -16,7 +16,7 @@ struct EveningCheckboxView: View {
         VStack {
             Label {
                 Text("feed_selection_evening")
-                    .foregroundColor(Color(uiColor: .label))
+                    .foregroundStyle(Color.label)
                     .font(.title2.bold())
             } icon: {
                 Image(systemName: SFSymbols.eveningToggleSelected)
@@ -28,7 +28,7 @@ struct EveningCheckboxView: View {
             .padding(.bottom)
             CheckBoxView(isChecked: $eveningOn)
         }
-        .cornerRadius(20)
+        .clipShape(.rect(cornerRadius: 20))
         .frame(width: 150, height: 150)
 
     }

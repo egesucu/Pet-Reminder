@@ -14,12 +14,13 @@ struct NextButton: ButtonStyle {
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        configuration
+            .label
             .font(.largeTitle)
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .padding()
             .background(conditionMet ? Color.gray.opacity(0.4) : tintColor)
-            .cornerRadius(15)
+            .clipShape(.rect(cornerRadius: 15))
             .shadow(radius: 10)
             .disabled(conditionMet)
     }

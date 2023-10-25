@@ -82,7 +82,7 @@ struct NewAddPetView: View {
 
         }
         .onChange(of: step) {
-            Logger.viewCycle.info("Page Value: \(step.text)")
+            Logger.pets.info("Page Value: \(step.text)")
         }
     }
 

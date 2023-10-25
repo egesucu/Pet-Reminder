@@ -91,7 +91,7 @@ private var debugMenu: some View {
             let domainName = Bundle.main.bundleIdentifier ?? ""
             UserDefaults.standard.removePersistentDomain(forName: domainName)
             UserDefaults.standard.synchronize()
-            Logger.viewCycle.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
+            Logger.settings.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
         })
     } header: {
         Text("debug_menu_title")

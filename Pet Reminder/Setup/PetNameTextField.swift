@@ -48,7 +48,7 @@ struct PetNameTextField: View {
                 .multilineTextAlignment(.center)
                 .onSubmit(controlName)
             }
-            .cornerRadius(5)
+            .clipShape(.rect(cornerRadius: 5))
             .frame(height: 50)
         }
         .alert(isPresented: $showAlert, error: PetError.name) {
@@ -76,15 +76,4 @@ struct PetNameTextField: View {
     PetNameTextField(name: .constant(Strings.viski), nameIsFilledCorrectly: .constant(false))
         .padding(.all)
         .modelContainer(PreviewSampleData.container)
-}
-
-enum PetError: LocalizedError {
-    case name
-
-    var errorDescription: String? {
-        switch self {
-        case .name:
-            return String(localized: "name_error")
-        }
-    }
 }

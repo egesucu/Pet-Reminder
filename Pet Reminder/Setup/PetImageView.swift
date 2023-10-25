@@ -31,7 +31,7 @@ struct PetImageView: View {
         }
         .onChange(of: selectedImageData) { _, _ in
             Logger
-                .viewCycle
+                .pets
                 .info("Selected Page is: \(selectedPage.text)")
         }
     }

@@ -111,15 +111,15 @@ struct NotificationView: View {
             } icon: {
                 if notification.identifier.contains("morning") {
                     Image(systemName: SFSymbols.morning)
-                        .foregroundColor(.yellow)
+                        .foregroundStyle(.yellow)
                         .font(.title)
                 } else if notification.identifier.contains("evening") {
                     Image(systemName: SFSymbols.evening)
-                        .foregroundColor(.blue)
+                        .foregroundStyle(.blue)
                         .font(.title)
                 } else {
                     Image(systemName: SFSymbols.birthday)
-                        .foregroundColor(.green)
+                        .foregroundStyle(.green)
                         .font(.title)
                 }
 

@@ -14,7 +14,7 @@ import SwiftData
 struct PetReminderApp: App {
 
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    @AppStorage("seenHello") var helloSeen = false
+    @AppStorage(Strings.helloSeen) var helloSeen = false
     @Environment(\.undoManager) var undoManager
     @State private var notificationManager = NotificationManager()
 

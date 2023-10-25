@@ -23,7 +23,7 @@ extension Color: RawRepresentable {
             self = Color(uiColor: color)
         } catch let error {
             Logger
-                .viewCycle
+                .settings
                 .error("\(error)")
             self = .green
         }
@@ -35,7 +35,7 @@ extension Color: RawRepresentable {
             return data.base64EncodedString()
         } catch let error {
             Logger
-                .viewCycle
+                .settings
                 .error("\(error)")
         }
         return ""

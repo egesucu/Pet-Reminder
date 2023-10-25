@@ -11,7 +11,7 @@ import CloudKit
 
 struct HelloView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    @AppStorage("seenHello") var helloSeen = false
+    @AppStorage(Strings.helloSeen) var helloSeen = false
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
     @State private var shouldLoadView = false
@@ -37,15 +37,15 @@ struct HelloView: View {
                 } label: {
                     Text("welcome_go_button")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 .padding()
                 .background(tintColor)
                 .clipShape(RoundedRectangle(cornerRadius: 25.0))
                 .shadow(radius: 3)
-                .fullScreenCover(isPresented: $navigateToHome, content: {
+                .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
-                })
+                }
                 Spacer()
             }
         }

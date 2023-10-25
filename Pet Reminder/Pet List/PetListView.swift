@@ -42,7 +42,7 @@ struct PetListView: View {
                              onDismiss: {
                 selectedPet = pets.first
                 Logger
-                    .viewCycle
+                    .pets
                     .debug("Pet Amount: \(pets.count)")
             },
                              content: {
@@ -87,7 +87,7 @@ struct PetListView: View {
                     .onTapGesture {
                         selectedPet = pet
                         Logger
-                            .viewCycle
+                            .pets
                             .info("PR: Pet Selected: \(pet.name)")
                     }
                     .padding([.top, .leading])
@@ -115,7 +115,7 @@ struct PetListView: View {
                 }, label: {
                     Image(systemName: SFSymbols.add)
                         .accessibilityLabel(Text("add_animal_accessible_label"))
-                        .foregroundColor(tintColor)
+                        .foregroundStyle(tintColor)
                         .font(.title)
                 })
             }

@@ -23,10 +23,13 @@ final class VetViewModelTests: XCTestCase {
         viewModel.searchText = "Pet"
         await viewModel.searchPins()
                 
-        viewModel.clearPreviousSearches()
+        await viewModel.clearPreviousSearches()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        Task {
+            let halfSecond = UInt64(0.5 * 1_000_000_000)
+            try await Task.sleep(nanoseconds: halfSecond)
             XCTAssertTrue(viewModel.searchedLocations.isEmpty)
+            
         }
     }
     

@@ -57,18 +57,16 @@ struct MapItemView: View {
                         }
                     }
                 }
-                Button(action: {
-                    showOpenMapAlert.toggle()
-                }, label: {
+                Button(action: openMapDetail) {
                     Text("map_open_in")
-                })
+                }
                 .buttonStyle(.bordered)
                 .padding(.trailing, 10)
             }
         }
         .alert("find_vet_open", isPresented: $showOpenMapAlert) {
             ForEach(MapApplication.allCases, id: \.self) { app in
-                Button(app.rawValue) {
+                Button(app.name) {
                     if let location {
                         openURLWithMap(
                             location: location,
@@ -77,10 +75,11 @@ struct MapItemView: View {
                     }
                 }
             }
-            Button {
-            } label: {
-                Text("Cancel")
-            }
+            Button("Cancel", action: {})
         }
+    }
+    
+    func openMapDetail() {
+        showOpenMapAlert.toggle()
     }
 }

@@ -26,7 +26,7 @@ class VetViewModel: NSObject {
     func requestMap() async {
         await updateAuthenticationStatus()
         Logger
-            .viewCycle
+            .vet
             .info("Location Auth Status: \(self.mapViewStatus.rawValue)")
     }
     
@@ -44,18 +44,21 @@ class VetViewModel: NSObject {
         }
         
         if mapViewStatus == .authorized {
+            await MainActor.run {
+                userLocation = .userLocation(fallback: .automatic)
+            }
             await searchPins()
         }
     }
 
-    func clearPreviousSearches() {
-        DispatchQueue.main.async {
-            self.searchedLocations.removeAll()
+    func clearPreviousSearches() async {
+        await MainActor.run {
+            searchedLocations.removeAll()
         }
     }
 
     func searchPins() async {
-        clearPreviousSearches()
+        await clearPreviousSearches()
 
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchText
@@ -75,7 +78,7 @@ class VetViewModel: NSObject {
             }
         } catch let error {
             Logger
-                .viewCycle
+                .vet
                 .error("\(error)")
         }
         

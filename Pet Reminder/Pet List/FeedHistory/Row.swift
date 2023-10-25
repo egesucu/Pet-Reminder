@@ -19,7 +19,7 @@ struct Row: View {
             Image(systemName: imageName)
                 .symbolRenderingMode(.hierarchical)
                 .font(.title)
-                .foregroundColor(type == .morning ? .yellow  : .blue)
+                .foregroundStyle(type == .morning ? .yellow  : .blue)
             Text(content)
         }
     }

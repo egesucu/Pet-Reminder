@@ -35,7 +35,7 @@ class StoreManager {
                     newConsumables.append(product)
                 default:
                     Logger
-                        .viewCycle
+                        .settings
                         .error("Unknwon product")
                 }
             }
@@ -43,7 +43,7 @@ class StoreManager {
             consumables = sortByPrice(newConsumables)
         } catch {
             Logger
-                .viewCycle
+                .settings
                 .error("Failed product request from the App Store server: \(error.localizedDescription)")
         }
     }

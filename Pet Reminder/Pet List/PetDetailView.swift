@@ -30,7 +30,7 @@ struct PetDetailView: View {
                 HStack {
                     Button {
                         Logger
-                            .viewCycle
+                            .pets
                             .info("PR: Feed History Tapped, pet name: \(pet.name)")
                         showFeedHistory.toggle()
                     } label: {
@@ -40,7 +40,7 @@ struct PetDetailView: View {
                     .tint(tintColor)
                     Button {
                         Logger
-                            .viewCycle
+                            .pets
                             .info("PR: Vaccine History Tapped")
                         showVaccines.toggle()
                     } label: {
