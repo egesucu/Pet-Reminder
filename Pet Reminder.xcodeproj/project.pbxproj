@@ -103,6 +103,8 @@
 		9D9F55392905711D007E014B /* FeedHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F55382905711D007E014B /* FeedHistory.swift */; };
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DA37A482AB6C2DA00874999 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */; };
+		9DA7DC362AFFDF8D0012207C /* VetViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7DC352AFFDF8D0012207C /* VetViewModelProtocol.swift */; };
+		9DA7DC382AFFDFE50012207C /* MockVetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7DC372AFFDFE50012207C /* MockVetViewModel.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DADDF6927821591000943AE /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6827821591000943AE /* PetCell.swift */; };
 		9DB0E0522778BC870089E9B0 /* ESImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0E0512778BC870089E9B0 /* ESImageView.swift */; };
@@ -228,6 +230,8 @@
 		9D9F55382905711D007E014B /* FeedHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHistory.swift; sourceTree = "<group>"; };
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		9DA7DC352AFFDF8D0012207C /* VetViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModelProtocol.swift; sourceTree = "<group>"; };
+		9DA7DC372AFFDFE50012207C /* MockVetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVetViewModel.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DADDF6827821591000943AE /* PetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
 		9DB0E0512778BC870089E9B0 /* ESImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESImageView.swift; sourceTree = "<group>"; };
@@ -596,6 +600,8 @@
 			children = (
 				9D0C24E025D08177008F93CD /* FindVetView.swift */,
 				9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */,
+				9DA7DC352AFFDF8D0012207C /* VetViewModelProtocol.swift */,
+				9DA7DC372AFFDFE50012207C /* MockVetViewModel.swift */,
 				9DF9A4AD2A842B470004CB8E /* MapItemView.swift */,
 			);
 			path = "Find Vet";
@@ -842,6 +848,7 @@
 				725F44CC2A260B3D0096CCCB /* DateExtensions.swift in Sources */,
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,
+				9DA7DC362AFFDF8D0012207C /* VetViewModelProtocol.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DE24A272ABEEB65008B91E2 /* VaccineExtensions.swift in Sources */,
 				9DE24A292ABEED38008B91E2 /* PreviewSampleData.swift in Sources */,
@@ -865,6 +872,7 @@
 				9DB669772A62EC2100A7573C /* PetExtensions.swift in Sources */,
 				9D0C923C2AA64F54009BF51C /* FeedExtensions.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
+				9DA7DC382AFFDFE50012207C /* MockVetViewModel.swift in Sources */,
 				9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */,
 				7224CB9029F7B218009B0ADC /* FeedTimeSelection.swift in Sources */,
 				725F44C42A260ABB0096CCCB /* URLDefinitions.swift in Sources */,

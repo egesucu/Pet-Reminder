@@ -13,7 +13,7 @@ import OSLog
 import Observation
 
 @Observable
-class VetViewModel: NSObject {
+class VetViewModel: NSObject, VetViewModelProtocol {
 
     var userLocation: MapCameraPosition = .userLocation(fallback: .automatic)
     var searchText = String(localized: "default_vet_text")
