@@ -42,9 +42,11 @@ struct CheckBoxView: View {
         Image(systemName: isChecked ? SFSymbols.checked : SFSymbols.notChecked)
             .contentTransition(.symbolEffect(.replace))
             .font(.system(size: 50))
-            .onTapGesture {
-                isChecked.toggle()
-            }
+            .onTapGesture(perform: toggleCheck)
+    }
+
+    func toggleCheck() {
+        isChecked.toggle()
     }
 }
 
