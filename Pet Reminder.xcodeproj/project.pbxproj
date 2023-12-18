@@ -18,6 +18,11 @@
 		725F44CA2A260B020096CCCB /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C92A260B020096CCCB /* StringExtensions.swift */; };
 		725F44CC2A260B3D0096CCCB /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CB2A260B3D0096CCCB /* DateExtensions.swift */; };
 		725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */; };
+		9D019D5B2B30DFDB009E003C /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D5A2B30DFDB009E003C /* DiaryViewModel.swift */; };
+		9D019D5D2B30E0D4009E003C /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D5C2B30E0D4009E003C /* Diary.swift */; };
+		9D019D5F2B30E7E0009E003C /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D5E2B30E7E0009E003C /* DiaryView.swift */; };
+		9D019D612B30E96B009E003C /* DiaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D602B30E96B009E003C /* DiaryExtensions.swift */; };
+		9D019D642B30EC32009E003C /* LoremSwiftum in Frameworks */ = {isa = PBXBuildFile; productRef = 9D019D632B30EC32009E003C /* LoremSwiftum */; };
 		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
@@ -157,6 +162,10 @@
 		725F44C92A260B020096CCCB /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		725F44CB2A260B3D0096CCCB /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		9D019D5A2B30DFDB009E003C /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		9D019D5C2B30E0D4009E003C /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
+		9D019D5E2B30E7E0009E003C /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
+		9D019D602B30E96B009E003C /* DiaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExtensions.swift; sourceTree = "<group>"; };
 		9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeManagerView.swift; sourceTree = "<group>"; };
 		9D0C24E025D08177008F93CD /* FindVetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVetView.swift; sourceTree = "<group>"; };
 		9D0C24E225D08181008F93CD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -275,6 +284,7 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
+				9D019D642B30EC32009E003C /* LoremSwiftum in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,11 +318,21 @@
 			path = AddPopup;
 			sourceTree = "<group>";
 		};
+		9D019D592B30DFCB009E003C /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				9D019D5A2B30DFDB009E003C /* DiaryViewModel.swift */,
+				9D019D5E2B30E7E0009E003C /* DiaryView.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
 		9D0C923F2AA64F84009BF51C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				9DB669742A62EC2100A7573C /* PetExtensions.swift */,
 				9DE24A262ABEEB65008B91E2 /* VaccineExtensions.swift */,
+				9D019D602B30E96B009E003C /* DiaryExtensions.swift */,
 				9D0C923B2AA64F54009BF51C /* FeedExtensions.swift */,
 				9D62936F2A87CF2B00BA577A /* ImageExtensions.swift */,
 				725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */,
@@ -585,6 +605,7 @@
 		9DCDA05726E3BFEE00DF290F /* Pet List */ = {
 			isa = PBXGroup;
 			children = (
+				9D019D592B30DFCB009E003C /* Diary */,
 				9D62936C2A87CD2000BA577A /* Custom Views */,
 				9D34019426DA7950005822DA /* PetListView.swift */,
 				9D70F67226B4B6BC007D37EF /* PetDetailView.swift */,
@@ -659,6 +680,7 @@
 				9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */,
 				9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */,
 				9DCDA06026E3C34600DF290F /* Pin.swift */,
+				9D019D5C2B30E0D4009E003C /* Diary.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -715,6 +737,7 @@
 			);
 			name = "Pet Reminder";
 			packageProductDependencies = (
+				9D019D632B30EC32009E003C /* LoremSwiftum */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -751,6 +774,7 @@
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
+				9D019D622B30EC32009E003C /* XCRemoteSwiftPackageReference "LoremSwiftum" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -827,10 +851,12 @@
 				9D73AAD726ECFEFC002DFFD1 /* EventsView.swift in Sources */,
 				9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */,
 				7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */,
+				9D019D5B2B30DFDB009E003C /* DiaryViewModel.swift in Sources */,
 				9DC87F1829FAC05A008AB720 /* TodaysEventsView.swift in Sources */,
 				9DCDA06326E3C72400DF290F /* EventView.swift in Sources */,
 				9D326E732A8549B400C1AC8D /* NewAddPetView.swift in Sources */,
 				9D0C92412AA64FEE009BF51C /* SFSymbols.swift in Sources */,
+				9D019D5F2B30E7E0009E003C /* DiaryView.swift in Sources */,
 				7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */,
 				725F44CA2A260B020096CCCB /* StringExtensions.swift in Sources */,
 				9D3ED57A2A9F8D6500940AA4 /* SetupSteps.swift in Sources */,
@@ -885,6 +911,7 @@
 				9DF9A4B02A8453EA0004CB8E /* EventFilterView.swift in Sources */,
 				9D73AAD526ECFCD1002DFFD1 /* AddEventView.swift in Sources */,
 				725F44C82A260ADC0096CCCB /* ViewExtensions.swift in Sources */,
+				9D019D5D2B30E0D4009E003C /* Diary.swift in Sources */,
 				9D5DC0EF29F58860007A444D /* ActionButton.swift in Sources */,
 				9D9B9C152AA127EA0002F4AE /* FeedListViewModel.swift in Sources */,
 				9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */,
@@ -899,6 +926,7 @@
 				9D3ED57C2A9F8D7D00940AA4 /* NotificationSelectView.swift in Sources */,
 				9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
+				9D019D612B30E96B009E003C /* DiaryExtensions.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
 				9D9B9C182AA12CEA0002F4AE /* CurrentFeedSection.swift in Sources */,
 				9DE24A2B2ABEED7C008B91E2 /* ModelContainerView.swift in Sources */,
@@ -1193,6 +1221,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9D019D622B30EC32009E003C /* XCRemoteSwiftPackageReference "LoremSwiftum" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukaskubanek/LoremSwiftum.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9D019D632B30EC32009E003C /* LoremSwiftum */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D019D622B30EC32009E003C /* XCRemoteSwiftPackageReference "LoremSwiftum" */;
+			productName = LoremSwiftum;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9D8E76E6248666BD004610C8 /* Project object */;
 }

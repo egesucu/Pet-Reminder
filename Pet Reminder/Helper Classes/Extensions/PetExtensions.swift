@@ -55,8 +55,13 @@ extension Pet {
             )
             pet.feeds = Feed().previews
             pet.vaccines = Vaccine().previews
+            pet.diaries = Diary().previews
             pets.append(pet)
         }
         return pets
+    }
+    
+    func removeDiary(diary: Diary) {
+        self.diaries?.removeAll { $0.date == diary.date }
     }
 }
