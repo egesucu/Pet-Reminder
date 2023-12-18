@@ -23,22 +23,14 @@ struct PetDetailView: View {
                 ESImageView(data: pet.image)
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
-                    .frame(
-                        minWidth: 50,
-                        idealWidth: 100,
-                        maxWidth: 200,
-                        minHeight: 50,
-                        idealHeight: 100,
-                        maxHeight: 200,
-                        alignment: .center
-                    )
+                    .frame(width: 250, height: 250)
                 Spacer()
                 FeedListView(pet: $pet)
-                .padding(.bottom, 50)
+                    .padding(.bottom, 50)
                 HStack {
                     Button {
                         Logger
-                            .viewCycle
+                            .pets
                             .info("PR: Feed History Tapped, pet name: \(pet.name)")
                         showFeedHistory.toggle()
                     } label: {
@@ -48,7 +40,7 @@ struct PetDetailView: View {
                     .tint(tintColor)
                     Button {
                         Logger
-                            .viewCycle
+                            .pets
                             .info("PR: Vaccine History Tapped")
                         showVaccines.toggle()
                     } label: {

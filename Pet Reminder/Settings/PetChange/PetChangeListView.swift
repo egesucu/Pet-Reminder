@@ -26,111 +26,123 @@ struct PetChangeListView: View {
     @State private var selectedPet: Pet?
     @State private var showSelectedPet = false
     @State private var showEditButton = false
-    @State private var notificationManager = NotificationManager()
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
-        ScrollView {
-            petList
-                .onTapGesture {
-                    Logger
-                        .viewCycle
-                        .info("Surface tapped.")
-                    isEditing = false
-                    Logger
-                        .viewCycle
-                        .info("Editing status: \(isEditing)")
-                }
-        }
-            .toolbar {
-                if showEditButton {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            isEditing.toggle()
-                        } label: {
-                            Text(isEditing ? "Done" : "Edit")
-                        }
+        VStack {
+            ScrollView {
+                petList
+                    .onTapGesture {
+                        Logger
+                            .pets
+                            .info("Surface tapped.")
+                        isEditing = false
+                        Logger
+                            .pets
+                            .info("Editing status: \(isEditing)")
                     }
-                }
             }
+                .toolbar {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        if showUndoButton {
+                            Button {
+                                modelContext.undoManager?.undo()
+                                showUndoButton = false
+                            } label: {
+                                Image(systemName: "arrow.uturn.backward.circle")
+                            }
+                        }
+                        if showEditButton {
+                            Button {
+                                isEditing.toggle()
+                            } label: {
+                                Text(isEditing ? "Done" : "Edit")
+                            }
+                        }
+                        
+                    }
+                    
+                }
             .navigationTitle(Text("Choose Friend"))
+        }
+        .overlay {
+            if pets.isEmpty {
+                ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
+            }
+        }
     }
 
     @ViewBuilder
     private var petList: some View {
-        if pets.isEmpty {
-            EmptyPageView(emptyPageReference: .petList)
-        } else {
-            LazyVGrid(columns: [.init(), .init()]) {
-                ForEach(pets, id: \.name) { pet in
-                    VStack {
-                        if isEditing {
-                            ZStack(alignment: .topTrailing) {
-                                VStack {
-                                    ESImageView(data: pet.image)
-                                        .clipShape(Circle())
-                                        .frame(width: 120, height: 120)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 60)
-                                                .stroke(
-                                                    defineColor(pet: pet),
-                                                    lineWidth: 5
-                                                )
-                                        )
-                                        .wiggling()
-                                    Text(pet.name)
-                                }
-                                Button {
-                                    withAnimation {
-                                        deletePet(pet: pet)
-                                        isEditing = false
-                                    }
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .font(.title)
-                                        .foregroundStyle(Color.red)
-                                        .offset(x: 15, y: 0)
-                                }
-
+        LazyVGrid(columns: [.init(), .init()]) {
+            ForEach(pets, id: \.name) { pet in
+                VStack {
+                    if isEditing {
+                        ZStack(alignment: .topTrailing) {
+                            VStack {
+                                ESImageView(data: pet.image)
+                                    .clipShape(Circle())
+                                    .frame(width: 120, height: 120)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 60)
+                                            .stroke(
+                                                defineColor(pet: pet),
+                                                lineWidth: 5
+                                            )
+                                    )
+                                    .wiggling()
+                                Text(pet.name)
                             }
-                        } else {
-                            ESImageView(data: pet.image)
-                                .clipShape(Circle())
-                                .frame(width: 120, height: 120)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 60)
-                                        .stroke(
-                                            defineColor(pet: pet),
-                                            lineWidth: 5
-                                        )
-                                )
-
-                            Text(pet.name)
+                            Button {
+                                withAnimation {
+                                    deletePet(pet: pet)
+                                    isEditing = false
+                                }
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title)
+                                    .foregroundStyle(Color.red)
+                                    .offset(x: 15, y: 0)
+                            }
+                            
                         }
-
+                    } else {
+                        ESImageView(data: pet.image)
+                            .clipShape(Circle())
+                            .frame(width: 120, height: 120)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 60)
+                                    .stroke(
+                                        defineColor(pet: pet),
+                                        lineWidth: 5
+                                    )
+                            )
+                        
+                        Text(pet.name)
                     }
-                    .onTapGesture {
-                        selectedPet = pet
-                        showSelectedPet.toggle()
-                        Logger
-                            .viewCycle
-                            .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
-                    }
-                    .sheet(isPresented: $showSelectedPet, onDismiss: {
-                        selectedPet = nil
-                    }, content: {
-                        PetChangeView(pet: $selectedPet)
-                            .presentationCornerRadius(25)
-                            .presentationDragIndicator(.hidden)
-                            .interactiveDismissDisabled()
-                    })
-                    .onLongPressGesture {
-                        isEditing = true
-                    }
-                    .padding([.top, .leading])
+                    
                 }
+                .onTapGesture {
+                    selectedPet = pet
+                    showSelectedPet.toggle()
+                    Logger
+                        .pets
+                        .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
+                }
+                .sheet(isPresented: $showSelectedPet, onDismiss: {
+                    selectedPet = nil
+                }, content: {
+                    PetChangeView(pet: $selectedPet)
+                        .presentationCornerRadius(25)
+                        .presentationDragIndicator(.hidden)
+                        .interactiveDismissDisabled()
+                })
+                .onLongPressGesture {
+                    isEditing = true
+                }
+                .padding([.top, .leading])
             }
         }
-
     }
 
     func deletePet(pet: Pet) {
@@ -143,7 +155,7 @@ struct PetChangeListView: View {
         buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             if time == 10 {
                 withAnimation {
-                    self.notificationManager.removeAllNotifications(of: tempPetName)
+                    self.notificationManager?.removeAllNotifications(of: tempPetName)
                     showUndoButton = false
                     timer.invalidate()
                 }
@@ -162,6 +174,6 @@ struct PetChangeListView: View {
     NavigationStack {
         PetChangeListView()
             .modelContainer(PreviewSampleData.container)
+            .environment(NotificationManager())
     }
-
 }

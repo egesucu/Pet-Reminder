@@ -19,7 +19,7 @@ struct PetCell: View {
                 .frame(width: 150, height: 150)
             VStack {
                 Text(pet.name)
-                    .foregroundColor(Color(uiColor: .label))
+                    .foregroundStyle(Color.label)
                     .font(.title)
                     .minimumScaleFactor(0.2)
                     .lineLimit(3)

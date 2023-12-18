@@ -30,3 +30,9 @@ extension Collection {
         !self.isEmpty
     }
 }
+
+extension Sequence {
+    func filter(_ keyPath: KeyPath<Element, Bool>) -> [Element] {
+        return self.filter { $0[keyPath: keyPath] }
+    }
+}

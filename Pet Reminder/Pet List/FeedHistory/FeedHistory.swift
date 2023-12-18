@@ -24,7 +24,7 @@ struct FeedHistory: View {
                 PreviousFeedsSection(feeds: feeds)
             }
             .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title)

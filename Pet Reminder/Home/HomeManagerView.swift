@@ -7,10 +7,11 @@
 //
 
 import SwiftUI
-import OSLog
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
+    
+    let eventManager = EventManager()
 
     var body: some View {
 
@@ -21,7 +22,7 @@ struct HomeManagerView: View {
                 }
                 .tag(PetReminderTabs.home)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            EventListView()
+            EventListView(eventVM: eventManager)
                 .tabItem {
                     Image(systemName: SFSymbols.list)
                 }
@@ -40,12 +41,10 @@ struct HomeManagerView: View {
                 .tag(PetReminderTabs.settings)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
         }
-        .tint(.dynamicBlack)
-
+        .tint(Color.label)
     }
 }
 
 #Preview {
     HomeManagerView()
-        .modelContainer(PreviewSampleData.container)
 }

@@ -25,6 +25,7 @@ struct Strings {
      static let viski = "Viski"
      static let donateTeaID = "pet_reminder_tea_donate"
      static let donateFoodID = "pet_reminder_food_donate"
+     static let helloSeen = "seenHello"
 
      static func footerLabel(_ first: Any) -> String {
         return "© Ege Sucu \(first)"

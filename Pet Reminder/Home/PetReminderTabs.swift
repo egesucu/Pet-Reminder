@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum PetReminderTabs: Hashable {
+enum PetReminderTabs {
     case home, events, vet, settings
 }

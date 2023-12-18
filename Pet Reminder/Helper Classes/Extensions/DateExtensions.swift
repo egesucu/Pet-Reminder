@@ -15,12 +15,12 @@ extension Date {
         return tomorrow
     }()
 
-    /// 20:00 of the current day
+    /// 08:00 AM of the current day
     static let eightAM: Self = {
         return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*8)
     }()
 
-    /// 08:00 of the current day
+    /// 08:00 PM of the current day
     static let eightPM: Self = {
         return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*20)
     }()
@@ -59,3 +59,17 @@ extension Calendar {
 
 /// 60(sec) * 60(min) * 24(hours) * 30(days) = 2_592_000
 let oneMonthInMilliSeconds: Double = 2_592_000
+
+// MARK: - DateComponents
+extension DateComponents {
+    static func generateRandomDateComponent() -> Self {
+        DateComponents(
+            year: Int.random(in: 2018...2023),
+            month: Int.random(in: 0...12),
+            day: Int.random(in: 0...30),
+            hour: Int.random(in: 0...23),
+            minute: Int.random(in: 0...59),
+            second: Int.random(in: 0...59)
+        )
+    }
+}

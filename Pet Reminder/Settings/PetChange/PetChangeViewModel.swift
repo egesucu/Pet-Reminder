@@ -46,7 +46,7 @@ class PetChangeViewModel {
     }
 
     func getPetData(pet: Pet) async {
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.birthday = pet.birthday
             self.nameText = pet.name
             self.selection = pet.selection
@@ -56,7 +56,7 @@ class PetChangeViewModel {
             if let evening = pet.eveningTime {
                 self.eveningDate = evening
             }
-
+            
             if let image = pet.image {
                 self.outputImageData = image
                 self.defaultPhotoOn = false

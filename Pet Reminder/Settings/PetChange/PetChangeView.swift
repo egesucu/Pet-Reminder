@@ -48,7 +48,7 @@ struct PetChangeView: View {
                             .padding()
                         Text("photo_upload_detail_title")
                             .font(.footnote)
-                            .foregroundColor(Color(.systemGray2))
+                            .foregroundStyle(Color(.systemGray2))
                             .multilineTextAlignment(.center)
                             .padding()
                         Form {

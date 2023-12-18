@@ -81,12 +81,3 @@ struct PopupWrapper<PresentingView: View, Content: View>: View {
         }
     }
 }
-
-extension View {
-  func popupView(isPresented: Binding<Bool>,
-                 content: AddPopupView) -> some View {
-    PopupWrapper(isPresented: isPresented,
-                     presentingView: self,
-                     content: content)
-  }
-}

@@ -11,46 +11,55 @@ import CloudKit
 
 struct HelloView: View {
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    @AppStorage("seenHello") var helloSeen = false
+    @AppStorage(Strings.helloSeen) var helloSeen = false
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
-    @State private var shouldLoadView = false
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Text("welcome_title")
                 .font(.title)
-            Image(uiImage: UIImage(named: "AppIcon") ?? .init())
-                .resizable()
-                .frame(width: 200, height: 200)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+            logoView()
             Text("welcome_context")
                 .padding(.vertical)
                 .font(.body)
             Spacer()
             HStack {
                 Spacer()
-                Button {
-                    helloSeen = true
-                    navigateToHome.toggle()
-                } label: {
+                Button(action: goButtonPressed) {
                     Text("welcome_go_button")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                 }
                 .padding()
                 .background(tintColor)
-                .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                .clipShape(.rect(cornerRadius: 25.0))
                 .shadow(radius: 3)
-                .fullScreenCover(isPresented: $navigateToHome, content: {
+                .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
-                })
+                }
                 Spacer()
             }
         }
         .padding()
         .opacity(shouldAnimate ? 1.0 : 0.0)
         .onAppear(perform: animateView)
+    }
+    
+    @ViewBuilder
+    func logoView() -> some View {
+        if let logoImage = UIImage(named: "AppIcon") {
+            Image(uiImage: logoImage)
+                .resizable()
+                .frame(width: 200, height: 200)
+                .clipShape(.rect(cornerRadius: 10))
+        }
+    }
+    
+    private func goButtonPressed() {
+        helloSeen = true
+        navigateToHome.toggle()
     }
 
     private func animateView() {
@@ -62,4 +71,5 @@ struct HelloView: View {
 
 #Preview {
     HelloView()
+        .environment(NotificationManager())
 }

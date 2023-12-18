@@ -13,3 +13,9 @@ enum MapApplication: String, CaseIterable {
     case apple = "Maps"
     case yandex = "Yandex Maps"
 }
+
+extension MapApplication {
+    var name: String {
+        self.rawValue
+    }
+}

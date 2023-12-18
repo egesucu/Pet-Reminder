@@ -22,7 +22,7 @@ class NotificationManager {
             return try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
         } catch let error {
             Logger
-                .viewCycle
+                .notifications
                 .error("\(error)")
         }
         return false
@@ -31,7 +31,7 @@ class NotificationManager {
     func filterNotifications(of pet: Pet) -> [UNNotificationRequest] {
         notifications.filter { notification in
             Logger
-                .viewCycle
+                .notifications
                 .info("Pet \(pet.name): notifications \(notification.identifier)")
             return notification.identifier.contains(pet.name)
         }
@@ -106,7 +106,7 @@ extension NotificationManager {
                 try await notificationCenter.add(request)
             } catch let error {
                 Logger
-                    .viewCycle
+                    .notifications
                     .error("\(error)")
             }
 
@@ -172,8 +172,4 @@ extension NotificationManager {
     }
 }
 
-extension Sequence {
-    func filter(_ keyPath: KeyPath<Element, Bool>) -> [Element] {
-        return self.filter { $0[keyPath: keyPath] }
-    }
-}
+

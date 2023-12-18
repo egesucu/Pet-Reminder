@@ -19,14 +19,14 @@ struct ESImageView: View {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()
-                .cornerRadius(25)
+                .clipShape(Circle())
                 .shadow(radius: 10)
                 .padding(5)
         } else {
             ZStack {
                 Rectangle()
                     .fill(tintColor)
-                    .cornerRadius(25)
+                    .clipShape(.rect(cornerRadius: 25))
                     .shadow(radius: 10)
 
                 Image(.defaultAnimal)

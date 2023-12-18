@@ -10,20 +10,24 @@ import SwiftUI
 
 struct AllNotificationsView: View {
 
-    @State private var notificationManager = NotificationManager()
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         List {
-            ForEach(notificationManager.notifications, id: \.identifier) { notification in
+            ForEach(notificationManager?.notifications ?? [], id: \.identifier) { notification in
                 VStack {
                     Text(notification.debugDescription)
                 }
             }
         }
-        .task(notificationManager.getNotifications)
+        .task(notificationManager?.getNotifications ?? fallbackFunction)
     }
+    
+    @Sendable
+    func fallbackFunction() async {}
 }
 
 #Preview {
     AllNotificationsView()
+        .environment(NotificationManager())
 }
