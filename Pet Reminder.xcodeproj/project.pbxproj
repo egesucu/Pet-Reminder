@@ -22,7 +22,6 @@
 		9D019D5D2B30E0D4009E003C /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D5C2B30E0D4009E003C /* Diary.swift */; };
 		9D019D5F2B30E7E0009E003C /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D5E2B30E7E0009E003C /* DiaryView.swift */; };
 		9D019D612B30E96B009E003C /* DiaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D019D602B30E96B009E003C /* DiaryExtensions.swift */; };
-		9D019D642B30EC32009E003C /* LoremSwiftum in Frameworks */ = {isa = PBXBuildFile; productRef = 9D019D632B30EC32009E003C /* LoremSwiftum */; };
 		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
@@ -66,6 +65,7 @@
 		9D6293702A87CF2B00BA577A /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* ImageExtensions.swift */; };
 		9D6293722A87D46300BA577A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
+		9D695F5D2B321A70000A2161 /* LoremSwiftum in Frameworks */ = {isa = PBXBuildFile; productRef = 9D695F5C2B321A70000A2161 /* LoremSwiftum */; };
 		9D69B00B2AE84C3000B14A04 /* VetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B00A2AE84C3000B14A04 /* VetViewModelTests.swift */; };
 		9D69B00C2AE84E1D00B14A04 /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9D69B00D2AE84E3200B14A04 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06026E3C34600DF290F /* Pin.swift */; };
@@ -284,7 +284,7 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
-				9D019D642B30EC32009E003C /* LoremSwiftum in Frameworks */,
+				9D695F5D2B321A70000A2161 /* LoremSwiftum in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,7 +737,7 @@
 			);
 			name = "Pet Reminder";
 			packageProductDependencies = (
-				9D019D632B30EC32009E003C /* LoremSwiftum */,
+				9D695F5C2B321A70000A2161 /* LoremSwiftum */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -774,7 +774,7 @@
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
-				9D019D622B30EC32009E003C /* XCRemoteSwiftPackageReference "LoremSwiftum" */,
+				9D695F5B2B321A70000A2161 /* XCRemoteSwiftPackageReference "LoremSwiftum" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -1223,7 +1223,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9D019D622B30EC32009E003C /* XCRemoteSwiftPackageReference "LoremSwiftum" */ = {
+		9D695F5B2B321A70000A2161 /* XCRemoteSwiftPackageReference "LoremSwiftum" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lukaskubanek/LoremSwiftum.git";
 			requirement = {
@@ -1234,9 +1234,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9D019D632B30EC32009E003C /* LoremSwiftum */ = {
+		9D695F5C2B321A70000A2161 /* LoremSwiftum */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9D019D622B30EC32009E003C /* XCRemoteSwiftPackageReference "LoremSwiftum" */;
+			package = 9D695F5B2B321A70000A2161 /* XCRemoteSwiftPackageReference "LoremSwiftum" */;
 			productName = LoremSwiftum;
 		};
 /* End XCSwiftPackageProductDependency section */
