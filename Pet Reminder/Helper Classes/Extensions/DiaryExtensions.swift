@@ -10,19 +10,18 @@ import Foundation
 import LoremSwiftum
 
 extension Diary {
-    
-    var previews: [Diary] {
-        var diaries: [Diary] = []
-        
-        for _ in 0..<5 {
-            let diaryItem = Diary(
-                date: .randomDate(),
-                title: Lorem.title,
-                content: Lorem.sentences(20)
-            )
-            diaries.append(diaryItem)
-        }
-        
-        return diaries
+
+  var previews: [Diary] {
+    var diaries: [Diary] = []
+
+    for _ in 0..<5 {
+      let diaryItem = Diary(
+        date: .randomDate(),
+        title: Lorem.title,
+        content: Lorem.sentences(20))
+      diaries.append(diaryItem)
     }
+
+    return diaries
+  }
 }

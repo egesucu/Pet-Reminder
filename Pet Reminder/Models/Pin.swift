@@ -10,49 +10,49 @@ import Foundation
 import MapKit
 
 struct Pin: Identifiable, Hashable {
-    var item: MKMapItem
+  var item: MKMapItem
 
-    var id: Int {
-        item.hashValue
-    }
+  var id: Int {
+    item.hashValue
+  }
 
-    var subThoroughfare: String? {
-        item.placemark.subThoroughfare
-    }
+  var subThoroughfare: String? {
+    item.placemark.subThoroughfare
+  }
 
-    var thoroughfare: String? {
-        item.placemark.thoroughfare
-    }
+  var thoroughfare: String? {
+    item.placemark.thoroughfare
+  }
 
-    var locality: String? {
-        item.placemark.locality
-    }
+  var locality: String? {
+    item.placemark.locality
+  }
 
-    var postalCode: String? {
-        item.placemark.postalCode
-    }
+  var postalCode: String? {
+    item.placemark.postalCode
+  }
 
-    var phoneNumber: String? {
-        item.phoneNumber
-    }
+  var phoneNumber: String? {
+    item.phoneNumber
+  }
 
-    var location: CLLocation {
-        item.placemark.location ?? .init()
-    }
+  var location: CLLocation {
+    item.placemark.location ?? .init()
+  }
 
-    var coordinate: CLLocationCoordinate2D {
-        location.coordinate
-    }
+  var coordinate: CLLocationCoordinate2D {
+    location.coordinate
+  }
 
-    var latitude: CLLocationDegrees {
-        coordinate.latitude
-    }
+  var latitude: CLLocationDegrees {
+    coordinate.latitude
+  }
 
-    var longitude: CLLocationDegrees {
-        coordinate.longitude
-    }
+  var longitude: CLLocationDegrees {
+    coordinate.longitude
+  }
 
-    var name: String {
-        item.name ?? ""
-    }
+  var name: String {
+    item.name ?? ""
+  }
 }

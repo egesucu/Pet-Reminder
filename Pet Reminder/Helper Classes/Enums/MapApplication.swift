@@ -8,14 +8,16 @@
 
 import Foundation
 
+// MARK: - MapApplication
+
 enum MapApplication: String, CaseIterable {
-    case google = "Google Maps"
-    case apple = "Maps"
-    case yandex = "Yandex Maps"
+  case google = "Google Maps"
+  case apple = "Maps"
+  case yandex = "Yandex Maps"
 }
 
 extension MapApplication {
-    var name: String {
-        self.rawValue
-    }
+  var name: String {
+    rawValue
+  }
 }

@@ -9,18 +9,17 @@
 import SwiftUI
 
 struct PrivacyPolicyView: View {
-    var body: some View {
-        ScrollView {
-            VStack {
-                Text("privacy_policy_content")
-                    .padding(.all)
-            }
-        }
-        .navigationTitle(Text("privacy_policy_title"))
-
+  var body: some View {
+    ScrollView {
+      VStack {
+        Text("privacy_policy_content")
+          .padding(.all)
+      }
     }
+    .navigationTitle(Text("privacy_policy_title"))
+  }
 }
 
 #Preview {
-    PrivacyPolicyView()
+  PrivacyPolicyView()
 }

@@ -6,14 +6,14 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import XCTest
 import SwiftData
+import XCTest
 @testable import Pet_Reminder
 
 final class FeedListViewModelTests: XCTestCase {
-    
-    func testTodaysFeeds() async throws {
-        // TODO: Write Unit Tests for SwiftData
-    }
+
+  func testTodaysFeeds() async throws {
+    // TODO: Write Unit Tests for SwiftData
+  }
 
 }

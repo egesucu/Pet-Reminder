@@ -10,29 +10,30 @@ import SwiftUI
 
 // MARK: - Array
 extension Array {
-    static var empty: Self { [] }
+  static var empty: Self { [] }
 }
 
 extension Array where Element: Hashable {
-    func removeDuplicates() -> [Element] {
-        var seen = Set<Element>()
-        return filter { seen.insert($0).inserted }
-    }
+  func removeDuplicates() -> [Element] {
+    var seen = Set<Element>()
+    return filter { seen.insert($0).inserted }
+  }
 }
 
 extension Collection {
-    /// Returns the element at the specified index if it is within bounds, otherwise nil.
-    subscript (safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
+  var isNotEmpty: Bool {
+    !isEmpty
+  }
 
-    var isNotEmpty: Bool {
-        !self.isEmpty
-    }
+  /// Returns the element at the specified index if it is within bounds, otherwise nil.
+  subscript(safe index: Index) -> Element? {
+    indices.contains(index) ? self[index] : nil
+  }
+
 }
 
 extension Sequence {
-    func filter(_ keyPath: KeyPath<Element, Bool>) -> [Element] {
-        return self.filter { $0[keyPath: keyPath] }
-    }
+  func filter(_ keyPath: KeyPath<Element, Bool>) -> [Element] {
+    filter { $0[keyPath: keyPath] }
+  }
 }

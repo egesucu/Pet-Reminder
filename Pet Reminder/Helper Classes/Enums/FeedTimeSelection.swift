@@ -9,7 +9,7 @@
 import Foundation
 
 enum FeedTimeSelection: Int, Codable {
-    case both
-    case morning
-    case evening
+  case both
+  case morning
+  case evening
 }

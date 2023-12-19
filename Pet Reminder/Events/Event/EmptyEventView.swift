@@ -10,32 +10,32 @@ import SwiftUI
 
 struct EmptyEventView: View {
 
-    var eventVM: EventManager
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+  var eventVM: EventManager
+  @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Text("event_no_title")
-                    .font(.headline)
-                    .padding()
-                Button(action: reloadEvents) {
-                    Text("refresh")
-                }
-                .tint(tintColor)
-                Spacer()
-            }
+  var body: some View {
+    VStack {
+      HStack {
+        Spacer()
+        Text("event_no_title")
+          .font(.headline)
+          .padding()
+        Button(action: reloadEvents) {
+          Text("refresh")
         }
+        .tint(tintColor)
+        Spacer()
+      }
     }
+  }
 
-    func reloadEvents() {
-        Task {
-            await eventVM.reloadEvents()
-        }
+  func reloadEvents() {
+    Task {
+      await eventVM.reloadEvents()
     }
+  }
 }
 
 #Preview {
-    EmptyEventView(eventVM: .init(isDemo: true))
+  EmptyEventView(eventVM: .init(isDemo: true))
 }

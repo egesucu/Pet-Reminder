@@ -10,20 +10,20 @@ import SwiftUI
 
 struct EventTimeView: View {
 
-    @Binding var dateString: String
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+  @Binding var dateString: String
+  @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    var body: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 100).fill(tintColor)
-            Text(dateString)
-                .multilineTextAlignment(.center)
-                .font(.body)
-                .foregroundStyle(tintColor.isDarkColor ? .white : .black)
-        }
+  var body: some View {
+    ZStack(alignment: .center) {
+      RoundedRectangle(cornerRadius: 100).fill(tintColor)
+      Text(dateString)
+        .multilineTextAlignment(.center)
+        .font(.body)
+        .foregroundStyle(tintColor.isDarkColor ? .white : .black)
     }
+  }
 }
 
 #Preview {
-    EventTimeView(dateString: .constant(Strings.demo))
+  EventTimeView(dateString: .constant(Strings.demo))
 }

@@ -6,19 +6,19 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import XCTest
 import SwiftData
+import XCTest
 
 // swiftlint: disable type_name
 final class Pet_ReminderTests: XCTestCase {
 
-    func testLanguageWithParameters() throws {
-        let name = "Viski"
-        let notExpectedOutput = "notification_content \(name)"
-        let stringKey: String.LocalizationValue = "notification_content \(name)"
-        let localization = String(localized: stringKey)
-        XCTAssertTrue(localization != notExpectedOutput)
-    }
+  func testLanguageWithParameters() throws {
+    let name = "Viski"
+    let notExpectedOutput = "notification_content \(name)"
+    let stringKey: String.LocalizationValue = "notification_content \(name)"
+    let localization = String(localized: stringKey)
+    XCTAssertTrue(localization != notExpectedOutput)
+  }
 
 //    func testOtherNotificationDeletion() async throws {
 //        let notificationManager = NotificationManager()
@@ -44,4 +44,5 @@ final class Pet_ReminderTests: XCTestCase {
 //    }
 
 }
+
 // swiftlint: enable type_name

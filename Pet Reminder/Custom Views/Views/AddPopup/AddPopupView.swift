@@ -8,76 +8,80 @@
 
 import SwiftUI
 
+// MARK: - AddPopupView
+
 struct AddPopupView: View {
 
-    @Binding var contentInput: String
-    @Binding var dateInput: Date
-    var onSave: () -> Void
-    var onCancel: () -> Void
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+  @Binding var contentInput: String
+  @Binding var dateInput: Date
+  var onSave: () -> Void
+  var onCancel: () -> Void
+  @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    var body: some View {
-        ZStack {
-            Color(uiColor: .label)
-                .opacity(0.8)
-                .onTapGesture(perform: onCancel)
-            ZStack(alignment: .center) {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color(uiColor: .systemBackground))
-                VStack(alignment: .center) {
-                    HStack {
-                        Text("add")
-                            .bold()
-                        TextField(Strings.placeholderVaccine, text: $contentInput)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 10)
+  var body: some View {
+    ZStack {
+      Color(uiColor: .label)
+        .opacity(0.8)
+        .onTapGesture(perform: onCancel)
+      ZStack(alignment: .center) {
+        RoundedRectangle(cornerRadius: 10)
+          .fill(Color(uiColor: .systemBackground))
+        VStack(alignment: .center) {
+          HStack {
+            Text("add")
+              .bold()
+            TextField(Strings.placeholderVaccine, text: $contentInput)
+              .multilineTextAlignment(.center)
+          }
+          .padding(.horizontal)
+          .padding(.bottom, 10)
 
-                    DatePicker(selection: $dateInput) {
-                        Text("date")
-                            .bold()
-                    }.padding(.horizontal)
+          DatePicker(selection: $dateInput) {
+            Text("date")
+              .bold()
+          }.padding(.horizontal)
 
-                    HStack {
-                        Button(action: onCancel) {
-                            Text("cancel")
-                        }
-                        .buttonStyle(.bordered)
-                        Spacer()
-                        Button(action: onSave) {
-                            Text("add")
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                    .padding(.all)
-                }
-                .tint(tintColor)
+          HStack {
+            Button(action: onCancel) {
+              Text("cancel")
             }
-        .frame(width: 300, height: 200)
+            .buttonStyle(.bordered)
+            Spacer()
+            Button(action: onSave) {
+              Text("add")
+            }
+            .buttonStyle(.borderedProminent)
+          }
+          .padding(.all)
         }
-        .zIndex(2)
-        .ignoresSafeArea()
+        .tint(tintColor)
+      }
+      .frame(width: 300, height: 200)
     }
+    .zIndex(2)
+    .ignoresSafeArea()
+  }
 
 }
 
 #Preview {
-    AddPopupView(contentInput: .constant(""), dateInput: .constant(.now), onSave: { }, onCancel: { })
-        .ignoresSafeArea()
-        .padding(.all)
+  AddPopupView(contentInput: .constant(""), dateInput: .constant(.now), onSave: { }, onCancel: { })
+    .ignoresSafeArea()
+    .padding(.all)
 }
+
+// MARK: - PopupWrapper
 
 struct PopupWrapper<PresentingView: View, Content: View>: View {
 
-    @Binding var isPresented: Bool
-    let presentingView: PresentingView
-    let content: Content
+  @Binding var isPresented: Bool
+  let presentingView: PresentingView
+  let content: Content
 
-    var body: some View {
-        ZStack {
-            if isPresented { content }
-            presentingView
-        }
+  var body: some View {
+    ZStack {
+      if isPresented { content }
+      presentingView
     }
+  }
 }

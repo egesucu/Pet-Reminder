@@ -6,95 +6,97 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct VaccineHistoryView: View {
 
-    @Binding var pet: Pet?
-    @Environment(\.dismiss) var dismiss
-    @Environment(\.modelContext) private var modelContext
-    @State private var viewModel = VaccineHistoryViewModel()
-    @State private var addVaccine = false
+  // MARK: Internal
 
-    var body: some View {
-        NavigationStack {
-            VStack {
-                if let pet {
-                    if pet.vaccinesArray.isEmpty {
-                        Text("no_vaccine_title")
-                    } else {
-                        List {
-                            ForEach(pet.vaccinesArray) { vaccine in
-                                HStack {
-                                    Label {
-                                        Text(vaccine.name)
-                                            .bold()
-                                    } icon: {
-                                        Image(systemName: SFSymbols.vaccine)
-                                    }
-                                    Spacer()
-                                    Text((vaccine.date).formatted())
-                                }
-                            }.onDelete { indexSet in
-                                viewModel.deleteVaccines(pet: pet, at: indexSet)
-                            }
-                        }
-                        .listStyle(.automatic)
-                    }
+  @Binding var pet: Pet?
+  @Environment(\.dismiss) var dismiss
 
-                } else {
-                    Text("no_vaccine_title")
+  var body: some View {
+    NavigationStack {
+      VStack {
+        if let pet {
+          if pet.vaccinesArray.isEmpty {
+            Text("no_vaccine_title")
+          } else {
+            List {
+              ForEach(pet.vaccinesArray) { vaccine in
+                HStack {
+                  Label {
+                    Text(vaccine.name)
+                      .bold()
+                  } icon: {
+                    Image(systemName: SFSymbols.vaccine)
+                  }
+                  Spacer()
+                  Text((vaccine.date).formatted())
                 }
+              }.onDelete { indexSet in
+                viewModel.deleteVaccines(pet: pet, at: indexSet)
+              }
             }
-            .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
-                    Button(action: dismiss.callAsFunction) {
-                        Image(systemName: SFSymbols.close)
-                            .tint(.blue)
-                            .font(.title)
-                    }.disabled(viewModel.shouldAddVaccine)
-                }
-                ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
-                    Button(action: {
-                        addVaccine.toggle()
-                    }) {
-                        Image(systemName: SFSymbols.add)
-                            .tint(.blue)
-                            .font(.title)
-                    }.disabled(viewModel.shouldAddVaccine)
-                }
-            }
-            .navigationTitle(Text("vaccine_history_title"))
-            .popupView(
-                isPresented: $viewModel.shouldAddVaccine.animation(),
-                content: AddPopupView(
-                    contentInput: $viewModel.vaccineName,
-                    dateInput: $viewModel.vaccineDate,
-                    onSave: {
-                        viewModel.saveVaccine(
-                            pet: pet
-                        )
-                    },
-                    onCancel: viewModel.cancelVaccine
-                )
-            )
-            .alert("Add", isPresented: $addVaccine) {
-                TextField("Pulvarin", text: $viewModel.vaccineName)
-                DatePicker("Date", selection: $viewModel.vaccineDate)
-                Button("OK", action: {
-                    viewModel.saveVaccine(pet: pet)
-                })
-                Button("Cancel", role: .cancel) { }
-            }
+            .listStyle(.automatic)
+          }
+
+        } else {
+          Text("no_vaccine_title")
         }
+      }
+      .toolbar {
+        ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
+          Button(action: dismiss.callAsFunction) {
+            Image(systemName: SFSymbols.close)
+              .tint(.blue)
+              .font(.title)
+          }.disabled(viewModel.shouldAddVaccine)
+        }
+        ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+          Button(action: {
+            addVaccine.toggle()
+          }) {
+            Image(systemName: SFSymbols.add)
+              .tint(.blue)
+              .font(.title)
+          }.disabled(viewModel.shouldAddVaccine)
+        }
+      }
+      .navigationTitle(Text("vaccine_history_title"))
+      .popupView(
+        isPresented: $viewModel.shouldAddVaccine.animation(),
+        content: AddPopupView(
+          contentInput: $viewModel.vaccineName,
+          dateInput: $viewModel.vaccineDate,
+          onSave: {
+            viewModel.saveVaccine(
+              pet: pet)
+          },
+          onCancel: viewModel.cancelVaccine))
+      .alert("Add", isPresented: $addVaccine) {
+        TextField("Pulvarin", text: $viewModel.vaccineName)
+        DatePicker("Date", selection: $viewModel.vaccineDate)
+        Button("OK", action: {
+          viewModel.saveVaccine(pet: pet)
+        })
+        Button("Cancel", role: .cancel) { }
+      }
     }
+  }
+
+  // MARK: Private
+
+  @Environment(\.modelContext) private var modelContext
+  @State private var viewModel = VaccineHistoryViewModel()
+  @State private var addVaccine = false
+
 }
 
 #Preview {
-    return NavigationStack {
-        VaccineHistoryView(pet: .constant(.init()))
-            .modelContainer(PreviewSampleData.container)
-
-    }
+  NavigationStack {
+    VaccineHistoryView(pet: .constant(.init()))
+      .modelContainer(PreviewSampleData.container)
+  }
 }

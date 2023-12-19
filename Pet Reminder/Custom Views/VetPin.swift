@@ -11,6 +11,6 @@ import MapKit
 
 struct VetPin: Identifiable {
 
-    var id  = UUID().uuidString
-    var place: CLPlacemark
+  var id = UUID().uuidString
+  var place: CLPlacemark
 }

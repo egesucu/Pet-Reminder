@@ -6,22 +6,28 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
-@Model public class Diary {
-    let date: Date
-    let title: String
-    let content: String
-    var pet: Pet?
-    
-    public init(
-        date: Date = .now,
-        title: String = "",
-        content: String = ""
-    ) {
-        self.date = date
-        self.title = title
-        self.content = content
-    }
+@Model
+public class Diary {
+
+  // MARK: Lifecycle
+
+  public init(
+    date: Date = .now,
+    title: String = "",
+    content: String = "")
+  {
+    self.date = date
+    self.title = title
+    self.content = content
+  }
+
+  // MARK: Internal
+
+  let date: Date
+  let title: String
+  let content: String
+  var pet: Pet?
 }

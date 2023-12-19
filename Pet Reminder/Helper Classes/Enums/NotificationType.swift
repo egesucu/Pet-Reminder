@@ -9,7 +9,7 @@
 import Foundation
 
 enum NotificationType: String {
-    case morning
-    case evening
-    case birthday
+  case morning
+  case evening
+  case birthday
 }

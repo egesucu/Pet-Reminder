@@ -10,27 +10,29 @@ import EventKit
 import Foundation
 
 enum EventAuthenticationStatus: String {
-    case authorized
-    case readOnly
-    case denied
-    case notDetermined
-    
-    static func value(status: EKAuthorizationStatus) -> Self {
-        switch status {
-            case .notDetermined:
-                return .notDetermined
-            case .restricted:
-                return .denied
-            case .denied:
-                return .denied
-            case .fullAccess:
-                return .authorized
-            case .writeOnly:
-                return .readOnly
-            case .authorized:
-                return .authorized
-            @unknown default:
-                return .denied
-        }
+  case authorized
+  case readOnly
+  case denied
+  case notDetermined
+
+  // MARK: Internal
+
+  static func value(status: EKAuthorizationStatus) -> Self {
+    switch status {
+    case .notDetermined:
+      return .notDetermined
+    case .restricted:
+      return .denied
+    case .denied:
+      return .denied
+    case .fullAccess:
+      return .authorized
+    case .writeOnly:
+      return .readOnly
+    case .authorized:
+      return .authorized
+    @unknown default:
+      return .denied
     }
+  }
 }

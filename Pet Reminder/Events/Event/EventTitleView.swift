@@ -10,17 +10,17 @@ import SwiftUI
 
 struct EventTitleView: View {
 
-    @Binding var eventTitle: String
+  @Binding var eventTitle: String
 
-    var body: some View {
-        Text(eventTitle)
-            .font(.headline)
-            .lineLimit(nil)
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
-    }
+  var body: some View {
+    Text(eventTitle)
+      .font(.headline)
+      .lineLimit(nil)
+      .multilineTextAlignment(.center)
+      .fixedSize(horizontal: false, vertical: true)
+  }
 }
 
 #Preview {
-    EventTitleView(eventTitle: .constant("Event"))
+  EventTitleView(eventTitle: .constant("Event"))
 }

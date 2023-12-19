@@ -6,11 +6,11 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 extension UIImage {
-    static func loadImage(name: String) -> UIImage {
-        return UIImage(named: name) ?? UIImage()
-    }
+  static func loadImage(name: String) -> UIImage {
+    UIImage(named: name) ?? UIImage()
+  }
 }

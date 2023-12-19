@@ -6,30 +6,30 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
 import CloudKit
 import SwiftData
+import SwiftUI
 
 @main
 struct PetReminderApp: App {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    @AppStorage(Strings.helloSeen) var helloSeen = false
-    @Environment(\.undoManager) var undoManager
-    @State private var notificationManager = NotificationManager()
+  @AppStorage(Strings.tintColor) var tintColor = Color.accent
+  @AppStorage(Strings.helloSeen) var helloSeen = false
+  @Environment(\.undoManager) var undoManager
+  @State private var notificationManager = NotificationManager()
 
-    var body: some Scene {
-        WindowGroup {
-            if helloSeen {
-                HomeManagerView()
-                    .environment(notificationManager)
-                    .tint(tintColor)
-            } else {
-                HelloView()
-                    .environment(notificationManager)
-                    .tint(tintColor)
-            }
-        }
-        .modelContainer(for: Pet.self)
+  var body: some Scene {
+    WindowGroup {
+      if helloSeen {
+        HomeManagerView()
+          .environment(notificationManager)
+          .tint(tintColor)
+      } else {
+        HelloView()
+          .environment(notificationManager)
+          .tint(tintColor)
+      }
     }
+    .modelContainer(for: Pet.self)
+  }
 }

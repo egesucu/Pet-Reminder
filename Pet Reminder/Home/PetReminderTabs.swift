@@ -9,5 +9,5 @@
 import Foundation
 
 enum PetReminderTabs {
-    case home, events, vet, settings
+  case home, events, vet, settings
 }

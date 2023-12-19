@@ -9,20 +9,19 @@
 import Foundation
 
 extension Vaccine {
-    
-    var preview: Vaccine {
-        return previews.first ?? .init()
+
+  var preview: Vaccine {
+    previews.first ?? .init()
+  }
+
+  var previews: [Vaccine] {
+    var vaccines: [Vaccine] = []
+    for vaccineName in Strings.demoVaccines {
+      let vaccine = Vaccine(
+        date: .randomDate(),
+        name: vaccineName)
+      vaccines.append(vaccine)
     }
-    
-    var previews: [Vaccine] {
-        var vaccines: [Vaccine] = []
-        Strings.demoVaccines.forEach { vaccineName in
-            let vaccine = Vaccine(
-                date: .randomDate(),
-                name: vaccineName
-            )
-            vaccines.append(vaccine)
-        }
-        return vaccines
-    }
+    return vaccines
+  }
 }

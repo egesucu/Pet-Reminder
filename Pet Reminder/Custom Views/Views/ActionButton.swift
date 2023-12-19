@@ -9,25 +9,22 @@
 import SwiftUI
 
 struct ActionButton: View {
-    var action: () -> Void
-    var content: LocalizedStringKey
-    var systemImage: String
-    var isEnabled: Bool
-    var tint: Color?
+  var action: () -> Void
+  var content: LocalizedStringKey
+  var systemImage: String
+  var isEnabled: Bool
+  var tint: Color?
 
-    var body: some View {
-        Button(action: action) {
-            Label(content, systemImage: systemImage)
-        }
-        .font(.title)
-        .tint(tint)
-        .buttonStyle(.borderedProminent)
-
+  var body: some View {
+    Button(action: action) {
+      Label(content, systemImage: systemImage)
     }
+    .font(.title)
+    .tint(tint)
+    .buttonStyle(.borderedProminent)
+  }
 }
 
 #Preview {
-    ActionButton(action: {
-
-    }, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: true, tint: .green)
+  ActionButton(action: { }, content: .save, systemImage: SFSymbols.pawprintCircleFill, isEnabled: true, tint: .green)
 }

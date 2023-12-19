@@ -6,41 +6,43 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
 import PhotosUI
+import SwiftUI
 
 struct PhotoImagePickerView: View {
-    @State private var selectedPhoto: PhotosPickerItem?
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+  @State private var selectedPhoto: PhotosPickerItem?
+  @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    @Binding var photoData: Data?
+  @Binding var photoData: Data?
 
-    var body: some View {
-        VStack {
-            PhotosPicker(
-                selection: $selectedPhoto,
-                matching: .images) {
-                    Label(
-                        "Select a photo",
-                        systemImage: "photo.fill"
-                    )
-                    .font(.title3)
-                }
-                .tint(tintColor)
-                .onChange(of: selectedPhoto) {
-                    Task {
-                        if let data = try? await selectedPhoto?
-                            .loadTransferable(type: Data.self) {
-                            photoData = data
-                        }
-                    }
-                }
-                .padding(.vertical)
+  var body: some View {
+    VStack {
+      PhotosPicker(
+        selection: $selectedPhoto,
+        matching: .images)
+      {
+        Label(
+          "Select a photo",
+          systemImage: "photo.fill")
+          .font(.title3)
+      }
+      .tint(tintColor)
+      .onChange(of: selectedPhoto) {
+        Task {
+          if
+            let data = try? await selectedPhoto?
+              .loadTransferable(type: Data.self)
+          {
+            photoData = data
+          }
         }
+      }
+      .padding(.vertical)
     }
+  }
 
 }
 
 #Preview {
-    PhotoImagePickerView(photoData: .constant(nil))
+  PhotoImagePickerView(photoData: .constant(nil))
 }

@@ -9,12 +9,12 @@
 import Foundation
 
 enum PetError: LocalizedError {
-    case name
-    
-    var errorDescription: String? {
-        switch self {
-            case .name:
-                return String(localized: "name_error")
-        }
+  case name
+
+  var errorDescription: String? {
+    switch self {
+    case .name:
+      String(localized: "name_error")
     }
+  }
 }

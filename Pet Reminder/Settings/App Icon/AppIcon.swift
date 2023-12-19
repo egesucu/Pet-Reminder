@@ -6,41 +6,43 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 enum AppIcon: String, CaseIterable, Identifiable {
 
-    case primary = "AppIcon"
-    case darkMode = "AppIcon-Dark"
-    case fivePointFive = "AppIcon-Old"
-    case five = "AppIcon-Oldest"
+  case primary = "AppIcon"
+  case darkMode = "AppIcon-Dark"
+  case fivePointFive = "AppIcon-Old"
+  case five = "AppIcon-Oldest"
 
-    var id: String { rawValue }
+  // MARK: Internal
 
-    var iconName: String? {
-        switch self {
-        case .primary:
-            return nil
-        default:
-            return rawValue
-        }
+  var id: String { rawValue }
+
+  var iconName: String? {
+    switch self {
+    case .primary:
+      nil
+    default:
+      rawValue
     }
+  }
 
-    var description: LocalizedStringKey {
-        switch self {
-        case .primary:
-            return "Logo 1(Default)"
-        case .darkMode:
-            return "Logo 2"
-        case .fivePointFive:
-            return "Logo V5.5"
-        case .five:
-            return "Logo V5"
-        }
+  var description: LocalizedStringKey {
+    switch self {
+    case .primary:
+      "Logo 1(Default)"
+    case .darkMode:
+      "Logo 2"
+    case .fivePointFive:
+      "Logo V5.5"
+    case .five:
+      "Logo V5"
     }
+  }
 
-    var preview: UIImage {
-        UIImage(named: rawValue) ?? UIImage()
-    }
+  var preview: UIImage {
+    UIImage(named: rawValue) ?? UIImage()
+  }
 }

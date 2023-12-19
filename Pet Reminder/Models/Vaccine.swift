@@ -10,17 +10,23 @@
 import Foundation
 import SwiftData
 
-@Model public class Vaccine {
-    var date = Date.now
-    var name = ""
-    var pet: Pet?
+@Model
+public class Vaccine {
 
-    init(
-        date: Foundation.Date = Date.now,
-        name: String = ""
-    ) {
-        self.date = date
-        self.name = name
-    }
+  // MARK: Lifecycle
+
+  init(
+    date: Foundation.Date = Date.now,
+    name: String = "")
+  {
+    self.date = date
+    self.name = name
+  }
+
+  // MARK: Internal
+
+  var date = Date.now
+  var name = ""
+  var pet: Pet?
 
 }

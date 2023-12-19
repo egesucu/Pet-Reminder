@@ -10,29 +10,28 @@ import SwiftUI
 
 struct PetBirthdayView: View {
 
-    @Binding var birthday: Date
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+  @Binding var birthday: Date
+  @AppStorage(Strings.tintColor) var tintColor = Color.accent
 
-    var body: some View {
-        VStack {
-            Spacer()
-            Text("birthday_title")
-                .font(.title2)
-                .bold()
-                .padding(.trailing, 20)
-            DatePicker(
-                "birthday_title",
-                selection: $birthday,
-                displayedComponents: .date
-            )
-                .labelsHidden()
-                .tint(tintColor)
-            Spacer()
-        }
-        .padding(.all)
+  var body: some View {
+    VStack {
+      Spacer()
+      Text("birthday_title")
+        .font(.title2)
+        .bold()
+        .padding(.trailing, 20)
+      DatePicker(
+        "birthday_title",
+        selection: $birthday,
+        displayedComponents: .date)
+        .labelsHidden()
+        .tint(tintColor)
+      Spacer()
     }
+    .padding(.all)
+  }
 }
 
 #Preview {
-    PetBirthdayView(birthday: .constant(.now))
+  PetBirthdayView(birthday: .constant(.now))
 }

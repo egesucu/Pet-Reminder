@@ -9,6 +9,6 @@
 import Foundation
 
 enum ICloudResultType {
-    case success
-    case error(IcloudErrorType)
+  case success
+  case error(IcloudErrorType)
 }

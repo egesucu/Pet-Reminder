@@ -9,52 +9,52 @@
 import Foundation
 
 extension Date {
-    static let tomorrow: Date = {
-        var today = Calendar.current.startOfDay(for: Date.now)
-        var tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today) ?? Date()
-        return tomorrow
-    }()
+  static let tomorrow: Date = {
+    var today = Calendar.current.startOfDay(for: Date.now)
+    var tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today) ?? Date()
+    return tomorrow
+  }()
 
-    /// 08:00 AM of the current day
-    static let eightAM: Self = {
-        return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*8)
-    }()
+  /// 08:00 AM of the current day
+  static let eightAM: Self = Calendar.current.startOfDay(for: Date()).addingTimeInterval(60 * 60 * 8)
 
-    /// 08:00 PM of the current day
-    static let eightPM: Self = {
-        return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*20)
-    }()
+  /// 08:00 PM of the current day
+  static let eightPM: Self = Calendar.current.startOfDay(for: Date()).addingTimeInterval(60 * 60 * 20)
 
-    func convertDateToString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MM yyyy"
-        return formatter.string(from: self)
-    }
-    func convertStringToDate(string: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MM yyyy"
-        return formatter.date(from: string) ?? Date()
-    }
+  static func randomDate() -> Self {
+    let components: DateComponents = .generateRandomDateComponent()
+    return Calendar.current.date(from: components) ?? .now
+  }
 
-    func printTime() -> String {
-        return self.formatted(.dateTime.hour().minute())
-    }
+  func convertDateToString() -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd MM yyyy"
+    return formatter.string(from: self)
+  }
 
-    func printDate() -> String {
-        return self.formatted(.dateTime.day()
-            .month(.twoDigits).year())
-    }
+  func convertStringToDate(string: String) -> Date {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd MM yyyy"
+    return formatter.date(from: string) ?? Date()
+  }
 
-    static func randomDate() -> Self {
-        let components: DateComponents = .generateRandomDateComponent()
-        return Calendar.current.date(from: components) ?? .now
-    }
+  func printTime() -> String {
+    formatted(.dateTime.hour().minute())
+  }
+
+  func printDate() -> String {
+    formatted(
+      .dateTime.day()
+        .month(.twoDigits).year())
+  }
+
 }
+
 // MARK: - Calendar
 extension Calendar {
-    func isDateLater(date: Date) -> Bool {
-        return date >= Date.tomorrow
-    }
+  func isDateLater(date: Date) -> Bool {
+    date >= Date.tomorrow
+  }
 }
 
 /// 60(sec) * 60(min) * 24(hours) * 30(days) = 2_592_000
@@ -62,14 +62,13 @@ let oneMonthInMilliSeconds: Double = 2_592_000
 
 // MARK: - DateComponents
 extension DateComponents {
-    static func generateRandomDateComponent() -> Self {
-        DateComponents(
-            year: Int.random(in: 2018...2023),
-            month: Int.random(in: 0...12),
-            day: Int.random(in: 0...30),
-            hour: Int.random(in: 0...23),
-            minute: Int.random(in: 0...59),
-            second: Int.random(in: 0...59)
-        )
-    }
+  static func generateRandomDateComponent() -> Self {
+    DateComponents(
+      year: Int.random(in: 2018...2023),
+      month: Int.random(in: 0...12),
+      day: Int.random(in: 0...30),
+      hour: Int.random(in: 0...23),
+      minute: Int.random(in: 0...59),
+      second: Int.random(in: 0...59))
+  }
 }

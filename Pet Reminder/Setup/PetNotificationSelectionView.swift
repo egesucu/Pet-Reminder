@@ -10,85 +10,82 @@ import SwiftUI
 
 struct PetNotificationSelectionView: View {
 
-    @Binding var dayType: FeedTimeSelection
-    @Binding var morningFeed: Date
-    @Binding var eveningFeed: Date
+  @Binding var dayType: FeedTimeSelection
+  @Binding var morningFeed: Date
+  @Binding var eveningFeed: Date
 
-    var body: some View {
-        VStack {
-            notificationType()
-                .animation(.easeOut(duration: 0.8), value: dayType)
-                .padding(.all)
-        }
-
-    }
-
-    @ViewBuilder func notificationType() -> some View {
-        switch dayType {
-        case .morning:
-            morningView
-        case .evening:
-            eveningView
-        default:
-            bothView
-        }
-    }
-
-    var morningView: some View {
-        HStack {
-            Image(.morning)
-                .resizable()
-                .frame(maxWidth: 100, maxHeight: 80)
-                .clipShape(.rect(cornerRadius: 15))
-            Spacer()
-            DatePicker("feed_selection_morning",
-                       selection: $morningFeed,
-                       in: ...eveningFeed.addingTimeInterval(60),
-                       displayedComponents: .hourAndMinute)
-
-        }
+  var body: some View {
+    VStack {
+      notificationType()
         .animation(.easeOut(duration: 0.8), value: dayType)
-        .transition(.identity)
-
+        .padding(.all)
     }
+  }
 
-    var eveningView: some View {
-        HStack {
-            Image(.evening)
-                .resizable()
-                .frame(maxWidth: 100, maxHeight: 80)
-                .clipShape(.rect(cornerRadius: 15))
-            Spacer()
-            DatePicker("feed_selection_evening",
-                       selection: $eveningFeed,
-                       in: morningFeed.addingTimeInterval(60)...,
-                       displayedComponents: .hourAndMinute)
-        }
-        .animation(.easeOut(duration: 0.8), value: dayType)
-        .transition(.identity)
+  var morningView: some View {
+    HStack {
+      Image(.morning)
+        .resizable()
+        .frame(maxWidth: 100, maxHeight: 80)
+        .clipShape(.rect(cornerRadius: 15))
+      Spacer()
+      DatePicker(
+        "feed_selection_morning",
+        selection: $morningFeed,
+        in: ...eveningFeed.addingTimeInterval(60),
+        displayedComponents: .hourAndMinute)
     }
+    .animation(.easeOut(duration: 0.8), value: dayType)
+    .transition(.identity)
+  }
 
-    var bothView: some View {
-        VStack {
-            morningView
-                .padding(.vertical)
-            eveningView
-        }
-        .animation(.easeOut(duration: 0.8), value: dayType)
-        .transition(.identity)
+  var eveningView: some View {
+    HStack {
+      Image(.evening)
+        .resizable()
+        .frame(maxWidth: 100, maxHeight: 80)
+        .clipShape(.rect(cornerRadius: 15))
+      Spacer()
+      DatePicker(
+        "feed_selection_evening",
+        selection: $eveningFeed,
+        in: morningFeed.addingTimeInterval(60)...,
+        displayedComponents: .hourAndMinute)
     }
+    .animation(.easeOut(duration: 0.8), value: dayType)
+    .transition(.identity)
+  }
+
+  var bothView: some View {
+    VStack {
+      morningView
+        .padding(.vertical)
+      eveningView
+    }
+    .animation(.easeOut(duration: 0.8), value: dayType)
+    .transition(.identity)
+  }
+
+  @ViewBuilder
+  func notificationType() -> some View {
+    switch dayType {
+    case .morning:
+      morningView
+    case .evening:
+      eveningView
+    default:
+      bothView
+    }
+  }
+
 }
 
 #Preview {
-    PetNotificationSelectionView(
-        dayType: .constant(
-            .both
-        ),
-        morningFeed: .constant(
-            .now
-        ),
-        eveningFeed: .constant(
-            .now
-        )
-    )
+  PetNotificationSelectionView(
+    dayType: .constant(
+      .both),
+    morningFeed: .constant(
+      .now),
+    eveningFeed: .constant(
+      .now))
 }

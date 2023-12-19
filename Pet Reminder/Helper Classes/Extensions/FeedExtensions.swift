@@ -9,42 +9,40 @@
 import Foundation
 
 extension Feed {
-    var wrappedFeedDate: Date {
-        self.feedDate ?? .now
-    }
+  var wrappedFeedDate: Date {
+    feedDate ?? .now
+  }
 
-    var wrappedMorningFedStamp: Date {
-        self.morningFedStamp ?? .now
-    }
+  var wrappedMorningFedStamp: Date {
+    morningFedStamp ?? .now
+  }
 
-    var wrappedEveningFedStamp: Date {
-        self.eveningFedStamp ?? .now
+  var wrappedEveningFedStamp: Date {
+    eveningFedStamp ?? .now
+  }
+
+  var preview: Feed {
+    Feed(
+      eveningFed: true,
+      eveningFedStamp: .eightPM,
+      feedDate: .eightPM,
+      morningFed: true,
+      morningFedStamp: .eightAM)
+  }
+
+  var previews: [Feed] {
+    var feeds: [Feed] = []
+    for _ in [0...4] {
+      let date = Date.randomDate()
+      let feed = Feed(
+        eveningFed: true,
+        eveningFedStamp: date,
+        feedDate: date,
+        morningFed: true,
+        morningFedStamp: date)
+      feeds.append(feed)
     }
-    
-    var preview: Feed {
-        Feed(
-            eveningFed: true,
-            eveningFedStamp: .eightPM,
-            feedDate: .eightPM,
-            morningFed: true,
-            morningFedStamp: .eightAM
-        )
-    }
-    
-    var previews: [Feed] {
-        var feeds: [Feed] = []
-        [0...4].forEach { _ in
-            let date = Date.randomDate()
-            let feed = Feed(
-                eveningFed: true,
-                eveningFedStamp: date,
-                feedDate: date,
-                morningFed: true,
-                morningFedStamp: date
-            )
-            feeds.append(feed)
-        }
-        return feeds
-    }
-    
+    return feeds
+  }
+
 }

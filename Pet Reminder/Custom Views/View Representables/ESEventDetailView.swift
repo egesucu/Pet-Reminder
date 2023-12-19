@@ -6,44 +6,46 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
 import EventKitUI
+import SwiftUI
 
 struct ESEventDetailView: UIViewControllerRepresentable {
 
-    typealias UIViewControllerType = EKEventViewController
+  typealias UIViewControllerType = EKEventViewController
 
-    var event: EKEvent
+  class Coordinator: NSObject, EKEventViewDelegate {
 
-    func makeUIViewController(context: Context) -> EKEventViewController {
-        let view = EKEventViewController()
-        view.event = event
-        view.allowsEditing = true
-        view.allowsCalendarPreview = true
-        view.delegate = context.coordinator
-        return view
+    // MARK: Lifecycle
+
+    init(_ parent: ESEventDetailView) {
+      self.parent = parent
     }
 
-    func updateUIViewController(_ uiViewController: EKEventViewController, context: Context) {
+    // MARK: Internal
 
+    var parent: ESEventDetailView
+
+    func eventViewController(_ controller: EKEventViewController, didCompleteWith _: EKEventViewAction) {
+      controller.dismiss(animated: true, completion: nil)
     }
 
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
-    }
+  }
 
-    class Coordinator: NSObject, EKEventViewDelegate {
+  var event: EKEvent
 
-        var parent: ESEventDetailView
+  func makeUIViewController(context: Context) -> EKEventViewController {
+    let view = EKEventViewController()
+    view.event = event
+    view.allowsEditing = true
+    view.allowsCalendarPreview = true
+    view.delegate = context.coordinator
+    return view
+  }
 
-        init(_ parent: ESEventDetailView) {
-            self.parent = parent
-        }
+  func updateUIViewController(_: EKEventViewController, context _: Context) { }
 
-        func eventViewController(_ controller: EKEventViewController, didCompleteWith action: EKEventViewAction) {
-            controller.dismiss(animated: true, completion: nil)
-        }
-
-    }
+  func makeCoordinator() -> Coordinator {
+    Coordinator(self)
+  }
 
 }

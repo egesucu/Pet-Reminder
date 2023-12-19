@@ -7,48 +7,53 @@
 //
 
 import Foundation
-import StoreKit
 import Observation
 import OSLog
+import StoreKit
 
 @Observable
 class StoreManager {
-    var consumables: [Product] = []
 
-    @ObservationIgnored let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
+  // MARK: Lifecycle
 
-    init() {
-        Task {
-            await requestProducts()
+  init() {
+    Task {
+      await requestProducts()
+    }
+  }
+
+  // MARK: Internal
+
+  var consumables: [Product] = []
+
+  @ObservationIgnored let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
+
+  func requestProducts() async {
+    do {
+      let storeProducts = try await Product.products(for: productIDs)
+
+      var newConsumables: [Product] = []
+
+      for product in storeProducts {
+        switch product.type {
+        case .consumable:
+          newConsumables.append(product)
+        default:
+          Logger
+            .settings
+            .error("Unknwon product")
         }
+      }
+
+      consumables = sortByPrice(newConsumables)
+    } catch {
+      Logger
+        .settings
+        .error("Failed product request from the App Store server: \(error.localizedDescription)")
     }
+  }
 
-    func requestProducts() async {
-        do {
-            let storeProducts = try await Product.products(for: productIDs)
-
-            var newConsumables: [Product] = []
-
-            for product in storeProducts {
-                switch product.type {
-                case .consumable:
-                    newConsumables.append(product)
-                default:
-                    Logger
-                        .settings
-                        .error("Unknwon product")
-                }
-            }
-
-            consumables = sortByPrice(newConsumables)
-        } catch {
-            Logger
-                .settings
-                .error("Failed product request from the App Store server: \(error.localizedDescription)")
-        }
-    }
-
-    func sortByPrice(_ products: [Product]) -> [Product] {
-        products.sorted(by: { return $0.price < $1.price })
-    }
+  func sortByPrice(_ products: [Product]) -> [Product] {
+    products.sorted(by: { $0.price < $1.price })
+  }
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 enum PetListViewReference {
-    case petList, settings
+  case petList, settings
 }

@@ -9,50 +9,44 @@
 import SwiftUI
 
 struct PreviousFeedsSection: View {
-    var feeds: [Feed]
+  var feeds: [Feed]
 
-    var body: some View {
-        Section {
-            if feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty {
-                Text("no_feed_content")
-            } else {
-                ForEach(feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }), id: \.self) { feed in
-                    if let morning = feed.morningFedStamp {
-                        Row(
-                            imageName: "sun.max.fill",
-                            title: String(
-                                localized: "feed_content"
-                            ),
-                            content: morning.formatted(
-                                date: .abbreviated,
-                                time: .shortened
-                            ),
-                            type: .morning
-                        )
-                    }
-                    if let evening = feed.eveningFedStamp {
-                        Row(
-                            imageName: "moon.circle.fill",
-                            title: String(
-                                localized: "feed_content"
-                            ),
-                            content: evening.formatted(
-                                date: .abbreviated,
-                                time: .shortened
-                            ),
-                            type: .evening
-                        )
-                    }
-                }
-            }
-        } header: {
-            Text("previous_title")
+  var body: some View {
+    Section {
+      if feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty {
+        Text("no_feed_content")
+      } else {
+        ForEach(feeds.filter { !Calendar.current.isDateInToday($0.feedDate ?? .now) }, id: \.self) { feed in
+          if let morning = feed.morningFedStamp {
+            Row(
+              imageName: "sun.max.fill",
+              title: String(
+                localized: "feed_content"),
+              content: morning.formatted(
+                date: .abbreviated,
+                time: .shortened),
+              type: .morning)
+          }
+          if let evening = feed.eveningFedStamp {
+            Row(
+              imageName: "moon.circle.fill",
+              title: String(
+                localized: "feed_content"),
+              content: evening.formatted(
+                date: .abbreviated,
+                time: .shortened),
+              type: .evening)
+          }
         }
+      }
+    } header: {
+      Text("previous_title")
     }
+  }
 }
 
 #Preview {
-    let feeds: [Feed] = Pet().feeds ?? []
-    return PreviousFeedsSection(feeds: feeds)
-        .modelContainer(PreviewSampleData.container)
+  let feeds: [Feed] = Pet().feeds ?? []
+  return PreviousFeedsSection(feeds: feeds)
+    .modelContainer(PreviewSampleData.container)
 }

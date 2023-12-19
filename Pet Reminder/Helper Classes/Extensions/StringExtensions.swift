@@ -6,85 +6,89 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import Foundation
 import EventKit
+import Foundation
 import SwiftUI
 
-struct Strings {
-     static let demoPets = [
-        "Viski", "Dolly", "Mısır", "Boncuk",
-        "Pop", "Rocky", "Bunny", "Spur", "Lully",
-        "Baggy"
-    ]
-     static let demoVaccines = ["Pulvarin", "Alvarin", "Gagarin", "Aclor", "Silverin", "Volverine"]
-     static let placeholderVaccine = "Pulvarin"
-     static let demo = "Demo"
-     static let petSaved = "petSaved"
-     static let tintColor = "tint_color"
-     static let doggo = "Doggo"
-     static let viski = "Viski"
-     static let donateTeaID = "pet_reminder_tea_donate"
-     static let donateFoodID = "pet_reminder_food_donate"
-     static let helloSeen = "seenHello"
+// MARK: - Strings
 
-     static func footerLabel(_ first: Any) -> String {
-        return "© Ege Sucu \(first)"
-    }
-     static func notificationIdenfier(_ first: Any, _ second: Any) -> String {
-      return "\(first)-\(second)-notification"
-    }
+enum Strings {
+  static let demoPets = [
+    "Viski", "Dolly", "Mısır", "Boncuk",
+    "Pop", "Rocky", "Bunny", "Spur", "Lully",
+    "Baggy",
+  ]
+  static let demoVaccines = ["Pulvarin", "Alvarin", "Gagarin", "Aclor", "Silverin", "Volverine"]
+  static let placeholderVaccine = "Pulvarin"
+  static let demo = "Demo"
+  static let petSaved = "petSaved"
+  static let tintColor = "tint_color"
+  static let doggo = "Doggo"
+  static let viski = "Viski"
+  static let donateTeaID = "pet_reminder_tea_donate"
+  static let donateFoodID = "pet_reminder_food_donate"
+  static let helloSeen = "seenHello"
 
-     static func demoEvent(_ first: Any) -> String {
-        return "Demo Event \(first)"
-    }
+  static let demoDataOccured = "demoDataOccured"
+  static let petReminder = "Pet Reminder"
 
-    static let demoDataOccured = "demoDataOccured"
-     static let petReminder = "Pet Reminder"
+  static func footerLabel(_ first: Any) -> String {
+    "© Ege Sucu \(first)"
+  }
+
+  static func notificationIdenfier(_ first: Any, _ second: Any) -> String {
+    "\(first)-\(second)-notification"
+  }
+
+  static func demoEvent(_ first: Any) -> String {
+    "Demo Event \(first)"
+  }
 
 }
 
 extension String {
-    static func formatEventDateTime(current: Bool, allDay: Bool, event: EKEvent) -> Self {
-        if allDay {
-            return current ? String(
-                localized: "all_day_title"
-            ) : String.futureDateTimeFormat(
-                allDay: allDay,
-                event: event
-            )
-        } else {
-            return current ? String.currentDateTimeFormat(
-                allDay: allDay,
-                event: event
-            ) : String.futureDateTimeFormat(
-                allDay: allDay,
-                event: event
-            )
-        }
-    }
+  var isNotEmpty: Bool {
+    !isEmpty
+  }
 
-    static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
-        if allDay {
-            return "\(event.startDate.printDate()) \(String(localized: "all_day_title"))"
-        } else {
-            return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
-        }
+  static func formatEventDateTime(current: Bool, allDay: Bool, event: EKEvent) -> Self {
+    if allDay {
+      current
+        ? String(
+          localized: "all_day_title")
+        : String.futureDateTimeFormat(
+          allDay: allDay,
+          event: event)
+    } else {
+      current
+        ? String.currentDateTimeFormat(
+          allDay: allDay,
+          event: event)
+        : String.futureDateTimeFormat(
+          allDay: allDay,
+          event: event)
     }
+  }
 
-    static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
-        if allDay {
-            return String(localized: "all_day_title")
-        } else {
-            return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
-        }
+  static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
+    if allDay {
+      "\(event.startDate.printDate()) \(String(localized: "all_day_title"))"
+    } else {
+      "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
     }
+  }
 
-    var isNotEmpty: Bool {
-        !self.isEmpty
+  static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
+    if allDay {
+      String(localized: "all_day_title")
+    } else {
+      "\(event.startDate.printTime()) - \(event.endDate.printTime())"
     }
+  }
+
 }
 
 extension LocalizedStringKey {
-    static let save: Self = "save"
-    static let cancel: Self = "cancel"
+  static let save: Self = "save"
+  static let cancel: Self = "cancel"
 }

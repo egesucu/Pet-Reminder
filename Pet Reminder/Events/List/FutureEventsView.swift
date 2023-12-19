@@ -6,45 +6,44 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
 import EventKit
+import SwiftUI
 
 struct FutureEventsView: View {
 
-    @Binding var eventVM: EventManager
-    @Binding var filteredCalendar: EKCalendar?
+  @Binding var eventVM: EventManager
+  @Binding var filteredCalendar: EKCalendar?
 
-    var filteredEvents: [EKEvent] {
-        withAnimation {
-            eventVM.events.filter {
-                if let filteredCalendar {
-                    return Calendar.current.isDateLater(date: $0.startDate) &&
-                    $0.calendar == filteredCalendar
-                } else {
-                    return Calendar.current.isDateLater(date: $0.startDate)
-                }
-            }
+  var filteredEvents: [EKEvent] {
+    withAnimation {
+      eventVM.events.filter {
+        if let filteredCalendar {
+          Calendar.current.isDateLater(date: $0.startDate) &&
+            $0.calendar == filteredCalendar
+        } else {
+          Calendar.current.isDateLater(date: $0.startDate)
         }
-
+      }
     }
+  }
 
-    var body: some View {
-        Section {
-            if filteredEvents.isEmpty {
-                Text("event_no_title")
-            } else {
-                ForEach(filteredEvents, id: \.self) { event in
-                    EventView(event: event, eventVM: eventVM)
-                        .padding(.horizontal, 5)
-                        .listRowSeparator(.hidden)
-                }
-            }
-        } header: {
-            Text("upcoming_title")
+  var body: some View {
+    Section {
+      if filteredEvents.isEmpty {
+        Text("event_no_title")
+      } else {
+        ForEach(filteredEvents, id: \.self) { event in
+          EventView(event: event, eventVM: eventVM)
+            .padding(.horizontal, 5)
+            .listRowSeparator(.hidden)
         }
+      }
+    } header: {
+      Text("upcoming_title")
     }
+  }
 }
 
 #Preview {
-    FutureEventsView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(nil))
+  FutureEventsView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(nil))
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 enum MapViewStatus: String {
-    case locationNotAllowed
-    case none
-    case authorized
+  case locationNotAllowed
+  case none
+  case authorized
 }
