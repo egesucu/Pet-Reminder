@@ -10,18 +10,29 @@ import Foundation
 import OSLog
 
 extension Logger {
-    private static var subsystem = Bundle.main.bundleIdentifier!
+    private static var subsystem: String { Bundle.main.bundleIdentifier! }
     
-    static let events = Logger(subsystem: subsystem, category: "Event")
+    static var events : Logger {
+        Logger(subsystem: subsystem, category: "Event")
+    }
     
-    static let vet = Logger(subsystem: subsystem, category: "Find Vet")
+    static var vet: Logger {
+        Logger(subsystem: subsystem, category: "Find Vet")
+    }
     
-    static let pets = Logger(subsystem: subsystem, category: "Pet")
-
-    static let feed = Logger(subsystem: subsystem, category: "Feed")
-        
-    static let settings = Logger(subsystem: subsystem, category: "Settings")
+    static var pets: Logger {
+        Logger(subsystem: subsystem, category: "Pet")
+    }
     
-    static let notifications = Logger(subsystem: subsystem, category: "Notifications")
-
+    static var feed: Logger {
+        Logger(subsystem: subsystem, category: "Feed")
+    }
+    
+    static var settings: Logger {
+        Logger(subsystem: subsystem, category: "Settings")
+    }
+    
+    static var notifications: Logger {
+        Logger(subsystem: subsystem, category: "Notifications")
+    }
 }
