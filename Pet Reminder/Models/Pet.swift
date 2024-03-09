@@ -10,7 +10,7 @@
 import Foundation
 import SwiftData
 
-@Model public class Pet {
+@Model public final class Pet: Sendable {
     public var id = UUID()
     var birthday = Date()
     var choice = 0
