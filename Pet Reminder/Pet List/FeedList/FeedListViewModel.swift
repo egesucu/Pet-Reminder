@@ -12,7 +12,7 @@ import SwiftData
 import OSLog
 
 @Observable
-class FeedListViewModel {
+final class FeedListViewModel {
 
     var morningOn = false
     var eveningOn = false
