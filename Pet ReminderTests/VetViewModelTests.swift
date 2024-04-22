@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Observation
 @testable import Pet_Reminder
 
 final class VetViewModelTests: XCTestCase {

@@ -30,11 +30,6 @@ extension Date {
         formatter.dateFormat = "dd MM yyyy"
         return formatter.string(from: self)
     }
-    func convertStringToDate(string: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MM yyyy"
-        return formatter.date(from: string) ?? Date()
-    }
 
     func printTime() -> String {
         return self.formatted(.dateTime.hour().minute())

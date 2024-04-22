@@ -20,11 +20,11 @@ struct AllNotificationsView: View {
                 }
             }
         }
-        .task(notificationManager?.getNotifications ?? fallbackFunction)
+        .task {
+            await notificationManager?.getNotifications()
+        }
     }
     
-    @Sendable
-    func fallbackFunction() async {}
 }
 
 #Preview {

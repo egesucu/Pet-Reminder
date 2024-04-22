@@ -62,7 +62,9 @@ struct NotificationView: View {
                 
             }
             .listStyle(.insetGrouped)
-            .refreshable(action: notificationManager?.getNotifications ?? fallbackFunction)
+            .refreshable {
+                await notificationManager?.getNotifications()
+            }
         }
         .overlay {
             if pets.isEmpty {
@@ -87,12 +89,11 @@ struct NotificationView: View {
 
             }
         }
-        .task(notificationManager?.getNotifications ?? fallbackFunction)
+        .task {
+            await notificationManager?.getNotifications()
+        }
     }
     
-    @Sendable
-    func fallbackFunction() async {}
-
     func notificationAmount(for name: String?) -> Int {
         return notificationManager?
             .notifications
@@ -100,7 +101,7 @@ struct NotificationView: View {
             .count ?? 0
     }
 
-    @Sendable func fetchNotificiations() async {
+    func fetchNotificiations() async {
         await notificationManager?.getNotifications()
     }
 

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,8 @@
 		725F44CA2A260B020096CCCB /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C92A260B020096CCCB /* StringExtensions.swift */; };
 		725F44CC2A260B3D0096CCCB /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CB2A260B3D0096CCCB /* DateExtensions.swift */; };
 		725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */; };
+		7296924D2BD6FFFE00611262 /* VetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B00A2AE84C3000B14A04 /* VetViewModelTests.swift */; };
+		7296924E2BD7000100611262 /* FeedListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0192AE8525000B14A04 /* FeedListViewModelTests.swift */; };
 		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
@@ -33,11 +35,6 @@
 		9D38130E2AA359DC0080F412 /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D38130D2AA359DC0080F412 /* AppIconManager.swift */; };
 		9D3813112AA35A6A0080F412 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3813102AA35A6A0080F412 /* AppIcon.swift */; };
 		9D3813132AA35CD40080F412 /* ChangeAppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3813122AA35CD40080F412 /* ChangeAppIconView.swift */; };
-		9D3E725A2AE97EEE008FCB8D /* MapViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0222AE8932B00B14A04 /* MapViewStatus.swift */; };
-		9D3E725B2AE97F0C008FCB8D /* AddPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9629F7B45C009B0ADC /* AddPopupView.swift */; };
-		9D3E725C2AE97F13008FCB8D /* MapApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C52A260ACA0096CCCB /* MapApplication.swift */; };
-		9D3E725D2AE97F1F008FCB8D /* SFSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C92402AA64FEE009BF51C /* SFSymbols.swift */; };
-		9D3E725E2AE97F23008FCB8D /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0252AE893E400B14A04 /* WiggleModifier.swift */; };
 		9D3ED57A2A9F8D6500940AA4 /* SetupSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */; };
 		9D3ED57C2A9F8D7D00940AA4 /* NotificationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3ED57B2A9F8D7D00940AA4 /* NotificationSelectView.swift */; };
 		9D4114AD2A83050500C21D87 /* PetChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4114AC2A83050500C21D87 /* PetChangeViewModel.swift */; };
@@ -61,21 +58,8 @@
 		9D6293702A87CF2B00BA577A /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* ImageExtensions.swift */; };
 		9D6293722A87D46300BA577A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
-		9D69B00B2AE84C3000B14A04 /* VetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B00A2AE84C3000B14A04 /* VetViewModelTests.swift */; };
-		9D69B00C2AE84E1D00B14A04 /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
-		9D69B00D2AE84E3200B14A04 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCDA06026E3C34600DF290F /* Pin.swift */; };
-		9D69B00E2AE84E3D00B14A04 /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
-		9D69B00F2AE84E4D00B14A04 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C92A260B020096CCCB /* StringExtensions.swift */; };
-		9D69B0102AE84E5900B14A04 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CB2A260B3D0096CCCB /* DateExtensions.swift */; };
-		9D69B0112AE84E6400B14A04 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C72A260ADC0096CCCB /* ViewExtensions.swift */; };
-		9D69B0132AE84E7E00B14A04 /* URLDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44C32A260ABB0096CCCB /* URLDefinitions.swift */; };
-		9D69B0142AE84E8600B14A04 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6293712A87D46300BA577A /* Logger.swift */; };
 		9D69B0152AE84E9200B14A04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FA248666C1004610C8 /* Assets.xcassets */; };
-		9D69B0172AE84EA400B14A04 /* ESSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFDDDD32AD2CDD3006833D7 /* ESSettingsButton.swift */; };
-		9D69B0182AE84EA900B14A04 /* MapItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A4AD2A842B470004CB8E /* MapItemView.swift */; };
-		9D69B01A2AE8525000B14A04 /* FeedListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0192AE8525000B14A04 /* FeedListViewModelTests.swift */; };
 		9D69B01C2AE8568C00B14A04 /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B01B2AE8568C00B14A04 /* ExtensionTests.swift */; };
-		9D69B01D2AE8574C00B14A04 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D62936F2A87CF2B00BA577A /* ImageExtensions.swift */; };
 		9D69B01F2AE8923C00B14A04 /* EventAuthenticationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B01E2AE8923C00B14A04 /* EventAuthenticationStatus.swift */; };
 		9D69B0212AE892C300B14A04 /* PetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0202AE892C300B14A04 /* PetError.swift */; };
 		9D69B0232AE8932B00B14A04 /* MapViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0222AE8932B00B14A04 /* MapViewStatus.swift */; };
@@ -741,7 +725,7 @@
 				};
 			};
 			buildConfigurationList = 9D8E76E9248666BD004610C8 /* Build configuration list for PBXProject "Pet Reminder" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -795,26 +779,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D69B0102AE84E5900B14A04 /* DateExtensions.swift in Sources */,
-				9D3E725E2AE97F23008FCB8D /* WiggleModifier.swift in Sources */,
-				9D69B0142AE84E8600B14A04 /* Logger.swift in Sources */,
-				9D69B00F2AE84E4D00B14A04 /* StringExtensions.swift in Sources */,
-				9D3E725C2AE97F13008FCB8D /* MapApplication.swift in Sources */,
-				9D69B0112AE84E6400B14A04 /* ViewExtensions.swift in Sources */,
-				9D69B00E2AE84E3D00B14A04 /* FindVetView.swift in Sources */,
-				9D69B00C2AE84E1D00B14A04 /* VetViewModel.swift in Sources */,
-				9D69B01A2AE8525000B14A04 /* FeedListViewModelTests.swift in Sources */,
-				9D69B0172AE84EA400B14A04 /* ESSettingsButton.swift in Sources */,
-				9D69B00B2AE84C3000B14A04 /* VetViewModelTests.swift in Sources */,
-				9D69B0182AE84EA900B14A04 /* MapItemView.swift in Sources */,
 				9D7C252B2A5948D300DDB027 /* Pet_ReminderTests.swift in Sources */,
-				9D3E725A2AE97EEE008FCB8D /* MapViewStatus.swift in Sources */,
-				9D69B0132AE84E7E00B14A04 /* URLDefinitions.swift in Sources */,
-				9D69B00D2AE84E3200B14A04 /* Pin.swift in Sources */,
-				9D69B01D2AE8574C00B14A04 /* ImageExtensions.swift in Sources */,
-				9D3E725B2AE97F0C008FCB8D /* AddPopupView.swift in Sources */,
+				7296924D2BD6FFFE00611262 /* VetViewModelTests.swift in Sources */,
+				7296924E2BD7000100611262 /* FeedListViewModelTests.swift in Sources */,
 				9D69B01C2AE8568C00B14A04 /* ExtensionTests.swift in Sources */,
-				9D3E725D2AE97F1F008FCB8D /* SFSymbols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

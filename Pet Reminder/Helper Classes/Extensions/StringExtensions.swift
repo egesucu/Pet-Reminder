@@ -62,6 +62,13 @@ extension String {
             )
         }
     }
+    
+    func convertStringToDate(locale: Locale = .current) -> Date {
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter.date(from: self) ?? Date()
+    }
 
     static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {

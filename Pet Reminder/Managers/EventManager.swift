@@ -68,7 +68,6 @@ class EventManager {
         }
     }
 
-    @Sendable
     func fetchCalendars() {
         if authStatus == .authorized {
             self.calendars = eventStore.calendars(for: .event)
@@ -131,7 +130,6 @@ class EventManager {
         }
     }
 
-    @Sendable
     func reloadEvents() async {
         await updateAuthStatus()
         await loadEvents()
