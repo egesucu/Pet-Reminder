@@ -31,7 +31,9 @@ struct FindVetView: View {
                 }
             }
         }
-        .task(viewModel.requestMap)
+        .task {
+            await viewModel.requestMap()
+        }
         .onSubmit(of: .search) {
             Task {
                 await viewModel.searchPins()

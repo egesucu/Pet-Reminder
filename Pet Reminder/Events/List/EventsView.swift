@@ -27,9 +27,13 @@ struct EventsView: View {
                 FutureEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
                     .transition(.slide)
             }
-            .task(eventVM.fetchCalendars)
+            .task {
+                eventVM.fetchCalendars()
+            }
             .onAppear(perform: getEventDates)
-            .refreshable(action: eventVM.reloadEvents)
+            .refreshable {
+                await eventVM.reloadEvents()
+            }
         }
         
     }

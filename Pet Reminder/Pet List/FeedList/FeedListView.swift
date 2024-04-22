@@ -83,17 +83,14 @@ struct FeedListView: View {
             }
 
         }
-        .task(getFeeds)
+        .task {
+            await viewModel.getLatestFeed(pet: pet)
+        }
         .onChange(of: pet) {
             Task {
-                await getFeeds()
+                viewModel.getLatestFeed(pet:)
             }
         }
-    }
-
-    @Sendable
-    func getFeeds() async {
-        await viewModel.getLatestFeed(pet: pet)
     }
 }
 

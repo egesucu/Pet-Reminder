@@ -32,7 +32,9 @@ struct EventListView: View {
         .toolbar(content: eventToolBar)
         .navigationTitle(Text("event_title"))
         .overlay(content: eventViewOverlay)
-        .task(eventVM.reloadEvents)
+        .task {
+            await eventVM.reloadEvents()
+        }
     }
     
     @ViewBuilder

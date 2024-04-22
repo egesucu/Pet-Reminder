@@ -22,7 +22,6 @@ class VetViewModel: NSObject, VetViewModelProtocol {
     var selectedLocation: Pin?
     var mapViewStatus: MapViewStatus = .none
     
-    @Sendable
     func requestMap() async {
         await updateAuthenticationStatus()
         Logger

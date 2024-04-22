@@ -37,7 +37,6 @@ class NotificationManager {
         }
     }
 
-    @Sendable
     func getNotifications() async {
         notifications = await UNUserNotificationCenter.current().pendingNotificationRequests()
     }
