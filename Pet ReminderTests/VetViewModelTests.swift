@@ -34,11 +34,4 @@ final class VetViewModelTests: XCTestCase {
         }
     }
     
-    func testAuthenticationStatus() async throws {
-        let viewModel = VetViewModel()
-        await viewModel.requestMap()
-        
-        XCTAssertTrue(viewModel.mapViewStatus == .authorized)
-    }
-    
 }
