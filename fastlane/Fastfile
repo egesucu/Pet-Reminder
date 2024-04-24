@@ -16,17 +16,10 @@ platform :ios do
       skip_package_ipa: true,
       skip_codesigning: true
     )
-    scan
   end
 
   lane :test do
     desc "Tests the application and produce coverage output."
-    gym(
-      clean: true,
-      silent: true,
-      skip_package_ipa: true,
-      skip_codesigning: true
-    )
     scan
     xcov
   end
