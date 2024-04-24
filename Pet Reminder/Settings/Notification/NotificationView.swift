@@ -44,13 +44,13 @@ struct NotificationView: View {
                                     remove(pet: pet, at: indexSet)
                                 }
                             }
-                            
+
                         } header: {
                             Text(pet.name)
                         } footer: {
                             let count = notificationAmount(for: pet.name)
                             Text("notification \(count)")
-                            
+
                         }
                         .onChange(of: notificationManager.notifications) {
                             Task {
@@ -59,7 +59,7 @@ struct NotificationView: View {
                         }
                     }
                 }
-                
+
             }
             .listStyle(.insetGrouped)
             .refreshable {
@@ -93,7 +93,7 @@ struct NotificationView: View {
             await notificationManager?.getNotifications()
         }
     }
-    
+
     func notificationAmount(for name: String?) -> Int {
         return notificationManager?
             .notifications

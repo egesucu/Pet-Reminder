@@ -62,7 +62,7 @@ extension String {
             )
         }
     }
-    
+
     func convertStringToDate(locale: Locale = .current) -> Date {
         let formatter = DateFormatter()
         formatter.locale = locale

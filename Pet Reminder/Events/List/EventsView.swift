@@ -35,7 +35,7 @@ struct EventsView: View {
                 await eventVM.reloadEvents()
             }
         }
-        
+
     }
 
     private func getEventDates() {

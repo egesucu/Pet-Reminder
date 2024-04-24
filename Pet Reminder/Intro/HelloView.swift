@@ -46,7 +46,7 @@ struct HelloView: View {
         .opacity(shouldAnimate ? 1.0 : 0.0)
         .onAppear(perform: animateView)
     }
-    
+
     @ViewBuilder
     func logoView() -> some View {
         if let logoImage = UIImage(named: "AppIcon") {
@@ -56,7 +56,7 @@ struct HelloView: View {
                 .clipShape(.rect(cornerRadius: 10))
         }
     }
-    
+
     private func goButtonPressed() {
         helloSeen = true
         navigateToHome.toggle()

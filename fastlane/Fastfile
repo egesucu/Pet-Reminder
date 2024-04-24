@@ -1,0 +1,29 @@
+update_fastlane
+
+default_platform(:ios)
+
+before_all do |lane, options|
+  clear_derived_data
+  clean_build_artifacts
+end
+
+platform :ios do
+  desc "Builds the application"
+  lane :build do
+    gym(
+      clean: true,
+      silent: true,
+      skip_package_ipa: true,
+      skip_codesigning: true,
+      export_options: {
+         iCloudContainerEnvironment: "Production"
+      } 
+    )
+  end
+
+  lane :test do
+    desc "Tests the application and produce coverage output."
+    scan(skip_build: true)
+    xcov
+  end
+end

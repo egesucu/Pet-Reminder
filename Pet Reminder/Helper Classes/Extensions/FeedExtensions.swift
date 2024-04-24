@@ -20,7 +20,7 @@ extension Feed {
     var wrappedEveningFedStamp: Date {
         self.eveningFedStamp ?? .now
     }
-    
+
     var preview: Feed {
         Feed(
             eveningFed: true,
@@ -30,7 +30,7 @@ extension Feed {
             morningFedStamp: .eightAM
         )
     }
-    
+
     var previews: [Feed] {
         var feeds: [Feed] = []
         [0...4].forEach { _ in
@@ -46,5 +46,5 @@ extension Feed {
         }
         return feeds
     }
-    
+
 }

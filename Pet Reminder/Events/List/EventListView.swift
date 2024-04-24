@@ -10,15 +10,15 @@ import SwiftUI
 import EventKit
 
 struct EventListView: View {
-    
+
     @State private var eventVM: EventManager
     @State private var showAddEvent = false
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    
+
     init(eventVM: EventManager) {
         _eventVM = State(wrappedValue: eventVM)
     }
-    
+
     var body: some View {
         NavigationStack {
             EventsView(eventVM: $eventVM)
@@ -36,7 +36,7 @@ struct EventListView: View {
             await eventVM.reloadEvents()
         }
     }
-    
+
     @ViewBuilder
     func eventViewOverlay() -> some View {
         if eventVM.authStatus == .denied {
@@ -57,7 +57,7 @@ struct EventListView: View {
             })
         }
     }
-    
+
     @ToolbarContentBuilder
     func eventToolBar() -> some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
@@ -68,13 +68,13 @@ struct EventListView: View {
             }
         }
     }
-    
+
     private func reloadEvents() {
         Task {
             eventVM.reloadEvents
         }
     }
-    
+
     private func toggleAddEvent() {
         showAddEvent.toggle()
     }

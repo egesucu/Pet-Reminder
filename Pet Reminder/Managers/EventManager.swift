@@ -51,7 +51,7 @@ class EventManager {
                 .info("Auth status is: \(self.authStatus.rawValue)")
         }
     }
-    
+
     func requestEvents() async {
         do {
             let result = try await eventStore.requestFullAccessToEvents()
@@ -108,7 +108,7 @@ class EventManager {
         events.removeAll()
         if authStatus == .authorized {
             let startDate: Date = .now
-            let endDate = Date(timeIntervalSinceNow: oneMonthInMilliSeconds)
+            let endDate = Calendar.current.date(byAdding: .month, value: 1, to: .now) ?? .now
             let predicate = self.eventStore.predicateForEvents(
                 withStart: startDate,
                 end: endDate,
@@ -188,6 +188,6 @@ class EventManager {
             }
         }
         await reloadEvents()
-        
+
     }
 }

@@ -50,7 +50,7 @@ extension Color {
         let lum = 0.2126 * red + 0.7152 * green + 0.0722 * blue
         return  lum < 0.50
     }
-    
+
     /// Black on Light Mode, White on Dark Mode
     static let label = Color(.label)
 }

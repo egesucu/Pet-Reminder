@@ -10,11 +10,11 @@ import MapKit
 import CoreLocation
 
 extension View {
-    
+
     func wiggling() -> some View {
         modifier(WiggleModifier())
     }
-    
+
     func popupView(isPresented: Binding<Bool>,
                    content: AddPopupView) -> some View {
         PopupWrapper(isPresented: isPresented,
@@ -75,6 +75,3 @@ extension View {
         }
     }
 }
-
-
-

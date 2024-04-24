@@ -17,7 +17,7 @@ protocol VetViewModelProtocol: Observable {
     var searchedLocations: [Pin] { get set }
     var selectedLocation: Pin? { get set }
     var mapViewStatus: MapViewStatus { get set }
-    
+
     func requestMap() async
     func updateAuthenticationStatus() async
     func clearPreviousSearches() async

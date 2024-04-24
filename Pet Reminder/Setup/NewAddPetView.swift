@@ -23,7 +23,7 @@ struct NewAddPetView: View {
     var dismiss
     @Environment(\.modelContext)
     private var modelContext
-    
+
     init(
         notificationManager: NotificationManager,
         viewModel: AddPetViewModel

@@ -11,19 +11,19 @@ import EventKit
 import OSLog
 
 struct AddEventView: View {
-    
+
     @Binding var eventVM: EventManager
     @Environment(\.dismiss) var dismiss
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    
+
     let feedback = UINotificationFeedbackGenerator()
-    
+
     var filteredCalendars: [EKCalendar] {
         return eventVM
             .calendars
             .filter { $0.allowsContentModifications }
     }
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -51,7 +51,7 @@ struct AddEventView: View {
             .toolbar(content: addEventToolbar)
         }
     }
-    
+
     @ViewBuilder
     func eventDateView() -> some View {
         if eventVM.isAllDay {
@@ -62,17 +62,17 @@ struct AddEventView: View {
             DatePicker("add_event_end", selection: $eventVM.eventEndDate)
         }
     }
-    
+
     @ToolbarContentBuilder
     func addEventToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading, content: cancelButton)
         ToolbarItem(placement: .topBarTrailing, content: saveButton)
     }
-    
+
     private func changeEventMinimumDate() {
         eventVM.eventEndDate = eventVM.eventStartDate.addingTimeInterval(60*60)
     }
-    
+
     private func saveButton() -> some View {
         Button(action: saveEvent) {
             Text("add_event_save")
@@ -80,13 +80,13 @@ struct AddEventView: View {
                 .bold()
         }
     }
-    
+
     private func cancelButton() -> some View {
         Button("cancel", action: dismiss.callAsFunction)
             .foregroundStyle(Color.red)
             .bold()
     }
-    
+
     private func saveEvent() {
         feedback.notificationOccurred(.success)
         Task {
@@ -94,7 +94,7 @@ struct AddEventView: View {
             dismiss()
         }
     }
-    
+
 }
 
 #Preview {

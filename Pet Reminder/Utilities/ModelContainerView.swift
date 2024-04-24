@@ -12,7 +12,7 @@ import SwiftData
 struct ModelContainerPreview<Content: View>: View {
     var content: () -> Content
     let container: ModelContainer
-    
+
     init(@ViewBuilder content: @escaping () -> Content, modelContainer: @escaping () throws -> ModelContainer) {
         self.content = content
         do {
@@ -25,10 +25,9 @@ struct ModelContainerPreview<Content: View>: View {
     init(_ modelContainer: @escaping () throws -> ModelContainer, @ViewBuilder content: @escaping () -> Content) {
         self.init(content: content, modelContainer: modelContainer)
     }
-    
+
     var body: some View {
         content()
             .modelContainer(container)
     }
 }
-

@@ -21,14 +21,14 @@ class VetViewModel: NSObject, VetViewModelProtocol {
     var locationManager = CLLocationManager()
     var selectedLocation: Pin?
     var mapViewStatus: MapViewStatus = .none
-    
+
     func requestMap() async {
         await updateAuthenticationStatus()
         Logger
             .vet
             .info("Location Auth Status: \(self.mapViewStatus.rawValue)")
     }
-    
+
     func updateAuthenticationStatus() async {
         locationManager.requestWhenInUseAuthorization()
         self.mapViewStatus = switch locationManager.authorizationStatus {
@@ -41,7 +41,7 @@ class VetViewModel: NSObject, VetViewModelProtocol {
         @unknown default:
                 .none
         }
-        
+
         if mapViewStatus == .authorized {
             await MainActor.run {
                 userLocation = .userLocation(fallback: .automatic)
@@ -80,6 +80,6 @@ class VetViewModel: NSObject, VetViewModelProtocol {
                 .vet
                 .error("\(error)")
         }
-        
+
     }
 }

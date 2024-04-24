@@ -10,12 +10,12 @@ import SwiftData
 import SwiftUI
 
 actor PreviewSampleData {
-    
+// swiftlint: disable force_try
     @MainActor
     static var container: ModelContainer = {
         return try! inMemoryContainer()
     }()
-    
+
     static var inMemoryContainer: () throws -> ModelContainer = {
         let schema = Schema([Pet.self])
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
@@ -28,4 +28,4 @@ actor PreviewSampleData {
         }
         return container
     }
-}
+} // swiftlint: enable force_try

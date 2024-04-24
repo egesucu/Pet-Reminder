@@ -11,10 +11,10 @@ import MapKit
 import CoreLocation
 
 struct FindVetView: View {
-    
+
     @State private var viewModel = VetViewModel()
     @AppStorage(Strings.tintColor) var tintColor = Color.accent
-    
+
     var body: some View {
         NavigationStack {
             mapView
@@ -51,7 +51,7 @@ struct FindVetView: View {
                 .padding(.horizontal)
         })
     }
-    
+
     private var mapView: some View {
         Map(
             position: $viewModel.userLocation,
@@ -77,7 +77,7 @@ struct FindVetView: View {
         .onSubmit(of: .search, searchPins)
         .disableAutocorrection(true)
     }
-    
+
     func searchPins() {
         Task {
             viewModel.searchPins
@@ -88,6 +88,3 @@ struct FindVetView: View {
 #Preview {
     FindVetView()
 }
-
-
-    

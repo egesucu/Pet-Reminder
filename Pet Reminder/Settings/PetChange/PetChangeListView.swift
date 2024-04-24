@@ -59,9 +59,9 @@ struct PetChangeListView: View {
                                 Text(isEditing ? "Done" : "Edit")
                             }
                         }
-                        
+
                     }
-                    
+
                 }
             .navigationTitle(Text("Choose Friend"))
         }
@@ -104,7 +104,7 @@ struct PetChangeListView: View {
                                     .foregroundStyle(Color.red)
                                     .offset(x: 15, y: 0)
                             }
-                            
+
                         }
                     } else {
                         ESImageView(data: pet.image)
@@ -117,10 +117,10 @@ struct PetChangeListView: View {
                                         lineWidth: 5
                                     )
                             )
-                        
+
                         Text(pet.name)
                     }
-                    
+
                 }
                 .onTapGesture {
                     selectedPet = pet

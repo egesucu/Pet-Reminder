@@ -17,27 +17,25 @@ extension Date {
 
     /// 08:00 AM of the current day
     static let eightAM: Self = {
-        return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*8)
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return calendar.date(byAdding: .hour, value: 8, to: today) ?? .now
     }()
 
     /// 08:00 PM of the current day
     static let eightPM: Self = {
-        return Calendar.current.startOfDay(for: Date()).addingTimeInterval(60*60*20)
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return calendar.date(byAdding: .hour, value: 20, to: today) ?? .now
     }()
 
-    func convertDateToString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MM yyyy"
-        return formatter.string(from: self)
+    func printTime(locale: Locale = .current) -> String {
+        return self.formatted(.dateTime.hour().minute().locale(locale))
     }
 
-    func printTime() -> String {
-        return self.formatted(.dateTime.hour().minute())
-    }
-
-    func printDate() -> String {
+    func printDate(locale: Locale = .current) -> String {
         return self.formatted(.dateTime.day()
-            .month(.twoDigits).year())
+            .month(.twoDigits).year().locale(locale))
     }
 
     static func randomDate() -> Self {
@@ -51,9 +49,6 @@ extension Calendar {
         return date >= Date.tomorrow
     }
 }
-
-/// 60(sec) * 60(min) * 24(hours) * 30(days) = 2_592_000
-let oneMonthInMilliSeconds: Double = 2_592_000
 
 // MARK: - DateComponents
 extension DateComponents {
