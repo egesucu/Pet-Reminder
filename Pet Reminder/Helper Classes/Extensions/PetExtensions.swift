@@ -33,19 +33,19 @@ extension Pet {
             first.date < second.date
         }
     }
-    
+
     var preview: Pet {
         let firstPet = previews.first ?? .init()
         return firstPet
     }
-    
+
     var previews: [Pet] {
         var pets: [Pet] = []
         Strings.demoPets.forEach { petName in
             let pet = Pet(
                 birthday: .randomDate(),
                 name: petName,
-                choice: [0,1,2].randomElement() ?? 0,
+                choice: [0, 1, 2].randomElement() ?? 0,
                 createdAt: .randomDate(),
                 eveningFed: false,
                 eveningTime: nil,

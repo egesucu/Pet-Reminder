@@ -12,36 +12,36 @@ import SwiftUI
 import CoreLocation
 
 class MockVetViewModel: VetViewModelProtocol {
-    
+
     var userLocation: MapCameraPosition = .automatic
-    
+
     var searchText: String = ""
-    
+
     var searchedLocations: [Pin] = []
-    
+
     var selectedLocation: Pin?
-    
+
     var mapViewStatus: MapViewStatus = .none
-    
+
     func requestMap() async {
         await updateAuthenticationStatus()
     }
-    
+
     func updateAuthenticationStatus() async {
         self.mapViewStatus = .authorized
     }
-    
+
     func clearPreviousSearches() async {
         await MainActor.run {
             self.searchedLocations.removeAll()
         }
     }
-    
+
     func searchPins() async {
         await clearPreviousSearches()
-        
+
         try? await Task.sleep(nanoseconds: 500_000_000)
-        
+
         await MainActor.run {
             self.searchedLocations = [
                 Pin(

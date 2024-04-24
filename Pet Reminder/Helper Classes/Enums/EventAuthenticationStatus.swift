@@ -14,7 +14,7 @@ enum EventAuthenticationStatus: String {
     case readOnly
     case denied
     case notDetermined
-    
+
     static func value(status: EKAuthorizationStatus) -> Self {
         switch status {
             case .notDetermined:

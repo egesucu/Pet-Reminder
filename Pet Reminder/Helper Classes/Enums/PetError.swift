@@ -10,7 +10,7 @@ import Foundation
 
 enum PetError: LocalizedError {
     case name
-    
+
     var errorDescription: String? {
         switch self {
             case .name:

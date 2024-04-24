@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
-    
+
     let eventManager = EventManager()
 
     var body: some View {

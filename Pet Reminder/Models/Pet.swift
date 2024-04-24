@@ -24,7 +24,7 @@ import SwiftData
 
     @Relationship(inverse: \Feed.pet) var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) var vaccines: [Vaccine]?
-    
+
     public init(
         birthday: Date = Date(),
         name: String = "",

@@ -56,7 +56,7 @@ class PetChangeViewModel {
             if let evening = pet.eveningTime {
                 self.eveningDate = evening
             }
-            
+
             if let image = pet.image {
                 self.outputImageData = image
                 self.defaultPhotoOn = false

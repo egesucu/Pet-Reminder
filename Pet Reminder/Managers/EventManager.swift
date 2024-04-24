@@ -51,7 +51,7 @@ class EventManager {
                 .info("Auth status is: \(self.authStatus.rawValue)")
         }
     }
-    
+
     func requestEvents() async {
         do {
             let result = try await eventStore.requestFullAccessToEvents()
@@ -188,6 +188,6 @@ class EventManager {
             }
         }
         await reloadEvents()
-        
+
     }
 }

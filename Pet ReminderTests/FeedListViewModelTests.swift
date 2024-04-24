@@ -11,7 +11,7 @@ import SwiftData
 @testable import Pet_Reminder
 
 final class FeedListViewModelTests: XCTestCase {
-    
+
     func testTodaysFeeds() async throws {
         // TODO: Write Unit Tests for SwiftData
     }

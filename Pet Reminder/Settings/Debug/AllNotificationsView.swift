@@ -24,7 +24,7 @@ struct AllNotificationsView: View {
             await notificationManager?.getNotifications()
         }
     }
-    
+
 }
 
 #Preview {

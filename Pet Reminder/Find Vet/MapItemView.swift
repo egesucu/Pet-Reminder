@@ -78,7 +78,7 @@ struct MapItemView: View {
             Button("Cancel", action: {})
         }
     }
-    
+
     func openMapDetail() {
         showOpenMapAlert.toggle()
     }

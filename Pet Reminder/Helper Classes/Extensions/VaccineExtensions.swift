@@ -9,11 +9,11 @@
 import Foundation
 
 extension Vaccine {
-    
+
     var preview: Vaccine {
         return previews.first ?? .init()
     }
-    
+
     var previews: [Vaccine] {
         var vaccines: [Vaccine] = []
         Strings.demoVaccines.forEach { vaccineName in

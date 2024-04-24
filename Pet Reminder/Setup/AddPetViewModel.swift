@@ -32,12 +32,12 @@ class AddPetViewModel {
         pet.name = name
         pet.birthday = birthday
         pet.image = selectedImageData
-        
+
         await createNotification(manager: notificationManager, type: dayType)
         pet.selection = dayType
         pet.morningTime = (dayType != .evening) ? morningFeed : nil
         pet.eveningTime = (dayType != .morning) ? eveningFeed : nil
-        
+
         return pet
     }
 

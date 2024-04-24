@@ -170,5 +170,3 @@ extension NotificationManager {
         }
     }
 }
-
-

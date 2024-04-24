@@ -21,7 +21,7 @@ struct PetListView: View {
 
     @State private var selectedPet: Pet?
     @State private var addPet = false
-    
+
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
