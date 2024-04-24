@@ -11,6 +11,8 @@ jobs:
     name: Prepare the Environment
     runs-on: macos-14
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4 
       - name: Setup Fastlane
         run: |
           pwd
@@ -20,8 +22,6 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
-      - name: Checkout
-        uses: actions/checkout@v4 
       - name: Build the app
         run: |
           pwd
