@@ -7,20 +7,32 @@ on:
     - '30-add-fastlane-support'
 
 jobs:
-  build:
-    name: Build the application.
+  prepare:
+    name: Prepare the Environment
     runs-on: macos-14
-
     steps:
+      - name: Setup Fastlane
+        run: |
+          bundle update
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
       - name: Checkout
         uses: actions/checkout@v4 
+
+  build:
+    name: Build the application.
+    runs-on: macos-14
+    steps:
       - name: Build the app
         run: |
           bundle exec fastlane build
         
+  test:
+    name: "Test the Application"
+    runs-on: macos-14
+    steps:
       - name: Test
         run: |
           bundle exec fastlane test
+      
