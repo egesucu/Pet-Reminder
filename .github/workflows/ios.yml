@@ -11,6 +11,9 @@ jobs:
     name: Prepare the Environment
     runs-on: macos-14
     steps:
+      - name: Install Required Plugins
+        run: |
+          brew install swiftlint
       - name: Checkout
         uses: actions/checkout@v4 
       - name: Setup Fastlane
