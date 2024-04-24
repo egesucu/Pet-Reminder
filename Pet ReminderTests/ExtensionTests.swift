@@ -44,7 +44,7 @@ final class ExtensionTests: XCTestCase {
     func testPrintTime() throws {
         let eightPM = Date.eightPM
         let expectedPrint = "20:00"
-        let printedTime = eightPM.printTime()
+        let printedTime = eightPM.printTime(locale: .init(identifier: "tr"))
         XCTAssertEqual(expectedPrint, printedTime)
     }
 
@@ -55,7 +55,7 @@ final class ExtensionTests: XCTestCase {
             .startOfDay(
                 for: "24 Eki 2023".convertStringToDate(locale: .init(identifier: "tr"))
             )
-            .printDate()
+            .printDate(locale: .init(identifier: "tr")).replacingOccurrences(of: "/", with: ".")
 
         XCTAssertEqual(expectedDate, dateString)
     }

@@ -29,13 +29,13 @@ extension Date {
         return calendar.date(byAdding: .hour, value: 20, to: today) ?? .now
     }()
 
-    func printTime() -> String {
-        return self.formatted(.dateTime.hour().minute())
+    func printTime(locale: Locale = .current) -> String {
+        return self.formatted(.dateTime.hour().minute().locale(locale))
     }
 
-    func printDate() -> String {
+    func printDate(locale: Locale = .current) -> String {
         return self.formatted(.dateTime.day()
-            .month(.twoDigits).year())
+            .month(.twoDigits).year().locale(locale))
     }
 
     static func randomDate() -> Self {
