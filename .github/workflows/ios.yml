@@ -14,6 +14,7 @@ jobs:
       - name: Setup Fastlane
         run: |
           bundle install
+        working-directory: ${{ github.workspace }}
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
@@ -27,6 +28,7 @@ jobs:
       - name: Build the app
         run: |
           bundle exec fastlane build
+        working-directory: ${{ github.workspace }}
         
   test:
     name: "Test the Application"
@@ -35,4 +37,5 @@ jobs:
       - name: Test
         run: |
           bundle exec fastlane test
+        working-directory: ${{ github.workspace }}
       
