@@ -22,7 +22,7 @@ jobs:
           xcode-version: latest
       - name: Swiftlint
         run: |
-            bundle exec fastlane swiftlint
+            bundle exec fastlane run swiftlint
         working-directory: ${{ github.workspace }}
       - name: Build the app
         run: |

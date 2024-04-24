@@ -18,10 +18,6 @@ platform :ios do
     )
   end
 
-  lane :swiftlint do
-    swiftlint
-  end
-
   lane :test do
     desc "Tests the application and produce coverage output."
     scan
