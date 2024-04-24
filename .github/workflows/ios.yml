@@ -7,7 +7,7 @@ on:
     - '30-add-fastlane-support'
 
 jobs:
-  prepare:
+  build-and-test:
     name: Prepare the Environment
     runs-on: macos-14
     steps:
@@ -20,22 +20,11 @@ jobs:
           xcode-version: latest
       - name: Checkout
         uses: actions/checkout@v4 
-
-  build:
-    name: Build the application.
-    runs-on: macos-14
-    steps:
       - name: Build the app
         run: |
           bundle exec fastlane build
         working-directory: ${{ github.workspace }}
-        
-  test:
-    name: "Test the Application"
-    runs-on: macos-14
-    steps:
       - name: Test
         run: |
           bundle exec fastlane test
         working-directory: ${{ github.workspace }}
-      
