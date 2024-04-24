@@ -8,18 +8,25 @@ before_all do |lane, options|
 end
 
 platform :ios do
-  desc "Description of what the lane does"
+  desc "Builds the application"
   lane :build do
-    get_certificates
-    get_provisioning_profile
-    gym
+    gym(
+      clean: true,
+      silent: true,
+      skip_package_ipa: true,
+      skip_codesigning: true
+    )
     scan
   end
 
   lane :test do
-    get_certificates
-    get_provisioning_profile
-    gym
+    desc "Tests the application and produce coverage output."
+    gym(
+      clean: true,
+      silent: true,
+      skip_package_ipa: true,
+      skip_codesigning: true
+    )
     scan
     xcov
   end
