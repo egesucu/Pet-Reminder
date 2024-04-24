@@ -14,7 +14,10 @@ platform :ios do
       clean: true,
       silent: true,
       skip_package_ipa: true,
-      skip_codesigning: true
+      skip_codesigning: true,
+      export_options: {
+         iCloudContainerEnvironment: "Production"
+      } 
     )
   end
 
