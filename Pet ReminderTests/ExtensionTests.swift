@@ -40,7 +40,7 @@ final class ExtensionTests: XCTestCase {
         let testDate = Calendar.current.startOfDay(for: "24 Eki 2023".convertStringToDate())
         let nowString = "24 Eki 2023"
         let expectedDate = Calendar.current.startOfDay(
-            for: nowString.convertStringToDate()
+            for: nowString.convertStringToDate(locale: .init(identifier: "tr"))
         )
         XCTAssertEqual(expectedDate, testDate)
     }

@@ -10,7 +10,7 @@ import SwiftData
 import SwiftUI
 
 actor PreviewSampleData {
-
+// swiftlint: disable force_try
     @MainActor
     static var container: ModelContainer = {
         return try! inMemoryContainer()
@@ -28,4 +28,4 @@ actor PreviewSampleData {
         }
         return container
     }
-}
+} // swiftlint: enable force_try
