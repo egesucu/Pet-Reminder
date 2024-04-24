@@ -47,50 +47,35 @@ class MockVetViewModel: VetViewModelProtocol {
                 Pin(
                     item: MKMapItem(
                         placemark: MKPlacemark(
-                            coordinate: CLLocationCoordinate2D(
-                                latitude: 41.1114,
-                                longitude: 29.1790
-                            )
+                            coordinate: CLLocationCoordinate2D(latitude: 41.1114, longitude: 29.1790)
                         )
                     )
                 ),
                 Pin(
                     item: MKMapItem(
                         placemark: MKPlacemark(
-                            coordinate: CLLocationCoordinate2D(
-                                latitude: 41.0681,
-                                longitude: 29.0693
-                            )
+                            coordinate: CLLocationCoordinate2D(latitude: 41.0681, longitude: 29.0693)
                         )
                     )
                 ),
                 Pin(
                     item: MKMapItem(
                         placemark: MKPlacemark(
-                            coordinate: CLLocationCoordinate2D(
-                                latitude: 41.0200,
-                                longitude: 29.3439
-                            )
+                            coordinate: CLLocationCoordinate2D(latitude: 41.0200, longitude: 29.3439)
                         )
                     )
                 ),
                 Pin(
                     item: MKMapItem(
                         placemark: MKPlacemark(
-                            coordinate: CLLocationCoordinate2D(
-                                latitude: 41.0663,
-                                longitude: 28.9010
-                            )
+                            coordinate: CLLocationCoordinate2D(latitude: 41.0663, longitude: 28.9010)
                         )
                     )
                 ),
                 Pin(
                     item: MKMapItem(
                         placemark: MKPlacemark(
-                            coordinate: CLLocationCoordinate2D(
-                                latitude: 41.2085,
-                                longitude: 29.0942
-                            )
+                            coordinate: CLLocationCoordinate2D(latitude: 41.2085, longitude: 29.0942)
                         )
                     )
                 )

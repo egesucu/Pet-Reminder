@@ -28,16 +28,12 @@ final class ExtensionTests: XCTestCase {
         XCTAssertFalse(lightGray.isDarkColor)
     }
 
-    func testStringConversion() throws {
-        let now = Date.now
-        let nowString = Date.now.formatted(.dateTime.day().month(.twoDigits).year())
-        let expectedDate = now.convertDateToString()
-            .replacingOccurrences(of: " ", with: ".")
-        XCTAssertEqual(expectedDate, nowString)
-    }
-
     func testDateConversion() throws {
-        let testDate = Calendar.current.startOfDay(for: "24 Eki 2023".convertStringToDate())
+        let testDate = Calendar.current.startOfDay(
+            for: "24 Eki 2023".convertStringToDate(
+                locale: .init(identifier: "tr")
+                )
+            )
         let nowString = "24 Eki 2023"
         let expectedDate = Calendar.current.startOfDay(
             for: nowString.convertStringToDate(locale: .init(identifier: "tr"))

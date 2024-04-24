@@ -34,7 +34,6 @@ struct PetListView: View {
             }
             .toolbar(content: addButtonToolbar)
             .onAppear {
-                performDemoDataDeletion()
                 selectedPet = pets.first
             }
             .navigationTitle(petListTitle)
@@ -119,30 +118,6 @@ struct PetListView: View {
                         .font(.title)
                 })
             }
-        }
-    }
-
-    @available(swift, deprecated: 6.0, message: "This is a hotfix function introduced in Pet Reminder 5.6.1 and will be removed in the 5.8 or newer release.")
-    func performDemoDataDeletion() {
-        if demoDataOccured {
-            for name in Strings.demoPets {
-                let pet = pets.filter({ $0.name == name}).first
-                if let pet {
-                    deletePet(pet: pet)
-                    self.notificationManager?.removeAllNotifications(of: pet.name)
-                }
-            }
-            demoDataOccured = false
-        }
-    }
-
-    @available(swift, deprecated: 6.0, message: "This is a hotfix function introduced in Pet Reminder 5.6.1 and will be removed in the 5.8 or newer release.")
-    func deletePet(pet: Pet) {
-        modelContext.delete(pet)
-        if pets.count > 0 {
-            selectedPet = pets.first
-        } else {
-            selectedPet = nil
         }
     }
 }

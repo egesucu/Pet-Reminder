@@ -13,8 +13,8 @@ enum PetError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-            case .name:
-                return String(localized: "name_error")
+        case .name:
+            return String(localized: "name_error")
         }
     }
 }

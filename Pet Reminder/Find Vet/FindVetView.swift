@@ -88,4 +88,3 @@ struct FindVetView: View {
 #Preview {
     FindVetView()
 }
-

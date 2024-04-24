@@ -56,13 +56,14 @@ struct VaccineHistoryView: View {
                     }.disabled(viewModel.shouldAddVaccine)
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
-                    Button(action: {
+                    Button {
                         addVaccine.toggle()
-                    }) {
+                    } label: {
                         Image(systemName: SFSymbols.add)
                             .tint(.blue)
                             .font(.title)
-                    }.disabled(viewModel.shouldAddVaccine)
+                    }
+                    .disabled(viewModel.shouldAddVaccine)
                 }
             }
             .navigationTitle(Text("vaccine_history_title"))

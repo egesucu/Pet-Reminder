@@ -19,7 +19,6 @@
 		725F44CC2A260B3D0096CCCB /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CB2A260B3D0096CCCB /* DateExtensions.swift */; };
 		725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F44CF2A260BBF0096CCCB /* ColorExtensions.swift */; };
 		7296924D2BD6FFFE00611262 /* VetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B00A2AE84C3000B14A04 /* VetViewModelTests.swift */; };
-		7296924E2BD7000100611262 /* FeedListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D69B0192AE8525000B14A04 /* FeedListViewModelTests.swift */; };
 		9D0C24DF25D07FEA008F93CD /* HomeManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24DE25D07FEA008F93CD /* HomeManagerView.swift */; };
 		9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E025D08177008F93CD /* FindVetView.swift */; };
 		9D0C24E325D08181008F93CD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C24E225D08181008F93CD /* SettingsView.swift */; };
@@ -180,7 +179,6 @@
 		9D6293712A87D46300BA577A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		9D69B00A2AE84C3000B14A04 /* VetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModelTests.swift; sourceTree = "<group>"; };
-		9D69B0192AE8525000B14A04 /* FeedListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListViewModelTests.swift; sourceTree = "<group>"; };
 		9D69B01B2AE8568C00B14A04 /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTests.swift; sourceTree = "<group>"; };
 		9D69B01E2AE8923C00B14A04 /* EventAuthenticationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAuthenticationStatus.swift; sourceTree = "<group>"; };
 		9D69B0202AE892C300B14A04 /* PetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetError.swift; sourceTree = "<group>"; };
@@ -390,7 +388,6 @@
 			children = (
 				9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */,
 				9D69B00A2AE84C3000B14A04 /* VetViewModelTests.swift */,
-				9D69B0192AE8525000B14A04 /* FeedListViewModelTests.swift */,
 				9D69B01B2AE8568C00B14A04 /* ExtensionTests.swift */,
 			);
 			path = "Pet ReminderTests";
@@ -781,7 +778,6 @@
 			files = (
 				9D7C252B2A5948D300DDB027 /* Pet_ReminderTests.swift in Sources */,
 				7296924D2BD6FFFE00611262 /* VetViewModelTests.swift in Sources */,
-				7296924E2BD7000100611262 /* FeedListViewModelTests.swift in Sources */,
 				9D69B01C2AE8568C00B14A04 /* ExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

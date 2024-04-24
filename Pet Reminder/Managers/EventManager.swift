@@ -108,7 +108,7 @@ class EventManager {
         events.removeAll()
         if authStatus == .authorized {
             let startDate: Date = .now
-            let endDate = Date(timeIntervalSinceNow: oneMonthInMilliSeconds)
+            let endDate = Calendar.current.date(byAdding: .month, value: 1, to: .now) ?? .now
             let predicate = self.eventStore.predicateForEvents(
                 withStart: startDate,
                 end: endDate,
