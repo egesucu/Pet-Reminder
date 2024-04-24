@@ -12,9 +12,6 @@ jobs:
     runs-on: macos-14
 
     steps:
-      - name: "Setup"
-        run: |
-          brew install
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
