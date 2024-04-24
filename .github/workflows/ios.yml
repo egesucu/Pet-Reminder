@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Setup Fastlane
         run: |
-          bundle update
+          bundle install
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
