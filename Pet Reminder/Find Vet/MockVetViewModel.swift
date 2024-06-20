@@ -11,7 +11,7 @@ import MapKit
 import SwiftUI
 import CoreLocation
 
-class MockVetViewModel {
+class MockVetViewModel: @unchecked Sendable {
 
     var userLocation: MapCameraPosition = .automatic
 

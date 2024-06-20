@@ -71,7 +71,7 @@ struct EventListView: View {
 
     private func reloadEvents() {
         Task {
-            eventVM.reloadEvents
+            await eventVM.reloadEvents()
         }
     }
 

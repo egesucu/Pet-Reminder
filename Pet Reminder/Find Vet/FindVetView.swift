@@ -74,14 +74,17 @@ struct FindVetView: View {
             MapCompass()
         }
         .searchable(text: $viewModel.searchText)
-        .onSubmit(of: .search, searchPins)
-        .disableAutocorrection(true)
-    }
-
-    func searchPins() {
-        Task {
-            viewModel.searchPins
+        .onSubmit(of: .search) {
+            Task {
+                await viewModel.searchPins()
+            }
         }
+        .onSubmit(of: .search) {
+            Task {
+                await viewModel.searchPins()
+            }
+        }
+        .disableAutocorrection(true)
     }
 }
 

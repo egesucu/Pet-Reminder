@@ -20,7 +20,7 @@ struct PetChangeListView: View {
     @Query(sort: \Pet.name) var pets: [Pet]
 
     @State private var showUndoButton = false
-    @State private var buttonTimer: Timer?
+    @State private var buttonTimer: DispatchSourceTimer?
     @State private var time = 0
     @State private var isEditing = false
     @State private var selectedPet: Pet?
@@ -152,17 +152,32 @@ struct PetChangeListView: View {
         }
         modelContext.delete(pet)
         showUndoButton.toggle()
-        buttonTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-            if time == 10 {
-                withAnimation {
-                    self.notificationManager?.removeAllNotifications(of: tempPetName)
-                    showUndoButton = false
-                    timer.invalidate()
+        
+        buttonTimer?.cancel()
+        buttonTimer = nil
+        
+        time = 0
+        
+        let timer = DispatchSource.makeTimerSource()
+        timer.schedule(deadline: .now(), repeating: 1.0)
+        
+        timer.setEventHandler {
+            Task { @MainActor in
+                if time == 10 {
+                    withAnimation {
+                        self.notificationManager?.removeAllNotifications(of: tempPetName)
+                        showUndoButton = false
+                        timer.cancel()
+                        self.buttonTimer = nil
+                    }
+                } else {
+                    time += 1
                 }
-            } else {
-                time += 1
             }
-        })
+        }
+        
+        buttonTimer = timer
+        timer.resume()
     }
 
     private func defineColor(pet: Pet) -> Color {

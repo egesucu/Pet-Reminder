@@ -23,21 +23,23 @@ struct PetCell: View {
                     .font(.title)
                     .minimumScaleFactor(0.2)
                     .lineLimit(3)
-                if pet.feeds?.count ?? 0 > 0,
-                   let lastFeed = pet.feeds?.last {
-                    if lastFeed.eveningFed,
-                       let eveningTime = lastFeed.eveningFedStamp {
-                        VStack(alignment: .leading) {
-                            Text("last_feed_title")
-                                .bold()
-                            Text("\(eveningTime.formatted())")
-                        }
-                    } else if lastFeed.morningFed,
-                              let morningTime = lastFeed.morningFedStamp {
-                        VStack(alignment: .leading) {
-                            Text("last_feed_title")
-                                .bold()
-                            Text(morningTime.formatted())
+                if let feeds = pet.feeds {
+                    if feeds.count > 0,
+                       let lastFeed = feeds.last {
+                        if lastFeed.eveningFed,
+                           let eveningTime = lastFeed.eveningFedStamp {
+                            VStack(alignment: .leading) {
+                                Text("last_feed_title")
+                                    .bold()
+                                Text("\(eveningTime.formatted())")
+                            }
+                        } else if lastFeed.morningFed,
+                                  let morningTime = lastFeed.morningFedStamp {
+                            VStack(alignment: .leading) {
+                                Text("last_feed_title")
+                                    .bold()
+                                Text(morningTime.formatted())
+                            }
                         }
                     }
                 }

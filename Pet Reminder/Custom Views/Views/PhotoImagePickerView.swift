@@ -27,15 +27,30 @@ struct PhotoImagePickerView: View {
                     .font(.title3)
                 }
                 .tint(tintColor.color)
-                .onChange(of: selectedPhoto) {
+                .onChange(of: selectedPhoto) { _ , newPhoto in
                     Task {
-                        if let data = try? await selectedPhoto?
-                            .loadTransferable(type: Data.self) {
-                            photoData = data
+                        if let newPhoto = newPhoto {
+                            await handlePhotoChange(newPhoto)
                         }
                     }
                 }
                 .padding(.vertical)
+        }
+    }
+    
+    @MainActor
+    private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
+        await MainActor.run {
+            processPhotoChange(newPhoto)
+        }
+    }
+    
+    @MainActor
+    private func processPhotoChange(_ newPhoto: PhotosPickerItem) {
+        Task {
+            if let data = try? await newPhoto.loadTransferable(type: Data.self) {
+                photoData = data
+            }
         }
     }
 
