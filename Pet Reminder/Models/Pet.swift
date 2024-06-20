@@ -10,8 +10,8 @@
 import Foundation
 import SwiftData
 
-@Model final class Pet: Sendable {
-    var id: UUID
+@Model final class Pet: @unchecked Sendable {
+    let id: UUID
     var birthday: Date
     var choice: Int
     var createdAt: Date?

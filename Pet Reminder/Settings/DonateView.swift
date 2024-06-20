@@ -46,7 +46,10 @@ struct DonateView: View {
         }.navigationTitle(Text("donate_us_title"))
     }
 
-    func purcahaseCompleted(product: Product, result: Result<Product.PurchaseResult, Error>) {
+    func purcahaseCompleted(
+        product: Product,
+        result: Result<Product.PurchaseResult, any Error>
+    ) {
         switch result {
         case .success(let result):
             switch result {
