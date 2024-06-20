@@ -11,25 +11,27 @@ import Foundation
 import SwiftData
 
 @Model final class Pet: @unchecked Sendable {
-    let id: UUID
-    var birthday: Date
-    var choice: Int
+    let id: UUID = UUID()
+    var birthday: Date = Date()
+    var choice: Int = 0
     var createdAt: Date?
     var image: Data?
     var feedSelection: FeedSelection?
-    var name: String
-
+    var name: String = ""
+    
     @Relationship(inverse: \Feed.pet) var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) var vaccines: [Vaccine]?
-
+    
     init(
         id: UUID = UUID(),
-        birthday: Date,
+        birthday: Date = Date(),
         name: String,
-        choice: Int,
-        createdAt: Date?,
-        feedSelection: FeedSelection?,
-        image: Data?
+        choice: Int = 0,
+        createdAt: Date? = nil,
+        feedSelection: FeedSelection? = nil,
+        image: Data? = nil,
+        feeds: [Feed]? = nil,
+        vaccines: [Vaccine]? = nil
     ) {
         self.id = id
         self.birthday = birthday
@@ -38,6 +40,7 @@ import SwiftData
         self.createdAt = createdAt
         self.image = image
         self.feedSelection = feedSelection
+        self.feeds = feeds
+        self.vaccines = vaccines
     }
-
 }
