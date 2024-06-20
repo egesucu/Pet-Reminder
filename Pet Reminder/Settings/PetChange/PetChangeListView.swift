@@ -20,7 +20,7 @@ struct PetChangeListView: View {
     @Query(sort: \Pet.name) var pets: [Pet]
 
     @State private var showUndoButton = false
-    @State private var buttonTimer: DispatchSourceTimer?
+    @State private var buttonTimer: (any DispatchSourceTimer)?
     @State private var time = 0
     @State private var isEditing = false
     @State private var selectedPet: Pet?

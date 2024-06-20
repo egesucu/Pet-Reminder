@@ -10,7 +10,7 @@
 import Foundation
 import SwiftData
 
-@Model public class Vaccine {
+@Model class Vaccine {
     var date = Date.now
     var name = ""
     var pet: Pet?

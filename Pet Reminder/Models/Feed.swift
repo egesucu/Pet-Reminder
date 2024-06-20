@@ -10,7 +10,7 @@
 import Foundation
 import SwiftData
 
-@Model public class Feed {
+@Model class Feed {
     var eveningFed = false
     var eveningFedStamp: Date?
     var feedDate: Date?
@@ -18,7 +18,7 @@ import SwiftData
     var morningFedStamp: Date?
     var pet: Pet?
 
-    public init(
+    init(
         eveningFed: Bool = false,
         eveningFedStamp: Date? = nil,
         feedDate: Date? = nil,
