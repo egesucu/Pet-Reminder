@@ -9,14 +9,23 @@
 import SwiftUI
 
 struct PreviousFeedsSection: View {
-    var feeds: [Feed]
+    var feeds: [Feed]?
 
     var body: some View {
         Section {
-            if feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty {
+            if ((feeds?
+                .filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty) != nil) {
                 Text("no_feed_content")
             } else {
-                ForEach(feeds.filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }), id: \.self) { feed in
+                ForEach(
+                    feeds?
+                        .filter(
+                            { !Calendar.current.isDateInToday(
+                                $0.feedDate ?? .now
+                            )
+                            }) ?? [],
+                    id: \.self
+                ) { feed in
                     if let morning = feed.morningFedStamp {
                         Row(
                             imageName: "sun.max.fill",
@@ -52,7 +61,8 @@ struct PreviousFeedsSection: View {
 }
 
 #Preview {
-    let feeds: [Feed] = Pet().feeds ?? []
-    return PreviousFeedsSection(feeds: feeds)
+    @Previewable var feeds: [Feed] = Feed.previews
+    
+    PreviousFeedsSection(feeds: feeds)
         .modelContainer(PreviewSampleData.container)
 }

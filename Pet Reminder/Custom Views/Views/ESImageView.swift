@@ -11,7 +11,7 @@ import SwiftUI
 struct ESImageView: View {
 
     var data: Data?
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         if let data = data,
@@ -25,7 +25,7 @@ struct ESImageView: View {
         } else {
             ZStack {
                 Rectangle()
-                    .fill(tintColor)
+                    .fill(tintColor.color)
                     .clipShape(.rect(cornerRadius: 25))
                     .shadow(radius: 10)
 

@@ -10,16 +10,16 @@ import SwiftUI
 
 struct CurrentFeedSection: View {
 
-    var feeds: [Feed]
+    var feeds: [Feed]?
 
     var filteredFeeds: [Feed] {
-        feeds
+        feeds?
             .filter {
                 if let date =  $0.feedDate {
                     return Calendar.current.isDateInToday(date)
                 }
                 return false
-            }
+            } ?? []
     }
 
     var body: some View {
@@ -63,7 +63,7 @@ struct CurrentFeedSection: View {
 }
 
 #Preview {
-    let feeds: [Feed] = Pet().feeds ?? []
+    let feeds: [Feed] = Pet.preview.feeds ?? []
     return CurrentFeedSection(feeds: feeds)
         .modelContainer(PreviewSampleData.container)
 }

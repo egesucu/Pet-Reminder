@@ -21,11 +21,11 @@ struct VaccineHistoryView: View {
         NavigationStack {
             VStack {
                 if let pet {
-                    if pet.vaccinesArray.isEmpty {
+                    if ((pet.vaccines?.isEmpty) != nil) {
                         Text("no_vaccine_title")
                     } else {
                         List {
-                            ForEach(pet.vaccinesArray) { vaccine in
+                            ForEach(pet.vaccines ?? []) { vaccine in
                                 HStack {
                                     Label {
                                         Text(vaccine.name)
@@ -93,9 +93,8 @@ struct VaccineHistoryView: View {
 }
 
 #Preview {
-    return NavigationStack {
-        VaccineHistoryView(pet: .constant(.init()))
+    NavigationStack {
+        VaccineHistoryView(pet: .constant(.preview))
             .modelContainer(PreviewSampleData.container)
-
     }
 }

@@ -19,7 +19,7 @@ struct FeedListView: View {
     var body: some View {
         HStack(spacing: 30) {
             if let pet {
-                switch pet.selection {
+                switch pet.feedSelection {
                 case .morning:
                     MorningCheckboxView(morningOn: $viewModel.morningOn)
                         .onChange(of: viewModel.morningOn, {
@@ -79,6 +79,8 @@ struct FeedListView: View {
                                 .info("PR: Evening Tapped, pet: \(pet.name)")
                             viewModel.eveningOn.toggle()
                         }
+                case .none:
+                    EmptyView()
                 }
             }
 
@@ -95,7 +97,7 @@ struct FeedListView: View {
 }
 
 #Preview {
-    return FeedListView(pet: .constant(Pet()))
+    FeedListView(pet: .constant(.preview))
         .modelContainer(PreviewSampleData.container)
 
 }

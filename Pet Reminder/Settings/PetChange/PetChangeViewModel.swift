@@ -11,13 +11,14 @@ import SwiftUI
 import OSLog
 import SwiftData
 
+@MainActor
 @Observable
 class PetChangeViewModel {
 
     var nameText = ""
     var petImage: Image?
     var birthday = Date()
-    var selection: FeedTimeSelection = .both
+    var selection: FeedSelection = .both
     var morningDate: Date = .eightAM
     var eveningDate: Date = .eightPM
     var showImagePicker = false
@@ -49,13 +50,7 @@ class PetChangeViewModel {
         await MainActor.run {
             self.birthday = pet.birthday
             self.nameText = pet.name
-            self.selection = pet.selection
-            if let morning = pet.morningTime {
-                self.morningDate = morning
-            }
-            if let evening = pet.eveningTime {
-                self.eveningDate = evening
-            }
+            self.selection = pet.feedSelection ?? .both
 
             if let image = pet.image {
                 self.outputImageData = image
@@ -77,26 +72,20 @@ class PetChangeViewModel {
         await notificationManager.createNotification(of: pet.name, with: .birthday, date: birthday)
     }
 
-    func changeNotification(pet: Pet, for selection: FeedTimeSelection) async {
-        pet.selection = selection
+    func changeNotification(pet: Pet, for selection: FeedSelection) async {
+        pet.feedSelection = selection
 
         switch selection {
         case .both:
             notificationManager.removeAllDailyNotifications(of: pet.name)
             await notificationManager.createNotification(of: pet.name, with: .morning, date: morningDate)
             await notificationManager.createNotification(of: pet.name, with: .evening, date: eveningDate)
-            pet.morningTime = morningDate
-            pet.eveningTime = eveningDate
         case .morning:
             notificationManager.removeAllDailyNotifications(of: pet.name)
             await notificationManager.createNotification(of: pet.name, with: .morning, date: morningDate)
-            pet.morningTime = morningDate
-            pet.eveningTime = nil
         case .evening:
             notificationManager.removeAllDailyNotifications(of: pet.name)
             await notificationManager.createNotification(of: pet.name, with: .evening, date: eveningDate)
-            pet.eveningTime = eveningDate
-            pet.morningTime = nil
         }
     }
 

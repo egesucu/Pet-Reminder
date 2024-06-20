@@ -9,16 +9,16 @@
 import SwiftUI
 
 struct ESSettingsButton: View {
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         Button("open_settings", action: openSettings)
             .buttonStyle(.bordered)
-            .tint(tintColor)
+            .tint(tintColor.color)
     }
 
     private func openSettings() {
-        @AppStorage(Strings.tintColor) var tintColor = Color.accent
+        @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     }
 }
 

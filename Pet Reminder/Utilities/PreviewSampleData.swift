@@ -20,7 +20,7 @@ actor PreviewSampleData {
         let schema = Schema([Pet.self])
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try! ModelContainer(for: schema, configurations: [configuration])
-        let sampleData: [any PersistentModel] = Pet().previews
+        let sampleData: [any PersistentModel] = Pet.previews
         Task { @MainActor in
             sampleData.forEach {
                 container.mainContext.insert($0)

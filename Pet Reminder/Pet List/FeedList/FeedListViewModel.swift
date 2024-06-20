@@ -11,6 +11,7 @@ import Observation
 import SwiftData
 import OSLog
 
+@MainActor
 @Observable
 class FeedListViewModel {
 
@@ -19,10 +20,11 @@ class FeedListViewModel {
 
     func todaysFeeds(pet: Pet?) -> [Feed] {
         guard let pet else { return [] }
-        return pet.feedsArray.filter { Calendar.current.isDateInToday($0.wrappedFeedDate) }
+        return pet.feeds?
+            .filter { Calendar.current.isDateInToday($0.wrappedFeedDate) } ?? []
     }
 
-    func updateFeed(pet: Pet?, type: FeedTimeSelection) {
+    func updateFeed(pet: Pet?, type: FeedSelection) {
         let todaysFeed = todaysFeeds(pet: pet)
 
         if todaysFeed.isEmpty {

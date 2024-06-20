@@ -14,11 +14,11 @@ struct AddPopupView: View {
     @Binding var dateInput: Date
     var onSave: () -> Void
     var onCancel: () -> Void
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         ZStack {
-            Color(uiColor: .label)
+            ESColor.label
                 .opacity(0.8)
                 .onTapGesture(perform: onCancel)
             ZStack(alignment: .center) {
@@ -52,7 +52,7 @@ struct AddPopupView: View {
                     }
                     .padding(.all)
                 }
-                .tint(tintColor)
+                .tint(tintColor.color)
             }
         .frame(width: 300, height: 200)
         }

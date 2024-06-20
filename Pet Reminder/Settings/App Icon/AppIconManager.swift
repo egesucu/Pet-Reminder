@@ -11,6 +11,7 @@ import Observation
 import UIKit
 import OSLog
 
+@MainActor
 @Observable
 class AppIconManager {
     private(set) var selectedAppIcon: AppIcon

@@ -11,7 +11,7 @@ import PhotosUI
 
 struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     @Binding var photoData: Data?
 
@@ -26,7 +26,7 @@ struct PhotoImagePickerView: View {
                     )
                     .font(.title3)
                 }
-                .tint(tintColor)
+                .tint(tintColor.color)
                 .onChange(of: selectedPhoto) {
                     Task {
                         if let data = try? await selectedPhoto?

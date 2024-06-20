@@ -10,7 +10,7 @@ import MapKit
 
 struct MapItemView: View {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var location: Pin?
     @State private var showOpenMapAlert = false
@@ -27,9 +27,9 @@ struct MapItemView: View {
                         if let phoneNumber = location.phoneNumber {
                             HStack {
                                 Image(systemName: "phone.fill")
-                                    .foregroundStyle(tintColor)
+                                    .foregroundStyle(tintColor.color)
                                 Text(phoneNumber)
-                                    .foregroundStyle(tintColor)
+                                    .foregroundStyle(tintColor.color)
                                     .onTapGesture {
                                         let url = URL(
                                             string: "tel:\(phoneNumber)"
@@ -40,7 +40,7 @@ struct MapItemView: View {
                                     }
                                 Spacer()
                             }
-                            .tint(tintColor)
+                            .tint(tintColor.color)
                         }
                         if let subThoroughfare = location.subThoroughfare,
                            let thoroughfare = location.thoroughfare,
@@ -48,7 +48,7 @@ struct MapItemView: View {
                            let postalCode = location.postalCode {
                             HStack {
                                 Image(systemName: "building.fill")
-                                    .foregroundStyle(tintColor)
+                                    .foregroundStyle(tintColor.color)
                                 Text("\(thoroughfare), \(subThoroughfare)")
                                 Text("\n\(postalCode), \(locality)")
                                 Spacer()

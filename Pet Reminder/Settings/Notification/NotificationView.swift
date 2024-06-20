@@ -28,7 +28,11 @@ struct NotificationView: View {
                                 Button {
                                     Task {
                                         await notificationManager
-                                            .createNotifications(for: pet)
+                                            .createNotifications(
+                                                for: pet,
+                                                morningTime: .eightAM,
+                                                eveningTime: .eightPM
+                                            )
                                         await fetchNotificiations()
                                     }
                                 } label: {

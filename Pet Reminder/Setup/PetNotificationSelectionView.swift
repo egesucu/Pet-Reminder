@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PetNotificationSelectionView: View {
 
-    @Binding var dayType: FeedTimeSelection
+    @Binding var dayType: FeedSelection
     @Binding var morningFeed: Date
     @Binding var eveningFeed: Date
 
@@ -81,14 +81,8 @@ struct PetNotificationSelectionView: View {
 
 #Preview {
     PetNotificationSelectionView(
-        dayType: .constant(
-            .both
-        ),
-        morningFeed: .constant(
-            .now
-        ),
-        eveningFeed: .constant(
-            .now
-        )
+        dayType: .constant(.both),
+        morningFeed: .constant(.now),
+        eveningFeed: .constant(.now)
     )
 }

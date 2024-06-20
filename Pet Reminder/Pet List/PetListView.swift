@@ -14,7 +14,7 @@ struct PetListView: View {
 
     @Environment(\.modelContext) private var modelContext
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     @AppStorage(Strings.demoDataOccured) var demoDataOccured = true
 
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
@@ -37,17 +37,17 @@ struct PetListView: View {
                 selectedPet = pets.first
             }
             .navigationTitle(petListTitle)
-            .fullScreenCover(isPresented: $addPet,
-                             onDismiss: {
-                selectedPet = pets.first
-                Logger
-                    .pets
-                    .debug("Pet Amount: \(pets.count)")
-            },
-                             content: {
-                NewAddPetView(
-                    notificationManager: .init(),
-                    viewModel: .init()
+            .fullScreenCover(
+                isPresented: $addPet,
+                onDismiss: {
+                    selectedPet = pets.first
+                    Logger
+                        .pets
+                        .debug("Pet Amount: \(pets.count)")
+                },
+                content: {
+                    NewAddPetView(
+                        viewModel: .init(notificationManager: .init())
                 )
             })
         }
@@ -60,7 +60,7 @@ struct PetListView: View {
                         addPet.toggle()
                     })
                     .buttonStyle(.bordered)
-                    .tint(tintColor)
+                    .tint(tintColor.color)
                 })
             }
         }
@@ -114,7 +114,7 @@ struct PetListView: View {
                 }, label: {
                     Image(systemName: SFSymbols.add)
                         .accessibilityLabel(Text("add_animal_accessible_label"))
-                        .foregroundStyle(tintColor)
+                        .foregroundStyle(tintColor.color)
                         .font(.title)
                 })
             }

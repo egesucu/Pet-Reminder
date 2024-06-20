@@ -11,7 +11,7 @@ import OSLog
 
 struct SettingsView: View {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     @State private var alertMessage: LocalizedStringKey = ""
     @State private var showAlert = false
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
@@ -26,11 +26,11 @@ struct SettingsView: View {
                     )
                     ColorPicker(
                         "settings_tint_color",
-                        selection: $tintColor
+                        selection: $tintColor.color
                     )
-                    if tintColor != Color.accentColor {
+                    if tintColor != ESColor(color: Color.accent) {
                         Button {
-                            tintColor = Color.accent
+                            tintColor = ESColor(color: Color.accent)
                             showAlert(content: "color_reset_cuccessfull")
                         } label: {
                             Text("settings_reset_color")

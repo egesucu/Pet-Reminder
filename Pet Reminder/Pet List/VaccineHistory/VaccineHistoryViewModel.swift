@@ -12,6 +12,7 @@ import Observation
 import SwiftData
 import OSLog
 
+@MainActor
 @Observable
 class VaccineHistoryViewModel {
 

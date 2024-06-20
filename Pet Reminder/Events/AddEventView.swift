@@ -14,7 +14,7 @@ struct AddEventView: View {
 
     @Binding var eventVM: EventManager
     @Environment(\.dismiss) var dismiss
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     let feedback = UINotificationFeedbackGenerator()
 
@@ -46,7 +46,7 @@ struct AddEventView: View {
                     eventDateView()
                 }
             }
-            .tint(tintColor)
+            .tint(tintColor.color)
             .navigationTitle(Text("add_event_title"))
             .toolbar(content: addEventToolbar)
         }
@@ -76,7 +76,7 @@ struct AddEventView: View {
     private func saveButton() -> some View {
         Button(action: saveEvent) {
             Text("add_event_save")
-                .foregroundStyle(tintColor)
+                .foregroundStyle(tintColor.color)
                 .bold()
         }
     }

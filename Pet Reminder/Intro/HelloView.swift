@@ -10,7 +10,7 @@ import SwiftUI
 import CloudKit
 
 struct HelloView: View {
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
@@ -33,7 +33,7 @@ struct HelloView: View {
                         .foregroundStyle(.white)
                 }
                 .padding()
-                .background(tintColor)
+                .background(tintColor.color)
                 .clipShape(.rect(cornerRadius: 25.0))
                 .shadow(radius: 3)
                 .fullScreenCover(isPresented: $navigateToHome) {

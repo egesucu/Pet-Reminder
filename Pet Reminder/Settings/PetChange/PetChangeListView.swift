@@ -15,7 +15,7 @@ struct PetChangeListView: View {
     @Environment(\.modelContext)
     private var modelContext
     @Environment(\.undoManager) var undoManager
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     @Query(sort: \Pet.name) var pets: [Pet]
 

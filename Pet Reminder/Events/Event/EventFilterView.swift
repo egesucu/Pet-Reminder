@@ -42,7 +42,7 @@ struct EventFilterView: View {
                             .fill(Color(cgColor: calendar.cgColor).opacity(0.4))
                     }
                     Text(calendar.title)
-                        .foregroundStyle(Color(cgColor: calendar.cgColor).isDarkColor ? Color.white : Color.black)
+                        .foregroundStyle(ESColor(cgColor: calendar.cgColor).isDarkColor ? Color.white : Color.black)
                         .multilineTextAlignment(.center)
                         .padding(.all, 5)
                 }

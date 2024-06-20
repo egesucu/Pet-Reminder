@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NotificationSelectView: View {
 
-    @Binding var dayType: FeedTimeSelection
+    @Binding var dayType: FeedSelection
 
     var body: some View {
         VStack {
@@ -22,11 +22,11 @@ struct NotificationSelectView: View {
                 label: Text("feed_time_title")
             ) {
                 Text("feed_selection_both")
-                    .tag(FeedTimeSelection.both)
+                    .tag(FeedSelection.both)
                 Text("feed_selection_morning")
-                    .tag(FeedTimeSelection.morning)
+                    .tag(FeedSelection.morning)
                 Text("feed_selection_evening")
-                    .tag(FeedTimeSelection.evening)
+                    .tag(FeedSelection.evening)
             }
             .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: dayType)

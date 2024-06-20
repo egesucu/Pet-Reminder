@@ -11,6 +11,7 @@ import StoreKit
 import Observation
 import OSLog
 
+@MainActor
 @Observable
 class StoreManager {
     var consumables: [Product] = []

@@ -9,6 +9,7 @@ import Observation
 import EventKit
 import OSLog
 
+@MainActor
 @Observable
 class EventManager {
 

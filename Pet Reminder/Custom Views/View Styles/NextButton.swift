@@ -11,7 +11,7 @@ import SwiftUI
 struct NextButton: ButtonStyle {
 
     var conditionMet: Bool
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     func makeBody(configuration: Configuration) -> some View {
         configuration
@@ -19,7 +19,9 @@ struct NextButton: ButtonStyle {
             .font(.largeTitle)
             .foregroundStyle(.white)
             .padding()
-            .background(conditionMet ? Color.gray.opacity(0.4) : tintColor)
+            .background(
+                conditionMet ? Color.gray.opacity(0.4) : tintColor.color
+            )
             .clipShape(.rect(cornerRadius: 15))
             .shadow(radius: 10)
             .disabled(conditionMet)

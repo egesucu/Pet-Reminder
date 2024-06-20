@@ -13,7 +13,7 @@ import CoreLocation
 struct FindVetView: View {
 
     @State private var viewModel = VetViewModel()
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         NavigationStack {
@@ -63,7 +63,7 @@ struct FindVetView: View {
                     systemImage: SFSymbols.pawprintCircleFill,
                     coordinate: location.coordinate
                 )
-                .tint(tintColor)
+                .tint(tintColor.color)
                 .tag(location)
             }
             UserAnnotation()
