@@ -24,6 +24,7 @@ class FeedListViewModel {
             .filter { Calendar.current.isDateInToday($0.wrappedFeedDate) } ?? []
     }
 
+    @MainActor
     func updateFeed(pet: Pet?, type: FeedSelection) {
         let todaysFeed = todaysFeeds(pet: pet)
 
@@ -61,6 +62,7 @@ class FeedListViewModel {
         }
     }
 
+    @MainActor
     func getLatestFeed(pet: Pet?) async {
         let todaysFeed = todaysFeeds(pet: pet)
 

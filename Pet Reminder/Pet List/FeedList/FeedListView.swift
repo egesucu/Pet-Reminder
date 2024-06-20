@@ -88,9 +88,9 @@ struct FeedListView: View {
         .task {
             await viewModel.getLatestFeed(pet: pet)
         }
-        .onChange(of: pet) {
+        .onChange(of: pet) { _, newPet in
             Task {
-                viewModel.getLatestFeed(pet:)
+                await viewModel.getLatestFeed(pet: newPet)
             }
         }
     }

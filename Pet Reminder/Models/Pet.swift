@@ -10,13 +10,10 @@
 import Foundation
 import SwiftData
 
-
-
-
-@Model class Pet {
-    var id = UUID()
-    var birthday = Date()
-    var choice = 0
+@Model final class Pet: Sendable {
+    var id: UUID
+    var birthday: Date
+    var choice: Int
     var createdAt: Date?
     var image: Data?
     var feedSelection: FeedSelection?
@@ -26,6 +23,7 @@ import SwiftData
     @Relationship(inverse: \Vaccine.pet) var vaccines: [Vaccine]?
 
     init(
+        id: UUID = UUID(),
         birthday: Date,
         name: String,
         choice: Int,
@@ -33,6 +31,7 @@ import SwiftData
         feedSelection: FeedSelection?,
         image: Data?
     ) {
+        self.id = id
         self.birthday = birthday
         self.name = name
         self.choice = choice

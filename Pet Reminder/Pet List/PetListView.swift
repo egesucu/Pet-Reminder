@@ -15,7 +15,6 @@ struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
 
     @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
-    @AppStorage(Strings.demoDataOccured) var demoDataOccured = true
 
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 

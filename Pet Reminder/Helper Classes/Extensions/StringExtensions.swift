@@ -92,6 +92,6 @@ extension String {
 }
 
 extension LocalizedStringKey {
-    static let save: Self = "save"
-    static let cancel: Self = "cancel"
+    @MainActor static let save: Self = "save"
+    @MainActor static let cancel: Self = "cancel"
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UserNotifications
+@preconcurrency import UserNotifications
 import Observation
 import OSLog
 
