@@ -16,7 +16,7 @@ struct PetChangeView: View {
     @Environment(\.modelContext) var modelContext
     @State private var selectedImageData: Data?
     @Environment(\.dismiss) var dismiss
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     @State private var viewModel = PetChangeViewModel()
 
     var body: some View {
@@ -76,7 +76,7 @@ struct PetChangeView: View {
                             Text("Save")
                                 .bold()
                         }
-                        .tint(tintColor)
+                        .tint(tintColor.color)
                     }
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
@@ -98,11 +98,11 @@ struct PetChangeView: View {
         VStack {
             Picker(selection: $viewModel.selection) {
                 Text("feed_selection_both")
-                    .tag(FeedTimeSelection.both)
+                    .tag(FeedSelection.both)
                 Text("feed_selection_morning")
-                    .tag(FeedTimeSelection.morning)
+                    .tag(FeedSelection.morning)
                 Text("feed_selection_evening")
-                    .tag(FeedTimeSelection.evening)
+                    .tag(FeedSelection.evening)
             } label: {
                 Text("feed_time_title")
             }
@@ -142,6 +142,6 @@ struct PetChangeView: View {
 }
 
 #Preview {
-    PetChangeView(pet: .constant(Pet()))
+    PetChangeView(pet: .constant(.preview))
         .modelContainer(PreviewSampleData.container)
 }

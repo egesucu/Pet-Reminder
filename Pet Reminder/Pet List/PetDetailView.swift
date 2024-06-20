@@ -15,7 +15,7 @@ struct PetDetailView: View {
     @State private var showFeedHistory = false
     @State private var showVaccines = false
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         VStack {
@@ -37,7 +37,7 @@ struct PetDetailView: View {
                         Label("feeds_title", systemImage: "fork.knife.circle.fill")
                     }
                     .buttonStyle(.bordered)
-                    .tint(tintColor)
+                    .tint(tintColor.color)
                     Button {
                         Logger
                             .pets
@@ -55,7 +55,7 @@ struct PetDetailView: View {
         }
         .fullScreenCover(isPresented: $showFeedHistory) {
             if let pet {
-                FeedHistory(feeds: pet.feedsArray)
+                FeedHistory(feeds: pet.feeds)
             }
         }
         .fullScreenCover(isPresented: $showVaccines) {
@@ -67,7 +67,9 @@ struct PetDetailView: View {
 
 #Preview(traits: .portrait) {
     NavigationStack {
-        PetDetailView(pet: .constant(Pet()))
+        PetDetailView(
+            pet: .constant(.preview)
+        )
             .modelContainer(PreviewSampleData.container)
     }
     .navigationViewStyle(.stack)

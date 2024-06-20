@@ -17,7 +17,7 @@ struct PetNameTextField: View {
     @Binding var nameIsFilledCorrectly: Bool
 
     @FocusState var isFocused
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         VStack {
@@ -28,7 +28,7 @@ struct PetNameTextField: View {
             ZStack {
                 Rectangle()
                     .fill(
-                        isFocused ? tintColor
+                        isFocused ? tintColor.color
                             .opacity(0.1) :
                             Color
                                 .black

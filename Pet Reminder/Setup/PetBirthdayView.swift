@@ -11,7 +11,7 @@ import SwiftUI
 struct PetBirthdayView: View {
 
     @Binding var birthday: Date
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         VStack {
@@ -26,7 +26,7 @@ struct PetBirthdayView: View {
                 displayedComponents: .date
             )
                 .labelsHidden()
-                .tint(tintColor)
+                .tint(tintColor.color)
             Spacer()
         }
         .padding(.all)

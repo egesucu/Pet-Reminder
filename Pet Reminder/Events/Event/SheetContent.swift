@@ -11,7 +11,7 @@ import EventKit
 
 struct SheetContent: View {
     @Environment(\.dismiss) var dismiss
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var event: EKEvent
 
@@ -23,7 +23,7 @@ struct SheetContent: View {
             }, label: {
                 Image(systemName: SFSymbols.close)
                     .font(.title)
-                    .tint(tintColor)
+                    .tint(tintColor.color)
             })
             .offset(x: -10, y: 10)
 

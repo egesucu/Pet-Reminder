@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7224CB8C29F7B1D4009B0ADC /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */; };
-		7224CB9029F7B218009B0ADC /* FeedTimeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB8F29F7B218009B0ADC /* FeedTimeSelection.swift */; };
 		7224CB9229F7B22B009B0ADC /* ICloudErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */; };
 		7224CB9429F7B23D009B0ADC /* ICloudResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9329F7B23D009B0ADC /* ICloudResult.swift */; };
 		7224CB9729F7B45C009B0ADC /* AddPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7224CB9629F7B45C009B0ADC /* AddPopupView.swift */; };
@@ -39,6 +38,8 @@
 		9D4114AD2A83050500C21D87 /* PetChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4114AC2A83050500C21D87 /* PetChangeViewModel.swift */; };
 		9D44ACC8279C5FAA007EB5B6 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACC7279C5FAA007EB5B6 /* ArrayExtensions.swift */; };
 		9D44ACCC279C74E9007EB5B6 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */; };
+		9D491D412C238B1B0029A745 /* PetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D491D402C238B1B0029A745 /* PetManager.swift */; };
+		9D491D432C238B320029A745 /* FeedSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D491D422C238B320029A745 /* FeedSelection.swift */; };
 		9D56661B29F6D50100324DCC /* PetReminderTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56661A29F6D50100324DCC /* PetReminderTabs.swift */; };
 		9D5DC0DD29F5804E007A444D /* PetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0DC29F5804E007A444D /* PetImageView.swift */; };
 		9D5DC0DF29F58061007A444D /* PetNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DC0DE29F58061007A444D /* PetNameTextField.swift */; };
@@ -86,7 +87,6 @@
 		9D9F55392905711D007E014B /* FeedHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F55382905711D007E014B /* FeedHistory.swift */; };
 		9D9F59B325E18228007672E8 /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F59B225E18228007672E8 /* HelloView.swift */; };
 		9DA37A482AB6C2DA00874999 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */; };
-		9DA7DC362AFFDF8D0012207C /* VetViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7DC352AFFDF8D0012207C /* VetViewModelProtocol.swift */; };
 		9DA7DC382AFFDFE50012207C /* MockVetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7DC372AFFDFE50012207C /* MockVetViewModel.swift */; };
 		9DAC8B5325E6F36500CA28DF /* VetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */; };
 		9DADDF6927821591000943AE /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DADDF6827821591000943AE /* PetCell.swift */; };
@@ -130,7 +130,6 @@
 
 /* Begin PBXFileReference section */
 		7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
-		7224CB8F29F7B218009B0ADC /* FeedTimeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeSelection.swift; sourceTree = "<group>"; };
 		7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudErrorType.swift; sourceTree = "<group>"; };
 		7224CB9329F7B23D009B0ADC /* ICloudResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudResult.swift; sourceTree = "<group>"; };
 		7224CB9629F7B45C009B0ADC /* AddPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPopupView.swift; sourceTree = "<group>"; };
@@ -160,6 +159,8 @@
 		9D4114AC2A83050500C21D87 /* PetChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetChangeViewModel.swift; sourceTree = "<group>"; };
 		9D44ACC7279C5FAA007EB5B6 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		9D44ACCB279C74E9007EB5B6 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		9D491D402C238B1B0029A745 /* PetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManager.swift; sourceTree = "<group>"; };
+		9D491D422C238B320029A745 /* FeedSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelection.swift; sourceTree = "<group>"; };
 		9D56661A29F6D50100324DCC /* PetReminderTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PetReminderTabs.swift; path = ../../Home/PetReminderTabs.swift; sourceTree = "<group>"; };
 		9D5DC0DC29F5804E007A444D /* PetImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetImageView.swift; sourceTree = "<group>"; };
 		9D5DC0DE29F58061007A444D /* PetNameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetNameTextField.swift; sourceTree = "<group>"; };
@@ -212,7 +213,6 @@
 		9D9F55382905711D007E014B /* FeedHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHistory.swift; sourceTree = "<group>"; };
 		9D9F59B225E18228007672E8 /* HelloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
-		9DA7DC352AFFDF8D0012207C /* VetViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModelProtocol.swift; sourceTree = "<group>"; };
 		9DA7DC372AFFDFE50012207C /* MockVetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVetViewModel.swift; sourceTree = "<group>"; };
 		9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VetViewModel.swift; sourceTree = "<group>"; };
 		9DADDF6827821591000943AE /* PetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
@@ -266,13 +266,13 @@
 		7224CB8A29F7B1C0009B0ADC /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				9D491D422C238B320029A745 /* FeedSelection.swift */,
 				9D9B9C112AA122EC0002F4AE /* PetListViewReference.swift */,
 				9D3ED5792A9F8D6500940AA4 /* SetupSteps.swift */,
 				9D56661A29F6D50100324DCC /* PetReminderTabs.swift */,
 				725F44C52A260ACA0096CCCB /* MapApplication.swift */,
 				7224CB8B29F7B1D4009B0ADC /* NotificationType.swift */,
 				9D0C92402AA64FEE009BF51C /* SFSymbols.swift */,
-				7224CB8F29F7B218009B0ADC /* FeedTimeSelection.swift */,
 				7224CB9129F7B22B009B0ADC /* ICloudErrorType.swift */,
 				7224CB9329F7B23D009B0ADC /* ICloudResult.swift */,
 				9D69B01E2AE8923C00B14A04 /* EventAuthenticationStatus.swift */,
@@ -346,6 +346,14 @@
 				9DD8C2D42AAC77FC00756AE8 /* PetChangeListView.swift */,
 			);
 			path = PetChange;
+			sourceTree = "<group>";
+		};
+		9D491D3F2C238B030029A745 /* Actors */ = {
+			isa = PBXGroup;
+			children = (
+				9D491D402C238B1B0029A745 /* PetManager.swift */,
+			);
+			path = Actors;
 			sourceTree = "<group>";
 		};
 		9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */ = {
@@ -581,7 +589,6 @@
 			children = (
 				9D0C24E025D08177008F93CD /* FindVetView.swift */,
 				9DAC8B5225E6F36500CA28DF /* VetViewModel.swift */,
-				9DA7DC352AFFDF8D0012207C /* VetViewModelProtocol.swift */,
 				9DA7DC372AFFDFE50012207C /* MockVetViewModel.swift */,
 				9DF9A4AD2A842B470004CB8E /* MapItemView.swift */,
 			);
@@ -636,6 +643,7 @@
 		9DFF73F2248BAD7F004B4901 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9D491D3F2C238B030029A745 /* Actors */,
 				9D5F5ABA2ABA498C00A3C8D3 /* Feed.swift */,
 				9D5F5ABB2ABA498C00A3C8D3 /* Pet.swift */,
 				9D5F5ABC2ABA498C00A3C8D3 /* Vaccine.swift */,
@@ -812,7 +820,6 @@
 				725F44CC2A260B3D0096CCCB /* DateExtensions.swift in Sources */,
 				9DB0E0562778BF9B0089E9B0 /* MorningCheckboxView.swift in Sources */,
 				725F44D02A260BBF0096CCCB /* ColorExtensions.swift in Sources */,
-				9DA7DC362AFFDF8D0012207C /* VetViewModelProtocol.swift in Sources */,
 				9DCDA06526E3C84000DF290F /* EmptyEventView.swift in Sources */,
 				9DE24A272ABEEB65008B91E2 /* VaccineExtensions.swift in Sources */,
 				9DE24A292ABEED38008B91E2 /* PreviewSampleData.swift in Sources */,
@@ -836,9 +843,9 @@
 				9DB669772A62EC2100A7573C /* PetExtensions.swift in Sources */,
 				9D0C923C2AA64F54009BF51C /* FeedExtensions.swift in Sources */,
 				9DADDF6927821591000943AE /* PetCell.swift in Sources */,
+				9D491D432C238B320029A745 /* FeedSelection.swift in Sources */,
 				9DA7DC382AFFDFE50012207C /* MockVetViewModel.swift in Sources */,
 				9D5DC0E729F580B0007A444D /* PetNotificationSelectionView.swift in Sources */,
-				7224CB9029F7B218009B0ADC /* FeedTimeSelection.swift in Sources */,
 				725F44C42A260ABB0096CCCB /* URLDefinitions.swift in Sources */,
 				9D69B0232AE8932B00B14A04 /* MapViewStatus.swift in Sources */,
 				9DC87F1A29FAC074008AB720 /* FutureEventsView.swift in Sources */,
@@ -864,6 +871,7 @@
 				9D1D472F28D6340B0079175C /* PrivacyPolicyView.swift in Sources */,
 				9D0C24E125D08177008F93CD /* FindVetView.swift in Sources */,
 				9DB0E0542778BF680089E9B0 /* EveningCheckboxView.swift in Sources */,
+				9D491D412C238B1B0029A745 /* PetManager.swift in Sources */,
 				9D9B9C182AA12CEA0002F4AE /* CurrentFeedSection.swift in Sources */,
 				9DE24A2B2ABEED7C008B91E2 /* ModelContainerView.swift in Sources */,
 				9D9B9C1F2AA12E270002F4AE /* VaccineHistoryViewModel.swift in Sources */,
@@ -991,7 +999,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1051,7 +1059,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1077,7 +1085,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1109,7 +1117,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

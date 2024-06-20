@@ -11,7 +11,7 @@ import SwiftUI
 struct EmptyEventView: View {
 
     var eventVM: EventManager
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         VStack {
@@ -23,7 +23,7 @@ struct EmptyEventView: View {
                 Button(action: reloadEvents) {
                     Text("refresh")
                 }
-                .tint(tintColor)
+                .tint(tintColor.color)
                 Spacer()
             }
         }

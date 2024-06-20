@@ -13,7 +13,7 @@ import SwiftData
 @main
 struct PetReminderApp: App {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @Environment(\.undoManager) var undoManager
     @State private var notificationManager = NotificationManager()
@@ -23,11 +23,11 @@ struct PetReminderApp: App {
             if helloSeen {
                 HomeManagerView()
                     .environment(notificationManager)
-                    .tint(tintColor)
+                    .tint(tintColor.color)
             } else {
                 HelloView()
                     .environment(notificationManager)
-                    .tint(tintColor)
+                    .tint(tintColor.color)
             }
         }
         .modelContainer(for: Pet.self)

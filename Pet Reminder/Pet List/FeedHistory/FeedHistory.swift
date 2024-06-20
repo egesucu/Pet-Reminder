@@ -10,11 +10,11 @@ import SwiftUI
 
 struct FeedHistory: View {
 
-    var feeds: [Feed]
+    var feeds: [Feed]?
 
     @Environment(\.dismiss) var dismiss
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
 
@@ -28,7 +28,7 @@ struct FeedHistory: View {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title)
-                            .tint(tintColor)
+                            .tint(tintColor.color)
                     }
                 }
             }

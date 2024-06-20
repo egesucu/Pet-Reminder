@@ -13,7 +13,7 @@ struct EventListView: View {
 
     @State private var eventVM: EventManager
     @State private var showAddEvent = false
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     init(eventVM: EventManager) {
         _eventVM = State(wrappedValue: eventVM)
@@ -64,7 +64,7 @@ struct EventListView: View {
             Button(action: toggleAddEvent) {
                 Label("add_event_accessible_title", systemImage: SFSymbols.calendar)
                     .font(.title2)
-                    .foregroundStyle(tintColor)
+                    .foregroundStyle(tintColor.color)
             }
         }
     }

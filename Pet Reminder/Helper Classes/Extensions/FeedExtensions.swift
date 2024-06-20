@@ -21,7 +21,7 @@ extension Feed {
         self.eveningFedStamp ?? .now
     }
 
-    var preview: Feed {
+    static var preview: Feed {
         Feed(
             eveningFed: true,
             eveningFedStamp: .eightPM,
@@ -31,7 +31,7 @@ extension Feed {
         )
     }
 
-    var previews: [Feed] {
+    static var previews: [Feed] {
         var feeds: [Feed] = []
         [0...4].forEach { _ in
             let date = Date.randomDate()

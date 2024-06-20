@@ -11,6 +11,7 @@ import UserNotifications
 import Observation
 import OSLog
 
+@MainActor
 @Observable
 class NotificationManager {
 
@@ -52,18 +53,20 @@ class NotificationManager {
         notifications = await notificationCenter.pendingNotificationRequests()
     }
 
-    func createNotifications(for pet: Pet) async {
-        switch pet.selection {
+    func createNotifications(for pet: Pet, morningTime: Date?, eveningTime: Date?) async {
+        switch pet.feedSelection {
         case .both:
-            await createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .eightAM)
-            await createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .eightPM)
+            await createNotification(of: pet.name, with: .morning, date: morningTime ?? .eightAM)
+            await createNotification(of: pet.name, with: .evening, date: eveningTime ?? .eightPM)
             await createNotification(of: pet.name, with: .birthday, date: pet.birthday)
         case .morning:
-            await createNotification(of: pet.name, with: .morning, date: pet.morningTime ?? .eightAM)
+            await createNotification(of: pet.name, with: .morning, date: morningTime ?? .eightAM)
             await createNotification(of: pet.name, with: .birthday, date: pet.birthday)
         case .evening:
-            await createNotification(of: pet.name, with: .evening, date: pet.eveningTime ?? .eightPM)
+            await createNotification(of: pet.name, with: .evening, date: eveningTime ?? .eightPM)
             await createNotification(of: pet.name, with: .birthday, date: pet.birthday)
+        case .none:
+            break
         }
     }
 }

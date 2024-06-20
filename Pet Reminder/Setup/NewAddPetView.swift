@@ -13,11 +13,10 @@ import SwiftData
 struct NewAddPetView: View {
 
     @State private var viewModel: AddPetViewModel
-    @State private var notificationManager: NotificationManager
 
     @State private var position = 0
     @State private var step: SetupSteps = .name
-    @State private var feedTime: FeedTimeSelection = .both
+    @State private var feedTime: FeedSelection = .both
     @State private var nameIsFilledCorrectly = false
     @Environment(\.dismiss)
     var dismiss
@@ -25,10 +24,8 @@ struct NewAddPetView: View {
     private var modelContext
 
     init(
-        notificationManager: NotificationManager,
         viewModel: AddPetViewModel
     ) {
-        _notificationManager = State(wrappedValue: notificationManager)
         _viewModel = State(wrappedValue: viewModel)
     }
 
@@ -41,22 +38,22 @@ struct NewAddPetView: View {
                             PetNameTextField(name: $viewModel.name, nameIsFilledCorrectly: $nameIsFilledCorrectly)
                                 .scrollTargetLayout()
                                 .id(SetupSteps.name)
-                                .padding(.all)
+                                .padding()
                                 .frame(width: geometry.size.width)
 
                             PetBirthdayView(birthday: $viewModel.birthday)
                                 .scrollTargetLayout()
-                                .padding(.all)
+                                .padding()
                                 .id(SetupSteps.birthday)
                                 .frame(width: geometry.size.width)
                             PetImageView(selectedImageData: $viewModel.selectedImageData, selectedPage: $step)
                                 .scrollTargetLayout()
-                                .padding(.all)
+                                .padding()
                                 .id(SetupSteps.photo)
                                 .frame(width: geometry.size.width)
                             NotificationSelectView(dayType: $feedTime)
                                 .scrollTargetLayout()
-                                .padding(.all)
+                                .padding()
                                 .id(SetupSteps.feedSelection)
                                 .frame(width: geometry.size.width)
                             PetNotificationSelectionView(
@@ -65,7 +62,7 @@ struct NewAddPetView: View {
                                 eveningFeed: $viewModel.eveningFeed
                             )
                                 .scrollTargetLayout()
-                                .padding(.all)
+                                .padding()
                                 .id(SetupSteps.feedTime)
                                 .frame(width: geometry.size.width)
                         }
@@ -92,7 +89,7 @@ struct NewAddPetView: View {
         HStack {
             previousButton(proxy: proxy)
             .buttonStyle(.bordered)
-            .tint(step == .name ? .red : Color(uiColor: .label))
+            .tint(step == .name ? .red : ESColor.label)
             Spacer()
             nextButton(proxy: proxy)
         }
@@ -140,7 +137,7 @@ struct NewAddPetView: View {
                     proxy.scrollTo(SetupSteps.feedTime)
                 case .feedTime:
                     Task {
-                        let pet = await viewModel.savePet(notificationManager: notificationManager)
+                        let pet = await viewModel.savePet()
                         modelContext.insert(pet)
                         dismiss()
                     }
@@ -148,14 +145,13 @@ struct NewAddPetView: View {
             }
         }
         .buttonStyle(.bordered)
-        .tint(step == .feedTime ? .green : .label)
+        .tint(step == .feedTime ? .green : ESColor.label)
         .disabled(!nameIsFilledCorrectly)
     }
 }
 
 #Preview {
     NewAddPetView(
-        notificationManager: .init(),
-        viewModel: .init()
+        viewModel: .init(notificationManager: .init())
     )
 }

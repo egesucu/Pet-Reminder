@@ -12,7 +12,7 @@ import OSLog
 
 struct DonateView: View {
 
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
     @State private var viewModel = StoreManager()
 
     var body: some View {

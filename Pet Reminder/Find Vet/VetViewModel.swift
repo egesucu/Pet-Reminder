@@ -12,8 +12,9 @@ import SwiftUI
 import OSLog
 import Observation
 
+@MainActor
 @Observable
-class VetViewModel: NSObject, VetViewModelProtocol {
+class VetViewModel {
 
     var userLocation: MapCameraPosition = .userLocation(fallback: .automatic)
     var searchText = String(localized: "default_vet_text")

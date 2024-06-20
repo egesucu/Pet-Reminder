@@ -19,12 +19,12 @@ struct PetCell: View {
                 .frame(width: 150, height: 150)
             VStack {
                 Text(pet.name)
-                    .foregroundStyle(Color.label)
+                    .foregroundStyle(ESColor.label)
                     .font(.title)
                     .minimumScaleFactor(0.2)
                     .lineLimit(3)
-                if pet.feedsArray.count > 0,
-                   let lastFeed = pet.feedsArray.last {
+                if pet.feeds?.count ?? 0 > 0,
+                   let lastFeed = pet.feeds?.last {
                     if lastFeed.eveningFed,
                        let eveningTime = lastFeed.eveningFedStamp {
                         VStack(alignment: .leading) {
@@ -48,7 +48,7 @@ struct PetCell: View {
 
 #Preview {
     NavigationStack {
-        PetCell(pet: .init())
+        PetCell(pet: .preview)
             .modelContainer(PreviewSampleData.container)
     }
 }

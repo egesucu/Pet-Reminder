@@ -11,11 +11,11 @@ import SwiftUI
 struct EventTimeView: View {
 
     @Binding var dateString: String
-    @AppStorage(Strings.tintColor) var tintColor = Color.accent
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 100).fill(tintColor)
+            RoundedRectangle(cornerRadius: 100).fill(tintColor.color)
             Text(dateString)
                 .multilineTextAlignment(.center)
                 .font(.body)

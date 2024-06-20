@@ -41,7 +41,7 @@ struct HomeManagerView: View {
                 .tag(PetReminderTabs.settings)
                 .toolbarBackground(Color(.systemBackground), for: .tabBar)
         }
-        .tint(Color.label)
+        .tint(ESColor.label)
     }
 }
 

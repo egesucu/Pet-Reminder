@@ -11,7 +11,7 @@ import MapKit
 import SwiftUI
 import CoreLocation
 
-class MockVetViewModel: VetViewModelProtocol {
+class MockVetViewModel {
 
     var userLocation: MapCameraPosition = .automatic
 

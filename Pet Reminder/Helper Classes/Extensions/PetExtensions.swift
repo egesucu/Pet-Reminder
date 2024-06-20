@@ -11,35 +11,20 @@ import Foundation
 import UIKit
 
 extension Pet {
-    var selection: FeedTimeSelection {
-        get {
-            return FeedTimeSelection(rawValue: self.choice) ?? .both
-        }
-        set {
-            choice = newValue.rawValue
-        }
-    }
 
-    var feedsArray: [Feed] {
-        let feeds = self.feeds ?? []
-        return feeds.sorted { first, second in
-            first.wrappedFeedDate < second.wrappedFeedDate
-        }
-    }
-
-    var vaccinesArray: [Vaccine] {
-        let vaccines = self.vaccines ?? []
-        return vaccines.sorted { first, second in
-            first.date < second.date
-        }
-    }
-
-    var preview: Pet {
-        let firstPet = previews.first ?? .init()
+    static var preview: Pet {
+        let firstPet = previews.first ?? .init(
+            birthday: .now,
+            name: "",
+            choice: 0,
+            createdAt: nil,
+            feedSelection: nil,
+            image: nil
+        )
         return firstPet
     }
 
-    var previews: [Pet] {
+    static var previews: [Pet] {
         var pets: [Pet] = []
         Strings.demoPets.forEach { petName in
             let pet = Pet(
@@ -47,14 +32,12 @@ extension Pet {
                 name: petName,
                 choice: [0, 1, 2].randomElement() ?? 0,
                 createdAt: .randomDate(),
-                eveningFed: false,
-                eveningTime: nil,
-                image: UIImage(resource: .defaultAnimal).jpegData(compressionQuality: 0.8),
-                morningFed: false,
-                morningTime: nil
+                feedSelection: .both, 
+                image: UIImage(resource: .defaultAnimal)
+                    .jpegData(compressionQuality: 0.8)
             )
-            pet.feeds = Feed().previews
-            pet.vaccines = Vaccine().previews
+            pet.feeds = Feed.previews
+            pet.vaccines = Vaccine.previews
             pets.append(pet)
         }
         return pets
