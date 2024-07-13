@@ -15,11 +15,15 @@ let package = Package(
     targets: [
         .target(
             name: "UI",
-            dependencies: ["SharedModels"]
+            dependencies: ["SharedModels"],
+            resources: [
+                .process("Resources/Assets.xcassets")
+            ],
+            swiftSettings: [.define("ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS")]
         ),
         .testTarget(
             name: "UITests",
-            dependencies: ["UI"]
+            dependencies: ["UI", "SharedModels"]
         ),
     ]
 )

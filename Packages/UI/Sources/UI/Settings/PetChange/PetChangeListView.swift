@@ -189,7 +189,7 @@ public struct PetChangeListView: View {
 #Preview {
     NavigationStack {
         PetChangeListView()
-            .modelContainer(PreviewSampleData.container)
+            .modelContainer(DataController.previewContainer)
             .environment(NotificationManager())
     }
 }

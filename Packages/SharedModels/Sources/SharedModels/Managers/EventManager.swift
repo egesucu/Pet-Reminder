@@ -6,8 +6,10 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 import Observation
-@preconcurrency import EventKit
+import EventKit
 import OSLog
+
+extension EKEventStore: @unchecked @retroactive Sendable {}
 
 @MainActor
 @Observable
@@ -52,20 +54,14 @@ public class EventManager {
     }
     
     public func requestEvents() async {
-        do {
+        Task { @MainActor in
             let result = try await eventStore.requestFullAccessToEvents()
             if result {
-                await MainActor.run {
-                    self.fetchCalendars()
-                }
+                self.fetchCalendars()
             } else {
-                await MainActor.run {
-                    self.authStatus = .denied
-                }
+                self.authStatus = .denied
             }
             await updateAuthStatus()
-        } catch let error {
-            Logger.events.error("\(error)")
         }
     }
     

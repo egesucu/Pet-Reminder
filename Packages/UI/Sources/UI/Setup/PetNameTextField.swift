@@ -76,5 +76,5 @@ struct PetNameTextField: View {
 #Preview {
     PetNameTextField(name: .constant(Strings.viski), nameIsFilledCorrectly: .constant(false))
         .padding(.all)
-        .modelContainer(PreviewSampleData.container)
+        .modelContainer(DataController.previewContainer)
 }

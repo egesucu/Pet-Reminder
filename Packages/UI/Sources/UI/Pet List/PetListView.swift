@@ -125,7 +125,7 @@ public struct PetListView: View {
 #Preview {
     NavigationStack {
         PetListView()
-            .modelContainer(PreviewSampleData.container)
+            .modelContainer(DataController.previewContainer)
             .environment(NotificationManager())
     }
 }

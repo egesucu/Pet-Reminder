@@ -9,16 +9,16 @@
 import UIKit
 import SwiftUI
 
-enum AppIcon: String, CaseIterable, Identifiable {
+public enum AppIcon: String, CaseIterable, Identifiable {
 
     case primary = "AppIcon"
     case darkMode = "AppIcon-Dark"
     case fivePointFive = "AppIcon-Old"
     case five = "AppIcon-Oldest"
 
-    var id: String { rawValue }
+    public var id: String { rawValue }
 
-    var iconName: String? {
+    public var iconName: String? {
         switch self {
         case .primary:
             return nil
@@ -27,7 +27,7 @@ enum AppIcon: String, CaseIterable, Identifiable {
         }
     }
 
-    var description: LocalizedStringKey {
+    public var description: LocalizedStringKey {
         switch self {
         case .primary:
             return "Logo 1(Default)"
@@ -40,7 +40,7 @@ enum AppIcon: String, CaseIterable, Identifiable {
         }
     }
 
-    var preview: UIImage {
-        UIImage(named: rawValue) ?? UIImage()
+    public var preview: UIImage {
+        UIImage(named: rawValue, in: .module, compatibleWith: nil) ?? UIImage()
     }
 }

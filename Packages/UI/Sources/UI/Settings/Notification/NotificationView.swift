@@ -157,6 +157,6 @@ public struct NotificationView: View {
 
 #Preview {
     NotificationView()
-        .modelContainer(PreviewSampleData.container)
+        .modelContainer(DataController.previewContainer)
         .environment(NotificationManager())
 }

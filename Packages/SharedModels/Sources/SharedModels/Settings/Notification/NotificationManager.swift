@@ -7,9 +7,12 @@
 //
 
 import Foundation
-@preconcurrency import UserNotifications
+import UserNotifications
 import Observation
 import OSLog
+
+extension UNNotificationRequest: @unchecked @retroactive Sendable {}
+extension UNUserNotificationCenter: @unchecked @retroactive Sendable {}
 
 @MainActor
 @Observable

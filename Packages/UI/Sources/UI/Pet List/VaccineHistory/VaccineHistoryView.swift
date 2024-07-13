@@ -96,6 +96,6 @@ public struct VaccineHistoryView: View {
 #Preview {
     NavigationStack {
         VaccineHistoryView(pet: .constant(.preview))
-            .modelContainer(PreviewSampleData.container)
+            .modelContainer(DataController.previewContainer)
     }
 }
