@@ -10,6 +10,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 import SharedModels
+import OSLog
 
 public struct FindVetView: View {
 
@@ -34,11 +35,6 @@ public struct FindVetView: View {
         }
         .task {
             await viewModel.requestMap()
-        }
-        .onSubmit(of: .search) {
-            Task {
-                await viewModel.searchPins()
-            }
         }
         .sheet(item: $viewModel.selectedLocation, onDismiss: {
             withAnimation {
@@ -77,12 +73,11 @@ public struct FindVetView: View {
         .searchable(text: $viewModel.searchText)
         .onSubmit(of: .search) {
             Task {
-                await viewModel.searchPins()
-            }
-        }
-        .onSubmit(of: .search) {
-            Task {
-                await viewModel.searchPins()
+                do {
+                    try await viewModel.searchPins()
+                } catch let error {
+                    Logger.vet.error("Error setting user location: \(error.localizedDescription)")
+                }
             }
         }
         .disableAutocorrection(true)

@@ -30,34 +30,45 @@ public class VetViewModel {
         Logger.vet.info("Location Auth Status: \(self.mapViewStatus.rawValue)")
     }
     
-    public func updateAuthenticationStatus() async {
+    @MainActor
+    public func requestLocation() async {
         locationManager.requestWhenInUseAuthorization()
+        await updateAuthenticationStatus()
+    }
+    
+    @MainActor
+    public func updateAuthenticationStatus() async {
         self.mapViewStatus = switch locationManager.authorizationStatus {
         case .notDetermined:
                 .none
-        case .denied, .restricted:
-                .locationNotAllowed
         case .authorizedAlways, .authorizedWhenInUse, .authorized:
                 .authorized
-        @unknown default:
-                .none
+        default:
+                .locationNotAllowed
         }
         
         if mapViewStatus == .authorized {
-            await MainActor.run {
-                userLocation = .userLocation(fallback: .automatic)
-            }
-            await searchPins()
+            await setUserLocation()
         }
     }
     
+    @MainActor
+    public func setUserLocation() async {
+        userLocation = .userLocation(fallback: .automatic)
+        do {
+            try await searchPins()
+        } catch let error {
+            Logger.vet.error("Error setting user location: \(error.localizedDescription)")
+        }
+    }
+    
+    @MainActor
     public func clearPreviousSearches() async {
-        await MainActor.run {
-            searchedLocations.removeAll()
-        }
+        searchedLocations.removeAll()
     }
     
-    public func searchPins() async {
+    @MainActor
+    public func searchPins() async throws {
         await clearPreviousSearches()
         
         let searchRequest = MKLocalSearch.Request()
@@ -69,20 +80,23 @@ public class VetViewModel {
         let localSearch = MKLocalSearch(request: searchRequest)
         
         Task {
-            let response = try await localSearch.start()
-            await processSearchResponse(response)
+            do {
+                let response = try await localSearch.start()
+                await processSearchResponse(response)
+            } catch let error {
+                throw error
+            }
         }
     }
     
     @MainActor
     private func processSearchResponse(_ response: MKLocalSearch.Response) async {
-        await MainActor.run {
-            response.mapItems.forEach {
-                self.searchedLocations.append(Pin(item: $0))
-            }
-            userLocation = .userLocation(fallback: .automatic)
+        response.mapItems.forEach {
+            self.searchedLocations.append(Pin(item: $0))
         }
+        userLocation = .userLocation(fallback: .automatic)
     }
 }
 
-extension MKLocalSearch.Response: @unchecked @retroactive Sendable {}
+extension MKLocalSearch.Response: @unchecked @retroactive Sendable {
+}

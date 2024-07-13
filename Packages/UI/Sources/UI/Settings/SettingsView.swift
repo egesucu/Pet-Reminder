@@ -39,10 +39,6 @@ public struct SettingsView: View {
                         .sensoryFeedback(.success, trigger: showAlert)
                     }
                     NavigationLink(
-                        "settings_change_icon",
-                        destination: ChangeAppIconView()
-                    )
-                    NavigationLink(
                         "notifications_manage_title",
                         destination:
                             NotificationView()
