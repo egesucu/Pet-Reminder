@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -12,6 +13,7 @@
       }
     },
     "\n%@, %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -28,6 +30,7 @@
       }
     },
     "%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -38,6 +41,7 @@
       }
     },
     "%@, %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +58,7 @@
       }
     },
     "%lf" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -79,9 +84,6 @@
           }
         }
       }
-    },
-    "Add" : {
-
     },
     "add_animal_accessible_label" : {
       "extractionState" : "manual",
@@ -135,6 +137,7 @@
       }
     },
     "add_event_calendar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -304,6 +307,7 @@
       }
     },
     "All" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -314,6 +318,7 @@
       }
     },
     "All Notifications" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -375,6 +380,7 @@
       }
     },
     "Back" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -436,6 +442,7 @@
       }
     },
     "cancel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -452,6 +459,7 @@
       }
     },
     "Cancel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -479,6 +487,7 @@
       }
     },
     "Choose Friend" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -507,6 +516,7 @@
       }
     },
     "color_reset_cuccessfull" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -540,6 +550,7 @@
       }
     },
     "Create default notifications for your pet." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -572,9 +583,6 @@
         }
       }
     },
-    "Date" : {
-
-    },
     "date_select_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -593,6 +601,7 @@
       }
     },
     "debug_menu_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -762,6 +771,7 @@
       }
     },
     "Done" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -778,6 +788,7 @@
       }
     },
     "Edit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -788,6 +799,7 @@
       }
     },
     "event_error_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -821,6 +833,7 @@
       }
     },
     "event_not_allowed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -872,6 +885,7 @@
       }
     },
     "event_wrong_allowence" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -990,6 +1004,7 @@
       }
     },
     "feeds_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1006,6 +1021,7 @@
       }
     },
     "find_vet_error_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1213,6 +1229,7 @@
       }
     },
     "Logo 1(Default)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1229,6 +1246,7 @@
       }
     },
     "Logo 2" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1245,6 +1263,7 @@
       }
     },
     "Logo V5" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1255,6 +1274,7 @@
       }
     },
     "Logo V5.5" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1282,6 +1302,7 @@
       }
     },
     "map_open_in" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1332,6 +1353,7 @@
       }
     },
     "Next" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1571,6 +1593,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1622,6 +1645,7 @@
       }
     },
     "pet_add_pet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1808,9 +1832,6 @@
         }
       }
     },
-    "Pulvarin" : {
-
-    },
     "refresh" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1829,6 +1850,7 @@
       }
     },
     "Remove" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1862,6 +1884,7 @@
       }
     },
     "remove_userdefaults" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1895,6 +1918,7 @@
       }
     },
     "save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1911,6 +1935,7 @@
       }
     },
     "Save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1927,6 +1952,7 @@
       }
     },
     "Select a photo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1960,6 +1986,7 @@
       }
     },
     "settings_change_icon" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1976,6 +2003,7 @@
       }
     },
     "settings_reset_color" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2182,6 +2210,7 @@
     },
     "vaccines_title" : {
       "comment" : "VACCINATIONS",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2232,6 +2261,7 @@
       }
     },
     "welcome_go_button" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
