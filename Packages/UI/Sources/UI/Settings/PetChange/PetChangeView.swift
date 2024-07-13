@@ -144,5 +144,5 @@ public struct PetChangeView: View {
 
 #Preview {
     PetChangeView(pet: .constant(.preview))
-        .modelContainer(PreviewSampleData.container)
+        .modelContainer(DataController.previewContainer)
 }

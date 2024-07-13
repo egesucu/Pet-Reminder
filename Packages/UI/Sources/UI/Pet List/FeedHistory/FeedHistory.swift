@@ -41,6 +41,6 @@ struct FeedHistory: View {
 #Preview {
     NavigationStack {
         FeedHistory(feeds: [.init()])
-            .modelContainer(PreviewSampleData.container)
+            .modelContainer(DataController.previewContainer)
     }
 }

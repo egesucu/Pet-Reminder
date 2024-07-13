@@ -65,5 +65,5 @@ struct PreviousFeedsSection: View {
     @Previewable var feeds: [Feed] = Feed.previews
     
     PreviousFeedsSection(feeds: feeds)
-        .modelContainer(PreviewSampleData.container)
+        .modelContainer(DataController.previewContainer)
 }

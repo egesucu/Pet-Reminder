@@ -6,7 +6,7 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-@preconcurrency import MapKit
+import MapKit
 import CoreLocation
 import SwiftUI
 import OSLog
@@ -68,11 +68,9 @@ public class VetViewModel {
         
         let localSearch = MKLocalSearch(request: searchRequest)
         
-        do {
+        Task {
             let response = try await localSearch.start()
             await processSearchResponse(response)
-        } catch let error {
-            Logger.vet.error("\(error)")
         }
     }
     
@@ -86,3 +84,5 @@ public class VetViewModel {
         }
     }
 }
+
+extension MKLocalSearch.Response: @unchecked @retroactive Sendable {}

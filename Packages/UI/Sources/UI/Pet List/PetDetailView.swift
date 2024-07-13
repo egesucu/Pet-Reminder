@@ -71,7 +71,7 @@ public struct PetDetailView: View {
         PetDetailView(
             pet: .constant(.preview)
         )
-            .modelContainer(PreviewSampleData.container)
+            .modelContainer(DataController.previewContainer)
     }
     .navigationViewStyle(.stack)
 }
