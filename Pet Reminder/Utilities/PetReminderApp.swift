@@ -9,11 +9,15 @@
 import SwiftUI
 import CloudKit
 import SwiftData
+import UI
+import SharedModels
 
 @main
 struct PetReminderApp: App {
 
-    @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accent)
+    @AppStorage(Strings.tintColor) var tintColor = ESColor(
+        color: Color.accentColor
+    )
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @Environment(\.undoManager) var undoManager
     @State private var notificationManager = NotificationManager()

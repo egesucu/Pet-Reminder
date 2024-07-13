@@ -8,7 +8,6 @@
 
 import SwiftData
 import SwiftUI
-import UI
 import SharedModels
 
 actor PreviewSampleData {
