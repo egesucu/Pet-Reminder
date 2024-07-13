@@ -12,8 +12,6 @@
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
 		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
-		9D7C252B2A5948D300DDB027 /* Pet_ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */; };
-		9D7C25322A594B2F00DDB027 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
 		9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */; };
 		9D8A4EB12C42984700D6CB9B /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 9D8A4EB02C42984700D6CB9B /* UI */; };
@@ -25,16 +23,6 @@
 		9DE86E612C42BF67003C5681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DE86E602C42BF67003C5681 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9D7C252C2A5948D300DDB027 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D8E76E6248666BD004610C8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9D8E76ED248666BD004610C8;
-			remoteInfo = "Pet Reminder";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_xcodebuild.sh; sourceTree = "<group>"; };
@@ -42,9 +30,6 @@
 		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		9D7C25282A5948D300DDB027 /* Pet ReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pet ReminderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_ReminderTests.swift; sourceTree = "<group>"; };
-		9D7C25312A594AEC00DDB027 /* Pet Reminder.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Pet Reminder.xctestplan"; sourceTree = "<group>"; };
 		9D8970A425681E9300B3C414 /* PetReminderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderApp.swift; sourceTree = "<group>"; };
 		9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreConfiguration.storekit; sourceTree = "<group>"; };
 		9D8E76EE248666BD004610C8 /* Pet Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pet Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,13 +44,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9D7C25252A5948D300DDB027 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9D8E76EB248666BD004610C8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -99,22 +77,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9D7C25292A5948D300DDB027 /* Pet ReminderTests */ = {
-			isa = PBXGroup;
-			children = (
-				9D7C252A2A5948D300DDB027 /* Pet_ReminderTests.swift */,
-			);
-			path = "Pet ReminderTests";
-			sourceTree = "<group>";
-		};
 		9D8E76E5248666BD004610C8 = {
 			isa = PBXGroup;
 			children = (
 				9D8E76F0248666BD004610C8 /* Pet Reminder */,
 				9DE86E5C2C42A0DB003C5681 /* Packages */,
 				9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */,
-				9D7C25312A594AEC00DDB027 /* Pet Reminder.xctestplan */,
-				9D7C25292A5948D300DDB027 /* Pet ReminderTests */,
 				9D71CEF2248836BD00AA1458 /* Frameworks */,
 				9D8E76EF248666BD004610C8 /* Products */,
 			);
@@ -124,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				9D8E76EE248666BD004610C8 /* Pet Reminder.app */,
-				9D7C25282A5948D300DDB027 /* Pet ReminderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,24 +140,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9D7C25272A5948D300DDB027 /* Pet ReminderTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9D7C25302A5948D300DDB027 /* Build configuration list for PBXNativeTarget "Pet ReminderTests" */;
-			buildPhases = (
-				9D7C25242A5948D300DDB027 /* Sources */,
-				9D7C25252A5948D300DDB027 /* Frameworks */,
-				9D7C25262A5948D300DDB027 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9D7C252D2A5948D300DDB027 /* PBXTargetDependency */,
-			);
-			name = "Pet ReminderTests";
-			productName = "Pet ReminderTests";
-			productReference = 9D7C25282A5948D300DDB027 /* Pet ReminderTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		9D8E76ED248666BD004610C8 /* Pet Reminder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D8E7705248666C1004610C8 /* Build configuration list for PBXNativeTarget "Pet Reminder" */;
@@ -223,10 +172,6 @@
 				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = "Ege Sucu";
 				TargetAttributes = {
-					9D7C25272A5948D300DDB027 = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = 9D8E76ED248666BD004610C8;
-					};
 					9D8E76ED248666BD004610C8 = {
 						CreatedOnToolsVersion = 11.5;
 					};
@@ -249,20 +194,11 @@
 			projectRoot = "";
 			targets = (
 				9D8E76ED248666BD004610C8 /* Pet Reminder */,
-				9D7C25272A5948D300DDB027 /* Pet ReminderTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9D7C25262A5948D300DDB027 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9D7C25322A594B2F00DDB027 /* Localizable.xcstrings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9D8E76EC248666BD004610C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -282,14 +218,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9D7C25242A5948D300DDB027 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9D7C252B2A5948D300DDB027 /* Pet_ReminderTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9D8E76EA248666BD004610C8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -300,63 +228,15 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		9D7C252D2A5948D300DDB027 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9D8E76ED248666BD004610C8 /* Pet Reminder */;
-			targetProxy = 9D7C252C2A5948D300DDB027 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		9D7C252E2A5948D300DDB027 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RKA7R98LN8;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.softtech.test.Pet-ReminderTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pet Reminder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pet Reminder";
-			};
-			name = Debug;
-		};
-		9D7C252F2A5948D300DDB027 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RKA7R98LN8;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.softtech.test.Pet-ReminderTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pet Reminder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pet Reminder";
-			};
-			name = Release;
-		};
 		9D8E7703248666C1004610C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = "SwiftUI UIKit";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -436,7 +316,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = "SwiftUI UIKit";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -509,7 +392,7 @@
 		9D8E7706248666C1004610C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark AppIcon-Oldest AppIcon-Old";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = SwiftUI;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
@@ -555,7 +438,7 @@
 		9D8E7707248666C1004610C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Dark AppIcon-Oldest AppIcon-Old";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = SwiftUI;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
@@ -601,15 +484,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9D7C25302A5948D300DDB027 /* Build configuration list for PBXNativeTarget "Pet ReminderTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9D7C252E2A5948D300DDB027 /* Debug */,
-				9D7C252F2A5948D300DDB027 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		9D8E76E9248666BD004610C8 /* Build configuration list for PBXProject "Pet Reminder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

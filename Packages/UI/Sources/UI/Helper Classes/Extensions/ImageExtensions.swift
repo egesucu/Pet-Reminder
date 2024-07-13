@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import SwiftUI
-import SharedModels
 
 extension UIImage {
-    static func loadImage(name: String) -> UIImage {
-        return UIImage(named: name) ?? UIImage()
+    public static func loadImage(name: String) -> UIImage {
+        UIImage(named: name) ?? UIImage()
     }
 }

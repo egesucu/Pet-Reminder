@@ -8,7 +8,8 @@ let package = Package(
     products: [
         .library(
             name: "SharedModels",
-            targets: ["SharedModels"]),
+            targets: ["SharedModels"]
+        ),
     ],
     targets: [
         .target(
