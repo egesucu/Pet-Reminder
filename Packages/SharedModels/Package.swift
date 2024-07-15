@@ -1,5 +1,4 @@
 // swift-tools-version: 6.0
-
 import PackageDescription
 
 let package = Package(
@@ -9,7 +8,7 @@ let package = Package(
         .library(
             name: "SharedModels",
             targets: ["SharedModels"]
-        ),
+        )
     ],
     targets: [
         .target(
@@ -18,6 +17,6 @@ let package = Package(
         .testTarget(
             name: "SharedModelsTests",
             dependencies: ["SharedModels"]
-        ),
+        )
     ]
 )

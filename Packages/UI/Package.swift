@@ -7,10 +7,14 @@ let package = Package(
     products: [
         .library(
             name: "UI",
-            targets: ["UI"]),
+            targets: ["UI"]
+            )
     ],
     dependencies: [
-        .package(name: "SharedModels", path: "../SharedModels")
+        .package(
+            name: "SharedModels", 
+            path: "../SharedModels"
+        )
     ],
     targets: [
         .target(
