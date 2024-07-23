@@ -14,7 +14,7 @@ public enum PetError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .name:
-            return String(localized: "name_error")
+            return String(localized: "name_error", bundle: .module)
         }
     }
 }

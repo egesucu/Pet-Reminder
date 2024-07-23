@@ -72,7 +72,7 @@ extension String {
 
     static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return "\(event.startDate.printDate()) \(String(localized: "all_day_title"))"
+            return "\(event.startDate.printDate()) \(String(localized: "all_day_title", bundle: .module))"
         } else {
             return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
@@ -80,7 +80,7 @@ extension String {
 
     static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return String(localized: "all_day_title")
+            return String(localized: "all_day_title", bundle: .module)
         } else {
             return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
         }

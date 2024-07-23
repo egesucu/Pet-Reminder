@@ -78,7 +78,7 @@ extension Tag {
             allDay: allDay,
             event: event
         )
-        let allDayTitle = String(localized: "all_day_title")
+        let allDayTitle = String(localized: "all_day_title", bundle: .module)
         #expect(expectedContent == allDayTitle)
 
         let expectedFutureAllDayTitle = String.formatEventDateTime(

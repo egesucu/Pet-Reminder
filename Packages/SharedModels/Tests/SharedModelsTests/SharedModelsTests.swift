@@ -6,7 +6,7 @@ import Testing
         let name = "Viski"
         let notExpectedOutput = "notification_content-\(name)"
         let stringKey: String.LocalizationValue = "notification_content \(name)"
-        let localization = String(localized: stringKey)
+        let localization = String(localized: stringKey, bundle: .module)
         #expect(localization != notExpectedOutput)
     }
 }

@@ -172,7 +172,7 @@ public class EventManager {
         
         let alarm = EKAlarm(relativeOffset: -60 * 10)
         newEvent.addAlarm(alarm)
-        newEvent.notes = String(localized: "add_event_note")
+        newEvent.notes = String(localized: "add_event_note", bundle: .module)
         
         do {
             try eventStore.save(newEvent, span: .thisEvent)
