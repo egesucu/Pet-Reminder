@@ -23,24 +23,22 @@ public struct HelloView: View {
 
     public var body: some View {
         VStack(alignment: .center, spacing: 20) {
-            Text("welcome_title")
+            Text("welcome_title", bundle: .module)
                 .font(.title)
             logoView()
-            Text("welcome_context")
+            Text("welcome_context", bundle: .module)
                 .padding(.vertical)
                 .font(.body)
             Spacer()
             HStack {
                 Spacer()
                 Button(action: goButtonPressed) {
-                    Text("welcome_go_button")
+                    Text("welcome_go_button", bundle: .module)
                         .font(.title)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.white)
                 }
-                .padding()
-                .background(tintColor.color)
-                .clipShape(.rect(cornerRadius: 25.0))
-                .shadow(radius: 3)
+                .buttonStyle(.borderedProminent)
+                .foregroundColor(tintColor.color)
                 .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
                 }
@@ -76,5 +74,5 @@ public struct HelloView: View {
 
 #Preview {
     HelloView()
-        .environment(NotificationManager())
+        .environment(NotificationManager.shared)
 }

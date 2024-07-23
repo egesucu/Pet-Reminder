@@ -2,68 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " "
-          }
-        }
-      }
-    },
-    "\n%@, %@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "\n%1$@, %2$@"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\n%1$@, %2$@"
-          }
-        }
-      }
+      "shouldTranslate" : false
     },
     "%@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
-          }
-        }
-      }
-    },
-    "%@, %@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@, %2$@"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@, %2$@"
-          }
-        }
-      }
-    },
-    "%lf" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lf"
           }
         }
       }
@@ -132,23 +78,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etkinlik Ekle"
-          }
-        }
-      }
-    },
-    "add_event_calendar" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Calendar"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Takvim"
           }
         }
       }
@@ -306,28 +235,6 @@
         }
       }
     },
-    "All" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tümü"
-          }
-        }
-      }
-    },
-    "All Notifications" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tüm Bildirimler"
-          }
-        }
-      }
-    },
     "all_day_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -375,17 +282,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Harita"
-          }
-        }
-      }
-    },
-    "Back" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri"
           }
         }
       }
@@ -442,7 +338,6 @@
       }
     },
     "cancel" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -454,17 +349,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İptal Et"
-          }
-        }
-      }
-    },
-    "Cancel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vazgeç"
           }
         }
       }
@@ -482,17 +366,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iCloud şu an aktif değil. Lütfen daha sonra tekrar deneyin."
-          }
-        }
-      }
-    },
-    "Choose Friend" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arkadaşını Seç"
           }
         }
       }
@@ -515,23 +388,6 @@
         }
       }
     },
-    "color_reset_cuccessfull" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom Color is removed successfully"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Özel renk başarıyla silindi"
-          }
-        }
-      }
-    },
     "continue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -545,23 +401,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Devam Et"
-          }
-        }
-      }
-    },
-    "Create default notifications for your pet." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create default notifications for your pet."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Evcil Hayvanın için varsayılan bildirimleri yarat."
           }
         }
       }
@@ -596,23 +435,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir tarih seç"
-          }
-        }
-      }
-    },
-    "debug_menu_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug Menu"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug Menu"
           }
         }
       }
@@ -753,68 +575,6 @@
         }
       }
     },
-    "done" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamam"
-          }
-        }
-      }
-    },
-    "Done" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamam"
-          }
-        }
-      }
-    },
-    "Edit" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düzenle"
-          }
-        }
-      }
-    },
-    "event_error_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Event Access Error"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etkinlik Erişim Hatası"
-          }
-        }
-      }
-    },
     "event_no_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -828,23 +588,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir etkinlik yok."
-          }
-        }
-      }
-    },
-    "event_not_allowed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You did not give us the permission to access your calendar. You can change this in the app settings."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Takvimlerine erişmemiz için izin vermediniz. Bunu ayarlarda değiştirebilirsiniz."
           }
         }
       }
@@ -880,23 +623,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sıradaki"
-          }
-        }
-      }
-    },
-    "event_wrong_allowence" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You give us \"write only access\" which we can't show you your event with that option. If you want to see your events, allow us in Settings."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bize \"Sadece yazma izni\" verdiniz. Bu izinde sizlere etkinliklerinizi gösteremiyoruz. Eğer etkinliklerinizi görmek istiyorsanız ayarlarda bize izin verin."
           }
         }
       }
@@ -999,40 +725,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Besleme Düzeni Seç"
-          }
-        }
-      }
-    },
-    "feeds_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Feeds"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Öğünler"
-          }
-        }
-      }
-    },
-    "find_vet_error_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Map Authentication Error"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Harita İzin Hatası"
           }
         }
       }
@@ -1228,62 +920,6 @@
         }
       }
     },
-    "Logo 1(Default)" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Default Logo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Varsayılan Logo"
-          }
-        }
-      }
-    },
-    "Logo 2" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alternative Logo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alternatif Logo"
-          }
-        }
-      }
-    },
-    "Logo V5" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logo V5"
-          }
-        }
-      }
-    },
-    "Logo V5.5" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logo V5.5"
-          }
-        }
-      }
-    },
     "manage_pet_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1297,23 +933,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dostlarını Yönet"
-          }
-        }
-      }
-    },
-    "map_open_in" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open in"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aç"
           }
         }
       }
@@ -1348,17 +967,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaten bu isme sahip bir evcil hayvan bulunuyor"
-          }
-        }
-      }
-    },
-    "Next" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İleri"
           }
         }
       }
@@ -1592,23 +1200,6 @@
         }
       }
     },
-    "OK" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        }
-      }
-    },
     "open_settings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1640,23 +1231,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kullanıcı satın alma yapamıyor."
-          }
-        }
-      }
-    },
-    "pet_add_pet" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Let's add one."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Haydi birini ekleyelim."
           }
         }
       }
@@ -1832,6 +1406,16 @@
         }
       }
     },
+    "Pulvarin" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulvarin"
+          }
+        }
+      }
+    },
     "refresh" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1849,23 +1433,6 @@
         }
       }
     },
-    "Remove" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sil"
-          }
-        }
-      }
-    },
     "remove_all" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1879,23 +1446,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tümünü Sil"
-          }
-        }
-      }
-    },
-    "remove_userdefaults" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove UserDefaults"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "UserDefaults'u Sil"
           }
         }
       }
@@ -1918,7 +1468,6 @@
       }
     },
     "save" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1930,40 +1479,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaydet"
-          }
-        }
-      }
-    },
-    "Save" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
-          }
-        }
-      }
-    },
-    "Select a photo" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select a photo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fotoğraf Seç"
           }
         }
       }
@@ -1981,40 +1496,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir tarih seç"
-          }
-        }
-      }
-    },
-    "settings_change_icon" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Logo"
-          }
-        }
-      }
-    },
-    "settings_reset_color" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset Custom Color"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Özel Rengi Sıfırla"
           }
         }
       }
@@ -2208,24 +1689,6 @@
         }
       }
     },
-    "vaccines_title" : {
-      "comment" : "VACCINATIONS",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vaccines"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aşılar"
-          }
-        }
-      }
-    },
     "welcome_add_pet" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2256,23 +1719,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pet Reminder'a hoşgeldin. Burada küçük dostlarını yönetebilirsin. Onların günlük ihtiyaçlarını yönetebilir ve onlar için etkinlikler oluşturabilirsin. Hazır mısın? Hadi ilk dostunu ekleyerek başlayalım."
-          }
-        }
-      }
-    },
-    "welcome_go_button" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Let's Go!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Haydi başlayalım!"
           }
         }
       }

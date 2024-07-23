@@ -22,7 +22,7 @@ struct PetNameTextField: View {
 
     public var body: some View {
         VStack {
-            Text("start_name_label")
+            Text("start_name_label", bundle: .module)
                 .font(.title2)
                 .bold()
                 .padding(.bottom, 20)
@@ -56,7 +56,7 @@ struct PetNameTextField: View {
             Button(action: {
 
             }, label: {
-                Text("OK")
+                Text("OK", bundle: .module)
             })
         }
 

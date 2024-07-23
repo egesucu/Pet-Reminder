@@ -57,14 +57,14 @@ public struct PetChangeListView: View {
                             Button {
                                 isEditing.toggle()
                             } label: {
-                                Text(isEditing ? "Done" : "Edit")
+                                Text(isEditing ? "Done" : "Edit", bundle: .module)
                             }
                         }
 
                     }
 
                 }
-            .navigationTitle(Text("Choose Friend"))
+            .navigationTitle(Text("Choose Friend", bundle: .module))
         }
         .overlay {
             if pets.isEmpty {

@@ -27,7 +27,7 @@ public struct AddPopupView: View {
                     .fill(Color(uiColor: .systemBackground))
                 VStack(alignment: .center) {
                     HStack {
-                        Text("add")
+                        Text("add", bundle: .module)
                             .bold()
                         TextField(Strings.placeholderVaccine, text: $contentInput)
                             .multilineTextAlignment(.center)
@@ -36,18 +36,18 @@ public struct AddPopupView: View {
                     .padding(.bottom, 10)
 
                     DatePicker(selection: $dateInput) {
-                        Text("date")
+                        Text("date", bundle: .module)
                             .bold()
                     }.padding(.horizontal)
 
                     HStack {
                         Button(action: onCancel) {
-                            Text("cancel")
+                            Text("cancel", bundle: .module)
                         }
                         .buttonStyle(.bordered)
                         Spacer()
                         Button(action: onSave) {
-                            Text("add")
+                            Text("add", bundle: .module)
                         }
                         .buttonStyle(.borderedProminent)
                     }

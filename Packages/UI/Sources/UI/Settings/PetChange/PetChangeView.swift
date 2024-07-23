@@ -39,23 +39,29 @@ public struct PetChangeView: View {
                                     .padding(.vertical)
                             }
                         }
-                        Toggle("default_photo_label", isOn: $viewModel.defaultPhotoOn)
-                            .tint(Color.accentColor)
-                            .onChange(of: viewModel.defaultPhotoOn, {
-                                if viewModel.defaultPhotoOn {
-                                    viewModel.outputImageData = nil
-                                }
-                            })
-                            .padding()
-                        Text("photo_upload_detail_title")
+                        Toggle(isOn: $viewModel.defaultPhotoOn) {
+                            Text("default_photo_label", bundle: .module)
+                        }
+                        .tint(Color.accentColor)
+                        .onChange(of: viewModel.defaultPhotoOn, {
+                            if viewModel.defaultPhotoOn {
+                                viewModel.outputImageData = nil
+                            }
+                        })
+                        .padding()
+                        Text("photo_upload_detail_title", bundle: .module)
                             .font(.footnote)
                             .foregroundStyle(Color(.systemGray2))
                             .multilineTextAlignment(.center)
                             .padding()
                         Form {
                             Section {
-                                TextField("tap_to_change_text", text: $viewModel.nameText)
-                                DatePicker("birthday_title", selection: $viewModel.birthday, displayedComponents: .date)
+                                TextField(text: $viewModel.nameText) {
+                                    Text("tap_to_change_text", bundle: .module)
+                                }
+                                DatePicker(selection: $viewModel.birthday, displayedComponents: .date) {
+                                    Text("birthday_title", bundle: .module)
+                                }
                             }
                             Section {
                                 pickerView
@@ -74,7 +80,7 @@ public struct PetChangeView: View {
                             }
                             dismiss()
                         } label: {
-                            Text("Save")
+                            Text("Save", bundle: .module)
                                 .bold()
                         }
                         .tint(tintColor.color)
@@ -83,7 +89,7 @@ public struct PetChangeView: View {
                         Button {
                             dismiss()
                         } label: {
-                            Text("Cancel")
+                            Text("Cancel", bundle: .module)
                                 .bold()
                         }
                         .tint(Color(uiColor: .systemRed))
@@ -98,11 +104,11 @@ public struct PetChangeView: View {
     var pickerView: some View {
         VStack {
             Picker(selection: $viewModel.selection) {
-                Text("feed_selection_both")
+                Text("feed_selection_both", bundle: .module)
                     .tag(FeedSelection.both)
-                Text("feed_selection_morning")
+                Text("feed_selection_morning", bundle: .module)
                     .tag(FeedSelection.morning)
-                Text("feed_selection_evening")
+                Text("feed_selection_evening", bundle: .module)
                     .tag(FeedSelection.evening)
             } label: {
                 Text("feed_time_title")
@@ -126,18 +132,20 @@ public struct PetChangeView: View {
 
     var eveningView: some View {
         DatePicker(
-            "feed_selection_evening",
             selection: $viewModel.eveningDate,
             displayedComponents: .hourAndMinute
-        )
+        ) {
+            Text("feed_selection_evening", bundle: .module)
+        }
     }
 
     var morningView: some View {
         DatePicker(
-            "feed_selection_morning",
             selection: $viewModel.morningDate,
             displayedComponents: .hourAndMinute
-        )
+        ) {
+            Text("feed_selection_morning", bundle: .module)
+        }
     }
 
 }

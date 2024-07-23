@@ -16,7 +16,7 @@ struct PreviousFeedsSection: View {
         Section {
             if ((feeds?
                 .filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty) != nil) {
-                Text("no_feed_content")
+                Text("no_feed_content", bundle: .module)
             } else {
                 ForEach(
                     feeds?
@@ -56,7 +56,7 @@ struct PreviousFeedsSection: View {
                 }
             }
         } header: {
-            Text("previous_title")
+            Text("previous_title", bundle: .module)
         }
     }
 }

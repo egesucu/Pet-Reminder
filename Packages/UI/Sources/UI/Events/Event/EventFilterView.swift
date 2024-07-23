@@ -25,7 +25,7 @@ public struct EventFilterView: View {
                     Capsule()
                         .fill(Color.black.opacity(0.4))
                 }
-                Text("All")
+                Text("All", bundle: .module)
             }
             .onTapGesture {
                 withAnimation {

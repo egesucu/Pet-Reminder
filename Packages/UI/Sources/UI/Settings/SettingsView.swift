@@ -20,40 +20,43 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("app_settings")) {
-                    NavigationLink(
-                        "manage_pet_title",
-                        destination: PetChangeListView()
-                    )
-                    ColorPicker(
-                        "settings_tint_color",
-                        selection: $tintColor.color
-                    )
+                Section(header: Text("app_settings", bundle: .module)) {
+                    NavigationLink {
+                        PetChangeListView()
+                    } label: {
+                        Text("manage_pet_title", bundle: .module)
+                    }
+                    ColorPicker(selection: $tintColor.color) {
+                        Text("settings_tint_color", bundle: .module)
+                    }
                     if tintColor != ESColor(color: Color.accentColor) {
                         Button {
                             tintColor = ESColor(color: Color.accentColor)
                             showAlert(content: "color_reset_cuccessfull")
                         } label: {
-                            Text("settings_reset_color")
+                            Text(LocalizedStringKey("settings_reset_color"))
                         }
                         .sensoryFeedback(.success, trigger: showAlert)
                     }
-                    NavigationLink(
-                        "notifications_manage_title",
-                        destination:
-                            NotificationView()
-                    )
-                    NavigationLink(
-                        "privacy_policy_title",
-                        destination: PrivacyPolicyView()
-                    )
+                    NavigationLink {
+                        NotificationView()
+                    } label: {
+                        Text("notifications_manage_title", bundle: .module)
+                    }
+                    NavigationLink {
+                        PrivacyPolicyView()
+                    } label: {
+                        Text(LocalizedStringKey("privacy_policy_title"), bundle: .module)
+                    }
                 }
                 Section {
-                    NavigationLink("donate_us_title") {
+                    NavigationLink {
                         DonateView()
+                    } label: {
+                        Text("donate_us_title", bundle: .module)
                     }
                 } header: {
-                    Text("buy_coffee_title")
+                    Text("buy_coffee_title", bundle: .module)
                 } footer: {
                     Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
                 }
@@ -62,7 +65,7 @@ public struct SettingsView: View {
                 NavigationLink(
                     destination: AllNotificationsView()
                 ) {
-                    Text("All Notifications")
+                    Text("All Notifications", bundle: .module)
                 }
                 #endif
             }
@@ -70,7 +73,7 @@ public struct SettingsView: View {
                 Button("OK", role: .cancel) {}
 
             })
-            .navigationTitle(Text("settings_tab_title"))
+            .navigationTitle(Text("settings_tab_title", bundle: .module))
 
         }.navigationViewStyle(.stack)
     }
@@ -84,14 +87,16 @@ public struct SettingsView: View {
 #if DEBUG
 private var debugMenu: some View {
     Section {
-        Button("remove_userdefaults", action: {
+        Button {
             let domainName = Bundle.main.bundleIdentifier ?? ""
             UserDefaults.standard.removePersistentDomain(forName: domainName)
             UserDefaults.standard.synchronize()
             Logger.settings.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
-        })
+        } label: {
+            Text("remove_userdefaults", bundle: .module)
+        }
     } header: {
-        Text("debug_menu_title")
+        Text("debug_menu_title", bundle: .module)
     } footer: {
         Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
     }

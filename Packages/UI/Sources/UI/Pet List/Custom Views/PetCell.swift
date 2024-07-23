@@ -30,14 +30,14 @@ struct PetCell: View {
                         if lastFeed.eveningFed,
                            let eveningTime = lastFeed.eveningFedStamp {
                             VStack(alignment: .leading) {
-                                Text("last_feed_title")
+                                Text("last_feed_title", bundle: .module)
                                     .bold()
                                 Text("\(eveningTime.formatted())")
                             }
                         } else if lastFeed.morningFed,
                                   let morningTime = lastFeed.morningFedStamp {
                             VStack(alignment: .leading) {
-                                Text("last_feed_title")
+                                Text("last_feed_title", bundle: .module)
                                     .bold()
                                 Text(morningTime.formatted())
                             }

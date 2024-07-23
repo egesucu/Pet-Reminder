@@ -10,7 +10,6 @@
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
-		9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
 		9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */; };
@@ -27,7 +26,6 @@
 		9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_xcodebuild.sh; sourceTree = "<group>"; };
 		9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
-		9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9D8970A425681E9300B3C414 /* PetReminderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderApp.swift; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */,
-				9D65457C2A2E96E300B0D35B /* Localizable.xcstrings */,
 				9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */,
 				9D8970A425681E9300B3C414 /* PetReminderApp.swift */,
 				9D8E7702248666C1004610C8 /* Info.plist */,
@@ -208,7 +205,6 @@
 				9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */,
 				9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */,
 				9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */,
-				9D65457D2A2E96E400B0D35B /* Localizable.xcstrings in Resources */,
 				9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */,
 				9DE86E612C42BF67003C5681 /* Assets.xcassets in Resources */,
 				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,

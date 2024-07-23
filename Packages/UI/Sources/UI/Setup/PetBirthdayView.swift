@@ -17,7 +17,7 @@ public struct PetBirthdayView: View {
     public var body: some View {
         VStack {
             Spacer()
-            Text("birthday_title")
+            Text("birthday_title", bundle: .module)
                 .font(.title2)
                 .bold()
                 .padding(.trailing, 20)
