@@ -90,12 +90,11 @@ extension EventView {
         self.showWarningForCalendar.toggle()
     }
 
+    @MainActor
     private func fillData() async {
         self.eventTitle = event.title
         let content = eventVM.fillEventData(event: event)
-        await MainActor.run {
-            self.dateString = content
-        }
+        self.dateString = content
     }
 }
 

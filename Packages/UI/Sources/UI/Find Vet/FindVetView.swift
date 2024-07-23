@@ -16,18 +16,26 @@ public struct FindVetView: View {
 
     @State private var viewModel = VetViewModel()
     @AppStorage(Strings.tintColor) var tintColor = ESColor(color: Color.accentColor)
+    
+    public init() {
+        viewModel.searchText = String(localized: "default_vet_text", bundle: .module)
+    }
 
     public var body: some View {
         NavigationStack {
             mapView
         }
-        .navigationTitle(Text("find_vet_title"))
+        .navigationTitle(Text("find_vet_title", bundle: .module))
         .overlay {
             if viewModel.mapViewStatus == .locationNotAllowed {
                 ContentUnavailableView {
-                    Label("find_vet_error_title", systemImage: SFSymbols.locationAuthError)
+                    Label {
+                        Text("find_vet_error_title", bundle: .module)
+                    } icon: {
+                        Image(systemName: SFSymbols.locationAuthError)
+                    }
                 } description: {
-                    Text("location_alert_context")
+                    Text("location_alert_context", bundle: .module)
                 } actions: {
                     ESSettingsButton()
                 }

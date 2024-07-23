@@ -17,7 +17,7 @@ import Observation
 public class VetViewModel {
 
     public var userLocation: MapCameraPosition = .userLocation(fallback: .automatic)
-    public var searchText = String(localized: "default_vet_text")
+    public var searchText = ""
     public var searchedLocations: [Pin] = []
     public var locationManager = CLLocationManager()
     public var selectedLocation: Pin?

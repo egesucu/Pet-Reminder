@@ -41,9 +41,7 @@ public struct PhotoImagePickerView: View {
     
     @MainActor
     private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
-        await MainActor.run {
-            processPhotoChange(newPhoto)
-        }
+        processPhotoChange(newPhoto)
     }
     
     @MainActor

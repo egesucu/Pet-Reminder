@@ -28,9 +28,9 @@ public struct DonateView: View {
                         .padding(.vertical, 10)
                     Spacer()
                 }
-                Text("donate_us_context")
+                Text("donate_us_context", bundle: .module)
                     .padding()
-                Text("donate_us_comment")
+                Text("donate_us_comment", bundle: .module)
                     .padding()
                 ForEach(viewModel.consumables, id: \.self) { product in
                     ProductView(product, prefersPromotionalIcon: false)
@@ -44,7 +44,7 @@ public struct DonateView: View {
                         }
                 }
             }.padding(.horizontal)
-        }.navigationTitle(Text("donate_us_title"))
+        }.navigationTitle(Text("donate_us_title", bundle: .module))
     }
 
     func purcahaseCompleted(

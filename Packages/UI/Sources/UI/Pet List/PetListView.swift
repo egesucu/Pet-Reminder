@@ -102,7 +102,7 @@ public struct PetListView: View {
     }
 
     private var petListTitle: Text {
-        Text("pet_name_title")
+        Text("pet_name_title", bundle: .module)
     }
 
     @ToolbarContentBuilder
@@ -113,7 +113,7 @@ public struct PetListView: View {
                     self.addPet.toggle()
                 }, label: {
                     Image(systemName: SFSymbols.add)
-                        .accessibilityLabel(Text("add_animal_accessible_label"))
+                        .accessibilityLabel(Text("add_animal_accessible_label", bundle: .module))
                         .foregroundStyle(tintColor.color)
                         .font(.title)
                 })

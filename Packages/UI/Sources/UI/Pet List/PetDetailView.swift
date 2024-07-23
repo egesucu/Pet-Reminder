@@ -35,7 +35,11 @@ public struct PetDetailView: View {
                             .info("PR: Feed History Tapped, pet name: \(pet.name)")
                         showFeedHistory.toggle()
                     } label: {
-                        Label("feeds_title", systemImage: "fork.knife.circle.fill")
+                        Label {
+                            Text("feeds_title", bundle: .module)
+                        } icon: {
+                            Image(systemName: "fork.knife.circle.fill")
+                        }
                     }
                     .buttonStyle(.bordered)
                     .tint(tintColor.color)
@@ -45,7 +49,11 @@ public struct PetDetailView: View {
                             .info("PR: Vaccine History Tapped")
                         showVaccines.toggle()
                     } label: {
-                        Label("vaccines_title", systemImage: "syringe.fill")
+                        Label {
+                            Text("vaccines_title", bundle: .module)
+                        } icon: {
+                            Image(systemName: "syringe.fill")
+                        }
                     }
                     .buttonStyle(.bordered)
                     .tint(.blue)
@@ -62,7 +70,7 @@ public struct PetDetailView: View {
         .fullScreenCover(isPresented: $showVaccines) {
             VaccineHistoryView(pet: $pet)
         }
-        .navigationTitle(Text("pet_name_title \(pet?.name ?? "")"))
+        .navigationTitle(Text("pet_name_title \(pet?.name ?? "")", bundle: .module))
     }
 }
 

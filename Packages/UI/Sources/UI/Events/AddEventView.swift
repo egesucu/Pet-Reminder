@@ -28,13 +28,22 @@ public struct AddEventView: View {
     public var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("add_event_info")) {
-                    TextField("add_event_name", text: $eventVM.eventName)
-                    Picker("add_event_calendar", selection: $eventVM.selectedCalendar) {
+                Section(
+                    header: Text(
+                        "add_event_info",
+                        bundle: .module
+                    )
+                ) {
+                    TextField(text: $eventVM.eventName) {
+                        Text("add_event_name", bundle: .module)
+                    }
+                    Picker(selection: $eventVM.selectedCalendar) {
                         ForEach(filteredCalendars, id: \.calendarIdentifier) {
                             Text($0.title)
                                 .tag($0)
                         }
+                    } label: {
+                        Text("add_event_calendar")
                     }
                     .onChange(of: eventVM.selectedCalendar) {
                         Logger
@@ -42,13 +51,25 @@ public struct AddEventView: View {
                             .info("Selected Calendar: \(eventVM.selectedCalendar.title)")
                     }
                 }
-                Section(header: Text("add_event_time")) {
-                    Toggle("all_day_title", isOn: $eventVM.isAllDay)
+                Section(
+                    header: Text(
+                        "add_event_time",
+                        bundle: .module
+                    )
+                ) {
+                    Toggle(isOn: $eventVM.isAllDay) {
+                        Text("all_day_title", bundle: .module)
+                    }
                     eventDateView()
                 }
             }
             .tint(tintColor.color)
-            .navigationTitle(Text("add_event_title"))
+            .navigationTitle(
+                Text(
+                    "add_event_title",
+                    bundle: .module
+                )
+            )
             .toolbar(content: addEventToolbar)
         }
     }
@@ -56,11 +77,17 @@ public struct AddEventView: View {
     @ViewBuilder
     func eventDateView() -> some View {
         if eventVM.isAllDay {
-            DatePicker("add_event_date", selection: $eventVM.allDayDate, displayedComponents: .date)
+            DatePicker(selection: $eventVM.allDayDate, displayedComponents: .date) {
+                Text("add_event_date", bundle: .module)
+            }
         } else {
-            DatePicker("add_event_start", selection: $eventVM.eventStartDate)
-                .onChange(of: eventVM.eventStartDate, changeEventMinimumDate)
-            DatePicker("add_event_end", selection: $eventVM.eventEndDate)
+            DatePicker(selection: $eventVM.eventStartDate) {
+                Text("add_event_start", bundle: .module)
+            }
+            .onChange(of: eventVM.eventStartDate, changeEventMinimumDate)
+            DatePicker(selection: $eventVM.eventEndDate) {
+                Text("add_event_end", bundle: .module)
+            }
         }
     }
 
@@ -76,16 +103,18 @@ public struct AddEventView: View {
 
     private func saveButton() -> some View {
         Button(action: saveEvent) {
-            Text("add_event_save")
+            Text("add_event_save", bundle: .module)
                 .foregroundStyle(tintColor.color)
                 .bold()
         }
     }
 
     private func cancelButton() -> some View {
-        Button("cancel", action: dismiss.callAsFunction)
-            .foregroundStyle(Color.red)
-            .bold()
+        Button(action: dismiss.callAsFunction) {
+            Text("cancel", bundle: .module)
+        }
+        .foregroundStyle(Color.red)
+        .bold()
     }
 
     private func saveEvent() {

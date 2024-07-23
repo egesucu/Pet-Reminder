@@ -46,11 +46,10 @@ public class EventManager {
         return events
     }
     
+    @MainActor
     private func updateAuthStatus() async {
-        await MainActor.run {
-            self.authStatus = .value(status: EKEventStore.authorizationStatus(for: .event))
-            Logger.events.info("Auth status is: \(self.authStatus.rawValue)")
-        }
+        self.authStatus = .value(status: EKEventStore.authorizationStatus(for: .event))
+        Logger.events.info("Auth status is: \(self.authStatus.rawValue)")
     }
     
     public func requestEvents() async {
@@ -101,11 +100,10 @@ public class EventManager {
         }
     }
     
+    @MainActor
     public func loadEvents() async {
         await updateAuthStatus()
-        await MainActor.run {
-            events.removeAll()
-        }
+        events.removeAll()
         if authStatus == .authorized {
             let startDate: Date = .now
             let endDate = Calendar.current.date(byAdding: .month, value: 1, to: .now) ?? .now
@@ -128,12 +126,11 @@ public class EventManager {
         }
     }
     
+    @MainActor
     public func reloadEvents() async {
         await updateAuthStatus()
         await loadEvents()
-        await MainActor.run {
-            fetchCalendars()
-        }
+        fetchCalendars()
     }
     
     public func convertDateToString(startDate: Date?, endDate: Date?) -> String {
@@ -148,42 +145,40 @@ public class EventManager {
         return ""
     }
     
+    @MainActor
     public func removeEvent(event: EKEvent) async {
         do {
-            try await MainActor.run {
-                try self.eventStore.remove(event, span: .thisEvent, commit: true)
-            }
+            try self.eventStore.remove(event, span: .thisEvent, commit: true)
         } catch {
             Logger.events.error("\(error)")
         }
     }
     
+    @MainActor
     public func saveEvent() async {
-        await MainActor.run {
-            let newEvent = EKEvent(eventStore: eventStore)
-            newEvent.title = eventName
-            newEvent.isAllDay = isAllDay
-            
-            if isAllDay {
-                newEvent.startDate = allDayDate
-                newEvent.endDate = allDayDate
-            } else {
-                newEvent.startDate = eventStartDate
-                newEvent.endDate = eventEndDate
-            }
-            
-            newEvent.calendar = selectedCalendar
-            
-            let alarm = EKAlarm(relativeOffset: -60 * 10)
-            newEvent.addAlarm(alarm)
-            newEvent.notes = String(localized: "add_event_note")
-            
-            do {
-                try eventStore.save(newEvent, span: .thisEvent)
-            } catch let error {
-                if let error = error as? EKError {
-                    Logger.events.error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
-                }
+        let newEvent = EKEvent(eventStore: eventStore)
+        newEvent.title = eventName
+        newEvent.isAllDay = isAllDay
+        
+        if isAllDay {
+            newEvent.startDate = allDayDate
+            newEvent.endDate = allDayDate
+        } else {
+            newEvent.startDate = eventStartDate
+            newEvent.endDate = eventEndDate
+        }
+        
+        newEvent.calendar = selectedCalendar
+        
+        let alarm = EKAlarm(relativeOffset: -60 * 10)
+        newEvent.addAlarm(alarm)
+        newEvent.notes = String(localized: "add_event_note")
+        
+        do {
+            try eventStore.save(newEvent, span: .thisEvent)
+        } catch let error {
+            if let error = error as? EKError {
+                Logger.events.error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
             }
         }
         await reloadEvents()

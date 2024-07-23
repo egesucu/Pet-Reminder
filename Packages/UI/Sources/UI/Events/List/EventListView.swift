@@ -31,7 +31,7 @@ public struct EventListView: View {
             AddEventView(eventVM: $eventVM)
         }
         .toolbar(content: eventToolBar)
-        .navigationTitle(Text("event_title"))
+        .navigationTitle(Text("event_title", bundle: .module))
         .overlay(content: eventViewOverlay)
         .task {
             await eventVM.reloadEvents()
@@ -42,17 +42,25 @@ public struct EventListView: View {
     func eventViewOverlay() -> some View {
         if eventVM.authStatus == .denied {
             ContentUnavailableView(label: {
-                Label("event_error_title", systemImage: "calendar.badge.exclamationmark")
+                Label {
+                    Text("event_error_title", bundle: .module)
+                } icon: {
+                    Image(systemName: "calendar.badge.exclamationmark")
+                }
             }, description: {
-                Text("event_not_allowed")
+                Text("event_not_allowed", bundle: .module)
             }, actions: {
                 ESSettingsButton()
             })
         } else if eventVM.authStatus == .readOnly {
             ContentUnavailableView(label: {
-                Label("event_error_title", systemImage: "calendar.badge.exclamationmark")
+                Label {
+                    Text("event_error_title", bundle: .module)
+                } icon: {
+                    Image(systemName: "calendar.badge.exclamationmark")
+                }
             }, description: {
-                Text("event_wrong_allowence")
+                Text("event_wrong_allowence", bundle: .module)
             }, actions: {
                 ESSettingsButton()
             })
@@ -63,9 +71,13 @@ public struct EventListView: View {
     func eventToolBar() -> some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: toggleAddEvent) {
-                Label("add_event_accessible_title", systemImage: SFSymbols.calendar)
-                    .font(.title2)
-                    .foregroundStyle(tintColor.color)
+                Label {
+                    Text("add_event_accessible_title", bundle: .module)
+                        .font(.title2)
+                        .foregroundStyle(tintColor.color)
+                } icon: {
+                    Image(systemName: SFSymbols.calendar)
+                }
             }
         }
     }

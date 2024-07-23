@@ -23,7 +23,7 @@ public struct VaccineHistoryView: View {
             VStack {
                 if let pet {
                     if ((pet.vaccines?.isEmpty) != nil) {
-                        Text("no_vaccine_title")
+                        Text("no_vaccine_title", bundle: .module)
                     } else {
                         List {
                             ForEach(pet.vaccines ?? []) { vaccine in
@@ -45,7 +45,7 @@ public struct VaccineHistoryView: View {
                     }
 
                 } else {
-                    Text("no_vaccine_title")
+                    Text("no_vaccine_title", bundle: .module)
                 }
             }
             .toolbar {
@@ -67,7 +67,7 @@ public struct VaccineHistoryView: View {
                     .disabled(viewModel.shouldAddVaccine)
                 }
             }
-            .navigationTitle(Text("vaccine_history_title"))
+            .navigationTitle(Text("vaccine_history_title", bundle: .module))
             .popupView(
                 isPresented: $viewModel.shouldAddVaccine.animation(),
                 content: AddPopupView(

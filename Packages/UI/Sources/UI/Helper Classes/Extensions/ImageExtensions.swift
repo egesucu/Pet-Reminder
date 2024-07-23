@@ -10,6 +10,6 @@ import UIKit
 
 extension UIImage {
     public static func loadImage(name: String) -> UIImage {
-        UIImage(named: name) ?? UIImage()
+        UIImage(named: name, in: .module, with: nil) ?? UIImage()
     }
 }

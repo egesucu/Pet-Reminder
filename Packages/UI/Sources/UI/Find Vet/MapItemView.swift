@@ -59,7 +59,7 @@ public struct MapItemView: View {
                     }
                 }
                 Button(action: openMapDetail) {
-                    Text("map_open_in")
+                    Text("map_open_in", bundle: .module)
                 }
                 .buttonStyle(.bordered)
                 .padding(.trailing, 10)

@@ -48,18 +48,17 @@ public class PetChangeViewModel {
         outputImageData = nil
     }
 
+    @MainActor
     public func getPetData(pet: Pet) async {
-        await MainActor.run {
-            self.birthday = pet.birthday
-            self.nameText = pet.name
-            self.selection = pet.feedSelection ?? .both
+        self.birthday = pet.birthday
+        self.nameText = pet.name
+        self.selection = pet.feedSelection ?? .both
 
-            if let image = pet.image {
-                self.outputImageData = image
-                self.defaultPhotoOn = false
-            } else {
-                self.defaultPhotoOn = true
-            }
+        if let image = pet.image {
+            self.outputImageData = image
+            self.defaultPhotoOn = false
+        } else {
+            self.defaultPhotoOn = true
         }
     }
 

@@ -37,7 +37,7 @@ public struct NotificationView: View {
                                         await fetchNotificiations()
                                     }
                                 } label: {
-                                    Text("Create default notifications for your pet.")
+                                    Text("Create default notifications for your pet.", bundle: .module)
                                 }
                             } else {
                                 ForEach(
@@ -54,7 +54,7 @@ public struct NotificationView: View {
                             Text(pet.name)
                         } footer: {
                             let count = notificationAmount(for: pet.name)
-                            Text("notification \(count)")
+                            Text("notification \(count)", bundle: .module)
 
                         }
                         .onChange(of: notificationManager.notifications) {
@@ -76,7 +76,7 @@ public struct NotificationView: View {
                 ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
             }
         }
-        .navigationTitle(Text("notifications_title"))
+        .navigationTitle(Text("notifications_title", bundle: .module))
         .navigationViewStyle(.stack)
         .toolbar {
             if pets.isNotEmpty {
@@ -88,7 +88,7 @@ public struct NotificationView: View {
                             await fetchNotificiations()
                         }
                     } label: {
-                        Text("remove_all")
+                        Text("remove_all", bundle: .module)
                     }
                 }
 
@@ -113,7 +113,7 @@ public struct NotificationView: View {
     private func notificationView(notification: UNNotificationRequest) -> some View {
         VStack(alignment: .leading) {
             Label {
-                Text("notification_to")
+                Text("notification_to", bundle: .module)
             } icon: {
                 if notification.identifier.contains("morning") {
                     Image(systemName: SFSymbols.morning)

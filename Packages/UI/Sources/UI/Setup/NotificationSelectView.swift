@@ -15,18 +15,18 @@ public struct NotificationSelectView: View {
 
     public var body: some View {
         VStack {
-            Text("feed_time_title")
+            Text("feed_time_title", bundle: .module)
                 .font(.title2).bold()
                 .padding(.vertical)
             Picker(
                 selection: $dayType,
-                label: Text("feed_time_title")
+                label: Text("feed_time_title", bundle: .module)
             ) {
-                Text("feed_selection_both")
+                Text("feed_selection_both", bundle: .module)
                     .tag(FeedSelection.both)
-                Text("feed_selection_morning")
+                Text("feed_selection_morning", bundle: .module)
                     .tag(FeedSelection.morning)
-                Text("feed_selection_evening")
+                Text("feed_selection_evening", bundle: .module)
                     .tag(FeedSelection.evening)
             }
             .pickerStyle(.segmented)

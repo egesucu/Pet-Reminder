@@ -26,7 +26,7 @@ public struct PetShowImageView: View {
             Button {
                 onImageDelete()
             } label: {
-                Text("Remove")
+                Text("Remove", bundle: .module)
                     .font(.title3)
             }
             .buttonStyle(.bordered)

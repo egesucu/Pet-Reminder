@@ -32,7 +32,7 @@ public struct FutureEventsView: View {
     public var body: some View {
         Section {
             if filteredEvents.isEmpty {
-                Text("event_no_title")
+                Text("event_no_title", bundle: .module)
             } else {
                 ForEach(filteredEvents, id: \.self) { event in
                     EventView(event: event, eventVM: eventVM)
@@ -41,7 +41,7 @@ public struct FutureEventsView: View {
                 }
             }
         } header: {
-            Text("upcoming_title")
+            Text("upcoming_title", bundle: .module)
         }
     }
 }

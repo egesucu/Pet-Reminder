@@ -26,7 +26,7 @@ struct CurrentFeedSection: View {
     public var body: some View {
         Section {
             if filteredFeeds.isEmpty {
-                Text("no_feed_today_content")
+                Text("no_feed_today_content", bundle: .module)
             } else {
                 ForEach(filteredFeeds, id: \.self) { feed in
                     if let morning = feed.morningFedStamp {
@@ -58,7 +58,7 @@ struct CurrentFeedSection: View {
                 }
             }
         } header: {
-            Text("today")
+            Text("today", bundle: .module)
         }
     }
 }

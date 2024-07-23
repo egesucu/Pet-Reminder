@@ -27,7 +27,7 @@ public struct PetImageView: View {
 
             PhotoImagePickerView(photoData: $selectedImageData)
                 .padding(.vertical)
-            Text("photo_upload_detail_title")
+            Text("photo_upload_detail_title", bundle: .module)
                 .font(.footnote)
         }
         .onChange(of: selectedImageData) { _, _ in

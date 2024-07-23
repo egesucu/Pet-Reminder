@@ -16,7 +16,7 @@ public struct EveningCheckboxView: View {
     public var body: some View {
         VStack {
             Label {
-                Text("feed_selection_evening")
+                Text("feed_selection_evening", bundle: .module)
                     .foregroundStyle(ESColor.label)
                     .font(.title2.bold())
             } icon: {
