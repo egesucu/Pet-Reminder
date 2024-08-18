@@ -11,6 +11,7 @@ import CloudKit
 import SwiftData
 import UI
 import SharedModels
+import OSLog
 
 @main
 struct PetReminderApp: App {
@@ -28,6 +29,12 @@ struct PetReminderApp: App {
                 HomeManagerView()
                     .environment(notificationManager)
                     .tint(tintColor.color)
+                    .onAppear {
+                        Task {
+                            let result = await canUseCloudKit()
+                            Logger().info("iCloud Availability: \(result)")
+                        }
+                    }
             } else {
                 HelloView()
                     .environment(notificationManager)
@@ -35,5 +42,30 @@ struct PetReminderApp: App {
             }
         }
         .modelContainer(for: Pet.self)
+    }
+    
+    func isICloudAvailable() -> Bool {
+        let ubiquityIdentityToken = FileManager.default.ubiquityIdentityToken
+        return ubiquityIdentityToken != nil
+    }
+    
+    func checkCloudKitAvailability() async -> Bool {
+        let container = CKContainer.default()
+        do {
+            let result = try await container.accountStatus()
+            return result == .available ? true : false
+        } catch let error {
+            Logger().error("Error checking Container: \(error.localizedDescription)")
+            return false
+        }
+        
+    }
+    
+    func canUseCloudKit() async -> Bool {
+        if isICloudAvailable() {
+            return await checkCloudKitAvailability()
+        } else {
+            return false
+        }
     }
 }
