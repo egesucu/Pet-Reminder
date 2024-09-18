@@ -1,0 +1,131 @@
+//
+//  PetListView.swift
+//  Pet Reminder
+//
+//  Created by Ege Sucu on 28.08.2023.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
+//
+
+import SwiftUI
+import SwiftData
+import OSLog
+
+
+struct PetListView: View {
+
+    @Environment(\.modelContext) private var modelContext
+
+    
+
+    @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
+
+    @State private var selectedPet: Pet?
+    @State private var addPet = false
+
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    petList
+                    PetDetailView(pet: $selectedPet)
+                }
+            }
+            .toolbar(content: addButtonToolbar)
+            .onAppear {
+                selectedPet = pets.first
+            }
+            .navigationTitle(petListTitle)
+            .fullScreenCover(
+                isPresented: $addPet,
+                onDismiss: {
+                    selectedPet = pets.first
+                    Logger
+                        .pets
+                        .debug("Pet Amount: \(pets.count)")
+                },
+                content: {
+                    AddPetView(
+                        viewModel: .init(notificationManager: .init())
+                )
+            })
+        }
+        .overlay {
+            if pets.isEmpty {
+                ContentUnavailableView(label: {
+                    Label("pet_no_pet", systemImage: "pawprint.circle")
+                }, actions: {
+                    Button("pet_add_pet", action: {
+                        addPet.toggle()
+                    })
+                    .buttonStyle(.bordered)
+                    .tint(.accent)
+                })
+            }
+        }
+    }
+
+    private var petList: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 20) {
+                ForEach(pets, id: \.name) { pet in
+                    VStack {
+                        ESImageView(data: pet.image)
+                            .clipShape(Circle())
+                            .frame(width: 80, height: 80)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 40)
+                                    .stroke(
+                                        defineColor(pet: pet),
+                                        lineWidth: 5
+                                    )
+                            )
+                        Text(pet.name)
+                    }
+                    .onTapGesture {
+                        selectedPet = pet
+                        Logger
+                            .pets
+                            .info("PR: Pet Selected: \(pet.name)")
+                    }
+                    .padding([.top, .leading])
+
+                }
+            }
+
+        }
+    }
+
+    private func defineColor(pet: Pet) -> Color {
+        selectedPet?.name == pet.name ? Color.yellow : Color.clear
+    }
+
+    private var petListTitle: Text {
+        Text("pet_name_title")
+    }
+
+    @ToolbarContentBuilder
+    func addButtonToolbar() -> some ToolbarContent {
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            if pets.count > 0 {
+                Button(action: {
+                    self.addPet.toggle()
+                }, label: {
+                    Image(systemName: SFSymbols.add)
+                        .accessibilityLabel(Text("add_animal_accessible_label"))
+                        .foregroundStyle(.accent)
+                        .font(.title)
+                })
+            }
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        PetListView()
+            .modelContainer(DataController.previewContainer)
+            .environment(NotificationManager())
+    }
+}

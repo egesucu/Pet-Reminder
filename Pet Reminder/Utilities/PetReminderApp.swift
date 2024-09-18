@@ -9,16 +9,10 @@
 import SwiftUI
 import CloudKit
 import SwiftData
-import UI
-import SharedModels
 import OSLog
 
 @main
 struct PetReminderApp: App {
-
-    @AppStorage(Strings.tintColor) var tintColor = ESColor(
-        color: Color.accentColor
-    )
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @Environment(\.undoManager) var undoManager
     @State private var notificationManager = NotificationManager()
@@ -28,7 +22,6 @@ struct PetReminderApp: App {
             if helloSeen {
                 HomeManagerView()
                     .environment(notificationManager)
-                    .tint(tintColor.color)
                     .onAppear {
                         Task {
                             let result = await canUseCloudKit()
@@ -38,7 +31,6 @@ struct PetReminderApp: App {
             } else {
                 HelloView()
                     .environment(notificationManager)
-                    .tint(tintColor.color)
             }
         }
         .modelContainer(for: Pet.self)
