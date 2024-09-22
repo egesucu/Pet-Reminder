@@ -71,7 +71,7 @@ extension Tag {
     @Test("", .tags(.need)) func formattingCurrentEventDateTime() throws {
         let current = true
         let allDay = true
-        let manager = EventManager(isDemo: true)
+        let manager = EventViewModel(isDemo: true)
         let event = manager.events.first ?? .init(eventStore: manager.eventStore)
         let expectedContent = String.formatEventDateTime(
             current: current,

@@ -12,7 +12,7 @@ import EventKit
 
 struct FutureEventsView: View {
 
-    @Binding var eventVM: EventManager
+    @Binding var eventVM: EventViewModel
     @Binding var filteredCalendar: EKCalendar?
 
     var filteredEvents: [EKEvent] {

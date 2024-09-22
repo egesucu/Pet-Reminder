@@ -21,6 +21,7 @@ class AddPetViewModel {
     var morningFeed: Date = .eightAM
     var eveningFeed: Date = .eightPM
     var selectedImageData: Data?
+    var petType: PetType = .dog
     
     private let notificationManager: NotificationManager
     
@@ -39,7 +40,8 @@ class AddPetViewModel {
             choice: 0,
             createdAt: .now,
             feedSelection: dayType,
-            image: selectedImageData
+            image: selectedImageData,
+            type: petType
         )
         await createNotifications()
 

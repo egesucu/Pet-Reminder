@@ -344,13 +344,12 @@
         }
       }
     },
-    "Back" : {
-      "extractionState" : "stale",
+    "Bird" : {
       "localizations" : {
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geri"
+            "value" : "Kuş"
           }
         }
       }
@@ -445,6 +444,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iCloud şu an aktif değil. Lütfen daha sonra tekrar deneyin."
+          }
+        }
+      }
+    },
+    "Cat" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kedi"
           }
         }
       }
@@ -594,6 +603,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veteriner"
+          }
+        }
+      }
+    },
+    "Dog" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köpek"
           }
         }
       }
@@ -1006,6 +1025,16 @@
         }
       }
     },
+    "Fish" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balık"
+          }
+        }
+      }
+    },
     "google_maps" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1208,17 +1237,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaten bu isme sahip bir evcil hayvan bulunuyor"
-          }
-        }
-      }
-    },
-    "Next" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İleri"
           }
         }
       }
@@ -1475,6 +1493,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ayarları Aç"
+          }
+        }
+      }
+    },
+    "Other" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diğer"
           }
         }
       }
@@ -2104,6 +2132,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pet Reminder'a hoşgeldin"
+          }
+        }
+      }
+    },
+    "Which kind of the Pet you've got?" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evcil Hayvanının türü ne?"
           }
         }
       }

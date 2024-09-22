@@ -12,11 +12,11 @@ import EventKit
 
 struct EventListView: View {
 
-    @State private var eventVM: EventManager
+    @State private var eventVM: EventViewModel
     @State private var showAddEvent = false
     
 
-    init(eventVM: EventManager) {
+    init(eventVM: EventViewModel) {
         _eventVM = State(wrappedValue: eventVM)
     }
 
@@ -40,7 +40,7 @@ struct EventListView: View {
 
     @ViewBuilder
     func eventViewOverlay() -> some View {
-        if eventVM.authStatus == .denied {
+        if eventVM.status == .denied {
             ContentUnavailableView(label: {
                 Label {
                     Text("event_error_title")
@@ -52,7 +52,7 @@ struct EventListView: View {
             }, actions: {
                 ESSettingsButton()
             })
-        } else if eventVM.authStatus == .readOnly {
+        } else if eventVM.status == .readOnly {
             ContentUnavailableView(label: {
                 Label {
                     Text("event_error_title")

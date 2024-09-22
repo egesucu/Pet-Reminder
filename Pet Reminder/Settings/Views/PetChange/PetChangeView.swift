@@ -31,7 +31,7 @@ struct PetChangeView: View {
                                 PetShowImageView(selectedImage: selectedImage, onImageDelete: viewModel.removeImage)
                                     .padding(.horizontal)
                             } else {
-                                Image(.defaultAnimal)
+                                Image(.defaultOther)
                                     .frame(width: 200, height: 200)
                             }
                             if !viewModel.defaultPhotoOn {

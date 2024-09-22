@@ -13,13 +13,13 @@ import EventKit
 
 struct EventsView: View {
 
-    @Binding var eventVM: EventManager
+    @Binding var eventVM: EventViewModel
 
     @State private var dates = [Date]()
     @State private var filteredCalendar: EKCalendar?
 
     var body: some View {
-        if eventVM.authStatus == .authorized {
+        if eventVM.status == .authorized {
             List {
                 EventFilterView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
                     .transition(.slide)
@@ -29,7 +29,7 @@ struct EventsView: View {
                     .transition(.slide)
             }
             .task {
-                eventVM.fetchCalendars()
+                await eventVM.fetchCalendars()
             }
             .onAppear(perform: getEventDates)
             .refreshable {

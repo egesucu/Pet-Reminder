@@ -11,7 +11,7 @@ import SwiftUI
 
 struct EmptyEventView: View {
 
-    var eventVM: EventManager
+    var eventVM: EventViewModel
 
     var body: some View {
         VStack {

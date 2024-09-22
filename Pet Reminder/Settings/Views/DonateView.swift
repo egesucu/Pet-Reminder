@@ -21,7 +21,7 @@ struct DonateView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Spacer()
-                    Image(.defaultAnimal)
+                    Image(.defaultOther)
                         .resizable()
                         .scaledToFit()
                         .frame(height: 150)

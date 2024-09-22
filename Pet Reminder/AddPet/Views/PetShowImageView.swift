@@ -36,7 +36,7 @@ struct PetShowImageView: View {
 }
 
 #Preview {
-    let image = UIImage(resource: .defaultAnimal)
+    let image = UIImage(resource: .defaultOther)
     PetShowImageView(selectedImage: image) {
 
     }

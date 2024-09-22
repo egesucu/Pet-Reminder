@@ -39,8 +39,23 @@ struct AddPetView: View {
                         .padding()
                     PetBirthdayView(birthday: $viewModel.birthday)
                         .padding()
+                    
+                    Text("Which kind of the Pet you've got?")
+                        .font(.headline)
+                    
+                    Picker(selection: $viewModel.petType) {
+                        ForEach(PetType.allCases, id: \.self) {
+                            Text($0.name)
+                        }
+                    } label: {
+                        Text("Which kind of the Pet you've got?")
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    .colorMultiply(.accent)
+
                     PetImageView(
-                        selectedImageData: $viewModel.selectedImageData
+                        selectedImageData: $viewModel.selectedImageData, petType: $viewModel.petType
                     )
                         .padding()
                     NotificationSelectView(dayType: $feedTime)
