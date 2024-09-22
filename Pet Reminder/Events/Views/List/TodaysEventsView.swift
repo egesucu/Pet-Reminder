@@ -12,7 +12,7 @@ import EventKit
 
 struct TodaysEventsView: View {
 
-    @Binding var eventVM: EventManager
+    @Binding var eventVM: EventViewModel
 
     @Binding var filteredCalendar: EKCalendar?
 

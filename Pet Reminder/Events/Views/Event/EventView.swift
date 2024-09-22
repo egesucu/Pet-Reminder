@@ -18,7 +18,7 @@ struct EventView: View {
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
 
-    var eventVM: EventManager
+    var eventVM: EventViewModel
 
     var body: some View {
         HStack {
@@ -99,7 +99,7 @@ extension EventView {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    let manager = EventManager(isDemo: true)
+    let manager = EventViewModel(isDemo: true)
     let event = manager.exampleEvents[0]
     EventView(event: event, eventVM: manager)
         .frame(height: 100)

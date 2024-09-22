@@ -12,8 +12,10 @@ import EventKit
 
 struct EventFilterView: View {
 
-    @Binding var eventVM: EventManager
+    @Binding var eventVM: EventViewModel
     @Binding var filteredCalendar: EKCalendar?
+    
+    @State private var calendars: [EKCalendar] = []
 
     var body: some View {
         LazyVGrid(columns: [.init(.adaptive(minimum: 150, maximum: 300))]) {
@@ -33,7 +35,7 @@ struct EventFilterView: View {
                 }
 
             }
-            ForEach(eventVM.calendars, id: \.calendarIdentifier) { calendar in
+            ForEach(calendars, id: \.calendarIdentifier) { calendar in
                 ZStack {
                     if isCalendarSelected(calendar: calendar) {
                         Capsule()
@@ -53,6 +55,9 @@ struct EventFilterView: View {
                     }
                 }
             }
+        }
+        .task {
+            calendars = await eventVM.getCalendars()
         }
 
     }

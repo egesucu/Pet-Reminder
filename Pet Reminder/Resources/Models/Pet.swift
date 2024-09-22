@@ -18,6 +18,7 @@ import SwiftData
     var image: Data?
     var feedSelection: FeedSelection?
     var name: String = ""
+    var type: PetType = PetType.dog
     
     @Relationship(inverse: \Feed.pet) var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) var vaccines: [Vaccine]?
@@ -31,7 +32,8 @@ import SwiftData
         feedSelection: FeedSelection? = nil,
         image: Data? = nil,
         feeds: [Feed]? = nil,
-        vaccines: [Vaccine]? = nil
+        vaccines: [Vaccine]? = nil,
+        type: PetType = .dog
     ) {
         self.id = id
         self.birthday = birthday
@@ -42,5 +44,6 @@ import SwiftData
         self.feedSelection = feedSelection
         self.feeds = feeds
         self.vaccines = vaccines
+        self.type = type
     }
 }

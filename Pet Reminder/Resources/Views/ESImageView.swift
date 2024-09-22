@@ -29,7 +29,7 @@ struct ESImageView: View {
                     .clipShape(.rect(cornerRadius: 25))
                     .shadow(radius: 10)
 
-                Image(.defaultAnimal)
+                Image(.defaultOther)
                     .resizable()
                     .scaledToFit()
                     .clipShape(Circle())

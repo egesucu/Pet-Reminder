@@ -11,7 +11,7 @@ import SwiftUI
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
 
-    let eventManager = EventManager()
+    let eventManager = EventViewModel()
     
     init() {}
 

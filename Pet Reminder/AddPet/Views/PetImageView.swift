@@ -11,6 +11,7 @@ import SwiftUI
 struct PetImageView: View {
 
     @Binding var selectedImageData: Data?
+    @Binding var petType: PetType
 
     var body: some View {
         VStack {
@@ -18,8 +19,10 @@ struct PetImageView: View {
             let selectedImage = UIImage(data: selectedImageData) {
                 PetShowImageView(selectedImage: selectedImage, onImageDelete: removeImage)
             } else {
-                Image(.defaultAnimal)
+                petType
+                    .image
                     .frame(width: 200, height: 200)
+                    .clipShape(.rect(cornerRadius: 10))
             }
 
             PhotoImagePickerView(photoData: $selectedImageData)
@@ -36,5 +39,8 @@ struct PetImageView: View {
 
 #Preview {
     @Previewable @State var selectedImageData: Data?
-    PetImageView(selectedImageData: $selectedImageData)
+    PetImageView(
+        selectedImageData: $selectedImageData,
+        petType: .constant(.dog)
+    )
 }

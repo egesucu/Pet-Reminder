@@ -12,18 +12,13 @@ import OSLog
 
 struct AddEventView: View {
 
-    @Binding var eventVM: EventManager
+    @Binding var eventVM: EventViewModel
     @Environment(\.dismiss) var dismiss
     
+    @State private var filteredCalendars: [EKCalendar] = []
 
     let feedback = UINotificationFeedbackGenerator()
-
-    var filteredCalendars: [EKCalendar] {
-        return eventVM
-            .calendars
-            .filter { $0.allowsContentModifications }
-    }
-
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -68,12 +63,15 @@ struct AddEventView: View {
             )
             .toolbar(content: addEventToolbar)
         }
+        .task {
+            filteredCalendars = await eventVM.filteredCalendars()
+        }
     }
 
     @ViewBuilder
     func eventDateView() -> some View {
         if eventVM.isAllDay {
-            DatePicker(selection: $eventVM.allDayDate, displayedComponents: .date) {
+            DatePicker(selection: $eventVM.eventStartDate, displayedComponents: .date) {
                 Text("add_event_date")
             }
         } else {
