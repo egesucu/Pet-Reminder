@@ -68,29 +68,30 @@ struct PetListView: View {
 
     private var petList: some View {
         ScrollView(.horizontal) {
-            HStack(spacing: 20) {
+            HStack(spacing: 5) {
                 ForEach(pets, id: \.name) { pet in
-                    VStack {
-                        ESImageView(data: pet.image)
-                            .clipShape(Circle())
-                            .frame(width: 80, height: 80)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 40)
-                                    .stroke(
-                                        defineColor(pet: pet),
-                                        lineWidth: 5
-                                    )
-                            )
-                        Text(pet.name)
-                    }
+                    Text(pet.name)
+                        .foregroundStyle(
+                            selectedPet == pet
+                            ? .white
+                            : .black
+                        )
+                        .bold(selectedPet == pet)
+                        .padding(8)
+                        .background(
+                            selectedPet == pet
+                            ? Color.accent
+                            : Color.accent.opacity(0.3)
+                        )
+                        .clipShape(.capsule)
+                        .animation(.snappy, value: selectedPet)
                     .onTapGesture {
                         selectedPet = pet
                         Logger
                             .pets
                             .info("PR: Pet Selected: \(pet.name)")
                     }
-                    .padding([.top, .leading])
-
+                    .padding(.leading)
                 }
             }
 

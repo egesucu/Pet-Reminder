@@ -11,7 +11,7 @@ import SwiftUI
 struct ESImageView: View {
 
     var data: Data?
-    
+    var type: PetType
 
     var body: some View {
         if let data = data,
@@ -23,21 +23,29 @@ struct ESImageView: View {
                 .shadow(radius: 10)
                 .padding(5)
         } else {
-            ZStack {
-                Rectangle()
-                    .fill(.accent)
-                    .clipShape(.rect(cornerRadius: 25))
-                    .shadow(radius: 10)
-
-                Image(.defaultOther)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-            }
+            Image(definePetType)
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+        }
+    }
+    
+    private var definePetType: ImageResource {
+        switch type {
+        case .cat:
+                .defaultCat
+        case .dog:
+                .defaultDog
+        case .fish:
+                .defaultFish
+        case .bird:
+                .defaultBird
+        case .other:
+                .defaultOther
         }
     }
 }
 
 #Preview {
-    ESImageView()
+    ESImageView(type: .cat)
 }

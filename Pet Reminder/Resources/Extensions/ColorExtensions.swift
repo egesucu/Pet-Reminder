@@ -7,53 +7,6 @@
 //
 
 import SwiftUI
-import OSLog
-
-
-struct ESColor: RawRepresentable {
-    var color: Color
-    
-    init(color: Color) {
-        self.color = color
-    }
-    
-    init(cgColor: CGColor) {
-        self.color = Color(cgColor: cgColor)
-    }
-    
-    typealias RawValue = String
-    
-    init?(rawValue: String) {
-        guard let data = Data(base64Encoded: rawValue) else {
-            self.color = .green
-            return
-        }
-        do {
-            let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) ?? .green
-            self.color = Color(uiColor: color)
-        } catch let error {
-            Logger
-                .settings
-                .error("\(error)")
-            self.color = .green
-        }
-    }
-    
-    var rawValue: String {
-        do {
-            let data = try NSKeyedArchiver.archivedData(
-                withRootObject: UIColor(self.color),
-                requiringSecureCoding: false
-            )
-            return data.base64EncodedString()
-        } catch let error {
-            Logger
-                .settings
-                .error("\(error)")
-        }
-        return ""
-    }
-}
 
 extension Color {
     var isDarkColor: Bool {

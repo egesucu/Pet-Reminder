@@ -21,7 +21,7 @@ struct PetDetailView: View {
     var body: some View {
         VStack {
             if let pet {
-                ESImageView(data: pet.image)
+                ESImageView(data: pet.image, type: pet.type)
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
                     .frame(width: 250, height: 250)

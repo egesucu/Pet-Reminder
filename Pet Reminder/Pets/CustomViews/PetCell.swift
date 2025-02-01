@@ -15,7 +15,7 @@ struct PetCell: View {
 
     var body: some View {
         HStack {
-            ESImageView(data: pet.image)
+            ESImageView(data: pet.image, type: pet.type)
                 .padding(.trailing, 10)
                 .frame(width: 150, height: 150)
             VStack {

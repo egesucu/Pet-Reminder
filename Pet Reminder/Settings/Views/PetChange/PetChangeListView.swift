@@ -81,7 +81,7 @@ struct PetChangeListView: View {
                     if isEditing {
                         ZStack(alignment: .topTrailing) {
                             VStack {
-                                ESImageView(data: pet.image)
+                                ESImageView(data: pet.image, type: pet.type)
                                     .clipShape(Circle())
                                     .frame(width: 120, height: 120)
                                     .overlay(
@@ -108,7 +108,7 @@ struct PetChangeListView: View {
 
                         }
                     } else {
-                        ESImageView(data: pet.image)
+                        ESImageView(data: pet.image, type: pet.type)
                             .clipShape(Circle())
                             .frame(width: 120, height: 120)
                             .overlay(

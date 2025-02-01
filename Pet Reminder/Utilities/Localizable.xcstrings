@@ -1904,6 +1904,9 @@
         }
       }
     },
+    "Setup" : {
+
+    },
     "setup_name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2043,6 +2046,12 @@
     },
     "vaccines_title" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaccines"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

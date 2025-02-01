@@ -15,16 +15,18 @@ struct HelloView: View {
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
-    
-    init() {}
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
+            Spacer()
             Text("welcome_title")
+                .foregroundStyle(.white)
                 .font(.title)
+                .bold()
             logoView()
             Text("welcome_context")
                 .padding(.vertical)
+                .foregroundStyle(.white)
                 .font(.body)
             Spacer()
             HStack {
@@ -32,10 +34,11 @@ struct HelloView: View {
                 Button(action: goButtonPressed) {
                     Text("welcome_go_button")
                         .font(.title)
-                        .foregroundStyle(Color.white)
+                        .bold()
+                        .foregroundStyle(.accent)
                 }
                 .buttonStyle(.borderedProminent)
-                .foregroundColor(.accent)
+                .tint(.white)
                 .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
                 }
@@ -45,6 +48,10 @@ struct HelloView: View {
         .padding()
         .opacity(shouldAnimate ? 1.0 : 0.0)
         .onAppear(perform: animateView)
+        .background(
+            Color.accent,
+            ignoresSafeAreaEdges: .all
+        )
     }
 
     @ViewBuilder
