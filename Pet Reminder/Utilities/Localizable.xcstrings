@@ -1905,7 +1905,14 @@
       }
     },
     "Setup" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurulum"
+          }
+        }
+      }
     },
     "setup_name" : {
       "extractionState" : "manual",
@@ -2099,13 +2106,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome"
+            "value" : "Let’s Go"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Merhaba"
+            "value" : "Hadi"
           }
         }
       }
