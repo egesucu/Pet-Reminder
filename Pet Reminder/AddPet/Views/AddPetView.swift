@@ -30,14 +30,17 @@ struct AddPetView: View {
 
     var body: some View {
         NavigationStack {
-            TabView {
+            TabView(selection: $position) {
                 PetNameTextField(
                     name: $viewModel.name,
                     nameIsFilledCorrectly: $nameIsFilledCorrectly
                 )
                     .padding()
+                    .tag(0)
+                
                 PetBirthdayView(birthday: $viewModel.birthday)
                     .padding()
+                    .tag(1)
                 
                 VStack {
                     Text("Which kind of the Pet you've got?")
@@ -61,6 +64,7 @@ struct AddPetView: View {
                     )
                         .padding()
                 }
+                .tag(2)
                 
                 VStack {
                     NotificationSelectView(dayType: $feedTime)
@@ -73,6 +77,7 @@ struct AddPetView: View {
                         .padding()
                     saveButton()
                 }
+                .tag(3)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .toolbar {

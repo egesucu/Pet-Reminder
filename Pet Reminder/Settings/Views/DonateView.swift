@@ -44,7 +44,9 @@ struct DonateView: View {
                         }
                 }
             }.padding(.horizontal)
-        }.navigationTitle(Text("donate_us_title"))
+        }
+        .navigationTitle(Text("donate_us_title"))
+        .navigationBarTitleTextColor(.accent)
     }
 
     func purcahaseCompleted(

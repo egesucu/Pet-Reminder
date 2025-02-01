@@ -35,7 +35,6 @@ class EventViewModel {
     }
     
     var events: [EKEvent] = []
-    var selectedCalendar = EKCalendar(for: .event, eventStore: .init())
     var petCalendar: EKCalendar?
     var eventName = ""
     var eventStartDate: Date = Calendar.current.date(byAdding: .hour, value: 1, to: .now) ?? .now
@@ -58,11 +57,6 @@ class EventViewModel {
         await eventDataActor.getCalendars()
     }
     
-    func filteredCalendars() async -> [EKCalendar] {
-        let calendars = await eventDataActor.getCalendars()
-        return calendars.filter { $0.allowsContentModifications }
-    }
-    
     var exampleEvents: [EKEvent] {
         var events: [EKEvent] = []
         (0...4).forEach { index in
@@ -82,15 +76,13 @@ class EventViewModel {
     }
     
     func requestEvents() async {
-        Task {
-            let result = try await eventStore.requestFullAccessToEvents()
-            if result {
-                await self.fetchCalendars()
-            } else {
-                self.status = .denied
-            }
-            await updateAuthStatus()
+        let result = (try? await eventStore.requestFullAccessToEvents()) ?? false
+        if result {
+            await self.fetchCalendars()
+        } else {
+            self.status = .denied
         }
+        await updateAuthStatus()
     }
     
     @MainActor
@@ -139,7 +131,7 @@ class EventViewModel {
             eventStartDate: eventStartDate,
             eventEndDate: eventEndDate,
             isAllDay: isAllDay,
-            selectedCalendar: selectedCalendar
+            selectedCalendar: petCalendar ?? .init()
         )
         await loadEvents()
     }

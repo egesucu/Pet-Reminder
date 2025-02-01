@@ -77,6 +77,7 @@ struct NotificationView: View {
             }
         }
         .navigationTitle(Text("notifications_title"))
+        .navigationBarTitleTextColor(.accent)
         .navigationViewStyle(.stack)
         .toolbar {
             if pets.isNotEmpty {

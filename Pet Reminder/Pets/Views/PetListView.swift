@@ -14,9 +14,6 @@ import OSLog
 struct PetListView: View {
 
     @Environment(\.modelContext) private var modelContext
-
-    
-
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
     @State private var selectedPet: Pet?
@@ -37,6 +34,7 @@ struct PetListView: View {
                 selectedPet = pets.first
             }
             .navigationTitle(petListTitle)
+            .navigationBarTitleTextColor(.accent)
             .fullScreenCover(
                 isPresented: $addPet,
                 onDismiss: {

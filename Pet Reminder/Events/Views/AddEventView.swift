@@ -30,19 +30,6 @@ struct AddEventView: View {
                     TextField(text: $eventVM.eventName) {
                         Text("add_event_name")
                     }
-                    Picker(selection: $eventVM.selectedCalendar) {
-                        ForEach(filteredCalendars, id: \.calendarIdentifier) {
-                            Text($0.title)
-                                .tag($0)
-                        }
-                    } label: {
-                        Text("add_event_calendar")
-                    }
-                    .onChange(of: eventVM.selectedCalendar) {
-                        Logger
-                            .events
-                            .info("Selected Calendar: \(eventVM.selectedCalendar.title)")
-                    }
                 }
                 Section(
                     header: Text(
@@ -61,10 +48,8 @@ struct AddEventView: View {
                     "add_event_title"
                 )
             )
+            .navigationBarTitleTextColor(.accent)
             .toolbar(content: addEventToolbar)
-        }
-        .task {
-            filteredCalendars = await eventVM.filteredCalendars()
         }
     }
 

@@ -26,6 +26,7 @@ struct FindVetView: View {
             mapView
         }
         .navigationTitle(Text("find_vet_title"))
+        .navigationBarTitleTextColor(.accent)
         .overlay {
             if viewModel.mapViewStatus == .locationNotAllowed {
                 ContentUnavailableView {

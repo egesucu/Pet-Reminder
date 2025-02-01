@@ -52,7 +52,7 @@ struct VaccineHistoryView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemName: SFSymbols.close)
-                            .tint(.blue)
+                            .tint(.accent)
                             .font(.title)
                     }.disabled(viewModel.shouldAddVaccine)
                 }
@@ -61,13 +61,14 @@ struct VaccineHistoryView: View {
                         addVaccine.toggle()
                     } label: {
                         Image(systemName: SFSymbols.add)
-                            .tint(.blue)
+                            .tint(.accent)
                             .font(.title)
                     }
                     .disabled(viewModel.shouldAddVaccine)
                 }
             }
             .navigationTitle(Text("vaccine_history_title"))
+            .navigationBarTitleTextColor(.accent)
             .popupView(
                 isPresented: $viewModel.shouldAddVaccine.animation(),
                 content: AddPopupView(

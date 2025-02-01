@@ -65,6 +65,7 @@ struct PetChangeListView: View {
 
                 }
             .navigationTitle(Text("Choose Friend"))
+            .navigationBarTitleTextColor(.accent)
         }
         .overlay {
             if pets.isEmpty {

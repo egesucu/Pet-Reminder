@@ -105,6 +105,7 @@
       }
     },
     "add_event_calendar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

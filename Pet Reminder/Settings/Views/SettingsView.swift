@@ -61,6 +61,7 @@ struct SettingsView: View {
 
             })
             .navigationTitle(Text("settings_tab_title"))
+            .navigationBarTitleTextColor(.accent)
 
         }.navigationViewStyle(.stack)
     }

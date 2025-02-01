@@ -22,7 +22,7 @@ struct EveningCheckboxView: View {
             } icon: {
                 Image(systemName: SFSymbols.eveningToggleSelected)
                     .symbolRenderingMode(.hierarchical)
-                    .foregroundColor(.blue)
+                    .foregroundStyle(.blue)
                     .font(.largeTitle.bold())
                     .symbolEffect(.bounce, value: eveningOn)
             }

@@ -34,6 +34,7 @@ struct FeedHistory: View {
                 }
             }
             .navigationTitle(Text("feed_history_title"))
+            .navigationBarTitleTextColor(.accent)
         }
     }
 }

@@ -23,6 +23,9 @@ struct EventListView: View {
     var body: some View {
         NavigationStack {
             EventsView(eventVM: $eventVM)
+                .navigationTitle(Text("event_title"))
+                .navigationBarTitleTextColor(.accent)
+                .toolbar(content: eventToolBar)
         }
         .sheet(
             isPresented: $showAddEvent,
@@ -30,8 +33,7 @@ struct EventListView: View {
         ) {
             AddEventView(eventVM: $eventVM)
         }
-        .toolbar(content: eventToolBar)
-        .navigationTitle(Text("event_title"))
+        
         .overlay(content: eventViewOverlay)
         .task {
             await eventVM.reloadEvents()
