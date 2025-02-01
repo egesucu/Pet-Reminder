@@ -48,7 +48,9 @@ struct PetNotificationSelectionView: View {
                 displayedComponents: .hourAndMinute
             ) {
                 Text("feed_selection_morning")
+                    .foregroundStyle(.white)
             }
+            .tint(.white)
         }
         .animation(.easeOut(duration: 0.8), value: dayType)
         .transition(.identity)
@@ -68,7 +70,9 @@ struct PetNotificationSelectionView: View {
                 displayedComponents: .hourAndMinute
             ) {
                 Text("feed_selection_evening")
+                    .foregroundStyle(.white)
             }
+            .tint(.white)
         }
         .animation(.easeOut(duration: 0.8), value: dayType)
         .transition(.identity)
@@ -90,5 +94,9 @@ struct PetNotificationSelectionView: View {
         dayType: .constant(.both),
         morningFeed: .constant(.now),
         eveningFeed: .constant(.now)
+    )
+    .background(
+        Color.accent,
+        ignoresSafeAreaEdges: .all
     )
 }

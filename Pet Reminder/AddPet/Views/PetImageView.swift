@@ -28,6 +28,7 @@ struct PetImageView: View {
             PhotoImagePickerView(photoData: $selectedImageData)
                 .padding(.vertical)
             Text("photo_upload_detail_title")
+                .foregroundStyle(.white)
                 .font(.footnote)
         }
     }
@@ -43,4 +44,5 @@ struct PetImageView: View {
         selectedImageData: $selectedImageData,
         petType: .constant(.dog)
     )
+    .background(Color.accent, ignoresSafeAreaEdges: .all)
 }

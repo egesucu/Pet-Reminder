@@ -21,56 +21,68 @@ struct PetNameTextField: View {
     
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("start_name_label")
+                .foregroundStyle(Color.white)
                 .font(.title2)
                 .bold()
                 .padding(.bottom, 20)
-            ZStack {
+            
+            TextField(
+                Strings.doggo,
+                text: $name
+            )
+            .focused($isFocused)
+            .foregroundStyle(Color.white)
+            .font(.title)
+            .padding()
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
+            .multilineTextAlignment(.center)
+            .onChange(of: name) {
+                adjust(name: name)
+            }
+            .background(
                 Rectangle()
                     .fill(
-                        isFocused ? .accent
-                            .opacity(0.1) :
+                        isFocused ? .black
+                            .opacity(0.2) :
                             Color
-                                .black
-                                .opacity(0.1)
+                                .white
+                                .opacity(0.4)
 
                     )
                     .animation(.easeInOut, value: isFocused)
                     .shadow(radius: 8)
-                TextField(
-                    Strings.doggo,
-                    text: $name
-                )
-                .focused($isFocused)
-                .font(.title)
-                .padding()
-                .autocorrectionDisabled()
-                .multilineTextAlignment(.center)
-                .onChange(of: name) {
-                    if name.isNotEmpty && name.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
-                        nameIsFilledCorrectly = true
-                    } else {
-                        nameIsFilledCorrectly = false
-                    }
-                }
-            }
-            .clipShape(.rect(cornerRadius: 5))
-            .frame(height: 50)
+            )
         }
-        .alert(isPresented: $showAlert, error: PetError.name) {
-            Button(action: {
-
-            }, label: {
-                Text("OK")
-            })
+    }
+    
+    private func adjust(name: String) {
+        if name.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
+            nameIsFilledCorrectly = true
+        } else {
+            nameIsFilledCorrectly = false
         }
-
     }
 }
 
-#Preview {
+#Preview("Filled Case") {
     PetNameTextField(name: .constant(Strings.viski), nameIsFilledCorrectly: .constant(false))
         .padding(.all)
         .modelContainer(DataController.previewContainer)
+        .background(
+            Color.accent
+                .ignoresSafeArea()
+        )
+}
+
+#Preview("Empty Case") {
+    PetNameTextField(name: .constant(""), nameIsFilledCorrectly: .constant(false))
+        .padding(.all)
+        .modelContainer(DataController.previewContainer)
+        .background(
+            Color.accent
+                .ignoresSafeArea()
+        )
 }

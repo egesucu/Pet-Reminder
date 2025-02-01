@@ -15,20 +15,20 @@ struct PetBirthdayView: View {
     
 
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .leading) {
             Text("birthday_title")
                 .font(.title2)
+                .foregroundStyle(.white)
                 .bold()
                 .padding(.trailing, 20)
             DatePicker(
-                "birthday_title",
                 selection: $birthday,
-                displayedComponents: .date
-            )
+                displayedComponents: .date) {
+                    Text("birthday_title")
+                        .foregroundStyle(.white)
+                }
                 .labelsHidden()
-                .tint(.accent)
-            Spacer()
+                .tint(.white)
         }
         .padding(.all)
     }
@@ -36,4 +36,5 @@ struct PetBirthdayView: View {
 
 #Preview {
     PetBirthdayView(birthday: .constant(.now))
+        .background(Color.accent, ignoresSafeAreaEdges: .all)
 }
