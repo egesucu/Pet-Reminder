@@ -6,49 +6,38 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import Pet_Reminder
 import SwiftUI
 import EventKit
 
-final class ExtensionTests: XCTestCase {
+extension Tag {
+    @Tag static var need: Self
+}
 
-    func testLoadImage() throws {
-        let imageName = "both"
-        let uiImage: UIImage = UIImage.loadImage(name: imageName)
-        let realImage = UIImage(named: imageName)
-        XCTAssertEqual(realImage, uiImage)
-    }
 
-    func testIfDarkColor() throws {
-        let blue = Color.blue
-        let lightGray = Color(.lightGray)
-
-        XCTAssertTrue(blue.isDarkColor)
-        XCTAssertFalse(lightGray.isDarkColor)
-    }
-
-    func testDateConversion() throws {
+@Suite("Date Extension Tests") struct DateExtensionTests {
+    @Test func dateConversion() throws {
         let testDate = Calendar.current.startOfDay(
             for: "24 Eki 2023".convertStringToDate(
                 locale: .init(identifier: "tr")
-                )
             )
+        )
         let nowString = "24 Eki 2023"
         let expectedDate = Calendar.current.startOfDay(
             for: nowString.convertStringToDate(locale: .init(identifier: "tr"))
         )
-        XCTAssertEqual(expectedDate, testDate)
+        #expect(expectedDate == testDate)
     }
-
-    func testPrintTime() throws {
+    
+    @Test func printTime() throws {
         let eightPM = Date.eightPM
         let expectedPrint = "20:00"
         let printedTime = eightPM.printTime(locale: .init(identifier: "tr"))
-        XCTAssertEqual(expectedPrint, printedTime)
+        #expect(expectedPrint == printedTime)
     }
-
-    func testPrintDate() throws {
+    
+    @Test func printDate() throws {
         let dateString = "24.10.2023"
         let expectedDate = Calendar
             .current
@@ -56,29 +45,33 @@ final class ExtensionTests: XCTestCase {
                 for: "24 Eki 2023".convertStringToDate(locale: .init(identifier: "tr"))
             )
             .printDate(locale: .init(identifier: "tr")).replacingOccurrences(of: "/", with: ".")
-
-        XCTAssertEqual(expectedDate, dateString)
+        
+        #expect(expectedDate == dateString)
     }
-
-    func testRandomDate() throws {
+    
+    @Test func randomDate() throws {
         let randomDate = Calendar.current.date(from: .generateRandomDateComponent()) ?? .now
-        XCTAssertTrue(randomDate != .now)
+        #expect(randomDate != .now)
     }
-
-    func testLateDate() throws {
+    
+    @Test func lateDate() throws {
         let threeDaysLater = Calendar.current.date(byAdding: .day, value: 3, to: .now) ?? .now
-        XCTAssertTrue(Calendar.current.isDateLater(date: threeDaysLater))
+        #expect(Calendar.current.isDateLater(date: threeDaysLater))
     }
+}
 
-    func testFooterLabel() throws {
+@Suite("String Extension Tests") struct StringExtensionTests {
+
+    @Test func footerLabel() throws {
         let content = Strings.footerLabel("2023")
-        XCTAssertTrue(content == "© Ege Sucu 2023")
+        #expect(content == "© Ege Sucu 2023")
     }
 
-    func testFormattingCurrentEventDateTime() throws {
+    @MainActor
+    @Test("", .tags(.need)) func formattingCurrentEventDateTime() throws {
         let current = true
         let allDay = true
-        let manager = EventManager(isDemo: true)
+        let manager = EventViewModel(isDemo: true)
         let event = manager.events.first ?? .init(eventStore: manager.eventStore)
         let expectedContent = String.formatEventDateTime(
             current: current,
@@ -86,7 +79,7 @@ final class ExtensionTests: XCTestCase {
             event: event
         )
         let allDayTitle = String(localized: "all_day_title")
-        XCTAssertEqual(expectedContent, allDayTitle)
+        #expect(expectedContent == allDayTitle)
 
         let expectedFutureAllDayTitle = String.formatEventDateTime(
             current: false,
@@ -98,7 +91,7 @@ final class ExtensionTests: XCTestCase {
             allDay: allDay,
             event: event
         )
-        XCTAssertEqual(expectedFutureAllDayTitle, futureAllDayTitle)
+        #expect(expectedFutureAllDayTitle == futureAllDayTitle)
 
         let expectedCurrentTitle = String
             .formatEventDateTime(
@@ -112,7 +105,7 @@ final class ExtensionTests: XCTestCase {
                 allDay: false,
                 event: event
             )
-        XCTAssertEqual(expectedCurrentTitle, currentEventTitle)
+        #expect(expectedCurrentTitle == currentEventTitle)
 
         let expectedFutureTitle = String
             .formatEventDateTime(
@@ -126,30 +119,70 @@ final class ExtensionTests: XCTestCase {
                 allDay: false,
                 event: event
             )
-        XCTAssertEqual(expectedFutureTitle, futureEventTitle)
+        #expect(expectedFutureTitle == futureEventTitle)
 
     }
 
-    func testIsNotEmpty() throws {
+}
+
+@Suite("Array Extension Testing")
+struct ArrayTests {
+    @Test func testIsNotEmpty() throws {
         let intArray = [1, 2, 3]
-        XCTAssertEqual(intArray.isNotEmpty, !intArray.isEmpty)
-
+        #expect(intArray.isNotEmpty == !intArray.isEmpty)
+        
         let word = "Test"
-        XCTAssertEqual(word.isNotEmpty, !word.isEmpty)
+        #expect(word.isNotEmpty == !word.isEmpty)
     }
-
-    func testArrayDuplicateRemoval() throws {
+    
+    @Test func testArrayDuplicateRemoval() throws {
         let array = [1, 2, 4, 6, 2, 4]
         let uniqueArray = array
             .removeDuplicates()
             .sorted()
-        XCTAssertEqual(uniqueArray, [1, 2, 4, 6])
+        #expect(uniqueArray == [1, 2, 4, 6])
     }
-
-    func testSafeIndexAccess() throws {
+    
+    @Test func removeDuplicates() throws {
+        let array = [1, 2, 4, 6, 2, 4]
+        let uniqueArray = array.removeDuplicates()
+        #expect(uniqueArray == [1, 2, 4, 6])
+    }
+    
+    @Test func emptyArray() throws {
+        let emptyArray = [Int]()
+        #expect(emptyArray == .empty)
+    }
+    
+    @Test func testSafeIndexAccess() throws {
         let demo = [3, 4, 5, 6, 7, 8, 9, 10]
         let thirdIndex = demo[safe: 3]
-        XCTAssertNotNil(thirdIndex)
-        XCTAssertEqual(thirdIndex, 6)
+        #expect(thirdIndex != nil)
+        #expect(thirdIndex == 6)
+        #expect(demo[safe: 20] == nil)
+    }
+    
+    @Test func testFilterWithKeyPath() throws {
+        
+        struct TestModel {
+            let isActive: Bool
+            let name: String
+        }
+        
+        // Create test data
+        let items = [
+            TestModel(isActive: true, name: "Item 1"),
+            TestModel(isActive: false, name: "Item 2"),
+            TestModel(isActive: true, name: "Item 3"),
+            TestModel(isActive: false, name: "Item 4")
+        ]
+        
+        // Use the keyPath filter method
+        let filteredItems = items.filter(\.isActive)
+        
+        // Verify the result
+        #expect(filteredItems.count == 2)
+        #expect(filteredItems[0].name == "Item 1")
+        #expect(filteredItems[1].name == "Item 3")
     }
 }

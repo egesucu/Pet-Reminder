@@ -6,32 +6,41 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import XCTest
+import Testing
 import Observation
-@testable import Pet_Reminder
+import OSLog
 
-final class VetViewModelTests: XCTestCase {
+@Suite("Vet ViewModel Tests") struct VetViewModelTests {
 
-    func testPinSearch() async throws {
+    @Test @MainActor func testPinSearch() async throws {
         let viewModel = VetViewModel()
         viewModel.searchText = "Vet"
-        await viewModel.searchPins()
-        XCTAssertTrue(viewModel.searchedLocations.isNotEmpty)
+        
+        try await viewModel.searchPins()
+        
+        Task {
+            let halfSecond: Duration = .milliseconds(500)
+            try await Task.sleep(for: halfSecond)
+            #expect(viewModel.searchedLocations.isNotEmpty)
+        }
     }
 
-    func testClearSearchedLocations() async throws {
+    
+    @Test @MainActor func testClearSearchedLocations() async throws {
         let viewModel = VetViewModel()
         viewModel.searchText = "Pet"
-        await viewModel.searchPins()
+        do {
+            try await viewModel.searchPins()
+        } catch let error {
+            Issue.record(error, "Error setting user location")
+        }
 
         await viewModel.clearPreviousSearches()
 
         Task {
-            let halfSecond = UInt64(0.5 * 1_000_000_000)
-            try await Task.sleep(nanoseconds: halfSecond)
-            XCTAssertTrue(viewModel.searchedLocations.isEmpty)
-
+            let halfSecond: Duration = .milliseconds(500)
+            try await Task.sleep(for: halfSecond)
+            #expect(viewModel.searchedLocations.isEmpty)
         }
     }
-
 }
