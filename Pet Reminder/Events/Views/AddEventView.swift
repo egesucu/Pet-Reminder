@@ -44,9 +44,7 @@ struct AddEventView: View {
             }
             .tint(.accent)
             .navigationTitle(
-                Text(
-                    "add_event_title"
-                )
+                Text("add_event_title")
             )
             .navigationBarTitleTextColor(.accent)
             .toolbar(content: addEventToolbar)

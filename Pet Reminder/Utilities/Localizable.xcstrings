@@ -104,23 +104,6 @@
         }
       }
     },
-    "add_event_calendar" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add Event"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etkinlik Ekle"
-          }
-        }
-      }
-    },
     "add_event_date" : {
       "extractionState" : "manual",
       "localizations" : {
