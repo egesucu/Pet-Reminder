@@ -18,7 +18,11 @@ import SwiftData
     var image: Data?
     var feedSelection: FeedSelection?
     var name: String = ""
-    var type: PetType = PetType.dog
+    var type: PetType {
+        get { .init(rawValue: petTypeName) ?? .other }
+        set { petTypeName = newValue.rawValue }
+    }
+    private var petTypeName: PetType.RawValue = PetType.other.name
     
     @Relationship(inverse: \Feed.pet) var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) var vaccines: [Vaccine]?

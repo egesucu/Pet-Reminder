@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-enum PetType {
+enum PetType: String {
     case cat, dog, fish, bird, other
 }
 
