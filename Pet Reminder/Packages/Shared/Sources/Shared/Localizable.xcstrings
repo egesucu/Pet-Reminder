@@ -268,6 +268,7 @@
       }
     },
     "All Notifications" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -329,7 +330,6 @@
       }
     },
     "Bird" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -434,7 +434,6 @@
       }
     },
     "Cat" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -544,6 +543,7 @@
       }
     },
     "debug_menu_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -594,7 +594,6 @@
       }
     },
     "Dog" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1013,7 +1012,6 @@
       }
     },
     "Fish" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1486,7 +1484,6 @@
       }
     },
     "Other" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -1756,6 +1753,7 @@
       }
     },
     "remove_userdefaults" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1789,7 +1787,6 @@
       }
     },
     "save" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1816,7 +1813,6 @@
       }
     },
     "Select a photo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {

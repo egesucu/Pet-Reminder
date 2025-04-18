@@ -10,6 +10,7 @@ import SwiftUI
 import CloudKit
 import SwiftData
 import OSLog
+import Shared
 
 @main
 struct PetReminderApp: App {
