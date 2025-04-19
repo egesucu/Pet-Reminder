@@ -8,6 +8,7 @@
 
 import SwiftUI
 import EventKit
+import Shared
 
 
 struct FutureEventsView: View {

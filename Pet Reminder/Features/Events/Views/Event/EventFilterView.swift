@@ -8,7 +8,7 @@
 
 import SwiftUI
 import EventKit
-
+import Shared
 
 struct EventFilterView: View {
 

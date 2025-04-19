@@ -8,16 +8,28 @@
 
 import SwiftUI
 import Shared
+import SwiftData
 
 struct PetCell: View {
-
+    
     var pet: Pet
-
+    
     var body: some View {
         HStack {
-            ESImageView(data: pet.image, type: pet.type)
-                .padding(.trailing, 10)
-                .frame(width: 150, height: 150)
+            
+            if let imageData = pet.image,
+               let image = UIImage(data: imageData) {
+                Image(uiImage: image)
+                    .petImageStyle(useShadows: true)
+                    .padding(.trailing, 10)
+                    .frame(width: 150, height: 150)
+            } else {
+                Image(.generateDefaultData(type: pet.type))
+                    .petImageStyle()
+                    .padding(.trailing, 10)
+                    .frame(width: 150, height: 150)
+            }
+            
             VStack {
                 Text(pet.name)
                     .foregroundStyle(Color.label)

@@ -9,23 +9,34 @@
 import SwiftUI
 import OSLog
 import Shared
-
+import SwiftData
 
 struct PetDetailView: View {
-
+    
     @Binding var pet: Pet?
     @State private var showFeedHistory = false
     @State private var showVaccines = false
-
     
-
+    
+    
     var body: some View {
         VStack {
             if let pet {
-                ESImageView(data: pet.image, type: pet.type)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .frame(width: 250, height: 250)
+                if let imageData = pet.image,
+                   let image = UIImage(data: imageData) {
+                    Image(uiImage: image)
+                        .petImageStyle(useShadows: true)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .frame(width: 250, height: 250)
+                } else {
+                    Image(.generateDefaultData(type: pet.type))
+                        .petImageStyle()
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .frame(width: 250, height: 250)
+                }
+                
                 Spacer()
                 FeedListView(pet: $pet)
                     .padding(.bottom, 50)
@@ -59,7 +70,7 @@ struct PetDetailView: View {
                     .buttonStyle(.bordered)
                     .tint(.blue)
                 }
-
+                
                 Spacer()
             }
         }
@@ -80,7 +91,7 @@ struct PetDetailView: View {
         PetDetailView(
             pet: .constant(.preview)
         )
-            .modelContainer(DataController.previewContainer)
+        .modelContainer(DataController.previewContainer)
     }
     .navigationViewStyle(.stack)
 }

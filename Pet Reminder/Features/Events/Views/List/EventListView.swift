@@ -53,7 +53,7 @@ struct EventListView: View {
             }, description: {
                 Text("event_not_allowed")
             }, actions: {
-                ESSettingsButton()
+                SettingsButton()
             })
         } else if eventVM.status == .readOnly {
             ContentUnavailableView(label: {
@@ -65,7 +65,7 @@ struct EventListView: View {
             }, description: {
                 Text("event_wrong_allowence")
             }, actions: {
-                ESSettingsButton()
+                SettingsButton()
             })
         }
     }

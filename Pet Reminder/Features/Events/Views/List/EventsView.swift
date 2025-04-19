@@ -9,6 +9,7 @@
 import SwiftUI
 import Foundation
 import EventKit
+import Shared
 
 
 struct EventsView: View {

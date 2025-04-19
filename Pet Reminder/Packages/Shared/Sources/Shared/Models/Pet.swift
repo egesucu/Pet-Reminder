@@ -9,20 +9,16 @@
 
 import Foundation
 import SwiftData
+import UIKit.UIImage
 
 @Model
 public final class Pet {
-    @Attribute(.unique) public var name: String
-    
-    public var birthday: Date
-    public var choice: Int
+    public var name: String = ""
+    public var birthday: Date = Date.now
+    public var choice: Int = 0
     public var createdAt: Date?
     public var image: Data?
     public var feedSelection: FeedSelection?
-    public var type: PetType {
-        get { .init(rawValue: petTypeName) ?? .other }
-        set { petTypeName = newValue.rawValue }
-    }
     private var petTypeName: PetType.RawValue = PetType.other.name
     
     @Relationship(inverse: \Feed.pet) public var feeds: [Feed]?
@@ -30,7 +26,7 @@ public final class Pet {
     
     public init(
         birthday: Date = Date(),
-        name: String,
+        name: String = "",
         choice: Int = 0,
         createdAt: Date? = nil,
         feedSelection: FeedSelection? = nil,
@@ -48,5 +44,43 @@ public final class Pet {
         self.feeds = feeds
         self.vaccines = vaccines
         self.type = type
+    }
+}
+
+public extension Pet {
+    var type: PetType {
+        get { .init(rawValue: petTypeName) ?? .other }
+        set { petTypeName = newValue.rawValue }
+    }
+    
+    static var preview: Pet {
+        let firstPet = previews.first ?? .init(
+            birthday: .now,
+            name: "",
+            choice: 0,
+            createdAt: nil,
+            feedSelection: nil,
+            image: nil
+        )
+        return firstPet
+    }
+
+    static var previews: [Pet] {
+        var pets: [Pet] = []
+        Strings.demoPets.forEach { petName in
+            let pet = Pet(
+                birthday: .randomDate(),
+                name: petName,
+                choice: [0, 1, 2].randomElement() ?? 0,
+                createdAt: .randomDate(),
+                feedSelection: .both,
+                image: UIImage(named: "default-animal")?
+                    .jpegData(compressionQuality: 0.8)
+            )
+            pet.feeds = Feed.previews
+            pet.vaccines = Vaccine.previews
+            pets.append(pet)
+        }
+        return pets
     }
 }

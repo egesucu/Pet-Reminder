@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import Shared
 
 struct PrivacyPolicyView: View {
     var body: some View {

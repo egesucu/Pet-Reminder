@@ -8,13 +8,11 @@
 import Foundation
 import SwiftData
 
-public enum FeedSelection {
+public enum FeedSelection: Codable, CaseIterable, CustomStringConvertible {
     case morning
     case evening
     case both
-}
-
-extension FeedSelection: CustomStringConvertible {
+    
     public var description: String {
         return switch self {
         case .morning:
@@ -27,15 +25,9 @@ extension FeedSelection: CustomStringConvertible {
     }
 }
 
-extension FeedSelection: Codable {}
-
-extension FeedSelection: CaseIterable {}
-
 public extension FeedSelection {
     func fetchFeedSelection(from: String) -> Self {
         return switch from {
-        case FeedSelection.morning.description:
-            .morning
         case FeedSelection.evening.description:
             .evening
         case FeedSelection.both.description:

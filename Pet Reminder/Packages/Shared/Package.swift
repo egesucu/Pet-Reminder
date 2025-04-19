@@ -2,6 +2,22 @@
 
 import PackageDescription
 
+extension SwiftSetting {
+    /// Introduce existential `any`
+    /// - Version: Swift 5.6
+    /// - Since: SwiftPM 5.8
+    /// - SeeAlso: [SE-0335: Introduce existential `any`](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md)
+    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")
+}
+
+extension SwiftSetting: @retroactive CaseIterable {
+    public static var allCases: [Self] {
+        [
+            .existentialAny
+        ]
+    }
+}
+
 let package = Package(
     name: "Shared",
     platforms: [
@@ -29,3 +45,8 @@ let package = Package(
         ),
     ]
 )
+
+package
+    .targets
+    .filter { ![.system, .binary, .plugin].contains($0.type) }
+    .forEach { $0.swiftSettings = SwiftSetting.allCases }

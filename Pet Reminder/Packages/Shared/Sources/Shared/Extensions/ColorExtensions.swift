@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-extension Color {
-    public var isDarkColor: Bool {
+public extension Color {
+    var isDarkColor: Bool {
         var red, green, blue, alpha: CGFloat
         (red, green, blue, alpha) = (0, 0, 0, 0)
         UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
@@ -18,5 +18,5 @@ extension Color {
     }
     
     /// Black on Light Mode, White on Dark Mode
-    public static let label = Color(.label)
+    static let label = Color(.label)
 }

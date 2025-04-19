@@ -16,8 +16,8 @@ public struct Pin: Identifiable, Hashable {
         self.item = item
     }
 
-    public var id: Int {
-        item.hashValue
+    public var id: String {
+        "\(latitude)-\(longitude)-\(name)"
     }
 
     public var subThoroughfare: String? {
@@ -58,5 +58,11 @@ public struct Pin: Identifiable, Hashable {
 
     public var name: String {
         item.name ?? ""
+    }
+}
+
+extension Pin: CustomStringConvertible {
+    public var description: String {
+        "\(name) at \(coordinate.latitude), \(coordinate.longitude)"
     }
 }

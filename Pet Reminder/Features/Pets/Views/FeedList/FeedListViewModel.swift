@@ -26,8 +26,9 @@ class FeedListViewModel {
 
     func todaysFeeds(pet: Pet?) -> [Feed] {
         guard let pet else { return [] }
-        return pet.feeds?
-            .filter { Calendar.current.isDateInToday($0.wrappedFeedDate) } ?? []
+        return pet
+            .feeds?
+            .filter { Calendar.current.isDateInToday($0.feedDate ?? .now) } ?? []
     }
 
     @MainActor

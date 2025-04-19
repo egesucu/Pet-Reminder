@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Shared
+import SwiftData
 
 struct PreviousFeedsSection: View {
     var feeds: [Feed]?

@@ -1,5 +1,5 @@
 //
-//  ESSettingsButton.swift
+//  SettingsButton.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 8.10.2023.
@@ -9,7 +9,7 @@
 import SwiftUI
 
 
-public struct ESSettingsButton: View {
+public struct SettingsButton: View {
     
     public init() {}
 
@@ -28,5 +28,5 @@ public struct ESSettingsButton: View {
 }
 
 #Preview {
-    ESSettingsButton()
+    SettingsButton()
 }

@@ -1,5 +1,5 @@
 //
-//  ICloudResult.swift
+//  CloudResult.swift
 //  Pet Reminder
 //
 //  Created by Sucu, Ege on 25.04.2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ICloudResultType {
+public enum CloudResultType {
     case success
-    case error(IcloudErrorType)
+    case error(CloudError)
 }

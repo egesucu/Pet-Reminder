@@ -9,6 +9,7 @@
 import SwiftUI
 import EventKit
 import OSLog
+import Shared
 
 struct AddEventView: View {
 

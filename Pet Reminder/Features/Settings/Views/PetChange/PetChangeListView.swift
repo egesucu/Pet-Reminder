@@ -13,14 +13,14 @@ import Shared
 
 
 struct PetChangeListView: View {
-
+    
     @Environment(\.modelContext)
     private var modelContext
     @Environment(\.undoManager) var undoManager
     
-
+    
     @Query(sort: \Pet.name) var pets: [Pet]
-
+    
     @State private var showUndoButton = false
     @State private var buttonTimer: (any DispatchSourceTimer)?
     @State private var time = 0
@@ -29,7 +29,7 @@ struct PetChangeListView: View {
     @State private var showSelectedPet = false
     @State private var showEditButton = false
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
-
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -44,27 +44,27 @@ struct PetChangeListView: View {
                             .info("Editing status: \(isEditing)")
                     }
             }
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        if showUndoButton {
-                            Button {
-                                modelContext.undoManager?.undo()
-                                showUndoButton = false
-                            } label: {
-                                Image(systemName: "arrow.uturn.backward.circle")
-                            }
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    if showUndoButton {
+                        Button {
+                            modelContext.undoManager?.undo()
+                            showUndoButton = false
+                        } label: {
+                            Image(systemName: "arrow.uturn.backward.circle")
                         }
-                        if showEditButton {
-                            Button {
-                                isEditing.toggle()
-                            } label: {
-                                Text(isEditing ? "Done" : "Edit")
-                            }
-                        }
-
                     }
-
+                    if showEditButton {
+                        Button {
+                            isEditing.toggle()
+                        } label: {
+                            Text(isEditing ? "Done" : "Edit")
+                        }
+                    }
+                    
                 }
+                
+            }
             .navigationTitle(Text("Choose Friend"))
             .navigationBarTitleTextColor(.accent)
         }
@@ -74,7 +74,7 @@ struct PetChangeListView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private var petList: some View {
         LazyVGrid(columns: [.init(), .init()]) {
@@ -83,17 +83,33 @@ struct PetChangeListView: View {
                     if isEditing {
                         ZStack(alignment: .topTrailing) {
                             VStack {
-                                ESImageView(data: pet.image, type: pet.type)
-                                    .clipShape(Circle())
-                                    .frame(width: 120, height: 120)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 60)
-                                            .stroke(
-                                                defineColor(pet: pet),
-                                                lineWidth: 5
-                                            )
-                                    )
-                                    .wiggling()
+                                if let imageData = pet.image,
+                                   let image = UIImage(data: imageData) {
+                                    Image(uiImage: image)
+                                        .petImageStyle(useShadows: true)
+                                        .frame(width: 120, height: 120)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 60)
+                                                .stroke(
+                                                    defineColor(pet: pet),
+                                                    lineWidth: 5
+                                                )
+                                        )
+                                        .wiggling()
+                                } else {
+                                    Image(.generateDefaultData(type: pet.type))
+                                        .petImageStyle()
+                                        .frame(width: 120, height: 120)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 60)
+                                                .stroke(
+                                                    defineColor(pet: pet),
+                                                    lineWidth: 5
+                                                )
+                                        )
+                                        .wiggling()
+                                }
+                                
                                 Text(pet.name)
                             }
                             Button {
@@ -107,23 +123,36 @@ struct PetChangeListView: View {
                                     .foregroundStyle(Color.red)
                                     .offset(x: 15, y: 0)
                             }
-
+                            
                         }
                     } else {
-                        ESImageView(data: pet.image, type: pet.type)
-                            .clipShape(Circle())
-                            .frame(width: 120, height: 120)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 60)
-                                    .stroke(
-                                        defineColor(pet: pet),
-                                        lineWidth: 5
-                                    )
-                            )
-
+                        if let imageData = pet.image,
+                           let image = UIImage(data: imageData) {
+                            Image(uiImage: image)
+                                .petImageStyle(useShadows: true)
+                                .frame(width: 120, height: 120)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 60)
+                                        .stroke(
+                                            defineColor(pet: pet),
+                                            lineWidth: 5
+                                        )
+                                )
+                        } else {
+                            Image(.generateDefaultData(type: pet.type))
+                                .petImageStyle()
+                                .frame(width: 120, height: 120)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 60)
+                                        .stroke(
+                                            defineColor(pet: pet),
+                                            lineWidth: 5
+                                        )
+                                )
+                        }
                         Text(pet.name)
                     }
-
+                    
                 }
                 .onTapGesture {
                     selectedPet = pet
@@ -147,7 +176,7 @@ struct PetChangeListView: View {
             }
         }
     }
-
+    
     func deletePet(pet: Pet) {
         let tempPetName = pet.name
         if pet == selectedPet {
@@ -182,7 +211,7 @@ struct PetChangeListView: View {
         buttonTimer = timer
         timer.resume()
     }
-
+    
     private func defineColor(pet: Pet) -> Color {
         selectedPet?.name == pet.name ? Color.yellow : Color.clear
     }

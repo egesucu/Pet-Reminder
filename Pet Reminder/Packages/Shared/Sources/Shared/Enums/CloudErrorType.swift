@@ -1,5 +1,5 @@
 //
-//  ICloudError.swift
+//  CloudError.swift
 //  Pet Reminder
 //
 //  Created by Sucu, Ege on 25.04.2023.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-public enum IcloudErrorType: LocalizedError {
-    case icloudUnavailable
-    case noIcloud
+public enum CloudError: LocalizedError {
+    case cloudUnavailable
+    case cloudNotPresent
     case restricted
     case cantFetchStatus
     case unknownError(String)
 
     public var errorDescription: String? {
         return switch self {
-        case .icloudUnavailable:
+        case .cloudUnavailable:
             String(localized: "cloud_unavailable")
-        case .noIcloud:
+        case .cloudNotPresent:
             String(localized: "no_account")
         case .restricted:
             String(localized: "restricted_account")

@@ -9,7 +9,7 @@
 import SwiftUI
 import StoreKit
 import OSLog
-
+import Shared
 
 struct DonateView: View {
 

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Shared
+import SwiftData
 
 struct FeedHistory: View {
 

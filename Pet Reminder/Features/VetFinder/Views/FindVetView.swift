@@ -39,7 +39,7 @@ struct FindVetView: View {
                 } description: {
                     Text("location_alert_context")
                 } actions: {
-                    ESSettingsButton()
+                    SettingsButton()
                 }
             }
         }

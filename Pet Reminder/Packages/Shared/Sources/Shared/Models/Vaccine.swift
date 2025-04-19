@@ -12,8 +12,8 @@ import SwiftData
 
 @Model
 public class Vaccine {
-    public var date: Date
-    public var name: String
+    public var date: Date = Date.now
+    public var name: String = ""
     public var pet: Pet?
 
     public init(
@@ -23,5 +23,22 @@ public class Vaccine {
         self.date = date
         self.name = name
     }
+}
 
+extension Vaccine {
+    static var preview: Vaccine {
+        return previews.first ?? .init()
+    }
+
+    static var previews: [Vaccine] {
+        var vaccines: [Vaccine] = []
+        Strings.demoVaccines.forEach { vaccineName in
+            let vaccine = Vaccine(
+                date: .randomDate(),
+                name: vaccineName
+            )
+            vaccines.append(vaccine)
+        }
+        return vaccines
+    }
 }
