@@ -328,17 +328,6 @@
         }
       }
     },
-    "Bird" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kuş"
-          }
-        }
-      }
-    },
     "birthday_ask_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -433,17 +422,6 @@
         }
       }
     },
-    "Cat" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kedi"
-          }
-        }
-      }
-    },
     "Choose Friend" : {
       "localizations" : {
         "tr" : {
@@ -516,16 +494,6 @@
         }
       }
     },
-    "Date" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarih"
-          }
-        }
-      }
-    },
     "date_select_label" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -589,17 +557,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veteriner"
-          }
-        }
-      }
-    },
-    "Dog" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Köpek"
           }
         }
       }
@@ -1008,17 +965,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakında"
-          }
-        }
-      }
-    },
-    "Fish" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Balık"
           }
         }
       }
@@ -1485,17 +1431,6 @@
         }
       }
     },
-    "Other" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diğer"
-          }
-        }
-      }
-    },
     "payment_cant" : {
       "comment" : "PAYMENT",
       "extractionState" : "manual",
@@ -1701,16 +1636,6 @@
         }
       }
     },
-    "Pulvarin" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pulvarin"
-          }
-        }
-      }
-    },
     "refresh" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1788,40 +1713,12 @@
         }
       }
     },
-    "save" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
-          }
-        }
-      }
-    },
     "Save" : {
       "localizations" : {
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaydet"
-          }
-        }
-      }
-    },
-    "Select a photo" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fotoğraf Seç"
           }
         }
       }
@@ -2025,6 +1922,22 @@
         }
       }
     },
+    "vaccine_date_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taken"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alındığı Tarih"
+          }
+        }
+      }
+    },
     "vaccine_history_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2038,6 +1951,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aşı Geçmişi"
+          }
+        }
+      }
+    },
+    "vaccine_title_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İsim"
           }
         }
       }

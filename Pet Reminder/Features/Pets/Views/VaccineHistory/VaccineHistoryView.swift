@@ -13,38 +13,55 @@ import SFSafeSymbols
 
 struct VaccineHistoryView: View {
 
-    @Binding var pet: Pet?
+    @Binding var pet: Pet
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = VaccineHistoryViewModel()
-    @State private var addVaccine = false
 
     var body: some View {
         NavigationStack {
             VStack {
-                if let pet {
-                    if ((pet.vaccines?.isEmpty) != nil) {
-                        Text("no_vaccine_title")
-                    } else {
-                        List {
-                            ForEach(pet.vaccines ?? []) { vaccine in
+                if let vaccines = pet.vaccines {
+                    List {
+                        ForEach(vaccines) { vaccine in
+                            VStack {
                                 HStack {
                                     Label {
-                                        Text(vaccine.name)
+                                        Text("vaccine_title_label")
                                             .bold()
                                     } icon: {
-                                        Image(systemSymbol: SFSymbol.syringeFill)
+                                        Image(systemSymbol: .syringeFill)
+                                            .font(.headline)
+                                            .symbolRenderingMode(.palette)
+                                            .symbolEffect(.bounce, options: .repeat(3))
+                                            .foregroundStyle(.blue, .white)
                                     }
+                                    Spacer()
+                                    Text(vaccine.name)
+                                }
+                                
+                                HStack {
+                                    Label {
+                                        Text("vaccine_date_label")
+                                            .bold()
+                                    } icon: {
+                                        Image(systemSymbol: .hourglassBottomhalfFilled)
+                                            .font(.headline)
+                                            .symbolRenderingMode(.palette)
+                                            .symbolEffect(.bounce, options: .repeat(3))
+                                            .foregroundStyle(.blue, .white)
+                                    }
+                                    
                                     Spacer()
                                     Text((vaccine.date).formatted())
                                 }
-                            }.onDelete { indexSet in
-                                viewModel.deleteVaccines(pet: pet, at: indexSet)
                             }
                         }
-                        .listStyle(.automatic)
+                        .onDelete { indexSet in
+                            viewModel.deleteVaccines(pet: pet, at: indexSet)
+                        }
                     }
-
+                    .listStyle(.automatic)
                 } else {
                     Text("no_vaccine_title")
                 }
@@ -53,25 +70,25 @@ struct VaccineHistoryView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
                     Button(action: dismiss.callAsFunction) {
                         Image(systemSymbol: SFSymbol.xmarkCircleFill)
-                            .tint(.accent)
-                            .font(.title)
+                            .tint(.red)
+                            .font(.title2)
                     }.disabled(viewModel.shouldAddVaccine)
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
                     Button {
-                        addVaccine.toggle()
+                        viewModel.shouldAddVaccine.toggle()
                     } label: {
                         Image(systemSymbol: SFSymbol.plusCircleFill)
-                            .tint(.accent)
-                            .font(.title)
+                            .tint(.blue)
+                            .font(.title2)
                     }
                     .disabled(viewModel.shouldAddVaccine)
                 }
             }
             .navigationTitle(Text("vaccine_history_title"))
-            .navigationBarTitleTextColor(.accent)
+            .navigationBarTitleTextColor(.blue)
             .popupView(
-                isPresented: $viewModel.shouldAddVaccine.animation(),
+                isPresented: $viewModel.shouldAddVaccine,
                 content: AddPopupView(
                     contentInput: $viewModel.vaccineName,
                     dateInput: $viewModel.vaccineDate,
@@ -83,14 +100,6 @@ struct VaccineHistoryView: View {
                     onCancel: viewModel.cancelVaccine
                 )
             )
-            .alert("add", isPresented: $addVaccine) {
-                TextField("Pulvarin", text: $viewModel.vaccineName)
-                DatePicker("Date", selection: $viewModel.vaccineDate)
-                Button("OK", action: {
-                    viewModel.saveVaccine(pet: pet)
-                })
-                Button("Cancel", role: .cancel) { }
-            }
         }
     }
 }

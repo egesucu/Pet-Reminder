@@ -46,4 +46,19 @@ extension PetType {
                 .resizable()
         }
     }
+    
+    public var uiImage: UIImage {
+        return switch self {
+        case .cat:
+            UIImage(resource: .defaultCat)
+        case .dog:
+            UIImage(resource: .defaultDog)
+        case .fish:
+            UIImage(resource: .defaultFish)
+        case .bird:
+            UIImage(resource: .defaultBird)
+        case .other:
+            UIImage(resource: .defaultOther)
+        }
+    }
 }

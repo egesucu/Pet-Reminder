@@ -68,14 +68,15 @@ public extension Pet {
     static var previews: [Pet] {
         var pets: [Pet] = []
         Strings.demoPets.forEach { petName in
+            let randomType = PetType.allCases.randomElement() ?? .dog
             let pet = Pet(
                 birthday: .randomDate(),
                 name: petName,
                 choice: [0, 1, 2].randomElement() ?? 0,
                 createdAt: .randomDate(),
                 feedSelection: .both,
-                image: UIImage(named: "default-animal")?
-                    .jpegData(compressionQuality: 0.8)
+                image: randomType.uiImage.jpegData(compressionQuality: 0.8),
+                type: randomType
             )
             pet.feeds = Feed.previews
             pet.vaccines = Vaccine.previews

@@ -17,10 +17,10 @@ struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
-    @State private var selectedPet: Pet?
+    @State private var selectedPet: Pet = .init()
     @State private var addPet = false
 
-    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
+    @Environment(NotificationManager.self) private var notificationManager: NotificationManager
 
     var body: some View {
         NavigationStack {
@@ -32,23 +32,15 @@ struct PetListView: View {
             }
             .toolbar(content: addButtonToolbar)
             .onAppear {
-                selectedPet = pets.first
+                Task { await definePet() }
             }
             .navigationTitle(petListTitle)
             .navigationBarTitleTextColor(.accent)
             .fullScreenCover(
                 isPresented: $addPet,
-                onDismiss: {
-                    selectedPet = pets.first
-                    Logger
-                        .pets
-                        .debug("Pet Amount: \(pets.count)")
-                },
-                content: {
-                    AddPetView(
-                        viewModel: .init(notificationManager: .init())
-                )
-            })
+                onDismiss: updatePets,
+                content: addPetView
+            )
         }
         .overlay {
             if pets.isEmpty {
@@ -63,6 +55,25 @@ struct PetListView: View {
                 })
             }
         }
+    }
+    
+    @ViewBuilder
+    private func addPetView() -> some View {
+        let viewModel = AddPetViewModel(notificationManager: notificationManager)
+        
+        AddPetView(viewModel: viewModel)
+    }
+    
+    private func updatePets() {
+        Task { await definePet() }
+    }
+    
+    @MainActor
+    private func definePet() async {
+        selectedPet = pets.first ?? .init()
+        Logger
+            .pets
+            .debug("Pet Amount: \(pets.count)")
     }
 
     private var petList: some View {
@@ -98,25 +109,29 @@ struct PetListView: View {
     }
 
     private func defineColor(pet: Pet) -> Color {
-        selectedPet?.name == pet.name ? Color.yellow : Color.clear
+        selectedPet == pet
+        ? Color.yellow
+        : Color.clear
     }
 
     private var petListTitle: Text {
         Text("pet_name_title")
+    }
+    
+    private func toggleAddPet() {
+        addPet.toggle()
     }
 
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarTrailing) {
             if pets.count > 0 {
-                Button(action: {
-                    self.addPet.toggle()
-                }, label: {
+                Button(action: toggleAddPet) {
                     Image(systemSymbol: SFSymbol.plusCircleFill)
                         .accessibilityLabel(Text("add_animal_accessible_label"))
                         .foregroundStyle(.accent)
                         .font(.title)
-                })
+                }
             }
         }
     }

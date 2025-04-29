@@ -42,12 +42,14 @@ class VaccineHistoryViewModel {
         }
     }
     
-    func saveVaccine(pet: Pet?) {
-        guard let pet else { return }
-        let vaccine = Vaccine()
-        vaccine.name = vaccineName
-        vaccine.date = vaccineDate
+    func saveVaccine(pet: Pet) {
+        let vaccine = Vaccine(date: vaccineDate, name: vaccineName)
         pet.vaccines?.append(vaccine)
+        do {
+            try pet.modelContext?.save()
+        } catch {
+            Logger().error("Vaccine could not be saved: \(error)")
+        }
         
         resetTemporaryData()
         togglePopup()
@@ -58,9 +60,8 @@ class VaccineHistoryViewModel {
         vaccineDate = .now
     }
     
-    func deleteVaccines(pet: Pet?, at offsets: IndexSet) {
-        if let pet,
-           let vaccines = pet.vaccines {
+    func deleteVaccines(pet: Pet, at offsets: IndexSet) {
+        if let vaccines = pet.vaccines {
             for offset in offsets {
                 pet.modelContext?.delete(vaccines[offset])
             }

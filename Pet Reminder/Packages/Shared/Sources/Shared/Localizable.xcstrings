@@ -267,17 +267,6 @@
         }
       }
     },
-    "All Notifications" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tüm Bildirimler"
-          }
-        }
-      }
-    },
     "all_day_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -538,23 +527,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir tarih seç"
-          }
-        }
-      }
-    },
-    "debug_menu_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug"
           }
         }
       }
@@ -1748,23 +1720,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tümünü Sil"
-          }
-        }
-      }
-    },
-    "remove_userdefaults" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove UserDefaults"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "UserDefaults’u Sil"
           }
         }
       }
