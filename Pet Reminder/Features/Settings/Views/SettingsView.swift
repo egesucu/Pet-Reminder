@@ -23,6 +23,7 @@ struct SettingsView: View {
                 Section(header: Text("app_settings")) {
                     NavigationLink {
                         PetChangeListView()
+                            .environment(notificationManager)
                     } label: {
                         Text("manage_pet_title")
                     }

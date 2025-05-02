@@ -13,21 +13,23 @@ import Shared
 import SFSafeSymbols
 
 struct PetListView: View {
-
+    
     @Environment(\.modelContext) private var modelContext
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
-
+    
     @State private var selectedPet: Pet = .init()
     @State private var addPet = false
-
+    
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager
-
-    var body: some View {
+    
+    private var petsView: some View {
         NavigationStack {
             ScrollView {
                 VStack {
                     petList
-                    PetDetailView(pet: $selectedPet)
+                    if selectedPet.name.isNotEmpty {
+                        PetDetailView(pet: $selectedPet)
+                    }
                 }
             }
             .toolbar(content: addButtonToolbar)
@@ -36,11 +38,6 @@ struct PetListView: View {
             }
             .navigationTitle(petListTitle)
             .navigationBarTitleTextColor(.accent)
-            .fullScreenCover(
-                isPresented: $addPet,
-                onDismiss: updatePets,
-                content: addPetView
-            )
         }
         .overlay {
             if pets.isEmpty {
@@ -55,13 +52,39 @@ struct PetListView: View {
                 })
             }
         }
+        .onChange(of: addPet) {
+            if !addPet {
+                Logger.pets.info("Pet Add Sheet dismissed, context changed?: \(modelContext.hasChanges)")
+                Logger.pets.info("Pet Count: \(pets.count)")
+            }
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            petsView
+            if addPet {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation { addPet = false }
+                    }
+                
+                addPetView()
+                    .padding()
+            }
+        }
+        .animation(.easeInOut, value: addPet)
     }
     
     @ViewBuilder
     private func addPetView() -> some View {
-        let viewModel = AddPetViewModel(notificationManager: notificationManager)
-        
-        AddPetView(viewModel: viewModel)
+        AddPetModal {
+            withAnimation { addPet = false }
+        }
+        .transition(.move(edge: .bottom))
+        .zIndex(1)
+        .ignoresSafeArea()
     }
     
     private func updatePets() {
@@ -75,7 +98,7 @@ struct PetListView: View {
             .pets
             .debug("Pet Amount: \(pets.count)")
     }
-
+    
     private var petList: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 5) {
@@ -95,25 +118,25 @@ struct PetListView: View {
                         )
                         .clipShape(.capsule)
                         .animation(.snappy, value: selectedPet)
-                    .onTapGesture {
-                        selectedPet = pet
-                        Logger
-                            .pets
-                            .info("PR: Pet Selected: \(pet.name)")
-                    }
-                    .padding(.leading)
+                        .onTapGesture {
+                            selectedPet = pet
+                            Logger
+                                .pets
+                                .info("PR: Pet Selected: \(pet.name)")
+                        }
+                        .padding(.leading)
                 }
             }
-
+            
         }
     }
-
+    
     private func defineColor(pet: Pet) -> Color {
         selectedPet == pet
         ? Color.yellow
         : Color.clear
     }
-
+    
     private var petListTitle: Text {
         Text("pet_name_title")
     }
@@ -121,7 +144,7 @@ struct PetListView: View {
     private func toggleAddPet() {
         addPet.toggle()
     }
-
+    
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarTrailing) {
@@ -132,6 +155,7 @@ struct PetListView: View {
                         .foregroundStyle(.accent)
                         .font(.title)
                 }
+                .opacity(addPet ? 0 : 1)
             }
         }
     }
@@ -142,5 +166,21 @@ struct PetListView: View {
         PetListView()
             .modelContainer(DataController.previewContainer)
             .environment(NotificationManager())
+    }
+}
+
+struct AddPetModal: View {
+    @Environment(NotificationManager.self) private var notificationManager
+    var onDismiss: () -> Void
+    
+    var body: some View {
+        AddPetView(onDismiss: onDismiss)
+            .background(.thinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .background(Color.clear)
+            .onTapGesture(perform: onDismiss)
+            .environment(notificationManager)
     }
 }

@@ -16,8 +16,8 @@ struct PetChangeListView: View {
     
     @Environment(\.modelContext)
     private var modelContext
-    @Environment(\.undoManager) var undoManager
-    
+    @Environment(NotificationManager.self)
+    private var notificationManager: NotificationManager
     
     @Query(sort: \Pet.name) var pets: [Pet]
     
@@ -28,7 +28,6 @@ struct PetChangeListView: View {
     @State private var selectedPet: Pet?
     @State private var showSelectedPet = false
     @State private var showEditButton = false
-    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
     
     var body: some View {
         VStack {
@@ -37,7 +36,7 @@ struct PetChangeListView: View {
                     .onTapGesture {
                         Logger
                             .pets
-                            .info("Surface tapped.")
+                            .info("\("Surface tapped.")")
                         isEditing = false
                         Logger
                             .pets
@@ -46,14 +45,6 @@ struct PetChangeListView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    if showUndoButton {
-                        Button {
-                            modelContext.undoManager?.undo()
-                            showUndoButton = false
-                        } label: {
-                            Image(systemName: "arrow.uturn.backward.circle")
-                        }
-                    }
                     if showEditButton {
                         Button {
                             isEditing.toggle()
@@ -125,6 +116,15 @@ struct PetChangeListView: View {
                             }
                             
                         }
+                        .transition(
+                            .asymmetric(
+                                insertion: .identity,
+                                removal: .scale
+                                    .combined(
+                                        with: .opacity
+                                    )
+                            )
+                        )
                     } else {
                         if let imageData = pet.image,
                            let image = UIImage(data: imageData) {
@@ -161,59 +161,40 @@ struct PetChangeListView: View {
                         .pets
                         .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
                 }
-                .sheet(isPresented: $showSelectedPet, onDismiss: {
-                    selectedPet = nil
-                }, content: {
+                .sheet(isPresented: $showSelectedPet, onDismiss: deselectPet, content: {
                     PetChangeView(pet: $selectedPet)
                         .presentationCornerRadius(25)
                         .presentationDragIndicator(.hidden)
                         .interactiveDismissDisabled()
                 })
-                .onLongPressGesture {
-                    isEditing = true
-                }
+                .onLongPressGesture(perform: setEditMode)
                 .padding([.top, .leading])
             }
         }
     }
     
+    private func deselectPet() {
+        selectedPet = nil
+    }
+    
+    private func setEditMode() {
+        isEditing.toggle()
+    }
+    
     func deletePet(pet: Pet) {
-        let tempPetName = pet.name
+        notificationManager.removeAllNotifications(of: pet.name)
         if pet == selectedPet {
-            selectedPet = nil
+            deselectPet()
         }
-        modelContext.delete(pet)
-        showUndoButton.toggle()
-        
-        buttonTimer?.cancel()
-        buttonTimer = nil
-        
-        time = 0
-        
-        let timer = DispatchSource.makeTimerSource()
-        timer.schedule(deadline: .now(), repeating: 1.0)
-        
-        timer.setEventHandler {
-            Task { @MainActor in
-                if time == 10 {
-                    withAnimation {
-                        self.notificationManager?.removeAllNotifications(of: tempPetName)
-                        showUndoButton = false
-                        timer.cancel()
-                        self.buttonTimer = nil
-                    }
-                } else {
-                    time += 1
-                }
-            }
+        withAnimation {
+            modelContext.delete(pet)
         }
-        
-        buttonTimer = timer
-        timer.resume()
     }
     
     private func defineColor(pet: Pet) -> Color {
-        selectedPet?.name == pet.name ? Color.yellow : Color.clear
+        selectedPet == pet
+        ? Color.yellow
+        : Color.clear
     }
 }
 

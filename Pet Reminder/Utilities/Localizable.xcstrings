@@ -1713,6 +1713,9 @@
         }
       }
     },
+    "Retry" : {
+
+    },
     "Save" : {
       "localizations" : {
         "tr" : {
@@ -1722,6 +1725,9 @@
           }
         }
       }
+    },
+    "Save Failed" : {
+
     },
     "select_date" : {
       "extractionState" : "manual",
@@ -1793,6 +1799,7 @@
       }
     },
     "Setup" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
