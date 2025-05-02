@@ -17,7 +17,7 @@ struct NotificationSelectView: View {
         VStack {
             Text("feed_time_title")
                 .font(.title2).bold()
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.label)
                 .padding(.vertical)
                 .animation(.easeOut(duration: 0.8), value: dayType)
             Picker(
@@ -26,13 +26,13 @@ struct NotificationSelectView: View {
             ) {
                 Text("feed_selection_both")
                     .tag(FeedSelection.both)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.label)
                 Text("feed_selection_morning")
                     .tag(FeedSelection.morning)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.label)
                 Text("feed_selection_evening")
                     .tag(FeedSelection.evening)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.label)
             }
             .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: dayType)

@@ -20,11 +20,10 @@ struct PetNameTextField: View {
 
     @FocusState var isFocused
     
-
     var body: some View {
         VStack(alignment: .leading) {
             Text("start_name_label")
-                .foregroundStyle(Color.white)
+                .foregroundStyle(Color.black)
                 .font(.title2)
                 .bold()
                 .padding(.bottom, 20)
@@ -34,11 +33,10 @@ struct PetNameTextField: View {
                 text: $name
             )
             .focused($isFocused)
-            .foregroundStyle(Color.white)
+            .foregroundStyle(Color.black)
             .font(.title)
             .padding()
             .autocorrectionDisabled()
-            .textInputAutocapitalization(.never)
             .multilineTextAlignment(.center)
             .onChange(of: name) {
                 adjust(name: name)
@@ -46,7 +44,7 @@ struct PetNameTextField: View {
             .background(
                 Rectangle()
                     .fill(
-                        isFocused ? .black
+                        isFocused ? .accent
                             .opacity(0.2) :
                             Color
                                 .white
@@ -54,7 +52,7 @@ struct PetNameTextField: View {
 
                     )
                     .animation(.easeInOut, value: isFocused)
-                    .shadow(radius: 8)
+                    .clipShape(.rect(cornerRadius: 10))
             )
         }
     }
@@ -73,9 +71,12 @@ struct PetNameTextField: View {
         .padding(.all)
         .modelContainer(DataController.previewContainer)
         .background(
-            Color.accent
+            Color
+                .gray
+                .opacity(0.3)
                 .ignoresSafeArea()
         )
+        .padding()
 }
 
 #Preview("Empty Case") {
@@ -83,7 +84,10 @@ struct PetNameTextField: View {
         .padding(.all)
         .modelContainer(DataController.previewContainer)
         .background(
-            Color.accent
+            Color
+                .gray
+                .opacity(0.3)
                 .ignoresSafeArea()
         )
+        .padding()
 }

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import Shared
 
 struct PetBirthdayView: View {
 
@@ -18,14 +18,14 @@ struct PetBirthdayView: View {
         VStack(alignment: .leading) {
             Text("birthday_title")
                 .font(.title2)
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.label)
                 .bold()
                 .padding(.trailing, 20)
             DatePicker(
                 selection: $birthday,
                 displayedComponents: .date) {
                     Text("birthday_title")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.label)
                 }
                 .labelsHidden()
                 .tint(.white)
