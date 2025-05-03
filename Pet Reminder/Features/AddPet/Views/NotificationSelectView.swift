@@ -11,17 +11,17 @@ import Shared
 
 struct NotificationSelectView: View {
 
-    @Binding var dayType: FeedSelection
+    @Binding var feedSelection: FeedSelection
 
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             Text("feed_time_title")
-                .font(.title2).bold()
+                .font(.title3).bold()
                 .foregroundStyle(Color.label)
                 .padding(.vertical)
-                .animation(.easeOut(duration: 0.8), value: dayType)
+                .animation(.easeOut(duration: 0.8), value: feedSelection)
             Picker(
-                selection: $dayType,
+                selection: $feedSelection,
                 label: Text("feed_time_title")
             ) {
                 Text("feed_selection_both")
@@ -34,17 +34,15 @@ struct NotificationSelectView: View {
                     .tag(FeedSelection.evening)
                     .foregroundStyle(Color.label)
             }
-            .pickerStyle(.segmented)
-            .animation(.easeOut(duration: 0.8), value: dayType)
+            .pickerStyle(.menu)
+            .tint(.accent)
+            .animation(.easeOut(duration: 0.8), value: feedSelection)
         }
     }
 }
 
 #Preview {
-    @Previewable @State var dayType: FeedSelection = .both
-    NotificationSelectView(dayType: $dayType)
-        .background(
-            Color.accent,
-            ignoresSafeAreaEdges: .all
-        )
+    @Previewable @State var feedSelection: FeedSelection = .both
+    NotificationSelectView(feedSelection: $feedSelection)
+        .background(.ultraThinMaterial)
 }

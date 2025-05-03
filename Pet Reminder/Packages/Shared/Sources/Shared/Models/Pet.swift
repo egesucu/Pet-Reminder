@@ -19,7 +19,7 @@ public final class Pet {
     public var createdAt: Date?
     public var image: Data?
     public var feedSelection: FeedSelection?
-    private var petTypeName: PetType.RawValue = PetType.other.name
+    private var petTypeName: PetType.RawValue = PetType.other.rawValue
     
     @Relationship(inverse: \Feed.pet) public var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) public var vaccines: [Vaccine]?

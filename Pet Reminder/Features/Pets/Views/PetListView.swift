@@ -22,11 +22,26 @@ struct PetListView: View {
     
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager
     
-    private var petsView: some View {
+    var body: some View {
+        ZStack {
+            petsOverview
+            if addPet {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                addPetView()
+                    .padding()
+            }
+        }
+        .animation(.easeInOut, value: addPet)
+    }
+    
+    private var petsOverview: some View {
         NavigationStack {
             ScrollView {
                 VStack {
                     petList
+                    /// Showing the detail page only if the selected pet has values(i.e. not empty)
                     if selectedPet.name.isNotEmpty {
                         PetDetailView(pet: $selectedPet)
                     }
@@ -56,32 +71,25 @@ struct PetListView: View {
             if !addPet {
                 Logger.pets.info("Pet Add Sheet dismissed, context changed?: \(modelContext.hasChanges)")
                 Logger.pets.info("Pet Count: \(pets.count)")
+                /// If we have a new pet after there was none, or the new pet added and sorted via name
+                /// we would like to switch first pet into the arrays first item.
+                if pets.count > 0,
+                   let firstPet = pets.first {
+                    selectedPet = firstPet
+                }
             }
         }
-    }
-    
-    var body: some View {
-        ZStack {
-            petsView
-            if addPet {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        withAnimation { addPet = false }
-                    }
-                
-                addPetView()
-                    .padding()
-            }
-        }
-        .animation(.easeInOut, value: addPet)
     }
     
     @ViewBuilder
     private func addPetView() -> some View {
-        AddPetModal {
-            withAnimation { addPet = false }
+        AddPetView() {
+            withAnimation { toggleAddPet() }
         }
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .environment(notificationManager)
         .transition(.move(edge: .bottom))
         .zIndex(1)
         .ignoresSafeArea()
@@ -166,21 +174,5 @@ struct PetListView: View {
         PetListView()
             .modelContainer(DataController.previewContainer)
             .environment(NotificationManager())
-    }
-}
-
-struct AddPetModal: View {
-    @Environment(NotificationManager.self) private var notificationManager
-    var onDismiss: () -> Void
-    
-    var body: some View {
-        AddPetView(onDismiss: onDismiss)
-            .background(.thinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .background(Color.clear)
-            .onTapGesture(perform: onDismiss)
-            .environment(notificationManager)
     }
 }

@@ -1449,6 +1449,22 @@
         }
       }
     },
+    "Pet Exists" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already have this pet. We don’t allow multiple pets with the same name on the app."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu evcil hayvana zaten sahipsin. Uygulamada aynı isimle birden fazla evcil hayvan olmasına izin vermiyoruz."
+          }
+        }
+      }
+    },
     "pet_add_pet" : {
       "localizations" : {
         "en" : {
@@ -1714,7 +1730,14 @@
       }
     },
     "Retry" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekrar Dene"
+          }
+        }
+      }
     },
     "Save" : {
       "localizations" : {
@@ -1727,7 +1750,30 @@
       }
     },
     "Save Failed" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydedilemedi"
+          }
+        }
+      }
+    },
+    "Save Successful" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Successfully Saved"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarıyla Kaydedildi"
+          }
+        }
+      }
     },
     "select_date" : {
       "extractionState" : "manual",
@@ -1794,17 +1840,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ayarlar"
-          }
-        }
-      }
-    },
-    "Setup" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kurulum"
           }
         }
       }

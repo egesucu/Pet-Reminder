@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import OSLog
 
 public enum PetType: String {
     case cat, dog, fish, bird, other
@@ -17,13 +18,28 @@ public enum PetType: String {
 extension PetType: CaseIterable, Codable {}
 
 extension PetType {
-    public var name: String {
-        return switch self {
-        case .cat: String(localized: "Cat")
-        case .dog: String(localized: "Dog")
-        case .fish: String(localized: "Fish")
-        case .bird: String(localized: "Bird")
-        case .other: String(localized: "Other")
+    public var localizedName: String {
+        switch self {
+        case .cat:
+            let cat = String(localized: "Cat", bundle: .module)
+            Logger.pets.info("Pet's localized type is: \(cat)")
+            return cat
+        case .dog:
+            let dog = String(localized: "Dog", bundle: .module)
+            Logger.pets.info("Pet's localized type is: \(dog)")
+            return dog
+        case .fish:
+            let fish = String(localized: "Fish", bundle: .module)
+            Logger.pets.info("Pet's localized type is: \(fish)")
+            return fish
+        case .bird:
+            let bird = String(localized: "Bird", bundle: .module)
+            Logger.pets.info("Pet's localized type is: \(bird)")
+            return bird
+        case .other:
+            let other = String(localized: "Other", bundle: .module)
+            Logger.pets.info("Pet's localized type is: \(other)")
+            return other
         }
     }
     

@@ -16,7 +16,8 @@ struct PetNameTextField: View {
 
     @Binding var name: String
     @State private var showAlert = false
-    @Binding var nameIsFilledCorrectly: Bool
+    @Binding var nameIsValid: Bool
+    @Binding var petExists: Bool
 
     @FocusState var isFocused
     
@@ -39,7 +40,7 @@ struct PetNameTextField: View {
             .autocorrectionDisabled()
             .multilineTextAlignment(.center)
             .onChange(of: name) {
-                adjust(name: name)
+                check(name: name)
             }
             .background(
                 Rectangle()
@@ -47,47 +48,60 @@ struct PetNameTextField: View {
                         isFocused ? .accent
                             .opacity(0.2) :
                             Color
-                                .white
-                                .opacity(0.4)
+                                .black
+                                .opacity(0.1)
 
                     )
                     .animation(.easeInOut, value: isFocused)
                     .clipShape(.rect(cornerRadius: 10))
             )
+            
+            if petExists {
+                Text("Pet Exists")
+                    .foregroundStyle(.red)
+                    .font(.footnote)
+                    .bold()
+            }
         }
     }
     
-    private func adjust(name: String) {
+    private func check(name: String) {
         if name.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
-            nameIsFilledCorrectly = true
+            nameIsValid = true
         } else {
-            nameIsFilledCorrectly = false
+            nameIsValid = false
         }
+        
+        self.petExists = pets.map(\.name).contains(name)
     }
 }
 
 #Preview("Filled Case") {
-    PetNameTextField(name: .constant(Strings.viski), nameIsFilledCorrectly: .constant(false))
-        .padding(.all)
-        .modelContainer(DataController.previewContainer)
-        .background(
-            Color
-                .gray
-                .opacity(0.3)
-                .ignoresSafeArea()
-        )
-        .padding()
+    @Previewable @FocusState var isFocused: Bool
+    
+    PetNameTextField(
+        name: .constant(Strings.viski),
+        nameIsValid: .constant(false),
+        petExists: .constant(false),
+        isFocused: _isFocused
+    )
+    .padding(.all)
+    .modelContainer(DataController.previewContainer)
+    .background(.ultraThinMaterial)
+    .padding()
+    .onAppear {
+        isFocused = true
+    }
 }
 
 #Preview("Empty Case") {
-    PetNameTextField(name: .constant(""), nameIsFilledCorrectly: .constant(false))
+    PetNameTextField(
+        name: .constant(""),
+        nameIsValid: .constant(false),
+        petExists: .constant(false),
+    )
         .padding(.all)
         .modelContainer(DataController.previewContainer)
-        .background(
-            Color
-                .gray
-                .opacity(0.3)
-                .ignoresSafeArea()
-        )
+        .background(.ultraThinMaterial)
         .padding()
 }
