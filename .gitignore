@@ -23,7 +23,6 @@ xcshareddata/
 
 # Swift Package Manager
 .swiftpm/
-Package.resolved
 
 # Fastlane
 fastlane/report.xml
