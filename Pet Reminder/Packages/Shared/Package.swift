@@ -30,13 +30,15 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "6.2.0")
+        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "6.2.0"),
+        .package(url: "https://github.com/gonzalezreal/swift-markdown-ui", from: "2.0.2")
     ],
     targets: [
         .target(
             name: "Shared",
             dependencies: [
-                "SFSafeSymbols"
+                "SFSafeSymbols",
+                .product(name: "MarkdownUI", package: "swift-markdown-ui")
             ],
             resources: [
                 .process("Resources/LICENSE.md")
