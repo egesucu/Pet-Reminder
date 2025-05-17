@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F02DB2B6F600F1BAA2 /* Shared */; };
 		7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */; };
+		728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 728C343D2DD8BE9C00C75BE8 /* MarkdownUI */; };
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
@@ -67,6 +68,7 @@
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
 				7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */,
+				728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */,
 				7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +160,7 @@
 			packageProductDependencies = (
 				7214E4F02DB2B6F600F1BAA2 /* Shared */,
 				7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */,
+				728C343D2DD8BE9C00C75BE8 /* MarkdownUI */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -195,6 +198,7 @@
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
 				7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
+				728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -598,6 +602,14 @@
 				minimumVersion = 6.2.0;
 			};
 		};
+		728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -609,6 +621,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
 			productName = SFSafeSymbols;
+		};
+		728C343D2DD8BE9C00C75BE8 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

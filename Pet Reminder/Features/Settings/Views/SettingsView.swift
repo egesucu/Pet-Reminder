@@ -37,6 +37,12 @@ struct SettingsView: View {
                     } label: {
                         Text(LocalizedStringKey("privacy_policy_title"))
                     }
+                    
+                    NavigationLink {
+                        LicenseView()
+                    } label: {
+                        Text("license_view_label")
+                    }
                 }
                 Section {
                     NavigationLink {

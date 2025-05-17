@@ -37,6 +37,9 @@ let package = Package(
             name: "Shared",
             dependencies: [
                 "SFSafeSymbols"
+            ],
+            resources: [
+                .process("Resources/LICENSE.md")
             ]
         ),
         .testTarget(

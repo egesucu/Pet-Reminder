@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "shouldTranslate" : false
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "\n%@, %@" : {
       "localizations" : {
@@ -11,9 +18,14 @@
             "state" : "new",
             "value" : "\n%1$@, %2$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n%1$@, %2$@"
+          }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "%@" : {
       "localizations" : {
@@ -32,9 +44,14 @@
             "state" : "new",
             "value" : "%1$@, %2$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@"
+          }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "add" : {
       "extractionState" : "manual",
@@ -1036,6 +1053,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Son Öğün:"
+          }
+        }
+      }
+    },
+    "license_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenses"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisanslar"
+          }
+        }
+      }
+    },
+    "license_view_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenses"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisanslar"
           }
         }
       }
