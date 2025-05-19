@@ -16,6 +16,18 @@ extension EKEventStore: @unchecked @retroactive Sendable {}
 @Observable
 class EventViewModel {
     
+    var exampleEvents: [EKEvent] {
+        var events: [EKEvent] = []
+        (0...4).forEach { index in
+            let event = EKEvent(eventStore: self.eventStore)
+            event.title = Strings.demoEvent(index + 1)
+            event.startDate = .now
+            event.endDate = .now.addingTimeInterval(60)
+            events.append(event)
+        }
+        return events
+    }
+    
     enum Status: String {
         case authorized
         case readOnly
@@ -36,7 +48,9 @@ class EventViewModel {
     }
     
     var events: [EKEvent] = []
-    var petCalendar: EKCalendar?
+    var calendars: [EventCalendar] = []
+    var selectedCalendar: EventCalendar?
+    var petCalendar: EventCalendar?
     var eventName = ""
     var eventStartDate: Date = Calendar.current.date(byAdding: .hour, value: 1, to: .now) ?? .now
     var eventEndDate: Date = Calendar.current.date(byAdding: .hour, value: 2, to: .now) ?? .now
@@ -44,56 +58,35 @@ class EventViewModel {
     var status: Status = .notDetermined
     
     @ObservationIgnored let eventStore = EKEventStore()
-    
-    private let eventDataActor: EventDataActor
-    
+        
     init(isDemo: Bool = false) {
-        eventDataActor = EventDataActor(eventStore: eventStore)
         if isDemo {
             events = exampleEvents
+        } else {
+            Task { [weak self] in
+                guard let self else { return }
+                await self.requestCalendarAccess()
+            }
         }
     }
-    
-    func getCalendars() async -> [EKCalendar] {
-        await eventDataActor.getCalendars()
-    }
-    
-    var exampleEvents: [EKEvent] {
-        var events: [EKEvent] = []
-        (0...4).forEach { index in
-            let event = EKEvent(eventStore: self.eventStore)
-            event.title = Strings.demoEvent(index + 1)
-            event.startDate = .now
-            event.endDate = .now.addingTimeInterval(60)
-            events.append(event)
-        }
-        return events
-    }
-    
+
     @MainActor
     private func updateAuthStatus() async {
         status = .value(status: EKEventStore.authorizationStatus(for: .event))
         Logger.events.info("Auth status is: \(self.status.rawValue)")
     }
     
-    func requestEvents() async {
-        let result = (try? await eventStore.requestFullAccessToEvents()) ?? false
-        if result {
-            await self.fetchCalendars()
-        } else {
-            self.status = .denied
-        }
-        await updateAuthStatus()
-    }
-    
-    @MainActor
-    func loadEvents() async {
-        await updateAuthStatus()
-        events.removeAll()
-        if status == .authorized {
-            events = await eventDataActor.loadEvents()
-        } else {
-            await requestEvents()
+    func requestCalendarAccess() async {
+        do {
+            let result = try await eventStore.requestFullAccessToEvents()
+            if result {
+                await self.fetchCalendars()
+            } else {
+                self.status = .denied
+            }
+            await updateAuthStatus()
+        } catch {
+            Logger.events.error("Could not get the auth status: \(error)")
         }
     }
     
@@ -106,34 +99,104 @@ class EventViewModel {
     }
     
     @MainActor
-    func reloadEvents() async {
-        await updateAuthStatus()
-        await loadEvents()
-        await fetchCalendars()
-    }
-    
-    @MainActor
     func fetchCalendars() async {
         if status == .authorized {
-            await eventDataActor.fetchCalendars()
-            await setPetCalendar()
+            self.calendars = eventStore.calendars(for: .event).map(\.title).map(EventCalendar.init)
+            await definePetCalendar()
         }
     }
     
     @MainActor
-    func setPetCalendar() async {
-        petCalendar = await eventDataActor.findOrCreatePetCalendar()
+    func definePetCalendar() async {
+        petCalendar = await findOrCreatePetCalendar()
     }
     
     @MainActor
     func saveEvent() async {
-        await eventDataActor.saveEvent(
+        await saveEvent(
             eventName: eventName,
             eventStartDate: eventStartDate,
             eventEndDate: eventEndDate,
             isAllDay: isAllDay,
-            selectedCalendar: petCalendar ?? .init()
+            selectedCalendar: petCalendar ?? .init("")
         )
-        await loadEvents()
+    }
+    
+    func findOrCreatePetCalendar() async -> EventCalendar? {
+        if let petCalendar = calendars.first(where: { $0.title == "Pet Reminder" }) {
+            return petCalendar
+        } else {
+            return await createCalendar()
+        }
+    }
+    
+    private func createCalendar() async -> EventCalendar? {
+        let calendar = EKCalendar(for: .event, eventStore: eventStore)
+        calendar.title = "Pet Reminder"
+        if let defaultCalendar = eventStore.defaultCalendarForNewEvents {
+            calendar.source = defaultCalendar.source
+        }
+        do {
+            try eventStore.saveCalendar(calendar, commit: true)
+            let petCalendar = EventCalendar(calendar.title)
+            calendars.append(petCalendar)
+            return petCalendar
+        } catch {
+            Logger.events.error("\(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func loadEvents() async -> [EKEvent] {
+        let startDate: Date = .now
+        let endDate = Calendar.current.date(byAdding: .month, value: 1, to: .now) ?? .now
+        let predicate = eventStore.predicateForEvents(
+            withStart: startDate,
+            end: endDate,
+            calendars: eventStore.calendars(for: .event)
+        )
+        return eventStore.events(matching: predicate)
+    }
+    
+    func saveEvent(
+        eventName: String,
+        eventStartDate: Date,
+        eventEndDate: Date,
+        isAllDay: Bool,
+        selectedCalendar: EventCalendar
+    ) async {
+        
+        guard let petCalendar = eventStore.calendars(for: .event).first(where: { $0.title == selectedCalendar.title }) else {
+            Logger.events.error("Event Save Error, Pet Calendar have not been found.")
+            return
+        }
+        
+        let newEvent = EKEvent(eventStore: eventStore)
+        newEvent.title = eventName
+        newEvent.isAllDay = isAllDay
+        newEvent.startDate = eventStartDate
+        newEvent.endDate = isAllDay ? eventStartDate : eventEndDate
+        newEvent.calendar = petCalendar
+        
+        let alarm = EKAlarm(
+            absoluteDate: Calendar.current.date(byAdding: .minute, value: -10, to: .now) ?? .now
+        )
+        newEvent.addAlarm(alarm)
+        newEvent.notes = "Pet Event"
+        
+        do {
+            try eventStore.save(newEvent, span: .thisEvent, commit: true)
+        } catch let error {
+            if let error = error as? EKError {
+                Logger.events.error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    @MainActor
+    func reloadEvents() async {
+        await updateAuthStatus()
+        await fetchCalendars()
+        self.events = await loadEvents()
     }
 }

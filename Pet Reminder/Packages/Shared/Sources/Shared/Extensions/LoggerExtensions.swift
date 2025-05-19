@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  LoggerExtensions.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 12.08.2023.

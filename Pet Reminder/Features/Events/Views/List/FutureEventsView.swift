@@ -10,24 +10,20 @@ import SwiftUI
 import EventKit
 import Shared
 
-
 struct FutureEventsView: View {
 
     @Binding var eventVM: EventViewModel
-    @Binding var filteredCalendar: EKCalendar?
+    @Binding var selectedCalendar: EventCalendar?
 
     var filteredEvents: [EKEvent] {
-        withAnimation {
-            eventVM.events.filter {
-                if let filteredCalendar {
-                    return Calendar.current.isDateLater(date: $0.startDate) &&
-                    $0.calendar == filteredCalendar
-                } else {
-                    return Calendar.current.isDateLater(date: $0.startDate)
-                }
+        eventVM.events.filter {
+            if let selectedCalendar {
+                return Calendar.current.isDateLater(date: $0.startDate) &&
+                $0.calendar.title == selectedCalendar.title
+            } else {
+                return Calendar.current.isDateLater(date: $0.startDate)
             }
         }
-
     }
 
     var body: some View {
@@ -48,5 +44,8 @@ struct FutureEventsView: View {
 }
 
 #Preview {
-    FutureEventsView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(nil))
+    FutureEventsView(
+        eventVM: .constant(.init(isDemo: true)),
+        selectedCalendar: .constant(nil)
+    )
 }

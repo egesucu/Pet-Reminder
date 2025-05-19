@@ -12,7 +12,6 @@ import Shared
 struct EventTimeView: View {
 
     @Binding var dateString: String
-    
 
     var body: some View {
         ZStack(alignment: .center) {

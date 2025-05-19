@@ -29,6 +29,12 @@
     },
     "%@" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -276,6 +282,12 @@
     },
     "All" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1841,6 +1853,22 @@
         }
       }
     },
+    "Selected Calendar: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected Calendar: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçili Takvim: %@"
+          }
+        }
+      }
+    },
     "settings_tab_title" : {
       "comment" : "SETTINGS",
       "extractionState" : "manual",
@@ -1992,6 +2020,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bugün"
+          }
+        }
+      }
+    },
+    "Tümü" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tümü"
           }
         }
       }

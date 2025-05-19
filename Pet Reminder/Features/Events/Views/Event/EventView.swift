@@ -37,14 +37,18 @@ struct EventView: View {
     private func allDayEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
             RoundedRectangle(cornerRadius: 2)
-                .frame(width: 4)
+                .frame(width: 6)
                 .foregroundStyle(Color(cgColor: event.calendar.cgColor))
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
-                .foregroundStyle(Color(cgColor: event.calendar.cgColor))
+                .padding(.all, 5)
+                .background(Color(cgColor: event.calendar.cgColor))
+                .foregroundStyle(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding(.trailing, 5)
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
@@ -55,15 +59,21 @@ struct EventView: View {
     private func futureEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
             Text(event.startDate.formatted(.dateTime.hour().minute()))
+                .padding(.all, 5)
+                .background(Color(cgColor: event.calendar.cgColor))
+                .foregroundStyle(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.trailing, 5)
-                .foregroundStyle(Color(cgColor: event.calendar.cgColor))
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
+                .padding(.all, 5)
+                .background(Color(cgColor: event.calendar.cgColor))
+                .foregroundStyle(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.trailing, 5)
-                .foregroundStyle(Color(cgColor: event.calendar.cgColor))
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
@@ -98,10 +108,41 @@ extension EventView {
     }
 }
 
-#Preview(traits: .sizeThatFitsLayout) {
-    let manager = EventViewModel(isDemo: true)
-    let event = manager.exampleEvents[0]
-    EventView(event: event, eventVM: manager)
+#Preview("Daily Event", traits: .sizeThatFitsLayout) {
+    let dummyStore = EKEventStore()
+    let dummyEvent = EKEvent(eventStore: dummyStore)
+    dummyEvent.title = "Checkup"
+    dummyEvent.startDate = Date()
+    dummyEvent.endDate = Date().addingTimeInterval(3600)
+    dummyEvent.calendar = {
+        let cal = EKCalendar(for: .event, eventStore: dummyStore)
+        cal.title = "Vet"
+        cal.cgColor = UIColor.systemBlue.cgColor
+        return cal
+    }()
+    
+    let dummyVM = EventViewModel(isDemo: true)
+    return EventView(event: dummyEvent, eventVM: dummyVM)
+        .frame(height: 100)
+        .padding()
+}
+
+#Preview("Full Day Event", traits: .sizeThatFitsLayout) {
+    let dummyStore = EKEventStore()
+    let dummyEvent = EKEvent(eventStore: dummyStore)
+    dummyEvent.title = "Checkup"
+    dummyEvent.startDate = Date()
+    dummyEvent.isAllDay = true
+    dummyEvent.endDate = Date().addingTimeInterval(3600)
+    dummyEvent.calendar = {
+        let cal = EKCalendar(for: .event, eventStore: dummyStore)
+        cal.title = "Vet"
+        cal.cgColor = UIColor.systemBlue.cgColor
+        return cal
+    }()
+    
+    let dummyVM = EventViewModel(isDemo: true)
+    return EventView(event: dummyEvent, eventVM: dummyVM)
         .frame(height: 100)
         .padding()
 }

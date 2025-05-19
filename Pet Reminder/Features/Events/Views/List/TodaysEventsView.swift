@@ -8,35 +8,22 @@
 
 import SwiftUI
 import EventKit
-
+import OSLog
+import Shared
 
 struct TodaysEventsView: View {
 
     @Binding var eventVM: EventViewModel
-
-    @Binding var filteredCalendar: EKCalendar?
-
-    var filteredEvents: [EKEvent] {
-        withAnimation {
-            return eventVM
-                .events
-                .filter {
-                    if let filteredCalendar {
-                        return Calendar.current.isDateInToday($0.startDate) &&
-                        $0.calendar == filteredCalendar
-                    } else {
-                        return Calendar.current.isDateInToday($0.startDate)
-                    }
-                }
-        }
-    }
+    @Binding var selectedCalendar: EventCalendar?
+    
+    @State private var todaysEvents: [EKEvent] = []
 
     var body: some View {
         Section {
-            if filteredEvents.isEmpty {
+            if todaysEvents.isEmpty {
                 Text("event_no_title")
             } else {
-                ForEach(filteredEvents, id: \.self) { event in
+                ForEach(todaysEvents, id: \.self) { event in
                     EventView(event: event, eventVM: eventVM)
                         .padding(.horizontal, 5)
                         .listRowSeparator(.hidden)
@@ -45,9 +32,36 @@ struct TodaysEventsView: View {
         } header: {
             Text("today_title")
         }
+        .onChange(of: eventVM.events) {
+            recalculateEvents()
+        }
+        .onChange(of: selectedCalendar) {
+            recalculateEvents()
+        }
+        .onAppear {
+            recalculateEvents()
+        }
+    }
+    
+    private func recalculateEvents() {
+        Logger.events.info("Recalculating today's events")
+        withAnimation {
+            if let selected = selectedCalendar {
+                todaysEvents = eventVM.events.filter {
+                    Calendar.current.isDateInToday($0.startDate) && $0.calendar.title == selected.title
+                }
+            } else {
+                todaysEvents = eventVM.events.filter {
+                    Calendar.current.isDateInToday($0.startDate)
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    TodaysEventsView(eventVM: .constant(.init(isDemo: true)), filteredCalendar: .constant(nil))
+    TodaysEventsView(
+        eventVM: .constant(.init(isDemo: true)),
+        selectedCalendar: .constant(nil)
+    )
 }

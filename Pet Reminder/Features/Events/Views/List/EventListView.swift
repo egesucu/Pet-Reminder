@@ -9,6 +9,7 @@
 import SwiftUI
 import EventKit
 import Shared
+import OSLog
 import SFSafeSymbols
 
 struct EventListView: View {
@@ -23,10 +24,16 @@ struct EventListView: View {
 
     var body: some View {
         NavigationStack {
-            EventsView(eventVM: $eventVM)
+            EventsView(eventVM: $eventVM, selectedCalendar: $eventVM.selectedCalendar)
                 .navigationTitle(Text("event_title"))
                 .navigationBarTitleTextColor(.accent)
-                .toolbar(content: eventToolBar)
+                .toolbar {
+                        EventFilterMenu(
+                            calendars: $eventVM.calendars,
+                            selectedCalendar: $eventVM.selectedCalendar
+                        )
+                        eventToolBar()
+                }
         }
         .sheet(
             isPresented: $showAddEvent,
@@ -38,6 +45,9 @@ struct EventListView: View {
         .overlay(content: eventViewOverlay)
         .task {
             await eventVM.reloadEvents()
+        }
+        .onChange(of: eventVM.selectedCalendar) { oldValue, newValue in
+            Logger.events.info("Selected calendar has changed from \(String(describing: oldValue)) to \(String(describing: newValue))")
         }
     }
 

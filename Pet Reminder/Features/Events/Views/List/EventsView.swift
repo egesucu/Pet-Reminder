@@ -15,26 +15,32 @@ import Shared
 struct EventsView: View {
 
     @Binding var eventVM: EventViewModel
+    @Binding var selectedCalendar: EventCalendar?
 
     @State private var dates = [Date]()
-    @State private var filteredCalendar: EKCalendar?
-
+    
     var body: some View {
         if eventVM.status == .authorized {
             List {
-                EventFilterView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
+                TodaysEventsView(eventVM: $eventVM, selectedCalendar: $selectedCalendar)
                     .transition(.slide)
-                TodaysEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
+                FutureEventsView(eventVM: $eventVM, selectedCalendar: $selectedCalendar)
                     .transition(.slide)
-                FutureEventsView(eventVM: $eventVM, filteredCalendar: $filteredCalendar)
-                    .transition(.slide)
-            }
-            .task {
-                await eventVM.fetchCalendars()
             }
             .onAppear(perform: getEventDates)
             .refreshable {
                 await eventVM.reloadEvents()
+            }
+            .overlay(alignment: .bottom) {
+                VStack {
+                    Spacer()
+                    Text("Selected Calendar: \(selectedCalendar?.title ?? String(localized: "All"))")
+                        .font(.footnote)
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .clipShape(.capsule)
+                        .frame(height: 60)
+                }
             }
         }
 
@@ -48,5 +54,5 @@ struct EventsView: View {
 }
 
 #Preview {
-    EventsView(eventVM: .constant(.init(isDemo: true)))
+    EventsView(eventVM: .constant(.init(isDemo: true)), selectedCalendar: .constant(nil))
 }
