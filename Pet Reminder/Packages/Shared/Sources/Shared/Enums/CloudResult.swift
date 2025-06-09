@@ -1,0 +1,14 @@
+//
+//  CloudResult.swift
+//  Pet Reminder
+//
+//  Created by Sucu, Ege on 25.04.2023.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
+//
+
+import Foundation
+
+public enum CloudResultType {
+    case success
+    case error(CloudError)
+}

@@ -7,19 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		72C446272C9B6AA4003B1DE7 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C446262C9B6AA4003B1DE7 /* DataController.swift */; };
-		72C4463D2C9B6B87003B1DE7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 72C4463C2C9B6B86003B1DE7 /* Localizable.xcstrings */; };
-		72C4463F2C9B6B9D003B1DE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72C4463E2C9B6B9D003B1DE7 /* Assets.xcassets */; };
+		7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F02DB2B6F600F1BAA2 /* Shared */; };
+		7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */; };
+		728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 728C343D2DD8BE9C00C75BE8 /* MarkdownUI */; };
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
-		9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8970A425681E9300B3C414 /* PetReminderApp.swift */; };
-		9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */; };
-		9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */; };
-		9DA37A482AB6C2DA00874999 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
-		9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,34 +28,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		72C446262C9B6AA4003B1DE7 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		72C4463C2C9B6B86003B1DE7 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		72C4463E2C9B6B9D003B1DE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pet ReminderTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_xcodebuild.sh; sourceTree = "<group>"; };
 		9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
-		9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pet Reminder.entitlements"; sourceTree = "<group>"; };
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		9D8970A425681E9300B3C414 /* PetReminderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetReminderApp.swift; sourceTree = "<group>"; };
-		9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreConfiguration.storekit; sourceTree = "<group>"; };
 		9D8E76EE248666BD004610C8 /* Pet Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pet Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		9D8E7702248666C1004610C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Ankara.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7214E4ED2DB2B61B00F1BAA2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Packages/Shared,
+				Utilities/Info.plist,
+			);
+			target = 9D8E76ED248666BD004610C8 /* Pet Reminder */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		72C445642C9B6829003B1DE7 /* AddPet */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AddPet; sourceTree = "<group>"; };
-		72C445792C9B6859003B1DE7 /* Pets */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Pets; sourceTree = "<group>"; };
-		72C445952C9B68CF003B1DE7 /* VetFinder */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = VetFinder; sourceTree = "<group>"; };
-		72C445A02C9B690D003B1DE7 /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
-		72C445BA2C9B6952003B1DE7 /* Events */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Events; sourceTree = "<group>"; };
-		72C445D42C9B6984003B1DE7 /* Intro */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Intro; sourceTree = "<group>"; };
-		72C445DC2C9B69E8003B1DE7 /* HomeTabs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = HomeTabs; sourceTree = "<group>"; };
-		72C445E22C9B6A37003B1DE7 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+		7214E4902DB2B61B00F1BAA2 /* Pet Reminder */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (7214E4ED2DB2B61B00F1BAA2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Pet Reminder"; sourceTree = "<group>"; };
 		72C446452C9B6BBC003B1DE7 /* Pet ReminderTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Pet ReminderTests"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -78,6 +67,9 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
+				7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */,
+				728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */,
+				7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +98,7 @@
 		9D8E76E5248666BD004610C8 = {
 			isa = PBXGroup;
 			children = (
-				9D8E76F0248666BD004610C8 /* Pet Reminder */,
+				7214E4902DB2B61B00F1BAA2 /* Pet Reminder */,
 				72C446452C9B6BBC003B1DE7 /* Pet ReminderTests */,
 				9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */,
 				9D71CEF2248836BD00AA1458 /* Frameworks */,
@@ -121,47 +113,6 @@
 				72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9D8E76F0248666BD004610C8 /* Pet Reminder */ = {
-			isa = PBXGroup;
-			children = (
-				72C445E22C9B6A37003B1DE7 /* Resources */,
-				72C445DC2C9B69E8003B1DE7 /* HomeTabs */,
-				72C445D42C9B6984003B1DE7 /* Intro */,
-				72C445BA2C9B6952003B1DE7 /* Events */,
-				72C445A02C9B690D003B1DE7 /* Settings */,
-				72C445952C9B68CF003B1DE7 /* VetFinder */,
-				72C445792C9B6859003B1DE7 /* Pets */,
-				72C445642C9B6829003B1DE7 /* AddPet */,
-				9DFF73F4248BADB2004B4901 /* Utilities */,
-				9D8E76FC248666C1004610C8 /* Preview Content */,
-			);
-			path = "Pet Reminder";
-			sourceTree = "<group>";
-		};
-		9D8E76FC248666C1004610C8 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				9D8E76FD248666C1004610C8 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		9DFF73F4248BADB2004B4901 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				9DD6A26E2AB5C6AB005312D3 /* Ankara.gpx */,
-				9D71CEF1248836B000AA1458 /* Pet Reminder.entitlements */,
-				9D8970A425681E9300B3C414 /* PetReminderApp.swift */,
-				9D8E7702248666C1004610C8 /* Info.plist */,
-				9DA37A472AB6C2DA00874999 /* InfoPlist.xcstrings */,
-				72C4463E2C9B6B9D003B1DE7 /* Assets.xcassets */,
-				72C4463C2C9B6B86003B1DE7 /* Localizable.xcstrings */,
-				9D8A0585271329F600BF5F32 /* StoreConfiguration.storekit */,
-				72C446262C9B6AA4003B1DE7 /* DataController.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,17 +154,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				72C445642C9B6829003B1DE7 /* AddPet */,
-				72C445792C9B6859003B1DE7 /* Pets */,
-				72C445952C9B68CF003B1DE7 /* VetFinder */,
-				72C445A02C9B690D003B1DE7 /* Settings */,
-				72C445BA2C9B6952003B1DE7 /* Events */,
-				72C445D42C9B6984003B1DE7 /* Intro */,
-				72C445DC2C9B69E8003B1DE7 /* HomeTabs */,
-				72C445E22C9B6A37003B1DE7 /* Resources */,
+				7214E4902DB2B61B00F1BAA2 /* Pet Reminder */,
 			);
 			name = "Pet Reminder";
 			packageProductDependencies = (
+				7214E4F02DB2B6F600F1BAA2 /* Shared */,
+				7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */,
+				728C343D2DD8BE9C00C75BE8 /* MarkdownUI */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -227,7 +174,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1630;
 				ORGANIZATIONNAME = "Ege Sucu";
 				TargetAttributes = {
 					72C446432C9B6BBC003B1DE7 = {
@@ -250,6 +197,8 @@
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
+				7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
+				728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -273,15 +222,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DA37A482AB6C2DA00874999 /* InfoPlist.xcstrings in Resources */,
 				9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */,
-				9DD6A26F2AB5C6AB005312D3 /* Ankara.gpx in Resources */,
 				9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */,
 				9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */,
-				9D8A0586271329F600BF5F32 /* StoreConfiguration.storekit in Resources */,
-				9D8E76FE248666C1004610C8 /* Preview Assets.xcassets in Resources */,
-				72C4463F2C9B6B9D003B1DE7 /* Assets.xcassets in Resources */,
-				72C4463D2C9B6B87003B1DE7 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,8 +242,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D8970A525681E9400B3C414 /* PetReminderApp.swift in Sources */,
-				72C446272C9B6AA4003B1DE7 /* DataController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +263,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RKA7R98LN8;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -330,7 +270,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_DYNAMIC_ACTOR_ISOLATION = YES;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_ACTOR_ISOLATED_TYPES_USABILITY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_UPCOMING_FEATURE_NONFROZEN_ENUM_EXHAUSTIVITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pet Reminder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pet Reminder";
 			};
@@ -343,14 +287,17 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RKA7R98LN8;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "tr.com.egesucu.Pet-ReminderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_DYNAMIC_ACTOR_ISOLATION = YES;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_ACTOR_ISOLATED_TYPES_USABILITY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_UPCOMING_FEATURE_NONFROZEN_ENUM_EXHAUSTIVITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pet Reminder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pet Reminder";
 			};
@@ -396,6 +343,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -435,7 +383,9 @@
 				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -479,6 +429,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -511,7 +462,9 @@
 				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -527,7 +480,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pet Reminder/Preview Content\"";
-				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
@@ -537,7 +489,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0.2;
+				MARKETING_VERSION = 6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -556,6 +508,7 @@
 				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -573,7 +526,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Pet Reminder/Preview Content\"";
-				DEVELOPMENT_TEAM = RKA7R98LN8;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
@@ -583,7 +535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0.2;
+				MARKETING_VERSION = 6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -602,6 +554,7 @@
 				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -639,6 +592,42 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SFSafeSymbols/SFSafeSymbols.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.0;
+			};
+		};
+		728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7214E4F02DB2B6F600F1BAA2 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shared;
+		};
+		7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
+			productName = SFSafeSymbols;
+		};
+		728C343D2DD8BE9C00C75BE8 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9D8E76E6248666BD004610C8 /* Project object */;
 }

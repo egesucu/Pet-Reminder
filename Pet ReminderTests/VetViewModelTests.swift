@@ -9,6 +9,7 @@
 import Testing
 import Observation
 import OSLog
+@testable import Pet_Reminder
 
 @Suite("Vet ViewModel Tests") struct VetViewModelTests {
 

@@ -1,34 +1,35 @@
-### Swift ###
+# macOS system files
+.DS_Store
 
-## User settings
+# Xcode
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
 xcuserdata/
-
-## Obj-C/Swift specific
+*.moved-aside
 *.hmap
+*.xccheckout
+profile
 
-## App packaging
-*.ipa
-*.dSYM.zip
-*.dSYM
+# Workspace settings
+xcshareddata/
 
-## Playgrounds
-timeline.xctimeline
-playground.xcworkspace
+# Swift Package Manager
+.swiftpm/
 
-.build/
-Packages/**/.build/*
-# fastlane
+# Fastlane
 fastlane/report.xml
 fastlane/Preview.html
-fastlane/screenshots/**/*.png
+fastlane/screenshots
 fastlane/test_output
-fastlane/xcov_report
 
-# Others
-*.cer*
-*.p12
-*.mobileprovision
-*.xcuserstate
-.DS_Store
-**/*.xcworkspacedata
-**/xcshareddata/*
+# Other
+.idea/
+*.xcscmblueprint
