@@ -205,6 +205,7 @@ extension AddPetView {
             return
         }
         Task {
+            pet.feedSelection = feedSelection
             modelContext.insert(pet)
             await createNotifications()
             

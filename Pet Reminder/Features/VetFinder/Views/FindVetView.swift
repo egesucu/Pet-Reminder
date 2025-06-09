@@ -17,7 +17,6 @@ struct FindVetView: View {
 
     @State private var viewModel = VetViewModel()
     
-    
     init() {
         viewModel.searchText = String(localized: "default_vet_text")
     }
@@ -25,9 +24,9 @@ struct FindVetView: View {
     var body: some View {
         NavigationStack {
             mapView
+                .navigationTitle(Text("find_vet_title"))
+                .navigationBarTitleTextColor(.accent)
         }
-        .navigationTitle(Text("find_vet_title"))
-        .navigationBarTitleTextColor(.accent)
         .overlay {
             if viewModel.mapViewStatus == .locationNotAllowed {
                 ContentUnavailableView {

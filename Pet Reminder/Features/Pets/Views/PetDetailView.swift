@@ -17,8 +17,6 @@ struct PetDetailView: View {
     @State private var showFeedHistory = false
     @State private var showVaccines = false
     
-    
-    
     var body: some View {
         VStack {
             if let imageData = pet.image,
