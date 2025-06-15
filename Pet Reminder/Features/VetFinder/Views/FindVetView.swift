@@ -43,6 +43,7 @@ struct FindVetView: View {
             }
         }
         .task {
+            await viewModel.setUserLocation()
             await viewModel.requestMap()
         }
         .sheet(item: $viewModel.selectedLocation, onDismiss: {
