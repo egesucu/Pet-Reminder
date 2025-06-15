@@ -55,6 +55,7 @@ class VetViewModel {
     
     @MainActor
     func setUserLocation() async {
+        locationManager.startUpdatingLocation()
         userLocation = .userLocation(fallback: .automatic)
         do {
             try await searchPins()
