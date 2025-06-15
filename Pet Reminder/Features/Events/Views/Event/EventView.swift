@@ -18,7 +18,7 @@ struct EventView: View {
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
 
-    var eventVM: EventViewModel
+    @Environment(EventManager.self) private var manager
 
     var body: some View {
         HStack {
@@ -92,7 +92,7 @@ extension EventView {
     private func onSheetDismiss() {
         Task {
             await fillData()
-            await eventVM.reloadEvents()
+            await manager.reloadEvents()
         }
     }
 
@@ -103,7 +103,7 @@ extension EventView {
     @MainActor
     private func fillData() async {
         self.eventTitle = event.title
-        let content = eventVM.fillEventData(event: event)
+        let content = manager.fillEventData(event: event)
         self.dateString = content
     }
 }
@@ -121,8 +121,9 @@ extension EventView {
         return cal
     }()
     
-    let dummyVM = EventViewModel(isDemo: true)
-    return EventView(event: dummyEvent, eventVM: dummyVM)
+    let dummyVM = EventManager.demo
+    return EventView(event: dummyEvent)
+        .environment(dummyVM)
         .frame(height: 100)
         .padding()
 }
@@ -141,8 +142,9 @@ extension EventView {
         return cal
     }()
     
-    let dummyVM = EventViewModel(isDemo: true)
-    return EventView(event: dummyEvent, eventVM: dummyVM)
+    let dummyVM = EventManager.demo
+    return EventView(event: dummyEvent)
+        .environment(dummyVM)
         .frame(height: 100)
         .padding()
 }

@@ -30,5 +30,5 @@ struct AllNotificationsView: View {
 
 #Preview {
     AllNotificationsView()
-        .environment(NotificationManager())
+        .environment(NotificationManager.shared)
 }

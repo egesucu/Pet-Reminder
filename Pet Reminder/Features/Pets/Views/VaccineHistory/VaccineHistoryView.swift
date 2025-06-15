@@ -27,7 +27,7 @@ struct VaccineHistoryView: View {
                             VStack {
                                 HStack {
                                     Label {
-                                        Text("vaccine_title_label")
+                                        Text(.vaccineTitleLabel)
                                             .bold()
                                     } icon: {
                                         Image(systemSymbol: .syringeFill)

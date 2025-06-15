@@ -14,46 +14,39 @@ import SFSafeSymbols
 
 struct EventListView: View {
 
-    @State private var eventVM: EventViewModel
+    @Environment(EventManager.self) private var eventManager
     @State private var showAddEvent = false
-    
-
-    init(eventVM: EventViewModel) {
-        _eventVM = State(wrappedValue: eventVM)
-    }
 
     var body: some View {
         NavigationStack {
-            EventsView(eventVM: $eventVM, selectedCalendar: $eventVM.selectedCalendar)
-                .navigationTitle(Text("event_title"))
+            EventsView()
+                .navigationTitle(Text(.eventTitle))
                 .navigationBarTitleTextColor(.accent)
                 .toolbar {
-                        EventFilterMenu(
-                            calendars: $eventVM.calendars,
-                            selectedCalendar: $eventVM.selectedCalendar
-                        )
+                        EventFilterMenu()
                         eventToolBar()
                 }
+                .environment(eventManager)
         }
         .sheet(
             isPresented: $showAddEvent,
             onDismiss: reloadEvents
         ) {
-            AddEventView(eventVM: $eventVM)
+            AddEventView()
+                .environment(eventManager)
         }
-        
         .overlay(content: eventViewOverlay)
         .task {
-            await eventVM.reloadEvents()
+            await eventManager.reloadEvents()
         }
-        .onChange(of: eventVM.selectedCalendar) { oldValue, newValue in
+        .onChange(of: eventManager.selectedCalendar) { oldValue, newValue in
             Logger.events.info("Selected calendar has changed from \(String(describing: oldValue)) to \(String(describing: newValue))")
         }
     }
 
     @ViewBuilder
     func eventViewOverlay() -> some View {
-        if eventVM.status == .denied {
+        if eventManager.status == .denied {
             ContentUnavailableView(label: {
                 Label {
                     Text("event_error_title")
@@ -65,7 +58,7 @@ struct EventListView: View {
             }, actions: {
                 SettingsButton()
             })
-        } else if eventVM.status == .readOnly {
+        } else if eventManager.status == .readOnly {
             ContentUnavailableView(label: {
                 Label {
                     Text("event_error_title")
@@ -73,7 +66,7 @@ struct EventListView: View {
                     Image(systemName: "calendar.badge.exclamationmark")
                 }
             }, description: {
-                Text("event_wrong_allowence")
+                Text(.eventWrongAllowence)
             }, actions: {
                 SettingsButton()
             })
@@ -97,7 +90,7 @@ struct EventListView: View {
 
     private func reloadEvents() {
         Task {
-            await eventVM.reloadEvents()
+            await eventManager.reloadEvents()
         }
     }
 
@@ -107,5 +100,6 @@ struct EventListView: View {
 }
 
 #Preview {
-    EventListView(eventVM: .init(isDemo: true))
+    EventListView()
+        .environment(EventManager.demo)
 }

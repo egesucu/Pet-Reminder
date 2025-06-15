@@ -59,7 +59,7 @@ struct PetDetailView: View {
                     showVaccines.toggle()
                 } label: {
                     Label {
-                        Text("vaccines_title")
+                        Text(.vaccinesTitle)
                     } icon: {
                         Image(systemName: "syringe.fill")
                     }
@@ -87,5 +87,4 @@ struct PetDetailView: View {
         )
         .modelContainer(DataController.previewContainer)
     }
-    .navigationViewStyle(.stack)
 }

@@ -52,7 +52,7 @@ struct AddPetView: View {
         .background(.ultraThinMaterial)
         .sensoryFeedback(.error, trigger: saveFailed)
         .sensoryFeedback(.success, trigger: saveSuccess)
-        .alert("Save Failed", isPresented: $saveFailed) {
+        .alert(.saveFailed, isPresented: $saveFailed) {
             Button("OK", action: onDismiss)
             Button("Retry", action: save)
         }
@@ -90,7 +90,7 @@ struct AddPetView: View {
                 .tag(1)
             
             VStack(spacing: 20) {
-                Text("Which kind of the Pet you've got?")
+                Text(.petKindText)
                     .font(.headline)
                     .foregroundStyle(.black)
                 
@@ -101,7 +101,7 @@ struct AddPetView: View {
                             .foregroundStyle(.black)
                     }
                 } label: {
-                    Text("Which kind of the Pet you've got?")
+                    Text(.petKindText)
                         .foregroundStyle(.black)
                 }
                 .pickerStyle(.segmented)
@@ -169,8 +169,7 @@ struct AddPetView: View {
 
 #Preview {
     AddPetView()
-        .environment(NotificationManager())
-        .background(.ultraThinMaterial)
+        .environment(NotificationManager.shared)
 }
 
 

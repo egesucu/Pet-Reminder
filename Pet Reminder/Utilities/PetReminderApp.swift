@@ -16,18 +16,19 @@ import Shared
 struct PetReminderApp: App {
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @Environment(\.undoManager) var undoManager
-    @State private var notificationManager = NotificationManager()
+    @State private var notificationManager = NotificationManager.shared
+    @State private var eventManager = EventManager.shared
 
     var body: some Scene {
         WindowGroup {
             if helloSeen {
                 HomeManagerView()
-                    .environment(notificationManager)
             } else {
                 HelloView()
-                    .environment(notificationManager)
             }
         }
+        .environment(notificationManager)
+        .environment(eventManager)
         .modelContainer(for: Pet.self)
     }
 }

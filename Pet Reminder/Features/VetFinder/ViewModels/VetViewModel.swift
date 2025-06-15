@@ -18,13 +18,16 @@ import Shared
 class VetViewModel {
 
     var userLocation: MapCameraPosition = .userLocation(fallback: .automatic)
-    var searchText = ""
     var searchedLocations: [Pin] = []
     var locationManager = CLLocationManager()
     var selectedLocation: Pin?
     var mapViewStatus: MapViewStatus = .none
     
-    init() { }
+    init() {}
+    
+    @MainActor deinit {
+        locationManager.stopUpdatingLocation()
+    }
     
     func requestMap() async {
         await updateAuthenticationStatus()
@@ -55,12 +58,11 @@ class VetViewModel {
     
     @MainActor
     func setUserLocation() async {
-        userLocation = .userLocation(fallback: .automatic)
-        do {
-            try await searchPins()
-        } catch let error {
-            Logger.vet.error("Error setting user location: \(error.localizedDescription)")
-        }
+        locationManager.startUpdatingLocation()
+        userLocation = .userLocation(
+            followsHeading: true,
+            fallback: .automatic
+        )
     }
     
     @MainActor
@@ -69,11 +71,11 @@ class VetViewModel {
     }
     
     @MainActor
-    func searchPins() async throws {
+    func searchPins(text: String) async throws {
         await clearPreviousSearches()
         
         let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = searchText
+        searchRequest.naturalLanguageQuery = text
         if let region = userLocation.region {
             searchRequest.region = region
         }

@@ -12,59 +12,93 @@ import OSLog
 import Shared
 
 struct DonateView: View {
-
-    
-    @State private var viewModel = StoreManager()
+    @State private var consumables: [Product] = []
+    let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                HStack {
-                    Spacer()
-                    Image(.defaultOther)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 150)
-                        .padding(.vertical, 10)
-                    Spacer()
+                Image(.defaultOther)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 200)
+                    .clipShape(.rect(cornerRadius: 10))
+                VStack {
+                    Text(.donateUsContext)
+                        .padding(.bottom)
+                    Text(.donateUsComment)
+                        .padding(.bottom)
                 }
-                Text("donate_us_context")
-                    .padding()
-                Text("donate_us_comment")
-                    .padding()
-                ForEach(viewModel.consumables, id: \.self) { product in
-                    ProductView(product, prefersPromotionalIcon: false)
-                        .onInAppPurchaseCompletion { product, result in
-                            purcahaseCompleted(product: product, result: result)
-                        }
-                        .onInAppPurchaseStart { product in
-                            Logger
-                                .settings
-                                .info("Purchasing the product: \(product.displayName)")
-                        }
+                .padding(.vertical)
+                
+                LazyVStack {
+                    ForEach(consumables) { product in
+                        ProductView(product, prefersPromotionalIcon: true)
+                            .onInAppPurchaseCompletion { product, result in
+                                Task {
+                                    await purcahaseCompleted(product: product, result: result)
+                                }
+                            }
+                            .onInAppPurchaseStart { product in
+                                Logger
+                                    .settings
+                                    .info("Purchasing the product: \(product.displayName)")
+                            }
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+                    }
                 }
-            }.padding(.horizontal)
+            }
+            .padding(.horizontal)
+            .task(requestProducts)
         }
-        .navigationTitle(Text("donate_us_title"))
+        .navigationTitle(Text(.donateUsTitle))
         .navigationBarTitleTextColor(.accent)
     }
 
+    func requestProducts() async {
+        do {
+            let storeProducts = try await Product.products(for: productIDs)
+            var newConsumables: [Product] = []
+
+            for product in storeProducts {
+                switch product.type {
+                case .consumable:
+                    newConsumables.append(product)
+                default:
+                    Logger
+                        .settings
+                        .error("We don't support other iAP product types.")
+                }
+            }
+
+            withAnimation {
+                consumables = newConsumables.sorted { return $0.price < $1.price }
+            }
+        } catch {
+            Logger
+                .settings
+                .error("Failed product request from the App Store server: \(error.localizedDescription)")
+        }
+    }
+}
+
+// MARK: - After Purchase Actions
+extension DonateView {
+    /// Checks the result of the purchase
     func purcahaseCompleted(
         product: Product,
         result: Result<Product.PurchaseResult, any Error>
-    ) {
+    ) async {
         switch result {
         case .success(let result):
             switch result {
-            case .success(let res):
-                switch res {
+            case .success(let output):
+                switch output {
                 case .verified(let transaction):
                     Logger
                         .settings
                         .info("Verified Transaction: \(transaction.debugDescription)")
-                    Task {
-                        await transaction.finish()
-                    }
+                    await transaction.finish()
                 case .unverified(let transaction, let error):
                     Logger
                         .settings
@@ -95,5 +129,7 @@ struct DonateView: View {
 }
 
 #Preview {
-    DonateView()
+    NavigationStack {
+        DonateView()
+    }
 }

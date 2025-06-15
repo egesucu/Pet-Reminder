@@ -57,7 +57,7 @@ struct PetNameTextField: View {
             )
             
             if petExists {
-                Text("Pet Exists")
+                Text(.petExists)
                     .foregroundStyle(.red)
                     .font(.footnote)
                     .bold()

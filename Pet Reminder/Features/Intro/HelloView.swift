@@ -33,7 +33,7 @@ struct HelloView: View {
             HStack {
                 Spacer()
                 Button(action: goButtonPressed) {
-                    Text("welcome_go_button")
+                    Text(.welcomeGoButton)
                         .font(.title)
                         .bold()
                         .foregroundStyle(.accent)
@@ -42,6 +42,7 @@ struct HelloView: View {
                 .tint(.white)
                 .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
+                        .environment(notificationManager)
                 }
                 Spacer()
             }

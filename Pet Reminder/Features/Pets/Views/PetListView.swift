@@ -12,6 +12,8 @@ import OSLog
 import Shared
 import SFSafeSymbols
 
+extension ReferenceWritableKeyPath: @retroactive @unchecked Sendable { }
+
 struct PetListView: View {
     
     @Environment(\.modelContext) private var modelContext
@@ -173,6 +175,6 @@ struct PetListView: View {
     NavigationStack {
         PetListView()
             .modelContainer(DataController.previewContainer)
-            .environment(NotificationManager())
+            .environment(NotificationManager.shared)
     }
 }

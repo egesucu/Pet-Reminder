@@ -79,7 +79,6 @@ struct NotificationView: View {
         }
         .navigationTitle(Text("notifications_title"))
         .navigationBarTitleTextColor(.accent)
-        .navigationViewStyle(.stack)
         .toolbar {
             if pets.isNotEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -160,5 +159,5 @@ struct NotificationView: View {
 #Preview {
     NotificationView()
         .modelContainer(DataController.previewContainer)
-        .environment(NotificationManager())
+        .environment(NotificationManager.shared)
 }

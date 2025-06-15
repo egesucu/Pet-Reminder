@@ -11,11 +11,10 @@ import Foundation
 public enum PetError: LocalizedError {
     case name
 
-    public var errorDescription: String? {
-        if self == .name {
+    nonisolated public var errorDescription: String? {
+        switch self {
+        case .name:
             return String(localized: "name_error")
-        } else {
-            return "Unknown error"
         }
     }
 }

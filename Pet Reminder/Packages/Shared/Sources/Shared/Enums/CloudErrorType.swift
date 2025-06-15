@@ -15,7 +15,7 @@ public enum CloudError: LocalizedError {
     case cantFetchStatus
     case unknownError(String)
 
-    public var errorDescription: String? {
+    nonisolated public var errorDescription: String? {
         return switch self {
         case .cloudUnavailable:
             String(localized: "cloud_unavailable")

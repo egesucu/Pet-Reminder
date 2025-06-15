@@ -13,9 +13,21 @@ import Shared
 
 struct AddEventView: View {
 
-    @Binding var eventVM: EventViewModel
+    @Environment(EventManager.self) private var manager
     @Environment(\.dismiss) var dismiss
     
+    @State private var eventName = ""
+    @State private var allDay = false
+    @State private var startDate: Date = Calendar.current.date(
+        byAdding: .hour,
+        value: 1,
+        to: .now
+    ) ?? .now
+    @State private var endDate: Date = Calendar.current.date(
+        byAdding: .hour,
+        value: 2,
+        to: .now
+    ) ?? .now
     @State private var filteredCalendars: [EKCalendar] = []
 
     let feedback = UINotificationFeedbackGenerator()
@@ -28,7 +40,7 @@ struct AddEventView: View {
                         "add_event_info"
                     )
                 ) {
-                    TextField(text: $eventVM.eventName) {
+                    TextField(text: $eventName) {
                         Text("add_event_name")
                     }
                 }
@@ -37,7 +49,7 @@ struct AddEventView: View {
                         "add_event_time"
                     )
                 ) {
-                    Toggle(isOn: $eventVM.isAllDay) {
+                    Toggle(isOn: $allDay) {
                         Text("all_day_title")
                     }
                     eventDateView()
@@ -54,16 +66,16 @@ struct AddEventView: View {
 
     @ViewBuilder
     func eventDateView() -> some View {
-        if eventVM.isAllDay {
-            DatePicker(selection: $eventVM.eventStartDate, displayedComponents: .date) {
+        if allDay {
+            DatePicker(selection: $startDate, displayedComponents: .date) {
                 Text("add_event_date")
             }
         } else {
-            DatePicker(selection: $eventVM.eventStartDate) {
+            DatePicker(selection: $startDate) {
                 Text("add_event_start")
             }
-            .onChange(of: eventVM.eventStartDate, changeEventMinimumDate)
-            DatePicker(selection: $eventVM.eventEndDate) {
+            .onChange(of: startDate, changeEventMinimumDate)
+            DatePicker(selection: $endDate) {
                 Text("add_event_end")
             }
         }
@@ -76,7 +88,7 @@ struct AddEventView: View {
     }
 
     private func changeEventMinimumDate() {
-        eventVM.eventEndDate = eventVM.eventStartDate.addingTimeInterval(60*60)
+        endDate = startDate.addingTimeInterval(60*60)
     }
 
     private func saveButton() -> some View {
@@ -98,7 +110,12 @@ struct AddEventView: View {
     private func saveEvent() {
         feedback.notificationOccurred(.success)
         Task {
-            await eventVM.saveEvent()
+            await manager.saveEvent(
+                name: eventName,
+                start: startDate,
+                end: endDate,
+                allDay: allDay
+            )
             dismiss()
         }
     }
@@ -106,5 +123,6 @@ struct AddEventView: View {
 }
 
 #Preview {
-    AddEventView(eventVM: .constant(.init(isDemo: true)))
+    AddEventView()
+        .environment(EventManager.demo)
 }

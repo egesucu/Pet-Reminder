@@ -9,46 +9,50 @@
 import SwiftUI
 import Shared
 import SFSafeSymbols
+import SwiftData
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
-
-    let eventManager = EventViewModel()
+    @Environment(EventManager.self) private var eventManager
+    
+    @Environment(NotificationManager.self) private var notificationManager
     
     init() {}
 
     var body: some View {
-
+        
         TabView(selection: $currentTab) {
-            PetListView()
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.pawprint)
-                }
-                .tag(PetReminderTabs.home)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            EventListView(eventVM: eventManager)
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.listBullet)
-                }
-                .tag(PetReminderTabs.events)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            FindVetView()
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.map)
-                }
-                .tag(PetReminderTabs.vet)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            SettingsView()
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.gearshape)
-                }
-                .tag(PetReminderTabs.settings)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
+            Tab(value: PetReminderTabs.home) {
+                PetListView()
+                    .environment(notificationManager)
+            } label: {
+                Image(systemSymbol: SFSymbol.pawprint)
+            }
+            Tab(value: PetReminderTabs.events) {
+                EventListView()
+                    .environment(eventManager)
+            } label: {
+                Image(systemSymbol: SFSymbol.listBullet)
+            }
+            Tab(value: PetReminderTabs.settings) {
+                SettingsView()
+                    .environment(notificationManager)
+            } label: {
+                Image(systemSymbol: SFSymbol.gearshape)
+            }
+            Tab(value: PetReminderTabs.vet, role: .search) {
+                FindVetView()
+            } label: {
+                Image(systemSymbol: SFSymbol.magnifyingglass)
+            }
         }
-        .tint(Color.label)
+        .tint(.accent)
     }
 }
 
 #Preview {
     HomeManagerView()
+        .environment(NotificationManager.shared)
+        .environment(EventManager.demo)
+        .modelContainer(DataController.previewContainer)
 }

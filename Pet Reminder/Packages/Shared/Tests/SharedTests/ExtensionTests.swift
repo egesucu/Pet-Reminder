@@ -7,6 +7,7 @@
 //
 
 import Testing
+import Shared
 @testable import Pet_Reminder
 import SwiftUI
 import EventKit
@@ -62,6 +63,7 @@ extension Tag {
 
 @Suite("String Extension Tests") struct StringExtensionTests {
 
+    @MainActor
     @Test func footerLabel() throws {
         let content = Strings.footerLabel("2023")
         #expect(content == "© Ege Sucu 2023")
@@ -71,7 +73,7 @@ extension Tag {
     @Test("", .tags(.need)) func formattingCurrentEventDateTime() throws {
         let current = true
         let allDay = true
-        let manager = EventViewModel(isDemo: true)
+        let manager = EventManager.demo
         let event = manager.events.first ?? .init(eventStore: manager.eventStore)
         let expectedContent = String.formatEventDateTime(
             current: current,

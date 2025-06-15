@@ -90,18 +90,18 @@ extension NotificationManager {
 
         if await askPermission() {
             let content = UNMutableNotificationContent()
-            content.title = String(localized: "notification_title")
+            content.title = String(localized: .notificationTitle)
             var dateComponents = DateComponents()
             let calendar = Calendar.current
 
             switch type {
             case .birthday:
-                content.body = String(localized: "notification_birthday_content \(petName)")
+                content.body = String(localized: .notificationBirthdayContent(petName))
                 dateComponents.day = calendar.component(.day, from: date)
                 dateComponents.month = calendar.component(.month, from: date)
                 dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
             default:
-                content.body = String(localized: "notification_content \(petName)")
+                content.body = String(localized: .notificationContent(petName))
                 dateComponents.hour = calendar.component(.hour, from: date)
                 dateComponents.minute = calendar.component(.minute, from: date)
             }

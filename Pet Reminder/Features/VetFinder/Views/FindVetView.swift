@@ -16,34 +16,37 @@ import SFSafeSymbols
 struct FindVetView: View {
 
     @State private var viewModel = VetViewModel()
+    @State private var searchText = String(localized: .defaultVetText)
     
-    init() {
-        viewModel.searchText = String(localized: "default_vet_text")
+    init() {}
+    
+    init(searchText: State<String>) {
+        self._searchText = searchText
     }
 
     var body: some View {
         NavigationStack {
             mapView
-                .navigationTitle(Text("find_vet_title"))
-                .navigationBarTitleTextColor(.accent)
         }
         .overlay {
             if viewModel.mapViewStatus == .locationNotAllowed {
                 ContentUnavailableView {
                     Label {
-                        Text("find_vet_error_title")
+                        Text(.findVetErrorTitle)
                     } icon: {
                         Image(systemSymbol: SFSymbol.mappinSlashCircle)
                     }
                 } description: {
-                    Text("location_alert_context")
+                    Text(.locationAlertContext)
                 } actions: {
                     SettingsButton()
                 }
             }
         }
         .task {
+            await viewModel.requestLocation()
             await viewModel.requestMap()
+            try? await viewModel.searchPins(text: searchText)
         }
         .sheet(item: $viewModel.selectedLocation, onDismiss: {
             withAnimation {
@@ -79,11 +82,11 @@ struct FindVetView: View {
             MapUserLocationButton()
             MapCompass()
         }
-        .searchable(text: $viewModel.searchText)
+        .searchable(text: $searchText)
         .onSubmit(of: .search) {
             Task {
                 do {
-                    try await viewModel.searchPins()
+                    try await viewModel.searchPins(text: searchText)
                 } catch let error {
                     Logger.vet.error("Error setting user location: \(error.localizedDescription)")
                 }
@@ -93,6 +96,16 @@ struct FindVetView: View {
     }
 }
 
-#Preview {
-    FindVetView()
+#Preview("English") {
+    @Previewable @State var searchText = "Vet"
+    
+    FindVetView(searchText: _searchText)
+        .environment(\.locale, .init(identifier: "en"))
+}
+
+#Preview("Turkish") {
+    @Previewable @State var searchText = "Veteriner"
+    
+    FindVetView(searchText: _searchText)
+        .environment(\.locale, .init(identifier: "tr"))
 }

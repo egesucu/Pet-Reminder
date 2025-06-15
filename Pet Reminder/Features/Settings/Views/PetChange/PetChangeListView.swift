@@ -49,14 +49,14 @@ struct PetChangeListView: View {
                         Button {
                             isEditing.toggle()
                         } label: {
-                            Text(isEditing ? "Done" : "Edit")
+                            Text(.done)
                         }
                     }
                     
                 }
                 
             }
-            .navigationTitle(Text("Choose Friend"))
+            .navigationTitle(Text(.chooseFriend))
             .navigationBarTitleTextColor(.accent)
         }
         .overlay {
@@ -202,6 +202,6 @@ struct PetChangeListView: View {
     NavigationStack {
         PetChangeListView()
             .modelContainer(DataController.previewContainer)
-            .environment(NotificationManager())
+            .environment(NotificationManager.shared)
     }
 }

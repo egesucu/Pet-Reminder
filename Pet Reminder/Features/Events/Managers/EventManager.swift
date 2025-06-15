@@ -1,5 +1,5 @@
 //
-//  EventViewModel.swift
+//  EventManager.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 20.12.2023.
@@ -14,7 +14,14 @@ extension EKEventStore: @unchecked @retroactive Sendable {}
 
 @MainActor
 @Observable
-class EventViewModel {
+class EventManager {
+    
+    var fakeCalendar: EKCalendar {
+        let calendar = EKCalendar(for: .event, eventStore: self.eventStore)
+        calendar.title = "Fake Calendar"
+        calendar.cgColor = CGColor.init(red: 0.52, green: 0.45, blue: 0.334, alpha: 0.545)
+        return calendar
+    }
     
     var exampleEvents: [EKEvent] {
         var events: [EKEvent] = []
@@ -23,6 +30,8 @@ class EventViewModel {
             event.title = Strings.demoEvent(index + 1)
             event.startDate = .now
             event.endDate = .now.addingTimeInterval(60)
+            event.isAllDay = false
+            event.calendar = fakeCalendar
             events.append(event)
         }
         return events
@@ -51,17 +60,18 @@ class EventViewModel {
     var calendars: [EventCalendar] = []
     var selectedCalendar: EventCalendar?
     var petCalendar: EventCalendar?
-    var eventName = ""
-    var eventStartDate: Date = Calendar.current.date(byAdding: .hour, value: 1, to: .now) ?? .now
-    var eventEndDate: Date = Calendar.current.date(byAdding: .hour, value: 2, to: .now) ?? .now
-    var isAllDay = false
     var status: Status = .notDetermined
     
     @ObservationIgnored let eventStore = EKEventStore()
+    
+    static let shared = EventManager()
+    static let demo = EventManager(isDemo: true)
         
     init(isDemo: Bool = false) {
         if isDemo {
             events = exampleEvents
+            status = .authorized
+            selectedCalendar = nil
         } else {
             Task { [weak self] in
                 guard let self else { return }
@@ -112,12 +122,17 @@ class EventViewModel {
     }
     
     @MainActor
-    func saveEvent() async {
+    func saveEvent(
+        name: String,
+        start: Date,
+        end: Date,
+        allDay: Bool
+    ) async {
         await saveEvent(
-            eventName: eventName,
-            eventStartDate: eventStartDate,
-            eventEndDate: eventEndDate,
-            isAllDay: isAllDay,
+            eventName: name,
+            eventStartDate: start,
+            eventEndDate: end,
+            isAllDay: allDay,
             selectedCalendar: petCalendar ?? .init("")
         )
     }
