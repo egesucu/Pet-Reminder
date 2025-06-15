@@ -43,7 +43,11 @@ struct FindVetView: View {
             }
         }
         .task {
+            await viewModel.requestLocation()
             await viewModel.requestMap()
+            if viewModel.searchedLocations.isEmpty {
+                try? await viewModel.searchPins()
+            }
         }
         .sheet(item: $viewModel.selectedLocation, onDismiss: {
             withAnimation {
@@ -93,6 +97,12 @@ struct FindVetView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     FindVetView()
+        .environment(\.locale, .init(identifier: "en"))
+}
+
+#Preview("Turkish") {
+    FindVetView()
+        .environment(\.locale, .init(identifier: "tr"))
 }
