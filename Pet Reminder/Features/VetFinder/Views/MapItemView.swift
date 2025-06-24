@@ -12,8 +12,6 @@ import Shared
 
 struct MapItemView: View {
 
-    
-
     var location: Pin?
     @State private var showOpenMapAlert = false
 
@@ -44,15 +42,11 @@ struct MapItemView: View {
                             }
                             .tint(.accent)
                         }
-                        if let subThoroughfare = location.subThoroughfare,
-                           let thoroughfare = location.thoroughfare,
-                           let locality = location.locality,
-                           let postalCode = location.postalCode {
+                        if let fullAdress = location.fullAdress {
                             HStack {
                                 Image(systemName: "building.fill")
                                     .foregroundStyle(.accent)
-                                Text("\(thoroughfare), \(subThoroughfare)")
-                                Text("\n\(postalCode), \(locality)")
+                                Text(fullAdress)
                                 Spacer()
                             }
 

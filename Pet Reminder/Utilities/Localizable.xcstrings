@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "\n%@, %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -34,6 +35,7 @@
       }
     },
     "%@, %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
