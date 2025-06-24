@@ -47,6 +47,11 @@ struct AddPetView: View {
             VStack(spacing: 10) {
                 topActionsView
                 stepsView
+                    .transaction { transaction in
+                        if saveSuccess {
+                            transaction.disablesAnimations = true
+                        }
+                    }
             }
         }
         .background(.ultraThinMaterial)
@@ -198,11 +203,6 @@ extension AddPetView {
     
     private func save() {
         /// If the pet can't be saved, we show the alert & navigate the user into the first step to change the name.
-        guard petCanBeSaved else {
-            saveFailed.toggle()
-            position = 0
-            return
-        }
         Task {
             pet.feedSelection = feedSelection
             modelContext.insert(pet)
@@ -213,6 +213,9 @@ extension AddPetView {
                 saveSuccess.toggle()
             } catch {
                 Logger.pets.error("Could not saved the pet: \(error.localizedDescription)")
+                withAnimation(.none) {
+                    position = 0
+                }
                 saveFailed.toggle()
             }
         }

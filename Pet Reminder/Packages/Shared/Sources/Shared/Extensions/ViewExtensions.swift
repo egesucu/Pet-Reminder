@@ -26,10 +26,9 @@ public extension View {
     private func handleGoogleMaps(location: Pin) {
         guard let deeplink = URLDefinitions.googleMapsDeeplinkURL else { return }
         if UIApplication.shared.canOpenURL(deeplink) {
-            let content = String(
-                format: URLDefinitions.googleMapsLocationString,
-                location.latitude,
-                location.longitude
+            let content = URLDefinitions.googleMapsLocationString(
+                latitude: location.latitude,
+                longitude: location.longitude
             )
             let url = URL(string: content)
             if let url {
@@ -49,10 +48,9 @@ public extension View {
     private func handleYandexMap(location: Pin) {
         guard let deeplink = URLDefinitions.yandexMapsDeeplinkURL else { return }
         if UIApplication.shared.canOpenURL(deeplink) {
-            let content = String(
-                format: URLDefinitions.yandexMapsLocationString,
-                location.latitude,
-                location.longitude
+            let content = URLDefinitions.yandexMapsLocationString(
+                latitude: location.latitude,
+                longitude: location.longitude
             )
             let url = URL(string: content)
             if let url {

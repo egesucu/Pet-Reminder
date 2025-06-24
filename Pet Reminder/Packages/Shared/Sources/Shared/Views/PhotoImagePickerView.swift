@@ -61,5 +61,9 @@ public struct PhotoImagePickerView: View {
 }
 
 #Preview {
-    PhotoImagePickerView(photoData: .constant(nil))
+    @Previewable @State var photoData: Data?
+    PhotoImagePickerView(photoData: $photoData)
+        .task {
+            photoData = UIImage(resource: .defaultOther).pngData()
+        }
 }

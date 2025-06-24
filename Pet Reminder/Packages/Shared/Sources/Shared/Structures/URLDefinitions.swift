@@ -11,8 +11,12 @@ import Foundation
 struct URLDefinitions {
     static let googleMapsAppStoreURL = URL(string: "https://apps.apple.com/us/app/google-maps/id585027354")
     static let googleMapsDeeplinkURL = URL(string: "comgooglemaps://")
-    static let googleMapsLocationString = "comgooglemaps://?saddr=&daddr=%f,%f"
+    static func googleMapsLocationString(latitude: Double, longitude: Double) -> String {
+        "comgooglemaps://?saddr=&daddr=\(latitude),\(longitude)"
+    }
     static let yandexMapsAppStoreURL = URL(string: "https://itunes.apple.com/ru/app/yandex.navigator/id474500851")
     static let yandexMapsDeeplinkURL = URL(string: "yandexnavi://")
-    static let yandexMapsLocationString = "yandexnavi://build_route_on_map?lat_to=%f&lon_to=%f"
+    static func yandexMapsLocationString(latitude: Double, longitude: Double) -> String {
+        "yandexnavi://build_route_on_map?lat_to=\(latitude)&lon_to=\(longitude)"
+    }
 }

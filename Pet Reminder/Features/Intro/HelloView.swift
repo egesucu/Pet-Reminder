@@ -9,7 +9,7 @@
 import SwiftUI
 import CloudKit
 import Shared
-
+import Playgrounds
 
 struct HelloView: View {
     @AppStorage(Strings.helloSeen) var helloSeen = false
@@ -81,4 +81,10 @@ struct HelloView: View {
 #Preview {
     HelloView()
         .environment(NotificationManager.shared)
+}
+
+
+#Playground {
+    let helloString = Strings.helloSeen
+    _ = UserDefaults.standard.bool(forKey: helloString)
 }

@@ -24,23 +24,24 @@ public struct MorningCheckboxView: View {
             Label {
                 Text("feed_selection_morning")
                     .foregroundStyle(Color.label)
-                    .font(.title2.bold())
+                    .lineLimit(nil)
             } icon: {
                 Image(systemSymbol: SFSymbol.sunMaxCircleFill)
                     .symbolRenderingMode(.hierarchical)
                     .symbolEffect(.bounce, value: morningOn)
                     .foregroundStyle(.yellow)
-                    .font(.largeTitle.bold())
             }
-            .font(.title.bold())
+            .font(.largeTitle.bold())
             .padding(.bottom)
             CheckBoxView(isChecked: $morningOn)
         }
         .clipShape(.rect(cornerRadius: 20))
-        .frame(width: 150, height: 150)
+        .frame(idealWidth: 150, idealHeight: 150)
     }
 }
 
 #Preview {
-    MorningCheckboxView(morningOn: .constant(true))
+    @Previewable @State var isOn = false
+    
+    MorningCheckboxView(morningOn: $isOn)
 }

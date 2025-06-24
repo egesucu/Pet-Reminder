@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "Shared",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v26)
     ],

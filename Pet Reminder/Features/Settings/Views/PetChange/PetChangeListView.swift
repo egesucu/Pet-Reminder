@@ -116,15 +116,9 @@ struct PetChangeListView: View {
                             }
                             
                         }
-                        .transition(
-                            .asymmetric(
-                                insertion: .identity,
-                                removal: .scale
-                                    .combined(
-                                        with: .opacity
-                                    )
-                            )
-                        )
+                        .opacity(isEditing ? 1 : 0)
+                        .scaleEffect(isEditing ? 1 : 0.95)
+                        .animation(.easeInOut(duration: 0.3), value: isEditing)
                     } else {
                         if let imageData = pet.image,
                            let image = UIImage(data: imageData) {

@@ -12,7 +12,7 @@ import SwiftData
 import UIKit.UIImage
 
 @Model
-public final class Pet: Sendable {
+public final class Pet {
     public var name: String = ""
     public var birthday: Date = Date.now
     public var choice: Int = 0

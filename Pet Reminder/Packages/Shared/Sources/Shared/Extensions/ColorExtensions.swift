@@ -10,11 +10,30 @@ import SwiftUI
 
 public extension Color {
     var isDarkColor: Bool {
-        var red, green, blue, alpha: CGFloat
-        (red, green, blue, alpha) = (0, 0, 0, 0)
-        UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        let lum = 0.2126 * red + 0.7152 * green + 0.0722 * blue
-        return  lum < 0.50
+        
+        let cgColor = self.resolve(in: .init()).cgColor
+        
+        guard let components = cgColor.components else {
+            return false
+        }
+        
+        let red, green, blue: CGFloat
+        
+        switch components.count {
+        case 2: // Grayscale + alpha
+            red = components[0]
+            green = components[0]
+            blue = components[0]
+        case 4: // RGBA
+            red = components[0]
+            green = components[1]
+            blue = components[2]
+        default:
+            return false
+        }
+        
+        let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+        return luminance < 0.5
     }
     
     /// Black on Light Mode, White on Dark Mode

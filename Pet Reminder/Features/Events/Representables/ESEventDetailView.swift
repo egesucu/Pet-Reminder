@@ -43,7 +43,7 @@ struct ESEventDetailView: UIViewControllerRepresentable {
 
         func eventViewController(_ controller: EKEventViewController, didCompleteWith action: EKEventViewAction) {
             Task {
-                await controller.dismiss(animated: true, completion: nil)
+                controller.dismiss(animated: true, completion: nil)
             }
         }
 

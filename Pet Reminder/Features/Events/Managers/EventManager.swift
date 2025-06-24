@@ -6,7 +6,7 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 import Observation
-@preconcurrency import EventKit
+import EventKit
 import OSLog
 import Shared
 

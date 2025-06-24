@@ -9,15 +9,14 @@
 import SwiftUI
 import Shared
 import SwiftData
+import Playgrounds
 
 struct FeedHistory: View {
 
     var feeds: [Feed]?
 
     @Environment(\.dismiss) var dismiss
-
     
-
     var body: some View {
 
         NavigationStack {
@@ -45,4 +44,9 @@ struct FeedHistory: View {
         FeedHistory(feeds: [.init()])
             .modelContainer(DataController.previewContainer)
     }
+}
+
+#Playground {
+    _ = Feed.previews
+    _ = Feed.preview
 }

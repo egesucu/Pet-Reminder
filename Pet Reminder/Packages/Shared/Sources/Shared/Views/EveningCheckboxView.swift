@@ -22,21 +22,21 @@ public struct EveningCheckboxView: View {
     public var body: some View {
         VStack {
             Label {
-                Text("feed_selection_evening")
+                Text(String(localized: "feed_selection_evening"))
                     .foregroundStyle(Color.label)
-                    .font(.title2.bold())
+                    .lineLimit(nil)
             } icon: {
                 Image(systemSymbol: SFSymbol.moonCircleFill)
                     .symbolRenderingMode(.hierarchical)
                     .foregroundStyle(.blue)
-                    .font(.largeTitle.bold())
                     .symbolEffect(.bounce, value: eveningOn)
             }
+            .font(.largeTitle.bold())
             .padding(.bottom)
             CheckBoxView(isChecked: $eveningOn)
         }
         .clipShape(.rect(cornerRadius: 20))
-        .frame(width: 150, height: 150)
+        .frame(idealWidth: 150, idealHeight: 150)
 
     }
 }
@@ -47,10 +47,12 @@ struct CheckBoxView: View {
 
     var body: some View {
         Image(
-            systemSymbol: isChecked ? SFSymbol.checkmarkSquare : SFSymbol.square
+            systemSymbol: isChecked
+            ? SFSymbol.checkmarkSquare
+            : SFSymbol.square
         )
             .contentTransition(.symbolEffect(.replace))
-            .font(.system(size: 50))
+            .font(.largeTitle)
             .onTapGesture(perform: toggleCheck)
     }
 
@@ -60,5 +62,8 @@ struct CheckBoxView: View {
 }
 
 #Preview {
-    EveningCheckboxView(eveningOn: .constant(true))
+    @Previewable @State var isOn = false
+    
+    EveningCheckboxView(eveningOn: $isOn)
+        .environment(\.locale, .init(identifier: "en"))
 }

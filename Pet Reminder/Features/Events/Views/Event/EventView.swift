@@ -8,7 +8,7 @@
 
 import SwiftUI
 import EventKit
-
+import Playgrounds
 
 struct EventView: View {
 
@@ -147,4 +147,9 @@ extension EventView {
         .environment(dummyVM)
         .frame(height: 100)
         .padding()
+}
+
+#Playground {
+    let manager = EventManager.demo
+    _ = manager.events
 }

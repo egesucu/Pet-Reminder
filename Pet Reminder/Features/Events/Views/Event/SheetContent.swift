@@ -14,7 +14,6 @@ import SFSafeSymbols
 struct SheetContent: View {
     @Environment(\.dismiss) var dismiss
     
-
     var event: EKEvent
 
     var body: some View {
