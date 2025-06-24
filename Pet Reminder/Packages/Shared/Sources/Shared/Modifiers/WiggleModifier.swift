@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 public struct WiggleModifier: ViewModifier {
     @State private var isWiggling = false
     

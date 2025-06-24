@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 struct PetShowImageView: View {
 
     var selectedImage: UIImage

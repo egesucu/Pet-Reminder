@@ -49,7 +49,6 @@ class PetChangeViewModel {
         outputImageData = nil
     }
 
-    @MainActor
     func getPetData(pet: Pet) async {
         self.birthday = pet.birthday
         self.nameText = pet.name

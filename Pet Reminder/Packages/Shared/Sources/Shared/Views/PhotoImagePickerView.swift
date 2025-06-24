@@ -44,12 +44,10 @@ public struct PhotoImagePickerView: View {
         }
     }
     
-    @MainActor
     private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
         processPhotoChange(newPhoto)
     }
     
-    @MainActor
     private func processPhotoChange(_ newPhoto: PhotosPickerItem) {
         Task {
             if let data = try? await newPhoto.loadTransferable(type: Data.self) {

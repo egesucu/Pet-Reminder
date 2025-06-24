@@ -100,7 +100,6 @@ extension EventView {
         self.showWarningForCalendar.toggle()
     }
 
-    @MainActor
     private func fillData() async {
         self.eventTitle = event.title
         let content = manager.fillEventData(event: event)

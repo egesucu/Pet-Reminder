@@ -101,7 +101,6 @@ struct PetListView: View {
         Task { await definePet() }
     }
     
-    @MainActor
     private func definePet() async {
         selectedPet = pets.first ?? .init()
         Logger

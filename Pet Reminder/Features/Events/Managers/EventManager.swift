@@ -80,7 +80,6 @@ class EventManager {
         }
     }
 
-    @MainActor
     private func updateAuthStatus() async {
         status = .value(status: EKEventStore.authorizationStatus(for: .event))
         Logger.events.info("Auth status is: \(self.status.rawValue)")
@@ -108,7 +107,6 @@ class EventManager {
         }
     }
     
-    @MainActor
     func fetchCalendars() async {
         if status == .authorized {
             self.calendars = eventStore.calendars(for: .event).map(\.title).map(EventCalendar.init)
@@ -116,12 +114,10 @@ class EventManager {
         }
     }
     
-    @MainActor
     func definePetCalendar() async {
         petCalendar = await findOrCreatePetCalendar()
     }
     
-    @MainActor
     func saveEvent(
         name: String,
         start: Date,
@@ -208,7 +204,6 @@ class EventManager {
         }
     }
     
-    @MainActor
     func reloadEvents() async {
         await updateAuthStatus()
         await fetchCalendars()

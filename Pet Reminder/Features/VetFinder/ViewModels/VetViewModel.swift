@@ -34,13 +34,11 @@ class VetViewModel {
         Logger.vet.info("Location Auth Status: \(self.mapViewStatus.rawValue)")
     }
     
-    @MainActor
     func requestLocation() async {
         locationManager.requestWhenInUseAuthorization()
         await updateAuthenticationStatus()
     }
     
-    @MainActor
     func updateAuthenticationStatus() async {
         self.mapViewStatus = switch locationManager.authorizationStatus {
         case .notDetermined:
@@ -56,7 +54,6 @@ class VetViewModel {
         }
     }
     
-    @MainActor
     func setUserLocation() async {
         locationManager.startUpdatingLocation()
         userLocation = .userLocation(
@@ -65,12 +62,10 @@ class VetViewModel {
         )
     }
     
-    @MainActor
     func clearPreviousSearches() async {
         searchedLocations.removeAll()
     }
     
-    @MainActor
     func searchPins(text: String) async throws {
         await clearPreviousSearches()
         
@@ -92,7 +87,6 @@ class VetViewModel {
         }
     }
     
-    @MainActor
     private func processSearchResponse(_ response: MKLocalSearch.Response) async {
         response.mapItems.forEach {
             self.searchedLocations.append(Pin(item: $0))

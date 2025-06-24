@@ -16,7 +16,6 @@ struct PetCell: View {
     
     var body: some View {
         HStack {
-            
             if let imageData = pet.image,
                let image = UIImage(data: imageData) {
                 Image(uiImage: image)

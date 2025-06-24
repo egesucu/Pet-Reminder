@@ -11,7 +11,6 @@ import SwiftData
 import OSLog
 import Shared
 
-
 struct FeedListView: View {
 
     @Binding var pet: Pet

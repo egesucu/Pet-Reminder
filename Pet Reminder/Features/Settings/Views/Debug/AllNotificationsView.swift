@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 struct AllNotificationsView: View {
 
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?

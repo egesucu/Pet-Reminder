@@ -11,7 +11,7 @@ import Foundation
 public enum PetError: LocalizedError {
     case name
 
-    nonisolated public var errorDescription: String? {
+    public nonisolated var errorDescription: String? {
         switch self {
         case .name:
             return String(localized: "name_error")

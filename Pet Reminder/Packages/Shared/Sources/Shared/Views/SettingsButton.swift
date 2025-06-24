@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 public struct SettingsButton: View {
     
     public init() {}

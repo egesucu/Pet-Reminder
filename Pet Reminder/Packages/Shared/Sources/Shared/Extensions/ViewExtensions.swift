@@ -9,7 +9,6 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-
 public extension View {
 
     func openURLWithMap(location: Pin, application: MapApplication) {

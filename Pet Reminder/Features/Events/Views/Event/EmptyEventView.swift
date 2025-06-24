@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 struct EmptyEventView: View {
 
     @Environment(EventManager.self) private var manager

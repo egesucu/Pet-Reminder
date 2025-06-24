@@ -10,7 +10,6 @@ import SwiftData
 import SwiftUI
 import Shared
 
-
 @MainActor
 class DataController {
     static let previewContainer: ModelContainer = {

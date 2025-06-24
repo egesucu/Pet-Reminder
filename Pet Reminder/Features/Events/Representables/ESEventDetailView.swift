@@ -9,7 +9,6 @@
 import SwiftUI
 import EventKitUI
 
-
 struct ESEventDetailView: UIViewControllerRepresentable {
 
     typealias UIViewControllerType = EKEventViewController

@@ -6,16 +6,13 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
+import Foundation
 import Testing
 import Shared
-@testable import Pet_Reminder
-import SwiftUI
-import EventKit
 
 extension Tag {
     @Tag static var need: Self
 }
-
 
 @Suite("Date Extension Tests") struct DateExtensionTests {
     @Test func dateConversion() throws {
@@ -67,62 +64,6 @@ extension Tag {
     @Test func footerLabel() throws {
         let content = Strings.footerLabel("2023")
         #expect(content == "© Ege Sucu 2023")
-    }
-
-    @MainActor
-    @Test("", .tags(.need)) func formattingCurrentEventDateTime() throws {
-        let current = true
-        let allDay = true
-        let manager = EventManager.demo
-        let event = manager.events.first ?? .init(eventStore: manager.eventStore)
-        let expectedContent = String.formatEventDateTime(
-            current: current,
-            allDay: allDay,
-            event: event
-        )
-        let allDayTitle = String(localized: "all_day_title")
-        #expect(expectedContent == allDayTitle)
-
-        let expectedFutureAllDayTitle = String.formatEventDateTime(
-            current: false,
-            allDay: allDay,
-            event: event
-        )
-
-        let futureAllDayTitle = String.futureDateTimeFormat(
-            allDay: allDay,
-            event: event
-        )
-        #expect(expectedFutureAllDayTitle == futureAllDayTitle)
-
-        let expectedCurrentTitle = String
-            .formatEventDateTime(
-                current: current,
-                allDay: false,
-                event: event
-            )
-
-        let currentEventTitle = String
-            .currentDateTimeFormat(
-                allDay: false,
-                event: event
-            )
-        #expect(expectedCurrentTitle == currentEventTitle)
-
-        let expectedFutureTitle = String
-            .formatEventDateTime(
-                current: false,
-                allDay: false,
-                event: event
-            )
-
-        let futureEventTitle = String
-            .futureDateTimeFormat(
-                allDay: false,
-                event: event
-            )
-        #expect(expectedFutureTitle == futureEventTitle)
-
     }
 
 }

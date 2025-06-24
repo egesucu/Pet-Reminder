@@ -32,12 +32,10 @@ class MockVetViewModel: @unchecked Sendable {
         self.mapViewStatus = .authorized
     }
 
-    @MainActor
     func clearPreviousSearches() async {
         searchedLocations.removeAll()
     }
 
-    @MainActor
     func searchPins() async {
         await clearPreviousSearches()
         

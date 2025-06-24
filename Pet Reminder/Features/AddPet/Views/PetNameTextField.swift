@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 import Shared
 
-
 struct PetNameTextField: View {
     @Query(sort: \Pet.name) var pets: [Pet]
 

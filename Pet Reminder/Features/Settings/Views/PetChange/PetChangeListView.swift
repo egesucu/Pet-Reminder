@@ -11,7 +11,6 @@ import SwiftData
 import OSLog
 import Shared
 
-
 struct PetChangeListView: View {
     
     @Environment(\.modelContext)

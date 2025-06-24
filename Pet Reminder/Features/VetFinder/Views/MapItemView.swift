@@ -9,7 +9,6 @@ import SwiftUI
 import MapKit
 import Shared
 
-
 struct MapItemView: View {
 
     var location: Pin?

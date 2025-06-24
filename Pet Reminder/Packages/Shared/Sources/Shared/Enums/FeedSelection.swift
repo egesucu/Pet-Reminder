@@ -13,7 +13,7 @@ public enum FeedSelection: @MainActor Codable, CaseIterable, CustomStringConvert
     case evening
     case both
     
-    nonisolated public var description: String {
+    public var description: String {
         return switch self {
         case .morning:
             "Morning"
@@ -26,7 +26,7 @@ public enum FeedSelection: @MainActor Codable, CaseIterable, CustomStringConvert
 }
 
 public extension FeedSelection {
-    nonisolated func fetchFeedSelection(from: String) -> Self {
+    func fetchFeedSelection(from: String) -> Self {
         return switch from {
         case FeedSelection.evening.description:
             .evening
