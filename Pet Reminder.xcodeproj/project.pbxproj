@@ -13,6 +13,8 @@
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
+		9D662A772E0CA6BF00757A91 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D662A762E0CA6BF00757A91 /* Shared */; };
+		9D662A792E0CA6C300757A91 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D662A782E0CA6C300757A91 /* Shared */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D662A792E0CA6C300757A91 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +73,7 @@
 				7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */,
 				728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */,
 				7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */,
+				9D662A772E0CA6BF00757A91 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +140,7 @@
 			);
 			name = "Pet ReminderTests";
 			packageProductDependencies = (
+				9D662A782E0CA6C300757A91 /* Shared */,
 			);
 			productName = "Pet ReminderTests";
 			productReference = 72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */;
@@ -161,6 +166,7 @@
 				7214E4F02DB2B6F600F1BAA2 /* Shared */,
 				7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */,
 				728C343D2DD8BE9C00C75BE8 /* MarkdownUI */,
+				9D662A762E0CA6BF00757A91 /* Shared */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -199,6 +205,7 @@
 			packageReferences = (
 				7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
 				728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				9D662A752E0CA6BF00757A91 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -361,7 +368,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Pet Reminder/Pet Reminder/Utilities/Info.plist";
+				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -441,7 +448,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Pet Reminder/Pet Reminder/Utilities/Info.plist";
+				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -593,6 +600,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		9D662A752E0CA6BF00757A91 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Shared";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -626,6 +640,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		9D662A762E0CA6BF00757A91 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shared;
+		};
+		9D662A782E0CA6C300757A91 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shared;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
