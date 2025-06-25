@@ -48,9 +48,7 @@ struct PetListView: View {
                 }
             }
             .toolbar(content: addButtonToolbar)
-            .onAppear {
-                Task { await definePet() }
-            }
+            .task(definePet)
             .navigationTitle(petListTitle)
             .navigationBarTitleTextColor(.accent)
         }
@@ -99,7 +97,6 @@ struct PetListView: View {
         Task { await definePet() }
     }
     
-    @MainActor
     private func definePet() async {
         selectedPet = pets.first ?? .init()
         Logger

@@ -17,6 +17,19 @@ struct PetReminderApp: App {
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @Environment(\.undoManager) var undoManager
     @State private var notificationManager = NotificationManager()
+    
+    let container: ModelContainer
+    
+    init() {
+        do {
+            container = try ModelContainer(
+                for: Pet.self,
+                migrationPlan: PetMigrationPlan.self
+            )
+        } catch {
+            fatalError("Failed to initialize model container.")
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -28,6 +41,6 @@ struct PetReminderApp: App {
                     .environment(notificationManager)
             }
         }
-        .modelContainer(for: Pet.self)
+        .modelContainer(container)
     }
 }

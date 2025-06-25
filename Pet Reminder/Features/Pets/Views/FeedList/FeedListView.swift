@@ -80,8 +80,6 @@ struct FeedListView: View {
                             .info("PR: Evening Tapped, pet: \(pet.name)")
                         viewModel.eveningOn.toggle()
                     }
-            case .none:
-                EmptyView()
             }
 
         }

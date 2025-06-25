@@ -53,7 +53,7 @@ class PetChangeViewModel {
     func getPetData(pet: Pet) async {
         self.birthday = pet.birthday
         self.nameText = pet.name
-        self.selection = pet.feedSelection ?? .both
+        self.selection = pet.feedSelection
 
         if let image = pet.image {
             self.outputImageData = image
