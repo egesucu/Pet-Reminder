@@ -297,6 +297,7 @@
       }
     },
     "All Notifications" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -541,6 +542,7 @@
       }
     },
     "debug_menu_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1758,6 +1760,7 @@
       }
     },
     "remove_userdefaults" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
