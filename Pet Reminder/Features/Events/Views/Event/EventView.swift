@@ -120,7 +120,7 @@ extension EventView {
         cal.cgColor = UIColor.systemBlue.cgColor
         return cal
     }()
-    
+
     let dummyVM = EventManager.demo
     return EventView(event: dummyEvent)
         .environment(dummyVM)
@@ -141,7 +141,7 @@ extension EventView {
         cal.cgColor = UIColor.systemBlue.cgColor
         return cal
     }()
-    
+
     let dummyVM = EventManager.demo
     return EventView(event: dummyEvent)
         .environment(dummyVM)
@@ -149,9 +149,11 @@ extension EventView {
         .padding()
 }
 
+// swiftlint: disable todo
 // Broken with Xcode 26 Beta 3
 // FIXME: Try this on later betas
-//#Playground {
+// #Playground {
 //    let manager = EventManager.demo
 //    _ = manager.events
-//}
+// }
+// swiftlint: enable todo

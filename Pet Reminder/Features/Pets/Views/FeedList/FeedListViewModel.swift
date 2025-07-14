@@ -15,10 +15,10 @@ import Shared
 @MainActor
 @Observable
 class FeedListViewModel {
-    
+
     var morningOn = false
     var eveningOn = false
-    
+
     init(morningOn: Bool = false, eveningOn: Bool = false) {
         self.morningOn = morningOn
         self.eveningOn = eveningOn

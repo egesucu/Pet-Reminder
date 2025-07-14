@@ -12,22 +12,22 @@ import EventKit
 import Shared
 
 struct EventFilterMenu: ToolbarContent {
-    
+
     @Environment(EventManager.self) private var manager
-    
+
     func iconNameDefinition(_ title: String) -> String {
         title.prefix(1).localizedLowercase
     }
-    
+
     var allCalendars: [EventCalendar] {
         let allOption = EventCalendar(String(localized: .all))
         return ([allOption] + manager.calendars)
     }
-    
+
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Menu {
-                ForEach(allCalendars, id:\.title) { calendar in
+                ForEach(allCalendars, id: \.title) { calendar in
                     Button {
                         if calendar.title == String(localized: .all) {
                             manager.selectedCalendar = nil
@@ -48,7 +48,7 @@ struct EventFilterMenu: ToolbarContent {
                                     },
                                     alignment: .center
                                 )
-                            
+
                             Text(calendar.title)
                                 .fontWeight(manager.selectedCalendar == calendar ? .semibold : .regular)
                         }
@@ -82,7 +82,7 @@ struct EventFilterMenu: ToolbarContent {
                 EventFilterMenu()
             }
         }
-        
+
     }
-   
+
 }

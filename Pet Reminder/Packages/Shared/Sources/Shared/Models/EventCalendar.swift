@@ -8,10 +8,10 @@
 import Foundation
 
 public struct EventCalendar: Identifiable, Equatable, Sendable, Hashable {
-    
+
     public let id: UUID = UUID()
     public let title: String
-    
+
     public init(_ title: String) {
         self.title = title
     }

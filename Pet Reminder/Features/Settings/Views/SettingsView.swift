@@ -48,8 +48,7 @@ struct SettingsView: View {
             .navigationBarTitleTextColor(.accent)
         }
     }
-    
-    
+
     /// Shows the current year info from latest year
     /// - Returns: A String value depending on the current year,
     /// like `© Ege Sucu 2025`

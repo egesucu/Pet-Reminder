@@ -12,7 +12,7 @@ import SFSafeSymbols
 public struct MorningCheckboxView: View {
 
     @Binding var morningOn: Bool
-    
+
     public init(
         morningOn: Binding<Bool>
     ) {
@@ -42,6 +42,6 @@ public struct MorningCheckboxView: View {
 
 #Preview {
     @Previewable @State var isOn = false
-    
+
     MorningCheckboxView(morningOn: $isOn)
 }

@@ -12,7 +12,7 @@ import SFSafeSymbols
 public struct EveningCheckboxView: View {
 
     @Binding var eveningOn: Bool
-    
+
     public init(
         eveningOn: Binding<Bool>
     ) {
@@ -63,7 +63,7 @@ struct CheckBoxView: View {
 
 #Preview {
     @Previewable @State var isOn = false
-    
+
     EveningCheckboxView(eveningOn: $isOn)
         .environment(\.locale, .init(identifier: "en"))
 }

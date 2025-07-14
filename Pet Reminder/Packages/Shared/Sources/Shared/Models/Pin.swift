@@ -11,7 +11,7 @@ import MapKit
 
 public struct Pin: Identifiable, Hashable {
     public var item: MKMapItem
-    
+
     public init(item: MKMapItem) {
         self.item = item
     }

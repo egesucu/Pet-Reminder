@@ -42,7 +42,11 @@ struct EventListView: View {
             await eventManager.reloadEvents()
         }
         .onChange(of: eventManager.selectedCalendar) { oldValue, newValue in
-            Logger.events.info("Selected calendar has changed from \(String(describing: oldValue)) to \(String(describing: newValue))")
+            let oldValue = "\(String(describing: oldValue))"
+            let newValue = "\(String(describing: newValue))"
+            Logger
+                .events
+                .info("Selected calendar has changed from \(oldValue)) to \(newValue)")
         }
     }
 

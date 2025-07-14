@@ -38,9 +38,9 @@ class MockVetViewModel: @unchecked Sendable {
 
     func searchPins() async {
         await clearPreviousSearches()
-        
+
         try? await Task.sleep(nanoseconds: 500_000_000)
-        
+
         self.searchedLocations = [
             Pin(
                 item: MKMapItem(

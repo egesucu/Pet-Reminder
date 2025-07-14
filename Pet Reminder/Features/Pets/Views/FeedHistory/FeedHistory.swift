@@ -15,7 +15,7 @@ struct FeedHistory: View {
     var feeds: [Feed]?
 
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
 
         NavigationStack {

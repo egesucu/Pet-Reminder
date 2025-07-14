@@ -12,7 +12,7 @@ import PhotosUI
 public struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     @Binding var photoData: Data?
-    
+
     public init(
         selectedPhoto: PhotosPickerItem? = nil,
         photoData: Binding<Data?> = .constant(nil)
@@ -33,7 +33,7 @@ public struct PhotoImagePickerView: View {
                     .font(.title3)
                 }
                 .tint(.accent)
-                .onChange(of: selectedPhoto) { _ , newPhoto in
+                .onChange(of: selectedPhoto) { _, newPhoto in
                     Task {
                         if let newPhoto = newPhoto {
                             await handlePhotoChange(newPhoto)
@@ -43,11 +43,11 @@ public struct PhotoImagePickerView: View {
                 .padding(.vertical)
         }
     }
-    
+
     private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
         processPhotoChange(newPhoto)
     }
-    
+
     private func processPhotoChange(_ newPhoto: PhotosPickerItem) {
         Task {
             if let data = try? await newPhoto.loadTransferable(type: Data.self) {

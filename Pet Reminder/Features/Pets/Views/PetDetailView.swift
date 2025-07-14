@@ -12,11 +12,11 @@ import Shared
 import SwiftData
 
 struct PetDetailView: View {
-    
+
     @Binding var pet: Pet
     @State private var showFeedHistory = false
     @State private var showVaccines = false
-    
+
     var body: some View {
         VStack {
             if let imageData = pet.image,
@@ -33,7 +33,7 @@ struct PetDetailView: View {
                     .padding(.top, 20)
                     .frame(width: 250, height: 250)
             }
-            
+
             Spacer()
             FeedListView(pet: $pet)
                 .padding(.bottom, 50)
@@ -67,7 +67,7 @@ struct PetDetailView: View {
                 .buttonStyle(.bordered)
                 .tint(.blue)
             }
-            
+
             Spacer()
         }
         .fullScreenCover(isPresented: $showFeedHistory) {

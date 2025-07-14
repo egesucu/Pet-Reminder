@@ -12,14 +12,14 @@ import OSLog
 import Shared
 
 struct PetChangeListView: View {
-    
+
     @Environment(\.modelContext)
     private var modelContext
     @Environment(NotificationManager.self)
     private var notificationManager: NotificationManager
-    
+
     @Query(sort: \Pet.name) var pets: [Pet]
-    
+
     @State private var showUndoButton = false
     @State private var buttonTimer: (any DispatchSourceTimer)?
     @State private var time = 0
@@ -27,7 +27,7 @@ struct PetChangeListView: View {
     @State private var selectedPet: Pet?
     @State private var showSelectedPet = false
     @State private var showEditButton = false
-    
+
     var body: some View {
         VStack {
             ScrollView {
@@ -51,9 +51,9 @@ struct PetChangeListView: View {
                             Text(.done)
                         }
                     }
-                    
+
                 }
-                
+
             }
             .navigationTitle(Text(.chooseFriend))
             .navigationBarTitleTextColor(.accent)
@@ -64,7 +64,7 @@ struct PetChangeListView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private var petList: some View {
         LazyVGrid(columns: [.init(), .init()]) {
@@ -99,7 +99,7 @@ struct PetChangeListView: View {
                                         )
                                         .wiggling()
                                 }
-                                
+
                                 Text(pet.name)
                             }
                             Button {
@@ -113,7 +113,7 @@ struct PetChangeListView: View {
                                     .foregroundStyle(Color.red)
                                     .offset(x: 15, y: 0)
                             }
-                            
+
                         }
                         .opacity(isEditing ? 1 : 0)
                         .scaleEffect(isEditing ? 1 : 0.95)
@@ -145,7 +145,7 @@ struct PetChangeListView: View {
                         }
                         Text(pet.name)
                     }
-                    
+
                 }
                 .onTapGesture {
                     selectedPet = pet
@@ -165,15 +165,15 @@ struct PetChangeListView: View {
             }
         }
     }
-    
+
     private func deselectPet() {
         selectedPet = nil
     }
-    
+
     private func setEditMode() {
         isEditing.toggle()
     }
-    
+
     func deletePet(pet: Pet) {
         notificationManager.removeAllNotifications(of: pet.name)
         if pet == selectedPet {
@@ -183,7 +183,7 @@ struct PetChangeListView: View {
             modelContext.delete(pet)
         }
     }
-    
+
     private func defineColor(pet: Pet) -> Color {
         selectedPet == pet
         ? Color.yellow

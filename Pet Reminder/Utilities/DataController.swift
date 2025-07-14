@@ -17,11 +17,11 @@ class DataController {
             let config = ModelConfiguration(isStoredInMemoryOnly: true)
             let container = try ModelContainer(for: Pet.self, configurations: config)
             let sampleData: [Pet] = Pet.previews
-            
+
             sampleData.forEach {
                 container.mainContext.insert($0)
             }
-            
+
             return container
         } catch {
             fatalError("Failed to create model container for previewing: \(error.localizedDescription)")

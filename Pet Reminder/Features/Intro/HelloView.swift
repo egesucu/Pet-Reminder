@@ -83,10 +83,11 @@ struct HelloView: View {
         .environment(NotificationManager.shared)
 }
 
-
+// swiftlint: disable todo
 // Broken with Xcode 26 Beta 3
 // FIXME: Try this on later betas
-//#Playground {
+// #Playground {
 //    let helloString = Strings.helloSeen
 //    _ = UserDefaults.standard.bool(forKey: helloString)
-//}
+// }
+// swiftlint: enable todo

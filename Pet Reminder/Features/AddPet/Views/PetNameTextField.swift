@@ -19,7 +19,7 @@ struct PetNameTextField: View {
     @Binding var petExists: Bool
 
     @FocusState var isFocused
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("start_name_label")
@@ -27,7 +27,7 @@ struct PetNameTextField: View {
                 .font(.title2)
                 .bold()
                 .padding(.bottom, 20)
-            
+
             TextField(
                 Strings.doggo,
                 text: $name
@@ -54,7 +54,7 @@ struct PetNameTextField: View {
                     .animation(.easeInOut, value: isFocused)
                     .clipShape(.rect(cornerRadius: 10))
             )
-            
+
             if petExists {
                 Text(.petExists)
                     .foregroundStyle(.red)
@@ -63,21 +63,21 @@ struct PetNameTextField: View {
             }
         }
     }
-    
+
     private func check(name: String) {
         if name.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
             nameIsValid = true
         } else {
             nameIsValid = false
         }
-        
+
         self.petExists = pets.map(\.name).contains(name)
     }
 }
 
 #Preview("Filled Case") {
     @Previewable @FocusState var isFocused: Bool
-    
+
     PetNameTextField(
         name: .constant(Strings.viski),
         nameIsValid: .constant(false),

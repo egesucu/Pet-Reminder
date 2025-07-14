@@ -11,9 +11,9 @@ import Shared
 import SwiftData
 
 struct PetCell: View {
-    
+
     var pet: Pet
-    
+
     var body: some View {
         HStack {
             if let imageData = pet.image,
@@ -28,7 +28,7 @@ struct PetCell: View {
                     .padding(.trailing, 10)
                     .frame(width: 150, height: 150)
             }
-            
+
             VStack {
                 Text(pet.name)
                     .foregroundStyle(Color.label)

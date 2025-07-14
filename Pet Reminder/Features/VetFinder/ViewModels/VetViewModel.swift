@@ -22,23 +22,23 @@ class VetViewModel {
     var locationManager = CLLocationManager()
     var selectedLocation: Pin?
     var mapViewStatus: MapViewStatus = .none
-    
+
     init() {}
-    
+
     @MainActor deinit {
         locationManager.stopUpdatingLocation()
     }
-    
+
     func requestMap() async {
         await updateAuthenticationStatus()
         Logger.vet.info("Location Auth Status: \(self.mapViewStatus.rawValue)")
     }
-    
+
     func requestLocation() async {
         locationManager.requestWhenInUseAuthorization()
         await updateAuthenticationStatus()
     }
-    
+
     func updateAuthenticationStatus() async {
         self.mapViewStatus = switch locationManager.authorizationStatus {
         case .notDetermined:
@@ -48,12 +48,12 @@ class VetViewModel {
         default:
                 .locationNotAllowed
         }
-        
+
         if mapViewStatus == .authorized {
             await setUserLocation()
         }
     }
-    
+
     func setUserLocation() async {
         locationManager.startUpdatingLocation()
         userLocation = .userLocation(
@@ -61,22 +61,22 @@ class VetViewModel {
             fallback: .automatic
         )
     }
-    
+
     func clearPreviousSearches() async {
         searchedLocations.removeAll()
     }
-    
+
     func searchPins(text: String) async throws {
         await clearPreviousSearches()
-        
+
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = text
         if let region = userLocation.region {
             searchRequest.region = region
         }
-        
+
         let localSearch = MKLocalSearch(request: searchRequest)
-        
+
         Task {
             do {
                 let response = try await localSearch.start()
@@ -86,7 +86,7 @@ class VetViewModel {
             }
         }
     }
-    
+
     private func processSearchResponse(_ response: MKLocalSearch.Response) async {
         response.mapItems.forEach {
             self.searchedLocations.append(Pin(item: $0))

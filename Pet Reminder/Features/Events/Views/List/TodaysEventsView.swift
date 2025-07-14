@@ -14,7 +14,7 @@ import Shared
 struct TodaysEventsView: View {
 
     @Environment(EventManager.self) private var manager
-    
+
     @State private var todaysEvents: [EKEvent] = []
 
     var body: some View {
@@ -42,7 +42,7 @@ struct TodaysEventsView: View {
             recalculateEvents()
         }
     }
-    
+
     private func recalculateEvents() {
         Logger.events.info("Recalculating today's events")
         withAnimation {

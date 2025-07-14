@@ -12,7 +12,7 @@ import OSLog
 
 struct LicenseView: View {
     @State private var context: AttributedString = .init()
-    
+
     var body: some View {
         ScrollView {
             VStack {
@@ -23,7 +23,7 @@ struct LicenseView: View {
         .navigationTitle(Text(.licenseTitle))
         .navigationBarTitleTextColor(.accent)
     }
-    
+
     func readFile() async {
         if let fileURL = SharedResources.bundle.url(forResource: "LICENSE", withExtension: "md") {
             do {

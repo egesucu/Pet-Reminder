@@ -15,8 +15,8 @@ struct PreviousFeedsSection: View {
 
     var body: some View {
         Section {
-            if ((feeds?
-                .filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty) != nil) {
+            if (feeds?
+                .filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty) != nil {
                 Text("no_feed_content")
             } else {
                 ForEach(
@@ -64,7 +64,7 @@ struct PreviousFeedsSection: View {
 
 #Preview {
     @Previewable var feeds: [Feed] = Feed.previews
-    
+
     PreviousFeedsSection(feeds: feeds)
         .modelContainer(DataController.previewContainer)
 }

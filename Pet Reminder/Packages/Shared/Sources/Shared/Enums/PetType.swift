@@ -42,7 +42,7 @@ extension PetType {
             return other
         }
     }
-    
+
     public var image: Image {
         return switch self {
         case .cat:
@@ -62,7 +62,7 @@ extension PetType {
                 .resizable()
         }
     }
-    
+
     public var uiImage: UIImage {
         return switch self {
         case .cat:

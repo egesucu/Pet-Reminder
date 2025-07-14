@@ -30,7 +30,7 @@ struct DonateView: View {
                         .padding(.bottom)
                 }
                 .padding(.vertical)
-                
+
                 LazyVStack {
                     ForEach(consumables) { product in
                         ProductView(product, prefersPromotionalIcon: true)

@@ -15,7 +15,7 @@ struct AddEventView: View {
 
     @Environment(EventManager.self) private var manager
     @Environment(\.dismiss) var dismiss
-    
+
     @State private var eventName = ""
     @State private var allDay = false
     @State private var startDate: Date = Calendar.current.date(
@@ -31,7 +31,7 @@ struct AddEventView: View {
     @State private var filteredCalendars: [EKCalendar] = []
 
     let feedback = UINotificationFeedbackGenerator()
-    
+
     var body: some View {
         NavigationStack {
             Form {

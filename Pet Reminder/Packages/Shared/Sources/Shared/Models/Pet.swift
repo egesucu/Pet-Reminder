@@ -20,10 +20,10 @@ public final class Pet {
     public var image: Data?
     public var feedSelection: FeedSelection?
     private var petTypeName: PetType.RawValue = PetType.other.rawValue
-    
+
     @Relationship(inverse: \Feed.pet) public var feeds: [Feed]?
     @Relationship(inverse: \Vaccine.pet) public var vaccines: [Vaccine]?
-    
+
     public init(
         birthday: Date = Date(),
         name: String = "",
@@ -52,7 +52,7 @@ public extension Pet {
         get { .init(rawValue: petTypeName) ?? .other }
         set { petTypeName = newValue.rawValue }
     }
-    
+
     static var preview: Pet {
         let firstPet = previews.first ?? .init(
             birthday: .now,

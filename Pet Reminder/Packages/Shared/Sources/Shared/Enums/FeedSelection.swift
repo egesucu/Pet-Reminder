@@ -12,7 +12,7 @@ public enum FeedSelection: @MainActor Codable, CaseIterable, CustomStringConvert
     case morning
     case evening
     case both
-    
+
     public var description: String {
         return switch self {
         case .morning:

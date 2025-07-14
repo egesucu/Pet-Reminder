@@ -12,7 +12,6 @@ import Shared
 struct PetBirthdayView: View {
 
     @Binding var birthday: Date
-    
 
     var body: some View {
         VStack(alignment: .leading) {

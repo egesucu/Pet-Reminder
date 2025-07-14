@@ -18,12 +18,12 @@ extension UNUserNotificationCenter: @unchecked @retroactive Sendable {}
 @MainActor
 @Observable
 class NotificationManager {
-    
+
     static let shared = NotificationManager()
 
     var notifications: [UNNotificationRequest] = .empty
     let notificationCenter = UNUserNotificationCenter.current()
-    
+
     init(
         notifications: [UNNotificationRequest] = .empty
     ) {

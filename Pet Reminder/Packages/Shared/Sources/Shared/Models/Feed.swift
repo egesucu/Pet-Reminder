@@ -64,13 +64,15 @@ public extension Feed {
     }
 }
 
+// swiftlint: disable todo
 // Broken with Xcode 26 Beta 3
 // FIXME: Try this on later betas
-//#Playground {
+// #Playground {
 //    await MainActor.run {
 //        var feeds: [Feed] = []
 //        feeds = Feed.previews
 //        var feed: Feed? = nil
 //        feed = Feed.preview
 //    }
-//}
+// }
+// swiftlint: enable todo

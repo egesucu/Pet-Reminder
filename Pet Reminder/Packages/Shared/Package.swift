@@ -11,10 +11,11 @@ let package = Package(
         .library(
             name: "Shared",
             targets: ["Shared"],
-        ),
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "6.2.0")
+        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "6.2.0"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.59.1")
     ],
     targets: [
         .target(
@@ -28,11 +29,12 @@ let package = Package(
             swiftSettings: [
                 .defaultIsolation(MainActor.self),
                 .strictMemorySafety()
-            ]
+            ],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .testTarget(
             name: "SharedTests",
             dependencies: ["Shared"]
-        ),
+        )
     ]
 )

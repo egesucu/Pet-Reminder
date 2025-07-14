@@ -28,7 +28,7 @@ class PetChangeViewModel {
     var shouldChangeFeedSelection = false
 
     var notificationManager = NotificationManager()
-    
+
     init () {}
 
     func loadImage(pet: Pet) {
@@ -79,14 +79,34 @@ class PetChangeViewModel {
         switch selection {
         case .both:
             notificationManager.removeAllDailyNotifications(of: pet.name)
-            await notificationManager.createNotification(of: pet.name, with: NotificationType.morning, date: morningDate)
-            await notificationManager.createNotification(of: pet.name, with: NotificationType.evening, date: eveningDate)
+            await notificationManager.createNotification(
+                of: pet.name,
+                with: NotificationType.morning,
+                date: morningDate
+            )
+            await notificationManager.createNotification(
+                of: pet.name,
+                with: NotificationType.evening,
+                date: eveningDate
+            )
         case .morning:
-            notificationManager.removeAllDailyNotifications(of: pet.name)
-            await notificationManager.createNotification(of: pet.name, with: NotificationType.morning, date: morningDate)
+            notificationManager.removeAllDailyNotifications(
+                of: pet.name
+            )
+            await notificationManager.createNotification(
+                of: pet.name,
+                with: NotificationType.morning,
+                date: morningDate
+            )
         case .evening:
-            notificationManager.removeAllDailyNotifications(of: pet.name)
-            await notificationManager.createNotification(of: pet.name, with: NotificationType.evening, date: eveningDate)
+            notificationManager.removeAllDailyNotifications(
+                of: pet.name
+            )
+            await notificationManager.createNotification(
+                of: pet.name,
+                with: NotificationType.evening,
+                date: eveningDate
+            )
         }
     }
 

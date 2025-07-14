@@ -17,9 +17,9 @@ struct FindVetView: View {
 
     @State private var viewModel = VetViewModel()
     @State private var searchText = String(localized: .defaultVetText)
-    
+
     init() {}
-    
+
     init(searchText: State<String>) {
         self._searchText = searchText
     }
@@ -98,14 +98,14 @@ struct FindVetView: View {
 
 #Preview("English") {
     @Previewable @State var searchText = "Vet"
-    
+
     FindVetView(searchText: _searchText)
         .environment(\.locale, .init(identifier: "en"))
 }
 
 #Preview("Turkish") {
     @Previewable @State var searchText = "Veteriner"
-    
+
     FindVetView(searchText: _searchText)
         .environment(\.locale, .init(identifier: "tr"))
 }

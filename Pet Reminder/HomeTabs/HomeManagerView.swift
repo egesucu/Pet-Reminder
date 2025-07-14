@@ -14,13 +14,13 @@ import SwiftData
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
     @Environment(EventManager.self) private var eventManager
-    
+
     @Environment(NotificationManager.self) private var notificationManager
-    
+
     init() {}
 
     var body: some View {
-        
+
         TabView(selection: $currentTab) {
             Tab(value: PetReminderTabs.home) {
                 PetListView()

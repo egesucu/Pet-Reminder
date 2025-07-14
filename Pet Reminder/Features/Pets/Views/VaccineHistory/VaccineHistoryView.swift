@@ -39,7 +39,7 @@ struct VaccineHistoryView: View {
                                     Spacer()
                                     Text(vaccine.name)
                                 }
-                                
+
                                 HStack {
                                     Label {
                                         Text("vaccine_date_label")
@@ -51,7 +51,7 @@ struct VaccineHistoryView: View {
                                             .symbolEffect(.bounce, options: .repeat(3))
                                             .foregroundStyle(.blue, .white)
                                     }
-                                    
+
                                     Spacer()
                                     Text((vaccine.date).formatted())
                                 }

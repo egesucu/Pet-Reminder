@@ -15,29 +15,29 @@ import SFSafeSymbols
 extension ReferenceWritableKeyPath: @retroactive @unchecked Sendable { }
 
 struct PetListView: View {
-    
+
     @Environment(\.modelContext) private var modelContext
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
-    
+
     @State private var selectedPet: Pet = .init()
     @State private var addPet = false
-    
+
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager
-    
+
     var body: some View {
         ZStack {
             petsOverview
             if addPet {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
-                
+
                 addPetView()
                     .padding()
             }
         }
         .animation(.easeInOut, value: addPet)
     }
-    
+
     private var petsOverview: some View {
         NavigationStack {
             ScrollView {
@@ -84,10 +84,10 @@ struct PetListView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private func addPetView() -> some View {
-        AddPetView() {
+        AddPetView {
             withAnimation { toggleAddPet() }
         }
         .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -98,18 +98,18 @@ struct PetListView: View {
         .zIndex(1)
         .ignoresSafeArea()
     }
-    
+
     private func updatePets() {
         Task { await definePet() }
     }
-    
+
     private func definePet() async {
         selectedPet = pets.first ?? .init()
         Logger
             .pets
             .debug("Pet Amount: \(pets.count)")
     }
-    
+
     private var petList: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 5) {
@@ -138,24 +138,24 @@ struct PetListView: View {
                         .padding(.leading)
                 }
             }
-            
+
         }
     }
-    
+
     private func defineColor(pet: Pet) -> Color {
         selectedPet == pet
         ? Color.yellow
         : Color.clear
     }
-    
+
     private var petListTitle: Text {
         Text("pet_name_title")
     }
-    
+
     private func toggleAddPet() {
         addPet.toggle()
     }
-    
+
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarTrailing) {

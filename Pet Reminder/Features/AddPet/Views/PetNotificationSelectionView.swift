@@ -93,7 +93,7 @@ struct PetNotificationSelectionView: View {
     @Previewable @State var feedSelection: FeedSelection = .both
     @Previewable @State var morningFeed: Date = .eightAM
     @Previewable @State var eveningFeed: Date = .eightPM
-    
+
     PetNotificationSelectionView(
         feedSelection: $feedSelection,
         morningFeed: $morningFeed,

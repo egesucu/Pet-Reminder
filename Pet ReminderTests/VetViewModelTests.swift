@@ -16,9 +16,9 @@ import Shared
 
     @Test @MainActor func testPinSearch() async throws {
         let viewModel = VetViewModel()
-        
+
         try await viewModel.searchPins(text: "Vet")
-        
+
         Task {
             let halfSecond: Duration = .milliseconds(500)
             try await Task.sleep(for: halfSecond)
@@ -26,7 +26,6 @@ import Shared
         }
     }
 
-    
     @Test @MainActor func testClearSearchedLocations() async throws {
         let viewModel = VetViewModel()
         do {

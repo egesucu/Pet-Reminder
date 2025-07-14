@@ -27,14 +27,14 @@ extension Tag {
         )
         #expect(expectedDate == testDate)
     }
-    
+
     @Test func printTime() throws {
         let eightPM = Date.eightPM
         let expectedPrint = "20:00"
         let printedTime = eightPM.printTime(locale: .init(identifier: "tr"))
         #expect(expectedPrint == printedTime)
     }
-    
+
     @Test func printDate() throws {
         let dateString = "24.10.2023"
         let expectedDate = Calendar
@@ -43,15 +43,15 @@ extension Tag {
                 for: "24 Eki 2023".convertStringToDate(locale: .init(identifier: "tr"))
             )
             .printDate(locale: .init(identifier: "tr")).replacingOccurrences(of: "/", with: ".")
-        
+
         #expect(expectedDate == dateString)
     }
-    
+
     @Test func randomDate() throws {
         let randomDate = Calendar.current.date(from: .generateRandomDateComponent()) ?? .now
         #expect(randomDate != .now)
     }
-    
+
     @Test func lateDate() throws {
         let threeDaysLater = Calendar.current.date(byAdding: .day, value: 3, to: .now) ?? .now
         #expect(Calendar.current.isDateLater(date: threeDaysLater))
@@ -73,11 +73,11 @@ struct ArrayTests {
     @Test func testIsNotEmpty() throws {
         let intArray = [1, 2, 3]
         #expect(intArray.isNotEmpty == !intArray.isEmpty)
-        
+
         let word = "Test"
         #expect(word.isNotEmpty == !word.isEmpty)
     }
-    
+
     @Test func testArrayDuplicateRemoval() throws {
         let array = [1, 2, 4, 6, 2, 4]
         let uniqueArray = array
@@ -85,18 +85,18 @@ struct ArrayTests {
             .sorted()
         #expect(uniqueArray == [1, 2, 4, 6])
     }
-    
+
     @Test func removeDuplicates() throws {
         let array = [1, 2, 4, 6, 2, 4]
         let uniqueArray = array.removeDuplicates()
         #expect(uniqueArray == [1, 2, 4, 6])
     }
-    
+
     @Test func emptyArray() throws {
         let emptyArray = [Int]()
         #expect(emptyArray == .empty)
     }
-    
+
     @Test func testSafeIndexAccess() throws {
         let demo = [3, 4, 5, 6, 7, 8, 9, 10]
         let thirdIndex = demo[safe: 3]
@@ -104,14 +104,14 @@ struct ArrayTests {
         #expect(thirdIndex == 6)
         #expect(demo[safe: 20] == nil)
     }
-    
+
     @Test func testFilterWithKeyPath() throws {
-        
+
         struct TestModel {
             let isActive: Bool
             let name: String
         }
-        
+
         // Create test data
         let items = [
             TestModel(isActive: true, name: "Item 1"),
@@ -119,10 +119,10 @@ struct ArrayTests {
             TestModel(isActive: true, name: "Item 3"),
             TestModel(isActive: false, name: "Item 4")
         ]
-        
+
         // Use the keyPath filter method
         let filteredItems = items.filter(\.isActive)
-        
+
         // Verify the result
         #expect(filteredItems.count == 2)
         #expect(filteredItems[0].name == "Item 1")

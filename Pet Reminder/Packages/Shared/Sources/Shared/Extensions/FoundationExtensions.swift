@@ -21,8 +21,10 @@ public extension AttributedString {
             ),
             baseURL: nil
         )
-        
-        for (intentBlock, intentRange) in output.runs[AttributeScopes.FoundationAttributes.PresentationIntentAttribute.self].reversed() {
+
+        for (intentBlock, intentRange) in output.runs[
+            AttributeScopes.FoundationAttributes.PresentationIntentAttribute.self
+        ].reversed() {
             guard let intentBlock = intentBlock else { continue }
             for intent in intentBlock.components {
                 switch intent.kind {
@@ -41,7 +43,7 @@ public extension AttributedString {
                     break
                 }
             }
-            
+
             if intentRange.lowerBound != output.startIndex {
                 output.characters.insert(contentsOf: "\n\n", at: intentRange.lowerBound)
             }

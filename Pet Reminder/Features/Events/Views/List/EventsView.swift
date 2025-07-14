@@ -14,7 +14,7 @@ import Shared
 struct EventsView: View {
     @Environment(EventManager.self) private var manager
     @State private var dates = [Date]()
-    
+
     var body: some View {
         if manager.status == .authorized {
             List {
