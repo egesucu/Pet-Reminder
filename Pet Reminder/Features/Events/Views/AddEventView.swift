@@ -60,7 +60,9 @@ struct AddEventView: View {
                 Text("add_event_title")
             )
             .navigationBarTitleTextColor(.accent)
-            .toolbar(content: addEventToolbar)
+            .toolbar(content: {
+                addEventToolbar()
+            })
         }
     }
 
@@ -83,8 +85,12 @@ struct AddEventView: View {
 
     @ToolbarContentBuilder
     func addEventToolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading, content: cancelButton)
-        ToolbarItem(placement: .topBarTrailing, content: saveButton)
+        ToolbarItem(placement: .topBarLeading) {
+            cancelButton()
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            saveButton()
+        }
     }
 
     private func changeEventMinimumDate() {

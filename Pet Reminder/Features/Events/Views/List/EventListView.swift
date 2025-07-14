@@ -35,7 +35,9 @@ struct EventListView: View {
             AddEventView()
                 .environment(eventManager)
         }
-        .overlay(content: eventViewOverlay)
+        .overlay {
+            eventViewOverlay()
+        }
         .task {
             await eventManager.reloadEvents()
         }

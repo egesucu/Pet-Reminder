@@ -9,7 +9,6 @@
 import SwiftUI
 import Shared
 import SwiftData
-import Playgrounds
 
 struct FeedHistory: View {
 
@@ -44,9 +43,4 @@ struct FeedHistory: View {
         FeedHistory(feeds: [.init()])
             .modelContainer(DataController.previewContainer)
     }
-}
-
-#Playground {
-    _ = Feed.previews
-    _ = Feed.preview
 }

@@ -84,7 +84,9 @@ struct HelloView: View {
 }
 
 
-#Playground {
-    let helloString = Strings.helloSeen
-    _ = UserDefaults.standard.bool(forKey: helloString)
-}
+// Broken with Xcode 26 Beta 3
+// FIXME: Try this on later betas
+//#Playground {
+//    let helloString = Strings.helloSeen
+//    _ = UserDefaults.standard.bool(forKey: helloString)
+//}

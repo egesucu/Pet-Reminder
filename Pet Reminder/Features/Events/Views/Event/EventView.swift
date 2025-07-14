@@ -29,8 +29,9 @@ struct EventView: View {
             }
         }
         .sheet(isPresented: $showWarningForCalendar,
-               onDismiss: onSheetDismiss,
-               content: showEventDetail)
+               onDismiss: onSheetDismiss) {
+            showEventDetail()
+        }
     }
 
     @ViewBuilder
@@ -148,7 +149,9 @@ extension EventView {
         .padding()
 }
 
-#Playground {
-    let manager = EventManager.demo
-    _ = manager.events
-}
+// Broken with Xcode 26 Beta 3
+// FIXME: Try this on later betas
+//#Playground {
+//    let manager = EventManager.demo
+//    _ = manager.events
+//}

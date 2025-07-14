@@ -9,6 +9,7 @@
 
 import Foundation
 import SwiftData
+import Playgrounds
 
 @Model
 public class Feed {
@@ -62,3 +63,14 @@ public extension Feed {
         return feeds
     }
 }
+
+// Broken with Xcode 26 Beta 3
+// FIXME: Try this on later betas
+//#Playground {
+//    await MainActor.run {
+//        var feeds: [Feed] = []
+//        feeds = Feed.previews
+//        var feed: Feed? = nil
+//        feed = Feed.preview
+//    }
+//}

@@ -49,7 +49,9 @@ struct PetListView: View {
                     }
                 }
             }
-            .toolbar(content: addButtonToolbar)
+            .toolbar {
+                addButtonToolbar()
+            }
             .onAppear {
                 Task { await definePet() }
             }
