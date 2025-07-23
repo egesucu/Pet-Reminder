@@ -178,35 +178,35 @@ struct AddPetView: View {
 
 // MARK: - Actions
 extension AddPetView {
-    private func createNotifications() async {
+    private func createNotifications() async throws {
 
         switch feedSelection {
         case .both:
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.morning,
                 date: morningFeed
             )
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.evening,
                 date: eveningFeed
             )
         case .morning:
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.morning,
                 date: morningFeed
             )
         case .evening:
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.evening,
                 date: eveningFeed
             )
         }
 
-        await notificationManager.createNotification(
+        try await notificationManager.createNotification(
             of: pet.name,
             with: NotificationType.birthday,
             date: pet.birthday
@@ -224,9 +224,9 @@ extension AddPetView {
         Task {
             pet.feedSelection = feedSelection
             modelContext.insert(pet)
-            await createNotifications()
-
             do {
+                try await createNotifications()
+
                 try modelContext.save()
                 saveSuccess.toggle()
             } catch {

@@ -20,12 +20,12 @@ struct HelloView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Spacer()
-            Text("welcome_title")
+            Text(.welcomeTitle)
                 .foregroundStyle(.white)
                 .font(.title)
                 .bold()
             logoView()
-            Text("welcome_context")
+            Text(.welcomeContext)
                 .padding(.vertical)
                 .foregroundStyle(.white)
                 .font(.body)
@@ -36,10 +36,10 @@ struct HelloView: View {
                     Text(.welcomeGoButton)
                         .font(.title)
                         .bold()
-                        .foregroundStyle(.accent)
+                        .padding()
+                        .tint(.black)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.white)
+                .glassEffect()
                 .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
                         .environment(notificationManager)
@@ -51,7 +51,7 @@ struct HelloView: View {
         .opacity(shouldAnimate ? 1.0 : 0.0)
         .onAppear(perform: animateView)
         .background(
-            Color.accent,
+            LinearGradient(colors: [.accent, .green], startPoint: .topLeading, endPoint: .bottomTrailing),
             ignoresSafeAreaEdges: .all
         )
     }

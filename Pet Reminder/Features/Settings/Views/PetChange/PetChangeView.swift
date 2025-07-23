@@ -76,7 +76,7 @@ struct PetChangeView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             Task {
-                                await viewModel.savePet(pet: pet)
+                                try await viewModel.savePet(pet: pet)
                             }
                             dismiss()
                         } label: {

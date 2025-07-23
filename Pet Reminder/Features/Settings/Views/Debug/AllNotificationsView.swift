@@ -21,7 +21,7 @@ struct AllNotificationsView: View {
             }
         }
         .task {
-            await notificationManager?.getNotifications()
+            await notificationManager?.refreshNotifications()
         }
     }
 

@@ -27,7 +27,7 @@ class PetChangeViewModel {
     var defaultPhotoOn = false
     var shouldChangeFeedSelection = false
 
-    var notificationManager = NotificationManager()
+    var notificationManager = NotificationManager.shared
 
     init () {}
 
@@ -62,47 +62,47 @@ class PetChangeViewModel {
         }
     }
 
-    func changeName(pet: Pet) async {
+    func changeName(pet: Pet) async throws {
         pet.name = nameText
-        await changeNotification(pet: pet, for: selection)
+        try await changeNotification(pet: pet, for: selection)
     }
 
-    func changeBirthday(pet: Pet) async {
+    func changeBirthday(pet: Pet) async throws {
         pet.birthday = birthday
-        notificationManager.removeNotification(of: pet.name, with: NotificationType.birthday)
-        await notificationManager.createNotification(of: pet.name, with: NotificationType.birthday, date: birthday)
+        try await notificationManager.removeNotification(of: pet.name, with: NotificationType.birthday)
+        try await notificationManager.createNotification(of: pet.name, with: NotificationType.birthday, date: birthday)
     }
 
-    func changeNotification(pet: Pet, for selection: FeedSelection) async {
+    func changeNotification(pet: Pet, for selection: FeedSelection) async throws {
         pet.feedSelection = selection
 
         switch selection {
         case .both:
-            notificationManager.removeAllDailyNotifications(of: pet.name)
-            await notificationManager.createNotification(
+            try await notificationManager.removeAllDailyNotifications(of: pet.name)
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.morning,
                 date: morningDate
             )
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.evening,
                 date: eveningDate
             )
         case .morning:
-            notificationManager.removeAllDailyNotifications(
+            try await notificationManager.removeAllDailyNotifications(
                 of: pet.name
             )
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.morning,
                 date: morningDate
             )
         case .evening:
-            notificationManager.removeAllDailyNotifications(
+            try await notificationManager.removeAllDailyNotifications(
                 of: pet.name
             )
-            await notificationManager.createNotification(
+            try await notificationManager.createNotification(
                 of: pet.name,
                 with: NotificationType.evening,
                 date: eveningDate
@@ -124,15 +124,15 @@ class PetChangeViewModel {
 
     }
 
-    func savePet(pet: Pet) async {
-        await changeName(pet: pet)
-        await changeBirthday(pet: pet)
+    func savePet(pet: Pet) async throws {
+        try await changeName(pet: pet)
+        try await changeBirthday(pet: pet)
         if defaultPhotoOn {
             await deleteImageData(pet: pet)
         } else {
             pet.image = outputImageData
         }
-        await changeNotification(pet: pet, for: selection)
+        try await changeNotification(pet: pet, for: selection)
 
         morningDate = .eightAM
         eveningDate = .eightPM

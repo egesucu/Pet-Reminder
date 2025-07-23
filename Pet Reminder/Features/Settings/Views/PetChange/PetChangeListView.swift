@@ -103,9 +103,15 @@ struct PetChangeListView: View {
                                 Text(pet.name)
                             }
                             Button {
-                                withAnimation {
-                                    deletePet(pet: pet)
-                                    isEditing = false
+                                Task {
+                                    do {
+                                        try await deletePet(pet: pet)
+                                        withAnimation {
+                                            isEditing = false
+                                        }
+                                    } catch {
+                                        Logger.pets.error("Failed to delete pet: \(error.localizedDescription)")
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "xmark.circle.fill")
@@ -174,8 +180,8 @@ struct PetChangeListView: View {
         isEditing.toggle()
     }
 
-    func deletePet(pet: Pet) {
-        notificationManager.removeAllNotifications(of: pet.name)
+    func deletePet(pet: Pet) async throws {
+        try await notificationManager.removeAllNotifications(of: pet.name)
         if pet == selectedPet {
             deselectPet()
         }

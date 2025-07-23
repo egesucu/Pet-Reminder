@@ -25,51 +25,14 @@ struct NotificationView: View {
             List {
                 ForEach(pets, id: \.name) { pet in
                     if let notificationManager {
-                        Section {
-                            if notificationManager.filterNotifications(of: pet).isEmpty {
-                                Button {
-                                    Task {
-                                        await notificationManager
-                                            .createNotifications(
-                                                for: pet,
-                                                morningTime: .eightAM,
-                                                eveningTime: .eightPM
-                                            )
-                                        await fetchNotificiations()
-                                    }
-                                } label: {
-                                    Text("Create default notifications for your pet.")
-                                }
-                            } else {
-                                ForEach(
-                                    notificationManager.filterNotifications(of: pet),
-                                    id: \.identifier
-                                ) { notification in
-                                    notificationView(notification: notification)
-                                }.onDelete { indexSet in
-                                    remove(pet: pet, at: indexSet)
-                                }
-                            }
-
-                        } header: {
-                            Text(pet.name)
-                        } footer: {
-                            let count = notificationAmount(for: pet.name)
-                            Text("notification \(count)")
-
-                        }
-                        .onChange(of: notificationManager.notifications) {
-                            Task {
-                                await fetchNotificiations()
-                            }
-                        }
+                        notificationSection(for: pet, notificationManager: notificationManager)
                     }
                 }
 
             }
             .listStyle(.insetGrouped)
             .refreshable {
-                await notificationManager?.getNotifications()
+                await notificationManager?.refreshNotifications()
             }
         }
         .overlay {
@@ -83,9 +46,10 @@ struct NotificationView: View {
             if pets.isNotEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        notificationManager?.notificationCenter.removeAllPendingNotificationRequests()
-                        notificationManager?.notifications.removeAll()
                         Task {
+                            try? await notificationManager?.removeNotificationsIdentifiers(
+                                with: notificationManager?.notifications.map { $0.identifier
+                                } ?? [])
                             await fetchNotificiations()
                         }
                     } label: {
@@ -96,8 +60,18 @@ struct NotificationView: View {
             }
         }
         .task {
-            await notificationManager?.getNotifications()
+            await notificationManager?.refreshNotifications()
         }
+    }
+
+    private func createNotifications(for pet: Pet) async {
+        await notificationManager?
+            .createNotifications(
+                for: pet,
+                morningTime: .eightAM,
+                eveningTime: .eightPM
+            )
+        await fetchNotificiations()
     }
 
     func notificationAmount(for name: String?) -> Int {
@@ -108,7 +82,7 @@ struct NotificationView: View {
     }
 
     func fetchNotificiations() async {
-        await notificationManager?.getNotifications()
+        await notificationManager?.refreshNotifications()
     }
 
     private func notificationView(notification: UNNotificationRequest) -> some View {
@@ -145,12 +119,49 @@ struct NotificationView: View {
         }
     }
 
-    func remove(pet: Pet, at offset: IndexSet) {
+    func remove(pet: Pet, at offset: IndexSet) async {
         if let notificationManager {
             for index in offset {
                 let notification = notificationManager.filterNotifications(of: pet)[index]
-                notificationManager
+                try? await notificationManager
                     .removeNotificationsIdentifiers(with: [notification.identifier])
+            }
+        }
+    }
+
+    private func notificationSection(for pet: Pet, notificationManager: NotificationManager) -> some View {
+        Section {
+            if notificationManager.filterNotifications(of: pet).isEmpty {
+                Button {
+                    Task {
+                        await createNotifications(for: pet)
+                    }
+                } label: {
+                    Text("Create default notifications for your pet.")
+                }
+            } else {
+                ForEach(
+                    notificationManager.filterNotifications(of: pet),
+                    id: \.identifier
+                ) { notification in
+                    notificationView(notification: notification)
+                }
+                .onDelete { indexSet in
+                    Task {
+                        await remove(pet: pet, at: indexSet)
+                    }
+                }
+            }
+
+        } header: {
+            Text(pet.name)
+        } footer: {
+            let count = notificationAmount(for: pet.name)
+            Text("notification \(count)")
+        }
+        .onChange(of: notificationManager.notifications) {
+            Task {
+                await fetchNotificiations()
             }
         }
     }

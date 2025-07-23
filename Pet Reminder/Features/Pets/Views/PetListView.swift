@@ -116,9 +116,7 @@ struct PetListView: View {
                 ForEach(pets, id: \.name) { pet in
                     Text(pet.name)
                         .foregroundStyle(
-                            selectedPet == pet
-                            ? .white
-                            : .black
+                            .black
                         )
                         .bold(selectedPet == pet)
                         .padding(8)
@@ -161,7 +159,7 @@ struct PetListView: View {
         ToolbarItemGroup(placement: .topBarTrailing) {
             if pets.count > 0 {
                 Button(action: toggleAddPet) {
-                    Image(systemSymbol: SFSymbol.plusCircleFill)
+                    Image(systemSymbol: SFSymbol.plusCircle)
                         .accessibilityLabel(Text("add_animal_accessible_label"))
                         .foregroundStyle(.accent)
                         .font(.title)

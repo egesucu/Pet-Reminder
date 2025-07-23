@@ -103,7 +103,7 @@ extension EventView {
 
     private func fillData() async {
         self.eventTitle = event.title
-        let content = manager.fillEventData(event: event)
+        let content = manager.formattedEventDateString(for: event)
         self.dateString = content
     }
 }

@@ -42,7 +42,7 @@ struct VaccineHistoryView: View {
 
                                 HStack {
                                     Label {
-                                        Text("vaccine_date_label")
+                                        Text(.vaccineDateLabel)
                                             .bold()
                                     } icon: {
                                         Image(systemSymbol: .hourglassBottomhalfFilled)
@@ -63,13 +63,13 @@ struct VaccineHistoryView: View {
                     }
                     .listStyle(.automatic)
                 } else {
-                    Text("no_vaccine_title")
+                    Text(.noVaccineTitle)
                 }
             }
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
                     Button(action: dismiss.callAsFunction) {
-                        Image(systemSymbol: SFSymbol.xmarkCircleFill)
+                        Image(systemSymbol: SFSymbol.xmarkCircle)
                             .tint(.red)
                             .font(.title2)
                     }.disabled(viewModel.shouldAddVaccine)
@@ -78,14 +78,14 @@ struct VaccineHistoryView: View {
                     Button {
                         viewModel.shouldAddVaccine.toggle()
                     } label: {
-                        Image(systemSymbol: SFSymbol.plusCircleFill)
+                        Image(systemSymbol: SFSymbol.plusCircle)
                             .tint(.blue)
                             .font(.title2)
                     }
                     .disabled(viewModel.shouldAddVaccine)
                 }
             }
-            .navigationTitle(Text("vaccine_history_title"))
+            .navigationTitle(Text(.vaccineHistoryTitle))
             .navigationBarTitleTextColor(.blue)
             .popupView(
                 isPresented: $viewModel.shouldAddVaccine,
