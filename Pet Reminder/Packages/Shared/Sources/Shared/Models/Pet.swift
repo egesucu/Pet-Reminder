@@ -53,7 +53,7 @@ public extension Pet {
         set { petTypeName = newValue.rawValue }
     }
 
-    static var preview: Pet {
+    @MainActor static var preview: Pet {
         let firstPet = previews.first ?? .init(
             birthday: .now,
             name: "",
@@ -65,7 +65,7 @@ public extension Pet {
         return firstPet
     }
 
-    static var previews: [Pet] {
+    @MainActor static var previews: [Pet] {
         var pets: [Pet] = []
         Strings.demoPets.forEach { petName in
             let randomType = PetType.allCases.randomElement() ?? .dog

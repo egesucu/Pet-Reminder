@@ -35,7 +35,7 @@ struct PetNotificationSelectionView: View {
     var morningView: some View {
         VStack(alignment: .center, spacing: 8) {
             Label {
-                Text("feed_selection_morning")
+                Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
             } icon: {
                 Image(systemSymbol: .sunMaxFill)

@@ -37,7 +37,7 @@ public class Feed {
 }
 
 public extension Feed {
-    static var preview: Feed {
+    @MainActor static var preview: Feed {
         Feed(
             eveningFed: true,
             eveningFedStamp: .eightPM,
@@ -47,7 +47,7 @@ public extension Feed {
         )
     }
 
-    static var previews: [Feed] {
+    @MainActor static var previews: [Feed] {
         var feeds: [Feed] = []
         [0...4].forEach { _ in
             let date = Date.randomDate()
@@ -64,15 +64,9 @@ public extension Feed {
     }
 }
 
-// swiftlint: disable todo
-// Broken with Xcode 26 Beta 3
-// FIXME: Try this on later betas
-// #Playground {
-//    await MainActor.run {
-//        var feeds: [Feed] = []
-//        feeds = Feed.previews
-//        var feed: Feed? = nil
-//        feed = Feed.preview
-//    }
-// }
-// swiftlint: enable todo
+ #Playground {
+    await MainActor.run {
+        _ = Feed.previews
+        _ = Feed.preview
+    }
+ }

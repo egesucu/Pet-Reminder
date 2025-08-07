@@ -27,8 +27,7 @@ let package = Package(
                 .process("Resources/LICENSE.md")
             ],
             swiftSettings: [
-                .defaultIsolation(MainActor.self),
-                .strictMemorySafety()
+                .defaultIsolation(MainActor.self)
             ],
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),

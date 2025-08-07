@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Playgrounds
 
 public struct EventCalendar: Identifiable, Equatable, Sendable, Hashable {
 
@@ -21,4 +22,9 @@ extension EventCalendar: CustomStringConvertible {
     public var description: String {
         title
     }
+}
+
+#Playground {
+    let calendar = EventCalendar("Hello")
+    _ = calendar.description
 }
