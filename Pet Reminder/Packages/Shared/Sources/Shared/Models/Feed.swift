@@ -12,7 +12,8 @@ import SwiftData
 import Playgrounds
 
 @Model
-public class Feed {
+public class Feed: Identifiable {
+    public var id: UUID = UUID()
     public var eveningFed: Bool = false
     public var eveningFedStamp: Date?
     public var feedDate: Date?
@@ -21,12 +22,14 @@ public class Feed {
     public var pet: Pet?
 
     public init(
+        id: UUID = UUID(),
         eveningFed: Bool = false,
         eveningFedStamp: Date? = nil,
         feedDate: Date? = nil,
         morningFed: Bool = false,
         morningFedStamp: Date? = nil
     ) {
+        self.id = id
         self.eveningFed = eveningFed
         self.eveningFedStamp = eveningFedStamp
         self.feedDate = feedDate

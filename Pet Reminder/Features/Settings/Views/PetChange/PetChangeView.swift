@@ -154,3 +154,9 @@ struct PetChangeView: View {
     PetChangeView(pet: .constant(.preview))
         .modelContainer(DataController.previewContainer)
 }
+
+extension View {
+    func wiggling() -> some View {
+        modifier(WiggleModifier())
+    }
+}
