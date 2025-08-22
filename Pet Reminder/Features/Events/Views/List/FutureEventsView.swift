@@ -28,7 +28,7 @@ struct FutureEventsView: View {
     var body: some View {
         Section {
             if filteredEvents.isEmpty {
-                Text("event_no_title")
+                Text(.eventNoTitle)
             } else {
                 ForEach(filteredEvents, id: \.self) { event in
                     EventView(event: event)
@@ -38,7 +38,7 @@ struct FutureEventsView: View {
                 }
             }
         } header: {
-            Text("upcoming_title")
+            Text(.upcomingTitle)
         }
     }
 }

@@ -75,9 +75,9 @@ struct EventFilterMenu: ToolbarContent {
     NavigationStack {
         ScrollView {
             VStack {
-                Text("Hello")
+                Text(.hello)
             }
-            .navigationTitle(Text("Demo"))
+            .navigationTitle(Text(.hello))
             .toolbar {
                 EventFilterMenu()
             }

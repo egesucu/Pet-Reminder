@@ -46,7 +46,7 @@ public extension String {
     static func formatEventDateTime(current: Bool, allDay: Bool, event: EKEvent) -> Self {
         if allDay {
             return current ? String(
-                localized: "all_day_title"
+                localized: .allDayTitle
             ) : String.futureDateTimeFormat(
                 allDay: allDay,
                 event: event
@@ -71,7 +71,7 @@ public extension String {
 
     static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return "\(event.startDate.printDate()) \(String(localized: "all_day_title"))"
+            return "\(event.startDate.printDate()) \(String(localized: .allDayTitle))"
         } else {
             return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
         }
@@ -79,7 +79,7 @@ public extension String {
 
     static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
         if allDay {
-            return String(localized: "all_day_title")
+            return String(localized: .allDayTitle)
         } else {
             return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
         }

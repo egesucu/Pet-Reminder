@@ -9,6 +9,7 @@
 import SwiftUI
 import SwiftData
 import Shared
+import SFSafeSymbols
 
 struct CurrentFeedSection: View {
 
@@ -26,13 +27,13 @@ struct CurrentFeedSection: View {
 
     var body: some View {
         if filteredFeeds.isEmpty {
-            Text("no_feed_today_content")
+            Text(.noFeedTodayContent)
         } else {
             ForEach(filteredFeeds, id: \.id) { feed in
                 if let morning = feed.morningFedStamp {
                     HStack {
                         Row(
-                            imageName: "sun.max.fill",
+                            imageName: SFSymbol.sunMaxFill.rawValue,
                             content: morning.formatted(
                                 date: .abbreviated,
                                 time: .shortened
@@ -46,7 +47,7 @@ struct CurrentFeedSection: View {
                     HStack {
                         Spacer()
                         Row(
-                            imageName: "moon.circle.fill",
+                            imageName: SFSymbol.moonCircleFill.rawValue,
                             content: evening.formatted(
                                 date: .abbreviated,
                                 time: .shortened

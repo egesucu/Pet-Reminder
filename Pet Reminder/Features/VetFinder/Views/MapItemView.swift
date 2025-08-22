@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import Shared
+import SFSafeSymbols
 
 struct MapItemView: View {
 
@@ -25,7 +26,7 @@ struct MapItemView: View {
                     VStack(alignment: .leading) {
                         if let phoneNumber = location.phoneNumber {
                             HStack {
-                                Image(systemName: "phone.fill")
+                                Image(systemSymbol: .phoneFill)
                                     .foregroundStyle(.accent)
                                 Text(phoneNumber)
                                     .foregroundStyle(.accent)
@@ -43,7 +44,7 @@ struct MapItemView: View {
                         }
                         if let fullAdress = location.fullAdress {
                             HStack {
-                                Image(systemName: "building.fill")
+                                Image(systemSymbol: .buildingFill)
                                     .foregroundStyle(.accent)
                                 Text(fullAdress)
                                 Spacer()
@@ -70,7 +71,7 @@ struct MapItemView: View {
                     }
                 }
             }
-            Button("Cancel", action: {})
+            Button(.cancel, action: {})
         }
     }
 

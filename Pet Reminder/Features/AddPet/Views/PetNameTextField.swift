@@ -22,7 +22,7 @@ struct PetNameTextField: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("start_name_label")
+            Text(.startNameLabel)
                 .foregroundStyle(Color.black)
                 .font(.title2)
                 .bold()

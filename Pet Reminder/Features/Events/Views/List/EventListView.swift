@@ -69,7 +69,7 @@ struct EventListView: View {
                 Label {
                     Text("event_error_title")
                 } icon: {
-                    Image(systemName: "calendar.badge.exclamationmark")
+                    Image(systemSymbol: .calendarBadgeExclamationmark)
                 }
             }, description: {
                 Text(.eventWrongAllowence)
@@ -84,11 +84,11 @@ struct EventListView: View {
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: toggleAddEvent) {
                 Label {
-                    Text("add_event_accessible_title")
+                    Text(.addEventAccessibleTitle)
                         .font(.title2)
                         .foregroundStyle(.accent)
                 } icon: {
-                    Image(systemSymbol: SFSymbol.calendarBadgePlus)
+                    Image(systemSymbol: .calendarBadgePlus)
                 }
             }
         }

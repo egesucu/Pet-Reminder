@@ -149,11 +149,7 @@ extension EventView {
         .padding()
 }
 
-// swiftlint: disable todo
-// Broken with Xcode 26 Beta 3
-// FIXME: Try this on later betas
-// #Playground {
-//    let manager = EventManager.demo
-//    _ = manager.events
-// }
-// swiftlint: enable todo
+ #Playground {
+    let manager = EventManager.demo
+    _ = manager.events
+ }

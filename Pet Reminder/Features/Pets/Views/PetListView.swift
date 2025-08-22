@@ -60,12 +60,19 @@ struct PetListView: View {
         }
         .overlay {
             if pets.isEmpty {
-                ContentUnavailableView(label: {
-                    Label("pet_no_pet", systemImage: "pawprint.circle")
-                }, actions: {
-                    Button("pet_add_pet", action: {
+                ContentUnavailableView(
+                    label: {
+                        Label(
+                            "pet_no_pet",
+                            systemSymbol: .pawprintCircle
+                        )
+                    },
+                    actions: {
+                    Button {
                         addPet.toggle()
-                    })
+                    } label: {
+                        Text("pet_add_pet")
+                    }
                     .buttonStyle(.bordered)
                     .tint(.accent)
                 })
@@ -147,7 +154,7 @@ struct PetListView: View {
     }
 
     private var petListTitle: Text {
-        Text("pet_name_title")
+        Text(.petNameTitle)
     }
 
     private func toggleAddPet() {
@@ -156,15 +163,16 @@ struct PetListView: View {
 
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
-        ToolbarItemGroup(placement: .topBarTrailing) {
+        ToolbarItem(placement: .confirmationAction) {
             if pets.count > 0 {
                 Button(action: toggleAddPet) {
-                    Image(systemSymbol: SFSymbol.plusCircle)
-                        .accessibilityLabel(Text("add_animal_accessible_label"))
-                        .foregroundStyle(.accent)
-                        .font(.title)
+                    Image(systemSymbol: SFSymbol.plus)
+                        .accessibilityLabel(Text(.addAnimalAccessibleLabel))
+                        .foregroundColor(.white)
                 }
                 .opacity(addPet ? 0 : 1)
+                .glassEffect(.regular.tint(.accent).interactive())
+                .padding()
             }
         }
     }

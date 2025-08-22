@@ -20,7 +20,7 @@ struct TodaysEventsView: View {
     var body: some View {
         Section {
             if todaysEvents.isEmpty {
-                Text("event_no_title")
+                Text(.eventNoTitle)
             } else {
                 ForEach(todaysEvents, id: \.self) { event in
                     EventView(event: event)
@@ -30,7 +30,7 @@ struct TodaysEventsView: View {
                 }
             }
         } header: {
-            Text("today_title")
+            Text(.todayTitle)
         }
         .onChange(of: manager.events) {
             recalculateEvents()

@@ -8,13 +8,13 @@
 
 import Foundation
 
-public enum PetError: LocalizedError {
+@MainActor public enum PetError: @preconcurrency LocalizedError {
     case name
 
-    public nonisolated var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .name:
-            return String(localized: "name_error")
+            return String(localized: .nameError)
         }
     }
 }

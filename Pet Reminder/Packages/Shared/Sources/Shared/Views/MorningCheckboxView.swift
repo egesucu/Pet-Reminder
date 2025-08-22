@@ -22,11 +22,11 @@ public struct MorningCheckboxView: View {
     public var body: some View {
         VStack {
             Label {
-                Text("feed_selection_morning")
+                Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
                     .lineLimit(nil)
             } icon: {
-                Image(systemSymbol: SFSymbol.sunMaxCircleFill)
+                Image(systemSymbol: .sunMaxCircleFill)
                     .symbolRenderingMode(.hierarchical)
                     .symbolEffect(.bounce, value: morningOn)
                     .foregroundStyle(.yellow)

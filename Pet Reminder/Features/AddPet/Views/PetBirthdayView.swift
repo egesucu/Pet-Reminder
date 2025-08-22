@@ -15,7 +15,7 @@ struct PetBirthdayView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("birthday_title")
+            Text(.birthdayTitle)
                 .font(.title2)
                 .foregroundStyle(Color.label)
                 .bold()
@@ -23,7 +23,7 @@ struct PetBirthdayView: View {
             DatePicker(
                 selection: $birthday,
                 displayedComponents: .date) {
-                    Text("birthday_title")
+                    Text(.birthdayTitle)
                         .foregroundStyle(Color.label)
                 }
                 .labelsHidden()

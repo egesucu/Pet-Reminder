@@ -19,7 +19,7 @@ struct PetCell: View {
             if let imageData = pet.image,
                let image = UIImage(data: imageData) {
                 Image(uiImage: image)
-                    .petImageStyle(useShadows: true)
+                    .petImageStyle()
                     .padding(.trailing, 10)
                     .frame(width: 150, height: 150)
             } else {

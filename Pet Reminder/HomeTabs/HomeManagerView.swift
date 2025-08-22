@@ -26,24 +26,24 @@ struct HomeManagerView: View {
                 PetListView()
                     .environment(notificationManager)
             } label: {
-                Image(systemSymbol: SFSymbol.pawprint)
+                Image(systemSymbol: .pawprint)
             }
             Tab(value: PetReminderTabs.events) {
                 EventListView()
                     .environment(eventManager)
             } label: {
-                Image(systemSymbol: SFSymbol.listBullet)
+                Image(systemSymbol: .listBullet)
             }
             Tab(value: PetReminderTabs.settings) {
                 SettingsView()
                     .environment(notificationManager)
             } label: {
-                Image(systemSymbol: SFSymbol.gearshape)
+                Image(systemSymbol: .gearshape)
             }
             Tab(value: PetReminderTabs.vet, role: .search) {
                 FindVetView()
             } label: {
-                Image(systemSymbol: SFSymbol.magnifyingglass)
+                Image(systemSymbol: .magnifyingglass)
             }
         }
         .tint(.accent)

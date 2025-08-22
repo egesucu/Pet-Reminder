@@ -22,7 +22,7 @@ struct SheetContent: View {
             Button(action: {
                 dismiss()
             }, label: {
-                Image(systemSymbol: SFSymbol.xmarkCircleFill)
+                Image(systemSymbol: .xmarkCircleFill)
                     .font(.title)
                     .tint(.accent)
             })

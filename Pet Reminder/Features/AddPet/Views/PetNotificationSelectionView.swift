@@ -59,7 +59,7 @@ struct PetNotificationSelectionView: View {
     var eveningView: some View {
         VStack(spacing: 8) {
             Label {
-                Text("feed_selection_evening")
+                Text(.feedSelectionEvening)
                     .foregroundStyle(Color.label)
             } icon: {
                 Image(systemSymbol: .moonFill)

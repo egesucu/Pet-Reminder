@@ -40,7 +40,7 @@ struct PetChangeView: View {
                             }
                         }
                         Toggle(isOn: $viewModel.defaultPhotoOn) {
-                            Text("default_photo_label")
+                            Text(.defaultPhotoLabel)
                         }
                         .tint(Color.accentColor)
                         .onChange(of: viewModel.defaultPhotoOn, {
@@ -49,7 +49,7 @@ struct PetChangeView: View {
                             }
                         })
                         .padding()
-                        Text("photo_upload_detail_title")
+                        Text(.photoUploadDetailTitle)
                             .font(.footnote)
                             .foregroundStyle(Color(.systemGray2))
                             .multilineTextAlignment(.center)
@@ -57,10 +57,10 @@ struct PetChangeView: View {
                         Form {
                             Section {
                                 TextField(text: $viewModel.nameText) {
-                                    Text("tap_to_change_text")
+                                    Text(.tapToChangeText)
                                 }
                                 DatePicker(selection: $viewModel.birthday, displayedComponents: .date) {
-                                    Text("birthday_title")
+                                    Text(.birthdayTitle)
                                 }
                             }
                             Section {
@@ -80,7 +80,7 @@ struct PetChangeView: View {
                             }
                             dismiss()
                         } label: {
-                            Text("Save")
+                            Text(.save)
                                 .bold()
                         }
                         .tint(.accent)
@@ -89,7 +89,7 @@ struct PetChangeView: View {
                         Button {
                             dismiss()
                         } label: {
-                            Text("Cancel")
+                            Text(.cancel)
                                 .bold()
                         }
                         .tint(Color(uiColor: .systemRed))
@@ -104,14 +104,14 @@ struct PetChangeView: View {
     var pickerView: some View {
         VStack {
             Picker(selection: $viewModel.selection) {
-                Text("feed_selection_both")
+                Text(.feedSelectionBoth)
                     .tag(FeedSelection.both)
-                Text("feed_selection_morning")
+                Text(.feedSelectionMorning)
                     .tag(FeedSelection.morning)
-                Text("feed_selection_evening")
+                Text(.feedSelectionEvening)
                     .tag(FeedSelection.evening)
             } label: {
-                Text("feed_time_title")
+                Text(.feedTimeTitle)
             }
             .pickerStyle(.segmented)
         }
@@ -135,7 +135,7 @@ struct PetChangeView: View {
             selection: $viewModel.eveningDate,
             displayedComponents: .hourAndMinute
         ) {
-            Text("feed_selection_evening")
+            Text(.feedSelectionEvening)
         }
     }
 
@@ -144,7 +144,7 @@ struct PetChangeView: View {
             selection: $viewModel.morningDate,
             displayedComponents: .hourAndMinute
         ) {
-            Text("feed_selection_morning")
+            Text(.feedSelectionMorning)
         }
     }
 

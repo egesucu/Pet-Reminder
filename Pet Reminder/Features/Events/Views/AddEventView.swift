@@ -37,27 +37,27 @@ struct AddEventView: View {
             Form {
                 Section(
                     header: Text(
-                        "add_event_info"
+                        .addEventInfo
                     )
                 ) {
                     TextField(text: $eventName) {
-                        Text("add_event_name")
+                        Text(.addEventName)
                     }
                 }
                 Section(
                     header: Text(
-                        "add_event_time"
+                        .addEventTime
                     )
                 ) {
                     Toggle(isOn: $allDay) {
-                        Text("all_day_title")
+                        Text(.allDayTitle)
                     }
                     eventDateView()
                 }
             }
             .tint(.accent)
             .navigationTitle(
-                Text("add_event_title")
+                Text(.addEventTitle)
             )
             .navigationBarTitleTextColor(.accent)
             .toolbar(content: {
@@ -70,15 +70,15 @@ struct AddEventView: View {
     func eventDateView() -> some View {
         if allDay {
             DatePicker(selection: $startDate, displayedComponents: .date) {
-                Text("add_event_date")
+                Text(.addEventDate)
             }
         } else {
             DatePicker(selection: $startDate) {
-                Text("add_event_start")
+                Text(.addEventStart)
             }
             .onChange(of: startDate, changeEventMinimumDate)
             DatePicker(selection: $endDate) {
-                Text("add_event_end")
+                Text(.addEventEnd)
             }
         }
     }
@@ -99,7 +99,7 @@ struct AddEventView: View {
 
     private func saveButton() -> some View {
         Button(action: saveEvent) {
-            Text("add_event_save")
+            Text(.addEventSave)
                 .foregroundStyle(.accent)
                 .bold()
         }
@@ -107,7 +107,7 @@ struct AddEventView: View {
 
     private func cancelButton() -> some View {
         Button(action: dismiss.callAsFunction) {
-            Text("cancel")
+            Text(.cancel)
         }
         .foregroundStyle(Color.red)
         .bold()

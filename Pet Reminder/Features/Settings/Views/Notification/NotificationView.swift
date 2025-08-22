@@ -37,10 +37,13 @@ struct NotificationView: View {
         }
         .overlay {
             if pets.isEmpty {
-                ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
+                ContentUnavailableView(
+                    "pet_no_pet",
+                    systemSymbol: .pawprintCircle
+                )
             }
         }
-        .navigationTitle(Text("notifications_title"))
+        .navigationTitle(Text(.notificationsTitle))
         .navigationBarTitleTextColor(.accent)
         .toolbar {
             if pets.isNotEmpty {
@@ -53,7 +56,7 @@ struct NotificationView: View {
                             await fetchNotificiations()
                         }
                     } label: {
-                        Text("remove_all")
+                        Text(.removeAll)
                     }
                 }
 
@@ -88,18 +91,18 @@ struct NotificationView: View {
     private func notificationView(notification: UNNotificationRequest) -> some View {
         VStack(alignment: .leading) {
             Label {
-                Text("notification_to")
+                Text(.notificationTo)
             } icon: {
                 if notification.identifier.contains("morning") {
-                    Image(systemSymbol: SFSymbol.sunMaxCircleFill)
+                    Image(systemSymbol: .sunMaxCircleFill)
                         .foregroundStyle(.yellow)
                         .font(.title)
                 } else if notification.identifier.contains("evening") {
-                    Image(systemSymbol: SFSymbol.moonStarsCircleFill)
+                    Image(systemSymbol: .moonStarsCircleFill)
                         .foregroundStyle(.blue)
                         .font(.title)
                 } else {
-                    Image(systemSymbol: SFSymbol.birthdayCakeFill)
+                    Image(systemSymbol: .birthdayCakeFill)
                         .foregroundStyle(.green)
                         .font(.title)
                 }
@@ -157,7 +160,7 @@ struct NotificationView: View {
             Text(pet.name)
         } footer: {
             let count = notificationAmount(for: pet.name)
-            Text("notification \(count)")
+            Text(.notification(count))
         }
         .onChange(of: notificationManager.notifications) {
             Task {

@@ -28,7 +28,7 @@ public struct PhotoImagePickerView: View {
                 matching: .images) {
                     Label(
                         "Select a photo",
-                        systemImage: "photo.fill"
+                        systemSymbol: .photoFill
                     )
                     .font(.title3)
                 }

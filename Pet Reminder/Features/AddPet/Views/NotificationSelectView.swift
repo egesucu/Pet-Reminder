@@ -15,22 +15,22 @@ struct NotificationSelectView: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            Text("feed_time_title")
+            Text(.feedTimeTitle)
                 .font(.title3).bold()
                 .foregroundStyle(Color.label)
                 .padding(.vertical)
                 .animation(.easeOut(duration: 0.8), value: feedSelection)
             Picker(
                 selection: $feedSelection,
-                label: Text("feed_time_title")
+                label: Text(.feedTimeTitle)
             ) {
-                Text("feed_selection_both")
+                Text(.feedSelectionBoth)
                     .tag(FeedSelection.both)
                     .foregroundStyle(Color.label)
-                Text("feed_selection_morning")
+                Text(.feedSelectionMorning)
                     .tag(FeedSelection.morning)
                     .foregroundStyle(Color.label)
-                Text("feed_selection_evening")
+                Text(.feedSelectionEvening)
                     .tag(FeedSelection.evening)
                     .foregroundStyle(Color.label)
             }

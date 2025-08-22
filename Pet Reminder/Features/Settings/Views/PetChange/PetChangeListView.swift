@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
+import SFSafeSymbols
 
 struct PetChangeListView: View {
 
@@ -60,7 +61,10 @@ struct PetChangeListView: View {
         }
         .overlay {
             if pets.isEmpty {
-                ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
+                ContentUnavailableView(
+                    "pet_no_pet",
+                    systemSymbol: .pawprintCircle
+                )
             }
         }
     }
@@ -76,7 +80,7 @@ struct PetChangeListView: View {
                                 if let imageData = pet.image,
                                    let image = UIImage(data: imageData) {
                                     Image(uiImage: image)
-                                        .petImageStyle(useShadows: true)
+                                        .petImageStyle()
                                         .frame(width: 120, height: 120)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 60)
@@ -114,9 +118,9 @@ struct PetChangeListView: View {
                                     }
                                 }
                             } label: {
-                                Image(systemName: "xmark.circle.fill")
+                                Image(systemSymbol: .xmarkCircleFill)
                                     .font(.title)
-                                    .foregroundStyle(Color.red)
+                                    .foregroundStyle(.red)
                                     .offset(x: 15, y: 0)
                             }
 
@@ -128,7 +132,7 @@ struct PetChangeListView: View {
                         if let imageData = pet.image,
                            let image = UIImage(data: imageData) {
                             Image(uiImage: image)
-                                .petImageStyle(useShadows: true)
+                                .petImageStyle()
                                 .frame(width: 120, height: 120)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 60)
