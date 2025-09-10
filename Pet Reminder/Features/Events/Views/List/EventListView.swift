@@ -21,7 +21,6 @@ struct EventListView: View {
         NavigationStack {
             EventsView()
                 .navigationTitle(Text(.eventTitle))
-                .navigationBarTitleTextColor(.accent)
                 .toolbar {
                         EventFilterMenu()
                         eventToolBar()
@@ -86,11 +85,11 @@ struct EventListView: View {
                 Label {
                     Text(.addEventAccessibleTitle)
                         .font(.title2)
-                        .foregroundStyle(.accent)
                 } icon: {
                     Image(systemSymbol: .calendarBadgePlus)
                 }
             }
+            .tint(.accent)
         }
     }
 
@@ -105,7 +104,12 @@ struct EventListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
-    EventListView()
-        .environment(EventManager.demo)
+    NavigationStack {
+        EventListView()
+            .environment(EventManager.demo)
+    }
+
 }
+#endif

@@ -56,15 +56,8 @@ struct EventFilterMenu: ToolbarContent {
                     .tag(calendar)
                 }
             } label: {
-                Circle()
-                    .fill(.gray.opacity(0.15))
-                    .frame(width: 30, height: 30)
-                    .overlay {
-                        Image(systemSymbol: .ellipsis)
-                            .font(.system(size: 13.0, weight: .semibold))
-                            .foregroundColor(.accentColor)
-                            .padding()
-                    }
+                Image(systemSymbol: .ellipsis)
+                    .foregroundStyle(Color.accent)
             }
             .menuOrder(.priority)
         }
@@ -82,7 +75,7 @@ struct EventFilterMenu: ToolbarContent {
                 EventFilterMenu()
             }
         }
-
     }
+    .environment(EventManager.demo)
 
 }
