@@ -6,7 +6,8 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-/// Displays and manages the vaccine history for a selected pet, allowing users to add, view, and remove vaccine records.
+/// Displays and manages the vaccine history for a selected pet,
+/// allowing users to add, view, and remove vaccine records.
 
 import SwiftUI
 import SwiftData
@@ -14,7 +15,8 @@ import Shared
 import SFSafeSymbols
 import OSLog
 
-/// A SwiftUI view that presents a list of vaccines associated with a pet, supporting addition and deletion of vaccine records.
+/// A SwiftUI view that presents a list of vaccines associated with a pet,
+/// supporting addition and deletion of vaccine records.
 struct VaccineHistoryView: View {
 
     /// The environment-provided dismiss action for closing the view.
@@ -45,7 +47,8 @@ struct VaccineHistoryView: View {
         }
     }
 
-    /// The main content and navigation stack for the vaccine history, including a list of vaccines and controls for adding/removing entries.
+    /// The main content and navigation stack for the vaccine history,
+    /// including a list of vaccines and controls for adding/removing entries.
     var body: some View {
         NavigationStack {
             VStack {

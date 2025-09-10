@@ -6,7 +6,8 @@
 //  Copyright © 2025 Ege Sucu. All rights reserved.
 //
 
-/// View for adding a new vaccine record to a pet, including fields for vaccine name and date, and logic to persist the entry.
+/// View for adding a new vaccine record to a pet,
+/// including fields for vaccine name and date, and logic to persist the entry.
 
 import SwiftUI
 import SwiftData

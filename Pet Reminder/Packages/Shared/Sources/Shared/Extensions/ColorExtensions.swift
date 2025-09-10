@@ -38,4 +38,23 @@ public extension Color {
 
     /// Black on Light Mode, White on Dark Mode
     static let label = Color(.label)
+    /// White-ish on Light Mode, Black on Dark Mode
+    static let background = Color(uiColor: .systemBackground)
 }
+
+#if DEBUG
+
+#Preview {
+    VStack {
+        Color.label
+            .clipShape(.circle)
+        Spacer()
+        Color.background
+            .clipShape(.circle)
+    }
+    .background(Color.accent)
+    .padding()
+    
+}
+
+#endif

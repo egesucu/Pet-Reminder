@@ -9,7 +9,7 @@
 import SwiftUI
 import CloudKit
 import Shared
-import Playgrounds
+import SFSafeSymbols
 
 struct HelloView: View {
     @AppStorage(Strings.helloSeen) var helloSeen = false
@@ -21,13 +21,16 @@ struct HelloView: View {
         VStack(alignment: .center, spacing: 20) {
             Spacer()
             Text(.welcomeTitle)
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.label)
                 .font(.title)
                 .bold()
-            logoView()
+            Image(systemSymbol: SFSymbol.pawprintCircleFill)
+                .foregroundStyle(Color.label)
+                .bold()
+                .font(.system(size: 80))
             Text(.welcomeContext)
                 .padding(.vertical)
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.label)
                 .font(.body)
             Spacer()
             HStack {
@@ -37,9 +40,9 @@ struct HelloView: View {
                         .font(.title)
                         .bold()
                         .padding()
-                        .tint(.black)
+                        .tint(.label)
                 }
-                .glassEffect()
+                .glassEffect(.regular)
                 .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
                         .environment(notificationManager)
@@ -51,7 +54,14 @@ struct HelloView: View {
         .opacity(shouldAnimate ? 1.0 : 0.0)
         .onAppear(perform: animateView)
         .background(
-            LinearGradient(colors: [.accent, .green], startPoint: .topLeading, endPoint: .bottomTrailing),
+            LinearGradient(
+                colors: [
+                    .accent,
+                    .green.opacity(0.3)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            ),
             ignoresSafeAreaEdges: .all
         )
     }
@@ -78,16 +88,11 @@ struct HelloView: View {
     }
 }
 
+#if DEBUG
+
 #Preview {
     HelloView()
         .environment(NotificationManager.shared)
 }
 
-// swiftlint: disable todo
-// Broken with Xcode 26 Beta 3
-// FIXME: Try this on later betas
-// #Playground {
-//    let helloString = Strings.helloSeen
-//    _ = UserDefaults.standard.bool(forKey: helloString)
-// }
-// swiftlint: enable todo
+#endif
