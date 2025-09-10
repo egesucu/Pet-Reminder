@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftData
+import OSLog
 import Shared
 
 struct PetNameTextField: View {
@@ -23,7 +24,7 @@ struct PetNameTextField: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(.startNameLabel)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.label)
                 .font(.title2)
                 .bold()
                 .padding(.bottom, 20)
@@ -33,7 +34,7 @@ struct PetNameTextField: View {
                 text: $name
             )
             .focused($isFocused)
-            .foregroundStyle(Color.black)
+            .foregroundStyle(Color.label)
             .font(.title)
             .padding()
             .autocorrectionDisabled()
@@ -65,7 +66,9 @@ struct PetNameTextField: View {
     }
 
     private func check(name: String) {
-        if name.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
+        let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        Logger.pets.info("Name is: \(removedSpaceName)")
+        if removedSpaceName.isNotEmpty {
             nameIsValid = true
         } else {
             nameIsValid = false
@@ -74,6 +77,8 @@ struct PetNameTextField: View {
         self.petExists = pets.map(\.name).contains(name)
     }
 }
+
+#if DEBUG
 
 #Preview("Filled Case") {
     @Previewable @FocusState var isFocused: Bool
@@ -104,3 +109,5 @@ struct PetNameTextField: View {
         .background(.ultraThinMaterial)
         .padding()
 }
+
+#endif

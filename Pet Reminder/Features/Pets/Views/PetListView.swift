@@ -25,89 +25,90 @@ struct PetListView: View {
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager
 
     var body: some View {
-        ZStack {
-            petsOverview
-            if addPet {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-
-                addPetView()
-                    .padding()
-            }
-        }
-        .animation(.easeInOut, value: addPet)
-    }
-
-    private var petsOverview: some View {
-        NavigationStack {
-            ScrollView {
-                VStack {
-                    petList
-                    /// Showing the detail page only if the selected pet has values(i.e. not empty)
-                    if selectedPet.name.isNotEmpty {
-                        PetDetailView(pet: $selectedPet)
-                    }
-                }
-            }
-            .toolbar {
-                addButtonToolbar()
-            }
-            .onAppear {
-                Task { await definePet() }
-            }
-            .navigationTitle(petListTitle)
-            .navigationBarTitleTextColor(.accent)
-        }
-        .overlay {
-            if pets.isEmpty {
-                ContentUnavailableView(
-                    label: {
-                        Label(
-                            "pet_no_pet",
-                            systemSymbol: .pawprintCircle
-                        )
-                    },
-                    actions: {
-                    Button {
-                        addPet.toggle()
-                    } label: {
-                        Text("pet_add_pet")
-                    }
-                    .buttonStyle(.bordered)
-                    .tint(.accent)
-                })
-            }
-        }
-        .onChange(of: addPet) {
-            if !addPet {
-                Logger.pets.info("Pet Add Sheet dismissed, context changed?: \(modelContext.hasChanges)")
-                Logger.pets.info("Pet Count: \(pets.count)")
-                /// If we have a new pet after there was none, or the new pet added and sorted via name
-                /// we would like to switch first pet into the arrays first item.
-                if pets.count > 0,
-                   let firstPet = pets.first {
-                    selectedPet = firstPet
+        ScrollView {
+            VStack {
+                petList
+                /// Showing the detail page only if the selected pet has values(i.e. not empty)
+                if selectedPet.name.isNotEmpty {
+                    PetDetailView(pet: $selectedPet)
                 }
             }
         }
+        .toolbar(content: addButtonToolbar)
+        .task(definePet)
+        .navigationTitle(Text(.petNameTitle))
+        .sheet(
+            isPresented: $addPet,
+            onDismiss: handleDismissAction,
+            content: addPetView
+        )
+        .onReceive(NotificationCenter.default.publisher(for: .openPetByName)) { note in
+            guard let raw = note.object as? String else { return }
+            selectPet(named: raw)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openAddPet)) { _ in
+            addPet = true
+        }
+        .overlay(content: noPetView)
     }
 
     @ViewBuilder
     private func addPetView() -> some View {
-        AddPetView {
-            withAnimation { toggleAddPet() }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .environment(notificationManager)
-        .transition(.move(edge: .bottom))
-        .zIndex(1)
-        .ignoresSafeArea()
+        AddPetView()
+            .environment(notificationManager)
     }
 
-    private func updatePets() {
-        Task { await definePet() }
+    @ViewBuilder
+    private func noPetView() -> some View {
+        if pets.isEmpty {
+            ContentUnavailableView(
+                label: {
+                    Label {
+                        Text(.petNoPet)
+                    } icon: {
+                        Image(systemSymbol: .pawprintCircle)
+                    }
+                },
+                actions: {
+                    Button {
+                        addPet.toggle()
+                    } label: {
+                        Text(.petAddPet)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.accent)
+                }
+            )
+        }
+    }
+
+    @ToolbarContentBuilder
+    func addButtonToolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .confirmationAction) {
+            if pets.count > 0 {
+                Button {
+                    addPet.toggle()
+                } label: {
+                    Image(systemSymbol: SFSymbol.plus)
+                        .accessibilityLabel(Text(.addAnimalAccessibleLabel))
+                        .foregroundStyle(.white)
+                }
+                .buttonStyle(.glassProminent)
+                .tint(.accent)
+                .clipShape(.circle)
+            }
+        }
+    }
+
+    private func handleDismissAction() {
+        Logger.pets.info("Pet Add Sheet dismissed, context changed?: \(modelContext.hasChanges)")
+        Logger.pets.info("Pet Count: \(pets.count)")
+        /// If we have a new pet after there was none, or the new pet added and sorted via name
+        /// we would like to switch first pet into the arrays first item.
+        if pets.count > 0,
+           let firstPet = pets.first {
+            selectedPet = firstPet
+        }
     }
 
     private func definePet() async {
@@ -117,20 +118,52 @@ struct PetListView: View {
             .debug("Pet Amount: \(pets.count)")
     }
 
+    private func selectPet(named raw: String) {
+        // First try a direct, case/diacritic-insensitive match
+        if let exact = pets.first(
+            where: {
+                $0.name.compare(
+                    raw,
+                    options: [
+                        .caseInsensitive,
+                        .diacriticInsensitive
+                    ]
+                ) == .orderedSame
+            }) {
+            selectedPet = exact
+            Logger.pets.info("PR: Deep link selected pet: \(exact.name)")
+            return
+        }
+        // Fallback to slug match (handles spaces/punctuation differences)
+        let target = slug(raw)
+        if let slugged = pets.first(where: { slug($0.name) == target }) {
+            selectedPet = slugged
+            Logger.pets.info("PR: Deep link (slug) selected pet: \(slugged.name)")
+        }
+    }
+
+    private func slug(_ term: String) -> String {
+        let folded = term.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+        let allowed = CharacterSet.alphanumerics
+        return String(folded.unicodeScalars.filter { allowed.contains($0) })
+    }
+
     private var petList: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 5) {
                 ForEach(pets, id: \.name) { pet in
                     Text(pet.name)
                         .foregroundStyle(
-                            .black
+                            selectedPet == pet
+                            ? Color.background
+                            : Color.label
                         )
                         .bold(selectedPet == pet)
                         .padding(8)
                         .background(
                             selectedPet == pet
-                            ? Color.accent
-                            : Color.accent.opacity(0.3)
+                            ? Color.green
+                            : Color.green.opacity(0.3)
                         )
                         .clipShape(.capsule)
                         .animation(.snappy, value: selectedPet)
@@ -143,41 +176,12 @@ struct PetListView: View {
                         .padding(.leading)
                 }
             }
-
         }
     }
 
-    private func defineColor(pet: Pet) -> Color {
-        selectedPet == pet
-        ? Color.yellow
-        : Color.clear
-    }
-
-    private var petListTitle: Text {
-        Text(.petNameTitle)
-    }
-
-    private func toggleAddPet() {
-        addPet.toggle()
-    }
-
-    @ToolbarContentBuilder
-    func addButtonToolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .confirmationAction) {
-            if pets.count > 0 {
-                Button(action: toggleAddPet) {
-                    Image(systemSymbol: SFSymbol.plus)
-                        .accessibilityLabel(Text(.addAnimalAccessibleLabel))
-                        .foregroundColor(.white)
-                }
-                .opacity(addPet ? 0 : 1)
-                .glassEffect(.regular.tint(.accent).interactive())
-                .padding()
-            }
-        }
-    }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         PetListView()
@@ -185,3 +189,4 @@ struct PetListView: View {
             .environment(NotificationManager.shared)
     }
 }
+#endif

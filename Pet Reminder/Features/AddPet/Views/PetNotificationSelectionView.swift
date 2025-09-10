@@ -33,7 +33,7 @@ struct PetNotificationSelectionView: View {
     }
 
     var morningView: some View {
-        VStack(alignment: .center, spacing: 8) {
+        VStack(spacing: 8) {
             Label {
                 Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
@@ -80,7 +80,7 @@ struct PetNotificationSelectionView: View {
     }
 
     var bothView: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: 40) {
             morningView
             eveningView
         }
@@ -89,6 +89,7 @@ struct PetNotificationSelectionView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var feedSelection: FeedSelection = .both
     @Previewable @State var morningFeed: Date = .eightAM
@@ -99,6 +100,6 @@ struct PetNotificationSelectionView: View {
         morningFeed: $morningFeed,
         eveningFeed: $eveningFeed
     )
-    .background(.ultraThinMaterial)
     .padding(.horizontal)
 }
+#endif

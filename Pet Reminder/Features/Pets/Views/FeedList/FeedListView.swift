@@ -85,19 +85,17 @@ struct FeedListView: View {
             Label {
                 Text(.feedSelectionMorning)
                     .font(.title2.bold(morningOn))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(morningOn ? Color.background : Color.label)
             } icon: {
                 Image(systemSymbol: morningOn ? .checkmark : .sunMax)
                     .font(.title2.bold(morningOn))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(morningOn ? Color.background : Color.label)
             }
         }
         .buttonStyle(
             .glass(
                 .regular
-                    .interactive(
-                        morningOn
-                    )
+                    .interactive(morningOn)
                     .tint(morningOn ? .yellow : .yellow.opacity(0.4))
             )
         )
@@ -119,11 +117,11 @@ struct FeedListView: View {
             Label {
                 Text(.feedSelectionEvening)
                     .font(.title2.bold(eveningOn))
-                    .foregroundStyle(eveningOn ? .white : .black)
+                    .foregroundStyle(eveningOn ? Color.background : Color.label)
             } icon: {
                 Image(systemSymbol: eveningOn ? .checkmark : .moon)
                     .font(.title2.bold(eveningOn))
-                    .foregroundStyle(eveningOn ? .white : .black)
+                    .foregroundStyle(eveningOn ? Color.background : Color.label)
             }
         }
         .buttonStyle(
@@ -213,6 +211,7 @@ struct FeedListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var pet = Pet.preview
 
@@ -220,3 +219,4 @@ struct FeedListView: View {
         .modelContainer(DataController.previewContainer)
 
 }
+#endif

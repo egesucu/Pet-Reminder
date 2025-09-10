@@ -63,7 +63,7 @@ struct PetDetailView: View {
                     showFeedHistory.toggle()
                 } label: {
                     Label {
-                        Text("feeds_title")
+                        Text(.feedsTitle)
                             .font(.title)
                     } icon: {
                         Image(systemName: "fork.knife.circle.fill")
@@ -113,6 +113,7 @@ struct PetDetailView: View {
         }
 }
 
+#if DEBUG
 #Preview(traits: .portrait) {
     NavigationStack {
         PetDetailView(
@@ -121,3 +122,4 @@ struct PetDetailView: View {
         .modelContainer(DataController.previewContainer)
     }
 }
+#endif

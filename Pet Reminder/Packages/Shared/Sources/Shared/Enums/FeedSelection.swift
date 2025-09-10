@@ -23,6 +23,17 @@ public enum FeedSelection: @MainActor Codable, CaseIterable, CustomStringConvert
             "Both"
         }
     }
+
+    public var localized: LocalizedStringResource {
+        switch self {
+        case .morning:
+                .feedSelectionMorning
+        case .evening:
+                .feedSelectionEvening
+        case .both:
+                .feedSelectionBoth
+        }
+    }
 }
 
 public extension FeedSelection {

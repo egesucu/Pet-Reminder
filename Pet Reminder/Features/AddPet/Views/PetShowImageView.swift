@@ -18,17 +18,14 @@ struct PetShowImageView: View {
             Image(uiImage: selectedImage)
                 .resizable()
                 .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(.rect(cornerRadius: 10))
                 .frame(maxHeight: 180)
-                .shadow(radius: 10)
                 .padding(.trailing, 10)
-            Button {
-                onImageDelete()
-            } label: {
+            Button(action: onImageDelete) {
                 Text("Remove")
                     .font(.title3)
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.glassProminent)
             .tint(.red)
         }
     }

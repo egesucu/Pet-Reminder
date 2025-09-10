@@ -14,12 +14,11 @@ struct PetBirthdayView: View {
     @Binding var birthday: Date
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
             Text(.birthdayTitle)
                 .font(.title2)
                 .foregroundStyle(Color.label)
                 .bold()
-                .padding(.trailing, 20)
             DatePicker(
                 selection: $birthday,
                 displayedComponents: .date) {
@@ -33,7 +32,10 @@ struct PetBirthdayView: View {
     }
 }
 
+#if DEBUG
+
 #Preview {
     PetBirthdayView(birthday: .constant(.now))
-        .background(Color.accent, ignoresSafeAreaEdges: .all)
 }
+
+#endif

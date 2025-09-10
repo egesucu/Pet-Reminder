@@ -55,7 +55,7 @@ struct EventListView: View {
         if eventManager.status == .denied {
             ContentUnavailableView(label: {
                 Label {
-                    Text("event_error_title")
+                    Text(.eventErrorTitle)
                 } icon: {
                     Image(systemName: "calendar.badge.exclamationmark")
                 }
@@ -67,7 +67,7 @@ struct EventListView: View {
         } else if eventManager.status == .readOnly {
             ContentUnavailableView(label: {
                 Label {
-                    Text("event_error_title")
+                    Text(.eventErrorTitle)
                 } icon: {
                     Image(systemSymbol: .calendarBadgeExclamationmark)
                 }

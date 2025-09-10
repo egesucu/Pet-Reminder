@@ -14,35 +14,32 @@ struct NotificationSelectView: View {
     @Binding var feedSelection: FeedSelection
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 20) {
             Text(.feedTimeTitle)
-                .font(.title3).bold()
+                .font(.title3)
+                .bold()
                 .foregroundStyle(Color.label)
-                .padding(.vertical)
                 .animation(.easeOut(duration: 0.8), value: feedSelection)
             Picker(
                 selection: $feedSelection,
                 label: Text(.feedTimeTitle)
             ) {
-                Text(.feedSelectionBoth)
-                    .tag(FeedSelection.both)
-                    .foregroundStyle(Color.label)
-                Text(.feedSelectionMorning)
-                    .tag(FeedSelection.morning)
-                    .foregroundStyle(Color.label)
-                Text(.feedSelectionEvening)
-                    .tag(FeedSelection.evening)
-                    .foregroundStyle(Color.label)
+                ForEach(FeedSelection.allCases, id: \.description) {
+                    Text($0.localized)
+                        .tag($0)
+                }
             }
-            .pickerStyle(.menu)
-            .tint(.accent)
+            .pickerStyle(.segmented)
+            .tint(.green)
             .animation(.easeOut(duration: 0.8), value: feedSelection)
         }
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var feedSelection: FeedSelection = .both
     NotificationSelectView(feedSelection: $feedSelection)
-        .background(.ultraThinMaterial)
+        .padding()
 }
+#endif

@@ -39,11 +39,12 @@ struct PetImageView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var selectedImageData: Data?
     PetImageView(
         selectedImageData: $selectedImageData,
         petType: .constant(.dog)
     )
-    .background(Color.accent, ignoresSafeAreaEdges: .all)
 }
+#endif

@@ -32,7 +32,7 @@ struct EventsView: View {
             .overlay(alignment: .bottom) {
                 VStack {
                     Spacer()
-                    Text("Selected Calendar: \(manager.selectedCalendar?.title ?? String(localized: .all))")
+                    Text(.selectedCalendar(manager.selectedCalendar?.title ?? String(localized: .all)))
                         .font(.footnote)
                         .padding()
                         .background(.ultraThinMaterial)

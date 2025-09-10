@@ -54,7 +54,6 @@ public extension Color {
     }
     .background(Color.accent)
     .padding()
-    
 }
 
 #endif
