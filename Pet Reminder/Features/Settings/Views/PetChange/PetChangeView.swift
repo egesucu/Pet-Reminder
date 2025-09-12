@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
+import SFSafeSymbols
 
 struct PetChangeView: View {
 
@@ -17,6 +18,8 @@ struct PetChangeView: View {
     @Environment(\.modelContext) var modelContext
     @State private var selectedImageData: Data?
     @Environment(\.dismiss) var dismiss
+
+    @State private var petImageOutput: Data?
 
     @State private var viewModel = PetChangeViewModel()
 
@@ -26,26 +29,38 @@ struct PetChangeView: View {
                 VStack {
                     ScrollView {
                         HStack {
-                            if let outputImageData = viewModel.outputImageData,
-                               let selectedImage = UIImage(data: outputImageData) {
-                                PetShowImageView(selectedImage: selectedImage, onImageDelete: viewModel.removeImage)
-                                    .padding(.horizontal)
+                            if let petImageOutput = petImageOutput,
+                               let selectedImage = UIImage(data: petImageOutput) {
+                                PetShowImageView(
+                                    selectedImage: selectedImage,
+                                    onImageDelete: viewModel.removeImage
+                                )
+                                .frame(width: 150, height: 150)
+                                .clipShape(.circle)
+                                .padding(.horizontal)
                             } else {
                                 Image(.defaultOther)
-                                    .frame(width: 200, height: 200)
+                                    .resizable()
+                                    .frame(width: 150, height: 150)
+                                    .clipShape(.circle)
+                                    .padding(.horizontal)
                             }
                             if !viewModel.defaultPhotoOn {
-                                PhotoImagePickerView(photoData: $viewModel.outputImageData)
+                                PhotoImagePickerView(
+                                    desiredTitle: "Change",
+                                    photoData: $petImageOutput,
+                                    desiredIcon: .photoFill
+                                )
                                     .padding(.vertical)
                             }
                         }
                         Toggle(isOn: $viewModel.defaultPhotoOn) {
                             Text(.defaultPhotoLabel)
                         }
-                        .tint(Color.accentColor)
+                        .tint(.accent)
                         .onChange(of: viewModel.defaultPhotoOn, {
                             if viewModel.defaultPhotoOn {
-                                viewModel.outputImageData = nil
+                                petImageOutput = nil
                             }
                         })
                         .padding()
@@ -56,11 +71,17 @@ struct PetChangeView: View {
                             .padding()
                         Form {
                             Section {
-                                TextField(text: $viewModel.nameText) {
-                                    Text(.tapToChangeText)
+                                HStack {
+                                    Text(.name)
+                                        .bold()
+                                    TextField(text: $viewModel.nameText) {
+                                        Text(.tapToChangeText)
+                                    }
                                 }
+
                                 DatePicker(selection: $viewModel.birthday, displayedComponents: .date) {
                                     Text(.birthdayTitle)
+                                        .bold()
                                 }
                             }
                             Section {
@@ -150,10 +171,12 @@ struct PetChangeView: View {
 
 }
 
+#if DEBUG
 #Preview {
     PetChangeView(pet: .constant(.preview))
         .modelContainer(DataController.previewContainer)
 }
+#endif
 
 extension View {
     func wiggling() -> some View {

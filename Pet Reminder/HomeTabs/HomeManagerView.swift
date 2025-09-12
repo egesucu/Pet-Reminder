@@ -74,7 +74,6 @@ struct HomeManagerView: View {
             Tab(value: PetReminderTabs.vet, role: .search) {
                 NavigationStack(path: $vetPath) {
                     FindVetView()
-                        .navigationTitle("Find Vet")
                 }
             } label: {
                 Image(systemSymbol: .magnifyingglass)

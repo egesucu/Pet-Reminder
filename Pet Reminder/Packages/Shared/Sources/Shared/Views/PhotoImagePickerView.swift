@@ -8,60 +8,85 @@
 
 import SwiftUI
 import PhotosUI
+import SFSafeSymbols
 
 public struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
+    var desiredTitle: String
+    var desiredIcon: SFSymbol
     @Binding var photoData: Data?
 
     public init(
+        desiredTitle: String = "Add",
         selectedPhoto: PhotosPickerItem? = nil,
-        photoData: Binding<Data?> = .constant(nil)
+        photoData: Binding<Data?> = .constant(nil),
+        desiredIcon: SFSymbol = .photoBadgePlusFill
     ) {
         self.selectedPhoto = selectedPhoto
         self._photoData = photoData
+        self.desiredTitle = desiredTitle
+        self.desiredIcon = desiredIcon
     }
 
     public var body: some View {
-        VStack {
-            PhotosPicker(
-                selection: $selectedPhoto,
-                matching: .images) {
-                    Label(
-                        "Select a photo",
-                        systemSymbol: .photoFill
-                    )
-                    .font(.title3)
-                }
-                .tint(.accent)
-                .onChange(of: selectedPhoto) { _, newPhoto in
-                    Task {
-                        if let newPhoto = newPhoto {
-                            await handlePhotoChange(newPhoto)
-                        }
-                    }
-                }
-                .padding(.vertical)
+        PhotosPicker(
+            selection: $selectedPhoto,
+            matching: .any(
+                of: [.images, .not(.screenshots), .not(.bursts)]
+            )
+        ) { [desiredTitle, desiredIcon] in
+            Label(desiredTitle, systemSymbol: desiredIcon)
         }
+
+        .onChange(of: selectedPhoto) {
+            Task {
+                if let selectedPhoto {
+                    await handlePhotoChange(selectedPhoto)
+                }
+            }
+        }
+        .contentShape(.rect)
+        .tint(.accent)
+        .padding(.vertical)
     }
 
     private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
-        processPhotoChange(newPhoto)
+        await processPhotoChange(newPhoto)
     }
 
-    private func processPhotoChange(_ newPhoto: PhotosPickerItem) {
-        Task {
-            if let data = try? await newPhoto.loadTransferable(type: Data.self) {
-                photoData = data
-            }
+    private func processPhotoChange(_ newPhoto: PhotosPickerItem) async {
+        if let data = try? await newPhoto.loadTransferable(type: Data.self) {
+            photoData = data
+        } else {
+            photoData = nil
+            selectedPhoto = nil
         }
     }
 
 }
 
-#Preview {
+#if DEBUG
+#Preview("Photo picker with default title") {
     @Previewable @State var photoData: Data?
-    PhotoImagePickerView(photoData: $photoData)
-        .task {
-            photoData = UIImage(resource: .defaultOther).pngData()
-        }
+
+    PhotoImagePickerView(
+        photoData: $photoData
+    )
+    .task {
+        photoData = UIImage(resource: .defaultOther).pngData()
+    }
 }
+
+#Preview("Photo Picker with custom title") {
+    @Previewable @State var photoData: Data?
+
+    PhotoImagePickerView(
+        desiredTitle: "Change",
+        photoData: $photoData,
+        desiredIcon: .photoFill
+    )
+    .task {
+        photoData = UIImage(resource: .defaultOther).pngData()
+    }
+}
+#endif

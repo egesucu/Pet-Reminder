@@ -47,7 +47,7 @@ struct NotificationView: View {
         .navigationBarTitleTextColor(.accent)
         .toolbar {
             if pets.isNotEmpty {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .destructiveAction) {
                     Button {
                         Task {
                             try? await notificationManager?.removeNotificationsIdentifiers(
@@ -57,7 +57,9 @@ struct NotificationView: View {
                         }
                     } label: {
                         Text(.removeAll)
+                            .foregroundStyle(.red)
                     }
+                    .buttonStyle(.automatic)
                 }
 
             }
@@ -89,7 +91,7 @@ struct NotificationView: View {
     }
 
     private func notificationView(notification: UNNotificationRequest) -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 15) {
             Label {
                 Text(.notificationTo)
             } icon: {
@@ -111,12 +113,16 @@ struct NotificationView: View {
             Text(notification.content.body)
                 .font(.footnote)
                 .foregroundStyle(Color.gray)
-            if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
-               let date = trigger.nextTriggerDate() {
-                if notification.identifier.contains("birthday") {
-                    Text(date.formatted(.dateTime.day().month(.wide).year()))
-                } else {
-                    Text(date.formatted(.dateTime.hour().minute()))
+            HStack(spacing: 10) {
+                Text(.nextNotificationDate)
+                    .bold()
+                if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
+                   let date = trigger.nextTriggerDate() {
+                    if notification.identifier.contains("birthday") {
+                        Text(date.formatted(.dateTime.day().month(.wide).year()))
+                    } else {
+                        Text(date.formatted(.dateTime.hour().minute()))
+                    }
                 }
             }
         }
@@ -171,7 +177,10 @@ struct NotificationView: View {
 }
 
 #Preview {
-    NotificationView()
-        .modelContainer(DataController.previewContainer)
-        .environment(NotificationManager.shared)
+    NavigationStack {
+        NotificationView()
+    }
+    .modelContainer(DataController.previewContainer)
+    .environment(NotificationManager.shared)
+
 }

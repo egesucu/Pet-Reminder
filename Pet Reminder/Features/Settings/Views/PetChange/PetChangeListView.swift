@@ -21,13 +21,13 @@ struct PetChangeListView: View {
 
     @Query(sort: \Pet.name) var pets: [Pet]
 
-    @State private var showUndoButton = false
-    @State private var buttonTimer: (any DispatchSourceTimer)?
-    @State private var time = 0
     @State private var isEditing = false
     @State private var selectedPet: Pet?
     @State private var showSelectedPet = false
-    @State private var showEditButton = false
+
+    var showEditButton: Bool {
+        pets.isNotEmpty
+    }
 
     var body: some View {
         VStack {
@@ -49,7 +49,8 @@ struct PetChangeListView: View {
                         Button {
                             isEditing.toggle()
                         } label: {
-                            Text(.done)
+                            Text(isEditing ? .done : .edit)
+                                .animation(.bouncy)
                         }
                     }
 
@@ -82,25 +83,11 @@ struct PetChangeListView: View {
                                     Image(uiImage: image)
                                         .petImageStyle()
                                         .frame(width: 120, height: 120)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 60)
-                                                .stroke(
-                                                    defineColor(pet: pet),
-                                                    lineWidth: 5
-                                                )
-                                        )
                                         .wiggling()
                                 } else {
                                     Image(.generateDefaultData(type: pet.type))
                                         .petImageStyle()
                                         .frame(width: 120, height: 120)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 60)
-                                                .stroke(
-                                                    defineColor(pet: pet),
-                                                    lineWidth: 5
-                                                )
-                                        )
                                         .wiggling()
                                 }
 
@@ -134,30 +121,17 @@ struct PetChangeListView: View {
                             Image(uiImage: image)
                                 .petImageStyle()
                                 .frame(width: 120, height: 120)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 60)
-                                        .stroke(
-                                            defineColor(pet: pet),
-                                            lineWidth: 5
-                                        )
-                                )
                         } else {
                             Image(.generateDefaultData(type: pet.type))
                                 .petImageStyle()
                                 .frame(width: 120, height: 120)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 60)
-                                        .stroke(
-                                            defineColor(pet: pet),
-                                            lineWidth: 5
-                                        )
-                                )
                         }
                         Text(pet.name)
                     }
 
                 }
                 .onTapGesture {
+                    isEditing = false
                     selectedPet = pet
                     showSelectedPet.toggle()
                     Logger
@@ -192,12 +166,6 @@ struct PetChangeListView: View {
         withAnimation {
             modelContext.delete(pet)
         }
-    }
-
-    private func defineColor(pet: Pet) -> Color {
-        selectedPet == pet
-        ? Color.yellow
-        : Color.clear
     }
 }
 

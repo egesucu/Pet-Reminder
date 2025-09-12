@@ -18,11 +18,15 @@ struct DonateView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Image(.defaultOther)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 200)
-                    .clipShape(.rect(cornerRadius: 10))
+                HStack {
+                    Spacer()
+                    Image(.defaultOther)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 200)
+                        .clipShape(.circle)
+                    Spacer()
+                }
                 VStack {
                     Text(.donateUsContext)
                         .padding(.bottom)
