@@ -21,11 +21,7 @@ public extension Image {
             self
                 .resizable()
                 .scaledToFit()
-                .clipShape(Circle())
-                .overlay(
-                    Circle()
-                        .stroke(.white, lineWidth: 2)
-                )
+                .clipShape(.circle)
         }
     }
 }

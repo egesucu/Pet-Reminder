@@ -22,7 +22,7 @@ struct PetChangeListView: View {
     @Query(sort: \Pet.name) var pets: [Pet]
 
     @State private var isEditing = false
-    @State private var selectedPet: Pet?
+    @State private var selectedPet: Pet = .init()
     @State private var showSelectedPet = false
 
     var showEditButton: Bool {
@@ -136,7 +136,7 @@ struct PetChangeListView: View {
                     showSelectedPet.toggle()
                     Logger
                         .pets
-                        .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
+                        .info("PR: Pet Selected: \(selectedPet.name)")
                 }
                 .sheet(isPresented: $showSelectedPet, onDismiss: deselectPet, content: {
                     PetChangeView(pet: $selectedPet)
@@ -151,7 +151,7 @@ struct PetChangeListView: View {
     }
 
     private func deselectPet() {
-        selectedPet = nil
+        selectedPet = .init()
     }
 
     private func setEditMode() {
@@ -169,6 +169,7 @@ struct PetChangeListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         PetChangeListView()
@@ -176,3 +177,4 @@ struct PetChangeListView: View {
             .environment(NotificationManager.shared)
     }
 }
+#endif

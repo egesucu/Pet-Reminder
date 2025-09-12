@@ -33,9 +33,8 @@ struct PetBirthdayView: View {
 }
 
 #if DEBUG
-
 #Preview {
-    PetBirthdayView(birthday: .constant(.now))
+    @Previewable @State var birthday: Date = .now
+    PetBirthdayView(birthday: $birthday)
 }
-
 #endif
