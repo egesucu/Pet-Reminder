@@ -26,9 +26,12 @@ struct PetImageView: View {
                     .clipShape(.rect(cornerRadius: 10))
             }
 
-            PhotoImagePickerView(photoData: $selectedImageData)
+            PhotoImagePickerView(
+                desiredTitle: .add,
+                photoData: $selectedImageData
+            )
                 .padding(.vertical)
-            Text("photo_upload_detail_title")
+            Text(.photoUploadDetailTitle)
                 .foregroundStyle(Color.label)
                 .font(.footnote)
         }
@@ -39,11 +42,12 @@ struct PetImageView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var selectedImageData: Data?
     PetImageView(
         selectedImageData: $selectedImageData,
         petType: .constant(.dog)
     )
-    .background(Color.accent, ignoresSafeAreaEdges: .all)
 }
+#endif

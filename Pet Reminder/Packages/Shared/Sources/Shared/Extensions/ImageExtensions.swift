@@ -16,21 +16,13 @@ public extension UIImage {
 }
 
 public extension Image {
-    func petImageStyle(useShadows: Bool = false) -> some View {
+    func petImageStyle() -> some View {
         Group {
-            if useShadows {
-                self
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .shadow(radius: 10)
-                    .padding(5)
-            } else {
-                self
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-            }
+            self
+                .resizable()
+                .aspectRatio(1, contentMode: .fill)
+                .clipShape(.circle)
+                .contentShape(.circle)
         }
     }
 }

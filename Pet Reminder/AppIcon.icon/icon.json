@@ -1,0 +1,35 @@
+{
+  "fill" : "automatic",
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "image.png",
+          "name" : "image",
+          "position" : {
+            "scale" : 0.6,
+            "translation-in-points" : [
+              -4.486040452466902,
+              -26.266018873938247
+            ]
+          }
+        }
+      ],
+      "name" : "Layers",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

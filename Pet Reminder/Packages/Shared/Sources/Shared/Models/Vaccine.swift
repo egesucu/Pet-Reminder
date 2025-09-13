@@ -26,11 +26,11 @@ public class Vaccine {
 }
 
 extension Vaccine {
-    static var preview: Vaccine {
+    @MainActor static var preview: Vaccine {
         return previews.first ?? .init()
     }
 
-    static var previews: [Vaccine] {
+    @MainActor static var previews: [Vaccine] {
         var vaccines: [Vaccine] = []
         Strings.demoVaccines.forEach { vaccineName in
             let vaccine = Vaccine(

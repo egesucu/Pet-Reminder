@@ -13,7 +13,6 @@ import SFSafeSymbols
 
 struct SheetContent: View {
     @Environment(\.dismiss) var dismiss
-    
 
     var event: EKEvent
 
@@ -23,7 +22,7 @@ struct SheetContent: View {
             Button(action: {
                 dismiss()
             }, label: {
-                Image(systemSymbol: SFSymbol.xmarkCircleFill)
+                Image(systemSymbol: .xmarkCircleFill)
                     .font(.title)
                     .tint(.accent)
             })

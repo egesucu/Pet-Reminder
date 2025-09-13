@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum CloudError: LocalizedError {
+@MainActor public enum CloudError: @preconcurrency LocalizedError {
     case cloudUnavailable
     case cloudNotPresent
     case restricted
@@ -18,13 +18,13 @@ public enum CloudError: LocalizedError {
     public var errorDescription: String? {
         return switch self {
         case .cloudUnavailable:
-            String(localized: "cloud_unavailable")
+            String(localized: .cloudUnavailable)
         case .cloudNotPresent:
-            String(localized: "no_account")
+            String(localized: .noAccount)
         case .restricted:
-            String(localized: "restricted_account")
+            String(localized: .restrictedAccount)
         case .cantFetchStatus:
-            String(localized: "cant_fetch_status")
+            String(localized: .cantFetchStatus)
         case .unknownError(let message):
             message
         }

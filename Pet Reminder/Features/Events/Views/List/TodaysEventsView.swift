@@ -13,45 +13,45 @@ import Shared
 
 struct TodaysEventsView: View {
 
-    @Binding var eventVM: EventViewModel
-    @Binding var selectedCalendar: EventCalendar?
-    
+    @Environment(EventManager.self) private var manager
+
     @State private var todaysEvents: [EKEvent] = []
 
     var body: some View {
         Section {
             if todaysEvents.isEmpty {
-                Text("event_no_title")
+                Text(.eventNoTitle)
             } else {
                 ForEach(todaysEvents, id: \.self) { event in
-                    EventView(event: event, eventVM: eventVM)
+                    EventView(event: event)
+                        .environment(manager)
                         .padding(.horizontal, 5)
                         .listRowSeparator(.hidden)
                 }
             }
         } header: {
-            Text("today_title")
+            Text(.todayTitle)
         }
-        .onChange(of: eventVM.events) {
+        .onChange(of: manager.events) {
             recalculateEvents()
         }
-        .onChange(of: selectedCalendar) {
+        .onChange(of: manager.selectedCalendar) {
             recalculateEvents()
         }
         .onAppear {
             recalculateEvents()
         }
     }
-    
+
     private func recalculateEvents() {
         Logger.events.info("Recalculating today's events")
         withAnimation {
-            if let selected = selectedCalendar {
-                todaysEvents = eventVM.events.filter {
-                    Calendar.current.isDateInToday($0.startDate) && $0.calendar.title == selected.title
+            if let selected = manager.selectedCalendar {
+                todaysEvents = manager.events.filter { event in
+                    Calendar.current.isDateInToday(event.startDate) && event.calendar.title == selected.title
                 }
             } else {
-                todaysEvents = eventVM.events.filter {
+                todaysEvents = manager.events.filter {
                     Calendar.current.isDateInToday($0.startDate)
                 }
             }
@@ -60,8 +60,6 @@ struct TodaysEventsView: View {
 }
 
 #Preview {
-    TodaysEventsView(
-        eventVM: .constant(.init(isDemo: true)),
-        selectedCalendar: .constant(nil)
-    )
+    TodaysEventsView()
+        .environment(EventManager.demo)
 }

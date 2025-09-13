@@ -8,10 +8,9 @@
 
 import SwiftUI
 
-
 public struct WiggleModifier: ViewModifier {
     @State private var isWiggling = false
-    
+
     public init(
         isWiggling: State<Bool> = .init(initialValue: false)
     ) {

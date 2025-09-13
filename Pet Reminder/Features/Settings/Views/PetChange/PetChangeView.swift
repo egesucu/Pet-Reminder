@@ -10,116 +10,185 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
+import SFSafeSymbols
 
 struct PetChangeView: View {
 
-    @Binding var pet: Pet?
-    @Environment(\.modelContext) var modelContext
-    @State private var selectedImageData: Data?
-    @Environment(\.dismiss) var dismiss
-    
-    @State private var viewModel = PetChangeViewModel()
+    @Binding var pet: Pet
+    @Environment(\.modelContext)
+    var modelContext
+    @Environment(\.dismiss)
+    var dismiss
+
+    @Query(sort: \Pet.name) var pets: [Pet]
+
+    @State private var manager = PetDataManager()
+
+    @State private var showError = false
 
     var body: some View {
         NavigationStack {
-            if let pet {
-                VStack {
-                    ScrollView {
-                        HStack {
-                            if let outputImageData = viewModel.outputImageData,
-                               let selectedImage = UIImage(data: outputImageData) {
-                                PetShowImageView(selectedImage: selectedImage, onImageDelete: viewModel.removeImage)
-                                    .padding(.horizontal)
-                            } else {
-                                Image(.defaultOther)
-                                    .frame(width: 200, height: 200)
-                            }
-                            if !viewModel.defaultPhotoOn {
-                                PhotoImagePickerView(photoData: $viewModel.outputImageData)
-                                    .padding(.vertical)
-                            }
-                        }
-                        Toggle(isOn: $viewModel.defaultPhotoOn) {
-                            Text("default_photo_label")
-                        }
-                        .tint(Color.accentColor)
-                        .onChange(of: viewModel.defaultPhotoOn, {
-                            if viewModel.defaultPhotoOn {
-                                viewModel.outputImageData = nil
-                            }
-                        })
-                        .padding()
-                        Text("photo_upload_detail_title")
-                            .font(.footnote)
-                            .foregroundStyle(Color(.systemGray2))
-                            .multilineTextAlignment(.center)
-                            .padding()
-                        Form {
-                            Section {
-                                TextField(text: $viewModel.nameText) {
-                                    Text("tap_to_change_text")
-                                }
-                                DatePicker(selection: $viewModel.birthday, displayedComponents: .date) {
-                                    Text("birthday_title")
-                                }
-                            }
-                            Section {
-                                pickerView
-                                setupPickerView()
-                            }
-                        }
-                        .frame(height: 400)
-                    }
-                }
-                .navigationTitle(pet.name)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            Task {
-                                await viewModel.savePet(pet: pet)
-                            }
-                            dismiss()
-                        } label: {
-                            Text("Save")
-                                .bold()
-                        }
+            VStack {
+                switch manager.pageState {
+                case .loading:
+                    ProgressView()
+                        .frame(width: 200, height: 200)
                         .tint(.accent)
-                    }
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("Cancel")
-                                .bold()
-                        }
-                        .tint(Color(uiColor: .systemRed))
-                    }
+                case .loaded(let pet):
+                    petDetailView(pet)
+                case .failed:
+                    EmptyView()
                 }
-                .task {
-                    await viewModel.getPetData(pet: pet)
-                }
+            }
+            .navigationTitle(pet.name)
+            .onAppear {
+                manager.loadPet(for: pet, dismiss: dismiss.callAsFunction)
+            }
+            .alert("name_exist_error", isPresented: $showError) {
+                Button(role: .confirm, action: { })
             }
         }
     }
-    var pickerView: some View {
+
+    @ViewBuilder
+    func petImageView(_ pet: Pet) -> some View {
+        HStack {
+            if let photo = manager.petImage {
+                PetShowImageView(
+                    selectedImage: photo,
+                    onImageDelete: manager.removePhoto
+                )
+                .frame(width: 150, height: 150)
+                .padding(.horizontal)
+            } else {
+                pet
+                    .type
+                    .image
+                    .frame(width: 150, height: 150)
+                    .clipShape(.circle)
+                    .padding(.horizontal)
+            }
+            if !manager.defaultSelected {
+                PhotoImagePickerView(
+                    desiredTitle: "Change",
+                    photoData: $manager.petImageData,
+                    desiredIcon: .photoFill
+                )
+                .padding(.vertical)
+                .onChange(of: manager.petImageData) {
+                    manager.loadImage()
+                }
+            }
+        }
+        .padding(.bottom, 10)
+    }
+
+    @ViewBuilder
+    func petDetailView(_ pet: Pet) -> some View {
+        ScrollView {
+            petImageView(pet)
+
+            Toggle(isOn: $manager.defaultSelected) {
+                Text(.defaultPhotoLabel)
+            }
+            .tint(.accent)
+            .onChange(of: manager.defaultSelected) {
+                if manager.defaultSelected {
+                    manager.removePhoto()
+                }
+            }
+            .padding()
+            Text(.photoUploadDetailTitle)
+                .font(.footnote)
+                .foregroundStyle(Color(.systemGray2))
+                .multilineTextAlignment(.center)
+                .padding()
+            Form {
+                personalDetailsView
+                notificationSelectionView
+            }
+            .frame(minHeight: 500)
+        }
+        .toolbar(content: toolbar)
+        .background(Color(uiColor: .systemGroupedBackground))
+    }
+
+    @MainActor var personalDetailsView: some View {
+        Section {
+            HStack {
+                Text(.name)
+                    .bold()
+                TextField(text: $manager.name) {
+                    Text(.tapToChangeText)
+                }
+            }
+
+            DatePicker(
+                selection: $manager.birthday,
+                displayedComponents: .date
+            ) {
+                Text(.birthdayTitle)
+                    .bold()
+            }
+
+            Picker(selection: $manager.petType) {
+                ForEach(PetType.allCases, id: \.rawValue) { type in
+                    Text(type.localizedName)
+                        .tag(type)
+                }
+            } label: {
+                Text(.petKindText)
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: manager.petType) {
+                manager.loadImage()
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .confirmationAction) {
+            Button(action: save) {
+                Text("Save")
+                    .bold()
+            }
+            .tint(.accent)
+        }
+        ToolbarItem(placement: .cancellationAction) {
+            Button(action: cancel) {
+                Text(.cancelTitle)
+                    .bold()
+            }
+            .tint(.red)
+        }
+    }
+
+    var notificationSelectionView: some View {
+        Section {
+            notificationPickerView
+            notificationDetailsView
+        }
+    }
+
+    var notificationPickerView: some View {
         VStack {
-            Picker(selection: $viewModel.selection) {
-                Text("feed_selection_both")
+            Picker(selection: $manager.selection) {
+                Text(.feedSelectionBoth)
                     .tag(FeedSelection.both)
-                Text("feed_selection_morning")
+                Text(.feedSelectionMorning)
                     .tag(FeedSelection.morning)
-                Text("feed_selection_evening")
+                Text(.feedSelectionEvening)
                     .tag(FeedSelection.evening)
             } label: {
-                Text("feed_time_title")
+                Text(.feedTimeTitle)
             }
             .pickerStyle(.segmented)
         }
     }
 
-    @ViewBuilder
-    func setupPickerView() -> some View {
-        switch viewModel.selection {
+    @ViewBuilder var notificationDetailsView: some View {
+        switch manager.selection {
         case .both:
             morningView
             eveningView
@@ -132,25 +201,115 @@ struct PetChangeView: View {
 
     var eveningView: some View {
         DatePicker(
-            selection: $viewModel.eveningDate,
+            selection: $manager.eveningDate,
             displayedComponents: .hourAndMinute
         ) {
-            Text("feed_selection_evening")
+            Text(.feedSelectionEvening)
         }
     }
 
     var morningView: some View {
         DatePicker(
-            selection: $viewModel.morningDate,
+            selection: $manager.morningDate,
             displayedComponents: .hourAndMinute
         ) {
-            Text("feed_selection_morning")
+            Text(.feedSelectionMorning)
         }
     }
 
+    private func nameCanBeSaved() -> Bool {
+        let petNames = pets.map { $0.name }
+        let isUniqueName = !petNames.contains(where: { $0 == manager.name })
+        return isUniqueName
+    }
+
+    private func saveName() {
+        if nameCanBeSaved() {
+            pet.name = manager.name
+        } else {
+            manager.name = pet.name
+            showError = true
+        }
+    }
+
+    private func save() {
+        if pet.name != manager.name {
+            saveName()
+        }
+
+        // If we have a unique name error, don't continue saving
+        if showError {
+            return
+        }
+
+        if pet.image != manager.petImageData {
+            pet.image = manager.petImageData
+        }
+
+        if pet.type != manager.petType {
+            pet.type = manager.petType
+        }
+
+        if pet.birthday != manager.birthday {
+            pet.birthday = manager.birthday
+        }
+
+        /// This notification might be missing from previous data,
+        /// so it's best to run this even if there's no birthday change.
+        Task {
+            do {
+                try await manager.changeBirthday()
+            } catch {
+                Logger().error(
+                    "Unknown error occurred while updating birthday. \(error.localizedDescription)"
+                )
+            }
+        }
+
+        if pet.feedSelection != manager.selection {
+            pet.feedSelection = manager.selection
+            Task {
+                do {
+                    try await manager.changeNotification()
+                } catch {
+                    Logger().error(
+                        "Unknown error occurred while updating selection. \(error.localizedDescription)"
+                    )
+                }
+            }
+        }
+
+        if pet.hasChanges {
+            Task {
+                do {
+                    try modelContext.save()
+                    Logger().info("Pet Data has been updated")
+                } catch {
+                    Logger().error(
+                        "Unknown error occurred while updating the pet. \(error.localizedDescription)"
+                    )
+                }
+            }
+        }
+        dismiss()
+    }
+
+    private func cancel() {
+        manager.cancel(for: pet)
+        dismiss()
+    }
 }
 
+#if DEBUG
 #Preview {
     PetChangeView(pet: .constant(.preview))
         .modelContainer(DataController.previewContainer)
+        .environment(\.locale, .init(identifier: "tr"))
+}
+#endif
+
+extension View {
+    func wiggling() -> some View {
+        modifier(WiggleModifier())
+    }
 }

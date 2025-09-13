@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 struct AllNotificationsView: View {
 
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
@@ -22,7 +21,7 @@ struct AllNotificationsView: View {
             }
         }
         .task {
-            await notificationManager?.getNotifications()
+            await notificationManager?.refreshNotifications()
         }
     }
 
@@ -30,5 +29,5 @@ struct AllNotificationsView: View {
 
 #Preview {
     AllNotificationsView()
-        .environment(NotificationManager())
+        .environment(NotificationManager.shared)
 }

@@ -14,49 +14,47 @@ import SFSafeSymbols
 
 struct EventListView: View {
 
-    @State private var eventVM: EventViewModel
+    @Environment(EventManager.self) private var eventManager
     @State private var showAddEvent = false
-    
-
-    init(eventVM: EventViewModel) {
-        _eventVM = State(wrappedValue: eventVM)
-    }
 
     var body: some View {
         NavigationStack {
-            EventsView(eventVM: $eventVM, selectedCalendar: $eventVM.selectedCalendar)
-                .navigationTitle(Text("event_title"))
-                .navigationBarTitleTextColor(.accent)
+            EventsView()
+                .navigationTitle(Text(.eventTitle))
                 .toolbar {
-                        EventFilterMenu(
-                            calendars: $eventVM.calendars,
-                            selectedCalendar: $eventVM.selectedCalendar
-                        )
+                        EventFilterMenu()
                         eventToolBar()
                 }
+                .environment(eventManager)
         }
         .sheet(
             isPresented: $showAddEvent,
             onDismiss: reloadEvents
         ) {
-            AddEventView(eventVM: $eventVM)
+            AddEventView()
+                .environment(eventManager)
         }
-        
-        .overlay(content: eventViewOverlay)
+        .overlay {
+            eventViewOverlay()
+        }
         .task {
-            await eventVM.reloadEvents()
+            await eventManager.reloadEvents()
         }
-        .onChange(of: eventVM.selectedCalendar) { oldValue, newValue in
-            Logger.events.info("Selected calendar has changed from \(String(describing: oldValue)) to \(String(describing: newValue))")
+        .onChange(of: eventManager.selectedCalendar) { oldValue, newValue in
+            let oldValue = "\(String(describing: oldValue))"
+            let newValue = "\(String(describing: newValue))"
+            Logger
+                .events
+                .info("Selected calendar has changed from \(oldValue)) to \(newValue)")
         }
     }
 
     @ViewBuilder
     func eventViewOverlay() -> some View {
-        if eventVM.status == .denied {
+        if eventManager.status == .denied {
             ContentUnavailableView(label: {
                 Label {
-                    Text("event_error_title")
+                    Text(.eventErrorTitle)
                 } icon: {
                     Image(systemName: "calendar.badge.exclamationmark")
                 }
@@ -65,15 +63,15 @@ struct EventListView: View {
             }, actions: {
                 SettingsButton()
             })
-        } else if eventVM.status == .readOnly {
+        } else if eventManager.status == .readOnly {
             ContentUnavailableView(label: {
                 Label {
-                    Text("event_error_title")
+                    Text(.eventErrorTitle)
                 } icon: {
-                    Image(systemName: "calendar.badge.exclamationmark")
+                    Image(systemSymbol: .calendarBadgeExclamationmark)
                 }
             }, description: {
-                Text("event_wrong_allowence")
+                Text(.eventWrongAllowence)
             }, actions: {
                 SettingsButton()
             })
@@ -85,19 +83,19 @@ struct EventListView: View {
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: toggleAddEvent) {
                 Label {
-                    Text("add_event_accessible_title")
+                    Text(.addEventAccessibleTitle)
                         .font(.title2)
-                        .foregroundStyle(.accent)
                 } icon: {
-                    Image(systemSymbol: SFSymbol.calendarBadgePlus)
+                    Image(systemSymbol: .calendarBadgePlus)
                 }
             }
+            .tint(.accent)
         }
     }
 
     private func reloadEvents() {
         Task {
-            await eventVM.reloadEvents()
+            await eventManager.reloadEvents()
         }
     }
 
@@ -106,6 +104,12 @@ struct EventListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
-    EventListView(eventVM: .init(isDemo: true))
+    NavigationStack {
+        EventListView()
+            .environment(EventManager.demo)
+    }
+
 }
+#endif

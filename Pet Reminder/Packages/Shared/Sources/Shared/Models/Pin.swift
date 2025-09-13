@@ -11,7 +11,7 @@ import MapKit
 
 public struct Pin: Identifiable, Hashable {
     public var item: MKMapItem
-    
+
     public init(item: MKMapItem) {
         self.item = item
     }
@@ -20,20 +20,8 @@ public struct Pin: Identifiable, Hashable {
         "\(latitude)-\(longitude)-\(name)"
     }
 
-    public var subThoroughfare: String? {
-        item.placemark.subThoroughfare
-    }
-
-    public var thoroughfare: String? {
-        item.placemark.thoroughfare
-    }
-
-    public var locality: String? {
-        item.placemark.locality
-    }
-
-    public var postalCode: String? {
-        item.placemark.postalCode
+    public var fullAdress: String? {
+        item.address?.fullAddress
     }
 
     public var phoneNumber: String? {
@@ -41,7 +29,7 @@ public struct Pin: Identifiable, Hashable {
     }
 
     public var location: CLLocation {
-        item.placemark.location ?? .init()
+        item.location
     }
 
     public var coordinate: CLLocationCoordinate2D {

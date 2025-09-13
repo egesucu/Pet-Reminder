@@ -9,12 +9,10 @@
 /* Begin PBXBuildFile section */
 		7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F02DB2B6F600F1BAA2 /* Shared */; };
 		7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */; };
-		728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 728C343D2DD8BE9C00C75BE8 /* MarkdownUI */; };
+		9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D06639B2E0B5D28004CF6F5 /* Shared */; };
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
-		9D662A772E0CA6BF00757A91 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D662A762E0CA6BF00757A91 /* Shared */; };
-		9D662A792E0CA6C300757A91 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D662A782E0CA6C300757A91 /* Shared */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
@@ -60,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D662A792E0CA6C300757A91 /* Shared in Frameworks */,
+				9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,9 +69,7 @@
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
 				7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */,
-				728C343E2DD8BE9C00C75BE8 /* MarkdownUI in Frameworks */,
 				7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */,
-				9D662A772E0CA6BF00757A91 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +136,7 @@
 			);
 			name = "Pet ReminderTests";
 			packageProductDependencies = (
-				9D662A782E0CA6C300757A91 /* Shared */,
+				9D06639B2E0B5D28004CF6F5 /* Shared */,
 			);
 			productName = "Pet ReminderTests";
 			productReference = 72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */;
@@ -157,6 +153,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9D0305952E25B36600AA5CAE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				7214E4902DB2B61B00F1BAA2 /* Pet Reminder */,
@@ -165,8 +162,6 @@
 			packageProductDependencies = (
 				7214E4F02DB2B6F600F1BAA2 /* Shared */,
 				7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */,
-				728C343D2DD8BE9C00C75BE8 /* MarkdownUI */,
-				9D662A762E0CA6BF00757A91 /* Shared */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -180,7 +175,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = "Ege Sucu";
 				TargetAttributes = {
 					72C446432C9B6BBC003B1DE7 = {
@@ -204,8 +199,8 @@
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
 				7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
-				728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				9D662A752E0CA6BF00757A91 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */,
+				9D06639A2E0B5D28004CF6F5 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */,
+				9D0305932E25B35800AA5CAE /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -260,6 +255,10 @@
 			target = 9D8E76ED248666BD004610C8 /* Pet Reminder */;
 			targetProxy = 72C446482C9B6BBC003B1DE7 /* PBXContainerItemProxy */;
 		};
+		9D0305952E25B36600AA5CAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9D0305942E25B36600AA5CAE /* SwiftLintBuildToolPlugin */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -272,6 +271,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "tr.com.egesucu.Pet-ReminderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -296,6 +296,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "tr.com.egesucu.Pet-ReminderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -375,7 +376,9 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -387,10 +390,12 @@
 				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
 				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
 				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
+				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
 				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_UPCOMING_FEATURE_NONISOLATED_NONSENDING_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 6.0;
 			};
@@ -454,7 +459,9 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -466,10 +473,12 @@
 				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
 				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
 				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
+				SWIFT_UPCOMING_FEATURE_INFER_ISOLATED_CONFORMANCES = YES;
 				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
 				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_UPCOMING_FEATURE_NONISOLATED_NONSENDING_BY_DEFAULT = YES;
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
@@ -482,6 +491,14 @@
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = SwiftUI;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_OSOBJECT_C_STYLE_CAST = YES;
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
+				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -489,21 +506,28 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Pet Reminder/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.5.2;
+				MARKETING_VERSION = 26;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_MEMORY_SAFETY = NO;
 				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
 				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
 				SWIFT_UPCOMING_FEATURE_DISABLE_OUTWARD_ACTOR_ISOLATION = YES;
@@ -519,6 +543,7 @@
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -528,6 +553,14 @@
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = SwiftUI;
+				CLANG_ANALYZER_GCD_PERFORMANCE = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_OSOBJECT_C_STYLE_CAST = YES;
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
+				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
 				CODE_SIGN_ENTITLEMENTS = "Pet Reminder/Utilities/Pet Reminder.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -535,21 +568,28 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Pet Reminder/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Pet Reminder/Utilities/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.5.2;
+				MARKETING_VERSION = 26;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_MEMORY_SAFETY = NO;
 				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
 				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
 				SWIFT_UPCOMING_FEATURE_DISABLE_OUTWARD_ACTOR_ISOLATION = YES;
@@ -565,6 +605,7 @@
 				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -601,7 +642,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		9D662A752E0CA6BF00757A91 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */ = {
+		9D06639A2E0B5D28004CF6F5 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Pet Reminder/Packages/Shared";
 		};
@@ -616,12 +657,12 @@
 				minimumVersion = 6.2.0;
 			};
 		};
-		728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+		9D0305932E25B35800AA5CAE /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.4.1;
+				minimumVersion = 0.59.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -636,16 +677,12 @@
 			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
 			productName = SFSafeSymbols;
 		};
-		728C343D2DD8BE9C00C75BE8 /* MarkdownUI */ = {
+		9D0305942E25B36600AA5CAE /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 728C343C2DD8BE9C00C75BE8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
+			package = 9D0305932E25B35800AA5CAE /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
-		9D662A762E0CA6BF00757A91 /* Shared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Shared;
-		};
-		9D662A782E0CA6C300757A91 /* Shared */ = {
+		9D06639B2E0B5D28004CF6F5 /* Shared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Shared;
 		};

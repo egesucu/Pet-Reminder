@@ -9,44 +9,42 @@
 import SwiftUI
 import Shared
 import SwiftData
+import SFSafeSymbols
 
 struct PreviousFeedsSection: View {
     var feeds: [Feed]?
 
+    var previousFeeds: [Feed] {
+        feeds?
+            .filter { !Calendar.current.isDateInToday(
+                $0.feedDate ?? .now
+            )
+            } ?? []
+    }
+
     var body: some View {
-        Section {
-            if ((feeds?
-                .filter({ !Calendar.current.isDateInToday($0.feedDate ?? .now) }).isEmpty) != nil) {
-                Text("no_feed_content")
-            } else {
-                ForEach(
-                    feeds?
-                        .filter(
-                            { !Calendar.current.isDateInToday(
-                                $0.feedDate ?? .now
-                            )
-                            }) ?? [],
-                    id: \.self
-                ) { feed in
-                    if let morning = feed.morningFedStamp {
+        if previousFeeds.isEmpty {
+            Text(.noFeedContent)
+        } else {
+            ForEach(previousFeeds, id: \Feed.id) { feed in
+                if let morning = feed.morningFedStamp {
+                    HStack {
                         Row(
-                            imageName: "sun.max.fill",
-                            title: String(
-                                localized: "feed_content"
-                            ),
+                            imageName: SFSymbol.sunMaxFill.rawValue,
                             content: morning.formatted(
                                 date: .abbreviated,
                                 time: .shortened
                             ),
                             type: .morning
                         )
+                        Spacer()
                     }
-                    if let evening = feed.eveningFedStamp {
+                }
+                if let evening = feed.eveningFedStamp {
+                    HStack {
+                        Spacer()
                         Row(
-                            imageName: "moon.circle.fill",
-                            title: String(
-                                localized: "feed_content"
-                            ),
+                            imageName: SFSymbol.moonCircleFill.rawValue,
                             content: evening.formatted(
                                 date: .abbreviated,
                                 time: .shortened
@@ -56,15 +54,14 @@ struct PreviousFeedsSection: View {
                     }
                 }
             }
-        } header: {
-            Text("previous_title")
+            .padding(.horizontal)
         }
     }
 }
 
 #Preview {
     @Previewable var feeds: [Feed] = Feed.previews
-    
+
     PreviousFeedsSection(feeds: feeds)
         .modelContainer(DataController.previewContainer)
 }

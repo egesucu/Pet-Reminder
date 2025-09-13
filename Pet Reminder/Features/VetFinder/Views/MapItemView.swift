@@ -8,11 +8,9 @@
 import SwiftUI
 import MapKit
 import Shared
-
+import SFSafeSymbols
 
 struct MapItemView: View {
-
-    
 
     var location: Pin?
     @State private var showOpenMapAlert = false
@@ -28,7 +26,7 @@ struct MapItemView: View {
                     VStack(alignment: .leading) {
                         if let phoneNumber = location.phoneNumber {
                             HStack {
-                                Image(systemName: "phone.fill")
+                                Image(systemSymbol: .phoneFill)
                                     .foregroundStyle(.accent)
                                 Text(phoneNumber)
                                     .foregroundStyle(.accent)
@@ -44,15 +42,11 @@ struct MapItemView: View {
                             }
                             .tint(.accent)
                         }
-                        if let subThoroughfare = location.subThoroughfare,
-                           let thoroughfare = location.thoroughfare,
-                           let locality = location.locality,
-                           let postalCode = location.postalCode {
+                        if let fullAdress = location.fullAdress {
                             HStack {
-                                Image(systemName: "building.fill")
+                                Image(systemSymbol: .buildingFill)
                                     .foregroundStyle(.accent)
-                                Text("\(thoroughfare), \(subThoroughfare)")
-                                Text("\n\(postalCode), \(locality)")
+                                Text(fullAdress)
                                 Spacer()
                             }
 
@@ -60,7 +54,7 @@ struct MapItemView: View {
                     }
                 }
                 Button(action: openMapDetail) {
-                    Text("map_open_in")
+                    Text(.mapOpenIn)
                 }
                 .buttonStyle(.bordered)
                 .padding(.trailing, 10)
@@ -77,7 +71,7 @@ struct MapItemView: View {
                     }
                 }
             }
-            Button("Cancel", action: {})
+            Button(role: .cancel, action: {})
         }
     }
 

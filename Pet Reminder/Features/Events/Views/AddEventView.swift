@@ -13,75 +13,92 @@ import Shared
 
 struct AddEventView: View {
 
-    @Binding var eventVM: EventViewModel
+    @Environment(EventManager.self) private var manager
     @Environment(\.dismiss) var dismiss
-    
+
+    @State private var eventName = ""
+    @State private var allDay = false
+    @State private var startDate: Date = Calendar.current.date(
+        byAdding: .hour,
+        value: 1,
+        to: .now
+    ) ?? .now
+    @State private var endDate: Date = Calendar.current.date(
+        byAdding: .hour,
+        value: 2,
+        to: .now
+    ) ?? .now
     @State private var filteredCalendars: [EKCalendar] = []
 
     let feedback = UINotificationFeedbackGenerator()
-    
+
     var body: some View {
         NavigationStack {
             Form {
                 Section(
                     header: Text(
-                        "add_event_info"
+                        .addEventInfo
                     )
                 ) {
-                    TextField(text: $eventVM.eventName) {
-                        Text("add_event_name")
+                    TextField(text: $eventName) {
+                        Text(.addEventName)
                     }
                 }
                 Section(
                     header: Text(
-                        "add_event_time"
+                        .addEventTime
                     )
                 ) {
-                    Toggle(isOn: $eventVM.isAllDay) {
-                        Text("all_day_title")
+                    Toggle(isOn: $allDay) {
+                        Text(.allDayTitle)
                     }
                     eventDateView()
                 }
             }
             .tint(.accent)
             .navigationTitle(
-                Text("add_event_title")
+                Text(.addEventTitle)
             )
-            .navigationBarTitleTextColor(.accent)
-            .toolbar(content: addEventToolbar)
+            .toolbar(content: {
+                addEventToolbar()
+            })
         }
     }
 
     @ViewBuilder
     func eventDateView() -> some View {
-        if eventVM.isAllDay {
-            DatePicker(selection: $eventVM.eventStartDate, displayedComponents: .date) {
-                Text("add_event_date")
+        if allDay {
+            DatePicker(selection: $startDate, displayedComponents: .date) {
+                Text(.addEventDate)
             }
         } else {
-            DatePicker(selection: $eventVM.eventStartDate) {
-                Text("add_event_start")
+            DatePicker(selection: $startDate) {
+                Text(.addEventStart)
             }
-            .onChange(of: eventVM.eventStartDate, changeEventMinimumDate)
-            DatePicker(selection: $eventVM.eventEndDate) {
-                Text("add_event_end")
+            .onChange(of: startDate, changeEventMinimumDate)
+            DatePicker(selection: $endDate) {
+                Text(.addEventEnd)
             }
         }
     }
 
     @ToolbarContentBuilder
     func addEventToolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading, content: cancelButton)
-        ToolbarItem(placement: .topBarTrailing, content: saveButton)
+        ToolbarItem(placement: .topBarLeading) {
+            cancelButton()
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            saveButton()
+        }
     }
 
     private func changeEventMinimumDate() {
-        eventVM.eventEndDate = eventVM.eventStartDate.addingTimeInterval(60*60)
+        endDate = startDate.addingTimeInterval(60*60)
     }
 
     private func saveButton() -> some View {
         Button(action: saveEvent) {
-            Text("add_event_save")
+            Text(.addEventSave)
                 .foregroundStyle(.accent)
                 .bold()
         }
@@ -89,7 +106,7 @@ struct AddEventView: View {
 
     private func cancelButton() -> some View {
         Button(action: dismiss.callAsFunction) {
-            Text("cancel")
+            Text(.cancelTitle)
         }
         .foregroundStyle(Color.red)
         .bold()
@@ -98,7 +115,12 @@ struct AddEventView: View {
     private func saveEvent() {
         feedback.notificationOccurred(.success)
         Task {
-            await eventVM.saveEvent()
+            await manager.saveEvent(
+                name: eventName,
+                start: startDate,
+                end: endDate,
+                allDay: allDay
+            )
             dismiss()
         }
     }
@@ -106,5 +128,6 @@ struct AddEventView: View {
 }
 
 #Preview {
-    AddEventView(eventVM: .constant(.init(isDemo: true)))
+    AddEventView()
+        .environment(EventManager.demo)
 }

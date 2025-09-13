@@ -11,26 +11,37 @@ import Shared
 
 struct Row: View {
     var imageName: String
-    var title: String
     var content: String
     var type: NotificationType
 
     var body: some View {
         HStack(alignment: .center) {
             Image(systemName: imageName)
-                .symbolRenderingMode(.hierarchical)
                 .font(.title)
-                .foregroundStyle(type == .morning ? .yellow  : .blue)
             Text(content)
         }
+        .bold()
+        .foregroundStyle(.white)
+        .padding(.all)
+        .glassEffect(
+            .regular.tint(
+                type == .morning ? .yellow  : .blue
+            )
+        )
     }
 }
 
 #Preview {
-    Row(
-        imageName: "",
-        title: "",
-        content: "",
-        type: .morning
-    )
+    Group {
+        Row(
+            imageName: "sun.max.circle.fill",
+            content: "heyoooooooooooo",
+            type: .morning
+        )
+        Row(
+            imageName: "moon.circle.fill",
+            content: "Hellooooo",
+            type: .evening
+        )
+    }
 }

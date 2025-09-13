@@ -12,27 +12,27 @@ import EventKit
 import Shared
 
 struct EventFilterMenu: ToolbarContent {
-    @Binding var calendars: [EventCalendar]
-    @Binding var selectedCalendar: EventCalendar?
-    
+
+    @Environment(EventManager.self) private var manager
+
     func iconNameDefinition(_ title: String) -> String {
         title.prefix(1).localizedLowercase
     }
-    
+
     var allCalendars: [EventCalendar] {
-        let allOption = EventCalendar(String(localized: "Tümü"))
-        return ([allOption] + calendars)
+        let allOption = EventCalendar(String(localized: .all))
+        return ([allOption] + manager.calendars)
     }
-    
+
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Menu {
-                ForEach(allCalendars, id:\.title) { calendar in
+                ForEach(allCalendars, id: \.title) { calendar in
                     Button {
-                        if calendar.title == String(localized: "Tümü") {
-                            selectedCalendar = nil
+                        if calendar.title == String(localized: .all) {
+                            manager.selectedCalendar = nil
                         } else {
-                            selectedCalendar = calendar
+                            manager.selectedCalendar = calendar
                         }
                     } label: {
                         HStack {
@@ -40,31 +40,24 @@ struct EventFilterMenu: ToolbarContent {
                                 .symbolRenderingMode(.monochrome)
                                 .overlay(
                                     Group {
-                                        if selectedCalendar == calendar {
-                                            Image(systemName: "checkmark")
+                                        if manager.selectedCalendar == calendar {
+                                            Image(systemSymbol: .checkmark)
                                                 .font(.system(size: 8, weight: .bold))
                                                 .foregroundColor(.white)
                                         }
                                     },
                                     alignment: .center
                                 )
-                            
+
                             Text(calendar.title)
-                                .fontWeight(selectedCalendar == calendar ? .semibold : .regular)
+                                .fontWeight(manager.selectedCalendar == calendar ? .semibold : .regular)
                         }
                     }
                     .tag(calendar)
                 }
             } label: {
-                Circle()
-                    .fill(.gray.opacity(0.15))
-                    .frame(width: 30, height: 30)
-                    .overlay {
-                        Image(systemSymbol: .ellipsis)
-                            .font(.system(size: 13.0, weight: .semibold))
-                            .foregroundColor(.accentColor)
-                            .padding()
-                    }
+                Image(systemSymbol: .ellipsis)
+                    .foregroundStyle(Color.accent)
             }
             .menuOrder(.priority)
         }
@@ -75,17 +68,14 @@ struct EventFilterMenu: ToolbarContent {
     NavigationStack {
         ScrollView {
             VStack {
-                Text("Hello")
+                Text(.hello)
             }
-            .navigationTitle(Text("Demo"))
+            .navigationTitle(Text(.hello))
             .toolbar {
-                EventFilterMenu(
-                    calendars: .constant([]),
-                selectedCalendar: .constant(nil)
-                )
+                EventFilterMenu()
             }
         }
-        
     }
-   
+    .environment(EventManager.demo)
+
 }

@@ -9,26 +9,25 @@
 import SwiftUI
 import Shared
 import OSLog
-import MarkdownUI
 
 struct LicenseView: View {
-    @State private var content = ""
-    
+    @State private var context: AttributedString = .init()
+
     var body: some View {
         ScrollView {
-            Markdown(content)
-                .padding(.all)
+            VStack {
+                Text(context).padding(.all)
+            }
         }
         .task(readFile)
-        .navigationTitle(Text("license_title"))
+        .navigationTitle(Text(.licenseTitle))
     }
-    
-    @MainActor
+
     func readFile() async {
         if let fileURL = SharedResources.bundle.url(forResource: "LICENSE", withExtension: "md") {
             do {
-                let string = try String(contentsOf: fileURL, encoding: .utf8)
-                content = string
+                let data = try AttributedString.convertMarkdown(url: fileURL)
+                context = data
             } catch {
                 Logger().error("Could not read the License file: \(error)")
             }

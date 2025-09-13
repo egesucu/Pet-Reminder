@@ -12,7 +12,7 @@ import SFSafeSymbols
 public struct MorningCheckboxView: View {
 
     @Binding var morningOn: Bool
-    
+
     public init(
         morningOn: Binding<Bool>
     ) {
@@ -22,25 +22,26 @@ public struct MorningCheckboxView: View {
     public var body: some View {
         VStack {
             Label {
-                Text("feed_selection_morning")
+                Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
-                    .font(.title2.bold())
+                    .lineLimit(nil)
             } icon: {
-                Image(systemSymbol: SFSymbol.sunMaxCircleFill)
+                Image(systemSymbol: .sunMaxCircleFill)
                     .symbolRenderingMode(.hierarchical)
                     .symbolEffect(.bounce, value: morningOn)
                     .foregroundStyle(.yellow)
-                    .font(.largeTitle.bold())
             }
-            .font(.title.bold())
+            .font(.largeTitle.bold())
             .padding(.bottom)
             CheckBoxView(isChecked: $morningOn)
         }
         .clipShape(.rect(cornerRadius: 20))
-        .frame(width: 150, height: 150)
+        .frame(idealWidth: 150, idealHeight: 150)
     }
 }
 
 #Preview {
-    MorningCheckboxView(morningOn: .constant(true))
+    @Previewable @State var isOn = false
+
+    MorningCheckboxView(morningOn: $isOn)
 }

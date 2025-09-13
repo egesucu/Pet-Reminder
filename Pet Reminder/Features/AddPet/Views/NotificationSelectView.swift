@@ -14,35 +14,36 @@ struct NotificationSelectView: View {
     @Binding var feedSelection: FeedSelection
 
     var body: some View {
-        VStack(spacing: 10) {
-            Text("feed_time_title")
-                .font(.title3).bold()
+        VStack(spacing: 20) {
+            Text(.feedTimeTitle)
+                .font(.title3)
+                .bold()
                 .foregroundStyle(Color.label)
-                .padding(.vertical)
                 .animation(.easeOut(duration: 0.8), value: feedSelection)
-            Picker(
-                selection: $feedSelection,
-                label: Text("feed_time_title")
-            ) {
-                Text("feed_selection_both")
-                    .tag(FeedSelection.both)
-                    .foregroundStyle(Color.label)
-                Text("feed_selection_morning")
-                    .tag(FeedSelection.morning)
-                    .foregroundStyle(Color.label)
-                Text("feed_selection_evening")
-                    .tag(FeedSelection.evening)
-                    .foregroundStyle(Color.label)
+            HStack {
+                Spacer()
+                Picker(
+                    selection: $feedSelection,
+                    label: Text(.feedTimeTitle)
+                ) {
+                    ForEach(FeedSelection.allCases, id: \.description) {
+                        Text($0.localized)
+                            .tag($0)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .tint(.green)
+                .animation(.easeOut(duration: 0.8), value: feedSelection)
+                Spacer()
             }
-            .pickerStyle(.menu)
-            .tint(.accent)
-            .animation(.easeOut(duration: 0.8), value: feedSelection)
         }
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var feedSelection: FeedSelection = .both
     NotificationSelectView(feedSelection: $feedSelection)
-        .background(.ultraThinMaterial)
+        .padding()
 }
+#endif

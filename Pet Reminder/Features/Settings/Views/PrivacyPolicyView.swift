@@ -13,16 +13,16 @@ struct PrivacyPolicyView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text("privacy_policy_content")
+                Text(.privacyPolicyContent)
                     .padding(.all)
             }
         }
-        .navigationTitle(Text("privacy_policy_title"))
-        .navigationBarTitleTextColor(.accent)
-
+        .navigationTitle(Text(.privacyPolicyTitle))
     }
 }
 
 #Preview {
-    PrivacyPolicyView()
+    NavigationStack {
+        PrivacyPolicyView()
+    }
 }

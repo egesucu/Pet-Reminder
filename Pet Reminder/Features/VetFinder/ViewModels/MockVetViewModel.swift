@@ -32,12 +32,10 @@ class MockVetViewModel: @unchecked Sendable {
         self.mapViewStatus = .authorized
     }
 
-    @MainActor
     func clearPreviousSearches() async {
         searchedLocations.removeAll()
     }
 
-    @MainActor
     func searchPins() async {
         await clearPreviousSearches()
 
@@ -46,37 +44,32 @@ class MockVetViewModel: @unchecked Sendable {
         self.searchedLocations = [
             Pin(
                 item: MKMapItem(
-                    placemark: MKPlacemark(
-                        coordinate: CLLocationCoordinate2D(latitude: 41.1114, longitude: 29.1790)
-                    )
+                    location: .init(latitude: 41.1114, longitude: 29.1790),
+                    address: nil
                 )
             ),
             Pin(
                 item: MKMapItem(
-                    placemark: MKPlacemark(
-                        coordinate: CLLocationCoordinate2D(latitude: 41.0681, longitude: 29.0693)
-                    )
+                    location: .init(latitude: 41.0681, longitude: 29.0693),
+                    address: nil
                 )
             ),
             Pin(
                 item: MKMapItem(
-                    placemark: MKPlacemark(
-                        coordinate: CLLocationCoordinate2D(latitude: 41.0200, longitude: 29.3439)
-                    )
+                    location: .init(latitude: 41.0200, longitude: 29.3439),
+                    address: nil
                 )
             ),
             Pin(
                 item: MKMapItem(
-                    placemark: MKPlacemark(
-                        coordinate: CLLocationCoordinate2D(latitude: 41.0663, longitude: 28.9010)
-                    )
+                    location: .init(latitude: 41.0663, longitude: 28.9010),
+                    address: nil
                 )
             ),
             Pin(
                 item: MKMapItem(
-                    placemark: MKPlacemark(
-                        coordinate: CLLocationCoordinate2D(latitude: 41.2085, longitude: 29.0942)
-                    )
+                    location: .init(latitude: 41.2085, longitude: 29.0942),
+                    address: nil
                 )
             )
         ]

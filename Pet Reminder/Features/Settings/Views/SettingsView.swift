@@ -10,96 +10,76 @@ import SwiftUI
 import OSLog
 import Shared
 
-
 struct SettingsView: View {
-
-    @State private var alertMessage: LocalizedStringKey = ""
-    @State private var showAlert = false
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
 
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("app_settings")) {
-                    NavigationLink {
+                Section(header: Text(.appSettings)) {
+                    NavigationLink(.managePetTitle) {
                         PetChangeListView()
                             .environment(notificationManager)
-                    } label: {
-                        Text("manage_pet_title")
                     }
-                    NavigationLink {
+                    NavigationLink(.notificationsManageTitle) {
                         NotificationView()
-                    } label: {
-                        Text("notifications_manage_title")
                     }
-                    NavigationLink {
+                    NavigationLink(.privacyPolicyTitle) {
                         PrivacyPolicyView()
-                    } label: {
-                        Text(LocalizedStringKey("privacy_policy_title"))
                     }
-                    
-                    NavigationLink {
+                    NavigationLink(.licenseViewLabel) {
                         LicenseView()
-                    } label: {
-                        Text("license_view_label")
                     }
                 }
                 Section {
-                    NavigationLink {
+                    NavigationLink(.donateUsTitle) {
                         DonateView()
-                    } label: {
-                        Text("donate_us_title")
                     }
                 } header: {
-                    Text("buy_coffee_title")
+                    Text(.buyCoffeeTitle)
                 } footer: {
-                    Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
+                    Text(currentYear)
                 }
                 #if DEBUG
                 debugMenu
-                NavigationLink(
-                    destination: AllNotificationsView()
-                ) {
-                    Text("All Notifications")
-                }
                 #endif
             }
-            .alert(alertMessage, isPresented: $showAlert, actions: {
-                Button("OK", role: .cancel) {}
-
-            })
-            .navigationTitle(Text("settings_tab_title"))
-            .navigationBarTitleTextColor(.accent)
-
-        }.navigationViewStyle(.stack)
+            .navigationTitle(Text(.settingsTabTitle))
+        }
     }
 
-    private func showAlert(content: LocalizedStringKey) {
-        alertMessage = content
-        showAlert.toggle()
+    /// Shows the current year info from latest year
+    /// - Returns: A String value depending on the current year,
+    /// like `© Ege Sucu 2025`
+    var currentYear: String {
+        Strings.footerLabel(Date.now.formatted(.dateTime.year()))
     }
 }
 
 #if DEBUG
 private var debugMenu: some View {
     Section {
-        Button {
-            let domainName = Bundle.main.bundleIdentifier ?? ""
-            UserDefaults.standard.removePersistentDomain(forName: domainName)
-            UserDefaults.standard.synchronize()
-            Logger.settings.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
-        } label: {
-            Text("remove_userdefaults")
+        Button(.removeUserdefaults, action: removeUserDefaults)
+        NavigationLink(.allNotifications) {
+            AllNotificationsView()
         }
     } header: {
-        Text("debug_menu_title")
-    } footer: {
-        Text(Strings.footerLabel(Date.now.formatted(.dateTime.year())))
+        Text(.debugMenuTitle)
     }
 }
+
+private func removeUserDefaults() {
+    Logger.settings.debug("Removing the user defaults")
+    let domainName = Bundle.main.bundleIdentifier ?? ""
+    Logger.settings.debug("Bundle ID is: \(domainName)")
+    UserDefaults.standard.removePersistentDomain(forName: domainName)
+    UserDefaults.standard.synchronize()
+    Logger.settings.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
+}
+
 #endif
 
 #Preview {
     SettingsView()
-        .environment(NotificationManager())
+        .environment(NotificationManager.shared)
 }

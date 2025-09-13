@@ -10,25 +10,25 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
-
+import SFSafeSymbols
 
 struct PetChangeListView: View {
-    
+
     @Environment(\.modelContext)
     private var modelContext
     @Environment(NotificationManager.self)
     private var notificationManager: NotificationManager
-    
+
     @Query(sort: \Pet.name) var pets: [Pet]
-    
-    @State private var showUndoButton = false
-    @State private var buttonTimer: (any DispatchSourceTimer)?
-    @State private var time = 0
+
     @State private var isEditing = false
-    @State private var selectedPet: Pet?
+    @State private var selectedPet: Pet = .init()
     @State private var showSelectedPet = false
-    @State private var showEditButton = false
-    
+
+    var showEditButton: Bool {
+        pets.isNotEmpty
+    }
+
     var body: some View {
         VStack {
             ScrollView {
@@ -49,23 +49,26 @@ struct PetChangeListView: View {
                         Button {
                             isEditing.toggle()
                         } label: {
-                            Text(isEditing ? "Done" : "Edit")
+                            Text(isEditing ? .done : .edit)
+                                .animation(.bouncy)
                         }
                     }
-                    
+
                 }
-                
+
             }
-            .navigationTitle(Text("Choose Friend"))
-            .navigationBarTitleTextColor(.accent)
+            .navigationTitle(Text(.chooseFriend))
         }
         .overlay {
             if pets.isEmpty {
-                ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
+                ContentUnavailableView(
+                    "pet_no_pet",
+                    systemSymbol: .pawprintCircle
+                )
             }
         }
     }
-    
+
     @ViewBuilder
     private var petList: some View {
         LazyVGrid(columns: [.init(), .init()]) {
@@ -77,89 +80,62 @@ struct PetChangeListView: View {
                                 if let imageData = pet.image,
                                    let image = UIImage(data: imageData) {
                                     Image(uiImage: image)
-                                        .petImageStyle(useShadows: true)
+                                        .petImageStyle()
                                         .frame(width: 120, height: 120)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 60)
-                                                .stroke(
-                                                    defineColor(pet: pet),
-                                                    lineWidth: 5
-                                                )
-                                        )
                                         .wiggling()
                                 } else {
                                     Image(.generateDefaultData(type: pet.type))
                                         .petImageStyle()
                                         .frame(width: 120, height: 120)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 60)
-                                                .stroke(
-                                                    defineColor(pet: pet),
-                                                    lineWidth: 5
-                                                )
-                                        )
                                         .wiggling()
                                 }
-                                
+
                                 Text(pet.name)
                             }
                             Button {
-                                withAnimation {
-                                    deletePet(pet: pet)
-                                    isEditing = false
+                                Task {
+                                    do {
+                                        try await deletePet(pet: pet)
+                                        withAnimation {
+                                            isEditing = false
+                                        }
+                                    } catch {
+                                        Logger.pets.error("Failed to delete pet: \(error.localizedDescription)")
+                                    }
                                 }
                             } label: {
-                                Image(systemName: "xmark.circle.fill")
+                                Image(systemSymbol: .xmarkCircleFill)
                                     .font(.title)
-                                    .foregroundStyle(Color.red)
+                                    .foregroundStyle(.red)
                                     .offset(x: 15, y: 0)
                             }
-                            
+
                         }
-                        .transition(
-                            .asymmetric(
-                                insertion: .identity,
-                                removal: .scale
-                                    .combined(
-                                        with: .opacity
-                                    )
-                            )
-                        )
+                        .opacity(isEditing ? 1 : 0)
+                        .scaleEffect(isEditing ? 1 : 0.95)
+                        .animation(.easeInOut(duration: 0.3), value: isEditing)
                     } else {
                         if let imageData = pet.image,
                            let image = UIImage(data: imageData) {
                             Image(uiImage: image)
-                                .petImageStyle(useShadows: true)
+                                .petImageStyle()
                                 .frame(width: 120, height: 120)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 60)
-                                        .stroke(
-                                            defineColor(pet: pet),
-                                            lineWidth: 5
-                                        )
-                                )
                         } else {
                             Image(.generateDefaultData(type: pet.type))
                                 .petImageStyle()
                                 .frame(width: 120, height: 120)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 60)
-                                        .stroke(
-                                            defineColor(pet: pet),
-                                            lineWidth: 5
-                                        )
-                                )
                         }
                         Text(pet.name)
                     }
-                    
+
                 }
                 .onTapGesture {
+                    isEditing = false
                     selectedPet = pet
                     showSelectedPet.toggle()
                     Logger
                         .pets
-                        .info("PR: Pet Selected: \(selectedPet?.name ?? "")")
+                        .info("PR: Pet Selected: \(selectedPet.name)")
                 }
                 .sheet(isPresented: $showSelectedPet, onDismiss: deselectPet, content: {
                     PetChangeView(pet: $selectedPet)
@@ -172,17 +148,17 @@ struct PetChangeListView: View {
             }
         }
     }
-    
+
     private func deselectPet() {
-        selectedPet = nil
+        selectedPet = .init()
     }
-    
+
     private func setEditMode() {
         isEditing.toggle()
     }
-    
-    func deletePet(pet: Pet) {
-        notificationManager.removeAllNotifications(of: pet.name)
+
+    func deletePet(pet: Pet) async throws {
+        try await notificationManager.removeAllNotifications(of: pet.name)
         if pet == selectedPet {
             deselectPet()
         }
@@ -190,18 +166,14 @@ struct PetChangeListView: View {
             modelContext.delete(pet)
         }
     }
-    
-    private func defineColor(pet: Pet) -> Color {
-        selectedPet == pet
-        ? Color.yellow
-        : Color.clear
-    }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         PetChangeListView()
             .modelContainer(DataController.previewContainer)
-            .environment(NotificationManager())
+            .environment(NotificationManager.shared)
     }
 }
+#endif

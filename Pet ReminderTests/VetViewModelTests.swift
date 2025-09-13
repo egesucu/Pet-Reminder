@@ -8,18 +8,17 @@
 
 import Testing
 import Observation
-import Shared
 import OSLog
+import Shared
 @testable import Pet_Reminder
 
 @Suite("Vet ViewModel Tests") struct VetViewModelTests {
 
     @Test @MainActor func testPinSearch() async throws {
         let viewModel = VetViewModel()
-        viewModel.searchText = "Vet"
-        
-        try await viewModel.searchPins()
-        
+
+        try await viewModel.searchPins(text: "Vet")
+
         Task {
             let halfSecond: Duration = .milliseconds(500)
             try await Task.sleep(for: halfSecond)
@@ -27,12 +26,10 @@ import OSLog
         }
     }
 
-    
     @Test @MainActor func testClearSearchedLocations() async throws {
         let viewModel = VetViewModel()
-        viewModel.searchText = "Pet"
         do {
-            try await viewModel.searchPins()
+            try await viewModel.searchPins(text: "Pet")
         } catch let error {
             Issue.record(error, "Error setting user location")
         }

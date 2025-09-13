@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import SFSafeSymbols
 
 struct PetShowImageView: View {
 
@@ -15,29 +15,28 @@ struct PetShowImageView: View {
     var onImageDelete: () -> Void
 
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             Image(uiImage: selectedImage)
                 .resizable()
                 .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .frame(maxHeight: 180)
-                .shadow(radius: 10)
-                .padding(.trailing, 10)
-            Button {
-                onImageDelete()
-            } label: {
-                Text("Remove")
-                    .font(.title3)
+                .clipShape(.circle)
+
+            Button(role: .destructive, action: onImageDelete) {
+                Label("Remove", systemSymbol: .minusCircleFill)
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.glass)
             .tint(.red)
         }
     }
 }
 
+#if DEBUG
 #Preview {
-    let image = UIImage(resource: .defaultOther)
-    PetShowImageView(selectedImage: image) {
+    @Previewable @State var image = UIImage(resource: .defaultOther)
 
-    }
+    PetShowImageView(selectedImage: image, onImageDelete: {
+        print("Image has been deleted.")
+    })
+        .padding()
 }
+#endif

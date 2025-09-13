@@ -12,12 +12,11 @@ import Shared
 
 struct FutureEventsView: View {
 
-    @Binding var eventVM: EventViewModel
-    @Binding var selectedCalendar: EventCalendar?
+    @Environment(EventManager.self) private var manager
 
     var filteredEvents: [EKEvent] {
-        eventVM.events.filter {
-            if let selectedCalendar {
+        manager.events.filter {
+            if let selectedCalendar = manager.selectedCalendar {
                 return Calendar.current.isDateLater(date: $0.startDate) &&
                 $0.calendar.title == selectedCalendar.title
             } else {
@@ -29,23 +28,22 @@ struct FutureEventsView: View {
     var body: some View {
         Section {
             if filteredEvents.isEmpty {
-                Text("event_no_title")
+                Text(.eventNoTitle)
             } else {
                 ForEach(filteredEvents, id: \.self) { event in
-                    EventView(event: event, eventVM: eventVM)
+                    EventView(event: event)
+                        .environment(manager)
                         .padding(.horizontal, 5)
                         .listRowSeparator(.hidden)
                 }
             }
         } header: {
-            Text("upcoming_title")
+            Text(.upcomingTitle)
         }
     }
 }
 
 #Preview {
-    FutureEventsView(
-        eventVM: .constant(.init(isDemo: true)),
-        selectedCalendar: .constant(nil)
-    )
+    FutureEventsView()
+        .environment(EventManager.demo)
 }

@@ -11,30 +11,28 @@ import Foundation
 import EventKit
 import Shared
 
-
 struct EventsView: View {
-
-    @Binding var eventVM: EventViewModel
-    @Binding var selectedCalendar: EventCalendar?
-
+    @Environment(EventManager.self) private var manager
     @State private var dates = [Date]()
-    
+
     var body: some View {
-        if eventVM.status == .authorized {
+        if manager.status == .authorized {
             List {
-                TodaysEventsView(eventVM: $eventVM, selectedCalendar: $selectedCalendar)
+                TodaysEventsView()
+                    .environment(manager)
                     .transition(.slide)
-                FutureEventsView(eventVM: $eventVM, selectedCalendar: $selectedCalendar)
+                FutureEventsView()
+                    .environment(manager)
                     .transition(.slide)
             }
             .onAppear(perform: getEventDates)
             .refreshable {
-                await eventVM.reloadEvents()
+                await manager.reloadEvents()
             }
             .overlay(alignment: .bottom) {
                 VStack {
                     Spacer()
-                    Text("Selected Calendar: \(selectedCalendar?.title ?? String(localized: "All"))")
+                    Text(.selectedCalendar(manager.selectedCalendar?.title ?? String(localized: .all)))
                         .font(.footnote)
                         .padding()
                         .background(.ultraThinMaterial)
@@ -47,12 +45,13 @@ struct EventsView: View {
     }
 
     private func getEventDates() {
-        let events = eventVM.events
+        let events = manager.events
         let eventDates = events.compactMap(\.startDate)
         self.dates = eventDates.removeDuplicates().sorted()
     }
 }
 
 #Preview {
-    EventsView(eventVM: .constant(.init(isDemo: true)), selectedCalendar: .constant(nil))
+    EventsView()
+        .environment(EventManager.demo)
 }

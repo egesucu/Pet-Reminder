@@ -8,7 +8,7 @@
 
 import SwiftUI
 import EventKit
-
+import Playgrounds
 
 struct EventView: View {
 
@@ -18,7 +18,7 @@ struct EventView: View {
     @State private var isShowing = false
     @State private var showWarningForCalendar = false
 
-    var eventVM: EventViewModel
+    @Environment(EventManager.self) private var manager
 
     var body: some View {
         HStack {
@@ -29,8 +29,9 @@ struct EventView: View {
             }
         }
         .sheet(isPresented: $showWarningForCalendar,
-               onDismiss: onSheetDismiss,
-               content: showEventDetail)
+               onDismiss: onSheetDismiss) {
+            showEventDetail()
+        }
     }
 
     @ViewBuilder
@@ -92,7 +93,7 @@ extension EventView {
     private func onSheetDismiss() {
         Task {
             await fillData()
-            await eventVM.reloadEvents()
+            await manager.reloadEvents()
         }
     }
 
@@ -100,10 +101,9 @@ extension EventView {
         self.showWarningForCalendar.toggle()
     }
 
-    @MainActor
     private func fillData() async {
         self.eventTitle = event.title
-        let content = eventVM.fillEventData(event: event)
+        let content = manager.formattedEventDateString(for: event)
         self.dateString = content
     }
 }
@@ -120,9 +120,10 @@ extension EventView {
         cal.cgColor = UIColor.systemBlue.cgColor
         return cal
     }()
-    
-    let dummyVM = EventViewModel(isDemo: true)
-    return EventView(event: dummyEvent, eventVM: dummyVM)
+
+    let dummyVM = EventManager.demo
+    return EventView(event: dummyEvent)
+        .environment(dummyVM)
         .frame(height: 100)
         .padding()
 }
@@ -140,9 +141,15 @@ extension EventView {
         cal.cgColor = UIColor.systemBlue.cgColor
         return cal
     }()
-    
-    let dummyVM = EventViewModel(isDemo: true)
-    return EventView(event: dummyEvent, eventVM: dummyVM)
+
+    let dummyVM = EventManager.demo
+    return EventView(event: dummyEvent)
+        .environment(dummyVM)
         .frame(height: 100)
         .padding()
 }
+
+ #Playground {
+    let manager = EventManager.demo
+    _ = manager.events
+ }

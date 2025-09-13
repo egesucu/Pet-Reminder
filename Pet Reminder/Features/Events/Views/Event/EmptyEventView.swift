@@ -8,20 +8,19 @@
 
 import SwiftUI
 
-
 struct EmptyEventView: View {
 
-    var eventVM: EventViewModel
+    @Environment(EventManager.self) private var manager
 
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                Text("event_no_title")
+                Text(.eventNoTitle)
                     .font(.headline)
                     .padding()
                 Button(action: reloadEvents) {
-                    Text("refresh")
+                    Text(.refresh)
                 }
                 .tint(.accent)
                 Spacer()
@@ -31,11 +30,12 @@ struct EmptyEventView: View {
 
     func reloadEvents() {
         Task {
-            await eventVM.reloadEvents()
+            await manager.reloadEvents()
         }
     }
 }
 
 #Preview {
-    EmptyEventView(eventVM: .init(isDemo: true))
+    EmptyEventView()
+        .environment(EventManager.demo)
 }

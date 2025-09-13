@@ -8,14 +8,13 @@
 
 import Foundation
 
-public enum PetError: LocalizedError {
+@MainActor public enum PetError: @preconcurrency LocalizedError {
     case name
 
     public var errorDescription: String? {
-        if self == .name {
-            return String(localized: "name_error")
-        } else {
-            return "Unknown error"
+        switch self {
+        case .name:
+            return String(localized: .nameError)
         }
     }
 }

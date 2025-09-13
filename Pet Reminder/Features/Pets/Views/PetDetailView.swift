@@ -10,33 +10,53 @@ import SwiftUI
 import OSLog
 import Shared
 import SwiftData
+import SFSafeSymbols
 
 struct PetDetailView: View {
-    
+
     @Binding var pet: Pet
     @State private var showFeedHistory = false
     @State private var showVaccines = false
-    
+
+    @Environment(\.modelContext) private var modelContext
+
+    let yellowGradient = LinearGradient(
+        colors: [.yellow, .yellow.opacity(0.6), .yellow.opacity(0.4)],
+        startPoint: .bottom,
+        endPoint: .top
+    )
+
     var body: some View {
-        VStack {
-            if let imageData = pet.image,
-               let image = UIImage(data: imageData) {
-                Image(uiImage: image)
-                    .petImageStyle(useShadows: true)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .frame(width: 250, height: 250)
-            } else {
-                Image(.generateDefaultData(type: pet.type))
-                    .petImageStyle()
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .frame(width: 250, height: 250)
+        VStack(spacing: 10) {
+            VStack(spacing: 0) {
+                if let imageData = pet.image,
+                   let image = UIImage(data: imageData) {
+                    Image(uiImage: image)
+                        .petImageStyle()
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .frame(width: 300, height: 300)
+                        .zIndex(2)
+                } else {
+                    Image(.generateDefaultData(type: pet.type))
+                        .petImageStyle()
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .frame(width: 300, height: 300)
+                        .zIndex(2)
+                }
+                FeedListView(pet: $pet)
+                    .frame(width: 320, height: 100)
+                    .padding(.horizontal, 30)
+                    .padding(.top, 60)
+                    .padding(.bottom, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(yellowGradient, lineWidth: 4)
+                    )
+                    .offset(x: 0, y: -60)
+
             }
-            
-            Spacer()
-            FeedListView(pet: $pet)
-                .padding(.bottom, 50)
             HStack {
                 Button {
                     Logger
@@ -45,12 +65,16 @@ struct PetDetailView: View {
                     showFeedHistory.toggle()
                 } label: {
                     Label {
-                        Text("feeds_title")
+                        Text(.feedsTitle)
+                            .font(.title)
+                            .foregroundStyle(Color.background)
                     } icon: {
-                        Image(systemName: "fork.knife.circle.fill")
+                        Image(systemSymbol: .forkKnife)
+                            .font(.title)
+                            .foregroundStyle(Color.background)
                     }
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.glassProminent)
                 .tint(.accent)
                 Button {
                     Logger
@@ -59,16 +83,18 @@ struct PetDetailView: View {
                     showVaccines.toggle()
                 } label: {
                     Label {
-                        Text("vaccines_title")
+                        Text(.vaccinesTitle)
+                            .font(.title)
+                            .foregroundStyle(Color.background)
                     } icon: {
-                        Image(systemName: "syringe.fill")
+                        Image(systemSymbol: .syringeFill)
+                            .font(.title)
+                            .foregroundStyle(Color.background)
                     }
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.glassProminent)
                 .tint(.blue)
             }
-            
-            Spacer()
         }
         .fullScreenCover(isPresented: $showFeedHistory) {
             FeedHistory(feeds: pet.feeds)
@@ -77,15 +103,48 @@ struct PetDetailView: View {
             VaccineHistoryView(pet: $pet)
         }
         .navigationTitle(Text("pet_name_title \(pet.name)"))
+        .onAppear {
+            setPetFeedSelection()
+        }
     }
+
+    /// This function ensures that each pet has a selection.
+    /// Coming from early versions, we used to set choice values, but now we require feedSelection.
+    func setPetFeedSelection() {
+        if pet.feedSelection == nil {
+            switch pet.choice {
+            case 0:
+                pet.feedSelection = .morning
+            case 1:
+                pet.feedSelection = .evening
+            default:
+                pet.feedSelection = .both
+            }
+            try? modelContext.save()
+        }
+    }
+
+    var detailView: some View {
+        FeedListView(pet: $pet)
+    }
+
+    func defineMorningFeed() -> SFSymbol {
+        let todaysFeed = pet
+            .feeds?
+            .first { Calendar.current.isDateInToday($0.feedDate ?? .now) }
+        let isFed = todaysFeed?.morningFed ?? false
+
+        return isFed ? .checkmark : .sunMax
+        }
 }
 
-#Preview(traits: .portrait) {
+#if DEBUG
+#Preview {
     NavigationStack {
         PetDetailView(
             pet: .constant(.preview)
         )
         .modelContainer(DataController.previewContainer)
     }
-    .navigationViewStyle(.stack)
 }
+#endif

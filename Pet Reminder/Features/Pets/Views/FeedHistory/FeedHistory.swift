@@ -9,40 +9,60 @@
 import SwiftUI
 import Shared
 import SwiftData
+import SFSafeSymbols
 
 struct FeedHistory: View {
 
+    @Environment(\.dismiss) var dismiss
     var feeds: [Feed]?
 
-    @Environment(\.dismiss) var dismiss
-
-    
-
     var body: some View {
-
         NavigationStack {
-            List {
-                CurrentFeedSection(feeds: feeds)
-                PreviousFeedsSection(feeds: feeds)
-            }
-            .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
-                    Button(action: dismiss.callAsFunction) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title)
-                            .tint(.accent)
-                    }
+            VStack(alignment: .leading, spacing: 16) {
+                ScrollView {
+                    Text(.today)
+                        .bold()
+                        .font(.title2)
+                        .padding(.leading, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    CurrentFeedSection(feeds: feeds)
+                    Text(.previousTitle)
+                        .bold()
+                        .font(.title2)
+                        .padding(.top, 8)
+                        .padding(.leading, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    PreviousFeedsSection(feeds: feeds)
                 }
             }
-            .navigationTitle(Text("feed_history_title"))
-            .navigationBarTitleTextColor(.accent)
+            .scrollIndicators(.hidden)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .cancel, action: dismiss.callAsFunction) {
+                        Image(systemSymbol: .xmark)
+                    }
+                    .tint(.red)
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(.regularMaterial)
+            .navigationTitle(Text(.feedHistoryTitle))
         }
+        .presentationBackground(.clear)
+        .presentationCornerRadius(24)
     }
 }
 
 #Preview {
-    NavigationStack {
-        FeedHistory(feeds: [.init()])
-            .modelContainer(DataController.previewContainer)
-    }
+    var feeds: [Feed] = Feed.previews
+    let todayFeed = Feed(
+        eveningFed: true,
+        eveningFedStamp: .eightPM,
+        feedDate: .now,
+        morningFed: true,
+        morningFedStamp: .eightAM
+    )
+    feeds.append(todayFeed)
+
+    return FeedHistory(feeds: feeds)
 }

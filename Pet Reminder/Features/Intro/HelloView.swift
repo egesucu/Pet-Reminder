@@ -9,39 +9,43 @@
 import SwiftUI
 import CloudKit
 import Shared
-
+import SFSafeSymbols
 
 struct HelloView: View {
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
-    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
+    @Environment(NotificationManager.self) private var notificationManager
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Spacer()
-            Text("welcome_title")
-                .foregroundStyle(.white)
+            Text(.welcomeTitle)
+                .foregroundStyle(Color.label)
                 .font(.title)
                 .bold()
-            logoView()
-            Text("welcome_context")
+            Image(systemSymbol: SFSymbol.pawprintCircleFill)
+                .foregroundStyle(Color.label)
+                .bold()
+                .font(.system(size: 80))
+            Text(.welcomeContext)
                 .padding(.vertical)
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.label)
                 .font(.body)
             Spacer()
             HStack {
                 Spacer()
                 Button(action: goButtonPressed) {
-                    Text("welcome_go_button")
+                    Text(.welcomeGoButton)
                         .font(.title)
                         .bold()
-                        .foregroundStyle(.accent)
+                        .padding()
+                        .tint(.label)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.white)
+                .glassEffect(.regular)
                 .fullScreenCover(isPresented: $navigateToHome) {
                     HomeManagerView()
+                        .environment(notificationManager)
                 }
                 Spacer()
             }
@@ -50,7 +54,14 @@ struct HelloView: View {
         .opacity(shouldAnimate ? 1.0 : 0.0)
         .onAppear(perform: animateView)
         .background(
-            Color.accent,
+            LinearGradient(
+                colors: [
+                    .accent,
+                    .green.opacity(0.3)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            ),
             ignoresSafeAreaEdges: .all
         )
     }
@@ -77,7 +88,11 @@ struct HelloView: View {
     }
 }
 
+#if DEBUG
+
 #Preview {
     HelloView()
         .environment(NotificationManager.shared)
 }
+
+#endif

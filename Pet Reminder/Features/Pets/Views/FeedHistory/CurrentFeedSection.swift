@@ -9,6 +9,7 @@
 import SwiftUI
 import SwiftData
 import Shared
+import SFSafeSymbols
 
 struct CurrentFeedSection: View {
 
@@ -25,30 +26,28 @@ struct CurrentFeedSection: View {
     }
 
     var body: some View {
-        Section {
-            if filteredFeeds.isEmpty {
-                Text("no_feed_today_content")
-            } else {
-                ForEach(filteredFeeds, id: \.self) { feed in
-                    if let morning = feed.morningFedStamp {
+        if filteredFeeds.isEmpty {
+            Text(.noFeedTodayContent)
+        } else {
+            ForEach(filteredFeeds, id: \.id) { feed in
+                if let morning = feed.morningFedStamp {
+                    HStack {
                         Row(
-                            imageName: "sun.max.circle.fill",
-                            title: String(
-                                localized: "feed_content"
-                            ),
+                            imageName: SFSymbol.sunMaxFill.rawValue,
                             content: morning.formatted(
                                 date: .abbreviated,
                                 time: .shortened
                             ),
                             type: .morning
                         )
+                        Spacer()
                     }
-                    if let evening = feed.eveningFedStamp {
+                }
+                if let evening = feed.eveningFedStamp {
+                    HStack {
+                        Spacer()
                         Row(
-                            imageName: "moon.circle.fill",
-                            title: String(
-                                localized: "feed_content"
-                            ),
+                            imageName: SFSymbol.moonCircleFill.rawValue,
                             content: evening.formatted(
                                 date: .abbreviated,
                                 time: .shortened
@@ -58,14 +57,20 @@ struct CurrentFeedSection: View {
                     }
                 }
             }
-        } header: {
-            Text("today")
+            .padding(.horizontal)
         }
     }
 }
 
 #Preview {
-    let feeds: [Feed] = Pet.preview.feeds ?? []
-    CurrentFeedSection(feeds: feeds)
+    let today = Date.now
+    let feed = Feed(
+        eveningFed: true,
+        eveningFedStamp: today,
+        feedDate: today,
+        morningFed: true,
+        morningFedStamp: today
+    )
+    CurrentFeedSection(feeds: [feed])
         .modelContainer(DataController.previewContainer)
 }

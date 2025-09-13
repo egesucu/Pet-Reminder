@@ -9,46 +9,133 @@
 import SwiftUI
 import Shared
 import SFSafeSymbols
+import SwiftData
 
 struct HomeManagerView: View {
     @State private var currentTab: PetReminderTabs = .home
+    @Environment(EventManager.self) private var eventManager
+    @Environment(NotificationManager.self) private var notificationManager
 
-    let eventManager = EventViewModel()
-    
+    // One navigation path per tab to preserve stack state
+    @State private var homePath = NavigationPath()
+    @State private var eventsPath = NavigationPath()
+    @State private var settingsPath = NavigationPath()
+    @State private var vetPath = NavigationPath()
+
+    // Optional: carry a pet name from deep link; your PetListView can observe this via NotificationCenter
+    @State private var pendingPetNameFromDeepLink: String?
+
     init() {}
 
     var body: some View {
-
         TabView(selection: $currentTab) {
-            PetListView()
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.pawprint)
+            // HOME TAB
+            Tab(value: PetReminderTabs.home) {
+                NavigationStack(path: $homePath) {
+                    PetListView()
+                        .environment(notificationManager)
+                        .navigationTitle("Pets")
+                        .onChange(of: pendingPetNameFromDeepLink) { _, newValue in
+                            /// Forward deep link pet name to the list via NotificationCenter
+                            /// so you don't need to change PetListView's API
+                            if let name = newValue {
+                                NotificationCenter.default.post(name: .openPetByName, object: name)
+                                pendingPetNameFromDeepLink = nil
+                            }
+                        }
                 }
-                .tag(PetReminderTabs.home)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            EventListView(eventVM: eventManager)
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.listBullet)
+            } label: {
+                Image(systemSymbol: .pawprint)
+            }
+
+            // EVENTS TAB
+            Tab(value: PetReminderTabs.events) {
+                NavigationStack(path: $eventsPath) {
+                    EventListView()
+                        .environment(eventManager)
+                        .navigationTitle("Events")
                 }
-                .tag(PetReminderTabs.events)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            FindVetView()
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.map)
+            } label: {
+                Image(systemSymbol: .listBullet)
+            }
+
+            // SETTINGS TAB
+            Tab(value: PetReminderTabs.settings) {
+                NavigationStack(path: $settingsPath) {
+                    SettingsView()
+                        .environment(notificationManager)
+                        .navigationTitle("Settings")
                 }
-                .tag(PetReminderTabs.vet)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
-            SettingsView()
-                .tabItem {
-                    Image(systemSymbol: SFSymbol.gearshape)
+            } label: {
+                Image(systemSymbol: .gearshape)
+            }
+
+            // FIND VET TAB
+            Tab(value: PetReminderTabs.vet, role: .search) {
+                NavigationStack(path: $vetPath) {
+                    FindVetView()
                 }
-                .tag(PetReminderTabs.settings)
-                .toolbarBackground(Color(.systemBackground), for: .tabBar)
+            } label: {
+                Image(systemSymbol: .magnifyingglass)
+            }
         }
-        .tint(Color.label)
+        .tint(.accent)
+        .onOpenURL { url in
+            handle(url)
+        }
     }
 }
 
+// MARK: - Deep Link Handling
+private extension HomeManagerView {
+    func handle(_ url: URL) {
+        guard url.scheme?.lowercased() == "petreminder" else { return }
+
+        // Expected forms:
+        // petreminder://home
+        // petreminder://home/<pet-name>
+        // petreminder://events
+        // petreminder://findVet
+        // petreminder://settings
+        guard let host = url.host?.lowercased() else { return }
+
+        switch host {
+        case "home":
+            currentTab = .home
+            // if there is a trailing component, treat it as a pet name slug
+            let comps = url.pathComponents.filter { $0 != "/" }
+            if let petName = comps.first, !petName.isEmpty {
+                // save to state; forwarded to PetListView via NotificationCenter
+                pendingPetNameFromDeepLink = petName
+            }
+        case "events":
+            currentTab = .events
+        case "findvet":
+            currentTab = .vet
+        case "settings":
+            currentTab = .settings
+        case "add":
+            currentTab = .home
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .openAddPet, object: nil)
+            }
+        default:
+            break
+        }
+    }
+}
+
+// Notification your PetListView can observe to open a pet by name
+extension Notification.Name {
+    static let openPetByName = Notification.Name("OpenPetByNameNotification")
+    static let openAddPet = Notification.Name("OpenAddPetSheetNotification")
+}
+
+#if DEBUG
 #Preview {
     HomeManagerView()
+        .environment(NotificationManager.shared)
+        .environment(EventManager.demo)
+        .modelContainer(DataController.previewContainer)
 }
+#endif

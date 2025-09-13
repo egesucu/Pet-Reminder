@@ -8,8 +8,8 @@
 
 import SwiftUI
 import SwiftData
+import OSLog
 import Shared
-
 
 struct PetNameTextField: View {
     @Query(sort: \Pet.name) var pets: [Pet]
@@ -20,21 +20,21 @@ struct PetNameTextField: View {
     @Binding var petExists: Bool
 
     @FocusState var isFocused
-    
+
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("start_name_label")
-                .foregroundStyle(Color.black)
+        VStack(alignment: .leading, spacing: 10) {
+            Text(.startNameLabel)
+                .foregroundStyle(Color.label)
                 .font(.title2)
                 .bold()
-                .padding(.bottom, 20)
-            
+                .padding(.bottom, 15)
+
             TextField(
                 Strings.doggo,
                 text: $name
             )
             .focused($isFocused)
-            .foregroundStyle(Color.black)
+            .foregroundStyle(Color.label)
             .font(.title)
             .padding()
             .autocorrectionDisabled()
@@ -55,30 +55,40 @@ struct PetNameTextField: View {
                     .animation(.easeInOut, value: isFocused)
                     .clipShape(.rect(cornerRadius: 10))
             )
-            
+
             if petExists {
-                Text("Pet Exists")
+                Text(.petExists)
                     .foregroundStyle(.red)
                     .font(.footnote)
                     .bold()
             }
+
+            Text(.petFact)
+                .font(.footnote)
+                .italic()
+                .padding(.top, 20)
+                .lineLimit(20)
         }
     }
-    
+
     private func check(name: String) {
-        if name.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
+        let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        Logger.pets.info("Name is: \(removedSpaceName)")
+        if removedSpaceName.isNotEmpty {
             nameIsValid = true
         } else {
             nameIsValid = false
         }
-        
+
         self.petExists = pets.map(\.name).contains(name)
     }
 }
 
+#if DEBUG
+
 #Preview("Filled Case") {
     @Previewable @FocusState var isFocused: Bool
-    
+
     PetNameTextField(
         name: .constant(Strings.viski),
         nameIsValid: .constant(false),
@@ -105,3 +115,5 @@ struct PetNameTextField: View {
         .background(.ultraThinMaterial)
         .padding()
 }
+
+#endif

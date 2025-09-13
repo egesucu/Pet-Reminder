@@ -25,80 +25,57 @@ struct NotificationView: View {
             List {
                 ForEach(pets, id: \.name) { pet in
                     if let notificationManager {
-                        Section {
-                            if notificationManager.filterNotifications(of: pet).isEmpty {
-                                Button {
-                                    Task {
-                                        await notificationManager
-                                            .createNotifications(
-                                                for: pet,
-                                                morningTime: .eightAM,
-                                                eveningTime: .eightPM
-                                            )
-                                        await fetchNotificiations()
-                                    }
-                                } label: {
-                                    Text("Create default notifications for your pet.")
-                                }
-                            } else {
-                                ForEach(
-                                    notificationManager.filterNotifications(of: pet),
-                                    id: \.identifier
-                                ) { notification in
-                                    notificationView(notification: notification)
-                                }.onDelete { indexSet in
-                                    remove(pet: pet, at: indexSet)
-                                }
-                            }
-
-                        } header: {
-                            Text(pet.name)
-                        } footer: {
-                            let count = notificationAmount(for: pet.name)
-                            Text("notification \(count)")
-
-                        }
-                        .onChange(of: notificationManager.notifications) {
-                            Task {
-                                await fetchNotificiations()
-                            }
-                        }
+                        notificationSection(for: pet, notificationManager: notificationManager)
                     }
                 }
 
             }
             .listStyle(.insetGrouped)
             .refreshable {
-                await notificationManager?.getNotifications()
+                await notificationManager?.refreshNotifications()
             }
         }
         .overlay {
             if pets.isEmpty {
-                ContentUnavailableView("pet_no_pet", systemImage: "pawprint.circle")
+                ContentUnavailableView(
+                    "pet_no_pet",
+                    systemSymbol: .pawprintCircle
+                )
             }
         }
-        .navigationTitle(Text("notifications_title"))
-        .navigationBarTitleTextColor(.accent)
-        .navigationViewStyle(.stack)
+        .navigationTitle(Text(.notificationsTitle))
         .toolbar {
             if pets.isNotEmpty {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .destructiveAction) {
                     Button {
-                        notificationManager?.notificationCenter.removeAllPendingNotificationRequests()
-                        notificationManager?.notifications.removeAll()
                         Task {
+                            try? await notificationManager?.removeNotificationsIdentifiers(
+                                with: notificationManager?.notifications.map { $0.identifier
+                                } ?? [])
                             await fetchNotificiations()
                         }
                     } label: {
-                        Text("remove_all")
+                        Text(.removeAll)
+                            .foregroundStyle(.red)
                     }
+                    .buttonStyle(.automatic)
                 }
 
             }
         }
         .task {
-            await notificationManager?.getNotifications()
+            await notificationManager?.refreshNotifications()
         }
+    }
+
+    private func createNotifications(for pet: Pet) async {
+        await notificationManager?
+            .createNotifications(
+                for: pet,
+                morningTime: .eightAM,
+                eveningTime: .eightPM
+            )
+        await fetchNotificiations()
     }
 
     func notificationAmount(for name: String?) -> Int {
@@ -109,24 +86,24 @@ struct NotificationView: View {
     }
 
     func fetchNotificiations() async {
-        await notificationManager?.getNotifications()
+        await notificationManager?.refreshNotifications()
     }
 
     private func notificationView(notification: UNNotificationRequest) -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 15) {
             Label {
-                Text("notification_to")
+                Text(.notificationTo)
             } icon: {
                 if notification.identifier.contains("morning") {
-                    Image(systemSymbol: SFSymbol.sunMaxCircleFill)
+                    Image(systemSymbol: .sunMaxCircleFill)
                         .foregroundStyle(.yellow)
                         .font(.title)
                 } else if notification.identifier.contains("evening") {
-                    Image(systemSymbol: SFSymbol.moonStarsCircleFill)
+                    Image(systemSymbol: .moonStarsCircleFill)
                         .foregroundStyle(.blue)
                         .font(.title)
                 } else {
-                    Image(systemSymbol: SFSymbol.birthdayCakeFill)
+                    Image(systemSymbol: .birthdayCakeFill)
                         .foregroundStyle(.green)
                         .font(.title)
                 }
@@ -135,30 +112,74 @@ struct NotificationView: View {
             Text(notification.content.body)
                 .font(.footnote)
                 .foregroundStyle(Color.gray)
-            if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
-               let date = trigger.nextTriggerDate() {
-                if notification.identifier.contains("birthday") {
-                    Text(date.formatted(.dateTime.day().month(.wide).year()))
-                } else {
-                    Text(date.formatted(.dateTime.hour().minute()))
+            HStack(spacing: 10) {
+                Text(.nextNotificationDate)
+                    .bold()
+                if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
+                   let date = trigger.nextTriggerDate() {
+                    if notification.identifier.contains("birthday") {
+                        Text(date.formatted(.dateTime.day().month(.wide).year()))
+                    } else {
+                        Text(date.formatted(.dateTime.hour().minute()))
+                    }
                 }
             }
         }
     }
 
-    func remove(pet: Pet, at offset: IndexSet) {
+    func remove(pet: Pet, at offset: IndexSet) async {
         if let notificationManager {
             for index in offset {
                 let notification = notificationManager.filterNotifications(of: pet)[index]
-                notificationManager
+                try? await notificationManager
                     .removeNotificationsIdentifiers(with: [notification.identifier])
+            }
+        }
+    }
+
+    private func notificationSection(for pet: Pet, notificationManager: NotificationManager) -> some View {
+        Section {
+            if notificationManager.filterNotifications(of: pet).isEmpty {
+                Button {
+                    Task {
+                        await createNotifications(for: pet)
+                    }
+                } label: {
+                    Text("Create default notifications for your pet.")
+                }
+            } else {
+                ForEach(
+                    notificationManager.filterNotifications(of: pet),
+                    id: \.identifier
+                ) { notification in
+                    notificationView(notification: notification)
+                }
+                .onDelete { indexSet in
+                    Task {
+                        await remove(pet: pet, at: indexSet)
+                    }
+                }
+            }
+
+        } header: {
+            Text(pet.name)
+        } footer: {
+            let count = notificationAmount(for: pet.name)
+            Text(.notification(count))
+        }
+        .onChange(of: notificationManager.notifications) {
+            Task {
+                await fetchNotificiations()
             }
         }
     }
 }
 
 #Preview {
-    NotificationView()
-        .modelContainer(DataController.previewContainer)
-        .environment(NotificationManager())
+    NavigationStack {
+        NotificationView()
+    }
+    .modelContainer(DataController.previewContainer)
+    .environment(NotificationManager.shared)
+
 }

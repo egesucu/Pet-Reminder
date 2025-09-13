@@ -18,26 +18,27 @@ import Shared
 class VetViewModel {
 
     var userLocation: MapCameraPosition = .userLocation(fallback: .automatic)
-    var searchText = ""
     var searchedLocations: [Pin] = []
     var locationManager = CLLocationManager()
     var selectedLocation: Pin?
     var mapViewStatus: MapViewStatus = .none
-    
-    init() { }
-    
+
+    init() {}
+
+    @MainActor deinit {
+        locationManager.stopUpdatingLocation()
+    }
+
     func requestMap() async {
         await updateAuthenticationStatus()
         Logger.vet.info("Location Auth Status: \(self.mapViewStatus.rawValue)")
     }
-    
-    @MainActor
+
     func requestLocation() async {
         locationManager.requestWhenInUseAuthorization()
         await updateAuthenticationStatus()
     }
-    
-    @MainActor
+
     func updateAuthenticationStatus() async {
         self.mapViewStatus = switch locationManager.authorizationStatus {
         case .notDetermined:
@@ -47,40 +48,35 @@ class VetViewModel {
         default:
                 .locationNotAllowed
         }
-        
+
         if mapViewStatus == .authorized {
             await setUserLocation()
         }
     }
-    
-    @MainActor
+
     func setUserLocation() async {
         locationManager.startUpdatingLocation()
-        userLocation = .userLocation(fallback: .automatic)
-        do {
-            try await searchPins()
-        } catch let error {
-            Logger.vet.error("Error setting user location: \(error.localizedDescription)")
-        }
+        userLocation = .userLocation(
+            followsHeading: true,
+            fallback: .automatic
+        )
     }
-    
-    @MainActor
+
     func clearPreviousSearches() async {
         searchedLocations.removeAll()
     }
-    
-    @MainActor
-    func searchPins() async throws {
+
+    func searchPins(text: String) async throws {
         await clearPreviousSearches()
-        
+
         let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = searchText
+        searchRequest.naturalLanguageQuery = text
         if let region = userLocation.region {
             searchRequest.region = region
         }
-        
+
         let localSearch = MKLocalSearch(request: searchRequest)
-        
+
         Task {
             do {
                 let response = try await localSearch.start()
@@ -90,8 +86,7 @@ class VetViewModel {
             }
         }
     }
-    
-    @MainActor
+
     private func processSearchResponse(_ response: MKLocalSearch.Response) async {
         response.mapItems.forEach {
             self.searchedLocations.append(Pin(item: $0))

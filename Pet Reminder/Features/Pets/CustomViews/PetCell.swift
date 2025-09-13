@@ -11,16 +11,15 @@ import Shared
 import SwiftData
 
 struct PetCell: View {
-    
+
     var pet: Pet
-    
+
     var body: some View {
         HStack {
-            
             if let imageData = pet.image,
                let image = UIImage(data: imageData) {
                 Image(uiImage: image)
-                    .petImageStyle(useShadows: true)
+                    .petImageStyle()
                     .padding(.trailing, 10)
                     .frame(width: 150, height: 150)
             } else {
@@ -29,7 +28,7 @@ struct PetCell: View {
                     .padding(.trailing, 10)
                     .frame(width: 150, height: 150)
             }
-            
+
             VStack {
                 Text(pet.name)
                     .foregroundStyle(Color.label)
@@ -37,7 +36,7 @@ struct PetCell: View {
                     .minimumScaleFactor(0.2)
                     .lineLimit(3)
                 if let feeds = pet.feeds {
-                    if feeds.count > 0,
+                    if feeds.isNotEmpty,
                        let lastFeed = feeds.last {
                         if lastFeed.eveningFed,
                            let eveningTime = lastFeed.eveningFedStamp {

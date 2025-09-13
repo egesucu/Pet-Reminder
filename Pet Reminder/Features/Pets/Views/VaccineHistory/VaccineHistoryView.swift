@@ -6,107 +6,113 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
+/// Displays and manages the vaccine history for a selected pet,
+/// allowing users to add, view, and remove vaccine records.
+
 import SwiftUI
 import SwiftData
 import Shared
 import SFSafeSymbols
+import OSLog
 
+/// A SwiftUI view that presents a list of vaccines associated with a pet,
+/// supporting addition and deletion of vaccine records.
 struct VaccineHistoryView: View {
 
-    @Binding var pet: Pet
+    /// The environment-provided dismiss action for closing the view.
     @Environment(\.dismiss) var dismiss
+    /// The environment-provided model context for data operations.
     @Environment(\.modelContext) private var modelContext
-    @State private var viewModel = VaccineHistoryViewModel()
 
+    /// The pet whose vaccine history is displayed and modified.
+    @Binding var pet: Pet
+
+    /// Controls the presentation of the Add Vaccine sheet.
+    @State private var shouldAddVaccine = false
+    /// Stores the name of the vaccine to be added.
+    @State private var vaccineName = ""
+
+    /// Returns a formatted view representing a single vaccine entry.
+    /// - Parameter vaccine: A Vaccine object to display.
+    /// - Returns: A view showing the vaccine's name and date.
+    @ViewBuilder
+    func vaccineView(_ vaccine: Vaccine) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label(vaccine.name, systemSymbol: .syringeFill)
+                .tint(.blue)
+                .bold()
+            Label(vaccine.date.formatted(), systemSymbol: .hourglassBottomhalfFilled)
+                .tint(.blue)
+                .bold()
+        }
+    }
+
+    /// The main content and navigation stack for the vaccine history,
+    /// including a list of vaccines and controls for adding/removing entries.
     var body: some View {
         NavigationStack {
             VStack {
                 if let vaccines = pet.vaccines {
                     List {
-                        ForEach(vaccines) { vaccine in
-                            VStack {
-                                HStack {
-                                    Label {
-                                        Text("vaccine_title_label")
-                                            .bold()
-                                    } icon: {
-                                        Image(systemSymbol: .syringeFill)
-                                            .font(.headline)
-                                            .symbolRenderingMode(.palette)
-                                            .symbolEffect(.bounce, options: .repeat(3))
-                                            .foregroundStyle(.blue, .white)
-                                    }
-                                    Spacer()
-                                    Text(vaccine.name)
-                                }
-                                
-                                HStack {
-                                    Label {
-                                        Text("vaccine_date_label")
-                                            .bold()
-                                    } icon: {
-                                        Image(systemSymbol: .hourglassBottomhalfFilled)
-                                            .font(.headline)
-                                            .symbolRenderingMode(.palette)
-                                            .symbolEffect(.bounce, options: .repeat(3))
-                                            .foregroundStyle(.blue, .white)
-                                    }
-                                    
-                                    Spacer()
-                                    Text((vaccine.date).formatted())
-                                }
-                            }
-                        }
-                        .onDelete { indexSet in
-                            viewModel.deleteVaccines(pet: pet, at: indexSet)
-                        }
+                        ForEach(vaccines, content: vaccineView)
+                            .onDelete(perform: removeVaccine)
                     }
                     .listStyle(.automatic)
                 } else {
-                    Text("no_vaccine_title")
+                    Text(.noVaccineTitle)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.topBarLeading) {
-                    Button(action: dismiss.callAsFunction) {
-                        Image(systemSymbol: SFSymbol.xmarkCircleFill)
-                            .tint(.red)
-                            .font(.title2)
-                    }.disabled(viewModel.shouldAddVaccine)
-                }
-                ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
-                    Button {
-                        viewModel.shouldAddVaccine.toggle()
-                    } label: {
-                        Image(systemSymbol: SFSymbol.plusCircleFill)
-                            .tint(.blue)
-                            .font(.title2)
-                    }
-                    .disabled(viewModel.shouldAddVaccine)
-                }
+            .toolbar(content: vaccineToolbars)
+            .navigationTitle(Text(.vaccineHistoryTitle))
+            .sheet(isPresented: $shouldAddVaccine) {
+                AddVaccineView(pet: $pet, vaccineName: $vaccineName)
+                    .presentationDetents([.fraction(0.3)])
             }
-            .navigationTitle(Text("vaccine_history_title"))
-            .navigationBarTitleTextColor(.blue)
-            .popupView(
-                isPresented: $viewModel.shouldAddVaccine,
-                content: AddPopupView(
-                    contentInput: $viewModel.vaccineName,
-                    dateInput: $viewModel.vaccineDate,
-                    onSave: {
-                        viewModel.saveVaccine(
-                            pet: pet
-                        )
-                    },
-                    onCancel: viewModel.cancelVaccine
-                )
-            )
+        }
+    }
+
+    /// Builds toolbar items for dismissing or adding vaccines.
+    @ToolbarContentBuilder func vaccineToolbars() -> some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button(role: .cancel, action: dismiss.callAsFunction) {
+                Image(systemSymbol: .xmark)
+            }
+            .tint(.red)
+        }
+        ToolbarItem(placement: .confirmationAction) {
+            Button(role: .confirm, action: addVaccine) {
+                Image(systemSymbol: .plus)
+                    .foregroundStyle(Color.background)
+            }
+            .tint(.blue)
+            .disabled(shouldAddVaccine)
+        }
+    }
+
+    /// Presents the Add Vaccine sheet when called.
+    private func addVaccine() {
+        shouldAddVaccine.toggle()
+    }
+
+    /// Deletes vaccines at the provided offsets from the pet's vaccine list.
+    /// - Parameter offset: The set of indices representing vaccines to delete.
+    private func removeVaccine(_ offset: IndexSet) {
+        if let vaccines = pet.vaccines {
+            for place in offset {
+                pet.modelContext?.delete(vaccines[place])
+            }
         }
     }
 }
 
-#Preview {
+#if DEBUG
+/// Preview for VaccineHistoryView using sample pet data.
+#Preview("Vaccine List") {
+    @Previewable @State var pet: Pet = .preview
+
     NavigationStack {
-        VaccineHistoryView(pet: .constant(.preview))
+        VaccineHistoryView(pet: $pet)
             .modelContainer(DataController.previewContainer)
     }
 }
+#endif
