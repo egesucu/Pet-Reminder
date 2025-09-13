@@ -26,7 +26,10 @@ struct PetImageView: View {
                     .clipShape(.rect(cornerRadius: 10))
             }
 
-            PhotoImagePickerView(photoData: $selectedImageData)
+            PhotoImagePickerView(
+                desiredTitle: .add,
+                photoData: $selectedImageData
+            )
                 .padding(.vertical)
             Text(.photoUploadDetailTitle)
                 .foregroundStyle(Color.label)

@@ -71,7 +71,7 @@ struct MapItemView: View {
                     }
                 }
             }
-            Button(.cancel, action: {})
+            Button(role: .cancel, action: {})
         }
     }
 

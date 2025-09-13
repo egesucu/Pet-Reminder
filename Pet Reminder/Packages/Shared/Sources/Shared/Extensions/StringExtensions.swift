@@ -89,8 +89,3 @@ public extension String {
         !self.isEmpty
     }
 }
-
-public extension LocalizedStringKey {
-    @MainActor static let save: Self = "Save"
-    @MainActor static let cancel: Self = "Cancel"
-}

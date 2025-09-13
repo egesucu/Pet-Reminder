@@ -150,14 +150,14 @@ struct PetChangeView: View {
     func toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button(action: save) {
-                Text(.save)
+                Text("Save")
                     .bold()
             }
             .tint(.accent)
         }
         ToolbarItem(placement: .cancellationAction) {
             Button(action: cancel) {
-                Text(.cancel)
+                Text(.cancelTitle)
                     .bold()
             }
             .tint(.red)
@@ -301,6 +301,7 @@ struct PetChangeView: View {
 #Preview {
     PetChangeView(pet: .constant(.preview))
         .modelContainer(DataController.previewContainer)
+        .environment(\.locale, .init(identifier: "tr"))
 }
 #endif
 

@@ -12,12 +12,12 @@ import SFSafeSymbols
 
 public struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
-    var desiredTitle: String
+    var desiredTitle: LocalizedStringResource
     var desiredIcon: SFSymbol
     @Binding var photoData: Data?
 
     public init(
-        desiredTitle: String = "Add",
+        desiredTitle: LocalizedStringResource,
         selectedPhoto: PhotosPickerItem? = nil,
         photoData: Binding<Data?> = .constant(nil),
         desiredIcon: SFSymbol = .photoBadgePlusFill
@@ -29,13 +29,18 @@ public struct PhotoImagePickerView: View {
     }
 
     public var body: some View {
+
         PhotosPicker(
             selection: $selectedPhoto,
             matching: .any(
                 of: [.images, .not(.screenshots), .not(.bursts)]
             )
-        ) { [desiredTitle, desiredIcon] in
-            Label(desiredTitle, systemSymbol: desiredIcon)
+        ) {
+            Label {
+                Text(desiredTitle)
+            } icon: {
+                Image(systemSymbol: desiredIcon)
+            }
         }
 
         .onChange(of: selectedPhoto) {
@@ -70,23 +75,26 @@ public struct PhotoImagePickerView: View {
     @Previewable @State var photoData: Data?
 
     PhotoImagePickerView(
+        desiredTitle: .addText,
         photoData: $photoData
     )
     .task {
         photoData = UIImage(resource: .defaultOther).pngData()
     }
+    .environment(\.locale, .init(identifier: "tr"))
 }
 
 #Preview("Photo Picker with custom title") {
     @Previewable @State var photoData: Data?
 
     PhotoImagePickerView(
-        desiredTitle: "Change",
+        desiredTitle: .change,
         photoData: $photoData,
         desiredIcon: .photoFill
     )
     .task {
         photoData = UIImage(resource: .defaultOther).pngData()
     }
+    .environment(\.locale, .init(identifier: "tr"))
 }
 #endif

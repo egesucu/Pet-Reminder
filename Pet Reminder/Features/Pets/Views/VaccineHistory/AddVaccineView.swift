@@ -44,7 +44,7 @@ struct AddVaccineView: View {
             DatePicker(.vaccineDateLabel, selection: $vaccineDate)
                 .bold()
             Button(role: .confirm, action: saveVaccine) {
-                Text(.save)
+                Text("Save")
                     .font(.title)
             }
             .buttonStyle(.glassProminent)

@@ -107,7 +107,7 @@ struct AddEventView: View {
 
     private func cancelButton() -> some View {
         Button(action: dismiss.callAsFunction) {
-            Text(.cancel)
+            Text("Cancel")
         }
         .foregroundStyle(Color.red)
         .bold()
