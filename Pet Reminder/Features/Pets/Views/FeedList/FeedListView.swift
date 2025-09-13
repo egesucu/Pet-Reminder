@@ -78,9 +78,9 @@ struct FeedListView: View {
 
     var morningButton: some View {
         Button {
-            updateFeed(pet: pet, type: .morning)
             morningOn.toggle()
             stateChanged.toggle()
+            updateFeed(pet: pet, type: .morning)
         } label: {
             Label {
                 Text(.feedSelectionMorning)
@@ -110,9 +110,9 @@ struct FeedListView: View {
 
     var eveningButton: some View {
         Button {
-            updateFeed(pet: pet, type: .evening)
             eveningOn.toggle()
             stateChanged.toggle()
+            updateFeed(pet: pet, type: .evening)
         } label: {
             Label {
                 Text(.feedSelectionEvening)
