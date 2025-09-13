@@ -252,14 +252,17 @@ struct PetChangeView: View {
 
         if pet.birthday != manager.birthday {
             pet.birthday = manager.birthday
-            Task {
-                do {
-                    try await manager.changeBirthday()
-                } catch {
-                    Logger().error(
-                        "Unknown error occurred while updating birthday. \(error.localizedDescription)"
-                    )
-                }
+        }
+
+        /// This notification might be missing from previous data,
+        /// so it's best to run this even if there's no birthday change.
+        Task {
+            do {
+                try await manager.changeBirthday()
+            } catch {
+                Logger().error(
+                    "Unknown error occurred while updating birthday. \(error.localizedDescription)"
+                )
             }
         }
 

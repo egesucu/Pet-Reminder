@@ -26,7 +26,7 @@ struct PetListView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 10) {
                 petList
                 /// Showing the detail page only if the selected pet has values(i.e. not empty)
                 if selectedPet.name.isNotEmpty {

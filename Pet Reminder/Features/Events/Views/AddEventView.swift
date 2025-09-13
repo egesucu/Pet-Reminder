@@ -59,7 +59,6 @@ struct AddEventView: View {
             .navigationTitle(
                 Text(.addEventTitle)
             )
-            .navigationBarTitleTextColor(.accent)
             .toolbar(content: {
                 addEventToolbar()
             })
@@ -107,7 +106,7 @@ struct AddEventView: View {
 
     private func cancelButton() -> some View {
         Button(action: dismiss.callAsFunction) {
-            Text("Cancel")
+            Text(.cancelTitle)
         }
         .foregroundStyle(Color.red)
         .bold()

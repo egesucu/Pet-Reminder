@@ -20,8 +20,9 @@ public extension Image {
         Group {
             self
                 .resizable()
-                .scaledToFit()
+                .aspectRatio(1, contentMode: .fill)
                 .clipShape(.circle)
+                .contentShape(.circle)
         }
     }
 }

@@ -64,7 +64,6 @@ struct VaccineHistoryView: View {
             }
             .toolbar(content: vaccineToolbars)
             .navigationTitle(Text(.vaccineHistoryTitle))
-            .navigationBarTitleTextColor(.blue)
             .sheet(isPresented: $shouldAddVaccine) {
                 AddVaccineView(pet: $pet, vaccineName: $vaccineName)
                     .presentationDetents([.fraction(0.3)])

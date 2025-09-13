@@ -21,7 +21,6 @@ struct LicenseView: View {
         }
         .task(readFile)
         .navigationTitle(Text(.licenseTitle))
-        .navigationBarTitleTextColor(.accent)
     }
 
     func readFile() async {

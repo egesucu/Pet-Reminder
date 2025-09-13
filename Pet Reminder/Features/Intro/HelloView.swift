@@ -15,7 +15,7 @@ struct HelloView: View {
     @AppStorage(Strings.helloSeen) var helloSeen = false
     @State private var navigateToHome = false
     @State private var shouldAnimate = false
-    @Environment(NotificationManager.self) private var notificationManager: NotificationManager?
+    @Environment(NotificationManager.self) private var notificationManager
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {

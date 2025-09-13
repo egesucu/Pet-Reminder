@@ -44,7 +44,6 @@ struct NotificationView: View {
             }
         }
         .navigationTitle(Text(.notificationsTitle))
-        .navigationBarTitleTextColor(.accent)
         .toolbar {
             if pets.isNotEmpty {
                 ToolbarItem(placement: .destructiveAction) {

@@ -45,7 +45,6 @@ struct SettingsView: View {
                 #endif
             }
             .navigationTitle(Text(.settingsTabTitle))
-            .navigationBarTitleTextColor(.accent)
         }
     }
 

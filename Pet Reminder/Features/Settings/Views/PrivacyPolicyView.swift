@@ -18,7 +18,6 @@ struct PrivacyPolicyView: View {
             }
         }
         .navigationTitle(Text(.privacyPolicyTitle))
-        .navigationBarTitleTextColor(.accent)
     }
 }
 

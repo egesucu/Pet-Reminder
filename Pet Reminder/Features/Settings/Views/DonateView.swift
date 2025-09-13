@@ -56,7 +56,6 @@ struct DonateView: View {
             .task(requestProducts)
         }
         .navigationTitle(Text(.donateUsTitle))
-        .navigationBarTitleTextColor(.accent)
     }
 
     func requestProducts() async {

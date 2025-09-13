@@ -47,7 +47,6 @@ struct FeedHistory: View {
             .scrollContentBackground(.hidden)
             .background(.regularMaterial)
             .navigationTitle(Text(.feedHistoryTitle))
-            .navigationBarTitleTextColor(.accent)
         }
         .presentationBackground(.clear)
         .presentationCornerRadius(24)
