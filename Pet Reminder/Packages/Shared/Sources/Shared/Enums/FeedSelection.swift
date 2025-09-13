@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-public enum FeedSelection: @MainActor Codable, CaseIterable, CustomStringConvertible {
+public enum FeedSelection: Codable, CaseIterable, CustomStringConvertible {
     case morning
     case evening
     case both
@@ -23,20 +23,32 @@ public enum FeedSelection: @MainActor Codable, CaseIterable, CustomStringConvert
             "Both"
         }
     }
+}
 
-    public var localized: LocalizedStringResource {
+// Keep UI-facing API isolated to the main actor without isolating Codable.
+@MainActor
+public extension FeedSelection {
+    var localized: LocalizedStringResource {
         switch self {
         case .morning:
-                .feedSelectionMorning
+            .feedSelectionMorning
         case .evening:
-                .feedSelectionEvening
+            .feedSelectionEvening
         case .both:
-                .feedSelectionBoth
+            .feedSelectionBoth
         }
     }
 }
 
 public extension FeedSelection {
+    static func fromLegacyChoice(_ choice: Int) -> Self {
+        switch choice {
+        case 0: return .morning
+        case 1: return .evening
+        default: return .both
+        }
+    }
+
     func fetchFeedSelection(from: String) -> Self {
         return switch from {
         case FeedSelection.evening.description:

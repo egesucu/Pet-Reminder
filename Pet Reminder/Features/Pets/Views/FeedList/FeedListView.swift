@@ -32,8 +32,6 @@ struct FeedListView: View {
                 case .both:
                     morningButton
                     eveningButton
-                case .none:
-                    EmptyView()
                 }
             }
             if let defineText = defineText() {
@@ -55,24 +53,20 @@ struct FeedListView: View {
     }
 
     private func defineText() -> String? {
-        if let feedSelection = pet.feedSelection {
-            switch feedSelection {
-            case .morning:
-                return String(localized: morningOn ? "All feeds are given" : "0/1 feed given")
-            case .evening:
-                return String(localized: eveningOn ? "All feeds are given" : "0/1 feed given")
-            case .both:
-                let bothChecked = morningOn && eveningOn
-                if bothChecked {
-                    return String(localized: "All feeds are given")
-                } else if morningOn || eveningOn {
-                    return String(localized: "1/2 feed given")
-                } else {
-                    return String(localized: "0/2 feed given")
-                }
+        switch pet.feedSelection {
+        case .morning:
+            return String(localized: morningOn ? "All feeds are given" : "0/1 feed given")
+        case .evening:
+            return String(localized: eveningOn ? "All feeds are given" : "0/1 feed given")
+        case .both:
+            let bothChecked = morningOn && eveningOn
+            if bothChecked {
+                return String(localized: "All feeds are given")
+            } else if morningOn || eveningOn {
+                return String(localized: "1/2 feed given")
+            } else {
+                return String(localized: "0/2 feed given")
             }
-        } else {
-            return nil
         }
     }
 

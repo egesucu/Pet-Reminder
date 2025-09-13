@@ -103,25 +103,6 @@ struct PetDetailView: View {
             VaccineHistoryView(pet: $pet)
         }
         .navigationTitle(Text("pet_name_title \(pet.name)"))
-        .onAppear {
-            setPetFeedSelection()
-        }
-    }
-
-    /// This function ensures that each pet has a selection.
-    /// Coming from early versions, we used to set choice values, but now we require feedSelection.
-    func setPetFeedSelection() {
-        if pet.feedSelection == nil {
-            switch pet.choice {
-            case 0:
-                pet.feedSelection = .morning
-            case 1:
-                pet.feedSelection = .evening
-            default:
-                pet.feedSelection = .both
-            }
-            try? modelContext.save()
-        }
     }
 
     var detailView: some View {

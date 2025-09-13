@@ -24,10 +24,10 @@ public enum PetSchemaV1: @preconcurrency VersionedSchema {
         public var image: Data?
         public var feedSelection: FeedSelection?
         private var petTypeName: PetType.RawValue = PetType.other.rawValue
-        
+
         @Relationship(inverse: \Feed.pet) public var feeds: [Feed]?
         @Relationship(inverse: \Vaccine.pet) public var vaccines: [Vaccine]?
-        
+
         public init(
             birthday: Date = Date(),
             name: String = "",
@@ -47,7 +47,7 @@ public enum PetSchemaV1: @preconcurrency VersionedSchema {
             self.vaccines = vaccines
             self.type = type
         }
-        
+
         var type: PetType {
             get { .init(rawValue: petTypeName) ?? .other }
             set { petTypeName = newValue.rawValue }

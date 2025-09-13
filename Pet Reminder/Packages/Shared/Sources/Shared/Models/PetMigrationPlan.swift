@@ -12,11 +12,11 @@ public enum PetMigrationPlan: SchemaMigrationPlan {
     public static var stages: [MigrationStage] {
         [migrateV1toV2]
     }
-    
+
     public static var schemas: [any VersionedSchema.Type] {
         [PetSchemaV1.self, PetSchemaV2.self]
     }
-    
+
     static let migrateV1toV2 = MigrationStage.custom(
         fromVersion: PetSchemaV1.self,
         toVersion: PetSchemaV2.self,
@@ -27,17 +27,15 @@ public enum PetMigrationPlan: SchemaMigrationPlan {
              This removes nil option from old db & set a selection if previously
              given by choice value.
              */
-            for user in users {
-                if user.feedSelection == nil {
-                    let choice = user.choice
-                    switch choice {
-                    case 0: // morning
-                        user.feedSelection = .morning
-                    case 1:
-                        user.feedSelection = .evening
-                    default:
-                        user.feedSelection = .both
-                    }
+            for user in users where user.feedSelection == nil {
+                let choice = user.choice
+                switch choice {
+                case 0: // morning
+                    user.feedSelection = .morning
+                case 1:
+                    user.feedSelection = .evening
+                default:
+                    user.feedSelection = .both
                 }
             }
 

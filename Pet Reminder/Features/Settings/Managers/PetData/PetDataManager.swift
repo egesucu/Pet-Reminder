@@ -61,7 +61,7 @@ class PetDataManager {
 
         self.birthday = pet.birthday
         self.name = pet.name
-        self.selection = pet.feedSelection ?? .both
+        self.selection = pet.feedSelection
         self.petType = pet.type
 
         if let image = pet.image {

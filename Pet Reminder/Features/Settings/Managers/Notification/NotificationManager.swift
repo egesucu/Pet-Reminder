@@ -100,8 +100,6 @@ class NotificationManager {
         case .evening:
             await createNotificationSafely(of: pet.name, with: .evening, date: eveningTime ?? .eightPM)
             await createNotificationSafely(of: pet.name, with: .birthday, date: pet.birthday)
-        case .none:
-            break
         }
     }
 
