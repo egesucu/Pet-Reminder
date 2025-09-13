@@ -104,50 +104,74 @@ struct PetChangeView: View {
                 .multilineTextAlignment(.center)
                 .padding()
             Form {
-                Section {
-                    HStack {
-                        Text(.name)
-                            .bold()
-                        TextField(text: $manager.name) {
-                            Text(.tapToChangeText)
-                        }
-                    }
-
-                    DatePicker(
-                        selection: $manager.birthday,
-                        displayedComponents: .date
-                    ) {
-                        Text(.birthdayTitle)
-                            .bold()
-                    }
-                }
-                Section {
-                    pickerView
-                    setupPickerView()
-                }
+                personalDetailsView
+                notificationSelectionView
             }
             .frame(minHeight: 500)
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button(action: save) {
-                    Text(.save)
-                        .bold()
-                }
-                .tint(.accent)
-            }
-            ToolbarItem(placement: .cancellationAction) {
-                Button(action: cancel) {
-                    Text(.cancel)
-                        .bold()
-                }
-                .tint(.red)
-            }
-        }
+        .toolbar(content: toolbar)
         .background(Color(uiColor: .systemGroupedBackground))
     }
 
-    var pickerView: some View {
+    @MainActor var personalDetailsView: some View {
+        Section {
+            HStack {
+                Text(.name)
+                    .bold()
+                TextField(text: $manager.name) {
+                    Text(.tapToChangeText)
+                }
+            }
+
+            DatePicker(
+                selection: $manager.birthday,
+                displayedComponents: .date
+            ) {
+                Text(.birthdayTitle)
+                    .bold()
+            }
+
+            Picker(selection: $manager.petType) {
+                ForEach(PetType.allCases, id: \.rawValue) { type in
+                    Text(type.localizedName)
+                        .tag(type)
+                }
+            } label: {
+                Text(.petKindText)
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: manager.petType) {
+                manager.loadImage()
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    func toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .confirmationAction) {
+            Button(action: save) {
+                Text(.save)
+                    .bold()
+            }
+            .tint(.accent)
+        }
+        ToolbarItem(placement: .cancellationAction) {
+            Button(action: cancel) {
+                Text(.cancel)
+                    .bold()
+            }
+            .tint(.red)
+        }
+    }
+
+    var notificationSelectionView: some View {
+        Section {
+            notificationPickerView
+            notificationDetailsView
+        }
+    }
+
+    var notificationPickerView: some View {
         VStack {
             Picker(selection: $manager.selection) {
                 Text(.feedSelectionBoth)
@@ -163,8 +187,7 @@ struct PetChangeView: View {
         }
     }
 
-    @ViewBuilder
-    func setupPickerView() -> some View {
+    @ViewBuilder var notificationDetailsView: some View {
         switch manager.selection {
         case .both:
             morningView
@@ -221,6 +244,10 @@ struct PetChangeView: View {
 
         if pet.image != manager.petImageData {
             pet.image = manager.petImageData
+        }
+
+        if pet.type != manager.petType {
+            pet.type = manager.petType
         }
 
         if pet.birthday != manager.birthday {

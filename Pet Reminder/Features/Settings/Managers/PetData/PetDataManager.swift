@@ -33,6 +33,7 @@ class PetDataManager {
     var morningDate: Date = .eightAM
     var eveningDate: Date = .eightPM
     var showImagePicker = false
+    var petType: PetType = .other
 
     var petImageData: Data?
     var petImage: UIImage?
@@ -61,6 +62,7 @@ class PetDataManager {
         self.birthday = pet.birthday
         self.name = pet.name
         self.selection = pet.feedSelection ?? .both
+        self.petType = pet.type
 
         if let image = pet.image {
             petImageData = image
@@ -141,6 +143,7 @@ class PetDataManager {
         petImageData = nil
         birthday = .now
         selection = .both
+        petType = .other
 
         loadPet(for: pet, dismiss: {})
     }

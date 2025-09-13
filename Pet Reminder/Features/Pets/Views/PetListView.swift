@@ -85,7 +85,7 @@ struct PetListView: View {
     @ToolbarContentBuilder
     func addButtonToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            if pets.count > 0 {
+            if pets.isNotEmpty {
                 Button {
                     addPet.toggle()
                 } label: {
@@ -105,7 +105,7 @@ struct PetListView: View {
         Logger.pets.info("Pet Count: \(pets.count)")
         /// If we have a new pet after there was none, or the new pet added and sorted via name
         /// we would like to switch first pet into the arrays first item.
-        if pets.count > 0,
+        if pets.isNotEmpty,
            let firstPet = pets.first {
             selectedPet = firstPet
         }

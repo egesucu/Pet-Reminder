@@ -62,6 +62,9 @@ struct PetNameTextField: View {
                     .font(.footnote)
                     .bold()
             }
+
+            Text(.petFact)
+                .font(.footnote)
         }
     }
 

@@ -36,7 +36,7 @@ struct PetCell: View {
                     .minimumScaleFactor(0.2)
                     .lineLimit(3)
                 if let feeds = pet.feeds {
-                    if feeds.count > 0,
+                    if feeds.isNotEmpty,
                        let lastFeed = feeds.last {
                         if lastFeed.eveningFed,
                            let eveningTime = lastFeed.eveningFedStamp {

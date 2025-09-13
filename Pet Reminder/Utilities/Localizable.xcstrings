@@ -1637,6 +1637,23 @@
         }
       }
     },
+    "pet_fact" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "According to pet name surveys worldwide, “Bella” consistently ranks among the top dog names across the U.S., U.K., and even parts of Europe — likely boosted by the Twilight books and movies making the name trendy for people and pets alike."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kediler için en yaygın isimlerden biri “Tekir”’dir. Aslında bu bir isimden çok, kedinin benekli/çizgili desenini tanımlar; ama Türkiye’de pek çok evde bu desenli kedilere varsayılan isim olarak Tekir denir."
+          }
+        }
+      }
+    },
     "pet_kind_text" : {
       "extractionState" : "manual",
       "localizations" : {
