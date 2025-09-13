@@ -91,7 +91,7 @@ struct PetListView: View {
                 } label: {
                     Image(systemSymbol: SFSymbol.plus)
                         .accessibilityLabel(Text(.addAnimalAccessibleLabel))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.background)
                 }
                 .buttonStyle(.glassProminent)
                 .tint(.accent)

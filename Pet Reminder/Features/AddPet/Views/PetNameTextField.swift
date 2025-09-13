@@ -22,12 +22,12 @@ struct PetNameTextField: View {
     @FocusState var isFocused
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(.startNameLabel)
                 .foregroundStyle(Color.label)
                 .font(.title2)
                 .bold()
-                .padding(.bottom, 20)
+                .padding(.bottom, 15)
 
             TextField(
                 Strings.doggo,
@@ -65,6 +65,9 @@ struct PetNameTextField: View {
 
             Text(.petFact)
                 .font(.footnote)
+                .italic()
+                .padding(.top, 20)
+                .lineLimit(20)
         }
     }
 

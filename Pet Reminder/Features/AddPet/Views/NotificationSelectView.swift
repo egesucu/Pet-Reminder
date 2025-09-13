@@ -20,18 +20,22 @@ struct NotificationSelectView: View {
                 .bold()
                 .foregroundStyle(Color.label)
                 .animation(.easeOut(duration: 0.8), value: feedSelection)
-            Picker(
-                selection: $feedSelection,
-                label: Text(.feedTimeTitle)
-            ) {
-                ForEach(FeedSelection.allCases, id: \.description) {
-                    Text($0.localized)
-                        .tag($0)
+            HStack {
+                Spacer()
+                Picker(
+                    selection: $feedSelection,
+                    label: Text(.feedTimeTitle)
+                ) {
+                    ForEach(FeedSelection.allCases, id: \.description) {
+                        Text($0.localized)
+                            .tag($0)
+                    }
                 }
+                .pickerStyle(.segmented)
+                .tint(.green)
+                .animation(.easeOut(duration: 0.8), value: feedSelection)
+                Spacer()
             }
-            .pickerStyle(.segmented)
-            .tint(.green)
-            .animation(.easeOut(duration: 0.8), value: feedSelection)
         }
     }
 }

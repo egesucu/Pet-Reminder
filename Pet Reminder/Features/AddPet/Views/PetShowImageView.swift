@@ -30,6 +30,7 @@ struct PetShowImageView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var image = UIImage(resource: .defaultOther)
 
@@ -38,3 +39,4 @@ struct PetShowImageView: View {
     })
         .padding()
 }
+#endif

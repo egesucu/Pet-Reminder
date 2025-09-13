@@ -15,7 +15,7 @@ struct PetBirthdayView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-            Text(.birthdayTitle)
+            Text(.birthdayAskLabel)
                 .font(.title2)
                 .foregroundStyle(Color.label)
                 .bold()

@@ -38,9 +38,10 @@ struct FeedHistory: View {
             .scrollIndicators(.hidden)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(action: dismiss.callAsFunction) {
+                    Button(role: .cancel, action: dismiss.callAsFunction) {
                         Image(systemSymbol: .xmark)
                     }
+                    .tint(.red)
                 }
             }
             .scrollContentBackground(.hidden)

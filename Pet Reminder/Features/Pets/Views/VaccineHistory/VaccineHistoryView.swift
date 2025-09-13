@@ -75,21 +75,17 @@ struct VaccineHistoryView: View {
     /// Builds toolbar items for dismissing or adding vaccines.
     @ToolbarContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button(
-                "",
-                systemImage: SFSymbol.xmark.rawValue,
-                role: .cancel,
-                action: dismiss.callAsFunction
-            )
-            .disabled(shouldAddVaccine)
+            Button(role: .cancel, action: dismiss.callAsFunction) {
+                Image(systemSymbol: .xmark)
+            }
+            .tint(.red)
         }
         ToolbarItem(placement: .confirmationAction) {
-            Button(
-                "",
-                systemImage: SFSymbol.plus.rawValue,
-                role: .confirm,
-                action: addVaccine
-            )
+            Button(role: .confirm, action: addVaccine) {
+                Image(systemSymbol: .plus)
+                    .foregroundStyle(Color.background)
+            }
+            .tint(.blue)
             .disabled(shouldAddVaccine)
         }
     }
@@ -110,6 +106,7 @@ struct VaccineHistoryView: View {
     }
 }
 
+#if DEBUG
 /// Preview for VaccineHistoryView using sample pet data.
 #Preview("Vaccine List") {
     @Previewable @State var pet: Pet = .preview
@@ -119,3 +116,4 @@ struct VaccineHistoryView: View {
             .modelContainer(DataController.previewContainer)
     }
 }
+#endif

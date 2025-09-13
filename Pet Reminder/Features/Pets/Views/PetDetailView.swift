@@ -65,9 +65,11 @@ struct PetDetailView: View {
                     Label {
                         Text(.feedsTitle)
                             .font(.title)
+                            .foregroundStyle(Color.background)
                     } icon: {
-                        Image(systemName: "fork.knife.circle.fill")
+                        Image(systemSymbol: .forkKnife)
                             .font(.title)
+                            .foregroundStyle(Color.background)
                     }
                 }
                 .buttonStyle(.glassProminent)
@@ -81,9 +83,11 @@ struct PetDetailView: View {
                     Label {
                         Text(.vaccinesTitle)
                             .font(.title)
+                            .foregroundStyle(Color.background)
                     } icon: {
-                        Image(systemName: "syringe.fill")
+                        Image(systemSymbol: .syringeFill)
                             .font(.title)
+                            .foregroundStyle(Color.background)
                     }
                 }
                 .buttonStyle(.glassProminent)
@@ -114,7 +118,7 @@ struct PetDetailView: View {
 }
 
 #if DEBUG
-#Preview(traits: .portrait) {
+#Preview {
     NavigationStack {
         PetDetailView(
             pet: .constant(.preview)

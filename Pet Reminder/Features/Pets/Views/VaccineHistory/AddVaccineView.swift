@@ -38,7 +38,7 @@ struct AddVaccineView: View {
 
     /// The main UI with fields for vaccine name, date, and a button to save the record.
     var body: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 15) {
             TextField(.vaccineTitleLabel, text: $vaccineName)
                 .bold()
             DatePicker(.vaccineDateLabel, selection: $vaccineDate)
@@ -47,8 +47,8 @@ struct AddVaccineView: View {
                 Text(.save)
                     .font(.title)
             }
-            .buttonStyle(.glass)
-            .tint(.blue)
+            .buttonStyle(.glassProminent)
+            .tint(.accent)
             .disabled(vaccineName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         }
         .padding()
@@ -69,7 +69,7 @@ struct AddVaccineView: View {
         dismiss()
     }
 }
-
+#if DEBUG
 /// Preview for AddVaccineView with an empty vaccine name.
 #Preview("Add Vaccine", traits: .fixedLayout(width: 400, height: 200)) {
     @Previewable @State var pet: Pet = .preview
@@ -89,3 +89,4 @@ struct AddVaccineView: View {
         .modelContainer(DataController.previewContainer)
         .background(Color.red.opacity(0.2)) // Preview Heights
 }
+#endif
