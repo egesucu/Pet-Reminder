@@ -26,9 +26,6 @@ let package = Package(
             resources: [
                 .process("Resources/LICENSE.md")
             ],
-            swiftSettings: [
-                .defaultIsolation(MainActor.self)
-            ],
             plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         ),
         .testTarget(

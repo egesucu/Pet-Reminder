@@ -77,14 +77,8 @@ class VetViewModel {
 
         let localSearch = MKLocalSearch(request: searchRequest)
 
-        Task {
-            do {
-                let response = try await localSearch.start()
-                await processSearchResponse(response)
-            } catch let error {
-                throw error
-            }
-        }
+        let response = try await localSearch.start()
+        await processSearchResponse(response)
     }
 
     private func processSearchResponse(_ response: MKLocalSearch.Response) async {

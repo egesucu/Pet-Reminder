@@ -280,7 +280,7 @@ class EventManager {
         let newEvent = EKEvent(eventStore: eventStore)
         newEvent.title = eventName
         newEvent.isAllDay = isAllDay
-        newEvent.startDate = eventStartDate
+        newEvent.startDate = Calendar.current.date(byAdding: .minute, value: -10, to: eventStartDate)
         newEvent.endDate = isAllDay ? eventStartDate : eventEndDate
         newEvent.calendar = petCalendar
 

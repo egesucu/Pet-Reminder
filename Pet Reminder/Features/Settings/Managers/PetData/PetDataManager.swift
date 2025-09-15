@@ -54,7 +54,7 @@ class PetDataManager {
     func loadPet(for pet: Pet?, dismiss: @escaping () -> Void) {
         pageState = .loading
         guard let pet else {
-            Logger().info("We need to have a pet data to work on this page")
+            Logger.pets.error("We need to have a pet data to work on this page")
             dismiss()
             return
         }

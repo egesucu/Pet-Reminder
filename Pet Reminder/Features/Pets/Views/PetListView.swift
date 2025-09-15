@@ -12,8 +12,6 @@ import OSLog
 import Shared
 import SFSafeSymbols
 
-extension ReferenceWritableKeyPath: @retroactive @unchecked Sendable { }
-
 struct PetListView: View {
 
     @Environment(\.modelContext) private var modelContext
