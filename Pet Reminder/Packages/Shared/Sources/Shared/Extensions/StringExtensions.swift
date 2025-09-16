@@ -29,8 +29,10 @@ public struct Strings {
     public static func footerLabel(_ first: Any) -> String {
         return "© Ege Sucu \(first)"
     }
-    public static func notificationIdenfier(_ first: Any, _ second: Any) -> String {
-      return "\(first)-\(second)-notification"
+
+    // Renamed from `notificationIdenfier` to `notificationIdentifier`
+    public static func notificationIdentifier(_ first: Any, _ second: Any) -> String {
+        return "\(first)-\(second)-notification"
     }
 
     public static func demoEvent(_ first: Any) -> String {
@@ -39,7 +41,6 @@ public struct Strings {
 
     public static let demoDataOccured = "demoDataOccured"
     public static let petReminder = "Pet Reminder"
-
 }
 
 public extension String {

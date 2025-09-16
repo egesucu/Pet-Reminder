@@ -26,6 +26,8 @@ public struct SettingsButton: View {
     }
 }
 
+#if DEBUG
 #Preview {
     SettingsButton()
 }
+#endif

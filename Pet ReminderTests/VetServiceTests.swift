@@ -46,6 +46,9 @@ private final class MockCLLocationManager: CLLocationManager {
 // MARK: - Mock VetService (protocol-level mock you can reuse in other tests)
 
 final class MockVetService: VetService {
+    func stopUpdating() {
+        
+    }
 
     // Inputs you can preset
     var nextStatus: MapViewStatus = .none

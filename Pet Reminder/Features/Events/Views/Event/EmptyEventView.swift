@@ -35,7 +35,9 @@ struct EmptyEventView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     EmptyEventView()
         .environment(EventManager.demo)
 }
+#endif

@@ -35,7 +35,15 @@ class PetDataManager {
     var showImagePicker = false
     var petType: PetType = .other
 
-    var petImageData: Data?
+    var petImageData: Data? {
+        didSet {
+            // Optional: downsample/compress large images before keeping them in memory/storage
+            if let data = petImageData,
+               let processed = ImageDownsampling.downsampleIfNeeded(data: data, maxDimension: 1024, jpegQuality: 0.8) {
+                petImageData = processed
+            }
+        }
+    }
     var petImage: UIImage?
 
     var notificationManager = NotificationManager.shared
@@ -44,6 +52,9 @@ class PetDataManager {
     var photoMode: PhotoMode = .none
 
     var defaultSelected = false
+
+    // Simple error surface for UI (alerts/toasts)
+    var lastErrorMessage: String?
 
     func removePhoto() {
         photoMode = .none
@@ -55,6 +66,7 @@ class PetDataManager {
         pageState = .loading
         guard let pet else {
             Logger.pets.error("We need to have a pet data to work on this page")
+            pageState = .failed
             dismiss()
             return
         }
@@ -79,59 +91,81 @@ class PetDataManager {
 
     func loadImage() {
         if let petImageData {
-            petImage = UIImage(data: petImageData)
+            if let decoded = UIImage(data: petImageData) {
+                petImage = decoded
+            } else {
+                Logger.pets.error("Failed to decode image data for pet")
+                // Clear invalid data to avoid repeated failures
+                petImage = nil
+                self.petImageData = nil
+                photoMode = .none
+            }
+        } else {
+            petImage = nil
         }
     }
 
-    func changeBirthday() async throws {
+    func changeBirthday() async {
         switch pageState {
         case .loaded(let pet):
-            try await notificationManager.removeNotification(
-                of: pet.name,
-                with: NotificationType.birthday
-            )
-            try await notificationManager.createNotification(
-                of: pet.name,
-                with: NotificationType.birthday,
-                date: birthday
-            )
+            do {
+                try await notificationManager.removeNotification(
+                    of: pet.name,
+                    with: NotificationType.birthday
+                )
+                try await notificationManager.createNotification(
+                    of: pet.name,
+                    with: NotificationType.birthday,
+                    date: birthday
+                )
+            } catch {
+                Logger.notifications.error(
+                    "Failed to update birthday notification for \(pet.name): \(error.localizedDescription)"
+                )
+                lastErrorMessage = String(localized: .notificationBirthdayUpdateFailed)
+                pageState = .failed
+            }
         default:
             break
         }
     }
 
-    func changeNotification() async throws {
-        switch selection {
-        case .both:
-            try await notificationManager.removeAllDailyNotifications(of: name)
-            try await notificationManager.createNotification(
-                of: name,
-                with: NotificationType.morning,
-                date: morningDate
+    func changeNotification() async {
+        do {
+            switch selection {
+            case .both:
+                try await notificationManager.removeAllDailyNotifications(of: name)
+                try await notificationManager.createNotification(
+                    of: name,
+                    with: NotificationType.morning,
+                    date: morningDate
+                )
+                try await notificationManager.createNotification(
+                    of: name,
+                    with: NotificationType.evening,
+                    date: eveningDate
+                )
+            case .morning:
+                try await notificationManager.removeAllDailyNotifications(of: name)
+                try await notificationManager.createNotification(
+                    of: name,
+                    with: NotificationType.morning,
+                    date: morningDate
+                )
+            case .evening:
+                try await notificationManager.removeAllDailyNotifications(of: name)
+                try await notificationManager.createNotification(
+                    of: name,
+                    with: NotificationType.evening,
+                    date: eveningDate
+                )
+            }
+        } catch {
+            Logger.notifications.error(
+                "Failed to update daily notifications for \(self.name): \(error.localizedDescription)"
             )
-            try await notificationManager.createNotification(
-                of: name,
-                with: NotificationType.evening,
-                date: eveningDate
-            )
-        case .morning:
-            try await notificationManager.removeAllDailyNotifications(
-                of: name
-            )
-            try await notificationManager.createNotification(
-                of: name,
-                with: NotificationType.morning,
-                date: morningDate
-            )
-        case .evening:
-            try await notificationManager.removeAllDailyNotifications(
-                of: name
-            )
-            try await notificationManager.createNotification(
-                of: name,
-                with: NotificationType.evening,
-                date: eveningDate
-            )
+            lastErrorMessage = String(localized: .notificationDailyUpdateFailed)
+            pageState = .failed
         }
     }
 
@@ -144,6 +178,10 @@ class PetDataManager {
         birthday = .now
         selection = .both
         petType = .other
+        showImagePicker = false
+        defaultSelected = false
+        photoMode = .none
+        lastErrorMessage = nil
 
         loadPet(for: pet, dismiss: {})
     }

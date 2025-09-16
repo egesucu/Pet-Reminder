@@ -27,7 +27,9 @@ struct AllNotificationsView: View {
 
 }
 
+#if DEBUG
 #Preview {
     AllNotificationsView()
         .environment(NotificationManager.shared)
 }
+#endif

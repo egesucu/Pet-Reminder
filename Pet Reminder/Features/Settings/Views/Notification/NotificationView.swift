@@ -140,12 +140,14 @@ struct NotificationView: View {
     private func notificationSection(for pet: Pet, notificationManager: NotificationManager) -> some View {
         Section {
             if notificationManager.filterNotifications(of: pet).isEmpty {
-                Button {
-                    Task {
-                        await createNotifications(for: pet)
+                VStack(alignment: .leading, spacing: 8) {
+                    Button {
+                        Task {
+                            await createNotifications(for: pet)
+                        }
+                    } label: {
+                        Text(.createDefaultNotificationsForYourPet)
                     }
-                } label: {
-                    Text("Create default notifications for your pet.")
                 }
             } else {
                 ForEach(
@@ -175,6 +177,7 @@ struct NotificationView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         NotificationView()
@@ -183,3 +186,4 @@ struct NotificationView: View {
     .environment(NotificationManager.shared)
 
 }
+#endif

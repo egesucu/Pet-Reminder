@@ -22,23 +22,23 @@ extension PetType {
         switch self {
         case .cat:
             let cat = String(localized: "Cat", bundle: .module)
-            Logger.pets.info("Pet's localized type is: \(cat)")
+            Logger.pets.debug("Pet's localized type is: \(cat)")
             return cat
         case .dog:
             let dog = String(localized: "Dog", bundle: .module)
-            Logger.pets.info("Pet's localized type is: \(dog)")
+            Logger.pets.debug("Pet's localized type is: \(dog)")
             return dog
         case .fish:
             let fish = String(localized: "Fish", bundle: .module)
-            Logger.pets.info("Pet's localized type is: \(fish)")
+            Logger.pets.debug("Pet's localized type is: \(fish)")
             return fish
         case .bird:
             let bird = String(localized: "Bird", bundle: .module)
-            Logger.pets.info("Pet's localized type is: \(bird)")
+            Logger.pets.debug("Pet's localized type is: \(bird)")
             return bird
         case .other:
             let other = String(localized: "Other", bundle: .module)
-            Logger.pets.info("Pet's localized type is: \(other)")
+            Logger.pets.debug("Pet's localized type is: \(other)")
             return other
         }
     }

@@ -33,7 +33,10 @@ struct PetListView: View {
             }
         }
         .toolbar(content: addButtonToolbar)
-        .task(definePet)
+        .task {
+            await definePet()
+            logDuplicateNamesIfAny()
+        }
         .navigationTitle(Text(.petNameTitle))
         .sheet(
             isPresented: $addPet,
@@ -107,6 +110,7 @@ struct PetListView: View {
            let firstPet = pets.first {
             selectedPet = firstPet
         }
+        logDuplicateNamesIfAny()
     }
 
     private func definePet() async {
@@ -144,6 +148,16 @@ struct PetListView: View {
         let folded = term.folding(options: .diacriticInsensitive, locale: .current).lowercased()
         let allowed = CharacterSet.alphanumerics
         return String(folded.unicodeScalars.filter { allowed.contains($0) })
+    }
+
+    private func logDuplicateNamesIfAny() {
+        let names = pets.map(\.name)
+        let duplicates = Dictionary(grouping: names, by: { $0 })
+            .filter { $1.count > 1 }
+            .keys
+        if duplicates.isEmpty == false {
+            Logger.pets.error("Duplicate pet names detected: \(duplicates.joined(separator: ", "))")
+        }
     }
 
     private var petList: some View {

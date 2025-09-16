@@ -64,6 +64,7 @@ struct EventFilterMenu: ToolbarContent {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         ScrollView {
@@ -79,3 +80,4 @@ struct EventFilterMenu: ToolbarContent {
     .environment(EventManager.demo)
 
 }
+#endif

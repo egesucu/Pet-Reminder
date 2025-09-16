@@ -21,6 +21,8 @@ struct EventTitleView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     EventTitleView(eventTitle: .constant("Event"))
 }
+#endif

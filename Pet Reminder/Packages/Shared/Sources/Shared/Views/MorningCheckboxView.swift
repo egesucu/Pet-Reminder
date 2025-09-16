@@ -40,8 +40,10 @@ public struct MorningCheckboxView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var isOn = false
 
     MorningCheckboxView(morningOn: $isOn)
 }
+#endif

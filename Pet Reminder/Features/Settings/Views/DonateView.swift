@@ -131,8 +131,10 @@ extension DonateView {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         DonateView()
     }
 }
+#endif

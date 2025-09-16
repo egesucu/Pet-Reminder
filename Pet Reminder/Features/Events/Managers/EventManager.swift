@@ -44,13 +44,8 @@ class EventManager {
 
     // MARK: - Demo & Mock Data
 
-    /// Contains static demo data and fallback calendar generation for demo/testing purposes.
     struct Demo {
-        /// A fallback/fake calendar used for demo purposes.
         static var fakeCalendar: EKCalendar {
-            // Attempt to cast eventStore to EKEventStore for calendar creation.
-            // Since this is static and we don't have eventStore instance here,
-            // we create a new EKEventStore instance for demo.
             let eventStore = EKEventStore()
             let calendar = EKCalendar(for: .event, eventStore: eventStore)
             calendar.title = "Fake Calendar"
@@ -58,7 +53,6 @@ class EventManager {
             return calendar
         }
 
-        /// Generates example demo events for UI/testing with a fake calendar.
         static var exampleEvents: [EKEvent] {
             let eventStore = EKEventStore()
             let fakeCalendar = Demo.fakeCalendar
@@ -75,8 +69,6 @@ class EventManager {
             return events
         }
     }
-
-    // MARK: - Status Handling
 
     enum Status: String {
         case authorized
@@ -97,17 +89,9 @@ class EventManager {
         }
     }
 
-    // MARK: - Shared Instances
-
     static let shared = EventManager()
     static let demo = EventManager(isDemo: true)
 
-    // MARK: - Initialization
-
-    /// Initializes the EventManager with an optional custom event store.
-    /// - Parameters:
-    ///   - isDemo: Indicates if demo data should be used.
-    ///   - eventStore: The event store conforming to `EventStoreProtocol`. Defaults to `EKEventStore`.
     init(isDemo: Bool = false, eventStore: any EventStoreProtocol = EKEventStore()) {
         self.eventStore = eventStore
 
@@ -123,9 +107,6 @@ class EventManager {
         }
     }
 
-    // MARK: - Computed Properties
-
-    /// Returns a calendar instance used for demo or fallback purposes.
     var fakeCalendar: EKCalendar {
         guard let eventStore = self.eventStore as? EKEventStore else {
             Logger.events.error("fakeCalendar: eventStore is not EKEventStore, returning stub calendar.")
@@ -139,16 +120,11 @@ class EventManager {
         return calendar
     }
 
-    // MARK: - Authorization
-
     private func updateAuthStatus() async {
         status = .value(status: EKEventStore.authorizationStatus(for: .event))
         Logger.events.info("Auth status is: \(self.status.rawValue)")
     }
 
-    // MARK: - Calendar Access
-
-    /// Requests access to the user's calendar for event usage.
     func requestCalendarAccess() async {
         do {
             let result = try await eventStore.requestFullAccessToEvents()
@@ -163,11 +139,6 @@ class EventManager {
         }
     }
 
-    // MARK: - Event Formatting
-
-    /// Returns a formatted string representation of an event's date and time.
-    /// - Parameter event: The event to format.
-    /// - Returns: A formatted date string.
     func formattedEventDateString(for event: EKEvent) -> String {
         if Calendar.current.isDateInToday(event.startDate) {
             return String.formatEventDateTime(current: true, allDay: event.isAllDay, event: event)
@@ -176,9 +147,6 @@ class EventManager {
         }
     }
 
-    // MARK: - Calendar Fetching & Management
-
-    /// Fetches available calendars and defines the Pet Reminder calendar if authorized.
     func fetchCalendars() async {
         if status == .authorized {
             self.calendars = eventStore.calendars(for: .event).map(\.title).map(EventCalendar.init)
@@ -190,15 +158,6 @@ class EventManager {
         petCalendar = await findOrCreatePetCalendar()
     }
 
-    // MARK: - Event Creation & Saving
-
-    /// Saves an event using the provided details, targeting the Pet Reminder calendar by default.
-    /// - Parameters:
-    ///   - name: The title of the event.
-    ///   - start: The start date of the event.
-    ///   - end: The end date of the event.
-    ///   - allDay: Whether the event is all day.
-    ///   - selectedCalendar: The calendar to save the event in. Defaults to `petCalendar` or an empty calendar if nil.
     func saveEvent(
         name: String,
         start: Date,
@@ -244,10 +203,6 @@ class EventManager {
         }
     }
 
-    // MARK: - Event Loading
-
-    /// Loads events for the next month from all event calendars.
-    /// - Returns: An array of events.
     func loadEvents() async -> [EKEvent] {
         let startDate: Date = .now
         let endDate = Calendar.current.date(byAdding: .month, value: 1, to: .now) ?? .now
@@ -280,13 +235,13 @@ class EventManager {
         let newEvent = EKEvent(eventStore: eventStore)
         newEvent.title = eventName
         newEvent.isAllDay = isAllDay
-        newEvent.startDate = Calendar.current.date(byAdding: .minute, value: -10, to: eventStartDate)
+        // Keep the provided start/end dates
+        newEvent.startDate = eventStartDate
         newEvent.endDate = isAllDay ? eventStartDate : eventEndDate
         newEvent.calendar = petCalendar
 
-        let alarm = EKAlarm(
-            absoluteDate: Calendar.current.date(byAdding: .minute, value: -10, to: .now) ?? .now
-        )
+        // Fire 10 minutes before the event start
+        let alarm = EKAlarm(relativeOffset: -600)
         newEvent.addAlarm(alarm)
         newEvent.notes = "Pet Event"
 
@@ -295,13 +250,12 @@ class EventManager {
         } catch let error {
             if let error = error as? EKError {
                 Logger.events.error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
+            } else {
+                Logger.events.error("Event Save Error: \(error.localizedDescription)")
             }
         }
     }
 
-    // MARK: - Event Reloading
-
-    /// Refreshes authorization status, calendar list, and loads events.
     func reloadEvents() async {
         await updateAuthStatus()
         await fetchCalendars()

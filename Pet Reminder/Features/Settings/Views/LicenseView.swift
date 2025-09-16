@@ -37,8 +37,10 @@ struct LicenseView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         LicenseView()
     }
 }
+#endif

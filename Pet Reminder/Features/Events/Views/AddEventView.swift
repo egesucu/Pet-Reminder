@@ -127,7 +127,9 @@ struct AddEventView: View {
 
 }
 
+#if DEBUG
 #Preview {
     AddEventView()
         .environment(EventManager.demo)
 }
+#endif

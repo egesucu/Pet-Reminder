@@ -67,6 +67,9 @@ struct FindVetView: View {
                 near: userLocation
             )
         }
+        .onDisappear {
+            vetService.stopUpdating()
+        }
         .sheet(item: $selectedLocation) { location in
             MapItemView(location: location)
                 .presentationDetents([.height(200)])

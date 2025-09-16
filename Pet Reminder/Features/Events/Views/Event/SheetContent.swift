@@ -31,6 +31,9 @@ struct SheetContent: View {
         }
     }
 }
+
+#if DEBUG
 #Preview {
     SheetContent(event: .init(eventStore: .init()))
 }
+#endif

@@ -21,8 +21,10 @@ struct PrivacyPolicyView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         PrivacyPolicyView()
     }
 }
+#endif
