@@ -61,9 +61,11 @@ struct CheckBoxView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @State var isOn = false
 
     EveningCheckboxView(eveningOn: $isOn)
         .environment(\.locale, .init(identifier: "en"))
 }
+#endif

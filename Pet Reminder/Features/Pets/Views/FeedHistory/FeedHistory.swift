@@ -53,6 +53,7 @@ struct FeedHistory: View {
     }
 }
 
+#if DEBUG
 #Preview {
     var feeds: [Feed] = Feed.previews
     let todayFeed = Feed(
@@ -66,3 +67,4 @@ struct FeedHistory: View {
 
     return FeedHistory(feeds: feeds)
 }
+#endif

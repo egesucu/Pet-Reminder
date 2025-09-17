@@ -43,7 +43,9 @@ struct FutureEventsView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     FutureEventsView()
         .environment(EventManager.demo)
 }
+#endif

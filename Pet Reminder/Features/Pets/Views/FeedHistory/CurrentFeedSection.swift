@@ -62,6 +62,7 @@ struct CurrentFeedSection: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let today = Date.now
     let feed = Feed(
@@ -74,3 +75,4 @@ struct CurrentFeedSection: View {
     CurrentFeedSection(feeds: [feed])
         .modelContainer(DataController.previewContainer)
 }
+#endif

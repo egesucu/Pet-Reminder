@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F02DB2B6F600F1BAA2 /* Shared */; };
 		7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */; };
+		724F85492E7A124D008EB9A2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 724F85482E7A124D008EB9A2 /* SFSafeSymbols */; };
 		9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D06639B2E0B5D28004CF6F5 /* Shared */; };
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724F85492E7A124D008EB9A2 /* SFSafeSymbols in Frameworks */,
 				9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,6 +139,7 @@
 			name = "Pet ReminderTests";
 			packageProductDependencies = (
 				9D06639B2E0B5D28004CF6F5 /* Shared */,
+				724F85482E7A124D008EB9A2 /* SFSafeSymbols */,
 			);
 			productName = "Pet ReminderTests";
 			productReference = 72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */;
@@ -180,6 +183,7 @@
 				TargetAttributes = {
 					72C446432C9B6BBC003B1DE7 = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 2600;
 						TestTargetID = 9D8E76ED248666BD004610C8;
 					};
 					9D8E76ED248666BD004610C8 = {
@@ -267,6 +271,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -276,7 +281,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "tr.com.egesucu.Pet-ReminderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_DYNAMIC_ACTOR_ISOLATION = YES;
 				SWIFT_UPCOMING_FEATURE_GLOBAL_ACTOR_ISOLATED_TYPES_USABILITY = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
@@ -292,14 +299,17 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "tr.com.egesucu.Pet-ReminderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_DYNAMIC_ACTOR_ISOLATION = YES;
 				SWIFT_UPCOMING_FEATURE_GLOBAL_ACTOR_ISOLATED_TYPES_USABILITY = YES;
@@ -370,7 +380,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -454,7 +464,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -515,7 +525,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 26;
+				MARKETING_VERSION = 26.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -577,7 +587,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 26;
+				MARKETING_VERSION = 26.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.egesucu.Pet-Reminder";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -673,6 +683,11 @@
 			productName = Shared;
 		};
 		7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
+			productName = SFSafeSymbols;
+		};
+		724F85482E7A124D008EB9A2 /* SFSafeSymbols */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
 			productName = SFSafeSymbols;

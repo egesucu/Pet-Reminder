@@ -60,9 +60,11 @@ struct PetCell: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         PetCell(pet: .preview)
             .modelContainer(DataController.previewContainer)
     }
 }
+#endif

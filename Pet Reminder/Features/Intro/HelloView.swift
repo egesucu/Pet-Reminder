@@ -13,7 +13,6 @@ import SFSafeSymbols
 
 struct HelloView: View {
     @AppStorage(Strings.helloSeen) var helloSeen = false
-    @State private var navigateToHome = false
     @State private var shouldAnimate = false
     @Environment(NotificationManager.self) private var notificationManager
 
@@ -43,10 +42,6 @@ struct HelloView: View {
                         .tint(.label)
                 }
                 .glassEffect(.regular)
-                .fullScreenCover(isPresented: $navigateToHome) {
-                    HomeManagerView()
-                        .environment(notificationManager)
-                }
                 Spacer()
             }
         }
@@ -78,7 +73,7 @@ struct HelloView: View {
 
     private func goButtonPressed() {
         helloSeen = true
-        navigateToHome.toggle()
+        // App will route to HomeManagerView automatically based on helloSeen in PetReminderApp
     }
 
     private func animateView() {

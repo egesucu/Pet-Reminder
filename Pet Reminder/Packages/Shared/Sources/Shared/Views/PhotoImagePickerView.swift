@@ -61,7 +61,13 @@ public struct PhotoImagePickerView: View {
 
     private func processPhotoChange(_ newPhoto: PhotosPickerItem) async {
         if let data = try? await newPhoto.loadTransferable(type: Data.self) {
-            photoData = data
+            // Downsample before assigning to reduce memory/storage footprint
+            let processed = ImageDownsampling.downsampleIfNeeded(
+                data: data,
+                maxDimension: 1024,
+                jpegQuality: 0.8
+            ) ?? data
+            photoData = processed
         } else {
             photoData = nil
             selectedPhoto = nil

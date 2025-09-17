@@ -24,6 +24,8 @@ struct EventTimeView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     EventTimeView(dateString: .constant(Strings.demo))
 }
+#endif

@@ -25,6 +25,7 @@ struct PetChangeView: View {
     @State private var manager = PetDataManager()
 
     @State private var showError = false
+    @State private var showManagerErrorAlert = false
 
     var body: some View {
         NavigationStack {
@@ -46,6 +47,16 @@ struct PetChangeView: View {
             }
             .alert("name_exist_error", isPresented: $showError) {
                 Button(role: .confirm, action: { })
+            }
+            .alert(isPresented: $showManagerErrorAlert) {
+                Alert(
+                    title: Text(.errorTitle),
+                    message: Text(manager.lastErrorMessage ?? String(localized: .unknownError)),
+                    dismissButton: .default(Text(.ok))
+                )
+            }
+            .onChange(of: manager.lastErrorMessage) {
+                showManagerErrorAlert = manager.lastErrorMessage != nil
             }
         }
     }
@@ -257,25 +268,13 @@ struct PetChangeView: View {
         /// This notification might be missing from previous data,
         /// so it's best to run this even if there's no birthday change.
         Task {
-            do {
-                try await manager.changeBirthday()
-            } catch {
-                Logger().error(
-                    "Unknown error occurred while updating birthday. \(error.localizedDescription)"
-                )
-            }
+            await manager.changeBirthday()
         }
 
         if pet.feedSelection != manager.selection {
             pet.feedSelection = manager.selection
             Task {
-                do {
-                    try await manager.changeNotification()
-                } catch {
-                    Logger().error(
-                        "Unknown error occurred while updating selection. \(error.localizedDescription)"
-                    )
-                }
+                await manager.changeNotification()
             }
         }
 
@@ -288,6 +287,7 @@ struct PetChangeView: View {
                     Logger().error(
                         "Unknown error occurred while updating the pet. \(error.localizedDescription)"
                     )
+                    manager.lastErrorMessage = String(localized: .petSaveFailed)
                 }
             }
         }

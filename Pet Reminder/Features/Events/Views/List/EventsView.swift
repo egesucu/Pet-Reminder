@@ -51,7 +51,9 @@ struct EventsView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     EventsView()
         .environment(EventManager.demo)
 }
+#endif

@@ -18,6 +18,19 @@ struct PetReminderApp: App {
     @State private var notificationManager = NotificationManager.shared
     @State private var eventManager = EventManager.shared
 
+    let container: ModelContainer
+
+    init() {
+        do {
+            container = try ModelContainer(
+                for: Pet.self,
+                migrationPlan: PetMigrationPlan.self
+            )
+        } catch {
+            fatalError("Failed to initialize model container.")
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             if helloSeen {
@@ -28,6 +41,6 @@ struct PetReminderApp: App {
         }
         .environment(notificationManager)
         .environment(eventManager)
-        .modelContainer(for: Pet.self)
+        .modelContainer(container)
     }
 }

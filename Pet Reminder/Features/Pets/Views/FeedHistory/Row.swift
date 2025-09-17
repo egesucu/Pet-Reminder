@@ -31,6 +31,7 @@ struct Row: View {
     }
 }
 
+#if DEBUG
 #Preview {
     Group {
         Row(
@@ -45,3 +46,4 @@ struct Row: View {
         )
     }
 }
+#endif

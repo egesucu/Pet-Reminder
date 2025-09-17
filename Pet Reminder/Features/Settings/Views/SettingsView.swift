@@ -77,9 +77,8 @@ private func removeUserDefaults() {
     Logger.settings.info("Hello Seen Debug: \(UserDefaults.standard.bool(forKey: "helloSeen"))")
 }
 
-#endif
-
 #Preview {
     SettingsView()
         .environment(NotificationManager.shared)
 }
+#endif

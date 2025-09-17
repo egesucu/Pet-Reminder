@@ -15,12 +15,26 @@ import SFSafeSymbols
 
 struct FindVetView: View {
 
-    @State private var viewModel = VetViewModel()
+    @State private var vetService = VetServiceImplementation(
+        locationManager: .init()
+    )
+
     @State private var searchText = String(localized: .defaultVetText)
 
-    init() {}
+    @State private var userLocation: MapCameraPosition = .userLocation(
+        fallback: .automatic
+    )
+    @State private var searchedLocations: [Pin] = []
+    @State private var selectedLocation: Pin?
+    @State private var mapViewStatus: MapViewStatus = .none
 
-    init(searchText: State<String>) {
+    init(
+        searchText: State<String> = .init(
+            initialValue: String(
+                localized: .defaultVetText
+            )
+        )
+    ) {
         self._searchText = searchText
     }
 
@@ -29,7 +43,7 @@ struct FindVetView: View {
             mapView
         }
         .overlay {
-            if viewModel.mapViewStatus == .locationNotAllowed {
+            if mapViewStatus == .locationNotAllowed {
                 ContentUnavailableView {
                     Label {
                         Text(.findVetErrorTitle)
@@ -44,29 +58,33 @@ struct FindVetView: View {
             }
         }
         .task {
-            await viewModel.requestLocation()
-            await viewModel.requestMap()
-            try? await viewModel.searchPins(text: searchText)
+            await vetService.requestMapPermissions()
+            self.mapViewStatus = vetService.setViewStatus()
+            self.userLocation = vetService.findUserLocation()
+
+            self.searchedLocations = await vetService.searchLocations(
+                with: searchText,
+                near: userLocation
+            )
         }
-        .sheet(item: $viewModel.selectedLocation, onDismiss: {
-            withAnimation {
-                viewModel.selectedLocation = nil
-            }
-        }, content: { location in
+        .onDisappear {
+            vetService.stopUpdating()
+        }
+        .sheet(item: $selectedLocation) { location in
             MapItemView(location: location)
                 .presentationDetents([.height(200)])
                 .presentationDragIndicator(.visible)
                 .presentationCornerRadius(25)
                 .padding(.horizontal)
-        })
+        }
     }
 
     private var mapView: some View {
         Map(
-            position: $viewModel.userLocation,
-            selection: $viewModel.selectedLocation
+            position: $userLocation,
+            selection: $selectedLocation
         ) {
-            ForEach(viewModel.searchedLocations) { location in
+            ForEach(searchedLocations) { location in
                 Marker(
                     location.name,
                     systemImage: SFSymbol.pawprintCircleFill.rawValue,
@@ -84,15 +102,24 @@ struct FindVetView: View {
         }
         .searchable(text: $searchText)
         .onSubmit(of: .search) {
-            Task {
-                do {
-                    try await viewModel.searchPins(text: searchText)
-                } catch let error {
-                    Logger.vet.error("Error setting user location: \(error.localizedDescription)")
-                }
-            }
+            searchedLocations.removeAll()
+            searchLocations()
         }
         .disableAutocorrection(true)
+    }
+
+    private func searchLocations() {
+        Task { @MainActor in
+            let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard query.isEmpty == false else {
+                self.searchedLocations = []
+                return
+            }
+            self.searchedLocations = await vetService.searchLocations(
+                with: query,
+                near: userLocation
+            )
+        }
     }
 }
 

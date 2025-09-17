@@ -59,9 +59,11 @@ struct PreviousFeedsSection: View {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable var feeds: [Feed] = Feed.previews
 
     PreviousFeedsSection(feeds: feeds)
         .modelContainer(DataController.previewContainer)
 }
+#endif

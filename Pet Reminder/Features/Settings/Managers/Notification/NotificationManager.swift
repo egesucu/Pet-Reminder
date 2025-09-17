@@ -34,12 +34,24 @@ extension UNUserNotificationCenter: NotificationCenterProtocol {}
 @Observable
 class NotificationManager {
 
+    // MARK: - Types
+
+    enum AuthorizationStatus: String {
+        case authorized
+        case denied
+        case notDetermined
+        case limited // provisional/ephemeral
+    }
+
     // MARK: - Properties
 
     static let shared = NotificationManager()
 
     var notifications: [UNNotificationRequest] = .empty
     private let notificationCenter: any NotificationCenterProtocol
+
+    // Exposed authorization snapshot for UI guidance (optional use in views)
+    var lastKnownAuthorizationStatus: AuthorizationStatus = .notDetermined
 
     // MARK: - Initialization
 
@@ -57,11 +69,46 @@ class NotificationManager {
 
     // MARK: - Permission & Fetch
 
-    /// Requests permission from the user to send notifications.
-    /// - Returns: A Boolean indicating if permission was granted.
-    /// - Throws: Propagates any error from the underlying notification center authorization request.
-    func askPermission() async throws -> Bool {
-        try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
+    /// Refreshes and stores the current authorization status without prompting.
+    func refreshAuthorizationStatus() async {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        self.lastKnownAuthorizationStatus = Self.map(settings.authorizationStatus)
+        Logger.notifications.info("Refreshed authorization status: \(self.lastKnownAuthorizationStatus.rawValue)")
+    }
+
+    /// Requests permission from the user to send notifications when status is not determined.
+    /// If already authorized/denied, it does not prompt again.
+    /// - Returns: A Boolean indicating if permission is (now) granted.
+    func askPermission() async -> Bool {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        switch settings.authorizationStatus {
+        case .notDetermined:
+            do {
+                let granted = try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
+                self.lastKnownAuthorizationStatus = granted ? .authorized : .denied
+                return granted
+            } catch {
+                Logger.notifications.error("Authorization request failed: \(error.localizedDescription)")
+                self.lastKnownAuthorizationStatus = .denied
+                return false
+            }
+        case .denied:
+            self.lastKnownAuthorizationStatus = .denied
+            Logger.notifications.info("Notification authorization status is denied")
+            return false
+        case .provisional, .ephemeral:
+            self.lastKnownAuthorizationStatus = .limited
+            // Limited permissions are not suitable for repeating scheduled notifications; treat as not granted.
+            return false
+        case .authorized:
+            self.lastKnownAuthorizationStatus = .authorized
+            return true
+        @unknown default:
+            self.lastKnownAuthorizationStatus = .denied
+            return false
+        }
     }
 
     /// Filters notifications for a specific pet by checking if their identifiers contain the pet's name.
@@ -141,8 +188,13 @@ extension NotificationManager {
     ///   - date: The date for the notification.
     /// - Throws: Throws if permission is denied or adding the notification request fails.
     func createNotification(of petName: String, with type: NotificationType, date: Date) async throws {
-        let permissionGranted = try await askPermission()
-        guard permissionGranted else { return }
+        let granted = await askPermission()
+        guard granted else {
+            Logger.notifications.info(
+                "Notification permission not granted; skipping scheduling for \(petName) \(type.rawValue)"
+            )
+            return
+        }
 
         let content = UNMutableNotificationContent()
         content.title = String(localized: .notificationTitle)
@@ -163,7 +215,7 @@ extension NotificationManager {
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(
-            identifier: Strings.notificationIdenfier(
+            identifier: Strings.notificationIdentifier(
                 petName,
                 type.rawValue
             ),
@@ -213,7 +265,7 @@ extension NotificationManager {
     /// - Throws: Placeholder for future error handling.
     func removeNotification(of petName: String, with type: NotificationType) async throws {
         try await removeNotificationsIdentifiers(with: [
-            Strings.notificationIdenfier(petName, type.rawValue)
+            Strings.notificationIdentifier(petName, type.rawValue)
         ])
     }
 
@@ -251,6 +303,18 @@ extension NotificationManager {
     ///   - types: The notification types.
     /// - Returns: An array of notification identifiers.
     private static func notificationIdentifiers(for name: String, types: [NotificationType]) -> [String] {
-        types.map { Strings.notificationIdenfier(name, $0.rawValue) }
+        types.map { Strings.notificationIdentifier(name, $0.rawValue) }
+    }
+
+    // MARK: - Helpers
+
+    private static func map(_ status: UNAuthorizationStatus) -> AuthorizationStatus {
+        switch status {
+        case .notDetermined: return .notDetermined
+        case .denied: return .denied
+        case .authorized: return .authorized
+        case .provisional, .ephemeral: return .limited
+        @unknown default: return .denied
+        }
     }
 }

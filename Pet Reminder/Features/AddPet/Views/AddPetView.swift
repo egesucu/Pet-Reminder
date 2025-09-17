@@ -69,13 +69,13 @@ struct AddPetView: View {
         .sensoryFeedback(.error, trigger: saveFailed)
         .sensoryFeedback(.success, trigger: saveSuccess)
         .alert(.saveFailed, isPresented: $saveFailed) {
-            Button("OK", action: dismiss.callAsFunction)
+            Button(.ok, action: dismiss.callAsFunction)
                 .tint(Color.red)
             Button("Retry", action: save)
                 .tint(Color.label)
         }
         .alert("Save Successful", isPresented: $saveSuccess) {
-            Button("OK", action: dismiss.callAsFunction)
+            Button(.ok, action: dismiss.callAsFunction)
                 .tint(Color.label)
         }
     }
