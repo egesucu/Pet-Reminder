@@ -45,7 +45,7 @@ struct HomeManagerView: View {
                         }
                 }
             } label: {
-                Label("pet_name_title", systemSymbol: .listBullet)
+                Label("home_tab_title", systemSymbol: .pawprint)
             }
 
             // EVENTS TAB
