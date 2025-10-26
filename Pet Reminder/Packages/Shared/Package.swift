@@ -14,8 +14,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "6.2.0"),
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.59.1")
+        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "7.0.0"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.1")
     ],
     targets: [
         .target(
