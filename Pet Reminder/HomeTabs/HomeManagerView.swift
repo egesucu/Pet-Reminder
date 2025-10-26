@@ -34,7 +34,7 @@ struct HomeManagerView: View {
                 NavigationStack(path: $homePath) {
                     PetListView()
                         .environment(notificationManager)
-                        .navigationTitle("Pets")
+                        .navigationTitle("pet_name_title")
                         .onChange(of: pendingPetNameFromDeepLink) { _, newValue in
                             /// Forward deep link pet name to the list via NotificationCenter
                             /// so you don't need to change PetListView's API
@@ -45,7 +45,7 @@ struct HomeManagerView: View {
                         }
                 }
             } label: {
-                Image(systemSymbol: .pawprint)
+                Label("pet_name_title", systemSymbol: .listBullet)
             }
 
             // EVENTS TAB
@@ -53,10 +53,10 @@ struct HomeManagerView: View {
                 NavigationStack(path: $eventsPath) {
                     EventListView()
                         .environment(eventManager)
-                        .navigationTitle("Events")
+                        .navigationTitle("events_tab_title")
                 }
             } label: {
-                Image(systemSymbol: .listBullet)
+                Label("events_tab_title", systemSymbol: .listBullet)
             }
 
             // SETTINGS TAB
@@ -64,10 +64,10 @@ struct HomeManagerView: View {
                 NavigationStack(path: $settingsPath) {
                     SettingsView()
                         .environment(notificationManager)
-                        .navigationTitle("Settings")
+                        .navigationTitle("settings_tab_title")
                 }
             } label: {
-                Image(systemSymbol: .gearshape)
+                Label("settings_tab_title", systemSymbol: .gearshape)
             }
 
             // FIND VET TAB
@@ -76,7 +76,7 @@ struct HomeManagerView: View {
                     FindVetView()
                 }
             } label: {
-                Image(systemSymbol: .magnifyingglass)
+                Label("find_vet_title", systemSymbol: .magnifyingglass)
             }
         }
         .tint(.accent)
