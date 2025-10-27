@@ -3,12 +3,11 @@ import Testing
 import EventKit
 @testable import Pet_Reminder
 
-@Suite("Event alarm scheduling")
 @MainActor
-struct EventAlarmTests {
+struct `Event Alarm Tests` {
 
     @Test
-    func eventAlarmIsRelativeTenMinutes() async throws {
+    func `Event Alarm is Relative to 10 minutes`() async throws {
         // Since EKEvent isn't trivial to introspect for alarms without an actual store,
         // this is a smoke test that ensures saveEvent completes without throwing.
         let sut = EventManager(isDemo: true)

@@ -21,7 +21,6 @@ struct AddPetView: View {
         case notifications
     }
 
-    @State private var position = 0
     @State private var pet: Pet = .init()
     @State private var selectedImageData: Data?
 
@@ -68,6 +67,9 @@ struct AddPetView: View {
         .background(.ultraThinMaterial)
         .sensoryFeedback(.error, trigger: saveFailed)
         .sensoryFeedback(.success, trigger: saveSuccess)
+        .onChange(of: selectedImageData) {
+            pet.image = selectedImageData
+        }
         .alert(.saveFailed, isPresented: $saveFailed) {
             Button(.ok, action: dismiss.callAsFunction)
                 .tint(Color.red)
@@ -190,26 +192,38 @@ struct AddPetView: View {
     // MARK: - Save
 
     private func save() {
-        guard pet.name.isNotEmpty else {
+        Task {
+            await persistPet()
+        }
+    }
+
+    @MainActor
+    private func persistPet() async {
+        pet.name = pet.name.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard petCanBeSaved, pet.name.isNotEmpty else {
             // bounce back to first step if somehow reached here
             path = []
             return
         }
 
-        Task {
-            pet.feedSelection = feedSelection
-            modelContext.insert(pet)
+        pet.feedSelection = feedSelection
+        pet.image = selectedImageData
 
-            do {
-                try await createNotifications()
-                try modelContext.save()
-                saveSuccess.toggle()
-            } catch {
-                Logger.pets.error("Could not save the pet: \(error.localizedDescription)")
-                saveFailed.toggle()
-                // Optionally take user back to name step to fix duplicates
-                path = []
-            }
+        if pet.createdAt == nil {
+            pet.createdAt = .now
+        }
+
+        do {
+            try await createNotifications()
+            modelContext.insert(pet)
+            try modelContext.save()
+            saveSuccess = true
+        } catch {
+            Logger.pets.error("Could not save the pet: \(error.localizedDescription)")
+            saveFailed = true
+            // Optionally take user back to name step to fix duplicates
+            path = []
         }
     }
 

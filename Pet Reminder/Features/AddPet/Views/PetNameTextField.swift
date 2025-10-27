@@ -6,6 +6,7 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 import SwiftData
 import OSLog
@@ -15,7 +16,6 @@ struct PetNameTextField: View {
     @Query(sort: \Pet.name) var pets: [Pet]
 
     @Binding var name: String
-    @State private var showAlert = false
     @Binding var nameIsValid: Bool
     @Binding var petExists: Bool
 
@@ -39,7 +39,11 @@ struct PetNameTextField: View {
             .padding()
             .autocorrectionDisabled()
             .multilineTextAlignment(.center)
+            .textInputAutocapitalization(.words)
             .onChange(of: name) {
+                check(name: name)
+            }
+            .task {
                 check(name: name)
             }
             .background(
@@ -74,13 +78,25 @@ struct PetNameTextField: View {
     private func check(name: String) {
         let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         Logger.pets.info("Name is: \(removedSpaceName)")
-        if removedSpaceName.isNotEmpty {
-            nameIsValid = true
-        } else {
-            nameIsValid = false
+
+        nameIsValid = removedSpaceName.isNotEmpty
+
+        guard removedSpaceName.isNotEmpty else {
+            petExists = false
+            return
         }
 
-        self.petExists = pets.map(\.name).contains(name)
+        let normalizedInput = removedSpaceName
+            .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
+            .lowercased()
+
+        petExists = pets.contains { existingPet in
+            let normalizedExisting = existingPet.name
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
+                .lowercased()
+            return normalizedExisting == normalizedInput
+        }
     }
 }
 

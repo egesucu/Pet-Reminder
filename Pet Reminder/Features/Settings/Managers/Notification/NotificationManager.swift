@@ -36,6 +36,8 @@ class NotificationManager {
 
     // MARK: - Types
 
+    typealias AuthorizationStatusProvider = () async -> UNAuthorizationStatus
+
     enum AuthorizationStatus: String {
         case authorized
         case denied
@@ -45,10 +47,11 @@ class NotificationManager {
 
     // MARK: - Properties
 
-    static let shared = NotificationManager()
+    @MainActor static var shared = NotificationManager()
 
     var notifications: [UNNotificationRequest] = .empty
     private let notificationCenter: any NotificationCenterProtocol
+    private let authorizationStatusProvider: AuthorizationStatusProvider
 
     // Exposed authorization snapshot for UI guidance (optional use in views)
     var lastKnownAuthorizationStatus: AuthorizationStatus = .notDetermined
@@ -59,21 +62,25 @@ class NotificationManager {
     /// - Parameters:
     ///   - notifications: Initial list of notifications.
     ///   - notificationCenter: The notification center to use. Defaults to UNUserNotificationCenter.current().
-    private init(
+    init(
         notifications: [UNNotificationRequest] = .empty,
-        notificationCenter: any NotificationCenterProtocol = UNUserNotificationCenter.current()
+        notificationCenter: any NotificationCenterProtocol = UNUserNotificationCenter.current(),
+        authorizationStatusProvider: @escaping AuthorizationStatusProvider = {
+            let settings = await UNUserNotificationCenter.current().notificationSettings()
+            return settings.authorizationStatus
+        }
     ) {
         self.notifications = notifications
         self.notificationCenter = notificationCenter
+        self.authorizationStatusProvider = authorizationStatusProvider
     }
 
     // MARK: - Permission & Fetch
 
     /// Refreshes and stores the current authorization status without prompting.
     func refreshAuthorizationStatus() async {
-        let center = UNUserNotificationCenter.current()
-        let settings = await center.notificationSettings()
-        self.lastKnownAuthorizationStatus = Self.map(settings.authorizationStatus)
+        let status = await authorizationStatusProvider()
+        self.lastKnownAuthorizationStatus = Self.map(status)
         Logger.notifications.info("Refreshed authorization status: \(self.lastKnownAuthorizationStatus.rawValue)")
     }
 
@@ -81,9 +88,8 @@ class NotificationManager {
     /// If already authorized/denied, it does not prompt again.
     /// - Returns: A Boolean indicating if permission is (now) granted.
     func askPermission() async -> Bool {
-        let center = UNUserNotificationCenter.current()
-        let settings = await center.notificationSettings()
-        switch settings.authorizationStatus {
+        let status = await authorizationStatusProvider()
+        switch status {
         case .notDetermined:
             do {
                 let granted = try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
