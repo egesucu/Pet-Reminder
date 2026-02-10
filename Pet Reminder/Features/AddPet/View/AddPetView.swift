@@ -22,16 +22,7 @@ struct AddPetView: View {
     }
 
     @State private var pet: Pet = .init()
-    @State private var selectedImageData: Data?
-
-    @State private var feedSelection: FeedSelection = .both
-    @State private var morningFeed: Date = .eightAM
-    @State private var eveningFeed: Date = .eightPM
-
-    @State private var nameIsValid = false
-    @State private var petExists = false
-    @State private var saveFailed = false
-    @State private var saveSuccess = false
+    @State private var addPet: AddPet = .init()
 
     @Environment(NotificationManager.self) private var notificationManager: NotificationManager
 
@@ -43,10 +34,6 @@ struct AddPetView: View {
 
     // Navigation
     @State private var path: [Step] = [] // empty path = first step
-
-    var petCanBeSaved: Bool {
-        nameIsValid && !petExists
-    }
 
     private var currentStep: Step {
         path.last ?? .name
@@ -64,19 +51,18 @@ struct AddPetView: View {
                         .toolbar { leadingBack; trailingNextOrSave }
                 }
         }
-        .background(.ultraThinMaterial)
-        .sensoryFeedback(.error, trigger: saveFailed)
-        .sensoryFeedback(.success, trigger: saveSuccess)
-        .onChange(of: selectedImageData) {
-            pet.image = selectedImageData
+        .sensoryFeedback(.error, trigger: addPet.saveFailed)
+        .sensoryFeedback(.success, trigger: addPet.saveSuccess)
+        .onChange(of: addPet.selectedImageData) {
+            pet.image = addPet.selectedImageData
         }
-        .alert(.saveFailed, isPresented: $saveFailed) {
+        .alert(.saveFailed, isPresented: $addPet.saveFailed) {
             Button(.ok, action: dismiss.callAsFunction)
                 .tint(Color.red)
             Button("Retry", action: save)
                 .tint(Color.label)
         }
-        .alert("Save Successful", isPresented: $saveSuccess) {
+        .alert("Save Successful", isPresented: $addPet.saveSuccess) {
             Button(.ok, action: dismiss.callAsFunction)
                 .tint(Color.label)
         }
@@ -116,12 +102,12 @@ struct AddPetView: View {
                 }
             } label: {
                 if currentStep == .notifications {
-                    Label("Save", systemSymbol: petCanBeSaved ? .squareAndArrowDownFill : .squareAndArrowDown)
+                    Label("Save", systemSymbol: addPet.petCanBeSaved ? .squareAndArrowDownFill : .squareAndArrowDown)
                 } else {
                     Label("Next", systemSymbol: .arrowRight)
                 }
             }
-            .disabled(currentStep == .name && !petCanBeSaved)
+            .disabled(currentStep == .name && !addPet.petCanBeSaved)
         }
     }
 
@@ -133,8 +119,8 @@ struct AddPetView: View {
         case .name:
             PetNameTextField(
                 name: $pet.name,
-                nameIsValid: $nameIsValid,
-                petExists: $petExists
+                nameIsValid: $addPet.nameIsValid,
+                petExists: $addPet.petExists
             )
             .padding(.horizontal)
 
@@ -155,7 +141,7 @@ struct AddPetView: View {
                 .pickerStyle(.segmented)
 
                 PetImageView(
-                    selectedImageData: $selectedImageData,
+                    selectedImageData: $addPet.selectedImageData,
                     petType: $pet.type
                 )
             }
@@ -163,11 +149,11 @@ struct AddPetView: View {
 
         case .notifications:
             VStack(spacing: 10) {
-                NotificationSelectView(feedSelection: $feedSelection)
+                NotificationSelectView(feedSelection: $addPet.feedSelection)
                 PetNotificationSelectionView(
-                    feedSelection: $feedSelection,
-                    morningFeed: $morningFeed,
-                    eveningFeed: $eveningFeed
+                    feedSelection: $addPet.feedSelection,
+                    morningFeed: $addPet.morningFeed,
+                    eveningFeed: $addPet.eveningFeed
                 )
             }
             .padding(.horizontal)
@@ -201,14 +187,14 @@ struct AddPetView: View {
     private func persistPet() async {
         pet.name = pet.name.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard petCanBeSaved, pet.name.isNotEmpty else {
+        guard addPet.petCanBeSaved, pet.name.isNotEmpty else {
             // bounce back to first step if somehow reached here
             path = []
             return
         }
 
-        pet.feedSelection = feedSelection
-        pet.image = selectedImageData
+        pet.feedSelection = addPet.feedSelection
+        pet.image = addPet.selectedImageData
 
         if pet.createdAt == nil {
             pet.createdAt = .now
@@ -218,24 +204,24 @@ struct AddPetView: View {
             try await createNotifications()
             modelContext.insert(pet)
             try modelContext.save()
-            saveSuccess = true
+            addPet.saveSuccess = true
         } catch {
             Logger.pets.error("Could not save the pet: \(error.localizedDescription)")
-            saveFailed = true
+            addPet.saveFailed = true
             // Optionally take user back to name step to fix duplicates
             path = []
         }
     }
 
     private func createNotifications() async throws {
-        switch feedSelection {
+        switch addPet.feedSelection {
         case .both:
-            try await notificationManager.createNotification(of: pet.name, with: .morning, date: morningFeed)
-            try await notificationManager.createNotification(of: pet.name, with: .evening, date: eveningFeed)
+            try await notificationManager.createNotification(of: pet.name, with: .morning, date: addPet.morningFeed)
+            try await notificationManager.createNotification(of: pet.name, with: .evening, date: addPet.eveningFeed)
         case .morning:
-            try await notificationManager.createNotification(of: pet.name, with: .morning, date: morningFeed)
+            try await notificationManager.createNotification(of: pet.name, with: .morning, date: addPet.morningFeed)
         case .evening:
-            try await notificationManager.createNotification(of: pet.name, with: .evening, date: eveningFeed)
+            try await notificationManager.createNotification(of: pet.name, with: .evening, date: addPet.eveningFeed)
         }
 
         try await notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
