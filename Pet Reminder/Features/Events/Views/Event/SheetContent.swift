@@ -9,7 +9,6 @@
 import SwiftUI
 import EventKit
 import Shared
-import SFSafeSymbols
 
 struct SheetContent: View {
     @Environment(\.dismiss) var dismiss
@@ -22,7 +21,7 @@ struct SheetContent: View {
             Button(action: {
                 dismiss()
             }, label: {
-                Image(systemSymbol: .xmarkCircleFill)
+                Image(systemName: "xmark.circle.fill")
                     .font(.title)
                     .tint(.accent)
             })

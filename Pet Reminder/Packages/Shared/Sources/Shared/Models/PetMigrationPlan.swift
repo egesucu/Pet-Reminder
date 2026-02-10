@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@preconcurrency import SwiftData
+import SwiftData
 
 public enum PetMigrationPlan: SchemaMigrationPlan {
     public static var stages: [MigrationStage] {

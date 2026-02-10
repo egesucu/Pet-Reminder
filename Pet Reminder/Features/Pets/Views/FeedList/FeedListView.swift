@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftData
 import OSLog
-import SFSafeSymbols
 import Shared
 
 struct FeedListView: View {
@@ -81,7 +80,7 @@ struct FeedListView: View {
                     .font(.title2.bold(morningOn))
                     .foregroundStyle(morningOn ? Color.background : Color.label)
             } icon: {
-                Image(systemSymbol: morningOn ? .checkmark : .sunMax)
+                Image(systemName: morningOn ? "checkmark" : "sun.max")
                     .font(.title2.bold(morningOn))
                     .foregroundStyle(morningOn ? Color.background : Color.label)
             }
@@ -113,7 +112,7 @@ struct FeedListView: View {
                     .font(.title2.bold(eveningOn))
                     .foregroundStyle(eveningOn ? Color.background : Color.label)
             } icon: {
-                Image(systemSymbol: eveningOn ? .checkmark : .moon)
+                Image(systemName: eveningOn ? "checkmark" : "moon")
                     .font(.title2.bold(eveningOn))
                     .foregroundStyle(eveningOn ? Color.background : Color.label)
             }

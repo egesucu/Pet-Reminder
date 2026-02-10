@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftData
 import Shared
-import SFSafeSymbols
 
 struct NotificationView: View {
 
@@ -39,7 +38,7 @@ struct NotificationView: View {
             if pets.isEmpty {
                 ContentUnavailableView(
                     "pet_no_pet",
-                    systemSymbol: .pawprintCircle
+                    systemImage: "pawprint.circle"
                 )
             }
         }
@@ -95,15 +94,15 @@ struct NotificationView: View {
                 Text(.notificationTo)
             } icon: {
                 if notification.identifier.contains("morning") {
-                    Image(systemSymbol: .sunMaxCircleFill)
+                    Image(systemName: "sun.max.circle.fill")
                         .foregroundStyle(.yellow)
                         .font(.title)
                 } else if notification.identifier.contains("evening") {
-                    Image(systemSymbol: .moonStarsCircleFill)
+                    Image(systemName: "moon.stars.circle.fill")
                         .foregroundStyle(.blue)
                         .font(.title)
                 } else {
-                    Image(systemSymbol: .birthdayCakeFill)
+                    Image(systemName: "birthday.cake.fill")
                         .foregroundStyle(.green)
                         .font(.title)
                 }

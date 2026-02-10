@@ -10,7 +10,6 @@ import SwiftUI
 import OSLog
 import Shared
 import SwiftData
-import SFSafeSymbols
 
 struct PetDetailView: View {
 
@@ -69,7 +68,7 @@ struct PetDetailView: View {
                             .font(.title)
                             .foregroundStyle(Color.background)
                     } icon: {
-                        Image(systemSymbol: .forkKnife)
+                        Image(systemName: "fork.knife")
                             .font(.title)
                             .foregroundStyle(Color.background)
                     }
@@ -87,7 +86,7 @@ struct PetDetailView: View {
                             .font(.title)
                             .foregroundStyle(Color.background)
                     } icon: {
-                        Image(systemSymbol: .syringeFill)
+                        Image(systemName: "syringe.fill")
                             .font(.title)
                             .foregroundStyle(Color.background)
                     }
@@ -109,13 +108,13 @@ struct PetDetailView: View {
         FeedListView(pet: $pet)
     }
 
-    func defineMorningFeed() -> SFSymbol {
+    func defineMorningFeed() -> String {
         let todaysFeed = pet
             .feeds?
             .first { Calendar.current.isDateInToday($0.feedDate ?? .now) }
         let isFed = todaysFeed?.morningFed ?? false
 
-        return isFed ? .checkmark : .sunMax
+        return isFed ? "checkmark" : "sun.max"
         }
 }
 

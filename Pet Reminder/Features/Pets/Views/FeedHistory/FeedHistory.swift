@@ -9,7 +9,6 @@
 import SwiftUI
 import Shared
 import SwiftData
-import SFSafeSymbols
 
 struct FeedHistory: View {
 
@@ -39,7 +38,7 @@ struct FeedHistory: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel, action: dismiss.callAsFunction) {
-                        Image(systemSymbol: .xmark)
+                        Image(systemName: "xmark")
                     }
                     .tint(.red)
                 }

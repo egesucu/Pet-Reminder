@@ -13,20 +13,12 @@ let package = Package(
             targets: ["Shared"],
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/SFSafeSymbols/SFSafeSymbols.git", from: "7.0.0"),
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.62.1")
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Shared",
-            dependencies: [
-                "SFSafeSymbols"
-            ],
-            resources: [
-                .process("Resources/LICENSE.md")
-            ],
-            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+            dependencies: [],
+            swiftSettings: [.strictMemorySafety()]
         ),
         .testTarget(
             name: "SharedTests",

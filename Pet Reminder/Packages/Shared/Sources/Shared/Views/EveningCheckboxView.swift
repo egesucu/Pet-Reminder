@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SFSafeSymbols
 
 public struct EveningCheckboxView: View {
 
@@ -26,7 +25,7 @@ public struct EveningCheckboxView: View {
                     .foregroundStyle(Color.label)
                     .lineLimit(nil)
             } icon: {
-                Image(systemSymbol: .moonCircleFill)
+                Image(systemName: "moon.circle.fill")
                     .symbolRenderingMode(.hierarchical)
                     .foregroundStyle(.blue)
                     .symbolEffect(.bounce, value: eveningOn)
@@ -47,9 +46,9 @@ struct CheckBoxView: View {
 
     var body: some View {
         Image(
-            systemSymbol: isChecked
-            ? SFSymbol.checkmarkSquare
-            : SFSymbol.square
+            systemName: isChecked
+            ? "checkmark.square"
+            : "square"
         )
             .contentTransition(.symbolEffect(.replace))
             .font(.largeTitle)

@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SFSafeSymbols
 
 public struct MorningCheckboxView: View {
 
@@ -26,7 +25,7 @@ public struct MorningCheckboxView: View {
                     .foregroundStyle(Color.label)
                     .lineLimit(nil)
             } icon: {
-                Image(systemSymbol: .sunMaxCircleFill)
+                Image(systemName: "sun.max.circle.fill")
                     .symbolRenderingMode(.hierarchical)
                     .symbolEffect(.bounce, value: morningOn)
                     .foregroundStyle(.yellow)

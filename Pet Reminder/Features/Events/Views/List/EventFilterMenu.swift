@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SFSafeSymbols
 import EventKit
 import Shared
 
@@ -41,7 +40,7 @@ struct EventFilterMenu: ToolbarContent {
                                 .overlay(
                                     Group {
                                         if manager.selectedCalendar == calendar {
-                                            Image(systemSymbol: .checkmark)
+                                            Image(systemName: "checkmark")
                                                 .font(.system(size: 8, weight: .bold))
                                                 .foregroundColor(.white)
                                         }
@@ -56,7 +55,7 @@ struct EventFilterMenu: ToolbarContent {
                     .tag(calendar)
                 }
             } label: {
-                Image(systemSymbol: .ellipsis)
+                Image(systemName: "ellipsis")
                     .foregroundStyle(Color.accent)
             }
             .menuOrder(.priority)

@@ -11,16 +11,16 @@ import Shared
 
 struct PetImageView: View {
 
-    @Binding var selectedImageData: Data?
-    @Binding var petType: PetType
+    @Binding var addPet: AddPet
 
     var body: some View {
         VStack {
-            if let selectedImageData,
-            let selectedImage = UIImage(data: selectedImageData) {
-                PetShowImageView(selectedImage: selectedImage, onImageDelete: removeImage)
+            if let data = addPet.selectedImageData,
+               let selectedImage = UIImage(data: data) {
+                Pet​Image​Preview​View(selectedImage: selectedImage, onDelete: removeImage)
             } else {
-                petType
+                addPet
+                    .type
                     .image
                     .frame(width: 200, height: 200)
                     .clipShape(.rect(cornerRadius: 10))
@@ -28,7 +28,7 @@ struct PetImageView: View {
 
             PhotoImagePickerView(
                 desiredTitle: .add,
-                photoData: $selectedImageData
+                photoData: $addPet.selectedImageData
             )
                 .padding(.vertical)
             Text(.photoUploadDetailTitle)
@@ -38,16 +38,13 @@ struct PetImageView: View {
     }
 
     func removeImage() {
-        selectedImageData = nil
+        addPet.selectedImageData = nil
     }
 }
 
 #if DEBUG
 #Preview {
-    @Previewable @State var selectedImageData: Data?
-    PetImageView(
-        selectedImageData: $selectedImageData,
-        petType: .constant(.dog)
-    )
+    @Previewable @State var addPet: AddPet = .init()
+    PetImageView(addPet: $addPet)
 }
 #endif

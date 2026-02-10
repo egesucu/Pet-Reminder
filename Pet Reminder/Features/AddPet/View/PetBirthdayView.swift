@@ -11,7 +11,7 @@ import Shared
 
 struct PetBirthdayView: View {
 
-    @Binding var birthday: Date
+    @Binding var addPet: AddPet
 
     var body: some View {
         VStack(alignment: .center) {
@@ -20,13 +20,13 @@ struct PetBirthdayView: View {
                 .foregroundStyle(Color.label)
                 .bold()
             DatePicker(
-                selection: $birthday,
-                displayedComponents: .date) {
-                    Text(.birthdayTitle)
-                        .foregroundStyle(Color.label)
-                }
-                .labelsHidden()
-                .tint(.white)
+                selection: $addPet.birthday,
+                displayedComponents: .date
+            ) {
+                Text(.birthdayTitle)
+            }
+            .labelsHidden()
+            .tint(.green)
         }
         .padding(.all)
     }
@@ -34,7 +34,7 @@ struct PetBirthdayView: View {
 
 #if DEBUG
 #Preview {
-    @Previewable @State var birthday: Date = .now
-    PetBirthdayView(birthday: $birthday)
+    @Previewable @State var addPet: AddPet = .init()
+    PetBirthdayView(addPet: $addPet)
 }
 #endif

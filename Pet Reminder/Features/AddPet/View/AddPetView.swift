@@ -10,7 +10,6 @@ import SwiftUI
 import OSLog
 import SwiftData
 import Shared
-import SFSafeSymbols
 
 struct AddPetView: View {
 
@@ -20,17 +19,18 @@ struct AddPetView: View {
         case kindAndImage
         case notifications
     }
-
-    @State private var pet: Pet = .init()
-    @State private var addPet: AddPet = .init()
-
-    @Environment(NotificationManager.self) private var notificationManager: NotificationManager
+    
+    @Environment(NotificationManager.self)
+    private var notificationManager: NotificationManager
 
     @Environment(\.modelContext)
     private var modelContext
 
     @Environment(\.dismiss)
     private var dismiss
+
+    @State private var pet: Pet = .init()
+    @State private var addPet: AddPet = .init()
 
     // Navigation
     @State private var path: [Step] = [] // empty path = first step
@@ -51,81 +51,51 @@ struct AddPetView: View {
                         .toolbar { leadingBack; trailingNextOrSave }
                 }
         }
-        .sensoryFeedback(.error, trigger: addPet.saveFailed)
-        .sensoryFeedback(.success, trigger: addPet.saveSuccess)
+        .sensoryFeedback(.error, trigger: addPet.saveState == .failure)
+        .sensoryFeedback(.success, trigger: addPet.saveState == .success)
         .onChange(of: addPet.selectedImageData) {
             pet.image = addPet.selectedImageData
         }
-        .alert(.saveFailed, isPresented: $addPet.saveFailed) {
-            Button(.ok, action: dismiss.callAsFunction)
-                .tint(Color.red)
-            Button("Retry", action: save)
-                .tint(Color.label)
-        }
-        .alert("Save Successful", isPresented: $addPet.saveSuccess) {
-            Button(.ok, action: dismiss.callAsFunction)
-                .tint(Color.label)
-        }
-    }
-
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var leadingCancel: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            Button(role: .cancel, action: dismiss.callAsFunction) {
-                Image(systemSymbol: .xmark)
-                    .foregroundStyle(.red)
+        .alert(.saveFailed, isPresented: Binding(
+            get: { addPet.saveState == .failure },
+            set: { if !$0 { addPet.saveState = .none } }
+        )) {
+            Button(.ok) {
+                addPet.saveState = .none
+                dismiss()
             }
-        }
-    }
-
-    @ToolbarContentBuilder
-    private var leadingBack: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                _ = path.popLast()
-            } label: {
-                Label("Back", systemSymbol: .chevronLeft)
+            .tint(Color.red)
+            Button("Retry") {
+                addPet.saveState = .none
+                save()
             }
+            .tint(Color.label)
         }
-    }
-
-    @ToolbarContentBuilder
-    private var trailingNextOrSave: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                if currentStep == .notifications {
-                    save()
-                } else {
-                    goNext()
-                }
-            } label: {
-                if currentStep == .notifications {
-                    Label("Save", systemSymbol: addPet.petCanBeSaved ? .squareAndArrowDownFill : .squareAndArrowDown)
-                } else {
-                    Label("Next", systemSymbol: .arrowRight)
-                }
+        .alert("Save Successful", isPresented: Binding(
+            get: { addPet.saveState == .success },
+            set: { if !$0 { addPet.saveState = .none } }
+        )) {
+            Button(.ok) {
+                addPet.saveState = .none
+                dismiss()
             }
-            .disabled(currentStep == .name && !addPet.petCanBeSaved)
+            .tint(Color.label)
         }
     }
+}
 
-    // MARK: - Steps
 
+// MARK: - Subviews
+private extension AddPetView {
     @ViewBuilder
-    private func stepView(for step: Step) -> some View {
+    func stepView(for step: Step) -> some View {
         switch step {
         case .name:
-            PetNameTextField(
-                name: $pet.name,
-                nameIsValid: $addPet.nameIsValid,
-                petExists: $addPet.petExists
-            )
-            .padding(.horizontal)
+            PetNameTextField(addPet: $addPet)
+                .padding(.horizontal)
 
         case .birthday:
-            PetBirthdayView(birthday: $pet.birthday)
+            PetBirthdayView(addPet: $addPet)
                 .padding(.horizontal)
 
         case .kindAndImage:
@@ -140,29 +110,70 @@ struct AddPetView: View {
                 }
                 .pickerStyle(.segmented)
 
-                PetImageView(
-                    selectedImageData: $addPet.selectedImageData,
-                    petType: $pet.type
-                )
+                PetImageView(addPet: $addPet)
             }
             .padding(.horizontal)
 
         case .notifications:
             VStack(spacing: 10) {
-                NotificationSelectView(feedSelection: $addPet.feedSelection)
-                PetNotificationSelectionView(
-                    feedSelection: $addPet.feedSelection,
-                    morningFeed: $addPet.morningFeed,
-                    eveningFeed: $addPet.eveningFeed
-                )
+                NotificationSelectView(addPet: $addPet)
+                PetNotificationSelectionView(addPet: $addPet)
             }
             .padding(.horizontal)
         }
     }
 
+}
+
+// MARK: - Toolbars
+private extension AddPetView {
+    @ToolbarContentBuilder
+    var leadingCancel: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button(role: .cancel, action: dismiss.callAsFunction) {
+                Image(systemName: "xmark")
+                    .foregroundStyle(.red)
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    var leadingBack: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                _ = path.popLast()
+            } label: {
+                Label("Back", systemImage: "chevron.left")
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    var trailingNextOrSave: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                if currentStep == .notifications {
+                    save()
+                } else {
+                    goNext()
+                }
+            } label: {
+                if currentStep == .notifications {
+                    Label("Save", systemImage: addPet.petCanBeSaved ? "square.and.arrow.down.fill" : "square.and.arrow.down")
+                } else {
+                    Label("Next", systemImage: "arrow.right")
+                }
+            }
+            .disabled(currentStep == .name && !addPet.petCanBeSaved)
+        }
+    }
+}
+
+// MARK: - Actions
+private extension AddPetView {
     // MARK: - Nav helpers
 
-    private func goNext() {
+    func goNext() {
         switch currentStep {
         case .name:
             path.append(.birthday)
@@ -177,22 +188,24 @@ struct AddPetView: View {
 
     // MARK: - Save
 
-    private func save() {
+    func save() {
         Task {
             await persistPet()
         }
     }
 
-    @MainActor
-    private func persistPet() async {
+    func persistPet() async {
         pet.name = pet.name.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard addPet.petCanBeSaved, pet.name.isNotEmpty else {
+        guard addPet.petCanBeSaved, addPet.name.isNotEmpty else {
             // bounce back to first step if somehow reached here
             path = []
             return
         }
 
+        pet.name = addPet.name
+        pet.type = addPet.type
+        pet.birthday = addPet.birthday
         pet.feedSelection = addPet.feedSelection
         pet.image = addPet.selectedImageData
 
@@ -204,16 +217,16 @@ struct AddPetView: View {
             try await createNotifications()
             modelContext.insert(pet)
             try modelContext.save()
-            addPet.saveSuccess = true
+            addPet.saveState = .success
         } catch {
             Logger.pets.error("Could not save the pet: \(error.localizedDescription)")
-            addPet.saveFailed = true
+            addPet.saveState = .failure
             // Optionally take user back to name step to fix duplicates
             path = []
         }
     }
 
-    private func createNotifications() async throws {
+    func createNotifications() async throws {
         switch addPet.feedSelection {
         case .both:
             try await notificationManager.createNotification(of: pet.name, with: .morning, date: addPet.morningFeed)
@@ -229,10 +242,12 @@ struct AddPetView: View {
 }
 
 #if DEBUG
-
 #Preview {
-    AddPetView()
-        .environment(NotificationManager.shared)
+    Button("Tap me") {
+        // Tapped
+    }.sheet(isPresented: .constant(true)) {
+        AddPetView()
+            .environment(NotificationManager.shared)
+    }
 }
-
 #endif

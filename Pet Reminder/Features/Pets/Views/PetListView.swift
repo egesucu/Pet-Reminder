@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
-import SFSafeSymbols
 
 struct PetListView: View {
 
@@ -67,7 +66,7 @@ struct PetListView: View {
                     Label {
                         Text(.petNoPet)
                     } icon: {
-                        Image(systemSymbol: .pawprintCircle)
+                        Image(systemName: "pawprint.circle")
                     }
                 },
                 actions: {
@@ -90,7 +89,7 @@ struct PetListView: View {
                 Button {
                     addPet.toggle()
                 } label: {
-                    Image(systemSymbol: SFSymbol.plus)
+                    Image(systemName: "plus")
                         .accessibilityLabel(Text(.addAnimalAccessibleLabel))
                         .foregroundStyle(Color.background)
                 }

@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
-import SFSafeSymbols
 
 struct PetChangeView: View {
 
@@ -65,9 +64,9 @@ struct PetChangeView: View {
     func petImageView(_ pet: Pet) -> some View {
         HStack {
             if let photo = manager.petImage {
-                PetShowImageView(
+                Pet​Image​Preview​View(
                     selectedImage: photo,
-                    onImageDelete: manager.removePhoto
+                    onDelete: manager.removePhoto
                 )
                 .frame(width: 150, height: 150)
                 .padding(.horizontal)
@@ -83,7 +82,7 @@ struct PetChangeView: View {
                 PhotoImagePickerView(
                     desiredTitle: "Change",
                     photoData: $manager.petImageData,
-                    desiredIcon: .photoFill
+                    desiredIcon: "photo.fill"
                 )
                 .padding(.vertical)
                 .onChange(of: manager.petImageData) {

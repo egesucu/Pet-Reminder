@@ -10,7 +10,6 @@ import SwiftUI
 import EventKit
 import Shared
 import OSLog
-import SFSafeSymbols
 
 struct EventListView: View {
 
@@ -68,7 +67,7 @@ struct EventListView: View {
                 Label {
                     Text(.eventErrorTitle)
                 } icon: {
-                    Image(systemSymbol: .calendarBadgeExclamationmark)
+                    Image(systemName: "calendar.badge.exclamationmark")
                 }
             }, description: {
                 Text(.eventWrongAllowence)
@@ -86,7 +85,7 @@ struct EventListView: View {
                     Text(.addEventAccessibleTitle)
                         .font(.title2)
                 } icon: {
-                    Image(systemSymbol: .calendarBadgePlus)
+                    Image(systemName: "calendar.badge.plus")
                 }
             }
             .tint(.accent)

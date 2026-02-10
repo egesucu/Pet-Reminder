@@ -9,7 +9,6 @@
 import SwiftUI
 import CloudKit
 import Shared
-import SFSafeSymbols
 
 struct HelloView: View {
     @AppStorage(Strings.helloSeen) var helloSeen = false
@@ -23,7 +22,7 @@ struct HelloView: View {
                 .foregroundStyle(Color.label)
                 .font(.title)
                 .bold()
-            Image(systemSymbol: SFSymbol.pawprintCircleFill)
+            Image(systemName: "pawprint.circle.fill")
                 .foregroundStyle(Color.label)
                 .bold()
                 .font(.system(size: 80))

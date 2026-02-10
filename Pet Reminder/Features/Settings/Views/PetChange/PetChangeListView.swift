@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
-import SFSafeSymbols
 
 struct PetChangeListView: View {
 
@@ -63,7 +62,7 @@ struct PetChangeListView: View {
             if pets.isEmpty {
                 ContentUnavailableView(
                     "pet_no_pet",
-                    systemSymbol: .pawprintCircle
+                    systemImage: "pawprint.circle"
                 )
             }
         }
@@ -104,7 +103,7 @@ struct PetChangeListView: View {
                                     }
                                 }
                             } label: {
-                                Image(systemSymbol: .xmarkCircleFill)
+                                Image(systemName: "xmark.circle.fill")
                                     .font(.title)
                                     .foregroundStyle(.red)
                                     .offset(x: 15, y: 0)

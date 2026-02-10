@@ -10,8 +10,8 @@ import SwiftUI
 import Shared
 
 struct NotificationSelectView: View {
-
-    @Binding var feedSelection: FeedSelection
+    
+    @Binding var addPet: AddPet
 
     var body: some View {
         VStack(spacing: 20) {
@@ -19,31 +19,28 @@ struct NotificationSelectView: View {
                 .font(.title3)
                 .bold()
                 .foregroundStyle(Color.label)
-                .animation(.easeOut(duration: 0.8), value: feedSelection)
-            HStack {
-                Spacer()
-                Picker(
-                    selection: $feedSelection,
-                    label: Text(.feedTimeTitle)
-                ) {
-                    ForEach(FeedSelection.allCases, id: \.description) {
-                        Text($0.localized)
-                            .tag($0)
-                    }
+                .animation(.easeOut(duration: 0.8), value: addPet.feedSelection)
+
+            Picker(
+                selection: $addPet.feedSelection,
+                label: Text(.feedTimeTitle)
+            ) {
+                ForEach(FeedSelection.allCases, id: \.description) {
+                    Text($0.localized)
+                        .tag($0)
                 }
-                .pickerStyle(.segmented)
-                .tint(.green)
-                .animation(.easeOut(duration: 0.8), value: feedSelection)
-                Spacer()
             }
+            .pickerStyle(.segmented)
+            .colorMultiply(.green)
+            .animation(.easeOut(duration: 0.8), value: addPet.feedSelection)
+            .padding(.horizontal, 8)
         }
     }
 }
 
 #if DEBUG
 #Preview {
-    @Previewable @State var feedSelection: FeedSelection = .both
-    NotificationSelectView(feedSelection: $feedSelection)
-        .padding()
+    @Previewable @State var addPet: AddPet = .init()
+    NotificationSelectView(addPet: $addPet)
 }
 #endif

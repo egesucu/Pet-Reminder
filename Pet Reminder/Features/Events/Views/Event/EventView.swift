@@ -148,8 +148,3 @@ extension EventView {
         .frame(height: 100)
         .padding()
 }
-
- #Playground {
-    let manager = EventManager.demo
-    _ = manager.events
- }

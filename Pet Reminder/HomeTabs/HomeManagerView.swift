@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Shared
-import SFSafeSymbols
 import SwiftData
 
 struct HomeManagerView: View {
@@ -45,7 +44,7 @@ struct HomeManagerView: View {
                         }
                 }
             } label: {
-                Label("home_tab_title", systemSymbol: .pawprint)
+                Label("home_tab_title", systemImage: "pawprint")
             }
 
             // EVENTS TAB
@@ -56,7 +55,7 @@ struct HomeManagerView: View {
                         .navigationTitle("events_tab_title")
                 }
             } label: {
-                Label("events_tab_title", systemSymbol: .listBullet)
+                Label("events_tab_title", systemImage: "list.bullet")
             }
 
             // SETTINGS TAB
@@ -67,7 +66,7 @@ struct HomeManagerView: View {
                         .navigationTitle("settings_tab_title")
                 }
             } label: {
-                Label("settings_tab_title", systemSymbol: .gearshape)
+                Label("settings_tab_title", systemImage: "gearshape")
             }
 
             // FIND VET TAB
@@ -76,7 +75,7 @@ struct HomeManagerView: View {
                     FindVetView()
                 }
             } label: {
-                Label("find_vet_title", systemSymbol: .magnifyingglass)
+                Label("find_vet_title", systemImage: "magnifyingglass")
             }
         }
         .tint(.accent)

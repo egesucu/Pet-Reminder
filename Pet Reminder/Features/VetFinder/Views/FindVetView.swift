@@ -11,7 +11,6 @@ import MapKit
 import CoreLocation
 import OSLog
 import Shared
-import SFSafeSymbols
 
 struct FindVetView: View {
 
@@ -48,7 +47,7 @@ struct FindVetView: View {
                     Label {
                         Text(.findVetErrorTitle)
                     } icon: {
-                        Image(systemSymbol: SFSymbol.mappinSlashCircle)
+                        Image(systemName: "mappin.slash.circle")
                     }
                 } description: {
                     Text(.locationAlertContext)
@@ -87,7 +86,7 @@ struct FindVetView: View {
             ForEach(searchedLocations) { location in
                 Marker(
                     location.name,
-                    systemImage: SFSymbol.pawprintCircleFill.rawValue,
+                    systemImage: "pawprint.circle.fill",
                     coordinate: location.coordinate
                 )
                 .tint(.accent)

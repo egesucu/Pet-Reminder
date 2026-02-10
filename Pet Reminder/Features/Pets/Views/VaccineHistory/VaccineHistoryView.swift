@@ -12,7 +12,6 @@
 import SwiftUI
 import SwiftData
 import Shared
-import SFSafeSymbols
 import OSLog
 
 /// A SwiftUI view that presents a list of vaccines associated with a pet,
@@ -38,10 +37,10 @@ struct VaccineHistoryView: View {
     @ViewBuilder
     func vaccineView(_ vaccine: Vaccine) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label(vaccine.name, systemSymbol: .syringeFill)
+            Label(vaccine.name, systemImage: "syringe.fill")
                 .tint(.blue)
                 .bold()
-            Label(vaccine.date.formatted(), systemSymbol: .hourglassBottomhalfFilled)
+            Label(vaccine.date.formatted(), systemImage: "hourglass.bottomhalf.filled")
                 .tint(.blue)
                 .bold()
         }
@@ -75,13 +74,13 @@ struct VaccineHistoryView: View {
     @ToolbarContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button(role: .cancel, action: dismiss.callAsFunction) {
-                Image(systemSymbol: .xmark)
+                Image(systemName: "xmark")
             }
             .tint(.red)
         }
         ToolbarItem(placement: .confirmationAction) {
             Button(role: .confirm, action: addVaccine) {
-                Image(systemSymbol: .plus)
+                Image(systemName: "plus")
                     .foregroundStyle(Color.background)
             }
             .tint(.blue)
