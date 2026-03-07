@@ -13,13 +13,10 @@ import Shared
 
 struct EventView: View {
 
-    var event: EKEvent
-    @State private var eventTitle = ""
-    @State private var dateString = ""
-    @State private var isShowing = false
-    @State private var showWarningForCalendar = false
-
     @Environment(EventManager.self) private var manager
+    @State private var addEvent: AddEvent = .init()
+
+    var event: EKEvent
 
     var body: some View {
         HStack {
@@ -29,7 +26,7 @@ struct EventView: View {
                 futureEvent(event: event)
             }
         }
-        .sheet(isPresented: $showWarningForCalendar,
+        .sheet(isPresented: $addEvent.showWarningForCalendar,
                onDismiss: onSheetDismiss) {
             showEventDetail()
         }
@@ -99,13 +96,13 @@ extension EventView {
     }
 
     private func showWarning() {
-        self.showWarningForCalendar.toggle()
+        self.addEvent.showWarningForCalendar.toggle()
     }
 
     private func fillData() async {
-        self.eventTitle = event.title
+        self.addEvent.eventTitle = event.title
         let content = manager.formattedEventDateString(for: event)
-        self.dateString = content
+        self.addEvent.dateString = content
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EventTitleView: View {
 
-    @Binding var eventTitle: String
+    var eventTitle: String
 
     var body: some View {
         Text(eventTitle)
@@ -23,6 +23,6 @@ struct EventTitleView: View {
 
 #if DEBUG
 #Preview {
-    EventTitleView(eventTitle: .constant("Event"))
+    EventTitleView(eventTitle: "Event")
 }
 #endif
