@@ -27,9 +27,6 @@ struct SettingsView: View {
                     NavigationLink(.privacyPolicyTitle) {
                         PrivacyPolicyView()
                     }
-                    NavigationLink(.licenseViewLabel) {
-                        LicenseView()
-                    }
                 }
                 Section {
                     NavigationLink(.donateUsTitle) {

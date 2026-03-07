@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SFSafeSymbols
 
 public struct MorningCheckboxView: View {
 
@@ -20,23 +19,23 @@ public struct MorningCheckboxView: View {
     }
 
     public var body: some View {
-        VStack {
+        VStack(spacing: PRSpacing.spacing8) {
             Label {
                 Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
                     .lineLimit(nil)
             } icon: {
-                Image(systemSymbol: .sunMaxCircleFill)
+                Image(systemName: "sun.max.circle.fill")
                     .symbolRenderingMode(.hierarchical)
                     .symbolEffect(.bounce, value: morningOn)
                     .foregroundStyle(.yellow)
             }
             .font(.largeTitle.bold())
-            .padding(.bottom)
+            .padding(.bottom, PRSpacing.spacing8)
             CheckBoxView(isChecked: $morningOn)
         }
-        .clipShape(.rect(cornerRadius: 20))
-        .frame(idealWidth: 150, idealHeight: 150)
+        .clipShape(.rect(cornerRadius: PRRadius.radius20))
+        .frame(idealWidth: PRComponentSize.avatar150, idealHeight: PRComponentSize.avatar150)
     }
 }
 

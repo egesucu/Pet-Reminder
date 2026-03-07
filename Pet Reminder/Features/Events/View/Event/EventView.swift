@@ -9,16 +9,14 @@
 import SwiftUI
 import EventKit
 import Playgrounds
+import Shared
 
 struct EventView: View {
 
-    var event: EKEvent
-    @State private var eventTitle = ""
-    @State private var dateString = ""
-    @State private var isShowing = false
-    @State private var showWarningForCalendar = false
-
     @Environment(EventManager.self) private var manager
+    @State private var addEvent: AddEvent = .init()
+
+    var event: EKEvent
 
     var body: some View {
         HStack {
@@ -28,7 +26,7 @@ struct EventView: View {
                 futureEvent(event: event)
             }
         }
-        .sheet(isPresented: $showWarningForCalendar,
+        .sheet(isPresented: $addEvent.showWarningForCalendar,
                onDismiss: onSheetDismiss) {
             showEventDetail()
         }
@@ -37,19 +35,19 @@ struct EventView: View {
     @ViewBuilder
     private func allDayEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
-            RoundedRectangle(cornerRadius: 2)
-                .frame(width: 6)
+            RoundedRectangle(cornerRadius: PRSpacing.spacing4 / 2)
+                .frame(width: PRLayout.eventIndicatorWidth)
                 .foregroundStyle(Color(cgColor: event.calendar.cgColor))
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
-                .padding(.all, 5)
+                .padding(PRSpacing.spacing4)
                 .background(Color(cgColor: event.calendar.cgColor))
                 .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.trailing, 5)
+                .clipShape(RoundedRectangle(cornerRadius: PRRadius.radius10))
+                .padding(.trailing, PRSpacing.spacing4)
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
@@ -60,21 +58,21 @@ struct EventView: View {
     private func futureEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
             Text(event.startDate.formatted(.dateTime.hour().minute()))
-                .padding(.all, 5)
+                .padding(PRSpacing.spacing4)
                 .background(Color(cgColor: event.calendar.cgColor))
                 .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.trailing, 5)
+                .clipShape(RoundedRectangle(cornerRadius: PRRadius.radius10))
+                .padding(.trailing, PRSpacing.spacing4)
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
-                .padding(.all, 5)
+                .padding(PRSpacing.spacing4)
                 .background(Color(cgColor: event.calendar.cgColor))
                 .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.trailing, 5)
+                .clipShape(RoundedRectangle(cornerRadius: PRRadius.radius10))
+                .padding(.trailing, PRSpacing.spacing4)
             Text(event.title)
                 .underline(true)
                 .onTapGesture(perform: showWarning)
@@ -84,7 +82,7 @@ struct EventView: View {
     private func showEventDetail() -> some View {
         SheetContent(event: event)
             .presentationDetents([.medium])
-            .presentationCornerRadius(10)
+            .presentationCornerRadius(PRRadius.radius10)
             .presentationDragIndicator(.visible)
     }
 }
@@ -98,13 +96,13 @@ extension EventView {
     }
 
     private func showWarning() {
-        self.showWarningForCalendar.toggle()
+        self.addEvent.showWarningForCalendar.toggle()
     }
 
     private func fillData() async {
-        self.eventTitle = event.title
+        self.addEvent.eventTitle = event.title
         let content = manager.formattedEventDateString(for: event)
-        self.dateString = content
+        self.addEvent.dateString = content
     }
 }
 
@@ -124,7 +122,7 @@ extension EventView {
     let dummyVM = EventManager.demo
     return EventView(event: dummyEvent)
         .environment(dummyVM)
-        .frame(height: 100)
+        .frame(height: PRComponentSize.feedCardHeight100)
         .padding()
 }
 
@@ -145,11 +143,6 @@ extension EventView {
     let dummyVM = EventManager.demo
     return EventView(event: dummyEvent)
         .environment(dummyVM)
-        .frame(height: 100)
+        .frame(height: PRComponentSize.feedCardHeight100)
         .padding()
 }
-
- #Playground {
-    let manager = EventManager.demo
-    _ = manager.events
- }

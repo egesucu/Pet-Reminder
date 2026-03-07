@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@preconcurrency import SwiftData
+import SwiftData
 
 public enum RollbackMigrationPlan: SchemaMigrationPlan {
     public static var schemas: [any VersionedSchema.Type] {

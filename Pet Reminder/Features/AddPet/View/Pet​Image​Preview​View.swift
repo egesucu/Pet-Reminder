@@ -1,5 +1,5 @@
 //
-//  PetShowImageView.swift
+//  Pet​Image​Preview​View.swift
 //  Pet Reminder
 //
 //  Created by Ege Sucu on 23.04.2023.
@@ -7,22 +7,25 @@
 //
 
 import SwiftUI
-import SFSafeSymbols
+import Shared
 
-struct PetShowImageView: View {
+struct Pet​Image​Preview​View: View {
 
     var selectedImage: UIImage
-    var onImageDelete: () -> Void
+    var onDelete: @MainActor () -> Void
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: PRSpacing.spacing16) {
             Image(uiImage: selectedImage)
                 .resizable()
                 .scaledToFit()
-                .clipShape(.circle)
+                .clipShape(RoundedRectangle(cornerRadius: PRRadius.radius10))
+                .glassEffect(.identity)
 
-            Button(role: .destructive, action: onImageDelete) {
-                Label("Remove", systemSymbol: .minusCircleFill)
+            Button(role: .destructive, action: onDelete) {
+                Text("Remove")
+                    .font(.title2)
+                    .padding()
             }
             .buttonStyle(.glass)
             .tint(.red)
@@ -34,9 +37,9 @@ struct PetShowImageView: View {
 #Preview {
     @Previewable @State var image = UIImage(resource: .defaultOther)
 
-    PetShowImageView(selectedImage: image, onImageDelete: {
+    Pet​Image​Preview​View(selectedImage: image) {
         print("Image has been deleted.")
-    })
+    }
         .padding()
 }
 #endif

@@ -12,7 +12,6 @@
 import SwiftUI
 import SwiftData
 import Shared
-import SFSafeSymbols
 import OSLog
 
 /// A SwiftUI view that presents a list of vaccines associated with a pet,
@@ -37,11 +36,11 @@ struct VaccineHistoryView: View {
     /// - Returns: A view showing the vaccine's name and date.
     @ViewBuilder
     func vaccineView(_ vaccine: Vaccine) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Label(vaccine.name, systemSymbol: .syringeFill)
+        VStack(alignment: .leading, spacing: PRSpacing.spacing8) {
+            Label(vaccine.name, systemImage: "syringe.fill")
                 .tint(.blue)
                 .bold()
-            Label(vaccine.date.formatted(), systemSymbol: .hourglassBottomhalfFilled)
+            Label(vaccine.date.formatted(), systemImage: "hourglass.bottomhalf.filled")
                 .tint(.blue)
                 .bold()
         }
@@ -66,7 +65,7 @@ struct VaccineHistoryView: View {
             .navigationTitle(Text(.vaccineHistoryTitle))
             .sheet(isPresented: $shouldAddVaccine) {
                 AddVaccineView(pet: $pet, vaccineName: $vaccineName)
-                    .presentationDetents([.fraction(0.3)])
+                    .presentationDetents([.fraction(PRSheetSize.compactFraction)])
             }
         }
     }
@@ -75,13 +74,13 @@ struct VaccineHistoryView: View {
     @ToolbarContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button(role: .cancel, action: dismiss.callAsFunction) {
-                Image(systemSymbol: .xmark)
+                Image(systemName: "xmark")
             }
             .tint(.red)
         }
         ToolbarItem(placement: .confirmationAction) {
             Button(role: .confirm, action: addVaccine) {
-                Image(systemSymbol: .plus)
+                Image(systemName: "plus")
                     .foregroundStyle(Color.background)
             }
             .tint(.blue)

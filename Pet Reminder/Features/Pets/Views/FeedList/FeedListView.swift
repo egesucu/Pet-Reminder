@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftData
 import OSLog
-import SFSafeSymbols
 import Shared
 
 struct FeedListView: View {
@@ -22,8 +21,8 @@ struct FeedListView: View {
     @State private var stateChanged = false
 
     var body: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 30) {
+        VStack(spacing: PRSpacing.spacing8) {
+            HStack(spacing: PRSpacing.spacing24) {
                 switch pet.feedSelection {
                 case .morning:
                     morningButton
@@ -81,8 +80,8 @@ struct FeedListView: View {
                     .font(.title2.bold(morningOn))
                     .foregroundStyle(morningOn ? Color.background : Color.label)
             } icon: {
-                Image(systemSymbol: morningOn ? .checkmark : .sunMax)
-                    .font(.title2.bold(morningOn))
+                Image(systemName: morningOn ? "checkmark" : "sun.max")
+                    .font(.system(size: PRIconSize.icon20, weight: morningOn ? .bold : .regular))
                     .foregroundStyle(morningOn ? Color.background : Color.label)
             }
         }
@@ -113,8 +112,8 @@ struct FeedListView: View {
                     .font(.title2.bold(eveningOn))
                     .foregroundStyle(eveningOn ? Color.background : Color.label)
             } icon: {
-                Image(systemSymbol: eveningOn ? .checkmark : .moon)
-                    .font(.title2.bold(eveningOn))
+                Image(systemName: eveningOn ? "checkmark" : "moon")
+                    .font(.system(size: PRIconSize.icon20, weight: eveningOn ? .bold : .regular))
                     .foregroundStyle(eveningOn ? Color.background : Color.label)
             }
         }

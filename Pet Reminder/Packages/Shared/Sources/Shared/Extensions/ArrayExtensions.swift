@@ -37,20 +37,3 @@ public extension Sequence {
         return self.filter { $0[keyPath: keyPath] }
     }
 }
-
-#Playground {
-    let _: [AnyObject] = .empty
-
-    let array = [2, 3, 4, 5, 2, 4]
-    _ = array.removeDuplicates()
-    _ = array[safe: 2]
-    _ = array.isNotEmpty
-
-    let custom = [
-        (value: 0, active: false),
-        (value: 1, active: false),
-        (value: 4, active: true),
-        (value: 5, active: false)
-    ]
-    _ = custom.filter(\.active)
-}

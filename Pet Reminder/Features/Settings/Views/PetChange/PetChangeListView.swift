@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
-import SFSafeSymbols
 
 struct PetChangeListView: View {
 
@@ -63,7 +62,7 @@ struct PetChangeListView: View {
             if pets.isEmpty {
                 ContentUnavailableView(
                     "pet_no_pet",
-                    systemSymbol: .pawprintCircle
+                    systemImage: "pawprint.circle"
                 )
             }
         }
@@ -81,12 +80,12 @@ struct PetChangeListView: View {
                                    let image = UIImage(data: imageData) {
                                     Image(uiImage: image)
                                         .petImageStyle()
-                                        .frame(width: 120, height: 120)
+                                        .frame(width: PRComponentSize.avatar120, height: PRComponentSize.avatar120)
                                         .wiggling()
                                 } else {
                                     Image(.generateDefaultData(type: pet.type))
                                         .petImageStyle()
-                                        .frame(width: 120, height: 120)
+                                        .frame(width: PRComponentSize.avatar120, height: PRComponentSize.avatar120)
                                         .wiggling()
                                 }
 
@@ -104,10 +103,10 @@ struct PetChangeListView: View {
                                     }
                                 }
                             } label: {
-                                Image(systemSymbol: .xmarkCircleFill)
-                                    .font(.title)
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: PRIconSize.icon24))
                                     .foregroundStyle(.red)
-                                    .offset(x: 15, y: 0)
+                                    .offset(x: PROffset.deleteBadgeX, y: 0)
                             }
 
                         }
@@ -119,11 +118,11 @@ struct PetChangeListView: View {
                            let image = UIImage(data: imageData) {
                             Image(uiImage: image)
                                 .petImageStyle()
-                                .frame(width: 120, height: 120)
+                                .frame(width: PRComponentSize.avatar120, height: PRComponentSize.avatar120)
                         } else {
                             Image(.generateDefaultData(type: pet.type))
                                 .petImageStyle()
-                                .frame(width: 120, height: 120)
+                                .frame(width: PRComponentSize.avatar120, height: PRComponentSize.avatar120)
                         }
                         Text(pet.name)
                     }
@@ -139,12 +138,13 @@ struct PetChangeListView: View {
                 }
                 .sheet(isPresented: $showSelectedPet, onDismiss: deselectPet, content: {
                     PetChangeView(pet: $selectedPet)
-                        .presentationCornerRadius(25)
+                        .presentationCornerRadius(PRPresentation.sheetCornerRadius25)
                         .presentationDragIndicator(.hidden)
                         .interactiveDismissDisabled()
                 })
                 .onLongPressGesture(perform: setEditMode)
-                .padding([.top, .leading])
+                .padding(.top, PRSpacing.spacing20)
+                .padding(.leading, PRSpacing.spacing20)
             }
         }
     }

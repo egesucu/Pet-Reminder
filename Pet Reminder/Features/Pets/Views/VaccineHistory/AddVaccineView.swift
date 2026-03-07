@@ -12,7 +12,6 @@
 import SwiftUI
 import SwiftData
 import Shared
-import SFSafeSymbols
 import OSLog
 
 /// A SwiftUI view that provides a UI for entering and saving a new vaccine for a selected pet.
@@ -38,7 +37,7 @@ struct AddVaccineView: View {
 
     /// The main UI with fields for vaccine name, date, and a button to save the record.
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: PRSpacing.spacing16) {
             TextField(.vaccineTitleLabel, text: $vaccineName)
                 .bold()
             DatePicker(.vaccineDateLabel, selection: $vaccineDate)

@@ -13,25 +13,22 @@ import OSLog
 import Shared
 
 struct PetNameTextField: View {
-    @Query(sort: \Pet.name) var pets: [Pet]
-
-    @Binding var name: String
-    @Binding var nameIsValid: Bool
-    @Binding var petExists: Bool
+    @Query var pets: [Pet]
+    
+    @Binding var addPet: AddPet
 
     @FocusState var isFocused
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: PRSpacing.spacing16) {
             Text(.startNameLabel)
                 .foregroundStyle(Color.label)
                 .font(.title2)
                 .bold()
-                .padding(.bottom, 15)
 
             TextField(
                 Strings.doggo,
-                text: $name
+                text: $addPet.name
             )
             .focused($isFocused)
             .foregroundStyle(Color.label)
@@ -40,11 +37,11 @@ struct PetNameTextField: View {
             .autocorrectionDisabled()
             .multilineTextAlignment(.center)
             .textInputAutocapitalization(.words)
-            .onChange(of: name) {
-                check(name: name)
+            .onChange(of: addPet.name) {
+                check(name: addPet.name)
             }
             .task {
-                check(name: name)
+                check(name: addPet.name)
             }
             .background(
                 Rectangle()
@@ -57,10 +54,10 @@ struct PetNameTextField: View {
 
                     )
                     .animation(.easeInOut, value: isFocused)
-                    .clipShape(.rect(cornerRadius: 10))
+                    .clipShape(.rect(cornerRadius: PRRadius.radius10))
             )
 
-            if petExists {
+            if addPet.petExists {
                 Text(.petExists)
                     .foregroundStyle(.red)
                     .font(.footnote)
@@ -70,7 +67,6 @@ struct PetNameTextField: View {
             Text(.petFact)
                 .font(.footnote)
                 .italic()
-                .padding(.top, 20)
                 .lineLimit(20)
         }
     }
@@ -79,10 +75,10 @@ struct PetNameTextField: View {
         let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         Logger.pets.info("Name is: \(removedSpaceName)")
 
-        nameIsValid = removedSpaceName.isNotEmpty
+        addPet.nameIsValid = removedSpaceName.isNotEmpty
 
         guard removedSpaceName.isNotEmpty else {
-            petExists = false
+            addPet.petExists = false
             return
         }
 
@@ -90,7 +86,7 @@ struct PetNameTextField: View {
             .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
             .lowercased()
 
-        petExists = pets.contains { existingPet in
+        addPet.petExists = pets.contains { existingPet in
             let normalizedExisting = existingPet.name
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
@@ -104,32 +100,37 @@ struct PetNameTextField: View {
 
 #Preview("Filled Case") {
     @Previewable @FocusState var isFocused: Bool
+    @Previewable @State var addPet: AddPet = AddPet(name: "Horn")
 
     PetNameTextField(
-        name: .constant(Strings.viski),
-        nameIsValid: .constant(false),
-        petExists: .constant(false),
+        addPet: $addPet,
         isFocused: _isFocused
     )
     .padding(.all)
     .modelContainer(DataController.previewContainer)
-    .background(.ultraThinMaterial)
-    .padding()
     .onAppear {
         isFocused = true
     }
 }
 
-#Preview("Empty Case") {
+#Preview("Pet Exist Case") {
+    @Previewable @State var addPet: AddPet = AddPet(name: Strings.viski)
+
     PetNameTextField(
-        name: .constant(""),
-        nameIsValid: .constant(false),
-        petExists: .constant(false),
+        addPet: $addPet
+    )
+    .padding(.all)
+    .modelContainer(DataController.previewContainer)
+}
+
+#Preview("Empty Case") {
+    @Previewable @State var addPet: AddPet = .init()
+    
+    PetNameTextField(
+        addPet: $addPet
     )
         .padding(.all)
         .modelContainer(DataController.previewContainer)
-        .background(.ultraThinMaterial)
-        .padding()
 }
 
 #endif

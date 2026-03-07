@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SFSafeSymbols
 
 public struct EveningCheckboxView: View {
 
@@ -20,23 +19,23 @@ public struct EveningCheckboxView: View {
     }
 
     public var body: some View {
-        VStack {
+        VStack(spacing: PRSpacing.spacing8) {
             Label {
                 Text(String(localized: .feedSelectionEvening))
                     .foregroundStyle(Color.label)
                     .lineLimit(nil)
             } icon: {
-                Image(systemSymbol: .moonCircleFill)
+                Image(systemName: "moon.circle.fill")
                     .symbolRenderingMode(.hierarchical)
                     .foregroundStyle(.blue)
                     .symbolEffect(.bounce, value: eveningOn)
             }
             .font(.largeTitle.bold())
-            .padding(.bottom)
+            .padding(.bottom, PRSpacing.spacing8)
             CheckBoxView(isChecked: $eveningOn)
         }
-        .clipShape(.rect(cornerRadius: 20))
-        .frame(idealWidth: 150, idealHeight: 150)
+        .clipShape(.rect(cornerRadius: PRRadius.radius20))
+        .frame(idealWidth: PRComponentSize.avatar150, idealHeight: PRComponentSize.avatar150)
 
     }
 }
@@ -47,12 +46,12 @@ struct CheckBoxView: View {
 
     var body: some View {
         Image(
-            systemSymbol: isChecked
-            ? SFSymbol.checkmarkSquare
-            : SFSymbol.square
+            systemName: isChecked
+            ? "checkmark.square"
+            : "square"
         )
             .contentTransition(.symbolEffect(.replace))
-            .font(.largeTitle)
+            .font(.system(size: PRIconSize.icon32))
             .onTapGesture(perform: toggleCheck)
     }
 

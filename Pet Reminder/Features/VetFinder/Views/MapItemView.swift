@@ -8,7 +8,6 @@
 import SwiftUI
 import MapKit
 import Shared
-import SFSafeSymbols
 
 struct MapItemView: View {
 
@@ -21,12 +20,12 @@ struct MapItemView: View {
                 Text(location.name)
                     .bold()
                     .font(.title3)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, PRSpacing.spacing8)
                 HStack {
                     VStack(alignment: .leading) {
                         if let phoneNumber = location.phoneNumber {
                             HStack {
-                                Image(systemSymbol: .phoneFill)
+                                Image(systemName: "phone.fill")
                                     .foregroundStyle(.accent)
                                 Text(phoneNumber)
                                     .foregroundStyle(.accent)
@@ -44,7 +43,7 @@ struct MapItemView: View {
                         }
                         if let fullAdress = location.fullAdress {
                             HStack {
-                                Image(systemSymbol: .buildingFill)
+                                Image(systemName: "building.fill")
                                     .foregroundStyle(.accent)
                                 Text(fullAdress)
                                 Spacer()
@@ -57,7 +56,7 @@ struct MapItemView: View {
                     Text(.mapOpenIn)
                 }
                 .buttonStyle(.bordered)
-                .padding(.trailing, 10)
+                .padding(.trailing, PRSpacing.spacing8)
             }
         }
         .alert("find_vet_open", isPresented: $showOpenMapAlert) {

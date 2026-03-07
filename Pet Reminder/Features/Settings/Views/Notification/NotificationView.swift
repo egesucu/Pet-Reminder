@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftData
 import Shared
-import SFSafeSymbols
 
 struct NotificationView: View {
 
@@ -39,7 +38,7 @@ struct NotificationView: View {
             if pets.isEmpty {
                 ContentUnavailableView(
                     "pet_no_pet",
-                    systemSymbol: .pawprintCircle
+                    systemImage: "pawprint.circle"
                 )
             }
         }
@@ -90,29 +89,29 @@ struct NotificationView: View {
     }
 
     private func notificationView(notification: UNNotificationRequest) -> some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: PRSpacing.spacing16) {
             Label {
                 Text(.notificationTo)
             } icon: {
                 if notification.identifier.contains("morning") {
-                    Image(systemSymbol: .sunMaxCircleFill)
+                    Image(systemName: "sun.max.circle.fill")
                         .foregroundStyle(.yellow)
-                        .font(.title)
+                        .font(.system(size: PRIconSize.icon24))
                 } else if notification.identifier.contains("evening") {
-                    Image(systemSymbol: .moonStarsCircleFill)
+                    Image(systemName: "moon.stars.circle.fill")
                         .foregroundStyle(.blue)
-                        .font(.title)
+                        .font(.system(size: PRIconSize.icon24))
                 } else {
-                    Image(systemSymbol: .birthdayCakeFill)
+                    Image(systemName: "birthday.cake.fill")
                         .foregroundStyle(.green)
-                        .font(.title)
+                        .font(.system(size: PRIconSize.icon24))
                 }
 
             }
             Text(notification.content.body)
                 .font(.footnote)
                 .foregroundStyle(Color.gray)
-            HStack(spacing: 10) {
+            HStack(spacing: PRSpacing.spacing8) {
                 Text(.nextNotificationDate)
                     .bold()
                 if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
@@ -140,7 +139,7 @@ struct NotificationView: View {
     private func notificationSection(for pet: Pet, notificationManager: NotificationManager) -> some View {
         Section {
             if notificationManager.filterNotifications(of: pet).isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: PRSpacing.spacing8) {
                     Button {
                         Task {
                             await createNotifications(for: pet)

@@ -42,9 +42,9 @@ public struct WiggleModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
-            .rotationEffect(.degrees(isWiggling ? 2.0 : 0))
+            .rotationEffect(.degrees(isWiggling ? PROffset.wiggle : 0))
             .animation(rotateAnimation, value: isWiggling)
-            .offset(x: 0, y: isWiggling ? 2.0 : 0)
+            .offset(x: 0, y: isWiggling ? PROffset.wiggle : 0)
             .animation(bounceAnimation, value: isWiggling)
             .onAppear { isWiggling.toggle() }
     }

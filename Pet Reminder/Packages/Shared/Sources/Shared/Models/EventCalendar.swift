@@ -23,8 +23,3 @@ extension EventCalendar: CustomStringConvertible {
         title
     }
 }
-
-#Playground {
-    let calendar = EventCalendar("Hello")
-    _ = calendar.description
-}

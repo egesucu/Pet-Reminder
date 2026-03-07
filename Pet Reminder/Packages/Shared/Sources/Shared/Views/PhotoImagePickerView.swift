@@ -8,19 +8,18 @@
 
 import SwiftUI
 import PhotosUI
-import SFSafeSymbols
 
 public struct PhotoImagePickerView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     var desiredTitle: LocalizedStringResource
-    var desiredIcon: SFSymbol
+    var desiredIcon: String
     @Binding var photoData: Data?
 
     public init(
         desiredTitle: LocalizedStringResource,
         selectedPhoto: PhotosPickerItem? = nil,
         photoData: Binding<Data?> = .constant(nil),
-        desiredIcon: SFSymbol = .photoBadgePlusFill
+        desiredIcon: String = "photo.badge.plus.fill"
     ) {
         self.selectedPhoto = selectedPhoto
         self._photoData = photoData
@@ -39,7 +38,7 @@ public struct PhotoImagePickerView: View {
             Label {
                 Text(desiredTitle)
             } icon: {
-                Image(systemSymbol: desiredIcon)
+                Image(systemName: desiredIcon)
             }
         }
 
@@ -96,7 +95,7 @@ public struct PhotoImagePickerView: View {
     PhotoImagePickerView(
         desiredTitle: .change,
         photoData: $photoData,
-        desiredIcon: .photoFill
+        desiredIcon: "photo.fill"
     )
     .task {
         photoData = UIImage(resource: .defaultOther).pngData()

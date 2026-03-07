@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftData
 import Shared
-import SFSafeSymbols
 
 struct CurrentFeedSection: View {
 
@@ -33,7 +32,7 @@ struct CurrentFeedSection: View {
                 if let morning = feed.morningFedStamp {
                     HStack {
                         Row(
-                            imageName: SFSymbol.sunMaxFill.rawValue,
+                            imageName: "sun.max.fill",
                             content: morning.formatted(
                                 date: .abbreviated,
                                 time: .shortened
@@ -47,7 +46,7 @@ struct CurrentFeedSection: View {
                     HStack {
                         Spacer()
                         Row(
-                            imageName: SFSymbol.moonCircleFill.rawValue,
+                            imageName: "moon.circle.fill",
                             content: evening.formatted(
                                 date: .abbreviated,
                                 time: .shortened

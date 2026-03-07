@@ -8,12 +8,12 @@
 //
 
 import Foundation
-@preconcurrency import SwiftData
+import SwiftData
 
 public typealias Pet = PetSchemaV2.Pet
 
-public enum PetSchemaV2: @preconcurrency VersionedSchema {
-    @MainActor public static let versionIdentifier = Schema.Version(2, 0, 0)
+public enum PetSchemaV2: VersionedSchema {
+    public static let versionIdentifier = Schema.Version(2, 0, 0)
 
     public static var models: [any PersistentModel.Type] {
         [Pet.self]

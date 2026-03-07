@@ -66,10 +66,3 @@ public extension Feed {
         return feeds
     }
 }
-
- #Playground {
-    await MainActor.run {
-        _ = Feed.previews
-        _ = Feed.preview
-    }
- }

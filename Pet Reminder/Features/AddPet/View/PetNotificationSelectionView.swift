@@ -8,21 +8,17 @@
 
 import SwiftUI
 import Shared
-import SFSafeSymbols
 
 struct PetNotificationSelectionView: View {
 
-    @Binding var feedSelection: FeedSelection
-    @Binding var morningFeed: Date
-    @Binding var eveningFeed: Date
+    @Binding var addPet: AddPet
 
     var body: some View {
-        notificationType()
+        notificationType
     }
 
-    @ViewBuilder
-    func notificationType() -> some View {
-        switch feedSelection {
+    @ViewBuilder var notificationType: some View {
+        switch addPet.feedSelection {
         case .morning:
             morningView
         case .evening:
@@ -33,17 +29,17 @@ struct PetNotificationSelectionView: View {
     }
 
     var morningView: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: PRSpacing.spacing8) {
             Label {
                 Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
             } icon: {
-                Image(systemSymbol: .sunMaxFill)
+                Image(systemName: "sun.max.fill")
                     .foregroundStyle(.yellow)
             }
             DatePicker(
-                selection: $morningFeed,
-                in: ...eveningFeed.addingTimeInterval(60),
+                selection: $addPet.morningFeed,
+                in: ...addPet.eveningFeed.addingTimeInterval(60),
                 displayedComponents: .hourAndMinute
             ) {
                 EmptyView()
@@ -51,23 +47,23 @@ struct PetNotificationSelectionView: View {
             .labelsHidden()
             .tint(Color.label)
         }
-        .animation(.easeOut(duration: 0.8), value: feedSelection)
+        .animation(.easeOut(duration: 0.8), value: addPet.feedSelection)
         .transition(.identity)
 
     }
 
     var eveningView: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: PRSpacing.spacing8) {
             Label {
                 Text(.feedSelectionEvening)
                     .foregroundStyle(Color.label)
             } icon: {
-                Image(systemSymbol: .moonFill)
+                Image(systemName: "moon.fill")
                     .foregroundStyle(.blue)
             }
             DatePicker(
-                selection: $eveningFeed,
-                in: morningFeed.addingTimeInterval(60)...,
+                selection: $addPet.eveningFeed,
+                in: addPet.morningFeed.addingTimeInterval(60)...,
                 displayedComponents: .hourAndMinute
             ) {
                 EmptyView()
@@ -75,31 +71,25 @@ struct PetNotificationSelectionView: View {
             .labelsHidden()
             .tint(Color.label)
         }
-        .animation(.easeOut(duration: 0.8), value: feedSelection)
+        .animation(.easeOut(duration: 0.8), value: addPet.feedSelection)
         .transition(.identity)
     }
 
     var bothView: some View {
-        HStack(spacing: 40) {
+        HStack(spacing: PRSpacing.spacing40) {
             morningView
             eveningView
         }
-        .animation(.easeOut(duration: 0.8), value: feedSelection)
+        .animation(.easeOut(duration: 0.8), value: addPet.feedSelection)
         .transition(.identity)
     }
 }
 
 #if DEBUG
 #Preview {
-    @Previewable @State var feedSelection: FeedSelection = .both
-    @Previewable @State var morningFeed: Date = .eightAM
-    @Previewable @State var eveningFeed: Date = .eightPM
+    @Previewable @State var addPet: AddPet = .init()
 
-    PetNotificationSelectionView(
-        feedSelection: $feedSelection,
-        morningFeed: $morningFeed,
-        eveningFeed: $eveningFeed
-    )
-    .padding(.horizontal)
+    PetNotificationSelectionView(addPet: $addPet)
+        .padding(.horizontal)
 }
 #endif
