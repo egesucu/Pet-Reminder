@@ -23,7 +23,7 @@ struct PetListView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 10) {
+            VStack(spacing: PRSpacing.spacing8) {
                 petList
                 /// Showing the detail page only if the selected pet has values(i.e. not empty)
                 if selectedPet.name.isNotEmpty {
@@ -161,7 +161,7 @@ struct PetListView: View {
 
     private var petList: some View {
         ScrollView(.horizontal) {
-            HStack(spacing: 5) {
+            HStack(spacing: PRSpacing.spacing8) {
                 ForEach(pets, id: \.name) { pet in
                     Text(pet.name)
                         .foregroundStyle(
@@ -170,7 +170,8 @@ struct PetListView: View {
                             : Color.label
                         )
                         .bold(selectedPet == pet)
-                        .padding(8)
+                        .padding(.horizontal, PRSpacing.spacing12)
+                        .padding(.vertical, PRSpacing.spacing8)
                         .background(
                             selectedPet == pet
                             ? Color.green
@@ -184,7 +185,7 @@ struct PetListView: View {
                                 .pets
                                 .info("PR: Pet Selected: \(pet.name)")
                         }
-                        .padding(.leading)
+                        .padding(.leading, PRSpacing.spacing12)
                 }
             }
         }

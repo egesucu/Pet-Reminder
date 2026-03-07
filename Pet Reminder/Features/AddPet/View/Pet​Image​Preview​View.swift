@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Shared
 
 struct Pet​Image​Preview​View: View {
 
@@ -14,11 +15,11 @@ struct Pet​Image​Preview​View: View {
     var onDelete: @MainActor () -> Void
 
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: PRSpacing.spacing16) {
             Image(uiImage: selectedImage)
                 .resizable()
                 .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(RoundedRectangle(cornerRadius: PRRadius.radius10))
                 .glassEffect(.identity)
 
             Button(role: .destructive, action: onDelete) {

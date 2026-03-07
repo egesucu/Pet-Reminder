@@ -22,8 +22,8 @@ struct PetImageView: View {
                 addPet
                     .type
                     .image
-                    .frame(width: 200, height: 200)
-                    .clipShape(.rect(cornerRadius: 10))
+                    .frame(width: PRComponentSize.avatar200, height: PRComponentSize.avatar200)
+                    .clipShape(.rect(cornerRadius: PRRadius.radius10))
             }
 
             PhotoImagePickerView(

@@ -32,7 +32,7 @@ struct PetChangeView: View {
                 switch manager.pageState {
                 case .loading:
                     ProgressView()
-                        .frame(width: 200, height: 200)
+                        .frame(width: PRComponentSize.avatar200, height: PRComponentSize.avatar200)
                         .tint(.accent)
                 case .loaded(let pet):
                     petDetailView(pet)
@@ -68,13 +68,13 @@ struct PetChangeView: View {
                     selectedImage: photo,
                     onDelete: manager.removePhoto
                 )
-                .frame(width: 150, height: 150)
+                .frame(width: PRComponentSize.avatar150, height: PRComponentSize.avatar150)
                 .padding(.horizontal)
             } else {
                 pet
                     .type
                     .image
-                    .frame(width: 150, height: 150)
+                    .frame(width: PRComponentSize.avatar150, height: PRComponentSize.avatar150)
                     .clipShape(.circle)
                     .padding(.horizontal)
             }
@@ -90,7 +90,7 @@ struct PetChangeView: View {
                 }
             }
         }
-        .padding(.bottom, 10)
+        .padding(.bottom, PRSpacing.spacing8)
     }
 
     @ViewBuilder
@@ -117,7 +117,7 @@ struct PetChangeView: View {
                 personalDetailsView
                 notificationSelectionView
             }
-            .frame(minHeight: 500)
+            .frame(minHeight: PRSheetSize.editFormMinHeight500)
         }
         .toolbar(content: toolbar)
         .background(Color(uiColor: .systemGroupedBackground))

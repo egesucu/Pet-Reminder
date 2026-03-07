@@ -29,7 +29,7 @@ struct PetNotificationSelectionView: View {
     }
 
     var morningView: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: PRSpacing.spacing8) {
             Label {
                 Text(.feedSelectionMorning)
                     .foregroundStyle(Color.label)
@@ -53,7 +53,7 @@ struct PetNotificationSelectionView: View {
     }
 
     var eveningView: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: PRSpacing.spacing8) {
             Label {
                 Text(.feedSelectionEvening)
                     .foregroundStyle(Color.label)
@@ -76,7 +76,7 @@ struct PetNotificationSelectionView: View {
     }
 
     var bothView: some View {
-        HStack(spacing: 40) {
+        HStack(spacing: PRSpacing.spacing40) {
             morningView
             eveningView
         }

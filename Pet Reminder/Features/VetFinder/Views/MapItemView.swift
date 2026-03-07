@@ -20,7 +20,7 @@ struct MapItemView: View {
                 Text(location.name)
                     .bold()
                     .font(.title3)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, PRSpacing.spacing8)
                 HStack {
                     VStack(alignment: .leading) {
                         if let phoneNumber = location.phoneNumber {
@@ -56,7 +56,7 @@ struct MapItemView: View {
                     Text(.mapOpenIn)
                 }
                 .buttonStyle(.bordered)
-                .padding(.trailing, 10)
+                .padding(.trailing, PRSpacing.spacing8)
             }
         }
         .alert("find_vet_open", isPresented: $showOpenMapAlert) {

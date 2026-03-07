@@ -26,37 +26,37 @@ struct PetDetailView: View {
     )
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: PRSpacing.spacing8) {
             VStack(spacing: 0) {
                 if let imageData = pet.image,
                    let image = UIImage(data: imageData) {
                     Image(uiImage: image)
                         .petImageStyle()
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .frame(width: 300, height: 300)
+                        .padding(.horizontal, PRSpacing.spacing20)
+                        .padding(.top, PRSpacing.spacing20)
+                        .frame(width: PRComponentSize.avatar300, height: PRComponentSize.avatar300)
                         .zIndex(2)
                 } else {
                     Image(.generateDefaultData(type: pet.type))
                         .petImageStyle()
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .frame(width: 300, height: 300)
+                        .padding(.horizontal, PRSpacing.spacing20)
+                        .padding(.top, PRSpacing.spacing20)
+                        .frame(width: PRComponentSize.avatar300, height: PRComponentSize.avatar300)
                         .zIndex(2)
                 }
                 FeedListView(pet: $pet)
-                    .frame(width: 320, height: 100)
-                    .padding(.horizontal, 30)
-                    .padding(.top, 60)
-                    .padding(.bottom, 10)
+                    .frame(width: 320, height: PRComponentSize.feedCardHeight100)
+                    .padding(.horizontal, PRSpacing.spacing32)
+                    .padding(.top, PRSpacing.spacing60)
+                    .padding(.bottom, PRSpacing.spacing8)
                     .background(
-                        RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(cornerRadius: PRRadius.radius20)
                             .stroke(yellowGradient, lineWidth: 4)
                     )
-                    .offset(x: 0, y: -60)
+                    .offset(x: 0, y: -PRSpacing.spacing60)
 
             }
-            HStack {
+            HStack(spacing: PRSpacing.spacing12) {
                 Button {
                     Logger
                         .pets
@@ -69,7 +69,7 @@ struct PetDetailView: View {
                             .foregroundStyle(Color.background)
                     } icon: {
                         Image(systemName: "fork.knife")
-                            .font(.title)
+                            .font(.system(size: PRIconSize.icon24, weight: .regular))
                             .foregroundStyle(Color.background)
                     }
                 }
@@ -87,7 +87,7 @@ struct PetDetailView: View {
                             .foregroundStyle(Color.background)
                     } icon: {
                         Image(systemName: "syringe.fill")
-                            .font(.title)
+                            .font(.system(size: PRIconSize.icon24, weight: .regular))
                             .foregroundStyle(Color.background)
                     }
                 }

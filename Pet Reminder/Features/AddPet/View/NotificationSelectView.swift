@@ -14,7 +14,7 @@ struct NotificationSelectView: View {
     @Binding var addPet: AddPet
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: PRSpacing.spacing20) {
             Text(.feedTimeTitle)
                 .font(.title3)
                 .bold()
@@ -33,7 +33,7 @@ struct NotificationSelectView: View {
             .pickerStyle(.segmented)
             .colorMultiply(.green)
             .animation(.easeOut(duration: 0.8), value: addPet.feedSelection)
-            .padding(.horizontal, 8)
+            .padding(.horizontal, PRSpacing.spacing8)
         }
     }
 }

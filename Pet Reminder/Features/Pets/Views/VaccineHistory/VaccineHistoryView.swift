@@ -36,7 +36,7 @@ struct VaccineHistoryView: View {
     /// - Returns: A view showing the vaccine's name and date.
     @ViewBuilder
     func vaccineView(_ vaccine: Vaccine) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: PRSpacing.spacing8) {
             Label(vaccine.name, systemImage: "syringe.fill")
                 .tint(.blue)
                 .bold()
@@ -65,7 +65,7 @@ struct VaccineHistoryView: View {
             .navigationTitle(Text(.vaccineHistoryTitle))
             .sheet(isPresented: $shouldAddVaccine) {
                 AddVaccineView(pet: $pet, vaccineName: $vaccineName)
-                    .presentationDetents([.fraction(0.3)])
+                    .presentationDetents([.fraction(PRSheetSize.compactFraction)])
             }
         }
     }

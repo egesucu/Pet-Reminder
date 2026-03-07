@@ -17,19 +17,19 @@ struct FeedHistory: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: PRSpacing.spacing16) {
                 ScrollView {
                     Text(.today)
                         .bold()
                         .font(.title2)
-                        .padding(.leading, 8)
+                        .padding(.leading, PRSpacing.spacing8)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     CurrentFeedSection(feeds: feeds)
                     Text(.previousTitle)
                         .bold()
                         .font(.title2)
-                        .padding(.top, 8)
-                        .padding(.leading, 8)
+                        .padding(.top, PRSpacing.spacing8)
+                        .padding(.leading, PRSpacing.spacing8)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     PreviousFeedsSection(feeds: feeds)
                 }
@@ -48,7 +48,7 @@ struct FeedHistory: View {
             .navigationTitle(Text(.feedHistoryTitle))
         }
         .presentationBackground(.clear)
-        .presentationCornerRadius(24)
+        .presentationCornerRadius(PRRadius.radius24)
     }
 }
 

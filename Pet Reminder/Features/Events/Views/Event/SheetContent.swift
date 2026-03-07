@@ -25,7 +25,7 @@ struct SheetContent: View {
                     .font(.title)
                     .tint(.accent)
             })
-            .offset(x: -10, y: 10)
+            .offset(x: PROffset.closeButtonX, y: PROffset.closeButtonY)
 
         }
     }

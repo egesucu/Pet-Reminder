@@ -41,7 +41,7 @@ struct EventFilterMenu: ToolbarContent {
                                     Group {
                                         if manager.selectedCalendar == calendar {
                                             Image(systemName: "checkmark")
-                                                .font(.system(size: 8, weight: .bold))
+                                                .font(.system(size: PRIconSize.icon8, weight: .bold))
                                                 .foregroundColor(.white)
                                         }
                                     },

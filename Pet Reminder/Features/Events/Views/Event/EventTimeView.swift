@@ -15,7 +15,7 @@ struct EventTimeView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 100).fill(.accent)
+            RoundedRectangle(cornerRadius: PRRadius.pill).fill(.accent)
             Text(dateString)
                 .multilineTextAlignment(.center)
                 .font(.body)

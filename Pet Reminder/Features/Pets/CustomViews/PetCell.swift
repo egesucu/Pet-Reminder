@@ -20,13 +20,13 @@ struct PetCell: View {
                let image = UIImage(data: imageData) {
                 Image(uiImage: image)
                     .petImageStyle()
-                    .padding(.trailing, 10)
-                    .frame(width: 150, height: 150)
+                    .padding(.trailing, PRSpacing.spacing8)
+                    .frame(width: PRComponentSize.avatar150, height: PRComponentSize.avatar150)
             } else {
                 Image(.generateDefaultData(type: pet.type))
                     .petImageStyle()
-                    .padding(.trailing, 10)
-                    .frame(width: 150, height: 150)
+                    .padding(.trailing, PRSpacing.spacing8)
+                    .frame(width: PRComponentSize.avatar150, height: PRComponentSize.avatar150)
             }
 
             VStack {

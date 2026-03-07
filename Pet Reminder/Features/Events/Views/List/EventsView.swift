@@ -37,7 +37,7 @@ struct EventsView: View {
                         .padding()
                         .background(.ultraThinMaterial)
                         .clipShape(.capsule)
-                        .frame(height: 60)
+                        .frame(height: PRSpacing.spacing60)
                 }
             }
         }

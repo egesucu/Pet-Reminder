@@ -15,14 +15,14 @@ struct Row: View {
     var type: NotificationType
 
     var body: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .center, spacing: PRSpacing.spacing8) {
             Image(systemName: imageName)
-                .font(.title)
+                .font(.system(size: PRIconSize.icon24))
             Text(content)
         }
         .bold()
         .foregroundStyle(.white)
-        .padding(.all)
+        .padding(PRSpacing.spacing16)
         .glassEffect(
             .regular.tint(
                 type == .morning ? .yellow  : .blue

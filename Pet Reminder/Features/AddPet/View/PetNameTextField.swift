@@ -20,7 +20,7 @@ struct PetNameTextField: View {
     @FocusState var isFocused
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: PRSpacing.spacing16) {
             Text(.startNameLabel)
                 .foregroundStyle(Color.label)
                 .font(.title2)
@@ -54,7 +54,7 @@ struct PetNameTextField: View {
 
                     )
                     .animation(.easeInOut, value: isFocused)
-                    .clipShape(.rect(cornerRadius: 10))
+                    .clipShape(.rect(cornerRadius: PRRadius.radius10))
             )
 
             if addPet.petExists {

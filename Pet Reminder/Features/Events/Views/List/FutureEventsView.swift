@@ -33,7 +33,7 @@ struct FutureEventsView: View {
                 ForEach(filteredEvents, id: \.self) { event in
                     EventView(event: event)
                         .environment(manager)
-                        .padding(.horizontal, 5)
+                        .padding(.horizontal, PRSpacing.spacing4)
                         .listRowSeparator(.hidden)
                 }
             }

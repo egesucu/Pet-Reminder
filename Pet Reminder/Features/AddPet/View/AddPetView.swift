@@ -92,14 +92,14 @@ private extension AddPetView {
         switch step {
         case .name:
             PetNameTextField(addPet: $addPet)
-                .padding(.horizontal)
+                .padding(.horizontal, PRSpacing.spacing20)
 
         case .birthday:
             PetBirthdayView(addPet: $addPet)
-                .padding(.horizontal)
+                .padding(.horizontal, PRSpacing.spacing20)
 
         case .kindAndImage:
-            VStack(spacing: 20) {
+            VStack(spacing: PRSpacing.spacing20) {
                 Text(.petKindText).font(.headline).foregroundStyle(.primary)
                 Picker(selection: $pet.type) {
                     ForEach(PetType.allCases, id: \.self) { type in
@@ -112,14 +112,14 @@ private extension AddPetView {
 
                 PetImageView(addPet: $addPet)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, PRSpacing.spacing20)
 
         case .notifications:
-            VStack(spacing: 10) {
+            VStack(spacing: PRSpacing.spacing8) {
                 NotificationSelectView(addPet: $addPet)
                 PetNotificationSelectionView(addPet: $addPet)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, PRSpacing.spacing20)
         }
     }
 

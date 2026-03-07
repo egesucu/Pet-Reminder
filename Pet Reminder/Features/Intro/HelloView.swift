@@ -16,7 +16,7 @@ struct HelloView: View {
     @Environment(NotificationManager.self) private var notificationManager
 
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
+        VStack(alignment: .center, spacing: PRSpacing.spacing20) {
             Spacer()
             Text(.welcomeTitle)
                 .foregroundStyle(Color.label)
@@ -25,7 +25,7 @@ struct HelloView: View {
             Image(systemName: "pawprint.circle.fill")
                 .foregroundStyle(Color.label)
                 .bold()
-                .font(.system(size: 80))
+                .font(.system(size: PRIconSize.icon80))
             Text(.welcomeContext)
                 .padding(.vertical)
                 .foregroundStyle(Color.label)
@@ -65,8 +65,8 @@ struct HelloView: View {
         if let logoImage = UIImage(named: "AppIcon") {
             Image(uiImage: logoImage)
                 .resizable()
-                .frame(width: 200, height: 200)
-                .clipShape(.rect(cornerRadius: 10))
+                .frame(width: PRComponentSize.avatar200, height: PRComponentSize.avatar200)
+                .clipShape(.rect(cornerRadius: PRRadius.radius10))
         }
     }
 

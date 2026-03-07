@@ -71,9 +71,9 @@ struct FindVetView: View {
         }
         .sheet(item: $selectedLocation) { location in
             MapItemView(location: location)
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(PRSheetSize.compactHeight200)])
                 .presentationDragIndicator(.visible)
-                .presentationCornerRadius(25)
+                .presentationCornerRadius(PRPresentation.sheetCornerRadius25)
                 .padding(.horizontal)
         }
     }
