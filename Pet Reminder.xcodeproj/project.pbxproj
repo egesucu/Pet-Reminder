@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F02DB2B6F600F1BAA2 /* Shared */; };
-		7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */; };
-		724F85492E7A124D008EB9A2 /* SFSafeSymbols in Frameworks */ = {isa = PBXBuildFile; productRef = 724F85482E7A124D008EB9A2 /* SFSafeSymbols */; };
 		9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 9D06639B2E0B5D28004CF6F5 /* Shared */; };
 		9D60E6D62ABB812800AC0CC2 /* ci_post_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D52ABB812800AC0CC2 /* ci_post_xcodebuild.sh */; };
 		9D60E6D72ABB812B00AC0CC2 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D32ABB7C7A00AC0CC2 /* ci_post_clone.sh */; };
@@ -59,7 +57,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				724F85492E7A124D008EB9A2 /* SFSafeSymbols in Frameworks */,
 				9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,7 +67,6 @@
 			files = (
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
-				7214E4F52DB2C5F500F1BAA2 /* SFSafeSymbols in Frameworks */,
 				7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,7 +135,6 @@
 			name = "Pet ReminderTests";
 			packageProductDependencies = (
 				9D06639B2E0B5D28004CF6F5 /* Shared */,
-				724F85482E7A124D008EB9A2 /* SFSafeSymbols */,
 			);
 			productName = "Pet ReminderTests";
 			productReference = 72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */;
@@ -163,7 +158,6 @@
 			name = "Pet Reminder";
 			packageProductDependencies = (
 				7214E4F02DB2B6F600F1BAA2 /* Shared */,
-				7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -201,7 +195,6 @@
 			);
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
-				7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
 				9D06639A2E0B5D28004CF6F5 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
@@ -652,31 +645,10 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SFSafeSymbols/SFSafeSymbols.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		7214E4F02DB2B6F600F1BAA2 /* Shared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Shared;
-		};
-		7214E4F42DB2C5F500F1BAA2 /* SFSafeSymbols */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
-			productName = SFSafeSymbols;
-		};
-		724F85482E7A124D008EB9A2 /* SFSafeSymbols */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7214E4F32DB2C5F500F1BAA2 /* XCRemoteSwiftPackageReference "SFSafeSymbols" */;
-			productName = SFSafeSymbols;
 		};
 		9D06639B2E0B5D28004CF6F5 /* Shared */ = {
 			isa = XCSwiftPackageProductDependency;
