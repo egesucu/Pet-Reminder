@@ -1,0 +1,103 @@
+//
+//  PhotoImagePicker.swift
+//  Pet Reminder
+//
+//  Created by Ege Sucu on 17.09.2023.
+//  Copyright © 2023 Ege Sucu. All rights reserved.
+//
+
+import SwiftUI
+import PhotosUI
+
+public struct PhotoImagePicker: View {
+    @State private var selectedPhoto: PhotosPickerItem?
+    var desiredTitle: LocalizedStringResource
+    var desiredIcon: String
+    @Binding var photoData: Data?
+
+    public init(
+        desiredTitle: LocalizedStringResource,
+        selectedPhoto: PhotosPickerItem? = nil,
+        photoData: Binding<Data?> = .constant(nil),
+        desiredIcon: String = "photo.badge.plus.fill"
+    ) {
+        self.selectedPhoto = selectedPhoto
+        self._photoData = photoData
+        self.desiredTitle = desiredTitle
+        self.desiredIcon = desiredIcon
+    }
+
+    public var body: some View {
+
+        PhotosPicker(
+            selection: $selectedPhoto,
+            matching: .any(
+                of: [.images, .not(.screenshots), .not(.bursts)]
+            )
+        ) {
+            Label {
+                Text(desiredTitle)
+            } icon: {
+                Image(systemName: desiredIcon)
+            }
+        }
+
+        .onChange(of: selectedPhoto) {
+            if let selectedPhoto {
+                await handlePhotoChange(selectedPhoto)
+            }
+        }
+        .contentShape(.rect)
+        .tint(.accent)
+        .padding(.vertical)
+    }
+
+    private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
+        await processPhotoChange(newPhoto)
+    }
+
+    private func processPhotoChange(_ newPhoto: PhotosPickerItem) async {
+        if let data = try? await newPhoto.loadTransferable(type: Data.self) {
+            // Downsample before assigning to reduce memory/storage footprint
+            let processed = ImageDownsampling.downsampleIfNeeded(
+                data: data,
+                maxDimension: 1024,
+                jpegQuality: 0.8
+            ) ?? data
+            photoData = processed
+        } else {
+            photoData = nil
+            selectedPhoto = nil
+        }
+    }
+
+}
+
+#if DEBUG
+#Preview("Photo picker with default title") {
+    @Previewable @State var photoData: Data?
+
+    PhotoImagePicker(
+        desiredTitle: .addText,
+        photoData: $photoData
+    )
+    .task {
+        photoData = UIImage(resource: .defaultOther).pngData()
+    }
+    .environment(\.locale, .init(identifier: "tr"))
+}
+
+#Preview("Photo Picker with custom title") {
+    @Previewable @State var photoData: Data?
+
+    PhotoImagePicker(
+        desiredTitle: .change,
+        photoData: $photoData,
+        desiredIcon: "photo.fill"
+    )
+    .task {
+        photoData = UIImage(resource: .defaultOther).pngData()
+    }
+    .environment(\.locale, .init(identifier: "tr"))
+}
+#endif

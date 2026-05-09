@@ -15,12 +15,12 @@ import Shared
 struct PetNameTextField: View {
     @Query var pets: [Pet]
     
-    @Binding var addPet: AddPet
+    @Binding var model: AddPet.Model
 
     @FocusState var isFocused
 
     var body: some View {
-        VStack(alignment: .leading, spacing: PRSpacing.spacing16) {
+        VStack(alignment: .leading, spacing: .spacing16) {
             Text(.startNameLabel)
                 .foregroundStyle(Color.label)
                 .font(.title2)
@@ -28,7 +28,7 @@ struct PetNameTextField: View {
 
             TextField(
                 Strings.doggo,
-                text: $addPet.name
+                text: $model.name
             )
             .focused($isFocused)
             .foregroundStyle(Color.label)
@@ -37,11 +37,11 @@ struct PetNameTextField: View {
             .autocorrectionDisabled()
             .multilineTextAlignment(.center)
             .textInputAutocapitalization(.words)
-            .onChange(of: addPet.name) {
-                check(name: addPet.name)
+            .onChange(of: model.name) {
+                check(name: model.name)
             }
             .task {
-                check(name: addPet.name)
+                check(name: model.name)
             }
             .background(
                 Rectangle()
@@ -54,10 +54,10 @@ struct PetNameTextField: View {
 
                     )
                     .animation(.easeInOut, value: isFocused)
-                    .clipShape(.rect(cornerRadius: PRRadius.radius10))
+                    .clipShape(.rect(cornerRadius: .radius10))
             )
 
-            if addPet.petExists {
+            if model.petExists {
                 Text(.petExists)
                     .foregroundStyle(.red)
                     .font(.footnote)
@@ -75,10 +75,10 @@ struct PetNameTextField: View {
         let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         Logger.pets.info("Name is: \(removedSpaceName)")
 
-        addPet.nameIsValid = removedSpaceName.isNotEmpty
+        model.nameIsValid = removedSpaceName.isNotEmpty
 
         guard removedSpaceName.isNotEmpty else {
-            addPet.petExists = false
+            model.petExists = false
             return
         }
 
@@ -86,7 +86,7 @@ struct PetNameTextField: View {
             .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
             .lowercased()
 
-        addPet.petExists = pets.contains { existingPet in
+        model.petExists = pets.contains { existingPet in
             let normalizedExisting = existingPet.name
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
@@ -100,10 +100,10 @@ struct PetNameTextField: View {
 
 #Preview("Filled Case") {
     @Previewable @FocusState var isFocused: Bool
-    @Previewable @State var addPet: AddPet = AddPet(name: "Horn")
+    @Previewable @State var model: AddPet.Model = AddPet.Model(name: "Horn")
 
     PetNameTextField(
-        addPet: $addPet,
+        model: $model,
         isFocused: _isFocused
     )
     .padding(.all)
@@ -114,20 +114,20 @@ struct PetNameTextField: View {
 }
 
 #Preview("Pet Exist Case") {
-    @Previewable @State var addPet: AddPet = AddPet(name: Strings.viski)
+    @Previewable @State var model: AddPet.Model = AddPet.Model(name: Strings.viski)
 
     PetNameTextField(
-        addPet: $addPet
+        model: $model
     )
     .padding(.all)
     .modelContainer(DataController.previewContainer)
 }
 
 #Preview("Empty Case") {
-    @Previewable @State var addPet: AddPet = .init()
+    @Previewable @State var model: AddPet.Model = .init()
     
     PetNameTextField(
-        addPet: $addPet
+        model: $model
     )
         .padding(.all)
         .modelContainer(DataController.previewContainer)

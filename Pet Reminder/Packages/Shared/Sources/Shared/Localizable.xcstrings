@@ -277,7 +277,14 @@
       }
     },
     "Bird" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bird"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -374,7 +381,14 @@
       }
     },
     "Cat" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cat"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -498,7 +512,14 @@
       }
     },
     "Dog" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dog"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -816,7 +837,14 @@
       }
     },
     "Fish" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fish"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1262,7 +1290,14 @@
       }
     },
     "Other" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

@@ -13,21 +13,21 @@ import OSLog
 import Observation
 import Shared
 
+@MainActor
 protocol VetService {
     func requestMapPermissions() async
     func setViewStatus() -> MapViewStatus
     func findUserLocation() -> MapCameraPosition
     func searchLocations(with searchTerm: String, near userLocation: MapCameraPosition) async -> [Pin]
-    // New: allow stopping updates when the view disappears
     func stopUpdating()
 }
 
 @Observable
-class VetServiceImplementation: VetService {
+final class VetServiceImplementation: VetService {
 
     private let locationManager: CLLocationManager
 
-    init(locationManager: CLLocationManager) {
+    init(locationManager: CLLocationManager = .init()) {
         self.locationManager = locationManager
     }
 
@@ -70,19 +70,21 @@ class VetServiceImplementation: VetService {
             return processSearchResponse(response)
         } catch {
             Logger.vet.error("Local Search Failed: \(error.localizedDescription)")
-            return []
+            return .empty
         }
     }
 
-    private func processSearchResponse(_ response: MKLocalSearch.Response) -> [Pin] {
+    func stopUpdating() {
+        locationManager.stopUpdatingLocation()
+    }
+}
+
+private extension VetServiceImplementation {
+    func processSearchResponse(_ response: MKLocalSearch.Response) -> [Pin] {
         var pins: [Pin] = []
         response.mapItems.forEach {
             pins.append(Pin(item: $0))
         }
         return pins
-    }
-
-    func stopUpdating() {
-        locationManager.stopUpdatingLocation()
     }
 }

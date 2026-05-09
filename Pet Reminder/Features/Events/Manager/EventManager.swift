@@ -170,7 +170,7 @@ class EventManager {
             eventStartDate: start,
             eventEndDate: end,
             isAllDay: allDay,
-            selectedCalendar: selectedCalendar ?? petCalendar ?? .init("")
+            selectedCalendar: selectedCalendar ?? petCalendar ?? .init(.empty)
         )
     }
 

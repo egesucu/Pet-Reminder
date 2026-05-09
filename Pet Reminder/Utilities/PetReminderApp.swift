@@ -34,12 +34,12 @@ struct PetReminderApp: App {
     var body: some Scene {
         WindowGroup {
             if helloSeen {
-                HomeManagerView()
+                HomeManager()
             } else {
-                HelloView()
+                Hello()
             }
         }
-        .environment(notificationManager)
+        .notification(notificationManager)
         .environment(eventManager)
         .modelContainer(container)
     }

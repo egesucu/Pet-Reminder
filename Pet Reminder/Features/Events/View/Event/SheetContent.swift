@@ -17,7 +17,7 @@ struct SheetContent: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            ESEventDetailView(event: event)
+            ESEventDetail(event: event)
             Button(action: {
                 dismiss()
             }, label: {
@@ -25,7 +25,7 @@ struct SheetContent: View {
                     .font(.title)
                     .tint(.accent)
             })
-            .offset(x: PROffset.closeButtonX, y: PROffset.closeButtonY)
+            .offset(x: .closeButtonX, y: .closeButtonY)
 
         }
     }
