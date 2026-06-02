@@ -62,12 +62,9 @@ struct ChangePetDetails: View {
     func petImageView(_ pet: Pet) -> some View {
         HStack {
             if let photo = manager.petImage {
-                Pet​Image​Preview​(
-                    selectedImage: photo,
-                    onDelete: manager.removePhoto
-                )
-                .frame(width: .avatar150, height: .avatar150)
-                .padding(.horizontal)
+                preview(for: photo)
+                    .frame(width: .avatar150, height: .avatar150)
+                    .padding(.horizontal)
             } else {
                 pet
                     .kind
@@ -89,6 +86,22 @@ struct ChangePetDetails: View {
             }
         }
         .padding(.bottom, .spacing8)
+    }
+    
+    func preview(for image: UIImage) -> some View {
+        VStack(spacing: .spacing16) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: .radius10))
+                .glassEffect(.identity)
+
+            Button(role: .destructive, action: manager.removePhoto) {
+                Text("Delete Photo")
+            }
+            .buttonStyle(.glass)
+            .tint(.red)
+        }
     }
 
     @ViewBuilder

@@ -13,22 +13,19 @@ import Shared
 
 struct AddPet: View {
 
-    enum Step: Hashable {
+    enum Step: Hashable, CaseIterable {
         case name
         case birthday
         case kindAndImage
         case notifications
     }
     
-    @Environment(\.notification)
-    private var notificationManager: NotificationManager
+    @Environment(\.notification) private var notificationManager: NotificationManager
 
-    @Environment(\.modelContext)
-    private var modelContext
+    @Environment(\.modelContext) private var modelContext
 
-    @Environment(\.dismiss)
-    private var dismiss
-
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var pet: Pet = .init()
     @State private var model: Model = .init()
 
@@ -38,18 +35,22 @@ struct AddPet: View {
     private var currentStep: Step {
         path.last ?? .name
     }
+    
+    private var currentStepIndex: Int {
+        Step.allCases.firstIndex(of: currentStep) ?? 0
+    }
+
+    private var progressValue: Double {
+        Double(currentStepIndex + 1)
+    }
 
     var body: some View {
-        NavigationStack(path: $path) {
-            stepView(for: .name)
+        NavigationStack {
+            stepContainer
                 .navigationTitle(.addPet)
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar { leadingCancel; trailingNextOrSave }
-                .navigationDestination(for: Step.self) { step in
-                    stepView(for: step)
-                        .navigationBarBackButtonHidden(true)
-                        .toolbar { leadingBack; trailingNextOrSave }
-                }
+                .navigationBarBackButtonHidden(true)
+                .toolbar { leadingToolbar; trailingNextOrSave }
         }
         .sensoryFeedback(.error, trigger: model.saveState == .failure)
         .sensoryFeedback(.success, trigger: model.saveState == .success)
@@ -80,6 +81,9 @@ struct AddPet: View {
                 dismiss()
             }
             .tint(Color.label)
+        }
+        .overlay(alignment: .top) {
+            progressView
         }
     }
 }
@@ -149,63 +153,69 @@ extension AddPet {
 
 // MARK: - Subviews
 private extension AddPet {
+    var stepContainer: some View {
+        stepView(for: currentStep)
+            .padding(.horizontal, .spacing20)
+            .id(currentStep)
+            .animation(.default, value: currentStep)
+    }
+
     @ViewBuilder
     func stepView(for step: Step) -> some View {
         switch step {
         case .name:
             PetNameTextField(model: $model)
-                .padding(.horizontal, .spacing20)
-
         case .birthday:
             PetBirthday(model: $model)
-                .padding(.horizontal, .spacing20)
-
         case .kindAndImage:
-            VStack(spacing: .spacing20) {
-                Text(.petKindText).font(.headline).foregroundStyle(.primary)
-                Picker(selection: $model.kind) {
-                    ForEach(Kind.allCases, id: \.self) { kind in
-                        Text(verbatim: kind.localizedName)
-                    }
-                } label: {
-                    Text(.petKindText)
-                }
-                .pickerStyle(.segmented)
-
-                PetImageSelection(model: $model)
-            }
-            .padding(.horizontal, .spacing20)
-
+            PetImageSelection(model: $model)
         case .notifications:
-            VStack(spacing: .spacing8) {
-                NotificationSelect(model: $model)
-                PetNotificationSelection(model: $model)
-            }
-            .padding(.horizontal, .spacing20)
+            NotificationSelect(model: $model)
         }
     }
-
+    
+    var progressView: some View {
+        HStack {
+            Spacer()
+            ProgressView(value: progressValue, total: Double(Step.allCases.count))
+                .tint(.label)
+                .frame(width: .customProgressWidth)
+                .animation(.spring(), value: progressValue)
+            Spacer()
+        }
+        .offset(y: progressOffset)
+    }
+    
+    var progressOffset: CGFloat {
+        switch UIDevice.current.orientation {
+        case .landscapeLeft, .landscapeRight:
+                .customProgressOffset - 10
+        case .portrait, .portraitUpsideDown:
+                .customProgressOffset
+        default:
+                .customProgressOffset
+        }
+    }
 }
 
 // MARK: - Toolbars
 private extension AddPet {
     @ToolbarContentBuilder
-    var leadingCancel: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            Button(role: .cancel, action: dismiss.callAsFunction) {
-                Image(systemName: "xmark")
-                    .foregroundStyle(.red)
+    var leadingToolbar: some ToolbarContent {
+        if currentStep == .name {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(role: .cancel, action: dismiss.callAsFunction) {
+                    Image(systemName: "xmark")
+                        .foregroundStyle(.red)
+                }
             }
-        }
-    }
-
-    @ToolbarContentBuilder
-    var leadingBack: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                _ = path.popLast()
-            } label: {
-                Label(.back, systemImage: "chevron.left")
+        } else {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    _ = path.popLast()
+                } label: {
+                    Label(.back, systemImage: "chevron.left")
+                }
             }
         }
     }
@@ -221,7 +231,7 @@ private extension AddPet {
                 }
             } label: {
                 if currentStep == .notifications {
-                    Label(.save, systemImage: model.petCanBeSaved ? "square.and.arrow.down.fill" : "square.and.arrow.down")
+                    Text(.save)
                 } else {
                     Label(.next, systemImage: "arrow.right")
                 }
@@ -301,6 +311,11 @@ private extension AddPet {
 
         try await notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
     }
+}
+
+private extension CGFloat {
+    static let customProgressWidth: Self = 80
+    static let customProgressOffset: Self = 80
 }
 
 #if DEBUG

@@ -20,54 +20,56 @@ struct PetNameTextField: View {
     @FocusState var isFocused
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .spacing16) {
-            Text(.startNameLabel)
-                .foregroundStyle(Color.label)
-                .font(.title2)
-                .bold()
-
-            TextField(
-                Strings.doggo,
-                text: $model.name
-            )
-            .focused($isFocused)
-            .foregroundStyle(Color.label)
-            .font(.title)
-            .padding()
-            .autocorrectionDisabled()
-            .multilineTextAlignment(.center)
-            .textInputAutocapitalization(.words)
-            .onChange(of: model.name) {
-                check(name: model.name)
-            }
-            .task {
-                check(name: model.name)
-            }
-            .background(
-                Rectangle()
-                    .fill(
-                        isFocused ? .accent
-                            .opacity(0.2) :
-                            Color
-                                .black
-                                .opacity(0.1)
-
-                    )
-                    .animation(.easeInOut, value: isFocused)
-                    .clipShape(.rect(cornerRadius: .radius10))
-            )
-
-            if model.petExists {
-                Text(.petExists)
-                    .foregroundStyle(.red)
-                    .font(.footnote)
+        ScrollView {
+            VStack(alignment: .leading, spacing: .spacing16) {
+                Text(.startNameLabel)
+                    .foregroundStyle(Color.label)
+                    .font(.title2)
                     .bold()
-            }
 
-            Text(.petFact)
-                .font(.footnote)
-                .italic()
-                .lineLimit(20)
+                TextField(
+                    Strings.doggo,
+                    text: $model.name
+                )
+                .focused($isFocused)
+                .foregroundStyle(Color.label)
+                .font(.title)
+                .padding()
+                .autocorrectionDisabled()
+                .multilineTextAlignment(.center)
+                .textInputAutocapitalization(.words)
+                .onChange(of: model.name) {
+                    check(name: model.name)
+                }
+                .task {
+                    check(name: model.name)
+                }
+                .background(
+                    Rectangle()
+                        .fill(
+                            isFocused ? .accent
+                                .opacity(0.2) :
+                                Color
+                                    .black
+                                    .opacity(0.1)
+
+                        )
+                        .animation(.easeInOut, value: isFocused)
+                        .clipShape(.rect(cornerRadius: .radius10))
+                )
+
+                if model.petExists {
+                    Text(.petExists)
+                        .foregroundStyle(.red)
+                        .font(.footnote)
+                        .bold()
+                }
+
+                Text(.petFact)
+                    .font(.footnote)
+                    .italic()
+                    .lineLimit(20)
+            }
         }
     }
 
