@@ -14,21 +14,29 @@ struct PetBirthday: View {
     @Binding var model: AddPet.Model
 
     var body: some View {
-        VStack(alignment: .center) {
-            Text(.birthdayAskLabel)
-                .font(.title2)
-                .foregroundStyle(Color.label)
-                .bold()
-            DatePicker(
-                selection: $model.birthday,
-                displayedComponents: .date
-            ) {
-                Text(.birthdayTitle)
+        ScrollView {
+            VStack(alignment: .leading, spacing: .spacing20) {
+                Text(.birthdayAskLabel)
+                    .font(.title2)
+                    .foregroundStyle(Color.label)
+                    .bold()
+                
+                DatePicker(
+                    String(localized: .birthdayTitle),
+                    selection: $model.birthday,
+                    displayedComponents: .date
+                )
+                .datePickerStyle(.graphical)
+                .tint(.green)
+                
+                VStack(alignment: .center, spacing: .spacing20) {
+                    Text(.birthdayInformation)
+                        .font(.caption2)
+                        .foregroundStyle(Color.label)
+                        .multilineTextAlignment(.center)
+                }
             }
-            .labelsHidden()
-            .tint(.green)
         }
-        .padding(.all)
     }
 }
 
