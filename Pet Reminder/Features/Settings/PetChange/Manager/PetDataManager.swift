@@ -28,6 +28,7 @@ class PetDataManager {
     }
 
     var name = String.empty
+    var breed = String.empty
     var birthday = Date()
     var selection: FeedSelection = .both
     var morningDate: Date = .eightAM
@@ -74,6 +75,7 @@ class PetDataManager {
         self.birthday = pet.birthday
         self.name = pet.name
         self.selection = pet.feedSelection
+        self.breed = pet.breed ?? String.empty
         self.kind = pet.kind
 
         if let image = pet.image {

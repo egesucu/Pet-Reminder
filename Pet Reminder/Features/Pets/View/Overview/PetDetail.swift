@@ -13,7 +13,7 @@ import SwiftData
 
 struct PetDetail: View {
 
-    @Binding var pet: Pet
+    let pet: Pet
     @State private var showFeedHistory = false
     @State private var showVaccines = false
 
@@ -28,23 +28,14 @@ struct PetDetail: View {
     var body: some View {
         VStack(spacing: .spacing8) {
             VStack(spacing: .zero) {
-                if let imageData = pet.image,
-                   let image = UIImage(data: imageData) {
-                    Image(uiImage: image)
-                        .petImageStyle()
-                        .padding(.horizontal, .spacing20)
-                        .padding(.top, .spacing20)
-                        .frame(width: .avatar300, height: .avatar300)
-                        .zIndex(2)
-                } else {
-                    Image(.generateDefaultData(kind: pet.kind))
-                        .petImageStyle()
-                        .padding(.horizontal, .spacing20)
-                        .padding(.top, .spacing20)
-                        .frame(width: .avatar300, height: .avatar300)
-                        .zIndex(2)
-                }
-                FeedList(pet: $pet)
+                CircleImage(
+                    avatarSize: .avatar120,
+                    imageData: pet.image,
+                    kind: pet.kind
+                )
+                .zIndex(2)
+                
+                FeedList(pet: pet)
                     .frame(width: 320, height: .feedCardHeight100)
                     .padding(.horizontal, .spacing32)
                     .padding(.top, .spacing60)
@@ -56,56 +47,46 @@ struct PetDetail: View {
                     .offset(x: 0, y: -.spacing60)
 
             }
-            HStack(spacing: .spacing12) {
-                Button {
-                    Logger
-                        .pets
-                        .info("PR: Feed History Tapped, pet name: \(pet.name)")
-                    showFeedHistory.toggle()
-                } label: {
-                    Label {
-                        Text(.feedsTitle)
-                            .font(.title)
-                            .foregroundStyle(Color.background)
-                    } icon: {
-                        Image(systemName: "fork.knife")
-                            .font(.system(size: .icon24, weight: .regular))
-                            .foregroundStyle(Color.background)
+        }
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                Image(systemName: "fork.knife")
+                    .foregroundStyle(.accent)
+                    .onTapGesture {
+                        Logger
+                            .pets
+                            .info("PR: Feed History Tapped, pet name: \(pet.name)")
+                        showFeedHistory.toggle()
                     }
-                }
-                .buttonStyle(.glassProminent)
-                .tint(.accent)
-                Button {
-                    Logger
-                        .pets
-                        .info("PR: Vaccine History Tapped")
-                    showVaccines.toggle()
-                } label: {
-                    Label {
-                        Text(.vaccinesTitle)
-                            .font(.title)
-                            .foregroundStyle(Color.background)
-                    } icon: {
-                        Image(systemName: "syringe.fill")
-                            .font(.system(size: .icon24, weight: .regular))
-                            .foregroundStyle(Color.background)
-                    }
-                }
-                .buttonStyle(.glassProminent)
-                .tint(.blue)
             }
+            
+            ToolbarSpacer(placement: .bottomBar)
+            
+            ToolbarItem(placement: .bottomBar) {
+                Image(systemName: "syringe.fill")
+                    .foregroundStyle(.blue)
+                    .onTapGesture {
+                        Logger
+                            .pets
+                            .info("PR: Vaccine History Tapped")
+                        showVaccines.toggle()
+                    }
+            }
+            
         }
-        .fullScreenCover(isPresented: $showFeedHistory) {
+        .sheet(isPresented: $showFeedHistory) {
             FeedHistory(feeds: pet.feeds)
+                .presentationDetents([.medium,.large])
         }
-        .fullScreenCover(isPresented: $showVaccines) {
-            VaccineHistory(pet: $pet)
+        .sheet(isPresented: $showVaccines) {
+            VaccineHistory(pet: pet)
+                .presentationDetents([.medium,.large])
         }
         .navigationTitle(Text("pet_name_title \(pet.name)"))
     }
 
     var detailView: some View {
-        FeedList(pet: $pet)
+        FeedList(pet: pet)
     }
 
     func defineMorningFeed() -> String {
@@ -122,7 +103,7 @@ struct PetDetail: View {
 #Preview {
     NavigationStack {
         PetDetail(
-            pet: .constant(.preview)
+            pet: .preview
         )
         .modelContainer(DataController.previewContainer)
     }

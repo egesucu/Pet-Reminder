@@ -24,7 +24,7 @@ struct VaccineHistory: View {
     @Environment(\.modelContext) private var modelContext
 
     /// The pet whose vaccine history is displayed and modified.
-    @Binding var pet: Pet
+    let pet: Pet
 
     /// Controls the presentation of the Add Vaccine sheet.
     @State private var shouldAddVaccine = false
@@ -64,7 +64,7 @@ struct VaccineHistory: View {
             .toolbar(content: vaccineToolbars)
             .navigationTitle(Text(.vaccineHistoryTitle))
             .sheet(isPresented: $shouldAddVaccine) {
-                AddVaccine(pet: $pet, vaccineName: $vaccineName)
+                AddVaccine(pet: pet, vaccineName: $vaccineName)
                     .presentationDetents([.fraction(.compactFraction)])
             }
         }
@@ -107,10 +107,8 @@ struct VaccineHistory: View {
 #if DEBUG
 /// Preview for VaccineHistoryView using sample pet data.
 #Preview("Vaccine List") {
-    @Previewable @State var pet: Pet = .preview
-
     NavigationStack {
-        VaccineHistory(pet: $pet)
+        VaccineHistory(pet: .preview)
             .modelContainer(DataController.previewContainer)
     }
 }
