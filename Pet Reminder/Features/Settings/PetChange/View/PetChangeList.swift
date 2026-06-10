@@ -74,18 +74,12 @@ struct PetChangeList: View {
                     if isEditing {
                         ZStack(alignment: .topTrailing) {
                             VStack {
-                                if let imageData = pet.image,
-                                   let image = UIImage(data: imageData) {
-                                    Image(uiImage: image)
-                                        .petImageStyle()
-                                        .frame(width: .avatar120, height: .avatar120)
-                                        .wiggling()
-                                } else {
-                                    Image(.generateDefaultData(kind: pet.kind))
-                                        .petImageStyle()
-                                        .frame(width: .avatar120, height: .avatar120)
-                                        .wiggling()
-                                }
+                                CircleImage(
+                                    avatarSize: .avatar120,
+                                    imageData: pet.image,
+                                    kind: pet.kind
+                                )
+                                .wiggling()
 
                                 Text(pet.name)
                             }
@@ -112,16 +106,12 @@ struct PetChangeList: View {
                         .scaleEffect(isEditing ? 1 : 0.95)
                         .animation(.easeInOut(duration: 0.3), value: isEditing)
                     } else {
-                        if let imageData = pet.image,
-                           let image = UIImage(data: imageData) {
-                            Image(uiImage: image)
-                                .petImageStyle()
-                                .frame(width: .avatar120, height: .avatar120)
-                        } else {
-                            Image(.generateDefaultData(kind: pet.kind))
-                                .petImageStyle()
-                                .frame(width: .avatar120, height: .avatar120)
-                        }
+                        CircleImage(
+                            avatarSize: .avatar120,
+                            imageData: pet.image,
+                            kind: pet.kind
+                        )
+                        
                         Text(pet.name)
                     }
 

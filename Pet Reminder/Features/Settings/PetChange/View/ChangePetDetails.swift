@@ -143,6 +143,14 @@ struct ChangePetDetails: View {
                     Text(.tapToChangeText)
                 }
             }
+            
+            HStack {
+                Text(.petBreedTitle)
+                    .bold()
+                TextField(text: $manager.breed) {
+                    Text(.tapToChangeText)
+                }
+            }
 
             DatePicker(
                 selection: $manager.birthday,
@@ -262,6 +270,11 @@ struct ChangePetDetails: View {
         if showError {
             return
         }
+        
+        // Making sure to not save a breed name as empty string.
+        if pet.breed != manager.breed {
+            pet.breed = manager.breed.isEmpty ? nil : manager.breed
+        }
 
         if pet.image != manager.petImageData {
             pet.image = manager.petImageData
@@ -289,16 +302,15 @@ struct ChangePetDetails: View {
         }
 
         if pet.hasChanges {
-            Task {
-                do {
-                    try modelContext.save()
-                    Logger().info("Pet Data has been updated")
-                } catch {
-                    Logger().error(
-                        "Unknown error occurred while updating the pet. \(error.localizedDescription)"
-                    )
-                    manager.lastErrorMessage = String(localized: .petSaveFailed)
-                }
+            do {
+                try modelContext.save()
+                Logger().info("Pet Data has been updated")
+            } catch {
+                Logger().error(
+                    "Unknown error occurred while updating the pet. \(error.localizedDescription)"
+                )
+                manager.lastErrorMessage = String(localized: .petSaveFailed)
+                return
             }
         }
         dismiss()

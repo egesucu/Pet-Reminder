@@ -20,20 +20,11 @@ struct AddVaccine: View {
     /// The environment dismiss action to close the sheet after saving.
     @Environment(\.dismiss) var dismiss
     /// The pet to which the new vaccine will be added.
-    @Binding var pet: Pet
+    let pet: Pet
     /// The name of the vaccine being entered by the user.
     @Binding var vaccineName: String
     /// The date selected for the new vaccine (defaults to now).
     @State private var vaccineDate = Date.now
-
-    /// Initializes the view with bindings to the selected pet and vaccine name.
-    init(
-        pet: Binding<Pet>,
-        vaccineName: Binding<String>
-    ) {
-        self._pet = pet
-        self._vaccineName = vaccineName
-    }
 
     /// The main UI with fields for vaccine name, date, and a button to save the record.
     var body: some View {
@@ -71,20 +62,18 @@ struct AddVaccine: View {
 #if DEBUG
 /// Preview for AddVaccineView with an empty vaccine name.
 #Preview("Add Vaccine", traits: .fixedLayout(width: 400, height: 200)) {
-    @Previewable @State var pet: Pet = .preview
     @Previewable @State var vaccineName = String.empty
 
-    AddVaccine(pet: $pet, vaccineName: $vaccineName)
+    AddVaccine(pet: .preview, vaccineName: $vaccineName)
         .modelContainer(DataController.previewContainer)
         .background(Color.red.opacity(0.2)) // Preview Heights
 }
 
 /// Preview for AddVaccineView with a pre-filled vaccine name.
 #Preview("Add Vaccine w Text", traits: .fixedLayout(width: 400, height: 200)) {
-    @Previewable @State var pet: Pet = .preview
     @Previewable @State var vaccineName = "Pulvarin"
 
-    AddVaccine(pet: $pet, vaccineName: $vaccineName)
+    AddVaccine(pet: .preview, vaccineName: $vaccineName)
         .modelContainer(DataController.previewContainer)
         .background(Color.red.opacity(0.2)) // Preview Heights
 }

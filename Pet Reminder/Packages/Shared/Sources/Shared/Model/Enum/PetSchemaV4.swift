@@ -1,15 +1,17 @@
 //
-//  PetSchemaV3.swift
+//  PetSchemaV4.swift
 //  Shared
 //
-//  Created by Ege Sucu on 23.04.2026.
+//  Created by Sucu, Ege on 08.06.26.
 //
 
 import Foundation
 import SwiftData
 
-public enum PetSchemaV3: VersionedSchema {
-    public static let versionIdentifier = Schema.Version(3, 0, 0)
+public typealias Pet = PetSchemaV4.Pet
+
+public enum PetSchemaV4: VersionedSchema {
+    public static let versionIdentifier = Schema.Version(4, 0, 0)
 
     public static var models: [any PersistentModel.Type] {
         [Pet.self]
@@ -21,7 +23,7 @@ public enum PetSchemaV3: VersionedSchema {
         public var birthday: Date = Date.now
         public var createdAt: Date?
         public var image: Data?
-        // Store a stable, nonlocalized raw value to avoid actor isolation issues.
+        public var breed: String?
         private var feedSelectionRaw: String = "both"
         @Attribute(originalName: "petTypeName")
         private var kindName: Kind.RawValue = Kind.other.rawValue
@@ -35,6 +37,7 @@ public enum PetSchemaV3: VersionedSchema {
             createdAt: Date? = nil,
             feedSelection: FeedSelection = .both,
             image: Data? = nil,
+            breed: String? = nil,
             feeds: [Feed]? = nil,
             vaccines: [Vaccine]? = nil,
             kind: Kind = .dog
@@ -42,6 +45,7 @@ public enum PetSchemaV3: VersionedSchema {
             self.birthday = birthday
             self.name = name
             self.createdAt = createdAt
+            self.breed = breed
             self.image = image
             self.feeds = feeds
             self.vaccines = vaccines
@@ -65,11 +69,11 @@ public enum PetSchemaV3: VersionedSchema {
 
         private static func rawString(for selection: FeedSelection) -> String {
             switch selection {
-            case .morning: 
+            case .morning:
                 return "morning"
-            case .evening: 
+            case .evening:
                 return "evening"
-            case .both:    
+            case .both:
                 return "both"
             }
         }
@@ -84,5 +88,54 @@ public enum PetSchemaV3: VersionedSchema {
                 return .both
             }
         }
+    }
+}
+
+public extension Pet {
+    @MainActor static var preview: Pet {
+        let firstPet = previews.first ?? .init(
+            birthday: .now,
+            name: .empty,
+            createdAt: nil,
+            feedSelection: .both,
+            image: nil,
+            breed: "Husky",
+            kind: .dog
+        )
+        return firstPet
+    }
+
+    @MainActor static var previews: [Pet] {
+        var pets: [Pet] = []
+        Strings.demoPets.forEach { petName in
+            let randomKind = Kind.allCases.randomElement() ?? .dog
+            
+            let randomBreed: String? = switch randomKind {
+            case .cat:
+                "Aegean"
+            case .dog:
+                "Beagle"
+            case .fish:
+                "Queen Angelfish"
+            case .bird:
+                "Australian King Parrot"
+            case .other:
+                nil
+            }
+            
+            let pet = Pet(
+                birthday: .randomDate(),
+                name: petName,
+                createdAt: .randomDate(),
+                feedSelection: .both,
+                image: randomKind.uiImage.jpegData(compressionQuality: 0.8),
+                breed: randomBreed,
+                kind: randomKind
+            )
+            pet.feeds = Feed.previews
+            pet.vaccines = Vaccine.previews
+            pets.append(pet)
+        }
+        return pets
     }
 }

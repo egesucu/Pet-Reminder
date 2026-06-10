@@ -13,7 +13,7 @@ import Shared
 
 struct FeedList: View {
 
-    @Binding var pet: Pet
+    let pet: Pet
     @Environment(\.modelContext) var context
 
     @State private var morningOn = false
@@ -206,9 +206,7 @@ struct FeedList: View {
 
 #if DEBUG
 #Preview {
-    @Previewable @State var pet = Pet.preview
-
-    FeedList(pet: $pet)
+    FeedList(pet: .preview)
         .modelContainer(DataController.previewContainer)
 
 }
