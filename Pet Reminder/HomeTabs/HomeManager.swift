@@ -69,7 +69,7 @@ struct HomeManager: View {
             }
 
             // FIND VET TAB
-            Tab(value: PetReminderTabs.vet, role: .search) {
+            Tab(value: PetReminderTabs.vet, role: .prominent) {
                 NavigationStack(path: $vetPath) {
                     FindVet()
                 }

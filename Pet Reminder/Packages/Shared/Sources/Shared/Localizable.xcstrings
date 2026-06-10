@@ -630,6 +630,23 @@
         }
       }
     },
+    "Evening Selected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evening is selected"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akşam seçildi"
+          }
+        }
+      }
+    },
     "event_no_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1005,6 +1022,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dostlarını Yönet"
+          }
+        }
+      }
+    },
+    "Morning and Evening Selected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning & Evening are selected"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah ve Akşam seçildi"
+          }
+        }
+      }
+    },
+    "Morning Selected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning is selected"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah seçildi"
           }
         }
       }
@@ -1497,6 +1548,12 @@
     },
     "Pulvarin" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulvarin"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

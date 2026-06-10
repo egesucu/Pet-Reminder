@@ -313,6 +313,23 @@
         }
       }
     },
+    "All needs complete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All needs complete"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm ihtiyaçlar tamamlandı"
+          }
+        }
+      }
+    },
     "All Notifications" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -842,6 +859,23 @@
         }
       }
     },
+    "Evening feed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evening feed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akşam öğünü"
+          }
+        }
+      }
+    },
     "event_error_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1168,6 +1202,23 @@
         }
       }
     },
+    "History" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçmiş"
+          }
+        }
+      }
+    },
     "home_tab_title" : {
       "comment" : "HOME",
       "extractionState" : "manual",
@@ -1338,6 +1389,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Şununla Aç"
+          }
+        }
+      }
+    },
+    "Morning feed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning feed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah öğünü"
           }
         }
       }
@@ -1907,22 +1975,6 @@
         }
       }
     },
-    "pet_breed_not_defined" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Not Defined"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tanımlanmadı"
-          }
-        }
-      }
-    },
     "pet_breed_title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2264,6 +2316,40 @@
         }
       }
     },
+    "Review feeding records" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review feeding records"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beslenme kayıtlarını incele"
+          }
+        }
+      }
+    },
+    "Review vaccine records" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review vaccine records"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aşı kayıtlarını incele"
+          }
+        }
+      }
+    },
     "Save" : {
       "comment" : "A button to save data.",
       "extractionState" : "manual",
@@ -2502,6 +2588,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bugün"
+          }
+        }
+      }
+    },
+    "Today's care" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's care"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugünkü bakım"
           }
         }
       }

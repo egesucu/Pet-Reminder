@@ -42,5 +42,10 @@ extension Image {
             .scaledToFit()
             .frame(width: width)
             .clipShape(.circle)
+            .overlay {
+                Circle()
+                    .stroke(.white, lineWidth: 3)
+            }
+            .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
     }
 }
