@@ -14,12 +14,12 @@ struct PetImageSelection: View {
     @Binding var model: AddPet.Model
 
     var body: some View {
-        ScrollView {
-            VStack {
-                Text(.petKindText)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-
+        VStack(alignment: .leading) {
+            Text(.petKindText)
+                .font(.headline)
+                .foregroundStyle(.primary)
+            
+            VStack(alignment: .center) {
                 Picker(selection: $model.kind) {
                     ForEach(Kind.allCases, id: \.self) { kind in
                         Text(verbatim: kind.localizedName)
@@ -36,10 +36,11 @@ struct PetImageSelection: View {
                     photoData: $model.selectedImageData
                 )
                     .padding(.vertical)
-                Text(.photoUploadDetailTitle)
-                    .foregroundStyle(Color.label)
-                    .font(.footnote)
             }
+
+            Text(.photoUploadDetailTitle)
+                .foregroundStyle(Color.label)
+                .font(.footnote)
         }
     }
 
@@ -50,7 +51,7 @@ struct PetImageSelection: View {
 
 // MARK: - Subviews
 private extension PetImageSelection {
-    @ViewBuilder var petImage: some View {
+    @ContentBuilder var petImage: some View {
         if let data = model.selectedImageData,
            let selectedImage = UIImage(data: data) {
             preview(for: selectedImage)
@@ -83,6 +84,8 @@ private extension PetImageSelection {
 #if DEBUG
 #Preview {
     @Previewable @State var model: AddPet.Model = .init()
+    
     PetImageSelection(model: $model)
+        .padding(.horizontal)
 }
 #endif

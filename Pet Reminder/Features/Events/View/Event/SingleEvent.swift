@@ -32,7 +32,7 @@ struct SingleEvent: View {
         }
     }
 
-    @ViewBuilder
+    @ContentBuilder
     private func allDayEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
             RoundedRectangle(cornerRadius: .spacing4 / 2)
@@ -54,7 +54,7 @@ struct SingleEvent: View {
         }
     }
 
-    @ViewBuilder
+    @ContentBuilder
     private func futureEvent(event: EKEvent) -> some View {
         if Calendar.current.isDateInToday(event.startDate) {
             Text(event.startDate.formatted(.dateTime.hour().minute()))

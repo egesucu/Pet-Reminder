@@ -38,7 +38,7 @@ class NotificationManager {
 
     typealias AuthorizationStatusProvider = () async -> UNAuthorizationStatus
 
-    enum AuthorizationStatus: String {
+    enum AuthorizationStatus: String, Equatable {
         case authorized
         case denied
         case notDetermined

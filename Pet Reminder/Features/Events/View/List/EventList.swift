@@ -46,7 +46,7 @@ struct EventList: View {
         await eventManager.reloadEvents()
     }
     
-    @ViewBuilder var eventNotAllowed: some View {
+    @ContentBuilder var eventNotAllowed: some View {
         ContentUnavailableView {
             Label {
                 Text(.eventErrorTitle)
@@ -60,7 +60,7 @@ struct EventList: View {
         }
     }
     
-    @ViewBuilder var wrongTypeError: some View {
+    @ContentBuilder var wrongTypeError: some View {
         ContentUnavailableView {
             Label {
                 Text(.eventErrorTitle)
@@ -74,7 +74,7 @@ struct EventList: View {
         }
     }
     
-    @ToolbarContentBuilder var eventToolBar: some ToolbarContent {
+    @ContentBuilder var eventToolBar: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: toggleAddEvent) {
                 Label {

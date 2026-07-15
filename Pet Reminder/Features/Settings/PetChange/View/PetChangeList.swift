@@ -66,7 +66,7 @@ struct PetChangeList: View {
         }
     }
 
-    @ViewBuilder
+    @ContentBuilder
     private var petList: some View {
         LazyVGrid(columns: [.init(), .init()]) {
             ForEach(pets, id: \.name) { pet in

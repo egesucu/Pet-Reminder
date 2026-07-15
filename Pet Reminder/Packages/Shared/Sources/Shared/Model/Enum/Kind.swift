@@ -15,7 +15,7 @@ public enum Kind: String {
     case cat, dog, fish, bird, other
 }
 
-extension Kind: CaseIterable, Codable {}
+extension Kind: CaseIterable, Codable, Equatable {}
 
 extension Kind {
     public var localizedName: String {

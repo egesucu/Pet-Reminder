@@ -57,7 +57,7 @@ struct AddEvent: View {
         }
     }
 
-    @ViewBuilder
+    @ContentBuilder
     func eventDateView() -> some View {
         if allDay {
             DatePicker(selection: $startDate, displayedComponents: .date) {
@@ -74,7 +74,7 @@ struct AddEvent: View {
         }
     }
 
-    @ToolbarContentBuilder
+    @ContentBuilder
     func addEventToolbar() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             cancelButton()

@@ -14,34 +14,31 @@ struct NotificationSelect: View {
     @Binding var model: AddPet.Model
         
     var body: some View {
-        ScrollView {
-            VStack(spacing: .spacing20) {
-                Text(.feedTimeTitle)
-                    .font(.title3)
-                    .bold()
-                    .foregroundStyle(Color.label)
-                    .animation(.easeOut(duration: 0.8), value: model.feedSelection)
-
-                Picker(
-                    selection: $model.feedSelection,
-                    label: Text(.feedTimeTitle)
-                ) {
-                    ForEach(FeedSelection.allCases, id: \.description) {
-                        Text($0.localized)
-                            .tag($0)
-                    }
-                }
-                .pickerStyle(.segmented)
+        VStack(alignment: .leading, spacing: .spacing20) {
+            Text(.feedTimeTitle)
+                .font(.headline)
+                .foregroundStyle(Color.label)
                 .animation(.easeOut(duration: 0.8), value: model.feedSelection)
-                
-                notificationType
+
+            Picker(
+                selection: $model.feedSelection,
+                label: Text(.feedTimeTitle)
+            ) {
+                ForEach(FeedSelection.allCases, id: \.description) {
+                    Text($0.localized)
+                        .tag($0)
+                }
             }
+            .pickerStyle(.segmented)
+            .animation(.easeOut(duration: 0.8), value: model.feedSelection)
+            
+            notificationType
         }
     }
 }
 
 private extension NotificationSelect {
-    @ViewBuilder var notificationType: some View {
+    @ContentBuilder var notificationType: some View {
         switch model.feedSelection {
         case .morning:
             morningView
@@ -103,6 +100,8 @@ private extension NotificationSelect {
 #if DEBUG
 #Preview {
     @Previewable @State var model: AddPet.Model = .init()
+    
     NotificationSelect(model: $model)
+        .padding(.horizontal)
 }
 #endif

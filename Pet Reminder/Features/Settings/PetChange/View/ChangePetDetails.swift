@@ -58,7 +58,7 @@ struct ChangePetDetails: View {
         }
     }
 
-    @ViewBuilder
+    @ContentBuilder
     func petImageView(_ pet: Pet) -> some View {
         HStack {
             if let photo = manager.petImage {
@@ -104,7 +104,7 @@ struct ChangePetDetails: View {
         }
     }
 
-    @ViewBuilder
+    @ContentBuilder
     func petDetailView(_ pet: Pet) -> some View {
         ScrollView {
             petImageView(pet)
@@ -175,7 +175,7 @@ struct ChangePetDetails: View {
         }
     }
 
-    @ToolbarContentBuilder
+    @ContentBuilder
     func toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button(action: save) {
@@ -216,7 +216,7 @@ struct ChangePetDetails: View {
         }
     }
 
-    @ViewBuilder var notificationDetailsView: some View {
+    @ContentBuilder var notificationDetailsView: some View {
         switch manager.selection {
         case .both:
             morningView

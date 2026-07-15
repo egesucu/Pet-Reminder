@@ -28,7 +28,7 @@ struct VaccineHistory: View {
     /// Returns a formatted view representing a single vaccine entry.
     /// - Parameter vaccine: A Vaccine object to display.
     /// - Returns: A view showing the vaccine's name and date.
-    @ViewBuilder
+    @ContentBuilder
     func vaccineView(_ vaccine: Vaccine) -> some View {
         VStack(alignment: .leading, spacing: .spacing8) {
             Label(vaccine.name, systemImage: "syringe.fill")
@@ -63,7 +63,7 @@ struct VaccineHistory: View {
     }
 
     /// Builds toolbar items for adding vaccines.
-    @ToolbarContentBuilder func vaccineToolbars() -> some ToolbarContent {
+    @ContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button(role: .confirm, action: addVaccine) {
                 Image(systemName: "plus")

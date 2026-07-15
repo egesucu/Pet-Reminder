@@ -14,27 +14,23 @@ struct PetBirthday: View {
     @Binding var model: AddPet.Model
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: .spacing20) {
-                Text(.birthdayAskLabel)
-                    .font(.title2)
+        VStack(alignment: .leading, spacing: .spacing20) {
+            Text(.birthdayAskLabel)
+                .font(.headline)
+                .foregroundStyle(Color.label)
+            
+            DatePicker(
+                String(localized: .birthdayTitle),
+                selection: $model.birthday,
+                displayedComponents: .date
+            )
+            .labelsHidden()
+            .tint(.green)
+            
+            VStack(alignment: .center, spacing: .spacing20) {
+                Text(.birthdayInformation)
+                    .font(.caption2)
                     .foregroundStyle(Color.label)
-                    .bold()
-                
-                DatePicker(
-                    String(localized: .birthdayTitle),
-                    selection: $model.birthday,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.graphical)
-                .tint(.green)
-                
-                VStack(alignment: .center, spacing: .spacing20) {
-                    Text(.birthdayInformation)
-                        .font(.caption2)
-                        .foregroundStyle(Color.label)
-                        .multilineTextAlignment(.center)
-                }
             }
         }
     }
@@ -43,6 +39,8 @@ struct PetBirthday: View {
 #if DEBUG
 #Preview {
     @Previewable @State var model: AddPet.Model = .init()
+    
     PetBirthday(model: $model)
+        .padding(.horizontal)
 }
 #endif

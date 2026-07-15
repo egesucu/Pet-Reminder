@@ -13,87 +13,88 @@ import OSLog
 import Shared
 
 struct PetNameTextField: View {
-    @Query var pets: [Pet]
+    @Environment(\.modelContext) private var modelContext
+
+    @Query private var pets: [Pet]
     
     @Binding var model: AddPet.Model
 
     @FocusState var isFocused
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: .spacing16) {
-                Text(.startNameLabel)
-                    .foregroundStyle(Color.label)
-                    .font(.title2)
-                    .bold()
-
-                TextField(
-                    Strings.doggo,
-                    text: $model.name
-                )
-                .focused($isFocused)
+        VStack(alignment: .leading, spacing: .spacing16) {
+            Text(.startNameLabel)
                 .foregroundStyle(Color.label)
-                .font(.title)
-                .padding()
-                .autocorrectionDisabled()
-                .multilineTextAlignment(.center)
-                .textInputAutocapitalization(.words)
-                .onChange(of: model.name) {
-                    check(name: model.name)
-                }
-                .task {
-                    check(name: model.name)
-                }
-                .background(
-                    Rectangle()
-                        .fill(
-                            isFocused ? .accent
-                                .opacity(0.2) :
-                                Color
-                                    .black
-                                    .opacity(0.1)
+                .font(.headline)
 
-                        )
-                        .animation(.easeInOut, value: isFocused)
-                        .clipShape(.rect(cornerRadius: .radius10))
-                )
-
-                if model.petExists {
-                    Text(.petExists)
-                        .foregroundStyle(.red)
-                        .font(.footnote)
-                        .bold()
-                }
-
-                Text(.petFact)
-                    .font(.footnote)
-                    .italic()
-                    .lineLimit(20)
+            TextField(
+                Strings.doggo,
+                text: $model.name
+            )
+            .focused($isFocused)
+            .foregroundStyle(Color.label)
+            .font(.title)
+            .padding()
+            .autocorrectionDisabled()
+            .multilineTextAlignment(.center)
+            .textInputAutocapitalization(.words)
+            .onChange(of: model.name) {
+                check(name: model.name)
             }
+            .task {
+                check(name: model.name)
+            }
+            .background(
+                Rectangle()
+                    .fill(
+                        isFocused ? .accent
+                            .opacity(0.2) :
+                            Color
+                                .black
+                                .opacity(0.1)
+
+                    )
+                    .animation(.easeInOut, value: isFocused)
+                    .clipShape(.rect(cornerRadius: .radius10))
+            )
+
+            if model.petExists {
+                Text(.petExists)
+                    .foregroundStyle(.red)
+                    .font(.footnote)
+                    .bold()
+            }
+
+            Text(.petFact)
+                .font(.footnote)
+                .italic()
+                .lineLimit(20)
         }
     }
+    
 
     private func check(name: String) {
-        let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        Logger.pets.info("Name is: \(removedSpaceName)")
+        let cleanedName = Pet.cleanedName(for: name)
+        Logger.pets.info("Name is: \(cleanedName)")
 
-        model.nameIsValid = removedSpaceName.isNotEmpty
+        model.nameIsValid = cleanedName.isNotEmpty
 
-        guard removedSpaceName.isNotEmpty else {
+        guard cleanedName.isNotEmpty else {
             model.petExists = false
             return
         }
 
-        let normalizedInput = removedSpaceName
-            .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
-            .lowercased()
+        model.petExists = exactNameExists(cleanedName) || pets.contains { existingPet in
+            existingPet.hasNameMatching(cleanedName)
+        }
+    }
 
-        model.petExists = pets.contains { existingPet in
-            let normalizedExisting = existingPet.name
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
-                .lowercased()
-            return normalizedExisting == normalizedInput
+    private func exactNameExists(_ name: String) -> Bool {
+        do {
+            return try modelContext.fetchCount(Pet.exactNameFetchDescriptor(for: name)) > 0
+        } catch {
+            Logger.pets.error("Could not check existing pet name: \(error.localizedDescription)")
+            return false
         }
     }
 }
