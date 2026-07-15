@@ -22,7 +22,7 @@ class PetDataManager {
         case failed
     }
 
-    enum PhotoMode {
+    enum PhotoMode: Equatable {
         case none
         case some(data: Data?)
     }

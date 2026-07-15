@@ -92,6 +92,31 @@ public enum PetSchemaV4: VersionedSchema {
 }
 
 public extension Pet {
+    static func cleanedName(for name: String) -> String {
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    static func normalizedName(for name: String) -> String {
+        cleanedName(for: name)
+            .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
+            .lowercased()
+    }
+
+    static func exactNameFetchDescriptor(for name: String) -> FetchDescriptor<Pet> {
+        let cleanedName = cleanedName(for: name)
+        var descriptor = FetchDescriptor<Pet>(
+            predicate: #Predicate<Pet> { pet in
+                pet.name == cleanedName
+            }
+        )
+        descriptor.fetchLimit = 1
+        return descriptor
+    }
+
+    func hasNameMatching(_ name: String) -> Bool {
+        Self.normalizedName(for: self.name) == Self.normalizedName(for: name)
+    }
+
     @MainActor static var preview: Pet {
         let firstPet = previews.first ?? .init(
             birthday: .now,

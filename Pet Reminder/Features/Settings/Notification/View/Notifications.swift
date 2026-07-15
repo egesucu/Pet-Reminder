@@ -39,7 +39,7 @@ struct Notifications: View {
 // MARK: - Helper UI
 private extension Notifications {
     
-    @ViewBuilder
+    @ContentBuilder
     func noPets() -> some View {
         if pets.isEmpty {
             ContentUnavailableView(
@@ -49,7 +49,7 @@ private extension Notifications {
         }
     }
     
-    @ToolbarContentBuilder
+    @ContentBuilder
     func removePets() -> some ToolbarContent {
         if pets.isNotEmpty {
             ToolbarItem(placement: .destructiveAction) {

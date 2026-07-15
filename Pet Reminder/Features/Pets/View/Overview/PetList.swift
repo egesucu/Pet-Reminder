@@ -43,7 +43,7 @@ struct PetList: View {
             }
     }
     
-    @ViewBuilder var list: some View {
+    @ContentBuilder var list: some View {
         if pets.isEmpty {
             noPetAdded
         } else {
@@ -106,13 +106,13 @@ struct PetList: View {
         }
     }
     
-    @ViewBuilder
+    @ContentBuilder
     func addPetView() -> some View {
         AddPet()
             .notification(notificationManager)
     }
 
-    @ViewBuilder
+    @ContentBuilder
     func managePetView() -> some View {
         ChangePetDetails(pet: $managedPet)
             .presentationCornerRadius(.sheetCornerRadius25)
@@ -154,7 +154,7 @@ struct PetList: View {
         )
     }
     
-    @ToolbarContentBuilder
+    @ContentBuilder
     func topActions() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             if pets.isNotEmpty {

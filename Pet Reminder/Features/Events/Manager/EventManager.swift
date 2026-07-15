@@ -36,11 +36,17 @@ class EventManager {
 
     // MARK: - Properties
 
-    var events: [EKEvent] = []
+    var events: [EKEvent] = [] {
+        didSet { updateFilteredEvents() }
+    }
     var calendars: [EventCalendar] = []
-    var selectedCalendar: EventCalendar?
+    var selectedCalendar: EventCalendar? {
+        didSet { updateFilteredEvents() }
+    }
     var petCalendar: EventCalendar?
     var status: Status = .notDetermined
+    private(set) var todaysEvents: [EKEvent] = []
+    private(set) var futureEvents: [EKEvent] = []
 
     // MARK: - Demo & Mock Data
 
@@ -70,7 +76,7 @@ class EventManager {
         }
     }
 
-    enum Status: String {
+    enum Status: String, Equatable {
         case authorized
         case readOnly
         case denied
@@ -99,6 +105,7 @@ class EventManager {
             events = EventManager.Demo.exampleEvents
             status = .authorized
             selectedCalendar = nil
+            updateFilteredEvents()
         } else {
             Task { [weak self] in
                 guard let self else { return }
@@ -145,6 +152,24 @@ class EventManager {
         } else {
             return String.formatEventDateTime(current: false, allDay: event.isAllDay, event: event)
         }
+    }
+
+    private func updateFilteredEvents() {
+        todaysEvents = events.filter { event in
+            Calendar.current.isDateInToday(event.startDate) && eventMatchesSelectedCalendar(event)
+        }
+
+        futureEvents = events.filter { event in
+            Calendar.current.isDateLater(date: event.startDate) && eventMatchesSelectedCalendar(event)
+        }
+    }
+
+    private func eventMatchesSelectedCalendar(_ event: EKEvent) -> Bool {
+        guard let selectedCalendar else {
+            return true
+        }
+
+        return event.calendar.title == selectedCalendar.title
     }
 
     func fetchCalendars() async {

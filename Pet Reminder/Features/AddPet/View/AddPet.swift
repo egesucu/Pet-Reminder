@@ -13,13 +13,6 @@ import Shared
 
 struct AddPet: View {
 
-    enum Step: Hashable, CaseIterable {
-        case name
-        case birthday
-        case kindAndImage
-        case notifications
-    }
-    
     @Environment(\.notification) private var notificationManager: NotificationManager
 
     @Environment(\.modelContext) private var modelContext
@@ -29,28 +22,21 @@ struct AddPet: View {
     @State private var pet: Pet = .init()
     @State private var model: Model = .init()
 
-    // Navigation
-    @State private var path: [Step] = [] // empty path = first step
-
-    private var currentStep: Step {
-        path.last ?? .name
-    }
-    
-    private var currentStepIndex: Int {
-        Step.allCases.firstIndex(of: currentStep) ?? 0
-    }
-
-    private var progressValue: Double {
-        Double(currentStepIndex + 1)
-    }
-
     var body: some View {
         NavigationStack {
-            stepContainer
+            ScrollView {
+                VStack(alignment: .leading, spacing: .spacing24) {
+                    PetNameTextField(model: $model)
+                    PetBirthday(model: $model)
+                    PetImageSelection(model: $model)
+                    NotificationSelect(model: $model)
+                    saveButton
+                }
+                .padding(.horizontal)
                 .navigationTitle(.addPet)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden(true)
-                .toolbar { leadingToolbar; trailingNextOrSave }
+                .toolbar { leadingToolbar }
+            }
         }
         .sensoryFeedback(.error, trigger: model.saveState == .failure)
         .sensoryFeedback(.success, trigger: model.saveState == .success)
@@ -68,7 +54,9 @@ struct AddPet: View {
             .tint(Color.red)
             Button(.retry) {
                 model.saveState = .none
-                save()
+                Task {
+                    await persistPet()
+                }
             }
             .tint(Color.label)
         }
@@ -82,9 +70,6 @@ struct AddPet: View {
             }
             .tint(Color.label)
         }
-        .overlay(alignment: .top) {
-            progressView
-        }
     }
 }
 
@@ -95,7 +80,7 @@ extension AddPet {
     class Model {
         
         /// Tracks the result of a save attempt.
-        enum SaveState {
+        enum SaveState: Equatable {
             case none, success, failure
         }
         
@@ -150,132 +135,51 @@ extension AddPet {
     }
 }
 
-
-// MARK: - Subviews
-private extension AddPet {
-    var stepContainer: some View {
-        stepView(for: currentStep)
-            .padding(.horizontal, .spacing20)
-            .id(currentStep)
-            .animation(.default, value: currentStep)
-    }
-
-    @ViewBuilder
-    func stepView(for step: Step) -> some View {
-        switch step {
-        case .name:
-            PetNameTextField(model: $model)
-        case .birthday:
-            PetBirthday(model: $model)
-        case .kindAndImage:
-            PetImageSelection(model: $model)
-        case .notifications:
-            NotificationSelect(model: $model)
-        }
-    }
-    
-    var progressView: some View {
-        HStack {
-            Spacer()
-            ProgressView(value: progressValue, total: Double(Step.allCases.count))
-                .tint(.label)
-                .frame(width: .customProgressWidth)
-                .animation(.spring(), value: progressValue)
-            Spacer()
-        }
-        .offset(y: progressOffset)
-    }
-    
-    var progressOffset: CGFloat {
-        switch UIDevice.current.orientation {
-        case .landscapeLeft, .landscapeRight:
-                .customProgressOffset - 10
-        case .portrait, .portraitUpsideDown:
-                .customProgressOffset
-        default:
-                .customProgressOffset
-        }
-    }
-}
-
 // MARK: - Toolbars
 private extension AddPet {
-    @ToolbarContentBuilder
+    @ContentBuilder
     var leadingToolbar: some ToolbarContent {
-        if currentStep == .name {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(role: .cancel, action: dismiss.callAsFunction) {
-                    Image(systemName: "xmark")
-                        .foregroundStyle(.red)
-                }
-            }
-        } else {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    _ = path.popLast()
-                } label: {
-                    Label(.back, systemImage: "chevron.left")
-                }
+        ToolbarItem(placement: .cancellationAction) {
+            Button(role: .cancel, action: dismiss.callAsFunction) {
+                Image(systemName: "xmark")
+                    .foregroundStyle(.red)
             }
         }
     }
 
-    @ToolbarContentBuilder
-    var trailingNextOrSave: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                if currentStep == .notifications {
-                    save()
-                } else {
-                    goNext()
-                }
-            } label: {
-                if currentStep == .notifications {
-                    Text(.save)
-                } else {
-                    Label(.next, systemImage: "arrow.right")
+    @ContentBuilder
+    var saveButton: some View {
+        HStack {
+            Spacer()
+            
+            Button(.save, systemImage: "square.and.arrow.down.fill", role: .confirm) {
+                Task {
+                    await persistPet()
                 }
             }
-            .disabled(currentStep == .name && !model.petCanBeSaved)
+            .buttonStyle(.glassProminent)
+            .tint(.accent)
+            .disabled(!model.petCanBeSaved)
+            
+            Spacer()
         }
     }
 }
 
 // MARK: - Actions
 private extension AddPet {
-    // MARK: - Nav helpers
-
-    func goNext() {
-        switch currentStep {
-        case .name:
-            path.append(.birthday)
-        case .birthday:
-            path.append(.kindAndImage)
-        case .kindAndImage:
-            path.append(.notifications)
-        case .notifications:
-            break
-        }
-    }
 
     // MARK: - Save
 
-    func save() {
-        Task {
-            await persistPet()
-        }
-    }
-
     func persistPet() async {
-        pet.name = pet.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanedName = Pet.cleanedName(for: model.name)
 
-        guard model.petCanBeSaved, model.name.isNotEmpty else {
-            // bounce back to first step if somehow reached here
-            path = []
+        guard model.petCanBeSaved, cleanedName.isNotEmpty else {
             return
         }
 
-        pet.name = model.name
+        model.name = cleanedName
+        pet.name = cleanedName
         pet.kind = model.kind
         pet.birthday = model.birthday
         pet.feedSelection = model.feedSelection
@@ -293,8 +197,6 @@ private extension AddPet {
         } catch {
             Logger.pets.error("Could not save the pet: \(error.localizedDescription)")
             model.saveState = .failure
-            // Optionally take user back to name step to fix duplicates
-            path = []
         }
     }
 
@@ -314,8 +216,7 @@ private extension AddPet {
 }
 
 private extension CGFloat {
-    static let customProgressWidth: Self = 80
-    static let customProgressOffset: Self = 80
+    static let customProgressOffset: Self = 30
 }
 
 #if DEBUG
