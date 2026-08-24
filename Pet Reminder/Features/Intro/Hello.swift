@@ -80,9 +80,34 @@ private extension CGFloat {
 
 #if DEBUG
 
-#Preview {
+#Preview("English") {
     Hello()
         .notification(NotificationManager.shared)
+        .environment(\.locale, .init(identifier: "en"))
+}
+
+#Preview("German") {
+    Hello()
+        .notification(NotificationManager.shared)
+        .environment(\.locale, .init(identifier: "de"))
+}
+
+#Preview("Spanish") {
+    Hello()
+        .notification(NotificationManager.shared)
+        .environment(\.locale, .init(identifier: "es"))
+}
+
+#Preview("Italian") {
+    Hello()
+        .notification(NotificationManager.shared)
+        .environment(\.locale, .init(identifier: "it"))
+}
+
+#Preview("Turkish") {
+    Hello()
+        .notification(NotificationManager.shared)
+        .environment(\.locale, .init(identifier: "tr"))
 }
 
 #endif
