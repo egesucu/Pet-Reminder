@@ -90,14 +90,17 @@ private extension MapItem {
     func handleThirdPartyMap(location: Pin, application: MapApplication) {
         guard let deeplinkURL = application.deeplinkURL else { return }
 
-        let urlToOpen: URL?
-        if UIApplication.shared.canOpenURL(deeplinkURL) {
-            urlToOpen = application.destinationURL(
+
+        var urlToOpen: URL?
+
+        UIApplication.shared.open(deeplinkURL) { success in
+
+            urlToOpen = success
+            ? application.destinationURL(
                 latitude: location.latitude,
                 longitude: location.longitude
             )
-        } else {
-            urlToOpen = application.appStoreURL
+            : application.appStoreURL
         }
 
         if let urlToOpen {
