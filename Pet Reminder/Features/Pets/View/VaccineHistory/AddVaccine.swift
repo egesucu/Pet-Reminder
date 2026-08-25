@@ -40,7 +40,7 @@ struct AddVaccine: View {
                 DatePicker(.vaccineDateLabel, selection: $vaccineDate)
                     .bold()
             }
-            .navigationTitle(Text(.vaccinesTitle))
+            .navigationTitle(Text(.addVaccine))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
