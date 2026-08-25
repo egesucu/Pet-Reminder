@@ -23,6 +23,12 @@
             "value" : "Pet Reminder"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet Reminder"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -58,6 +64,12 @@
             "value" : "Necesitamos este permiso para leer y modificar el calendario y los eventos."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous avons besoin de cette autorisation pour consulter et modifier votre calendrier et vos événements."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -91,6 +103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Necesitamos este permiso para mostrarte veterinarios cercanos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous avons besoin de cette autorisation pour vous montrer les vétérinaires à proximité."
           }
         },
         "it" : {
