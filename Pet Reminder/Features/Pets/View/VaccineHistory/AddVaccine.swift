@@ -26,21 +26,33 @@ struct AddVaccine: View {
     /// The date selected for the new vaccine (defaults to now).
     @State private var vaccineDate = Date.now
 
+    var isVaccineEmpty: Bool {
+        vaccineName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     /// The main UI with fields for vaccine name, date, and a button to save the record.
     var body: some View {
-        VStack(spacing: .spacing16) {
-            TextField(.vaccineTitleLabel, text: $vaccineName)
-                .bold()
-            DatePicker(.vaccineDateLabel, selection: $vaccineDate)
-                .bold()
-            Button(role: .confirm, action: saveVaccine) {
-                Text(.save)
-                    .font(.title)
+        NavigationStack {
+            VStack(spacing: .spacing16) {
+                TextField(.vaccineTitleLabel, text: $vaccineName)
+                    .textFieldStyle(.outlined)
+                    .bold()
+                DatePicker(.vaccineDateLabel, selection: $vaccineDate)
+                    .bold()
             }
-            .buttonStyle(.glassProminent)
-            .tint(.accent)
-            .disabled(vaccineName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            .navigationTitle(Text(.vaccinesTitle))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(role: .confirm, action: saveVaccine) {
+                        Text(.save)
+                    }
+                    .tint(.accent)
+                    .disabled(isVaccineEmpty)
+                }
+            }
         }
+
         .padding()
     }
 
@@ -63,18 +75,47 @@ struct AddVaccine: View {
 /// Preview for AddVaccineView with an empty vaccine name.
 #Preview("Add Vaccine", traits: .fixedLayout(width: 400, height: 200)) {
     @Previewable @State var vaccineName = String.empty
+    @Previewable @State var showSheet = true
 
-    AddVaccine(pet: .preview, vaccineName: $vaccineName)
-        .modelContainer(DataController.previewContainer)
-        .background(Color.red.opacity(0.2)) // Preview Heights
+    Rectangle()
+        .fill(Color.gray)
+        .sheet(isPresented: $showSheet) {
+            AddVaccine(pet: .preview, vaccineName: $vaccineName)
+                .modelContainer(DataController.previewContainer)
+                .presentationDetents([.fraction(.compactFraction)])
+        }
 }
 
 /// Preview for AddVaccineView with a pre-filled vaccine name.
 #Preview("Add Vaccine w Text", traits: .fixedLayout(width: 400, height: 200)) {
     @Previewable @State var vaccineName = "Pulvarin"
+    @Previewable @State var showSheet = true
 
-    AddVaccine(pet: .preview, vaccineName: $vaccineName)
-        .modelContainer(DataController.previewContainer)
-        .background(Color.red.opacity(0.2)) // Preview Heights
+    Rectangle()
+        .fill(Color.gray)
+        .sheet(isPresented: $showSheet) {
+            AddVaccine(pet: .preview, vaccineName: $vaccineName)
+                .modelContainer(DataController.previewContainer)
+                .presentationDetents([.fraction(.compactFraction)])
+        }
 }
 #endif
+
+
+struct OutlinedTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding()
+            .overlay {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(Color(UIColor.systemGray4), lineWidth: 2)
+            }
+    }
+}
+
+extension TextFieldStyle where Self == OutlinedTextFieldStyle {
+
+    internal static var outlined: OutlinedTextFieldStyle {
+        OutlinedTextFieldStyle()
+    }
+}

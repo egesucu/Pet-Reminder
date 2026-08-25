@@ -56,7 +56,10 @@ struct VaccineHistory: View {
         }
         .toolbar(content: vaccineToolbars)
         .navigationTitle(Text(.vaccineHistoryTitle))
-        .sheet(isPresented: $shouldAddVaccine) {
+        .sheet(
+            isPresented: $shouldAddVaccine,
+            onDismiss: clearVaccineName
+        ) {
             AddVaccine(pet: pet, vaccineName: $vaccineName)
                 .presentationDetents([.fraction(.compactFraction)])
         }
@@ -77,6 +80,10 @@ struct VaccineHistory: View {
     /// Presents the Add Vaccine sheet when called.
     private func addVaccine() {
         shouldAddVaccine.toggle()
+    }
+
+    private func clearVaccineName() {
+        vaccineName = .empty
     }
 
     /// Deletes vaccines at the provided offsets from the pet's vaccine list.
