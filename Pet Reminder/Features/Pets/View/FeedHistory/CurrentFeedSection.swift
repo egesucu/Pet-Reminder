@@ -2,76 +2,31 @@
 //  CurrentFeedSection.swift
 //  Pet Reminder
 //
-//  Created by Ege Sucu on 31.08.2023.
-//  Copyright © 2023 Ege Sucu. All rights reserved.
+//  Created by Ege Sucu on 26.08.2026.
+//  Copyright © 2026 Ege Sucu. All rights reserved.
 //
 
 import SwiftUI
-import SwiftData
 import Shared
 
 struct CurrentFeedSection: View {
-
-    var feeds: [Feed]?
-
-    var filteredFeeds: [Feed] {
-        feeds?
-            .filter {
-                if let date =  $0.feedDate {
-                    return Calendar.current.isDateInToday(date)
-                }
-                return false
-            } ?? []
-    }
+    let record: FeedDayRecord?
 
     var body: some View {
-        if filteredFeeds.isEmpty {
-            Text(.noFeedTodayContent)
-        } else {
-            ForEach(filteredFeeds, id: \.id) { feed in
-                if let morning = feed.morningFedStamp {
-                    HStack {
-                        Row(
-                            imageName: "sun.max.fill",
-                            content: morning.formatted(
-                                date: .abbreviated,
-                                time: .shortened
-                            ),
-                            type: .morning
-                        )
-                        Spacer()
-                    }
-                }
-                if let evening = feed.eveningFedStamp {
-                    HStack {
-                        Spacer()
-                        Row(
-                            imageName: "moon.circle.fill",
-                            content: evening.formatted(
-                                date: .abbreviated,
-                                time: .shortened
-                            ),
-                            type: .evening
-                        )
-                    }
-                }
+        VStack(alignment: .leading, spacing: .spacing12) {
+            Text("TODAY", comment: "Heading for today's feeding history section.")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+            if let record {
+                FeedDayCard(record: record, showsRelativeDate: true)
+            } else {
+                FeedHistoryEmptyState(
+                    systemImage: "fork.knife.circle",
+                    title: "No feeds recorded today",
+                    message: "Completed feeds will appear here."
+                )
             }
-            .padding(.horizontal)
         }
     }
 }
-
-#if DEBUG
-#Preview {
-    let today = Date.now
-    let feed = Feed(
-        eveningFed: true,
-        eveningFedStamp: today,
-        feedDate: today,
-        morningFed: true,
-        morningFedStamp: today
-    )
-    CurrentFeedSection(feeds: [feed])
-        .modelContainer(DataController.previewContainer)
-}
-#endif
