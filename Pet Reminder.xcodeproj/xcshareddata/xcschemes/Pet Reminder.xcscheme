@@ -70,6 +70,9 @@
          identifier = "../../Pet Reminder/Utilities/Ankara.gpx"
          referenceType = "0">
       </LocationScenarioReference>
+      <StoreKitConfigurationFileReference
+         identifier = "../../Pet Reminder/Utilities/StoreConfiguration.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

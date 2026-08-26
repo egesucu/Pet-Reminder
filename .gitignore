@@ -33,3 +33,4 @@ fastlane/test_output
 # Other
 .idea/
 *.xcscmblueprint
+AppStore

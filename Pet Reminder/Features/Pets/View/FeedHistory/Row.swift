@@ -9,24 +9,32 @@
 import SwiftUI
 import Shared
 
-struct Row: View {
-    var imageName: String
-    var content: String
-    var type: NotificationType
+struct FeedDayCard: View {
+    let record: FeedDayRecord
+    let showsRelativeDate: Bool
 
     var body: some View {
-        HStack(alignment: .center, spacing: .spacing8) {
-            Image(systemName: imageName)
-                .font(.system(size: .icon24))
-            Text(content)
-        }
-        .bold()
-        .foregroundStyle(.white)
-        .padding(.spacing16)
-        .glassEffect(
-            .regular.tint(
-                type == .morning ? .yellow  : .blue
+        VStack(alignment: .leading, spacing: .spacing12) {
+            FeedDayHeader(
+                date: record.date,
+                completedCount: record.completedCount,
+                showsRelativeDate: showsRelativeDate
             )
+
+            Divider()
+
+            if let morningTime = record.morningTime {
+                FeedRecordRow(type: .morning, time: morningTime)
+            }
+
+            if let eveningTime = record.eveningTime {
+                FeedRecordRow(type: .evening, time: eveningTime)
+            }
+        }
+        .padding(.spacing16)
+        .background(
+            RoundedRectangle(cornerRadius: .radius16)
+                .fill(Color(uiColor: .secondarySystemGroupedBackground))
         )
     }
 }
@@ -67,7 +75,7 @@ private struct FeedDayHeader: View {
     }
 }
 
-struct Row: View {
+private struct FeedRecordRow: View {
     let type: NotificationType
     let time: Date
 
@@ -98,7 +106,7 @@ struct Row: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.secondary)
         }
-        .padding(.vertical, .spacing8)
+        .padding(.vertical, .spacing4)
         .accessibilityElement(children: .combine)
     }
 
