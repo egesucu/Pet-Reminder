@@ -11,14 +11,17 @@ import Shared
 
 struct FeedHistory: View {
     let feeds: [Feed]?
+    let feedSelection: FeedSelection
 
-    @State private var todayRecord: FeedDayRecord?
-    @State private var previousRecords: [FeedDayRecord] = []
+    init(feeds: [Feed]?, feedSelection: FeedSelection = .both) {
+        self.feeds = feeds
+        self.feedSelection = feedSelection
+    }
 
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: .spacing24) {
-                FeedInsightsSection(records: allRecords)
+                FeedInsightsSection(records: records, feedSelection: feedSelection)
                 CurrentFeedSection(record: todayRecord)
                 PreviousFeedsSection(records: previousRecords)
             }
@@ -29,15 +32,18 @@ struct FeedHistory: View {
         .scrollIndicators(.hidden)
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle(Text(.feedHistoryTitle))
-        .task {
-            let records = FeedDayRecord.makeRecords(from: feeds ?? [])
-            todayRecord = records.first { Calendar.current.isDateInToday($0.date) }
-            previousRecords = records.filter { !Calendar.current.isDateInToday($0.date) }
-        }
     }
 
-    private var allRecords: [FeedDayRecord] {
-        [todayRecord].compactMap { $0 } + previousRecords
+    private var records: [FeedDayRecord] {
+        FeedDayRecord.makeRecords(from: feeds ?? [])
+    }
+
+    private var todayRecord: FeedDayRecord? {
+        records.first { Calendar.current.isDateInToday($0.date) }
+    }
+
+    private var previousRecords: [FeedDayRecord] {
+        records.filter { !Calendar.current.isDateInToday($0.date) }
     }
 }
 
@@ -50,6 +56,17 @@ struct FeedDayRecord: Identifiable {
 
     var completedCount: Int {
         [morningTime, eveningTime].compactMap { $0 }.count
+    }
+
+    func completedCount(for selection: FeedSelection) -> Int {
+        switch selection {
+        case .morning:
+            morningTime == nil ? 0 : 1
+        case .evening:
+            eveningTime == nil ? 0 : 1
+        case .both:
+            completedCount
+        }
     }
 
     static func makeRecords(from feeds: [Feed]) -> [FeedDayRecord] {

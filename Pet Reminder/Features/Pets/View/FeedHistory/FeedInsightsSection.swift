@@ -12,6 +12,7 @@ import Shared
 
 struct FeedInsightsSection: View {
     let records: [FeedDayRecord]
+    let feedSelection: FeedSelection
 
     @State private var isChartVisible = false
 
@@ -52,12 +53,12 @@ struct FeedInsightsSection: View {
                             x: .value("Day", day.date, unit: .day),
                             y: .value("Feeds", isChartVisible ? day.completedCount : 0)
                         )
-                        .foregroundStyle(day.completedCount == 2 ? Color.green : Color.accentColor)
+                        .foregroundStyle(day.completedCount >= expectedFeedCount ? Color.green : Color.accentColor)
                         .cornerRadius(4)
                     }
-                    .chartYScale(domain: 0...2)
+                    .chartYScale(domain: 0...expectedFeedCount)
                     .chartYAxis {
-                        AxisMarks(values: [0, 1, 2])
+                        AxisMarks(values: Array(0...expectedFeedCount))
                     }
                     .chartXAxis(.hidden)
                     .frame(height: 130)
@@ -92,7 +93,7 @@ struct FeedInsightsSection: View {
 
     private var recentDays: [FeedInsightDay] {
         let recordsByDate = Dictionary(uniqueKeysWithValues: records.map {
-            (calendar.startOfDay(for: $0.date), $0.completedCount)
+            (calendar.startOfDay(for: $0.date), $0.completedCount(for: feedSelection))
         })
         let today = calendar.startOfDay(for: .now)
 
@@ -110,11 +111,22 @@ struct FeedInsightsSection: View {
     }
 
     private var completionRate: Double {
-        Double(totalFeeds) / Double(recentDays.count * 2)
+        guard !recentDays.isEmpty else { return 0 }
+        return Double(totalFeeds) / Double(recentDays.count * expectedFeedCount)
     }
 
     private var fullDayStreak: Int {
-        recentDays.reversed().prefix { $0.completedCount == 2 }.count
+        let completedDays = recentDays.last?.completedCount == expectedFeedCount
+            ? recentDays
+            : Array(recentDays.dropLast())
+
+        return completedDays.reversed().prefix {
+            $0.completedCount == expectedFeedCount
+        }.count
+    }
+
+    private var expectedFeedCount: Int {
+        feedSelection == .both ? 2 : 1
     }
 }
 

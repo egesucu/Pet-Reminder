@@ -1,0 +1,285 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "DF5A4587",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "29,99",
+      "familyShareable" : false,
+      "internalID" : "BA5BAFAC",
+      "localizations" : [
+        {
+          "description" : "Ein kleines Trinkgeld für Pet Reminder.",
+          "displayName" : "Kleines Trinkgeld",
+          "locale" : "de"
+        },
+        {
+          "description" : "Small optional support for Pet Reminder.",
+          "displayName" : "Tea-Sized Tip",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Apoyo opcional a Pet Reminder: un té.",
+          "displayName" : "Propina de té",
+          "locale" : "es_ES"
+        },
+        {
+          "description" : "Petit soutien facultatif à Pet Reminder.",
+          "displayName" : "Pourboire thé",
+          "locale" : "fr"
+        },
+        {
+          "description" : "Piccolo sostegno facoltativo a Pet Reminder.",
+          "displayName" : "Mancia tè",
+          "locale" : "it"
+        },
+        {
+          "description" : "Pet Reminder için küçük destek.",
+          "displayName" : "Çaylık Destek",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_tea_donate",
+      "promotionalImageID" : "98A2180B",
+      "referenceName" : "TeaConsumable",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "199,99",
+      "familyShareable" : false,
+      "internalID" : "AB2E3D7A",
+      "localizations" : [
+        {
+          "description" : "Ein Essens-Trinkgeld für Pet Reminder.",
+          "displayName" : "Essens-Trinkgeld",
+          "locale" : "de"
+        },
+        {
+          "description" : "Meal-sized support for Pet Reminder.",
+          "displayName" : "Meal-Sized Tip",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Apoyo a Pet Reminder: una comida.",
+          "displayName" : "Propina de comida",
+          "locale" : "es_ES"
+        },
+        {
+          "description" : "Soutien repas facultatif à Pet Reminder.",
+          "displayName" : "Pourboire repas",
+          "locale" : "fr"
+        },
+        {
+          "description" : "Sostegno pasto facoltativo a Pet Reminder.",
+          "displayName" : "Mancia pasto",
+          "locale" : "it"
+        },
+        {
+          "description" : "Pet Reminder için yemeklik destek.",
+          "displayName" : "Yemeklik Destek",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_food_donate",
+      "promotionalImageID" : "2E7F5620",
+      "referenceName" : "FoodConsumable",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "149,99",
+      "familyShareable" : false,
+      "internalID" : "C0FFEE01",
+      "localizations" : [
+        {
+          "description" : "Ein Kaffee-Trinkgeld für Pet Reminder.",
+          "displayName" : "Kaffee-Trinkgeld",
+          "locale" : "de"
+        },
+        {
+          "description" : "Coffee-sized support for Pet Reminder.",
+          "displayName" : "Coffee-Sized Tip",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Apoyo opcional a Pet Reminder: un café.",
+          "displayName" : "Propina de café",
+          "locale" : "es_ES"
+        },
+        {
+          "description" : "Soutien café facultatif à Pet Reminder.",
+          "displayName" : "Pourboire café",
+          "locale" : "fr"
+        },
+        {
+          "description" : "Sostegno caffè facoltativo a Pet Reminder.",
+          "displayName" : "Mancia caffè",
+          "locale" : "it"
+        },
+        {
+          "description" : "Pet Reminder için kahvelik destek.",
+          "displayName" : "Kahvelik Destek",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_coffee_donate",
+      "promotionalImageID" : "7020DB2D",
+      "referenceName" : "CoffeeConsumable",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "249,99",
+      "familyShareable" : false,
+      "internalID" : "70A00001",
+      "localizations" : [
+        {
+          "description" : "Ein Spielzeug-Trinkgeld für Pet Reminder.",
+          "displayName" : "Spielzeug-Trinkgeld",
+          "locale" : "de"
+        },
+        {
+          "description" : "Toy-sized support for Pet Reminder.",
+          "displayName" : "Toy-Sized Tip",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Apoyo a Pet Reminder: un juguete.",
+          "displayName" : "Propina de juguete",
+          "locale" : "es_ES"
+        },
+        {
+          "description" : "Soutien jouet facultatif à Pet Reminder.",
+          "displayName" : "Pourboire jouet",
+          "locale" : "fr"
+        },
+        {
+          "description" : "Sostegno gioco facoltativo a Pet Reminder.",
+          "displayName" : "Mancia giocattolo",
+          "locale" : "it"
+        },
+        {
+          "description" : "Pet Reminder için oyuncaklık destek.",
+          "displayName" : "Oyuncaklık Destek",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_toy_donate",
+      "promotionalImageID" : "4DEEB840",
+      "referenceName" : "ToyConsumable",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "499,99",
+      "familyShareable" : false,
+      "internalID" : "FEA57001",
+      "localizations" : [
+        {
+          "description" : "Ein großzügiges Trinkgeld für Pet Reminder.",
+          "displayName" : "Festmahl-Trinkgeld",
+          "locale" : "de"
+        },
+        {
+          "description" : "Generous support for Pet Reminder.",
+          "displayName" : "Feast-Sized Tip",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Apoyo generoso a Pet Reminder.",
+          "displayName" : "Propina de festín",
+          "locale" : "es_ES"
+        },
+        {
+          "description" : "Soutien généreux facultatif à Pet Reminder.",
+          "displayName" : "Pourboire festin",
+          "locale" : "fr"
+        },
+        {
+          "description" : "Sostegno generoso per Pet Reminder.",
+          "displayName" : "Mancia banchetto",
+          "locale" : "it"
+        },
+        {
+          "description" : "Pet Reminder için cömert destek.",
+          "displayName" : "Ziyafetlik Destek",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "pet_reminder_feast_donate",
+      "promotionalImageID" : "782B37C9",
+      "referenceName" : "FeastConsumable",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "tr",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "TUR",
+    "_storeKitErrors" : [
+      {
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionBundleGroups" : [
+
+  ],
+  "subscriptionGroups" : [
+
+  ],
+  "subscriptionSuiteGroups" : [
+
+  ],
+  "version" : {
+    "major" : 6,
+    "minor" : 3
+  }
+}

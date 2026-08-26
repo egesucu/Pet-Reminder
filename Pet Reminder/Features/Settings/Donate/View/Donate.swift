@@ -13,7 +13,13 @@ import Shared
 
 struct Donate: View {
     @State private var consumables: [Product] = []
-    let productIDs = [Strings.donateTeaID, Strings.donateFoodID]
+    private let productIDs = [
+        Strings.donateTeaID,
+        Strings.donateFoodID,
+        Strings.donateCoffeeID,
+        Strings.donateToyID,
+        Strings.donateFeastID
+    ]
 
     var body: some View {
         ScrollView {
@@ -27,7 +33,7 @@ struct Donate: View {
 
                 products
             }
-            .padding(.horizontal, .spacing8)
+            .padding(.horizontal, .spacing12)
             .task(requestProducts)
         }
         .navigationTitle(Text(.donateUsTitle))
@@ -50,9 +56,11 @@ private extension Donate {
     }
     
     var products: some View {
-        LazyVStack(spacing: .spacing8) {
+        LazyVStack(alignment: .leading, spacing: .spacing8) {
             ForEach(consumables) { product in
-                ProductView(product, prefersPromotionalIcon: true)
+                ProductView(product, prefersPromotionalIcon: false) {
+                    donationIcon(for: product.id)
+                }
                     .onInAppPurchaseCompletion { product, result in
                         Task {
                             await purcahaseCompleted(product: product, result: result)
@@ -67,10 +75,37 @@ private extension Donate {
             }
         }
     }
+
+    @ViewBuilder
+    func donationIcon(for productID: String) -> some View {
+        Image(donationImageName(for: productID))
+            .resizable()
+            .scaledToFill()
+            .frame(width: 80, height: 80)
+            .clipShape(.rect(cornerRadius: 6))
+            .accessibilityHidden(true)
+    }
 }
 
 // MARK: - Helper Functions
 private extension Donate {
+    func donationImageName(for productID: String) -> String {
+        switch productID {
+        case Strings.donateTeaID:
+            "tea-tip"
+        case Strings.donateFoodID:
+            "food-tip"
+        case Strings.donateCoffeeID:
+            "coffee-tip"
+        case Strings.donateToyID:
+            "toy-tip"
+        case Strings.donateFeastID:
+            "feast-tip"
+        default:
+            "default-other"
+        }
+    }
+
     func requestProducts() async {
         do {
             let storeProducts = try await Product.products(for: productIDs)

@@ -24,6 +24,9 @@ public struct Strings {
     public static let viski = "Viski"
     public static let donateTeaID = "pet_reminder_tea_donate"
     public static let donateFoodID = "pet_reminder_food_donate"
+    public static let donateCoffeeID = "pet_reminder_coffee_donate"
+    public static let donateToyID = "pet_reminder_toy_donate"
+    public static let donateFeastID = "pet_reminder_feast_donate"
     public static let helloSeen = "seenHello"
 
     public static func footerLabel(_ first: Any) -> String {

@@ -41,7 +41,7 @@ struct PetDetail: View {
         .navigationDestination(item: $historyDestination) { destination in
             switch destination {
             case .feedHistory:
-                FeedHistory(feeds: pet.feeds)
+                FeedHistory(feeds: pet.feeds, feedSelection: pet.feedSelection)
             case .vaccines:
                 VaccineHistory(pet: pet)
             }
