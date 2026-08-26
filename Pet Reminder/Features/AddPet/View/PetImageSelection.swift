@@ -13,13 +13,15 @@ struct PetImageSelection: View {
 
     @Binding var model: AddPet.Model
 
+    @State private var breedInput = String.empty
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(.petKindText)
                 .font(.headline)
                 .foregroundStyle(.primary)
             
-            VStack(alignment: .center) {
+            VStack(alignment: .center, spacing: .spacing12) {
                 Picker(selection: $model.kind) {
                     ForEach(Kind.allCases, id: \.self) { kind in
                         Text(verbatim: kind.localizedName)
@@ -28,14 +30,23 @@ struct PetImageSelection: View {
                     Text(.petKindText)
                 }
                 .pickerStyle(.segmented)
-                
+
+                TextField(.petBreedOptional, text: $breedInput)
+                    .onChange(of: breedInput) {
+                        model.breed = if breedInput.isEmpty {
+                            breedInput
+                        } else {
+                            nil
+                        }
+                    }
+                    .textFieldStyle(.outlined)
+
                 petImage
 
                 PhotoImagePicker(
                     desiredTitle: .add,
                     photoData: $model.selectedImageData
                 )
-                    .padding(.vertical)
             }
 
             Text(.photoUploadDetailTitle)

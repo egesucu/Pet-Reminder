@@ -90,6 +90,8 @@ extension AddPet {
         var birthday: Date = .now
         /// Selected pet kind.
         var kind: Kind = .dog
+        /// Optional breed information of the pet
+        var breed: String?
         /// Raw image data from the picker.
         var selectedImageData: Data?
         /// Which feed reminders are enabled.
@@ -111,6 +113,7 @@ extension AddPet {
             birthday: Date = .now,
             selectedImageData: Data? = nil,
             kind: Kind = .dog,
+            breed: String? = nil,
             feedSelection: FeedSelection = .both,
             morningFeed: Date = .eightAM,
             eveningFeed: Date = .eightPM,
@@ -120,6 +123,7 @@ extension AddPet {
             self.name = name
             self.birthday = birthday
             self.kind = kind
+            self.breed = breed
             self.selectedImageData = selectedImageData
             self.feedSelection = feedSelection
             self.morningFeed = morningFeed
@@ -181,6 +185,7 @@ private extension AddPet {
         model.name = cleanedName
         pet.name = cleanedName
         pet.kind = model.kind
+        pet.breed = model.breed
         pet.birthday = model.birthday
         pet.feedSelection = model.feedSelection
         pet.image = model.selectedImageData
