@@ -10,48 +10,119 @@ import SwiftUI
 import Shared
 
 struct FeedHistory: View {
+    let feeds: [Feed]?
 
-    var feeds: [Feed]?
+    @State private var todayRecord: FeedDayRecord?
+    @State private var previousRecords: [FeedDayRecord] = []
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .spacing16) {
-            ScrollView {
-                Text(.today)
-                    .bold()
-                    .font(.title2)
-                    .padding(.leading, .spacing8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                CurrentFeedSection(feeds: feeds)
-                Text(.previousTitle)
-                    .bold()
-                    .font(.title2)
-                    .padding(.top, .spacing8)
-                    .padding(.leading, .spacing8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                PreviousFeedsSection(feeds: feeds)
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: .spacing24) {
+                FeedInsightsSection(records: allRecords)
+                CurrentFeedSection(record: todayRecord)
+                PreviousFeedsSection(records: previousRecords)
             }
+            .padding(.horizontal, .spacing20)
+            .padding(.top, .spacing16)
+            .padding(.bottom, .spacing32)
         }
         .scrollIndicators(.hidden)
-        .scrollContentBackground(.hidden)
-        .background(.regularMaterial)
+        .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle(Text(.feedHistoryTitle))
+        .task {
+            let records = FeedDayRecord.makeRecords(from: feeds ?? [])
+            todayRecord = records.first { Calendar.current.isDateInToday($0.date) }
+            previousRecords = records.filter { !Calendar.current.isDateInToday($0.date) }
+        }
+    }
+
+    private var allRecords: [FeedDayRecord] {
+        [todayRecord].compactMap { $0 } + previousRecords
+    }
+}
+
+struct FeedDayRecord: Identifiable {
+    let date: Date
+    let morningTime: Date?
+    let eveningTime: Date?
+
+    var id: Date { date }
+
+    var completedCount: Int {
+        [morningTime, eveningTime].compactMap { $0 }.count
+    }
+
+    static func makeRecords(from feeds: [Feed]) -> [FeedDayRecord] {
+        let calendar = Calendar.current
+        let groupedFeeds = Dictionary(grouping: feeds) { feed in
+            calendar.startOfDay(
+                for: feed.feedDate ?? feed.morningFedStamp ?? feed.eveningFedStamp ?? .distantPast
+            )
+        }
+
+        return groupedFeeds
+            .filter { $0.key != calendar.startOfDay(for: .distantPast) }
+            .map { date, feeds in
+                FeedDayRecord(
+                    date: date,
+                    morningTime: feeds.compactMap(\.morningFedStamp).max(),
+                    eveningTime: feeds.compactMap(\.eveningFedStamp).max()
+                )
+            }
+            .filter { $0.completedCount > 0 }
+            .sorted { $0.date > $1.date }
     }
 }
 
 #if DEBUG
 #Preview {
     var feeds: [Feed] = Feed.previews
-    let todayFeed = Feed(
-        eveningFed: true,
-        eveningFedStamp: .eightPM,
-        feedDate: .now,
-        morningFed: true,
-        morningFedStamp: .eightAM
+    feeds.append(
+        Feed(
+            eveningFed: true,
+            eveningFedStamp: .eightPM,
+            feedDate: .now,
+            morningFed: true,
+            morningFedStamp: .eightAM
+        )
     )
-    feeds.append(todayFeed)
 
     return NavigationStack {
         FeedHistory(feeds: feeds)
+    }
+}
+
+#Preview("More Data") {
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: .now)
+    let feeds = (0...50).compactMap { daysAgo -> Feed? in
+        guard let feedDate = calendar.date(byAdding: .day, value: -daysAgo, to: today),
+              let morningTime = calendar.date(bySettingHour: 8, minute: daysAgo % 60, second: 0, of: feedDate) else {
+            return nil
+        }
+
+        let hasEveningFeed = !daysAgo.isMultiple(of: 4)
+        let eveningTime = hasEveningFeed
+            ? calendar.date(bySettingHour: 20, minute: daysAgo % 60, second: 0, of: feedDate)
+            : nil
+
+        return Feed(
+            eveningFed: hasEveningFeed,
+            eveningFedStamp: eveningTime,
+            feedDate: feedDate,
+            morningFed: true,
+            morningFedStamp: morningTime
+        )
+    }
+
+    NavigationStack {
+        FeedHistory(feeds: feeds)
+    }
+}
+
+#Preview("Empty") {
+    NavigationStack {
+        FeedHistory(feeds: [])
     }
 }
 #endif
