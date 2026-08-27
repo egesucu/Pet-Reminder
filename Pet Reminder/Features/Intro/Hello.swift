@@ -7,75 +7,44 @@
 //
 
 import SwiftUI
-import CloudKit
 import Shared
 
 struct Hello: View {
-    @AppStorage(Strings.helloSeen) var helloSeen = false
+    @AppStorage(Strings.helloSeen) private var helloSeen = false
     @State private var shouldAnimate = false
-    @Environment(\.notification) private var notificationManager: NotificationManager
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            VStack(spacing: .spacing100) {
-                Text(.welcomeTitle)
-                    .foregroundStyle(Color.label)
-                    .font(.title)
-                    .bold()
-                Image(systemName: "pawprint.circle.fill")
-                    .foregroundStyle(Color.label)
-                    .bold()
-                    .font(.system(size: .icon120))
-                Text(.welcomeContext)
-                    .foregroundStyle(Color.label)
-                    .font(.body)
+            Color(uiColor: .systemBackground)
+                .ignoresSafeArea()
+
+            HelloBottomShape()
+
+            VStack(spacing: 0) {
                 Spacer()
+                HelloContent()
+                Spacer()
+                HelloContinueButton(action: returnHome)
             }
-            .padding(.horizontal, .spacing12)
-            .opacity(shouldAnimate ? 1.0 : 0.0)
-            .onAppear(perform: animateView)
-            
-            Button(action: goButtonPressed) {
-                Text(.welcomeGoButton)
-                    .font(.title)
-                    .foregroundStyle(Color.label)
-                    .bold()
-                    .padding(.horizontal, .spacing20)
-                    .padding(.vertical, .spacing16)
-            }
-            .buttonStyle(.glass)
-            
+            .padding(.horizontal, .spacing20)
+            .padding(.bottom, .spacing20)
+            .opacity(shouldAnimate ? 1 : 0)
+            .offset(y: shouldAnimate ? 0 : .spacing20)
         }
-        .frame(maxWidth: .infinity)
-        .background(
-            LinearGradient(
-                colors: [
-                    .accent.opacity(0.6),
-                    .green.opacity(0.3)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottom
-            ),
-            ignoresSafeAreaEdges: .all
-        )
+        .onAppear(perform: animateView)
     }
 }
 
 private extension Hello {
-    func goButtonPressed() {
+    func returnHome() {
         helloSeen = true
     }
 
     func animateView() {
-        withAnimation(.spring().speed(0.2)) {
+        withAnimation(.smooth(duration: 0.7)) {
             shouldAnimate = true
         }
     }
-}
-
-private extension CGFloat {
-    static let spacing100: Self = 100
-    static let icon120: Self = 120
 }
 
 #if DEBUG
