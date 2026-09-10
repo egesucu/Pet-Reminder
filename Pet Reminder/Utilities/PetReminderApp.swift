@@ -33,14 +33,32 @@ struct PetReminderApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if helloSeen {
-                HomeManager()
-            } else {
-                Hello()
+            Group {
+                if helloSeen {
+                    HomeManager()
+                } else {
+                    Hello()
+                }
+            }
+            .task {
+                await refreshNotificationLocalizations()
             }
         }
         .notification(notificationManager)
         .environment(eventManager)
         .modelContainer(container)
+    }
+
+    @MainActor
+    private func refreshNotificationLocalizations() async {
+        do {
+            let modelContext = ModelContext(container)
+            let pets = try modelContext.fetch(FetchDescriptor<Pet>())
+            try await notificationManager.refreshNotificationLocalizations(for: pets)
+        } catch {
+            Logger.notifications.error(
+                "Failed to refresh notification localizations: \(error.localizedDescription)"
+            )
+        }
     }
 }

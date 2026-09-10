@@ -134,6 +134,35 @@ class NotificationManager {
         notifications = await notificationCenter.pendingNotificationRequests()
     }
 
+    /// Updates pending notification titles and bodies using the app's current localization.
+    func refreshNotificationLocalizations(for pets: [Pet]) async throws {
+        let pendingRequests = await notificationCenter.pendingNotificationRequests()
+        let requestsByIdentifier = Dictionary(
+            uniqueKeysWithValues: pendingRequests.map { ($0.identifier, $0) }
+        )
+        let types: [NotificationType] = [.morning, .evening, .birthday]
+
+        for pet in pets {
+            for type in types {
+                let identifier = Strings.notificationIdentifier(pet.name, type.rawValue)
+                guard let existingRequest = requestsByIdentifier[identifier],
+                      let content = existingRequest.content.mutableCopy() as? UNMutableNotificationContent else {
+                    continue
+                }
+
+                content.title = String(localized: .notificationTitle)
+                content.body = notificationBody(for: pet.name, type: type)
+
+                let replacement = UNNotificationRequest(
+                    identifier: identifier,
+                    content: content,
+                    trigger: existingRequest.trigger
+                )
+                try await notificationCenter.add(replacement)
+            }
+        }
+    }
+
     /// Replaces name-based notification identifiers and content while preserving their triggers.
     func renameNotifications(from oldName: String, to newName: String) async throws {
         guard oldName != newName else { return }
