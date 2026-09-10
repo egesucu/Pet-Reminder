@@ -134,7 +134,7 @@ class NotificationManager {
         notifications = await notificationCenter.pendingNotificationRequests()
     }
 
-    /// Replaces name-based notification identifiers while preserving their content and triggers.
+    /// Replaces name-based notification identifiers and content while preserving their triggers.
     func renameNotifications(from oldName: String, to newName: String) async throws {
         guard oldName != newName else { return }
 
@@ -148,9 +148,14 @@ class NotificationManager {
                 continue
             }
 
+            guard let content = existingRequest.content.mutableCopy() as? UNMutableNotificationContent else {
+                continue
+            }
+            content.body = notificationBody(for: newName, type: type)
+
             let replacement = UNNotificationRequest(
                 identifier: Strings.notificationIdentifier(newName, type.rawValue),
-                content: existingRequest.content,
+                content: content,
                 trigger: existingRequest.trigger
             )
             try await notificationCenter.add(replacement)
@@ -236,12 +241,12 @@ extension NotificationManager {
 
         switch type {
         case .birthday:
-            content.body = String(localized: .notificationBirthdayContent(petName))
+            content.body = notificationBody(for: petName, type: type)
             dateComponents.day = calendar.component(.day, from: date)
             dateComponents.month = calendar.component(.month, from: date)
             dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
         default:
-            content.body = String(localized: .notificationContent(petName))
+            content.body = notificationBody(for: petName, type: type)
             dateComponents.hour = calendar.component(.hour, from: date)
             dateComponents.minute = calendar.component(.minute, from: date)
         }
@@ -257,6 +262,15 @@ extension NotificationManager {
         )
 
         try await notificationCenter.add(request)
+    }
+
+    private func notificationBody(for petName: String, type: NotificationType) -> String {
+        switch type {
+        case .birthday:
+            String(localized: .notificationBirthdayContent(petName))
+        case .morning, .evening:
+            String(localized: .notificationContent(petName))
+        }
     }
 }
 
