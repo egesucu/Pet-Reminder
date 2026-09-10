@@ -25,8 +25,8 @@ public enum PetSchemaV4: VersionedSchema {
         public var image: Data?
         public var breed: String?
         private var feedSelectionRaw: String = "both"
-        @Attribute(originalName: "petTypeName")
-        private var kindName: Kind.RawValue = Kind.other.rawValue
+        // Keep the original CloudKit field name; CloudKit-backed stores can't rename properties.
+        private var petTypeName: Kind.RawValue = Kind.other.rawValue
 
         @Relationship(inverse: \Feed.pet) public var feeds: [Feed]?
         @Relationship(inverse: \Vaccine.pet) public var vaccines: [Vaccine]?
@@ -63,8 +63,8 @@ public enum PetSchemaV4: VersionedSchema {
         }
 
         public var kind: Kind {
-            get { .init(rawValue: kindName) ?? .other }
-            set { kindName = newValue.rawValue }
+            get { .init(rawValue: petTypeName) ?? .other }
+            set { petTypeName = newValue.rawValue }
         }
 
         private static func rawString(for selection: FeedSelection) -> String {
@@ -92,6 +92,20 @@ public enum PetSchemaV4: VersionedSchema {
 }
 
 public extension Pet {
+    func addFeed(_ feed: Feed) {
+        var updatedFeeds = feeds ?? []
+        updatedFeeds.append(feed)
+        feeds = updatedFeeds
+        feed.pet = self
+    }
+
+    func addVaccine(_ vaccine: Vaccine) {
+        var updatedVaccines = vaccines ?? []
+        updatedVaccines.append(vaccine)
+        vaccines = updatedVaccines
+        vaccine.pet = self
+    }
+
     static func cleanedName(for name: String) -> String {
         name.trimmingCharacters(in: .whitespacesAndNewlines)
     }

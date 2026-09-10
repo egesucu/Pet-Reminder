@@ -134,6 +134,33 @@ class NotificationManager {
         notifications = await notificationCenter.pendingNotificationRequests()
     }
 
+    /// Replaces name-based notification identifiers while preserving their content and triggers.
+    func renameNotifications(from oldName: String, to newName: String) async throws {
+        guard oldName != newName else { return }
+
+        let pendingRequests = await notificationCenter.pendingNotificationRequests()
+        let types: [NotificationType] = [.morning, .evening, .birthday]
+        var oldIdentifiers: [String] = []
+
+        for type in types {
+            let oldIdentifier = Strings.notificationIdentifier(oldName, type.rawValue)
+            guard let existingRequest = pendingRequests.first(where: { $0.identifier == oldIdentifier }) else {
+                continue
+            }
+
+            let replacement = UNNotificationRequest(
+                identifier: Strings.notificationIdentifier(newName, type.rawValue),
+                content: existingRequest.content,
+                trigger: existingRequest.trigger
+            )
+            try await notificationCenter.add(replacement)
+            oldIdentifiers.append(oldIdentifier)
+        }
+
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: oldIdentifiers)
+        notificationCenter.removeDeliveredNotifications(withIdentifiers: oldIdentifiers)
+    }
+
     // MARK: - Notification Creation
 
     /// Creates notifications for a pet based on its feed selection and provided times.

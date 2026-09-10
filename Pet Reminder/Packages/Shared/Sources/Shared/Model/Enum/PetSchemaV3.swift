@@ -23,8 +23,8 @@ public enum PetSchemaV3: VersionedSchema {
         public var image: Data?
         // Store a stable, nonlocalized raw value to avoid actor isolation issues.
         private var feedSelectionRaw: String = "both"
-        @Attribute(originalName: "petTypeName")
-        private var kindName: Kind.RawValue = Kind.other.rawValue
+        // Keep the original CloudKit field name; CloudKit-backed stores can't rename properties.
+        private var petTypeName: Kind.RawValue = Kind.other.rawValue
 
         @Relationship(inverse: \Feed.pet) public var feeds: [Feed]?
         @Relationship(inverse: \Vaccine.pet) public var vaccines: [Vaccine]?
@@ -59,8 +59,8 @@ public enum PetSchemaV3: VersionedSchema {
         }
 
         public var kind: Kind {
-            get { .init(rawValue: kindName) ?? .other }
-            set { kindName = newValue.rawValue }
+            get { .init(rawValue: petTypeName) ?? .other }
+            set { petTypeName = newValue.rawValue }
         }
 
         private static func rawString(for selection: FeedSelection) -> String {

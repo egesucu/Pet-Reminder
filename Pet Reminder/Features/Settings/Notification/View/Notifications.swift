@@ -176,6 +176,7 @@ private extension Notifications {
             try? await notificationManager
                 .removeNotificationsIdentifiers(with: [notification.identifier])
         }
+        await fetchNotificiations()
     }
 }
 

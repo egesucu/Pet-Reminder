@@ -58,8 +58,9 @@ struct AddVaccine: View {
 
     /// Creates and saves a new vaccine to the pet, persists the change, and resets the form.
     func saveVaccine() {
-        let vaccine = Vaccine(date: vaccineDate, name: vaccineName)
-        pet.vaccines?.append(vaccine)
+        let cleanedName = vaccineName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let vaccine = Vaccine(date: vaccineDate, name: cleanedName)
+        pet.addVaccine(vaccine)
         do {
             try pet.modelContext?.save()
         } catch {

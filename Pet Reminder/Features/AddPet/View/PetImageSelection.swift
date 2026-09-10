@@ -33,11 +33,7 @@ struct PetImageSelection: View {
 
                 TextField(.petBreedOptional, text: $breedInput)
                     .onChange(of: breedInput) {
-                        model.breed = if breedInput.isEmpty {
-                            breedInput
-                        } else {
-                            nil
-                        }
+                        model.updateBreed(from: breedInput)
                     }
                     .textFieldStyle(.outlined)
 

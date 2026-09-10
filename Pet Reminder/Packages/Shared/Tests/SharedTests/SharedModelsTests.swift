@@ -1,7 +1,7 @@
 /// Tests validating shared model and localization behavior.
 
 import Testing
-@testable import Pet_Reminder
+@testable import Shared
 
 /// Suite covering tests related to shared models and localization functionality.
 @Suite("Shared Model Tests") struct SharedModelsTests {
@@ -24,4 +24,3 @@ import Testing
         #expect(localization != notExpectedOutput)
     }
 }
-

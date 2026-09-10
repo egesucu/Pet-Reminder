@@ -178,7 +178,11 @@ struct ChangePetDetails: View {
     @ContentBuilder
     func toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            Button(action: save) {
+            Button {
+                Task {
+                    await save()
+                }
+            } label: {
                 Text(.save)
                     .bold()
             }
@@ -261,17 +265,18 @@ struct ChangePetDetails: View {
         }
     }
 
-    private func save() {
+    private func save() async {
+        let oldName = pet.name
+        let selectionChanged = pet.feedSelection != manager.selection
+
         if pet.name != manager.name {
             saveName()
         }
 
-        // If we have a unique name error, don't continue saving
-        if showError {
+        guard showError == false else {
             return
         }
-        
-        // Making sure to not save a breed name as empty string.
+
         if pet.breed != manager.breed {
             pet.breed = manager.breed.isEmpty ? nil : manager.breed
         }
@@ -288,17 +293,8 @@ struct ChangePetDetails: View {
             pet.birthday = manager.birthday
         }
 
-        /// This notification might be missing from previous data,
-        /// so it's best to run this even if there's no birthday change.
-        Task {
-            await manager.changeBirthday()
-        }
-
-        if pet.feedSelection != manager.selection {
+        if selectionChanged {
             pet.feedSelection = manager.selection
-            Task {
-                await manager.changeNotification()
-            }
         }
 
         if pet.hasChanges {
@@ -306,6 +302,7 @@ struct ChangePetDetails: View {
                 try modelContext.save()
                 Logger().info("Pet Data has been updated")
             } catch {
+                modelContext.rollback()
                 Logger().error(
                     "Unknown error occurred while updating the pet. \(error.localizedDescription)"
                 )
@@ -313,7 +310,28 @@ struct ChangePetDetails: View {
                 return
             }
         }
-        dismiss()
+
+        do {
+            try await manager.notificationManager.renameNotifications(
+                from: oldName,
+                to: pet.name
+            )
+            await manager.changeBirthday()
+
+            if selectionChanged {
+                await manager.changeNotification()
+            }
+
+            guard manager.lastErrorMessage == nil else {
+                return
+            }
+            dismiss()
+        } catch {
+            Logger.notifications.error(
+                "Failed to rename notifications: \(error.localizedDescription)"
+            )
+            manager.lastErrorMessage = String(localized: .notificationDailyUpdateFailed)
+        }
     }
 
     private func cancel() {
