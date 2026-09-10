@@ -136,6 +136,11 @@ extension AddPet {
         var petCanBeSaved: Bool {
             nameIsValid && !petExists
         }
+
+        func updateBreed(from input: String) {
+            let cleanedBreed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+            breed = cleanedBreed.isEmpty ? nil : cleanedBreed
+        }
     }
 }
 
@@ -195,9 +200,9 @@ private extension AddPet {
         }
 
         do {
-            try await createNotifications()
             modelContext.insert(pet)
             try modelContext.save()
+            try await createNotifications()
             model.saveState = .success
         } catch {
             Logger.pets.error("Could not save the pet: \(error.localizedDescription)")

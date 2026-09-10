@@ -19,20 +19,33 @@ protocol EventStoreProtocol: Sendable {
     func events(matching predicate: NSPredicate) -> [EKEvent]
     func saveCalendar(_ calendar: EKCalendar, commit: Bool) throws
     func save(_ event: EKEvent, span: EKSpan, commit: Bool) throws
+    func makeCalendar(for entityType: EKEntityType) -> EKCalendar
+    func makeEvent() -> EKEvent
 }
 
-extension EKEventStore: @unchecked @retroactive Sendable, EventStoreProtocol {}
+extension EKEventStore: @unchecked @retroactive Sendable, EventStoreProtocol {
+    func makeCalendar(for entityType: EKEntityType) -> EKCalendar {
+        EKCalendar(for: entityType, eventStore: self)
+    }
+
+    func makeEvent() -> EKEvent {
+        EKEvent(eventStore: self)
+    }
+}
 
 /// Manages calendar events related to pet reminders, including permissions, event creation, and loading.
 @MainActor
 @Observable
 class EventManager {
 
+    typealias AuthorizationStatusProvider = () -> EKAuthorizationStatus
+
     private let petCalendarTitle = "Pet Reminder"
 
     // MARK: - Dependencies
 
     @ObservationIgnored var eventStore: any EventStoreProtocol
+    @ObservationIgnored private let authorizationStatusProvider: AuthorizationStatusProvider
 
     // MARK: - Properties
 
@@ -98,49 +111,46 @@ class EventManager {
     static let shared = EventManager()
     static let demo = EventManager(isDemo: true)
 
-    init(isDemo: Bool = false, eventStore: any EventStoreProtocol = EKEventStore()) {
+    init(
+        isDemo: Bool = false,
+        eventStore: any EventStoreProtocol = EKEventStore(),
+        authorizationStatusProvider: @escaping AuthorizationStatusProvider = {
+            EKEventStore.authorizationStatus(for: .event)
+        }
+    ) {
         self.eventStore = eventStore
+        self.authorizationStatusProvider = authorizationStatusProvider
 
         if isDemo {
             events = EventManager.Demo.exampleEvents
             status = .authorized
             selectedCalendar = nil
             updateFilteredEvents()
-        } else {
-            Task { [weak self] in
-                guard let self else { return }
-                await self.requestCalendarAccess()
-            }
         }
     }
 
     var fakeCalendar: EKCalendar {
-        guard let eventStore = self.eventStore as? EKEventStore else {
-            Logger.events.error("fakeCalendar: eventStore is not EKEventStore, returning stub calendar.")
-            let stubCalendar = EKCalendar(for: .event, eventStore: EKEventStore())
-            stubCalendar.title = "Stub Calendar"
-            return stubCalendar
-        }
-        let calendar = EKCalendar(for: .event, eventStore: eventStore)
+        let calendar = eventStore.makeCalendar(for: .event)
         calendar.title = "Fake Calendar"
         calendar.cgColor = CGColor(red: 0.52, green: 0.45, blue: 0.334, alpha: 0.545)
         return calendar
     }
 
     private func updateAuthStatus() async {
-        status = .value(status: EKEventStore.authorizationStatus(for: .event))
+        status = .value(status: authorizationStatusProvider())
         Logger.events.info("Auth status is: \(self.status.rawValue)")
     }
 
     func requestCalendarAccess() async {
         do {
             let result = try await eventStore.requestFullAccessToEvents()
+            await updateAuthStatus()
             if result {
                 await self.fetchCalendars()
+                self.events = await loadEvents()
             } else {
                 self.status = .denied
             }
-            await updateAuthStatus()
         } catch {
             Logger.events.error("Could not get the auth status: \(error)")
         }
@@ -208,11 +218,7 @@ class EventManager {
     }
 
     private func createCalendar() async -> EventCalendar? {
-        guard let eventStore = eventStore as? EKEventStore else {
-            Logger.events.error("Cannot create calendar: eventStore is not EKEventStore")
-            return nil
-        }
-        let calendar = EKCalendar(for: .event, eventStore: eventStore)
+        let calendar = eventStore.makeCalendar(for: .event)
         calendar.title = petCalendarTitle
         if let defaultCalendar = eventStore.defaultCalendarForNewEvents {
             calendar.source = defaultCalendar.source
@@ -252,12 +258,7 @@ class EventManager {
             return
         }
 
-        guard let eventStore = eventStore as? EKEventStore else {
-            Logger.events.error("Event Save Error, eventStore is not EKEventStore")
-            return
-        }
-
-        let newEvent = EKEvent(eventStore: eventStore)
+        let newEvent = eventStore.makeEvent()
         newEvent.title = eventName
         newEvent.isAllDay = isAllDay
         // Keep the provided start/end dates
@@ -283,6 +284,19 @@ class EventManager {
 
     func reloadEvents() async {
         await updateAuthStatus()
+
+        if status == .notDetermined {
+            await requestCalendarAccess()
+            return
+        }
+
+        guard status == .authorized else {
+            events = []
+            calendars = []
+            petCalendar = nil
+            return
+        }
+
         await fetchCalendars()
         self.events = await loadEvents()
     }

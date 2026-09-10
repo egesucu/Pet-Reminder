@@ -3437,43 +3437,43 @@
       }
     },
     "home_tab_title" : {
-      "comment" : "HOME",
+      "comment" : "Pet friends",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Täglich"
+            "state" : "translated",
+            "value" : "Freunde"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Daily"
+            "value" : "Friends"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Diario"
+            "state" : "translated",
+            "value" : "Amigos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quotidien"
+            "value" : "Amis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Giornaliero"
+            "value" : "Amici"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Günlük"
+            "value" : "Dostların"
           }
         }
       }

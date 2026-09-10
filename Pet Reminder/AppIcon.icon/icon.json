@@ -1,27 +1,22 @@
 {
-  "fill" : "automatic",
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.00392,0.57255,0.40392,1.00000"
+  },
   "groups" : [
     {
       "layers" : [
         {
-          "image-name" : "image.png",
-          "name" : "image",
-          "position" : {
-            "scale" : 0.6,
-            "translation-in-points" : [
-              -4.486040452466902,
-              -26.266018873938247
-            ]
-          }
+          "image-name" : "Paw-Check.svg",
+          "name" : "Paw and reminder check"
         }
       ],
-      "name" : "Layers",
+      "name" : "Pet care",
       "shadow" : {
         "kind" : "neutral",
-        "opacity" : 0.5
+        "opacity" : 0.25
       },
       "translucency" : {
-        "enabled" : true,
+        "enabled" : false,
         "value" : 0.5
       }
     }

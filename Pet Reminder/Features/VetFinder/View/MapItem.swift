@@ -91,20 +91,17 @@ private extension MapItem {
         guard let deeplinkURL = application.deeplinkURL else { return }
 
 
-        var urlToOpen: URL?
-
         UIApplication.shared.open(deeplinkURL) { success in
+            let urlToOpen = success
+                ? application.destinationURL(
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                )
+                : application.appStoreURL
 
-            urlToOpen = success
-            ? application.destinationURL(
-                latitude: location.latitude,
-                longitude: location.longitude
-            )
-            : application.appStoreURL
-        }
-
-        if let urlToOpen {
-            UIApplication.shared.open(urlToOpen)
+            if let urlToOpen {
+                UIApplication.shared.open(urlToOpen)
+            }
         }
     }
 }

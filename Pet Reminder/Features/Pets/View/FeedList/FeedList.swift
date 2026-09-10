@@ -165,7 +165,7 @@ struct FeedList: View {
                 feed.eveningFed = eveningOn
             }
             feed.feedDate = .now
-            pet?.feeds?.append(feed)
+            pet?.addFeed(feed)
 
         } else {
             // We have a feed, let's update inside of it.

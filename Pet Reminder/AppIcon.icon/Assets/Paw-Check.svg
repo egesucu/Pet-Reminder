@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<g fill="#FFFFFF">
+<ellipse cx="393" cy="307" rx="75" ry="105" transform="rotate(-14 393 307)"/>
+<ellipse cx="631" cy="307" rx="75" ry="105" transform="rotate(14 631 307)"/>
+<ellipse cx="258" cy="455" rx="67" ry="89" transform="rotate(-32 258 455)"/>
+<ellipse cx="766" cy="455" rx="67" ry="89" transform="rotate(32 766 455)"/>
+<path fill-rule="evenodd" d="M512 438 C432 438 401 519 362 567 C323 614 284 654 292 716 C299 775 351 801 407 785 C451 773 477 755 512 755 C547 755 573 773 617 785 C673 801 725 775 732 716 C740 654 701 614 662 567 C623 519 592 438 512 438 Z M402 632 L471 701 Q487 717 503 701 L637 567 Q653 551 637 535 L628 526 Q612 510 596 526 L487 635 L443 591 Q427 575 411 591 L402 600 Q386 616 402 632 Z"/>
+</g></svg>

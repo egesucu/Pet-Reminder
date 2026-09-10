@@ -35,9 +35,7 @@ struct HomeManager: View {
                         .environment(notificationManager)
                         .navigationTitle(.petNameTitle)
                         .onChange(of: pendingPetNameFromDeepLink) { _, newValue in
-                            /// Forward deep link pet name to the list via NotificationCenter
-                            /// so you don't need to change PetListView's API
-                            if let name = newValue {
+                                if let name = newValue {
                                 NotificationCenter.default.post(name: .openPetByName, object: name)
                                 pendingPetNameFromDeepLink = nil
                             }
