@@ -2469,47 +2469,6 @@
         }
       }
     },
-    "Morning and Evening Selected" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Morgens und abends ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Morning & Evening are selected"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Mañana y tarde seleccionadas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Matin et soir sélectionnés"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Mattina e sera selezionate"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sabah ve Akşam seçildi"
-          }
-        }
-      }
-    },
     "Morning Selected" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -23,17 +23,6 @@ public enum FeedSelection: Codable, CaseIterable, Equatable, CustomStringConvert
             "Both"
         }
     }
-
-    public var definition: LocalizedStringResource {
-        return switch self {
-        case .morning:
-           LocalizedStringResource.morningSelected
-        case .evening:
-            LocalizedStringResource.eveningSelected
-        case .both:
-            LocalizedStringResource.morningAndEveningSelected
-        }
-    }
 }
 
 // Keep UI-facing API isolated to the main actor without isolating Codable.

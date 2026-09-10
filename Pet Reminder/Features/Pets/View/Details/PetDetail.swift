@@ -75,16 +75,9 @@ private extension PetDetail {
     var dailyCareCard: some View {
         VStack(alignment: .leading, spacing: .spacing16) {
 
-            VStack(alignment: .leading, spacing: .spacing8) {
-                Label("Today's care", systemImage: "pawprint.fill")
-                    .font(.headline)
-                    .foregroundStyle(Color.label)
-
-                Text(pet.feedSelection.definition)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.secondary)
-
-            }
+            Label("Today's care", systemImage: "pawprint.fill")
+                .font(.headline)
+                .foregroundStyle(Color.label)
 
             FeedList(pet: pet)
                 .frame(maxWidth: .infinity, minHeight: .feedCardHeight100)

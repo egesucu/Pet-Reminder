@@ -36,15 +36,7 @@ class PetDataManager {
     var showImagePicker = false
     var kind: Kind = .other
 
-    var petImageData: Data? {
-        didSet {
-            // Optional: downsample/compress large images before keeping them in memory/storage
-            if let data = petImageData,
-               let processed = ImageDownsampling.downsampleIfNeeded(data: data, maxDimension: 1024, jpegQuality: 0.8) {
-                petImageData = processed
-            }
-        }
-    }
+    var petImageData: Data?
     var petImage: UIImage?
 
     var notificationManager = NotificationManager.shared
