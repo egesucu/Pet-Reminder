@@ -12,63 +12,150 @@ import OSLog
 import Shared
 
 struct PetList: View {
-
+    
     @Environment(\.modelContext) private var modelContext
+    
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
-    @State private var selectedPet: Pet = .init()
     @State private var addPet = false
+    @State private var selectedPet: Pet?
+    @State private var managedPet: Pet = .init()
+    @State private var showManagePet = false
 
     @Environment(\.notification) private var notificationManager: NotificationManager
-
+    
     var body: some View {
-        ScrollView {
-            VStack(spacing: .spacing8) {
-                petList
-                /// Showing the detail page only if the selected pet has values(i.e. not empty)
-                if selectedPet.name.isNotEmpty {
-                    PetDetail(pet: $selectedPet)
-                }
+        list
+            .toolbar(content: topActions)
+            .task(setupInitials)
+            .navigationTitle(Text(.petNameTitle))
+            .navigationDestination(item: $selectedPet) { pet in
+                PetDetail(pet: pet)
             }
-        }
-        .toolbar(content: addButtonToolbar)
-        .task(setupInitials)
-        .navigationTitle(Text(.petNameTitle))
-        .sheet(isPresented: $addPet, onDismiss: handleDismissAction, content: addPetView)
-        .onReceive(NotificationCenter.default.publisher(for: .openPetByName)) { note in
-            guard let raw = note.object as? String else { return }
-            selectPet(named: raw)
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .openAddPet)) { _ in
-            addPet = true
-        }
-        .overlay(content: noPetView)
-    }
-}
-
-// MARK: - UI Helpers
-private extension PetList {
-    var petList: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: .spacing20) {
-                ForEach(pets, id: \.name) { pet in
-                    Chip(
-                        title: pet.name,
-                        selected: selectedPet == pet
-                    ) {
-                        selectedPet = pet
-                        Logger
-                            .pets
-                            .info("PR: Pet Selected: \(pet.name)")
-                    }
-                }
+            .sheet(isPresented: $addPet, onDismiss: handleDismissAction, content: addPetView)
+            .sheet(isPresented: $showManagePet, onDismiss: dismissManagePet, content: managePetView)
+            .onReceive(NotificationCenter.default.publisher(for: .openPetByName)) { note in
+                guard let raw = note.object as? String else { return }
+                selectPet(named: raw)
             }
-        }
-        .padding(.horizontal, .spacing8)
+            .onReceive(NotificationCenter.default.publisher(for: .openAddPet)) { _ in
+                addPet = true
+            }
     }
     
-    @ToolbarContentBuilder
-    func addButtonToolbar() -> some ToolbarContent {
+    @ContentBuilder var list: some View {
+        if pets.isEmpty {
+            noPetAdded
+        } else {
+            List(pets) { pet in
+                HStack {
+                    cell(for: pet)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+                .contentShape(.rect)
+                .onTapGesture {
+                    selectedPet = pet
+                }
+                .accessibility(addTraits: [.isButton])
+                .accessibility(removeTraits: .isStaticText)
+            }
+        }
+    }
+    
+    func cell(for pet: Pet) -> some View {
+        VStack {
+            HStack {
+                CircleImage(
+                    avatarSize: .avatar80,
+                    imageData: pet.image,
+                    kind: pet.kind
+                )
+                
+                VStack(alignment: .leading) {
+                    Text(pet.name)
+                        .font(.title2)
+                        .bold()
+                    
+                    if let breed = pet.breed,
+                       breed.isNotEmpty {
+                        Text(breed)
+                            .font(.callout)
+                    } else {
+                        Button {
+                            openManagePet(for: pet)
+                        } label: {
+                            Text(.petBreedAdd)
+                                .font(.caption)
+                                .foregroundStyle(.gray)
+                                .opacity(0.7)
+                                .padding(.spacing4)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .stroke(style: StrokeStyle(lineWidth: 1, dash: [4]))
+                                        .foregroundStyle(.gray.opacity(0.7))
+                                }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    
+                    Text(birthdayTitle(for: pet))
+                        .font(.footnote)
+                }
+            }
+        }
+    }
+    
+    @ContentBuilder
+    func addPetView() -> some View {
+        AddPet()
+            .notification(notificationManager)
+    }
+
+    @ContentBuilder
+    func managePetView() -> some View {
+        ChangePetDetails(pet: $managedPet)
+            .presentationCornerRadius(.sheetCornerRadius25)
+            .presentationDragIndicator(.hidden)
+            .interactiveDismissDisabled()
+    }
+    
+    func birthdayTitle(for pet: Pet) -> String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month], from: pet.birthday, to: .now)
+        let years = components.year ?? .zero
+        let months = components.month ?? .zero
+        
+        if years <= .zero {
+            return String(localized: "pet_birthday_months \(months)")
+        } else {
+            return String(localized: "pet_birthday_years \(years)")
+        }
+    }
+    
+    var noPetAdded: some View {
+        ContentUnavailableView(
+            label: {
+                Label {
+                    Text(.petNoPet)
+                } icon: {
+                    Image(systemName: "pawprint.circle")
+                }
+            },
+            actions: {
+                Button {
+                    addPet.toggle()
+                } label: {
+                    Text(.petAddPet)
+                }
+                .buttonStyle(.bordered)
+                .tint(.accent)
+            }
+        )
+    }
+    
+    @ContentBuilder
+    func topActions() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             if pets.isNotEmpty {
                 Button {
@@ -84,43 +171,12 @@ private extension PetList {
             }
         }
     }
-    
-    @ViewBuilder
-    func addPetView() -> some View {
-        AddPet()
-            .notification(notificationManager)
-    }
-
-    @ViewBuilder
-    func noPetView() -> some View {
-        if pets.isEmpty {
-            ContentUnavailableView(
-                label: {
-                    Label {
-                        Text(.petNoPet)
-                    } icon: {
-                        Image(systemName: "pawprint.circle")
-                    }
-                },
-                actions: {
-                    Button {
-                        addPet.toggle()
-                    } label: {
-                        Text(.petAddPet)
-                    }
-                    .buttonStyle(.bordered)
-                    .tint(.accent)
-                }
-            )
-        }
-    }
 }
 
 // MARK: - Helper Functions
 private extension PetList {
     
     func setupInitials() async {
-        await definePet()
         logDuplicateNamesIfAny()
     }
     
@@ -161,33 +217,43 @@ private extension PetList {
             Logger.pets.info("PR: Deep link (slug) selected pet: \(slugged.name)")
         }
     }
-    
-    func definePet() async {
-        selectedPet = pets.first ?? .init()
-        Logger
-            .pets
-            .debug("Pet Amount: \(pets.count)")
+
+    func openManagePet(for pet: Pet) {
+        managedPet = pet
+        showManagePet = true
+    }
+
+    func dismissManagePet() {
+        managedPet = .init()
     }
     
     func handleDismissAction() {
         Logger.pets.info("Pet Add Sheet dismissed, context changed?: \(modelContext.hasChanges)")
         Logger.pets.info("Pet Count: \(pets.count)")
-        /// If we have a new pet after there was none, or the new pet added and sorted via name
-        /// we would like to switch first pet into the arrays first item.
-        if pets.isNotEmpty,
-           let firstPet = pets.first {
-            selectedPet = firstPet
-        }
         logDuplicateNamesIfAny()
     }
 }
 
+private extension CGFloat {
+    static let avatar80: Self = 80
+}
+
 #if DEBUG
-#Preview {
+#Preview("Multiple Pets") {
     NavigationStack {
         PetList()
             .modelContainer(DataController.previewContainer)
             .notification(NotificationManager.shared)
+            .navigationTitle(Text("Pets"))
+    }
+}
+
+#Preview("Empty Pets") {
+    NavigationStack {
+        PetList()
+            .modelContainer(DataController.emptyContainer)
+            .notification(NotificationManager.shared)
+            .navigationTitle(Text("Pets"))
     }
 }
 #endif

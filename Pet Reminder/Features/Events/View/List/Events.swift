@@ -7,13 +7,10 @@
 //
 
 import SwiftUI
-import Foundation
-import EventKit
 import Shared
 
 struct Events: View {
     @Environment(EventManager.self) private var manager
-    @State private var dates: [Date] = []
 
     var body: some View {
         if manager.status == .authorized {
@@ -25,7 +22,6 @@ struct Events: View {
                     .environment(manager)
                     .transition(.slide)
             }
-            .onAppear(perform: getEventDates)
             .refreshable(action: reloadEvents)
         }
     }
@@ -33,17 +29,10 @@ struct Events: View {
 
 // MARK: - Helpers
 private extension Events {
-    
+
     func reloadEvents() async {
         await manager.reloadEvents()
     }
-    
-    func getEventDates() {
-        let events = manager.events
-        let eventDates = events.compactMap(\.startDate)
-        self.dates = eventDates.removeDuplicates().sorted()
-    }
-    
 }
 
 #if DEBUG

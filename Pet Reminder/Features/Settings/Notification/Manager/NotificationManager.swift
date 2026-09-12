@@ -38,7 +38,7 @@ class NotificationManager {
 
     typealias AuthorizationStatusProvider = () async -> UNAuthorizationStatus
 
-    enum AuthorizationStatus: String {
+    enum AuthorizationStatus: String, Equatable {
         case authorized
         case denied
         case notDetermined
@@ -134,6 +134,67 @@ class NotificationManager {
         notifications = await notificationCenter.pendingNotificationRequests()
     }
 
+    /// Updates pending notification titles and bodies using the app's current localization.
+    func refreshNotificationLocalizations(for pets: [Pet]) async throws {
+        let pendingRequests = await notificationCenter.pendingNotificationRequests()
+        let requestsByIdentifier = Dictionary(
+            uniqueKeysWithValues: pendingRequests.map { ($0.identifier, $0) }
+        )
+        let types: [NotificationType] = [.morning, .evening, .birthday]
+
+        for pet in pets {
+            for type in types {
+                let identifier = Strings.notificationIdentifier(pet.name, type.rawValue)
+                guard let existingRequest = requestsByIdentifier[identifier],
+                      let content = existingRequest.content.mutableCopy() as? UNMutableNotificationContent else {
+                    continue
+                }
+
+                content.title = String(localized: .notificationTitle)
+                content.body = notificationBody(for: pet.name, type: type)
+
+                let replacement = UNNotificationRequest(
+                    identifier: identifier,
+                    content: content,
+                    trigger: existingRequest.trigger
+                )
+                try await notificationCenter.add(replacement)
+            }
+        }
+    }
+
+    /// Replaces name-based notification identifiers and content while preserving their triggers.
+    func renameNotifications(from oldName: String, to newName: String) async throws {
+        guard oldName != newName else { return }
+
+        let pendingRequests = await notificationCenter.pendingNotificationRequests()
+        let types: [NotificationType] = [.morning, .evening, .birthday]
+        var oldIdentifiers: [String] = []
+
+        for type in types {
+            let oldIdentifier = Strings.notificationIdentifier(oldName, type.rawValue)
+            guard let existingRequest = pendingRequests.first(where: { $0.identifier == oldIdentifier }) else {
+                continue
+            }
+
+            guard let content = existingRequest.content.mutableCopy() as? UNMutableNotificationContent else {
+                continue
+            }
+            content.body = notificationBody(for: newName, type: type)
+
+            let replacement = UNNotificationRequest(
+                identifier: Strings.notificationIdentifier(newName, type.rawValue),
+                content: content,
+                trigger: existingRequest.trigger
+            )
+            try await notificationCenter.add(replacement)
+            oldIdentifiers.append(oldIdentifier)
+        }
+
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: oldIdentifiers)
+        notificationCenter.removeDeliveredNotifications(withIdentifiers: oldIdentifiers)
+    }
+
     // MARK: - Notification Creation
 
     /// Creates notifications for a pet based on its feed selection and provided times.
@@ -209,12 +270,12 @@ extension NotificationManager {
 
         switch type {
         case .birthday:
-            content.body = String(localized: .notificationBirthdayContent(petName))
+            content.body = notificationBody(for: petName, type: type)
             dateComponents.day = calendar.component(.day, from: date)
             dateComponents.month = calendar.component(.month, from: date)
             dateComponents.hour = 0; dateComponents.minute = 0; dateComponents.second = 0
         default:
-            content.body = String(localized: .notificationContent(petName))
+            content.body = notificationBody(for: petName, type: type)
             dateComponents.hour = calendar.component(.hour, from: date)
             dateComponents.minute = calendar.component(.minute, from: date)
         }
@@ -230,6 +291,15 @@ extension NotificationManager {
         )
 
         try await notificationCenter.add(request)
+    }
+
+    private func notificationBody(for petName: String, type: NotificationType) -> String {
+        switch type {
+        case .birthday:
+            String(localized: .notificationBirthdayContent(petName))
+        case .morning, .evening:
+            String(localized: .notificationContent(petName))
+        }
     }
 }
 

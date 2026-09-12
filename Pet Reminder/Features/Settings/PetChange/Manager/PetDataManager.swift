@@ -22,12 +22,13 @@ class PetDataManager {
         case failed
     }
 
-    enum PhotoMode {
+    enum PhotoMode: Equatable {
         case none
         case some(data: Data?)
     }
 
     var name = String.empty
+    var breed = String.empty
     var birthday = Date()
     var selection: FeedSelection = .both
     var morningDate: Date = .eightAM
@@ -35,15 +36,7 @@ class PetDataManager {
     var showImagePicker = false
     var kind: Kind = .other
 
-    var petImageData: Data? {
-        didSet {
-            // Optional: downsample/compress large images before keeping them in memory/storage
-            if let data = petImageData,
-               let processed = ImageDownsampling.downsampleIfNeeded(data: data, maxDimension: 1024, jpegQuality: 0.8) {
-                petImageData = processed
-            }
-        }
-    }
+    var petImageData: Data?
     var petImage: UIImage?
 
     var notificationManager = NotificationManager.shared
@@ -74,6 +67,7 @@ class PetDataManager {
         self.birthday = pet.birthday
         self.name = pet.name
         self.selection = pet.feedSelection
+        self.breed = pet.breed ?? String.empty
         self.kind = pet.kind
 
         if let image = pet.image {

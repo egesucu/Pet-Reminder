@@ -8,61 +8,37 @@
 
 import SwiftUI
 import Shared
-import SwiftData
 
 struct PreviousFeedsSection: View {
-    var feeds: [Feed]?
-
-    var previousFeeds: [Feed] {
-        feeds?
-            .filter { !Calendar.current.isDateInToday(
-                $0.feedDate ?? .now
-            )
-            } ?? []
-    }
+    let records: [FeedDayRecord]
 
     var body: some View {
-        if previousFeeds.isEmpty {
-            Text(.noFeedContent)
-        } else {
-            ForEach(previousFeeds, id: \Feed.id) { feed in
-                if let morning = feed.morningFedStamp {
-                    HStack {
-                        Row(
-                            imageName: "sun.max.fill",
-                            content: morning.formatted(
-                                date: .abbreviated,
-                                time: .shortened
-                            ),
-                            type: .morning
-                        )
-                        Spacer()
-                    }
-                }
-                if let evening = feed.eveningFedStamp {
-                    HStack {
-                        Spacer()
-                        Row(
-                            imageName: "moon.circle.fill",
-                            content: evening.formatted(
-                                date: .abbreviated,
-                                time: .shortened
-                            ),
-                            type: .evening
-                        )
+        VStack(alignment: .leading, spacing: .spacing12) {
+            Text("PREVIOUS", comment: "Heading for previous feeding history records.")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+            if records.isEmpty {
+                FeedHistoryEmptyState(
+                    systemImage: "clock.arrow.circlepath",
+                    title: "No previous feeds",
+                    message: "Older completed feeds will appear here."
+                )
+            } else {
+                VStack(spacing: .spacing12) {
+                    ForEach(records) { record in
+                        FeedDayCard(record: record, showsRelativeDate: false)
                     }
                 }
             }
-            .padding(.horizontal)
         }
     }
 }
 
 #if DEBUG
 #Preview {
-    @Previewable var feeds: [Feed] = Feed.previews
-
-    PreviousFeedsSection(feeds: feeds)
-        .modelContainer(DataController.previewContainer)
+    PreviousFeedsSection(
+        records: FeedDayRecord.makeRecords(from: Feed.previews)
+    )
 }
 #endif

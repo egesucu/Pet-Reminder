@@ -13,7 +13,9 @@ import OSLog
 import Shared
 
 struct PetNameTextField: View {
-    @Query var pets: [Pet]
+    @Environment(\.modelContext) private var modelContext
+
+    @Query private var pets: [Pet]
     
     @Binding var model: AddPet.Model
 
@@ -23,8 +25,7 @@ struct PetNameTextField: View {
         VStack(alignment: .leading, spacing: .spacing16) {
             Text(.startNameLabel)
                 .foregroundStyle(Color.label)
-                .font(.title2)
-                .bold()
+                .font(.headline)
 
             TextField(
                 Strings.doggo,
@@ -70,28 +71,30 @@ struct PetNameTextField: View {
                 .lineLimit(20)
         }
     }
+    
 
     private func check(name: String) {
-        let removedSpaceName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        Logger.pets.info("Name is: \(removedSpaceName)")
+        let cleanedName = Pet.cleanedName(for: name)
+        Logger.pets.info("Name is: \(cleanedName)")
 
-        model.nameIsValid = removedSpaceName.isNotEmpty
+        model.nameIsValid = cleanedName.isNotEmpty
 
-        guard removedSpaceName.isNotEmpty else {
+        guard cleanedName.isNotEmpty else {
             model.petExists = false
             return
         }
 
-        let normalizedInput = removedSpaceName
-            .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
-            .lowercased()
+        model.petExists = exactNameExists(cleanedName) || pets.contains { existingPet in
+            existingPet.hasNameMatching(cleanedName)
+        }
+    }
 
-        model.petExists = pets.contains { existingPet in
-            let normalizedExisting = existingPet.name
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
-                .lowercased()
-            return normalizedExisting == normalizedInput
+    private func exactNameExists(_ name: String) -> Bool {
+        do {
+            return try modelContext.fetchCount(Pet.exactNameFetchDescriptor(for: name)) > 0
+        } catch {
+            Logger.pets.error("Could not check existing pet name: \(error.localizedDescription)")
+            return false
         }
     }
 }

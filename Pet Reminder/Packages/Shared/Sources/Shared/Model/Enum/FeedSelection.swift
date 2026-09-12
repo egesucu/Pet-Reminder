@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-public enum FeedSelection: Codable, CaseIterable, CustomStringConvertible {
+public enum FeedSelection: Codable, CaseIterable, Equatable, CustomStringConvertible {
     case morning
     case evening
     case both

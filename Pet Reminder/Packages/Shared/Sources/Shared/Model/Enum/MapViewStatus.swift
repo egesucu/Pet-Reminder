@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum MapViewStatus: String {
+public enum MapViewStatus: String, Equatable {
     case locationNotAllowed
     case none
     case authorized

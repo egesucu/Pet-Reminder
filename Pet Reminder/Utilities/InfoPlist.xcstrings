@@ -5,9 +5,33 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pet Reminder"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Pet Reminder"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pet Reminder"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet Reminder"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
             "value" : "Pet Reminder"
           }
         },
@@ -22,10 +46,34 @@
     "NSCalendarsFullAccessUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Diese Berechtigung wird benötigt, um deinen Kalender und deine Ereignisse zu lesen und zu bearbeiten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "We need this permission to read/write your calendar/events."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Necesitamos este permiso para leer y modificar el calendario y los eventos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous avons besoin de cette autorisation pour consulter et modifier votre calendrier et vos événements."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa autorizzazione è necessaria per leggere e modificare il calendario e gli eventi."
           }
         },
         "tr" : {
@@ -39,10 +87,34 @@
     "NSLocationWhenInUseUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Diese Berechtigung wird benötigt, um dir Tierarztpraxen in deiner Nähe anzuzeigen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "We need this permission to show you nearby vets."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Necesitamos este permiso para mostrarte veterinarios cercanos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous avons besoin de cette autorisation pour vous montrer les vétérinaires à proximité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa autorizzazione è necessaria per mostrare le cliniche veterinarie nelle vicinanze."
           }
         },
         "tr" : {
@@ -54,5 +126,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.3"
 }

@@ -10,41 +10,53 @@ import SwiftData
 
 public enum PetMigrationPlan: SchemaMigrationPlan {
     public static var stages: [MigrationStage] {
-        [migrateV1toV2, migrateV2toV3]
+        [migrateV1toV2, migrateV2toV3, migrateV3toV4]
     }
 
     public static var schemas: [any VersionedSchema.Type] {
-        [PetSchemaV1.self, PetSchemaV2.self, PetSchemaV3.self]
+        [PetSchemaV1.self, PetSchemaV2.self, PetSchemaV3.self, PetSchemaV4.self]
     }
 
     static let migrateV1toV2 = MigrationStage.custom(
         fromVersion: PetSchemaV1.self,
         toVersion: PetSchemaV2.self,
         willMigrate: { context in
-            let users = try context.fetch(FetchDescriptor<PetSchemaV1.Pet>())
-            /*
-             We want to remove choice & make sure a feed selection is present.
-             This removes nil option from old db & set a selection if previously
-             given by choice value.
-             */
-            for user in users where user.feedSelection == nil {
-                let choice = user.choice
-                switch choice {
-                case 0: // morning
-                    user.feedSelection = .morning
-                case 1:
-                    user.feedSelection = .evening
-                default:
-                    user.feedSelection = .both
+            let pets = try context.fetch(FetchDescriptor<PetSchemaV1.Pet>())
+
+            // Carry an existing selection through the legacy choice column.
+            for pet in pets {
+                switch pet.feedSelection {
+                case .morning:
+                    pet.choice = 0
+                case .evening:
+                    pet.choice = 1
+                case .both:
+                    pet.choice = 2
+                case nil:
+                    break
                 }
             }
 
             try context.save()
-        }, didMigrate: nil
+        },
+        didMigrate: { context in
+            let pets = try context.fetch(FetchDescriptor<PetSchemaV2.Pet>())
+
+            for pet in pets {
+                pet.feedSelection = .fromLegacyChoice(pet.choice)
+            }
+
+            try context.save()
+        }
     )
 
     static let migrateV2toV3 = MigrationStage.lightweight(
         fromVersion: PetSchemaV2.self,
         toVersion: PetSchemaV3.self
+    )
+
+    static let migrateV3toV4 = MigrationStage.lightweight(
+        fromVersion: PetSchemaV3.self,
+        toVersion: PetSchemaV4.self
     )
 }

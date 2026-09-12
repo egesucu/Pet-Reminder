@@ -27,4 +27,14 @@ class DataController {
             fatalError("Failed to create model container for previewing: \(error.localizedDescription)")
         }
     }()
+    
+    static let emptyContainer: ModelContainer = {
+        do {
+            let config = ModelConfiguration(isStoredInMemoryOnly: true)
+            let container = try ModelContainer(for: Pet.self, configurations: config)
+            return container
+        } catch {
+            fatalError("Failed to create model container for previewing: \(error.localizedDescription)")
+        }
+    }()
 }

@@ -79,7 +79,7 @@ private extension FindVet {
         }
     }
     
-    @ViewBuilder var locationNotAvailable: some View {
+    @ContentBuilder var locationNotAvailable: some View {
         if mapViewStatus == .locationNotAllowed && searchedLocations.isEmpty {
             ContentUnavailableView {
                 Label {

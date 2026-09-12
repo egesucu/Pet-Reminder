@@ -21,6 +21,7 @@ public enum PetSchemaV2: VersionedSchema {
     public final class Pet {
         public var name: String = String.empty
         public var birthday: Date = Date.now
+        var choice: Int = 0
         public var createdAt: Date?
         public var image: Data?
         // Store a stable, nonlocalized raw value to avoid actor isolation issues.

@@ -13,43 +13,30 @@ import Shared
 
 struct AddPet: View {
 
-    enum Step: Hashable {
-        case name
-        case birthday
-        case kindAndImage
-        case notifications
-    }
+    @Environment(\.notification) private var notificationManager: NotificationManager
+
+    @Environment(\.modelContext) private var modelContext
+
+    @Environment(\.dismiss) private var dismiss
     
-    @Environment(\.notification)
-    private var notificationManager: NotificationManager
-
-    @Environment(\.modelContext)
-    private var modelContext
-
-    @Environment(\.dismiss)
-    private var dismiss
-
     @State private var pet: Pet = .init()
     @State private var model: Model = .init()
 
-    // Navigation
-    @State private var path: [Step] = [] // empty path = first step
-
-    private var currentStep: Step {
-        path.last ?? .name
-    }
-
     var body: some View {
-        NavigationStack(path: $path) {
-            stepView(for: .name)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: .spacing24) {
+                    PetNameTextField(model: $model)
+                    PetBirthday(model: $model)
+                    PetImageSelection(model: $model)
+                    NotificationSelect(model: $model)
+                    saveButton
+                }
+                .padding(.horizontal)
                 .navigationTitle(.addPet)
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar { leadingCancel; trailingNextOrSave }
-                .navigationDestination(for: Step.self) { step in
-                    stepView(for: step)
-                        .navigationBarBackButtonHidden(true)
-                        .toolbar { leadingBack; trailingNextOrSave }
-                }
+                .toolbar { leadingToolbar }
+            }
         }
         .sensoryFeedback(.error, trigger: model.saveState == .failure)
         .sensoryFeedback(.success, trigger: model.saveState == .success)
@@ -67,7 +54,9 @@ struct AddPet: View {
             .tint(Color.red)
             Button(.retry) {
                 model.saveState = .none
-                save()
+                Task {
+                    await persistPet()
+                }
             }
             .tint(Color.label)
         }
@@ -91,7 +80,7 @@ extension AddPet {
     class Model {
         
         /// Tracks the result of a save attempt.
-        enum SaveState {
+        enum SaveState: Equatable {
             case none, success, failure
         }
         
@@ -101,6 +90,8 @@ extension AddPet {
         var birthday: Date = .now
         /// Selected pet kind.
         var kind: Kind = .dog
+        /// Optional breed information of the pet
+        var breed: String?
         /// Raw image data from the picker.
         var selectedImageData: Data?
         /// Which feed reminders are enabled.
@@ -122,6 +113,7 @@ extension AddPet {
             birthday: Date = .now,
             selectedImageData: Data? = nil,
             kind: Kind = .dog,
+            breed: String? = nil,
             feedSelection: FeedSelection = .both,
             morningFeed: Date = .eightAM,
             eveningFeed: Date = .eightPM,
@@ -131,6 +123,7 @@ extension AddPet {
             self.name = name
             self.birthday = birthday
             self.kind = kind
+            self.breed = breed
             self.selectedImageData = selectedImageData
             self.feedSelection = feedSelection
             self.morningFeed = morningFeed
@@ -143,54 +136,18 @@ extension AddPet {
         var petCanBeSaved: Bool {
             nameIsValid && !petExists
         }
-    }
-}
 
-
-// MARK: - Subviews
-private extension AddPet {
-    @ViewBuilder
-    func stepView(for step: Step) -> some View {
-        switch step {
-        case .name:
-            PetNameTextField(model: $model)
-                .padding(.horizontal, .spacing20)
-
-        case .birthday:
-            PetBirthday(model: $model)
-                .padding(.horizontal, .spacing20)
-
-        case .kindAndImage:
-            VStack(spacing: .spacing20) {
-                Text(.petKindText).font(.headline).foregroundStyle(.primary)
-                Picker(selection: $model.kind) {
-                    ForEach(Kind.allCases, id: \.self) { kind in
-                        Text(verbatim: kind.localizedName)
-                    }
-                } label: {
-                    Text(.petKindText)
-                }
-                .pickerStyle(.segmented)
-
-                PetImageSelection(model: $model)
-            }
-            .padding(.horizontal, .spacing20)
-
-        case .notifications:
-            VStack(spacing: .spacing8) {
-                NotificationSelect(model: $model)
-                PetNotificationSelection(model: $model)
-            }
-            .padding(.horizontal, .spacing20)
+        func updateBreed(from input: String) {
+            let cleanedBreed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+            breed = cleanedBreed.isEmpty ? nil : cleanedBreed
         }
     }
-
 }
 
 // MARK: - Toolbars
 private extension AddPet {
-    @ToolbarContentBuilder
-    var leadingCancel: some ToolbarContent {
+    @ContentBuilder
+    var leadingToolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button(role: .cancel, action: dismiss.callAsFunction) {
                 Image(systemName: "xmark")
@@ -199,74 +156,41 @@ private extension AddPet {
         }
     }
 
-    @ToolbarContentBuilder
-    var leadingBack: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                _ = path.popLast()
-            } label: {
-                Label(.back, systemImage: "chevron.left")
-            }
-        }
-    }
-
-    @ToolbarContentBuilder
-    var trailingNextOrSave: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                if currentStep == .notifications {
-                    save()
-                } else {
-                    goNext()
-                }
-            } label: {
-                if currentStep == .notifications {
-                    Label(.save, systemImage: model.petCanBeSaved ? "square.and.arrow.down.fill" : "square.and.arrow.down")
-                } else {
-                    Label(.next, systemImage: "arrow.right")
+    @ContentBuilder
+    var saveButton: some View {
+        HStack {
+            Spacer()
+            
+            Button(.save, systemImage: "square.and.arrow.down.fill", role: .confirm) {
+                Task {
+                    await persistPet()
                 }
             }
-            .disabled(currentStep == .name && !model.petCanBeSaved)
+            .buttonStyle(.glassProminent)
+            .tint(.accent)
+            .disabled(!model.petCanBeSaved)
+            
+            Spacer()
         }
     }
 }
 
 // MARK: - Actions
 private extension AddPet {
-    // MARK: - Nav helpers
-
-    func goNext() {
-        switch currentStep {
-        case .name:
-            path.append(.birthday)
-        case .birthday:
-            path.append(.kindAndImage)
-        case .kindAndImage:
-            path.append(.notifications)
-        case .notifications:
-            break
-        }
-    }
 
     // MARK: - Save
 
-    func save() {
-        Task {
-            await persistPet()
-        }
-    }
-
     func persistPet() async {
-        pet.name = pet.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanedName = Pet.cleanedName(for: model.name)
 
-        guard model.petCanBeSaved, model.name.isNotEmpty else {
-            // bounce back to first step if somehow reached here
-            path = []
+        guard model.petCanBeSaved, cleanedName.isNotEmpty else {
             return
         }
 
-        pet.name = model.name
+        model.name = cleanedName
+        pet.name = cleanedName
         pet.kind = model.kind
+        pet.breed = model.breed
         pet.birthday = model.birthday
         pet.feedSelection = model.feedSelection
         pet.image = model.selectedImageData
@@ -276,15 +200,13 @@ private extension AddPet {
         }
 
         do {
-            try await createNotifications()
             modelContext.insert(pet)
             try modelContext.save()
+            try await createNotifications()
             model.saveState = .success
         } catch {
             Logger.pets.error("Could not save the pet: \(error.localizedDescription)")
             model.saveState = .failure
-            // Optionally take user back to name step to fix duplicates
-            path = []
         }
     }
 
@@ -301,6 +223,10 @@ private extension AddPet {
 
         try await notificationManager.createNotification(of: pet.name, with: .birthday, date: pet.birthday)
     }
+}
+
+private extension CGFloat {
+    static let customProgressOffset: Self = 30
 }
 
 #if DEBUG

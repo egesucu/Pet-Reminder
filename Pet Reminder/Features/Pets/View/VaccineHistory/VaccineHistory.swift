@@ -12,19 +12,13 @@
 import SwiftUI
 import SwiftData
 import Shared
-import OSLog
 
 /// A SwiftUI view that presents a list of vaccines associated with a pet,
 /// supporting addition and deletion of vaccine records.
 struct VaccineHistory: View {
 
-    /// The environment-provided dismiss action for closing the view.
-    @Environment(\.dismiss) var dismiss
-    /// The environment-provided model context for data operations.
-    @Environment(\.modelContext) private var modelContext
-
     /// The pet whose vaccine history is displayed and modified.
-    @Binding var pet: Pet
+    let pet: Pet
 
     /// Controls the presentation of the Add Vaccine sheet.
     @State private var shouldAddVaccine = false
@@ -34,7 +28,7 @@ struct VaccineHistory: View {
     /// Returns a formatted view representing a single vaccine entry.
     /// - Parameter vaccine: A Vaccine object to display.
     /// - Returns: A view showing the vaccine's name and date.
-    @ViewBuilder
+    @ContentBuilder
     func vaccineView(_ vaccine: Vaccine) -> some View {
         VStack(alignment: .leading, spacing: .spacing8) {
             Label(vaccine.name, systemImage: "syringe.fill")
@@ -46,38 +40,33 @@ struct VaccineHistory: View {
         }
     }
 
-    /// The main content and navigation stack for the vaccine history,
+    /// The main content for the vaccine history,
     /// including a list of vaccines and controls for adding/removing entries.
     var body: some View {
-        NavigationStack {
-            VStack {
-                if let vaccines = pet.vaccines {
-                    List {
-                        ForEach(vaccines, content: vaccineView)
-                            .onDelete(perform: removeVaccine)
-                    }
-                    .listStyle(.automatic)
-                } else {
-                    Text(.noVaccineTitle)
+        VStack {
+            if let vaccines = pet.vaccines {
+                List {
+                    ForEach(vaccines, content: vaccineView)
+                        .onDelete(perform: removeVaccine)
                 }
+                .listStyle(.automatic)
+            } else {
+                Text(.noVaccineTitle)
             }
-            .toolbar(content: vaccineToolbars)
-            .navigationTitle(Text(.vaccineHistoryTitle))
-            .sheet(isPresented: $shouldAddVaccine) {
-                AddVaccine(pet: $pet, vaccineName: $vaccineName)
-                    .presentationDetents([.fraction(.compactFraction)])
-            }
+        }
+        .toolbar(content: vaccineToolbars)
+        .navigationTitle(Text(.vaccineHistoryTitle))
+        .sheet(
+            isPresented: $shouldAddVaccine,
+            onDismiss: clearVaccineName
+        ) {
+            AddVaccine(pet: pet, vaccineName: $vaccineName)
+                .presentationDetents([.fraction(.compactFraction)])
         }
     }
 
-    /// Builds toolbar items for dismissing or adding vaccines.
-    @ToolbarContentBuilder func vaccineToolbars() -> some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            Button(role: .cancel, action: dismiss.callAsFunction) {
-                Image(systemName: "xmark")
-            }
-            .tint(.red)
-        }
+    /// Builds toolbar items for adding vaccines.
+    @ContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button(role: .confirm, action: addVaccine) {
                 Image(systemName: "plus")
@@ -91,6 +80,10 @@ struct VaccineHistory: View {
     /// Presents the Add Vaccine sheet when called.
     private func addVaccine() {
         shouldAddVaccine.toggle()
+    }
+
+    private func clearVaccineName() {
+        vaccineName = .empty
     }
 
     /// Deletes vaccines at the provided offsets from the pet's vaccine list.
@@ -107,10 +100,8 @@ struct VaccineHistory: View {
 #if DEBUG
 /// Preview for VaccineHistoryView using sample pet data.
 #Preview("Vaccine List") {
-    @Previewable @State var pet: Pet = .preview
-
     NavigationStack {
-        VaccineHistory(pet: $pet)
+        VaccineHistory(pet: .preview)
             .modelContainer(DataController.previewContainer)
     }
 }

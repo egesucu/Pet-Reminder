@@ -8,62 +8,138 @@
 
 import SwiftUI
 import Shared
-import SwiftData
 
 struct FeedHistory: View {
+    let feeds: [Feed]?
+    let feedSelection: FeedSelection
 
-    @Environment(\.dismiss) var dismiss
-    var feeds: [Feed]?
+    init(feeds: [Feed]?, feedSelection: FeedSelection = .both) {
+        self.feeds = feeds
+        self.feedSelection = feedSelection
+    }
 
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading, spacing: .spacing16) {
-                ScrollView {
-                    Text(.today)
-                        .bold()
-                        .font(.title2)
-                        .padding(.leading, .spacing8)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    CurrentFeedSection(feeds: feeds)
-                    Text(.previousTitle)
-                        .bold()
-                        .font(.title2)
-                        .padding(.top, .spacing8)
-                        .padding(.leading, .spacing8)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    PreviousFeedsSection(feeds: feeds)
-                }
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: .spacing24) {
+                FeedInsightsSection(records: records, feedSelection: feedSelection)
+                CurrentFeedSection(record: todayRecord)
+                PreviousFeedsSection(records: previousRecords)
             }
-            .scrollIndicators(.hidden)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(role: .cancel, action: dismiss.callAsFunction) {
-                        Image(systemName: "xmark")
-                    }
-                    .tint(.red)
-                }
-            }
-            .scrollContentBackground(.hidden)
-            .background(.regularMaterial)
-            .navigationTitle(Text(.feedHistoryTitle))
+            .padding(.horizontal, .spacing20)
+            .padding(.top, .spacing16)
+            .padding(.bottom, .spacing32)
         }
-        .presentationBackground(.clear)
-        .presentationCornerRadius(.radius24)
+        .scrollIndicators(.hidden)
+        .background(Color(uiColor: .systemGroupedBackground))
+        .navigationTitle(Text(.feedHistoryTitle))
+    }
+
+    private var records: [FeedDayRecord] {
+        FeedDayRecord.makeRecords(from: feeds ?? [])
+    }
+
+    private var todayRecord: FeedDayRecord? {
+        records.first { Calendar.current.isDateInToday($0.date) }
+    }
+
+    private var previousRecords: [FeedDayRecord] {
+        records.filter { !Calendar.current.isDateInToday($0.date) }
+    }
+}
+
+struct FeedDayRecord: Identifiable {
+    let date: Date
+    let morningTime: Date?
+    let eveningTime: Date?
+
+    var id: Date { date }
+
+    var completedCount: Int {
+        [morningTime, eveningTime].compactMap { $0 }.count
+    }
+
+    func completedCount(for selection: FeedSelection) -> Int {
+        switch selection {
+        case .morning:
+            morningTime == nil ? 0 : 1
+        case .evening:
+            eveningTime == nil ? 0 : 1
+        case .both:
+            completedCount
+        }
+    }
+
+    static func makeRecords(from feeds: [Feed]) -> [FeedDayRecord] {
+        let calendar = Calendar.current
+        let groupedFeeds = Dictionary(grouping: feeds) { feed in
+            calendar.startOfDay(
+                for: feed.feedDate ?? feed.morningFedStamp ?? feed.eveningFedStamp ?? .distantPast
+            )
+        }
+
+        return groupedFeeds
+            .filter { $0.key != calendar.startOfDay(for: .distantPast) }
+            .map { date, feeds in
+                FeedDayRecord(
+                    date: date,
+                    morningTime: feeds.compactMap(\.morningFedStamp).max(),
+                    eveningTime: feeds.compactMap(\.eveningFedStamp).max()
+                )
+            }
+            .filter { $0.completedCount > 0 }
+            .sorted { $0.date > $1.date }
     }
 }
 
 #if DEBUG
 #Preview {
     var feeds: [Feed] = Feed.previews
-    let todayFeed = Feed(
-        eveningFed: true,
-        eveningFedStamp: .eightPM,
-        feedDate: .now,
-        morningFed: true,
-        morningFedStamp: .eightAM
+    feeds.append(
+        Feed(
+            eveningFed: true,
+            eveningFedStamp: .eightPM,
+            feedDate: .now,
+            morningFed: true,
+            morningFedStamp: .eightAM
+        )
     )
-    feeds.append(todayFeed)
 
-    return FeedHistory(feeds: feeds)
+    return NavigationStack {
+        FeedHistory(feeds: feeds)
+    }
+}
+
+#Preview("More Data") {
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: .now)
+    let feeds = (0...50).compactMap { daysAgo -> Feed? in
+        guard let feedDate = calendar.date(byAdding: .day, value: -daysAgo, to: today),
+              let morningTime = calendar.date(bySettingHour: 8, minute: daysAgo % 60, second: 0, of: feedDate) else {
+            return nil
+        }
+
+        let hasEveningFeed = !daysAgo.isMultiple(of: 4)
+        let eveningTime = hasEveningFeed
+            ? calendar.date(bySettingHour: 20, minute: daysAgo % 60, second: 0, of: feedDate)
+            : nil
+
+        return Feed(
+            eveningFed: hasEveningFeed,
+            eveningFedStamp: eveningTime,
+            feedDate: feedDate,
+            morningFed: true,
+            morningFedStamp: morningTime
+        )
+    }
+
+    NavigationStack {
+        FeedHistory(feeds: feeds)
+    }
+}
+
+#Preview("Empty") {
+    NavigationStack {
+        FeedHistory(feeds: [])
+    }
 }
 #endif
