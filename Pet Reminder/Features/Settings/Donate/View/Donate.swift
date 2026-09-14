@@ -15,10 +15,7 @@ struct Donate: View {
     @State private var consumables: [Product] = []
     private let productIDs = [
         Strings.donateTeaID,
-        Strings.donateFoodID,
-        Strings.donateCoffeeID,
-        Strings.donateToyID,
-        Strings.donateFeastID
+        Strings.donateFoodID
     ]
 
     var body: some View {
@@ -95,12 +92,6 @@ private extension Donate {
             "tea-tip"
         case Strings.donateFoodID:
             "food-tip"
-        case Strings.donateCoffeeID:
-            "coffee-tip"
-        case Strings.donateToyID:
-            "toy-tip"
-        case Strings.donateFeastID:
-            "feast-tip"
         default:
             "default-other"
         }
