@@ -5,7 +5,7 @@ let package = Package(
     name: "Shared",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v26)
+        .iOS(.v27)
     ],
     products: [
         .library(
