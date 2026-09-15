@@ -15,17 +15,20 @@ struct Donate: View {
     @State private var consumables: [Product] = []
     private let productIDs = [
         Strings.donateTeaID,
-        Strings.donateFoodID
+        Strings.donateFoodID,
+        Strings.donateCoffeeID,
+        Strings.donateToyID,
+        Strings.donateFeastID
     ]
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .spacing16) {
-
+                
                 animalImage
-
+                
                 Text(.donateUsContext)
-
+                
                 Text(.donateUsComment)
 
                 products
@@ -39,7 +42,7 @@ struct Donate: View {
 
 // MARK: - Helper UI
 private extension Donate {
-
+    
     var animalImage: some View {
         HStack(spacing: .zero) {
             Spacer()
@@ -51,7 +54,7 @@ private extension Donate {
             Spacer()
         }
     }
-
+    
     var products: some View {
         LazyVStack(alignment: .leading, spacing: .spacing8) {
             ForEach(consumables) { product in
@@ -92,6 +95,12 @@ private extension Donate {
             "tea-tip"
         case Strings.donateFoodID:
             "food-tip"
+        case Strings.donateCoffeeID:
+            "coffee-tip"
+        case Strings.donateToyID:
+            "toy-tip"
+        case Strings.donateFeastID:
+            "feast-tip"
         default:
             "default-other"
         }
