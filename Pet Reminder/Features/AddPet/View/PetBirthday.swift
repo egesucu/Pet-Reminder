@@ -18,7 +18,7 @@ struct PetBirthday: View {
             Text(.birthdayAskLabel)
                 .font(.headline)
                 .foregroundStyle(Color.label)
-            
+
             DatePicker(
                 String(localized: .birthdayTitle),
                 selection: $model.birthday,
@@ -26,7 +26,7 @@ struct PetBirthday: View {
             )
             .labelsHidden()
             .tint(.green)
-            
+
             VStack(alignment: .center, spacing: .spacing20) {
                 Text(.birthdayInformation)
                     .font(.caption2)
@@ -39,7 +39,7 @@ struct PetBirthday: View {
 #if DEBUG
 #Preview {
     @Previewable @State var model: AddPet.Model = .init()
-    
+
     PetBirthday(model: $model)
         .padding(.horizontal)
 }

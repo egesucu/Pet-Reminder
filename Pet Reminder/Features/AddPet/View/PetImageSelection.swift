@@ -20,7 +20,7 @@ struct PetImageSelection: View {
             Text(.petKindText)
                 .font(.headline)
                 .foregroundStyle(.primary)
-            
+
             VStack(alignment: .center, spacing: .spacing12) {
                 Picker(selection: $model.kind) {
                     ForEach(Kind.allCases, id: \.self) { kind in
@@ -70,7 +70,7 @@ private extension PetImageSelection {
                 .clipShape(.rect(cornerRadius: .radius10))
         }
     }
-    
+
     func preview(for image: UIImage) -> some View {
         VStack(spacing: .spacing16) {
             Image(uiImage: image)
@@ -91,7 +91,7 @@ private extension PetImageSelection {
 #if DEBUG
 #Preview {
     @Previewable @State var model: AddPet.Model = .init()
-    
+
     PetImageSelection(model: $model)
         .padding(.horizontal)
 }

@@ -12,9 +12,9 @@ import OSLog
 import Shared
 
 struct PetList: View {
-    
+
     @Environment(\.modelContext) private var modelContext
-    
+
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
     @State private var addPet = false
@@ -23,7 +23,7 @@ struct PetList: View {
     @State private var showManagePet = false
 
     @Environment(\.notification) private var notificationManager: NotificationManager
-    
+
     var body: some View {
         list
             .toolbar(content: topActions)
@@ -42,7 +42,7 @@ struct PetList: View {
                 addPet = true
             }
     }
-    
+
     @ContentBuilder var list: some View {
         if pets.isEmpty {
             noPetAdded
@@ -62,7 +62,7 @@ struct PetList: View {
             }
         }
     }
-    
+
     func cell(for pet: Pet) -> some View {
         VStack {
             HStack {
@@ -71,12 +71,12 @@ struct PetList: View {
                     imageData: pet.image,
                     kind: pet.kind
                 )
-                
+
                 VStack(alignment: .leading) {
                     Text(pet.name)
                         .font(.title2)
                         .bold()
-                    
+
                     if let breed = pet.breed,
                        breed.isNotEmpty {
                         Text(breed)
@@ -98,14 +98,14 @@ struct PetList: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    
+
                     Text(birthdayTitle(for: pet))
                         .font(.footnote)
                 }
             }
         }
     }
-    
+
     @ContentBuilder
     func addPetView() -> some View {
         AddPet()
@@ -119,20 +119,20 @@ struct PetList: View {
             .presentationDragIndicator(.hidden)
             .interactiveDismissDisabled()
     }
-    
+
     func birthdayTitle(for pet: Pet) -> String {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: pet.birthday, to: .now)
         let years = components.year ?? .zero
         let months = components.month ?? .zero
-        
+
         if years <= .zero {
             return String(localized: "pet_birthday_months \(months)")
         } else {
             return String(localized: "pet_birthday_years \(years)")
         }
     }
-    
+
     var noPetAdded: some View {
         ContentUnavailableView(
             label: {
@@ -153,7 +153,7 @@ struct PetList: View {
             }
         )
     }
-    
+
     @ContentBuilder
     func topActions() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
@@ -175,11 +175,11 @@ struct PetList: View {
 
 // MARK: - Helper Functions
 private extension PetList {
-    
+
     func setupInitials() async {
         logDuplicateNamesIfAny()
     }
-    
+
     func logDuplicateNamesIfAny() {
         let names = pets.map(\.name)
         let duplicates = Dictionary(grouping: names, by: { $0 })
@@ -189,13 +189,13 @@ private extension PetList {
             Logger.pets.error("Duplicate pet names detected: \(duplicates.joined(separator: ", "))")
         }
     }
-    
+
     func slug(_ term: String) -> String {
         let folded = term.folding(options: .diacriticInsensitive, locale: .current).lowercased()
         let allowed = CharacterSet.alphanumerics
         return String(folded.unicodeScalars.filter { allowed.contains($0) })
     }
-    
+
     func selectPet(named raw: String) {
         if let exact = pets.first(
             where: {
@@ -226,7 +226,7 @@ private extension PetList {
     func dismissManagePet() {
         managedPet = .init()
     }
-    
+
     func handleDismissAction() {
         Logger.pets.info("Pet Add Sheet dismissed, context changed?: \(modelContext.hasChanges)")
         Logger.pets.info("Pet Count: \(pets.count)")

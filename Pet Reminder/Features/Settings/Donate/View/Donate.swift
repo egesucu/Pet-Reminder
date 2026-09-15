@@ -21,11 +21,11 @@ struct Donate: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .spacing16) {
-                
+
                 animalImage
-                
+
                 Text(.donateUsContext)
-                
+
                 Text(.donateUsComment)
 
                 products
@@ -39,7 +39,7 @@ struct Donate: View {
 
 // MARK: - Helper UI
 private extension Donate {
-    
+
     var animalImage: some View {
         HStack(spacing: .zero) {
             Spacer()
@@ -51,7 +51,7 @@ private extension Donate {
             Spacer()
         }
     }
-    
+
     var products: some View {
         LazyVStack(alignment: .leading, spacing: .spacing8) {
             ForEach(consumables) { product in

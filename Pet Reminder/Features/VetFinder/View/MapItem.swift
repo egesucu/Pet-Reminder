@@ -12,21 +12,21 @@ import Shared
 struct MapItem: View {
 
     @State private var presentApps = false
-    
+
     let location: Pin
 
     var body: some View {
         VStack(spacing: .spacing16) {
             HStack(spacing: .zero) {
                 Spacer()
-                
+
                 Text(location.name)
                     .bold()
                     .font(.title3)
-                
+
                 Spacer()
             }
-            
+
             if let phoneNumber = location.phoneNumber {
                 Text(phoneNumber)
                     .foregroundStyle(.accent)
@@ -36,7 +36,7 @@ struct MapItem: View {
                     }
                     .accessibilityAddTraits(.isLink)
             }
-            
+
             if let fullAdress = location.fullAdress {
                 Text(fullAdress)
                     .foregroundStyle(.blue)
@@ -63,11 +63,11 @@ struct MapItem: View {
 
 // MARK: Helpers
 private extension MapItem {
-    
+
     func openMapDetail() {
         presentApps.toggle()
     }
-    
+
     func callThePlace(with phoneNumber: String) {
         if let url = URL(string: "tel:\(phoneNumber)") {
             UIApplication.shared.open(url)
@@ -89,7 +89,6 @@ private extension MapItem {
 
     func handleThirdPartyMap(location: Pin, application: MapApplication) {
         guard let deeplinkURL = application.deeplinkURL else { return }
-
 
         UIApplication.shared.open(deeplinkURL) { success in
             let urlToOpen = success
@@ -125,11 +124,11 @@ let address = MKAddress(
 )
 
 #Preview {
-    
+
     let item = MKMapItem(location: coordinate, address: address)
     item.name = "Basilica Cistern"
     item.phoneNumber = "+90 212 512 15 70"
-    
+
     return Color
         .gray
         .ignoresSafeArea()

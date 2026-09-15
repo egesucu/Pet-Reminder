@@ -8,6 +8,7 @@ private final class EventStoreSpy: EventStoreProtocol, @unchecked Sendable {
     private let backingStore: EKEventStore
 
     var requestAccessResult = true
+    var saveShouldFail = false
     var stubEvents: [EKEvent] = []
     private(set) var storedCalendars: [EKCalendar]
     private(set) var savedCalendars: [EKCalendar] = []
@@ -53,6 +54,7 @@ private final class EventStoreSpy: EventStoreProtocol, @unchecked Sendable {
     }
 
     func save(_ event: EKEvent, span: EKSpan, commit: Bool) throws {
+        if saveShouldFail { throw NSError(domain: "EventStoreTests", code: 1) }
         savedEvents.append(event)
     }
 
@@ -97,7 +99,7 @@ struct EventManagerTests {
 
         let start = Date(timeIntervalSince1970: 10_000)
         let end = Date(timeIntervalSince1970: 20_000)
-        await sut.saveEvent(name: "Vet Visit", start: start, end: end, allDay: false)
+        try await sut.saveEvent(name: "Vet Visit", start: start, end: end, allDay: false)
 
         let savedEvent = try #require(store.savedEvents.first)
         let alarm = try #require(savedEvent.alarms?.first)
@@ -105,6 +107,22 @@ struct EventManagerTests {
         #expect(savedEvent.startDate == start)
         #expect(savedEvent.endDate == end)
         #expect(alarm.relativeOffset == -600)
+    }
+
+    @Test("Save errors and missing calendars propagate to the caller")
+    func saveFailures() async {
+        let store = EventStoreSpy(calendarTitles: ["Pet Reminder"])
+        store.saveShouldFail = true
+        let sut = EventManager(eventStore: store, authorizationStatusProvider: { .fullAccess })
+        await sut.reloadEvents()
+        await #expect(throws: (any Error).self) {
+            try await sut.saveEvent(name: "Vet", start: .now, end: .now, allDay: false)
+        }
+        #expect(store.savedEvents.isEmpty)
+        let empty = EventManager(eventStore: EventStoreSpy(), authorizationStatusProvider: { .fullAccess })
+        await #expect(throws: EventSaveError.self) {
+            try await empty.saveEvent(name: "Vet", start: .now, end: .now, allDay: false)
+        }
     }
 
     @Test("Denied calendar access does not load calendars")

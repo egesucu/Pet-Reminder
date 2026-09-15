@@ -51,7 +51,7 @@ struct FindVet: View {
 
 // MARK: - Helper Views
 private extension FindVet {
-    
+
     var mapView: some View {
         Map(
             position: $userLocation,
@@ -78,7 +78,7 @@ private extension FindVet {
             searchLocations()
         }
     }
-    
+
     @ContentBuilder var locationNotAvailable: some View {
         if mapViewStatus == .locationNotAllowed && searchedLocations.isEmpty {
             ContentUnavailableView {
@@ -98,7 +98,7 @@ private extension FindVet {
 
 // MARK: - Helper Functions
 private extension FindVet {
-    
+
     @MainActor
     func setupPreDefinedLocations() async {
         self.mapViewStatus = vetService.setViewStatus()
@@ -109,7 +109,7 @@ private extension FindVet {
             near: userLocation
         )
     }
-    
+
     func searchLocations() {
         Task { @MainActor in
             let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -16,39 +16,43 @@ struct FeedList: View {
     let pet: Pet
     @Environment(\.modelContext) var context
 
-    @State private var morningOn = false
-    @State private var eveningOn = false
-    @State private var stateChanged = false
+    @State private var now = Date.now
+    @State private var showSaveError = false
+    @Environment(\.scenePhase) private var scenePhase
+
+    private var morningOn: Bool { DailyFeeds.isFed(.morning, pet: pet, at: now) }
+    private var eveningOn: Bool { DailyFeeds.isFed(.evening, pet: pet, at: now) }
 
     var body: some View {
         VStack(spacing: .spacing8) {
-            HStack(spacing: .spacing24) {
-                switch pet.feedSelection {
-                case .morning:
-                    morningButton
-                case .evening:
-                    eveningButton
-                case .both:
-                    morningButton
-                    eveningButton
-                }
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: .spacing24) { feedButtons }
+                VStack(spacing: .spacing16) { feedButtons }
             }
             if let defineText {
                 Text(defineText)
-                    .font(.title2)
-                    .bold()
-                    .transformEffect(.identity)
-                    .animation(.easeInOut, value: stateChanged)
+                    .font(.title2.bold())
             }
         }
         .task {
-            await fetchLatestFeed(for: pet)
-        }
-        .onChange(of: pet) {
-            Task {
-                await fetchLatestFeed(for: pet)
+            while !Task.isCancelled {
+                now = .now
+                let nextDay = Calendar.current.startOfDay(for: now).addingTimeInterval(36 * 60 * 60)
+                let midnight = Calendar.current.startOfDay(for: nextDay)
+                do {
+                    try await Task.sleep(for: .seconds(max(1, midnight.timeIntervalSinceNow)))
+                } catch { return }
             }
         }
+        .onChange(of: scenePhase) {
+            if scenePhase == .active { now = .now }
+        }
+        .alert(.saveFailed, isPresented: $showSaveError) { }
+    }
+
+    @ViewBuilder private var feedButtons: some View {
+        if pet.feedSelection != .evening { morningButton }
+        if pet.feedSelection != .morning { eveningButton }
     }
 
     var defineText: String? {
@@ -71,9 +75,7 @@ struct FeedList: View {
 
     var morningButton: some View {
         Button {
-            morningOn.toggle()
-            stateChanged.toggle()
-            updateFeed(pet: pet, type: .morning)
+            toggle(.morning)
         } label: {
             Label {
                 Text(.feedSelectionMorning)
@@ -103,9 +105,7 @@ struct FeedList: View {
 
     var eveningButton: some View {
         Button {
-            eveningOn.toggle()
-            stateChanged.toggle()
-            updateFeed(pet: pet, type: .evening)
+            toggle(.evening)
         } label: {
             Label {
                 Text(.feedSelectionEvening)
@@ -137,71 +137,15 @@ struct FeedList: View {
         }
     }
 
-    func fetchLatestFeed(for pet: Pet) async {
-        await getLatestFeed(pet: pet)
-    }
-
-    func todaysFeeds(pet: Pet?) -> [Feed] {
-        guard let pet else { return [] }
-        return pet
-            .feeds?
-            .filter { Calendar.current.isDateInToday($0.feedDate ?? .now) } ?? []
-    }
-
-    func updateFeed(pet: Pet?, type: FeedSelection) {
-        let todaysFeed = todaysFeeds(pet: pet)
-
-        if todaysFeed.isEmpty {
-            // We don't have any feed history for today
-            let feed = Feed()
-            switch type {
-            case .both:
-                break // We won't pass this to update feed.
-            case .morning:
-                feed.morningFed = morningOn
-                feed.morningFedStamp = morningOn ? .now : nil
-            case .evening:
-                feed.eveningFedStamp = eveningOn ? .now : nil
-                feed.eveningFed = eveningOn
-            }
-            feed.feedDate = .now
-            pet?.addFeed(feed)
-
-        } else {
-            // We have a feed, let's update inside of it.
-            guard let feed = todaysFeed.first else { return }
-            switch type {
-            case .both:
-                break // We won't pass this to update feed.
-            case .morning:
-                feed.morningFed = morningOn
-                feed.morningFedStamp = morningOn ? .now : nil
-            case .evening:
-                feed.eveningFedStamp = eveningOn ? .now : nil
-                feed.eveningFed = eveningOn
-            }
-
-            feed.feedDate = .now
-        }
+    private func toggle(_ type: FeedSelection) {
+        now = .now
         do {
-            try context.save()
+            try DailyFeeds.toggle(type, pet: pet, at: now, context: context)
         } catch {
-            Logger.feed.error("Error occurred while saving: \(error.localizedDescription)")
+            showSaveError = true
         }
     }
 
-    func getLatestFeed(pet: Pet?) async {
-        let todaysFeed = todaysFeeds(pet: pet)
-
-        if todaysFeed.isEmpty {
-            morningOn = false
-            eveningOn = false
-        } else {
-            guard let feed = todaysFeed.first else { return }
-            morningOn = feed.morningFed
-            eveningOn = feed.eveningFed
-        }
-    }
 }
 
 #if DEBUG

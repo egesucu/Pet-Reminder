@@ -22,7 +22,7 @@ extension Tag {
 /// Test suite for Date extension methods.
 /// Covers date parsing, formatting, random date generation, and date comparison utilities.
 @Suite("Date Extension Tests") struct DateExtensionTests {
-    
+
     /// Tests converting a Turkish locale date string to a Date object.
     /// Expects that the conversion matches the expected Date at start of day.
     @Test func dateConversion() throws {
@@ -94,7 +94,7 @@ extension Tag {
 /// Tests various utilities like duplicate removal, safe indexing, and keyPath filtering.
 @Suite("Array Extension Testing")
 struct ArrayTests {
-    
+
     /// Tests the `isNotEmpty` computed property on both array and string.
     /// Expects `isNotEmpty` to be the inverse of `isEmpty`.
     @Test func testIsNotEmpty() throws {
@@ -166,4 +166,3 @@ struct ArrayTests {
         #expect(filteredItems[1].name == "Item 3")
     }
 }
-

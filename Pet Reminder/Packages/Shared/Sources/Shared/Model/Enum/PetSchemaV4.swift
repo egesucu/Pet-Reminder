@@ -148,7 +148,7 @@ public extension Pet {
         var pets: [Pet] = []
         Strings.demoPets.forEach { petName in
             let randomKind = Kind.allCases.randomElement() ?? .dog
-            
+
             let randomBreed: String? = switch randomKind {
             case .cat:
                 "Aegean"
@@ -161,7 +161,7 @@ public extension Pet {
             case .other:
                 nil
             }
-            
+
             let pet = Pet(
                 birthday: .randomDate(),
                 name: petName,

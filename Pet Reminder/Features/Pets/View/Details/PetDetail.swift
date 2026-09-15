@@ -85,10 +85,12 @@ private extension PetDetail {
 
             Divider()
 
-            Label(nextFeedSummary, systemImage: nextFeedIcon)
+            TimelineView(.periodic(from: .now, by: 60)) { _ in
+                Label(nextFeedSummary, systemImage: nextFeedIcon)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(nextFeedColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
         .padding(.spacing20)
         .background(
@@ -176,17 +178,12 @@ private extension PetDetail {
         .buttonStyle(.plain)
     }
 
-    var todayFeed: Feed? {
-        pet.feeds?
-            .first { Calendar.current.isDateInToday($0.feedDate ?? .now) }
-    }
-
     var isMorningFed: Bool {
-        todayFeed?.morningFed ?? false
+        DailyFeeds.isFed(.morning, pet: pet, at: .now)
     }
 
     var isEveningFed: Bool {
-        todayFeed?.eveningFed ?? false
+        DailyFeeds.isFed(.evening, pet: pet, at: .now)
     }
 
     var nextFeedSummary: String {
@@ -200,7 +197,11 @@ private extension PetDetail {
         case .evening:
             String(localized: "Evening feed")
         case .both:
-            isMorningFed ? String(localized: "Evening feed") : String(localized: "Morning feed")
+            if isMorningFed {
+                String(localized: "Evening feed")
+            } else {
+                String(localized: "Morning feed")
+            }
         }
 
         return "\(String(localized: "Next")): \(feedName)"

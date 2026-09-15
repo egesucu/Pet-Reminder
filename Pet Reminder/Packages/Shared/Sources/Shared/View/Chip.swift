@@ -9,11 +9,11 @@
 import SwiftUI
 
 public struct Chip: View {
-    
+
     let title: String
     let selected: Bool
     let onTap: () -> Void
-    
+
     public init(
         title: String,
         selected: Bool,
@@ -23,7 +23,7 @@ public struct Chip: View {
         self.selected = selected
         self.onTap = onTap
     }
-    
+
     public var body: some View {
         Text(title)
             .foregroundStyle(
@@ -48,7 +48,7 @@ public struct Chip: View {
 #if DEBUG
 #Preview {
     @Previewable @State var selected: Bool = false
-    
+
     Chip(title: "Viski", selected: selected) {
         selected.toggle()
     }

@@ -38,9 +38,11 @@ struct SingleEvent: View {
             RoundedRectangle(cornerRadius: .spacing4 / 2)
                 .frame(width: .eventIndicatorWidth)
                 .foregroundStyle(Color(cgColor: event.calendar.cgColor))
-            Text(event.title)
-                .underline(true)
-                .onTapGesture(perform: showWarning)
+            Button(action: showWarning) {
+                Text(event.title).underline()
+            }
+            .buttonStyle(.plain)
+            .frame(minHeight: 44)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
                 .padding(.spacing4)
@@ -48,9 +50,11 @@ struct SingleEvent: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .padding(.trailing, .spacing4)
-            Text(event.title)
-                .underline(true)
-                .onTapGesture(perform: showWarning)
+            Button(action: showWarning) {
+                Text(event.title).underline()
+            }
+            .buttonStyle(.plain)
+            .frame(minHeight: 44)
         }
     }
 
@@ -63,9 +67,11 @@ struct SingleEvent: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .padding(.trailing, .spacing4)
-            Text(event.title)
-                .underline(true)
-                .onTapGesture(perform: showWarning)
+            Button(action: showWarning) {
+                Text(event.title).underline()
+            }
+            .buttonStyle(.plain)
+            .frame(minHeight: 44)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
                 .padding(.spacing4)
@@ -73,9 +79,11 @@ struct SingleEvent: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .padding(.trailing, .spacing4)
-            Text(event.title)
-                .underline(true)
-                .onTapGesture(perform: showWarning)
+            Button(action: showWarning) {
+                Text(event.title).underline()
+            }
+            .buttonStyle(.plain)
+            .frame(minHeight: 44)
         }
     }
 

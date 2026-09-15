@@ -45,7 +45,7 @@ private final class StubCenter: NotificationCenterProtocol {
 /// - When already authorized, it should not request authorization again and return true.
 /// - When denied, it should not request authorization and return false.
 /// - When not determined, it should request authorization and correctly adopt the granted or denied result.
-struct `Notification Authorization Tests` {
+struct NotificationAuthorizationTests {
 
     @Test
     func `Ask Permission handles Authorization States`() async {
@@ -100,4 +100,3 @@ struct `Notification Authorization Tests` {
         #expect(denyingStub.didRequestAuthorization == true)
     }
 }
-

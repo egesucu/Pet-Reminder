@@ -25,6 +25,8 @@ struct AddVaccine: View {
     @Binding var vaccineName: String
     /// The date selected for the new vaccine (defaults to now).
     @State private var vaccineDate = Date.now
+    @State private var showSaveError = false
+    @Environment(\.modelContext) private var modelContext
 
     var isVaccineEmpty: Bool {
         vaccineName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -54,6 +56,7 @@ struct AddVaccine: View {
         }
 
         .padding()
+        .alert(.saveFailed, isPresented: $showSaveError) { }
     }
 
     /// Creates and saves a new vaccine to the pet, persists the change, and resets the form.
@@ -62,9 +65,13 @@ struct AddVaccine: View {
         let vaccine = Vaccine(date: vaccineDate, name: cleanedName)
         pet.addVaccine(vaccine)
         do {
-            try pet.modelContext?.save()
+            try modelContext.save()
         } catch {
+            pet.vaccines?.removeAll { $0 === vaccine }
+            modelContext.delete(vaccine)
             Logger().error("Vaccine could not be saved: \(error)")
+            showSaveError = true
+            return
         }
 
         vaccineName = .empty
@@ -101,7 +108,6 @@ struct AddVaccine: View {
         }
 }
 #endif
-
 
 struct OutlinedTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {

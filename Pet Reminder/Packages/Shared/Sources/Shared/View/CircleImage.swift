@@ -8,11 +8,11 @@
 import SwiftUI
 
 public struct CircleImage: View {
-    
+
     let avatarSize: CGFloat
     let imageData: Data?
     let kind: Kind
-    
+
     public init(
         avatarSize: CGFloat = .avatar120,
         imageData: Data?,
@@ -22,12 +22,12 @@ public struct CircleImage: View {
         self.imageData = imageData
         self.kind = kind
     }
-    
+
     public var body: some View {
         if let imageData, let uiImage = UIImage(data: imageData) {
             Image(uiImage: uiImage)
                 .imageStyle(width: avatarSize)
-            
+
         } else {
             Image(.generateDefaultData(kind: kind))
                 .imageStyle(width: avatarSize)

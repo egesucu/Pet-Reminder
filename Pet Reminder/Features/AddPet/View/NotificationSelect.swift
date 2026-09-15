@@ -10,9 +10,9 @@ import SwiftUI
 import Shared
 
 struct NotificationSelect: View {
-    
+
     @Binding var model: AddPet.Model
-        
+
     var body: some View {
         VStack(alignment: .leading, spacing: .spacing20) {
             Text(.feedTimeTitle)
@@ -31,7 +31,7 @@ struct NotificationSelect: View {
             }
             .pickerStyle(.segmented)
             .animation(.easeOut(duration: 0.8), value: model.feedSelection)
-            
+
             notificationType
         }
     }
@@ -48,7 +48,7 @@ private extension NotificationSelect {
             bothView
         }
     }
-    
+
     var morningView: some View {
         DatePicker(
             selection: $model.morningFeed,
@@ -100,7 +100,7 @@ private extension NotificationSelect {
 #if DEBUG
 #Preview {
     @Previewable @State var model: AddPet.Model = .init()
-    
+
     NotificationSelect(model: $model)
         .padding(.horizontal)
 }

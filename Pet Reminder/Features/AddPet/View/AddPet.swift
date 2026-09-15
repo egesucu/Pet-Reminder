@@ -18,7 +18,7 @@ struct AddPet: View {
     @Environment(\.modelContext) private var modelContext
 
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var pet: Pet = .init()
     @State private var model: Model = .init()
 
@@ -78,12 +78,12 @@ extension AddPet {
     @Observable
     @MainActor
     class Model {
-        
+
         /// Tracks the result of a save attempt.
         enum SaveState: Equatable {
             case none, success, failure
         }
-        
+
         /// Entered pet name.
         var name: String
         /// Selected birthday for the pet.
@@ -106,7 +106,7 @@ extension AddPet {
         var petExists: Bool
         /// Result state for the last save attempt.
         var saveState: SaveState = .none
-        
+
         /// Creates a new Add Pet model with configurable defaults.
         init(
             name: String = .empty,
@@ -131,7 +131,7 @@ extension AddPet {
             self.nameIsValid = nameIsValid
             self.petExists = petExists
         }
-        
+
         /// Returns true when the pet can be saved.
         var petCanBeSaved: Bool {
             nameIsValid && !petExists
@@ -160,7 +160,7 @@ private extension AddPet {
     var saveButton: some View {
         HStack {
             Spacer()
-            
+
             Button(.save, systemImage: "square.and.arrow.down.fill", role: .confirm) {
                 Task {
                     await persistPet()
@@ -169,7 +169,7 @@ private extension AddPet {
             .buttonStyle(.glassProminent)
             .tint(.accent)
             .disabled(!model.petCanBeSaved)
-            
+
             Spacer()
         }
     }
