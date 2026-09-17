@@ -72,7 +72,7 @@ public extension CGFloat {
     static let spacing40: Self = 40
     /// Oversized spacing used for prominent section breaks.
     static let spacing60: Self = 60
-    
+
     /// Tiny icon size for subtle indicators or accessory glyphs.
     static let icon8: Self = 8
     /// Small icon size for compact controls.
@@ -87,7 +87,7 @@ public extension CGFloat {
     static let icon32: Self = 32
     /// Oversized icon size used for hero or illustration-like treatments.
     static let icon80: Self = 80
-    
+
     /// Small corner radius for subtle rounding.
     static let radius10: Self = 10
     /// Default corner radius for cards and controls.
@@ -98,10 +98,10 @@ public extension CGFloat {
     static let radius24: Self = 24
     /// Large radius value used to create pill-shaped views.
     static let pill: Self = 999
-    
+
     /// Minimum recommended tappable dimension for interactive elements.
     static let minimum: Self = 44
-    
+
     /// Small avatar size for profile or pet thumbnails.
     static let avatar120: Self = 120
     /// Medium avatar size for detail headers.
@@ -112,17 +112,17 @@ public extension CGFloat {
     static let avatar300: Self = 300
     /// Fixed height used by feed history cards.
     static let feedCardHeight100: Self = 100
-    
+
     /// Compact sheet or panel height used in constrained presentations.
     static let compactHeight200: Self = 200
     /// Minimum height used by taller edit forms.
     static let editFormMinHeight500: Self = 500
     /// Fractional height used for compact sheet presentations.
     static let compactFraction: Self = 0.3
-    
+
     /// Corner radius applied to bottom sheets.
     static let sheetCornerRadius25: Self = 25
-    
+
     /// Horizontal offset amount used by the wiggle animation.
     static let wiggle: Self = 2
     /// Horizontal offset for delete badges overlaid on content.

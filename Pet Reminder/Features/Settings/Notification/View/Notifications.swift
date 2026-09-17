@@ -38,7 +38,7 @@ struct Notifications: View {
 
 // MARK: - Helper UI
 private extension Notifications {
-    
+
     @ContentBuilder
     func noPets() -> some View {
         if pets.isEmpty {
@@ -48,7 +48,7 @@ private extension Notifications {
             )
         }
     }
-    
+
     @ContentBuilder
     func removePets() -> some ToolbarContent {
         if pets.isNotEmpty {
@@ -69,7 +69,7 @@ private extension Notifications {
 
         }
     }
-    
+
     func notificationView(notification: UNNotificationRequest) -> some View {
         VStack(alignment: .leading, spacing: .spacing16) {
             Label {
@@ -107,7 +107,7 @@ private extension Notifications {
             }
         }
     }
-    
+
     func notificationSection(
         for pet: Pet,
         notificationManager: NotificationManager
@@ -140,7 +140,7 @@ private extension Notifications {
         } header: {
             Text(pet.name)
         } footer: {
-            let count = notificationAmount(for: pet.name)
+            let count = notificationManager.filterNotifications(of: pet).count
             Text(.notification(count))
         }
         .onChange(of: notificationManager.notifications, action: fetchNotificiations)
@@ -149,18 +149,11 @@ private extension Notifications {
 
 // MARK: - Helper functions
 private extension Notifications {
-    
-    func notificationAmount(for name: String?) -> Int {
-        notificationManager
-            .notifications
-            .filter({$0.identifier.contains(name ?? "-")})
-            .count
-    }
-    
+
     func fetchNotificiations() async {
         await notificationManager.refreshNotifications()
     }
-    
+
     func createNotifications(for pet: Pet) async {
         await notificationManager.createNotifications(
             for: pet,
@@ -169,7 +162,7 @@ private extension Notifications {
         )
         await fetchNotificiations()
     }
-    
+
     func remove(pet: Pet, at offset: IndexSet) async {
         for index in offset {
             let notification = notificationManager.filterNotifications(of: pet)[index]

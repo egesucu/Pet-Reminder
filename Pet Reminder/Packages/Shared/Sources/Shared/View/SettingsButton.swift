@@ -19,8 +19,7 @@ public struct SettingsButton: View {
     }
 
     private func openSettings() {
-        if let url = URL(string: UIApplication.openSettingsURLString),
-           UIApplication.shared.canOpenURL(url) {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
     }

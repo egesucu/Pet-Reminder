@@ -65,11 +65,11 @@ public enum PetSchemaV3: VersionedSchema {
 
         private static func rawString(for selection: FeedSelection) -> String {
             switch selection {
-            case .morning: 
+            case .morning:
                 return "morning"
-            case .evening: 
+            case .evening:
                 return "evening"
-            case .both:    
+            case .both:
                 return "both"
             }
         }

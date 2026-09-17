@@ -125,7 +125,8 @@ class NotificationManager {
             Logger
                 .notifications
                 .info("Pet \(pet.name): notifications \(notification.identifier)")
-            return notification.identifier.contains(pet.name)
+            return Self.notificationIdentifiers(for: pet.name, types: [.morning, .evening, .birthday])
+                .contains(notification.identifier)
         }
     }
 
@@ -193,6 +194,17 @@ class NotificationManager {
 
         notificationCenter.removePendingNotificationRequests(withIdentifiers: oldIdentifiers)
         notificationCenter.removeDeliveredNotifications(withIdentifiers: oldIdentifiers)
+    }
+
+    /// Reads the stored hour and minute without changing the scheduled request.
+    func scheduledTime(for name: String, type: NotificationType) async -> Date? {
+        let identifier = Strings.notificationIdentifier(name, type.rawValue)
+        let requests = await notificationCenter.pendingNotificationRequests()
+        guard let trigger = requests.first(where: { $0.identifier == identifier })?.trigger
+                as? UNCalendarNotificationTrigger,
+              let hour = trigger.dateComponents.hour,
+              let minute = trigger.dateComponents.minute else { return nil }
+        return Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: .now)
     }
 
     // MARK: - Notification Creation
@@ -312,13 +324,10 @@ extension NotificationManager {
     func removeOtherNotifications(of pets: [Pet]) async throws {
         let allNotifications = await notificationCenter.pendingNotificationRequests()
 
-        let namesSet = Set(pets.map(\.name))
+        let knownIdentifierSet = Set(pets.flatMap {
+            Self.notificationIdentifiers(for: $0.name, types: [.morning, .evening, .birthday])
+        })
         let allIdentifierSet = Set(allNotifications.map(\.identifier))
-
-        let knownIdentifiers = allNotifications.compactMap { notification in
-            namesSet.contains(where: { notification.identifier.contains($0) }) ? notification.identifier : nil
-        }
-        let knownIdentifierSet = Set(knownIdentifiers)
 
         let unknownIdentifiers = allIdentifierSet.subtracting(knownIdentifierSet)
 

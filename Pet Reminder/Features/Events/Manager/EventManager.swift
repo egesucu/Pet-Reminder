@@ -199,8 +199,8 @@ class EventManager {
         end: Date,
         allDay: Bool,
         selectedCalendar: EventCalendar? = nil
-    ) async {
-        await saveEvent(
+    ) async throws {
+        try await saveEvent(
             eventName: name,
             eventStartDate: start,
             eventEndDate: end,
@@ -251,11 +251,10 @@ class EventManager {
         eventEndDate: Date,
         isAllDay: Bool,
         selectedCalendar: EventCalendar
-    ) async {
+    ) async throws {
         let calendars = eventStore.calendars(for: .event)
         guard let petCalendar = calendars.first(where: { $0.title == selectedCalendar.title }) else {
-            Logger.events.error("Event Save Error, Pet Calendar have not been found.")
-            return
+            throw EventSaveError.calendarUnavailable
         }
 
         let newEvent = eventStore.makeEvent()
@@ -271,15 +270,7 @@ class EventManager {
         newEvent.addAlarm(alarm)
         newEvent.notes = "Pet Event"
 
-        do {
-            try eventStore.save(newEvent, span: .thisEvent, commit: true)
-        } catch let error {
-            if let error = error as? EKError {
-                Logger.events.error("Event Save Error, \(error.errorCode): \(error.localizedDescription)")
-            } else {
-                Logger.events.error("Event Save Error: \(error.localizedDescription)")
-            }
-        }
+        try eventStore.save(newEvent, span: .thisEvent, commit: true)
     }
 
     func reloadEvents() async {

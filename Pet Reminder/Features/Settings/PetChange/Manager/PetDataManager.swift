@@ -39,7 +39,35 @@ class PetDataManager {
     var petImageData: Data?
     var petImage: UIImage?
 
-    var notificationManager = NotificationManager.shared
+    let notificationManager: NotificationManager
+    private var initialMorningDate: Date = .eightAM
+    private var initialEveningDate: Date = .eightPM
+    private var initialSelection: FeedSelection = .both
+
+    init(notificationManager: NotificationManager = .shared) {
+        self.notificationManager = notificationManager
+    }
+
+    var scheduleChanged: Bool {
+        selection != initialSelection
+            || !Calendar.current.isDate(morningDate, equalTo: initialMorningDate, toGranularity: .minute)
+            || !Calendar.current.isDate(eveningDate, equalTo: initialEveningDate, toGranularity: .minute)
+    }
+
+    func loadReminderTimes() async {
+        morningDate = await notificationManager.scheduledTime(for: name, type: .morning) ?? .eightAM
+        eveningDate = await notificationManager.scheduledTime(for: name, type: .evening) ?? .eightPM
+        initialMorningDate = morningDate
+        initialEveningDate = eveningDate
+        initialSelection = selection
+    }
+
+    func nameCanBeSaved(for pet: Pet, among pets: [Pet]) -> Bool {
+        let cleaned = Pet.cleanedName(for: name)
+        return !cleaned.isEmpty && !pets.contains {
+            $0.persistentModelID != pet.persistentModelID && $0.hasNameMatching(cleaned)
+        }
+    }
 
     var pageState: PageState = .loading
     var photoMode: PhotoMode = .none
@@ -117,7 +145,6 @@ class PetDataManager {
                     "Failed to update birthday notification for \(pet.name): \(error.localizedDescription)"
                 )
                 lastErrorMessage = String(localized: .notificationBirthdayUpdateFailed)
-                pageState = .failed
             }
         default:
             break
@@ -159,7 +186,6 @@ class PetDataManager {
                 "Failed to update daily notifications for \(self.name): \(error.localizedDescription)"
             )
             lastErrorMessage = String(localized: .notificationDailyUpdateFailed)
-            pageState = .failed
         }
     }
 

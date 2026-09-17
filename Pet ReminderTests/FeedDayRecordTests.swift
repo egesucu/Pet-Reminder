@@ -4,7 +4,7 @@ import Shared
 @testable import Pet_Reminder
 
 @MainActor
-struct `Feed Day Record Tests` {
+struct FeedDayRecordTests {
 
     @Test
     func `Records group feeds by day and keep latest stamps`() throws {

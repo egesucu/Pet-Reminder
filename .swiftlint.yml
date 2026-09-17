@@ -9,12 +9,11 @@ opt_in_rules: # some rules are only opt-in
   - colon
   - comma
 included: # paths to include during linting. `--path` is ignored if present.
-  - Project
-  - ProjectTests
-  - ProjectUITests
+  - Pet Reminder
+  - Pet ReminderTests
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods
-  - Project/R.generated.swift
+  - Pet Reminder/Packages/Shared/.build
 
 # configurable rules can be customized from this configuration file
 # binary rules can set their severity level

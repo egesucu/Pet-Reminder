@@ -12,10 +12,10 @@ import Shared
 import OSLog
 
 struct EventList: View {
-    
+
     @Environment(EventManager.self) private var eventManager
     @State private var showAddEvent = false
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -35,17 +35,17 @@ struct EventList: View {
             .navigationTitle(Text(.eventTitle))
             .environment(eventManager)
         }
-        .sheet(isPresented: $showAddEvent,onDismiss: onDismiss) {
+        .sheet(isPresented: $showAddEvent, onDismiss: onDismiss) {
             AddEvent()
                 .environment(eventManager)
         }
         .task(reloadEvents)
     }
-    
+
     func reloadEvents() async {
         await eventManager.reloadEvents()
     }
-    
+
     @ContentBuilder var eventNotAllowed: some View {
         ContentUnavailableView {
             Label {
@@ -59,7 +59,7 @@ struct EventList: View {
             SettingsButton()
         }
     }
-    
+
     @ContentBuilder var wrongTypeError: some View {
         ContentUnavailableView {
             Label {
@@ -73,7 +73,7 @@ struct EventList: View {
             SettingsButton()
         }
     }
-    
+
     @ContentBuilder var eventToolBar: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: toggleAddEvent) {
@@ -87,13 +87,13 @@ struct EventList: View {
             .tint(.accent)
         }
     }
-    
+
     private func onDismiss() {
         Task {
             await reloadEvents()
         }
     }
-    
+
     private func toggleAddEvent() {
         showAddEvent.toggle()
     }
@@ -105,6 +105,6 @@ struct EventList: View {
         EventList()
             .environment(EventManager.demo)
     }
-    
+
 }
 #endif

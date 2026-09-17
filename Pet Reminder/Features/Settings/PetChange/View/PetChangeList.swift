@@ -30,15 +30,7 @@ struct PetChangeList: View {
         VStack {
             ScrollView {
                 petList
-                    .onTapGesture {
-                        Logger
-                            .pets
-                            .info("\("Surface tapped.")")
-                        isEditing = false
-                        Logger
-                            .pets
-                            .info("Editing status: \(isEditing)")
-                    }
+
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -47,7 +39,7 @@ struct PetChangeList: View {
                             isEditing.toggle()
                         } label: {
                             Text(isEditing ? .done : .edit)
-                                .animation(.bouncy)
+                                .animation(.bouncy, value: isEditing)
                         }
                     }
 
@@ -55,6 +47,12 @@ struct PetChangeList: View {
 
             }
             .navigationTitle(Text(.chooseFriend))
+        }
+        .sheet(isPresented: $showSelectedPet, onDismiss: deselectPet) {
+            ChangePetDetails(pet: $selectedPet)
+                .presentationCornerRadius(.sheetCornerRadius25)
+                .presentationDragIndicator(.hidden)
+                .interactiveDismissDisabled()
         }
         .overlay {
             if pets.isEmpty {
@@ -70,66 +68,43 @@ struct PetChangeList: View {
     private var petList: some View {
         LazyVGrid(columns: [.init(), .init()]) {
             ForEach(pets, id: \.name) { pet in
-                VStack {
-                    if isEditing {
-                        ZStack(alignment: .topTrailing) {
-                            VStack {
-                                CircleImage(
-                                    avatarSize: .avatar120,
-                                    imageData: pet.image,
-                                    kind: pet.kind
-                                )
-                                .wiggling()
-
-                                Text(pet.name)
-                            }
-                            Button {
-                                Task {
-                                    do {
-                                        try await deletePet(pet: pet)
-                                        withAnimation {
-                                            isEditing = false
-                                        }
-                                    } catch {
-                                        Logger.pets.error("Failed to delete pet: \(error.localizedDescription)")
-                                    }
-                                }
-                            } label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.system(size: .icon24))
-                                    .foregroundStyle(.red)
-                                    .offset(x: .deleteBadgeX, y: 0)
-                            }
-
+                ZStack(alignment: .topTrailing) {
+                    Button {
+                        isEditing = false
+                        selectedPet = pet
+                        showSelectedPet = true
+                    } label: {
+                        VStack {
+                            CircleImage(
+                                avatarSize: .avatar120,
+                                imageData: pet.image,
+                                kind: pet.kind
+                            )
+                            .modifier(WiggleModifier(isEnabled: isEditing))
+                            Text(pet.name)
                         }
-                        .opacity(isEditing ? 1 : 0)
-                        .scaleEffect(isEditing ? 1 : 0.95)
-                        .animation(.easeInOut(duration: 0.3), value: isEditing)
-                    } else {
-                        CircleImage(
-                            avatarSize: .avatar120,
-                            imageData: pet.image,
-                            kind: pet.kind
-                        )
-                        
-                        Text(pet.name)
                     }
-
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(pet.name))
+                    if isEditing {
+                        Button(role: .destructive) {
+                            Task {
+                                do {
+                                    try await deletePet(pet: pet)
+                                    isEditing = false
+                                } catch {
+                                    Logger.pets.error("Failed to delete pet: \(error.localizedDescription)")
+                                }
+                            }
+                        } label: {
+                            Label("Delete \(pet.name)", systemImage: "xmark.circle.fill")
+                                .labelStyle(.iconOnly)
+                                .font(.title2)
+                                .frame(width: 44, height: 44)
+                        }
+                        .tint(.red)
+                    }
                 }
-                .onTapGesture {
-                    isEditing = false
-                    selectedPet = pet
-                    showSelectedPet.toggle()
-                    Logger
-                        .pets
-                        .info("PR: Pet Selected: \(selectedPet.name)")
-                }
-                .sheet(isPresented: $showSelectedPet, onDismiss: deselectPet, content: {
-                    ChangePetDetails(pet: $selectedPet)
-                        .presentationCornerRadius(.sheetCornerRadius25)
-                        .presentationDragIndicator(.hidden)
-                        .interactiveDismissDisabled()
-                })
                 .onLongPressGesture(perform: setEditMode)
                 .padding(.top, .spacing20)
                 .padding(.leading, .spacing20)

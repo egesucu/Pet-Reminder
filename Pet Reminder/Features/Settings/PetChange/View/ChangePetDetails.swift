@@ -22,6 +22,8 @@ struct ChangePetDetails: View {
     @State private var manager = PetDataManager()
 
     @State private var showError = false
+    @State private var isLoading = true
+    @State private var isSaving = false
     @State private var showManagerErrorAlert = false
 
     var body: some View {
@@ -39,9 +41,12 @@ struct ChangePetDetails: View {
                 }
             }
             .navigationTitle(pet.name)
-            .onAppear {
+            .task {
                 manager.loadPet(for: pet, dismiss: dismiss.callAsFunction)
+                await manager.loadReminderTimes()
+                isLoading = false
             }
+            .disabled(isLoading || isSaving)
             .alert(.nameExistError, isPresented: $showError) {
                 Button(role: .confirm, action: { })
             }
@@ -87,7 +92,7 @@ struct ChangePetDetails: View {
         }
         .padding(.bottom, .spacing8)
     }
-    
+
     func preview(for image: UIImage) -> some View {
         VStack(spacing: .spacing16) {
             Image(uiImage: image)
@@ -143,7 +148,7 @@ struct ChangePetDetails: View {
                     Text(.tapToChangeText)
                 }
             }
-            
+
             HStack {
                 Text(.petBreedTitle)
                     .bold()
@@ -251,13 +256,12 @@ struct ChangePetDetails: View {
     }
 
     private func nameCanBeSaved() -> Bool {
-        let petNames = pets.map { $0.name }
-        let isUniqueName = !petNames.contains(where: { $0 == manager.name })
-        return isUniqueName
+        manager.nameCanBeSaved(for: pet, among: pets)
     }
 
     private func saveName() {
         if nameCanBeSaved() {
+            manager.name = Pet.cleanedName(for: manager.name)
             pet.name = manager.name
         } else {
             manager.name = pet.name
@@ -266,8 +270,12 @@ struct ChangePetDetails: View {
     }
 
     private func save() async {
+        guard !isSaving else { return }
+        isSaving = true
+        defer { isSaving = false }
+        manager.lastErrorMessage = nil
+        let scheduleChanged = manager.scheduleChanged
         let oldName = pet.name
-        let selectionChanged = pet.feedSelection != manager.selection
 
         if pet.name != manager.name {
             saveName()
@@ -277,25 +285,7 @@ struct ChangePetDetails: View {
             return
         }
 
-        if pet.breed != manager.breed {
-            pet.breed = manager.breed.isEmpty ? nil : manager.breed
-        }
-
-        if pet.image != manager.petImageData {
-            pet.image = manager.petImageData
-        }
-
-        if pet.kind != manager.kind {
-            pet.kind = manager.kind
-        }
-
-        if pet.birthday != manager.birthday {
-            pet.birthday = manager.birthday
-        }
-
-        if selectionChanged {
-            pet.feedSelection = manager.selection
-        }
+        updatePetDetails()
 
         if pet.hasChanges {
             do {
@@ -318,7 +308,7 @@ struct ChangePetDetails: View {
             )
             await manager.changeBirthday()
 
-            if selectionChanged {
+            if scheduleChanged {
                 await manager.changeNotification()
             }
 
@@ -332,6 +322,14 @@ struct ChangePetDetails: View {
             )
             manager.lastErrorMessage = String(localized: .notificationDailyUpdateFailed)
         }
+    }
+
+    private func updatePetDetails() {
+        pet.breed = manager.breed.isEmpty ? nil : manager.breed
+        pet.image = manager.petImageData
+        pet.kind = manager.kind
+        pet.birthday = manager.birthday
+        pet.feedSelection = manager.selection
     }
 
     private func cancel() {

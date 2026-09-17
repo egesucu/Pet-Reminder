@@ -47,7 +47,7 @@ private final class MockCLLocationManager: CLLocationManager {
 
 final class MockVetService: VetService {
     func stopUpdating() {
-        
+
     }
 
     // Inputs you can preset
@@ -147,8 +147,8 @@ struct VetServiceTests {
 
         let pins = await sut.searchLocations(with: "vet", near: camera)
 
-        // Only assert type-level expectations to avoid flakiness.
-        #expect(pins.count >= 0)
+        // Search may return no results; any returned coordinates must still be valid.
+        #expect(pins.allSatisfy { CLLocationCoordinate2DIsValid($0.coordinate) })
     }
 
     @Test("MockVetService behaves as a controllable test double")
@@ -180,4 +180,3 @@ struct VetServiceTests {
         #expect(results.first?.name == "Mock Vet")
     }
 }
-

@@ -30,7 +30,9 @@ struct AddEvent: View {
     ) ?? .now
     @State private var filteredCalendars: [EKCalendar] = []
 
-    let feedback = UINotificationFeedbackGenerator()
+    @State private var saveError: String?
+    @State private var showSaveError = false
+    @State private var isSaving = false
 
     var body: some View {
         NavigationStack {
@@ -54,6 +56,10 @@ struct AddEvent: View {
             .tint(.accent)
             .navigationTitle(Text(.addEventTitle))
             .toolbar(content: addEventToolbar)
+            .disabled(isSaving)
+            .alert(.saveFailed, isPresented: $showSaveError) { } message: {
+                Text(saveError ?? String(localized: .unknownError))
+            }
         }
     }
 
@@ -68,7 +74,7 @@ struct AddEvent: View {
                 Text(.addEventStart)
             }
             .onChange(of: startDate, changeEventMinimumDate)
-            DatePicker(selection: $endDate) {
+            DatePicker(selection: $endDate, in: startDate...) {
                 Text(.addEventEnd)
             }
         }
@@ -94,6 +100,7 @@ struct AddEvent: View {
                 .foregroundStyle(.accent)
                 .bold()
         }
+        .disabled(eventName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || (!allDay && endDate < startDate))
     }
 
     private func cancelButton() -> some View {
@@ -105,15 +112,22 @@ struct AddEvent: View {
     }
 
     private func saveEvent() {
-        feedback.notificationOccurred(.success)
+        guard !isSaving else { return }
+        isSaving = true
         Task {
-            await manager.saveEvent(
-                name: eventName,
-                start: startDate,
-                end: endDate,
-                allDay: allDay
-            )
-            dismiss()
+            defer { isSaving = false }
+            do {
+                try await manager.saveEvent(
+                    name: eventName,
+                    start: startDate,
+                    end: endDate,
+                    allDay: allDay
+                )
+                dismiss()
+            } catch {
+                saveError = error.localizedDescription
+                showSaveError = true
+            }
         }
     }
 

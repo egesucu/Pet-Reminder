@@ -5,7 +5,7 @@ import Testing
 
 /// Suite covering tests related to shared models and localization functionality.
 @Suite("Shared Model Tests") struct SharedModelsTests {
-    
+
     /// Tests the localization string interpolation with parameters.
     ///
     /// - Scenario: Create a localized string using a parameter and verify

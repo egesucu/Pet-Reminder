@@ -92,6 +92,6 @@ public extension String {
     var isNotEmpty: Bool {
         !self.isEmpty
     }
-    
+
     static let empty = ""
 }

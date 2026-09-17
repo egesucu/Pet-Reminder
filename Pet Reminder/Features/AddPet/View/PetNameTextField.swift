@@ -16,7 +16,7 @@ struct PetNameTextField: View {
     @Environment(\.modelContext) private var modelContext
 
     @Query private var pets: [Pet]
-    
+
     @Binding var model: AddPet.Model
 
     @FocusState var isFocused
@@ -71,7 +71,6 @@ struct PetNameTextField: View {
                 .lineLimit(20)
         }
     }
-    
 
     private func check(name: String) {
         let cleanedName = Pet.cleanedName(for: name)
@@ -128,7 +127,7 @@ struct PetNameTextField: View {
 
 #Preview("Empty Case") {
     @Previewable @State var model: AddPet.Model = .init()
-    
+
     PetNameTextField(
         model: $model
     )

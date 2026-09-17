@@ -10,11 +10,12 @@ import SwiftUI
 
 public struct WiggleModifier: ViewModifier {
     @State private var isWiggling = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    public init(
-        isWiggling: State<Bool> = .init(initialValue: false)
-    ) {
-        self._isWiggling = isWiggling
+    private let isEnabled: Bool
+
+    public init(isEnabled: Bool = true) {
+        self.isEnabled = isEnabled
     }
 
     private static func randomize(interval: TimeInterval, withVariance variance: Double) -> TimeInterval {
@@ -42,10 +43,16 @@ public struct WiggleModifier: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
-            .rotationEffect(.degrees(isWiggling ? CGFloat.wiggle : 0))
-            .animation(rotateAnimation, value: isWiggling)
-            .offset(x: 0, y: isWiggling ? CGFloat.wiggle : 0)
-            .animation(bounceAnimation, value: isWiggling)
+            .rotationEffect(.degrees(isEnabled && !reduceMotion && isWiggling ? CGFloat.wiggle : 0))
+            .animation(
+                reduceMotion || !isEnabled ? nil : rotateAnimation,
+                value: isEnabled && !reduceMotion && isWiggling
+            )
+            .offset(x: 0, y: isEnabled && !reduceMotion && isWiggling ? CGFloat.wiggle : 0)
+            .animation(
+                reduceMotion || !isEnabled ? nil : bounceAnimation,
+                value: isEnabled && !reduceMotion && isWiggling
+            )
             .onAppear { isWiggling.toggle() }
     }
 }
