@@ -16,6 +16,7 @@ struct ChangePetDetails: View {
     @Binding var pet: Pet
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Query(sort: \Pet.name) var pets: [Pet]
 
@@ -111,7 +112,45 @@ struct ChangePetDetails: View {
 
     @ContentBuilder
     func petDetailView(_ pet: Pet) -> some View {
+        Group {
+            if horizontalSizeClass == .regular {
+                if #available(iOS 27.1, *) {
+                    ArrangementView {
+                        photoPane(for: pet)
+                    } secondary: {
+                        detailsForm
+                    }
+                    .arrangementViewStyle(.split)
+                } else {
+                    HStack(spacing: .zero) {
+                        photoPane(for: pet)
+                        Divider()
+                        detailsForm
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+            } else {
+                ScrollView {
+                    photoEditor(for: pet)
+                    detailsForm
+                        .frame(minHeight: .editFormMinHeight500)
+                }
+            }
+        }
+        .toolbar(content: toolbar)
+        .background(Color(uiColor: .systemGroupedBackground))
+    }
+
+    func photoPane(for pet: Pet) -> some View {
         ScrollView {
+            photoEditor(for: pet)
+                .padding(.spacing20)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    func photoEditor(for pet: Pet) -> some View {
+        VStack {
             petImageView(pet)
 
             Toggle(isOn: $manager.defaultSelected) {
@@ -124,19 +163,20 @@ struct ChangePetDetails: View {
                 }
             }
             .padding()
+
             Text(.photoUploadDetailTitle)
                 .font(.footnote)
-                .foregroundStyle(Color(.systemGray2))
+                .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding()
-            Form {
-                personalDetailsView
-                notificationSelectionView
-            }
-            .frame(minHeight: .editFormMinHeight500)
         }
-        .toolbar(content: toolbar)
-        .background(Color(uiColor: .systemGroupedBackground))
+    }
+
+    var detailsForm: some View {
+        Form {
+            personalDetailsView
+            notificationSelectionView
+        }
     }
 
     @MainActor var personalDetailsView: some View {
@@ -188,15 +228,13 @@ struct ChangePetDetails: View {
                     await save()
                 }
             } label: {
-                Text(.save)
-                    .bold()
+                Label(.save, systemImage: "checkmark")
             }
             .tint(.accent)
         }
         ToolbarItem(placement: .cancellationAction) {
             Button(action: cancel) {
-                Text(.cancelTitle)
-                    .bold()
+                Label(.cancelTitle, systemImage: "xmark")
             }
             .tint(.red)
         }

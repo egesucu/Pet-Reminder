@@ -8,13 +8,15 @@
 
 import SwiftUI
 import Shared
+import EventKit
 
 struct Events: View {
     @Environment(EventManager.self) private var manager
+    @Binding var selectedEvent: EKEvent?
 
     var body: some View {
         if manager.status == .authorized {
-            List {
+            List(selection: $selectedEvent) {
                 TodaysEvents()
                     .environment(manager)
                     .transition(.slide)
@@ -37,7 +39,7 @@ private extension Events {
 
 #if DEBUG
 #Preview {
-    Events()
+    Events(selectedEvent: .constant(nil))
         .environment(EventManager.demo)
 }
 #endif

@@ -61,7 +61,7 @@ struct VaccineHistory: View {
             onDismiss: clearVaccineName
         ) {
             AddVaccine(pet: pet, vaccineName: $vaccineName)
-                .presentationDetents([.fraction(.compactFraction)])
+                .presentationDetents([.medium])
         }
     }
 
@@ -69,7 +69,8 @@ struct VaccineHistory: View {
     @ContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button(role: .confirm, action: addVaccine) {
-                Image(systemName: "plus")
+                Label("Add vaccine", systemImage: "plus")
+                    .labelStyle(.iconOnly)
                     .foregroundStyle(Color.background)
             }
             .tint(.blue)

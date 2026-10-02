@@ -27,10 +27,25 @@ struct PetDetail: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: .spacing24) {
-                header
-                dailyCareCard
-                historyActions
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .top, spacing: .spacing24) {
+                    VStack(alignment: .leading, spacing: .spacing24) {
+                        header
+                        dailyCareCard
+                    }
+                    .frame(minWidth: .minimumDetailPane, maxWidth: .infinity)
+
+                    Divider()
+
+                    historyActions
+                        .frame(minWidth: .minimumDetailPane, maxWidth: .infinity)
+                }
+
+                VStack(alignment: .leading, spacing: .spacing24) {
+                    header
+                    dailyCareCard
+                    historyActions
+                }
             }
             .padding(.horizontal, .spacing20)
             .padding(.top, .spacing16)
@@ -225,6 +240,10 @@ private extension PetDetail {
             isMorningFed && isEveningFed
         }
     }
+}
+
+private extension CGFloat {
+    static let minimumDetailPane: Self = 260
 }
 
 #if DEBUG

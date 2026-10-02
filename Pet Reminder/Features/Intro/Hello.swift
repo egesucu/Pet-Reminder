@@ -20,16 +20,19 @@ struct Hello: View {
 
             HelloBottomShape()
 
-            VStack(spacing: 0) {
-                Spacer()
+            ScrollView {
                 HelloContent()
-                Spacer()
-                HelloContinueButton(action: returnHome)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, .spacing20)
+                    .padding(.vertical, .spacing40)
             }
-            .padding(.horizontal, .spacing20)
-            .padding(.bottom, .spacing20)
             .opacity(shouldAnimate ? 1 : 0)
             .offset(y: shouldAnimate ? 0 : .spacing20)
+        }
+        .safeAreaInset(edge: .bottom) {
+            HelloContinueButton(action: returnHome)
+                .padding(.horizontal, .spacing20)
+                .padding(.bottom, .spacing20)
         }
         .onAppear(perform: animateView)
     }

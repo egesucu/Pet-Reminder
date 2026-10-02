@@ -15,6 +15,7 @@ import Shared
 struct FindVet: View {
 
     @State private var vetService = VetServiceImplementation()
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @State private var searchText = String(localized: .defaultVetText)
 
@@ -30,8 +31,23 @@ struct FindVet: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationSplitView {
             mapView
+                .navigationTitle(Text(.findVetTitle))
+        } detail: {
+            if let selectedLocation {
+                ScrollView {
+                    MapItem(location: selectedLocation)
+                        .padding(.spacing20)
+                }
+                .navigationTitle(selectedLocation.name)
+            } else {
+                ContentUnavailableView(
+                    "Select a veterinary clinic",
+                    systemImage: "mappin.and.ellipse",
+                    description: Text("Choose a map marker to see contact and address information.")
+                )
+            }
         }
         .overlay(locationNotAvailable)
         .task {
@@ -41,9 +57,9 @@ struct FindVet: View {
         .onDisappear {
             vetService.stopUpdating()
         }
-        .sheet(item: $selectedLocation) { location in
+        .sheet(item: compactSelection) { location in
             MapItem(location: location)
-                .presentationDetents([.fraction(0.2)])
+                .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
     }
@@ -51,6 +67,13 @@ struct FindVet: View {
 
 // MARK: - Helper Views
 private extension FindVet {
+
+    var compactSelection: Binding<Pin?> {
+        Binding(
+            get: { horizontalSizeClass == .compact ? selectedLocation : nil },
+            set: { selectedLocation = $0 }
+        )
+    }
 
     var mapView: some View {
         Map(

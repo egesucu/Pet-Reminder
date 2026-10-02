@@ -15,13 +15,14 @@ struct EventList: View {
 
     @Environment(EventManager.self) private var eventManager
     @State private var showAddEvent = false
+    @State private var selectedEvent: EKEvent?
 
     var body: some View {
-        NavigationStack {
-            VStack {
+        NavigationSplitView {
+            Group {
                 switch eventManager.status {
                 case .authorized:
-                    Events()
+                    Events(selectedEvent: $selectedEvent)
                         .toolbar {
                             EventFilterMenu()
                             eventToolBar
@@ -34,6 +35,17 @@ struct EventList: View {
             }
             .navigationTitle(Text(.eventTitle))
             .environment(eventManager)
+        } detail: {
+            if let selectedEvent {
+                ESEventDetail(event: selectedEvent)
+                    .navigationTitle(selectedEvent.title)
+            } else {
+                ContentUnavailableView(
+                    "Select an event",
+                    systemImage: "calendar",
+                    description: Text("Choose an event to see its details.")
+                )
+            }
         }
         .sheet(isPresented: $showAddEvent, onDismiss: onDismiss) {
             AddEvent()
