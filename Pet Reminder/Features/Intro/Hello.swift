@@ -12,27 +12,35 @@ import Shared
 struct Hello: View {
     @AppStorage(Strings.helloSeen) private var helloSeen = false
     @State private var shouldAnimate = false
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Color(uiColor: .systemBackground)
-                .ignoresSafeArea()
-
-            HelloBottomShape()
-
-            ScrollView {
-                HelloContent()
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, .spacing20)
-                    .padding(.vertical, .spacing40)
-            }
-            .opacity(shouldAnimate ? 1 : 0)
-            .offset(y: shouldAnimate ? 0 : .spacing20)
+        ScrollView {
+            HelloContent()
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, .spacing20)
+                .padding(.vertical, verticalSizeClass == .compact ? .spacing12 : .spacing40)
         }
+        .scrollIndicators(.hidden)
+        .opacity(shouldAnimate ? 1 : 0)
+        .offset(y: shouldAnimate ? 0 : .spacing20)
         .safeAreaInset(edge: .bottom) {
             HelloContinueButton(action: returnHome)
                 .padding(.horizontal, .spacing20)
                 .padding(.bottom, .spacing20)
+        }
+        .background {
+            GeometryReader { geometry in
+                ZStack(alignment: .bottom) {
+                    Color(uiColor: .systemBackground)
+
+                    HelloBottomShape()
+                        .frame(height: geometry.size.height * 0.28)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .ignoresSafeArea()
+            .allowsHitTesting(false)
         }
         .onAppear(perform: animateView)
     }

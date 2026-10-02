@@ -12,7 +12,6 @@ import SwiftData
 
 struct HomeManager: View {
     @State private var currentTab: PetReminderTabs = .home
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(EventManager.self) private var eventManager
     @Environment(NotificationManager.self) private var notificationManager
 
@@ -60,8 +59,7 @@ struct HomeManager: View {
                 Label(.findVetTitle, systemImage: "magnifyingglass")
             }
         }
-        .tabViewStyle(.sidebarAdaptable)
-        .defaultTabBarPlacement(horizontalSizeClass == .regular ? .sidebar : .tabBar)
+        .defaultTabBarPlacement(.tabBar)
         .tint(.accent)
         .onOpenURL { url in
             handle(url)

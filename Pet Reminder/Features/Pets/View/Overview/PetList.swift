@@ -30,16 +30,20 @@ struct PetList: View {
                 .navigationTitle(Text(.petNameTitle))
                 .toolbar(content: topActions)
         } detail: {
-            if let selectedPet {
-                PetDetail(pet: selectedPet)
-            } else {
-                ContentUnavailableView(
-                    "Select a pet",
-                    systemImage: "pawprint.circle",
-                    description: Text("Choose a pet to see today's care and history.")
-                )
+            NavigationStack {
+                if let selectedPet {
+                    PetDetail(pet: selectedPet)
+                        .id(selectedPet.persistentModelID)
+                } else {
+                    ContentUnavailableView(
+                        "Select a pet",
+                        systemImage: "pawprint.circle",
+                        description: Text("Choose a pet to see today's care and history.")
+                    )
+                }
             }
         }
+            .navigationSplitViewStyle(.balanced)
             .task(setupInitials)
             .sheet(isPresented: $addPet, onDismiss: handleDismissAction, content: addPetView)
             .sheet(isPresented: $showManagePet, onDismiss: dismissManagePet, content: managePetView)

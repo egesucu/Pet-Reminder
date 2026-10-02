@@ -15,9 +15,9 @@ import Shared
 struct FindVet: View {
 
     @State private var vetService = VetServiceImplementation()
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @State private var searchText = String(localized: .defaultVetText)
+    @State private var isSearching = false
 
     @State private var userLocation: MapCameraPosition = .userLocation(
         fallback: .automatic
@@ -31,25 +31,11 @@ struct FindVet: View {
     }
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             mapView
                 .navigationTitle(Text(.findVetTitle))
-        } detail: {
-            if let selectedLocation {
-                ScrollView {
-                    MapItem(location: selectedLocation)
-                        .padding(.spacing20)
-                }
-                .navigationTitle(selectedLocation.name)
-            } else {
-                ContentUnavailableView(
-                    "Select a veterinary clinic",
-                    systemImage: "mappin.and.ellipse",
-                    description: Text("Choose a map marker to see contact and address information.")
-                )
-            }
+                .overlay(locationNotAvailable)
         }
-        .overlay(locationNotAvailable)
         .task {
             await vetService.requestMapPermissions()
             await setupPreDefinedLocations()
@@ -57,23 +43,31 @@ struct FindVet: View {
         .onDisappear {
             vetService.stopUpdating()
         }
-        .sheet(item: compactSelection) { location in
-            MapItem(location: location)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
+        .sheet(item: $selectedLocation) { location in
+            NavigationStack {
+                ScrollView {
+                    MapItem(location: location)
+                        .frame(maxWidth: .infinity)
+                        .padding(.spacing20)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            selectedLocation = nil
+                        } label: {
+                            Label("Close", systemImage: "xmark")
+                        }
+                    }
+                }
+            }
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
         }
     }
 }
 
 // MARK: - Helper Views
 private extension FindVet {
-
-    var compactSelection: Binding<Pin?> {
-        Binding(
-            get: { horizontalSizeClass == .compact ? selectedLocation : nil },
-            set: { selectedLocation = $0 }
-        )
-    }
 
     var mapView: some View {
         Map(
@@ -95,10 +89,11 @@ private extension FindVet {
             MapPitchToggle()
             MapUserLocationButton()
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, isPresented: $isSearching)
         .onSubmit(of: .search) {
             searchedLocations.removeAll()
             searchLocations()
+            isSearching = false
         }
     }
 
