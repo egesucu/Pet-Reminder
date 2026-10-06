@@ -21,6 +21,12 @@ struct PetReminderApp: App {
     let container: ModelContainer
 
     init() {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("--store-screenshots") {
+            container = DataController.screenshotContainer()
+            return
+        }
+        #endif
         do {
             container = try ModelContainer(
                 for: Pet.self,
@@ -34,19 +40,29 @@ struct PetReminderApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if helloSeen {
+                if helloSeen || isCapturingScreenshots {
                     HomeManager()
                 } else {
                     Hello()
                 }
             }
             .task {
-                await refreshNotificationLocalizations()
+                if !isCapturingScreenshots {
+                    await refreshNotificationLocalizations()
+                }
             }
         }
         .notification(notificationManager)
         .environment(eventManager)
         .modelContainer(container)
+    }
+
+    private var isCapturingScreenshots: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("--store-screenshots")
+        #else
+        false
+        #endif
     }
 
     @MainActor

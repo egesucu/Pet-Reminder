@@ -53,6 +53,17 @@ struct PetDetail: View {
         }
         .scrollIndicators(.hidden)
         .navigationTitle(Text("pet_name_title \(pet.name)"))
+        .task {
+            #if DEBUG
+            let arguments = ProcessInfo.processInfo.arguments
+            if arguments.contains("--store-screenshots"),
+               let index = arguments.firstIndex(of: "--screenshot-screen"),
+               arguments.indices.contains(index + 1),
+               arguments[index + 1] == "history" {
+                historyDestination = .feedHistory
+            }
+            #endif
+        }
         .navigationDestination(item: $historyDestination) { destination in
             switch destination {
             case .feedHistory:

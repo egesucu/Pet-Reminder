@@ -183,6 +183,15 @@ private extension PetList {
 
     func setupInitials() async {
         logDuplicateNamesIfAny()
+        #if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        if arguments.contains("--store-screenshots"),
+           let index = arguments.firstIndex(of: "--screenshot-screen"),
+           arguments.indices.contains(index + 1),
+           arguments[index + 1] != "pets" {
+            selectedPet = pets.first { $0.name == "Luna" }
+        }
+        #endif
     }
 
     func logDuplicateNamesIfAny() {
