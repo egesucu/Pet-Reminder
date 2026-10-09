@@ -14,6 +14,24 @@
 		9D60E6D92ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9D60E6D82ABB8BA400AC0CC2 /* ci_pre_xcodebuild.sh */; };
 		9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D71CEF3248836BD00AA1458 /* CloudKit.framework */; };
 		9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8262426FF690100EA2423 /* StoreKit.framework */; };
+		A10000000000000000000002 /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000001 /* SharedUI */; };
+		A10000000000000000000102 /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000101 /* SharedUI */; };
+		A10000000000000000010002 /* PetCare in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000010001 /* PetCare */; };
+		A10000000000000000010102 /* PetCare in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000010101 /* PetCare */; };
+		A10000000000000000020002 /* PreviewSupport in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000020001 /* PreviewSupport */; };
+		A10000000000000000020102 /* PreviewSupport in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000020101 /* PreviewSupport */; };
+		A100000000000000000A0002 /* Reminders in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000A0001 /* Reminders */; };
+		A100000000000000000A0102 /* Reminders in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000A0101 /* Reminders */; };
+		A100000000000000000B0002 /* Events in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000B0001 /* Events */; };
+		A100000000000000000B0102 /* Events in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000B0101 /* Events */; };
+		A100000000000000000C0002 /* VetFinder in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000C0001 /* VetFinder */; };
+		A100000000000000000C0102 /* VetFinder in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000C0101 /* VetFinder */; };
+		A10000000000000000140002 /* Pets in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000140001 /* Pets */; };
+		A10000000000000000140102 /* Pets in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000140101 /* Pets */; };
+		A10000000000000000150002 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000150001 /* Settings */; };
+		A10000000000000000160002 /* Intro in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000160001 /* Intro */; };
+		A10000000000000000150102 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000150101 /* Settings */; };
+		A10000000000000000160102 /* Intro in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000160101 /* Intro */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +58,6 @@
 		7214E4ED2DB2B61B00F1BAA2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Packages/Shared,
 				Utilities/Info.plist,
 			);
 			target = 9D8E76ED248666BD004610C8 /* Pet Reminder */;
@@ -58,6 +75,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D06639C2E0B5D28004CF6F5 /* Shared in Frameworks */,
+				A10000000000000000150102 /* Settings in Frameworks */,
+				A10000000000000000160102 /* Intro in Frameworks */,
+				A10000000000000000140102 /* Pets in Frameworks */,
+				A100000000000000000C0102 /* VetFinder in Frameworks */,
+				A100000000000000000B0102 /* Events in Frameworks */,
+				A100000000000000000A0102 /* Reminders in Frameworks */,
+				A10000000000000000020102 /* PreviewSupport in Frameworks */,
+				A10000000000000000010102 /* PetCare in Frameworks */,
+				A10000000000000000000102 /* SharedUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +94,15 @@
 				9D71CEF4248836BD00AA1458 /* CloudKit.framework in Frameworks */,
 				9DC8262526FF690100EA2423 /* StoreKit.framework in Frameworks */,
 				7214E4F12DB2B6F600F1BAA2 /* Shared in Frameworks */,
+				A10000000000000000150002 /* Settings in Frameworks */,
+				A10000000000000000160002 /* Intro in Frameworks */,
+				A10000000000000000140002 /* Pets in Frameworks */,
+				A100000000000000000C0002 /* VetFinder in Frameworks */,
+				A100000000000000000B0002 /* Events in Frameworks */,
+				A100000000000000000A0002 /* Reminders in Frameworks */,
+				A10000000000000000020002 /* PreviewSupport in Frameworks */,
+				A10000000000000000010002 /* PetCare in Frameworks */,
+				A10000000000000000000002 /* SharedUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +170,15 @@
 			name = "Pet ReminderTests";
 			packageProductDependencies = (
 				9D06639B2E0B5D28004CF6F5 /* Shared */,
+				A10000000000000000150101 /* Settings */,
+				A10000000000000000160101 /* Intro */,
+				A10000000000000000140101 /* Pets */,
+				A100000000000000000C0101 /* VetFinder */,
+				A100000000000000000B0101 /* Events */,
+				A100000000000000000A0101 /* Reminders */,
+				A10000000000000000020101 /* PreviewSupport */,
+				A10000000000000000010101 /* PetCare */,
+				A10000000000000000000101 /* SharedUI */,
 			);
 			productName = "Pet ReminderTests";
 			productReference = 72C446442C9B6BBC003B1DE7 /* Pet ReminderTests.xctest */;
@@ -158,6 +202,15 @@
 			name = "Pet Reminder";
 			packageProductDependencies = (
 				7214E4F02DB2B6F600F1BAA2 /* Shared */,
+				A10000000000000000150001 /* Settings */,
+				A10000000000000000160001 /* Intro */,
+				A10000000000000000140001 /* Pets */,
+				A100000000000000000C0001 /* VetFinder */,
+				A100000000000000000B0001 /* Events */,
+				A100000000000000000A0001 /* Reminders */,
+				A10000000000000000020001 /* PreviewSupport */,
+				A10000000000000000010001 /* PetCare */,
+				A10000000000000000000001 /* SharedUI */,
 			);
 			productName = "Pet Reminder";
 			productReference = 9D8E76EE248666BD004610C8 /* Pet Reminder.app */;
@@ -200,6 +253,16 @@
 			mainGroup = 9D8E76E5248666BD004610C8;
 			packageReferences = (
 				9D06639A2E0B5D28004CF6F5 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Shared" */,
+				A20000000000000000000008 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/ModuleTests" */,
+				A20000000000000000000007 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/PreviewSupport" */,
+				A20000000000000000000006 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Settings" */,
+				A2000000000000000000000A /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Intro" */,
+				A20000000000000000000005 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/VetFinder" */,
+				A20000000000000000000004 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Events" */,
+				A20000000000000000000003 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Pets" */,
+				A20000000000000000000002 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Reminders" */,
+				A20000000000000000000001 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/PetCare" */,
+				A20000000000000000000000 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/SharedUI" */,
 			);
 			productRefGroup = 9D8E76EF248666BD004610C8 /* Products */;
 			projectDirPath = "";
@@ -371,7 +434,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -455,7 +518,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Pet Reminder/Utilities/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -647,6 +710,46 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Pet Reminder/Packages/Shared";
 		};
+		A20000000000000000000000 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/SharedUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/SharedUI";
+		};
+		A20000000000000000000001 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/PetCare" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/PetCare";
+		};
+		A20000000000000000000002 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Reminders" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Reminders";
+		};
+		A20000000000000000000003 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Pets" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Pets";
+		};
+		A20000000000000000000004 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Events" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Events";
+		};
+		A20000000000000000000005 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/VetFinder" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/VetFinder";
+		};
+		A20000000000000000000006 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Settings" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Settings";
+		};
+		A2000000000000000000000A /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Intro" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Intro";
+		};
+		A20000000000000000000007 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/PreviewSupport" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/PreviewSupport";
+		};
+		A20000000000000000000008 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/ModuleTests" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/ModuleTests";
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -657,6 +760,78 @@
 		9D06639B2E0B5D28004CF6F5 /* Shared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Shared;
+		};
+		A10000000000000000000001 /* SharedUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUI;
+		};
+		A10000000000000000000101 /* SharedUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUI;
+		};
+		A10000000000000000010001 /* PetCare */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PetCare;
+		};
+		A10000000000000000010101 /* PetCare */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PetCare;
+		};
+		A10000000000000000020001 /* PreviewSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PreviewSupport;
+		};
+		A10000000000000000020101 /* PreviewSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PreviewSupport;
+		};
+		A100000000000000000A0001 /* Reminders */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reminders;
+		};
+		A100000000000000000A0101 /* Reminders */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reminders;
+		};
+		A100000000000000000B0001 /* Events */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Events;
+		};
+		A100000000000000000B0101 /* Events */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Events;
+		};
+		A100000000000000000C0001 /* VetFinder */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VetFinder;
+		};
+		A100000000000000000C0101 /* VetFinder */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VetFinder;
+		};
+		A10000000000000000140001 /* Pets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Pets;
+		};
+		A10000000000000000140101 /* Pets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Pets;
+		};
+		A10000000000000000150001 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		A10000000000000000160001 /* Intro */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Intro;
+		};
+		A10000000000000000150101 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		A10000000000000000160101 /* Intro */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Intro;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

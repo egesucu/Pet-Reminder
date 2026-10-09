@@ -1,36 +1,43 @@
 import Foundation
 import Observation
+import Pets
 import Shared
 import SwiftData
 
-/// Retains a request across launch and onboarding until a home view has handled it.
 @MainActor
 @Observable
 final class AppNavigationCoordinator {
-    struct PetRequest: Equatable {
-        let token = UUID()
-        let petID: UUID
+    var selectedTab: PetReminderTabs = .home
+    private(set) var pendingRequest: PetRouteRequest?
+
+    func openPet(id: UUID) { open(.pet(id)) }
+    func open(_ destination: PetRoute) {
+        selectedTab = .home
+        pendingRequest = PetRouteRequest(destination)
     }
 
-    private(set) var pendingPet: PetRequest?
-
-    func openPet(id: UUID) {
-        pendingPet = PetRequest(petID: id)
-    }
-
-    func consume(_ request: PetRequest) {
-        if pendingPet?.token == request.token {
-            pendingPet = nil
+    func handle(_ url: URL) {
+        guard url.scheme?.lowercased() == "petreminder", let host = url.host?.lowercased() else { return }
+        switch host {
+        case "home":
+            selectedTab = .home
+            if let name = url.pathComponents.first(where: { $0 != "/" }), !name.isEmpty {
+                open(.namedPet(name))
+            }
+        case "add": open(.addPet)
+        case "events": selectedTab = .events
+        case "findvet": selectedTab = .vet
+        case "settings": selectedTab = .settings
+        default: break
         }
     }
 
-    /// Resolve through the store when the UI still has a cached pre-backfill pet.
+    func consume(_ request: PetRouteRequest) {
+        if pendingRequest?.token == request.token { pendingRequest = nil }
+    }
+
     func resolvePendingPet(in context: ModelContext) throws -> Pet? {
-        guard let request = pendingPet else { return nil }
-        let id: UUID? = request.petID
-        let readContext = ModelContext(context.container)
-        let descriptor = FetchDescriptor<Pet>(predicate: #Predicate { $0.intentID == id })
-        guard let savedPet = try readContext.fetch(descriptor).first else { return nil }
-        return context.model(for: savedPet.persistentModelID) as? Pet
+        guard let id = pendingRequest?.petID else { return nil }
+        return try PetRouteResolver.resolve(id: id, in: context)
     }
 }

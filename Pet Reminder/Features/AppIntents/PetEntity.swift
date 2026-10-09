@@ -1,6 +1,8 @@
 import AppIntents
 import Foundation
 import Shared
+import SharedUI
+import PetCare
 import CoreSpotlight
 
 struct PetEntity: IndexedEntity {

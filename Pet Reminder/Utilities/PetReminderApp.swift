@@ -6,11 +6,17 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
+import Intro
+import VetFinder
+import Events
+import Reminders
 import SwiftUI
 import CloudKit
 import SwiftData
 import OSLog
 import Shared
+import SharedUI
+import PetCare
 import AppIntents
 import Combine
 import CoreData
@@ -18,8 +24,9 @@ import CoreData
 @main
 struct PetReminderApp: App {
     @AppStorage(Strings.helloSeen) var helloSeen = false
-    @State private var notificationManager = NotificationManager.shared
-    @State private var eventManager = EventManager.shared
+    @State private var notificationManager = NotificationManager()
+    @State private var eventManager = EventManager()
+    @State private var vetService = VetServiceImplementation()
     @State private var navigation: AppNavigationCoordinator
     @State private var careService: PetCareService
     @Environment(\.scenePhase) private var scenePhase
@@ -59,9 +66,10 @@ struct PetReminderApp: App {
                 if helloSeen || isCapturingScreenshots {
                     HomeManager()
                 } else {
-                    Hello()
+                    IntroView { helloSeen = true }
                 }
             }
+            .onOpenURL { navigation.handle($0) }
             .task {
                 if !isCapturingScreenshots {
                     spotlight.scheduleRefresh()
@@ -89,6 +97,7 @@ struct PetReminderApp: App {
         }
         .notification(notificationManager)
         .environment(eventManager)
+        .environment(vetService)
         .environment(navigation)
         .environment(careService)
         .modelContainer(container)

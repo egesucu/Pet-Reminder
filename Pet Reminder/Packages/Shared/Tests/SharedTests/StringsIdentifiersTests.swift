@@ -1,4 +1,5 @@
 import Testing
+
 @testable import Shared
 
 @Suite("Strings identifier tests")

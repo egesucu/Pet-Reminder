@@ -14,7 +14,7 @@ import Foundation
     public var errorDescription: String? {
         switch self {
         case .name:
-            return String(localized: .nameError)
+            return String(localized: SharedStrings.nameError)
         }
     }
 }

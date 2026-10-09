@@ -1,6 +1,8 @@
+import Pets
 import AppIntents
 import Foundation
 import Shared
+import PetCare
 import SwiftData
 import Testing
 @testable import Pet_Reminder
@@ -81,15 +83,15 @@ struct PetIntentsTests {
         intent.service = service
         intent.navigation = navigation
         _ = try await intent.perform()
-        let first = try #require(navigation.pendingPet)
+        let first = try #require(navigation.pendingRequest)
         _ = try await intent.perform()
-        let second = try #require(navigation.pendingPet)
+        let second = try #require(navigation.pendingRequest)
         #expect(first.petID == pet.intentID)
         #expect(second.token != first.token)
         navigation.consume(first)
-        #expect(navigation.pendingPet == second)
+        #expect(navigation.pendingRequest == second)
         navigation.consume(second)
-        #expect(navigation.pendingPet == nil)
+        #expect(navigation.pendingRequest == nil)
     }
 
     @Test("Intent policies require authentication and use the intended execution modes")
@@ -116,6 +118,6 @@ struct PetIntentsTests {
         let candidate = try navigation.resolvePendingPet(in: container.mainContext)
         let resolved = try #require(candidate)
         #expect(resolved.persistentModelID == pet.persistentModelID)
-        #expect(navigation.pendingPet != nil) // Resolution does not consume an unhandled request.
+        #expect(navigation.pendingRequest != nil) // Resolution does not consume an unhandled request.
     }
 }

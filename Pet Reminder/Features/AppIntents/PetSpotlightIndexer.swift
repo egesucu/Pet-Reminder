@@ -3,6 +3,8 @@ import CoreSpotlight
 import Foundation
 import OSLog
 import Shared
+import SharedUI
+import PetCare
 
 @MainActor
 protocol PetSearchIndex {

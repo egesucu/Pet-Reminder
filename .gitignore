@@ -36,3 +36,7 @@ fastlane/test_output
 AppStore
 AGENTS.md
 .vscode/
+
+# Local package and Python check caches
+.build/
+__pycache__/

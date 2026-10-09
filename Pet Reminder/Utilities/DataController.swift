@@ -9,6 +9,7 @@
 import SwiftData
 import SwiftUI
 import Shared
+import SharedUI
 
 @MainActor
 class DataController {
@@ -57,29 +58,4 @@ class DataController {
     }
     #endif
 
-    static let previewContainer: ModelContainer = {
-        do {
-            let config = ModelConfiguration(isStoredInMemoryOnly: true)
-            let container = try ModelContainer(for: Pet.self, configurations: config)
-            let sampleData: [Pet] = Pet.previews
-
-            sampleData.forEach {
-                container.mainContext.insert($0)
-            }
-
-            return container
-        } catch {
-            fatalError("Failed to create model container for previewing: \(error.localizedDescription)")
-        }
-    }()
-
-    static let emptyContainer: ModelContainer = {
-        do {
-            let config = ModelConfiguration(isStoredInMemoryOnly: true)
-            let container = try ModelContainer(for: Pet.self, configurations: config)
-            return container
-        } catch {
-            fatalError("Failed to create model container for previewing: \(error.localizedDescription)")
-        }
-    }()
 }

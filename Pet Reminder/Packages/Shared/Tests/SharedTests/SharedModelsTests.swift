@@ -1,6 +1,7 @@
 /// Tests validating shared model and localization behavior.
 
 import Testing
+
 @testable import Shared
 
 /// Suite covering tests related to shared models and localization functionality.

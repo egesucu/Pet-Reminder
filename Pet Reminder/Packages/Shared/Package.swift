@@ -4,25 +4,12 @@ import PackageDescription
 let package = Package(
     name: "Shared",
     defaultLocalization: "en",
-    platforms: [
-        .iOS(.v27)
+    platforms: [.iOS(.v27)],
+    products: [.library(name: "Shared", targets: ["Shared"])],
+    dependencies: [
     ],
-    products: [
-        .library(
-            name: "Shared",
-            targets: ["Shared"],
-        )
-    ],
-    dependencies: [],
     targets: [
-        .target(
-            name: "Shared",
-            dependencies: [],
-            swiftSettings: [.strictMemorySafety()]
-        ),
-        .testTarget(
-            name: "SharedTests",
-            dependencies: ["Shared"]
-        )
+        .target(name: "Shared", dependencies: [], swiftSettings: [.strictMemorySafety()]),
+        .testTarget(name: "SharedTests", dependencies: ["Shared"]),
     ]
 )

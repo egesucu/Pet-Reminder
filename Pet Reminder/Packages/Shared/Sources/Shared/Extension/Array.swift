@@ -6,10 +6,9 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
-import SwiftUI
+// MARK: - Array
 import Playgrounds
 
-// MARK: - Array
 public extension Array {
     static var empty: Self { [] }
 }

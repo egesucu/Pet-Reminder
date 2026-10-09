@@ -27,14 +27,14 @@ This repository contains the app's Swift source code, with an interface built us
 
 The app uses SwiftUI and Observation for its interface and state, SwiftData for persistence and schema migrations, UserNotifications for reminders, EventKit for calendar integration, MapKit and Core Location for vet search, and Swift Charts for feeding insights.
 
-A local Swift package, `Shared`, contains reusable models, views, extensions, and resources. It has no external package dependencies.
+Separate local Swift packages contain the app’s models, UI helpers, services, and features: `Shared`, `SharedUI`, `PetCare`, `Reminders`, `Pets`, `Events`, `VetFinder`, `Settings`, `Intro`, and `PreviewSupport`. They use explicit local package dependencies and no third-party packages. See [ARCHITECTURE.md](ARCHITECTURE.md) for ownership and integration contracts.
 
 ## Getting started
 
-The current app and app test targets require **iOS 27.0 or later**. The `Shared` package declares iOS 26.0 as its minimum and uses Swift tools version 6.4. Use an Xcode installation with an iOS 27 SDK and support for Swift tools 6.4 or later.
+The current app and app test targets require **iOS 27.0 or later**. All local packages also require iOS 27.0 and use Swift tools version 6.4. Use an Xcode installation with an iOS 27 SDK and support for Swift tools 6.4 or later.
 
 1. Clone this repository and open `Pet Reminder.xcodeproj` in Xcode.
-2. Allow Xcode to resolve the local `Shared` package.
+2. Allow Xcode to resolve the local packages under `Pet Reminder/Packages`.
 3. Select the **Pet Reminder** scheme and a compatible iPhone or iPad simulator or device.
 4. For device builds, choose your development team under **Signing & Capabilities**. If using your own app identifier, configure a matching iCloud container and update the app's entitlements. The checked-in container is `iCloud.com.egesucu.Pet-Reminder`.
 5. Build and run with **⌘R**.
@@ -60,7 +60,7 @@ Schema V5 adds optional UUID storage, backfills existing pets, and assigns and s
 
 Pet entities are also indexed in Spotlight. Search by name, animal type, or breed; the Open Pet result opens the matching UUID. Spotlight may also show feeding App Shortcuts for that pet. The app reconciles the index after successful saves, CloudKit imports, and activation, and removes deleted pets across launches. System requests can rebuild all pets or selected identities. Indexing reads saved data only and uses complete file protection; unfinished edits and screenshot samples are excluded. Feeding status stays a live query rather than indexed content.
 
-The `Shared` package contains `PetCareService`, `PetCareSession`, and `DailyFeeds` for future reuse. No widget extension, AI experience, or App Group storage move is included. A future widget must share the actions/entities and dependencies with its extension and explicitly plan cross-process storage and timeline refresh. App Intents expose the app's capabilities to supported system experiences; they do not by themselves provide a custom AI feature.
+The `PetCare` package contains `PetCareService`, `PetCareSession`, and `DailyFeeds` for reuse by the app and system integrations. No widget extension, AI experience, or App Group storage move is included. A future widget must share the actions/entities and dependencies with its extension and explicitly plan cross-process storage and timeline refresh. App Intents expose the app's capabilities to supported system experiences; they do not by themselves provide a custom AI feature.
 
 Before release, validate Siri on a signed compatible device and test upgrading two iCloud devices with the same existing pets. Independently upgrading legacy stores can initially assign different UUIDs to the same synced record; check convergence and saved-reference behavior after CloudKit synchronization. Simulator tests do not establish this behavior.
 
@@ -68,17 +68,17 @@ Before release, validate Siri on a signed compatible device and test upgrading t
 
 | Path | Contents |
 | --- | --- |
-| `Pet Reminder/Features/` | Pet management, feeding and vaccination history, events, vet search, onboarding, and settings |
+| `Pet Reminder/Features/` | App-owned App Intents and Spotlight |
 | `Pet Reminder/HomeTabs/` | Tab navigation and deep-link handling |
 | `Pet Reminder/Utilities/` | App entry point, persistence helpers, configuration, and app resources |
-| `Pet Reminder/Packages/Shared/` | Shared Swift package and its unit tests |
-| `Pet ReminderTests/` | App tests for notifications, calendar alarms, feeding records, pet data integrity, and vet services |
+| `Pet Reminder/Packages/` | Separate local packages for features, services, shared models/UI, previews, and public API tests |
+| `Pet ReminderTests/` | Hosted tests for migrations, reminder editing, navigation, App Intents, and Spotlight |
 | `AppStore/` | Store descriptions, release notes, screenshots, and promotional assets |
 | `ci_scripts/` | Xcode Cloud lifecycle scripts |
 
 ## Testing and contributing
 
-Run the app test target in Xcode with **⌘U** on a compatible simulator. The `Shared` package also includes tests for models, extensions, and string identifiers; open its `Package.swift` in Xcode to run those tests with an iOS simulator destination.
+Run the shared **Pet Reminder** scheme in Xcode with **⌘U** on a compatible simulator. Its checked-in test plan includes package unit tests, public API/resource checks, and app integration tests. Open an individual package’s `Package.swift` to test it independently. Run `python3 ci_scripts/check_modules.py` to verify dependency and source-ownership rules; Xcode Cloud runs this check before builds.
 
 Bug reports and pull requests are welcome. Include steps to reproduce a bug and describe how you validated a change. Follow the [Code of Conduct](CODE_OF_CONDUCT.md), and use the [Security Policy](SECURITY.md) to report vulnerabilities.
 

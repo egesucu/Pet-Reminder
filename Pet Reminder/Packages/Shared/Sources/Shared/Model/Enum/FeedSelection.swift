@@ -31,11 +31,11 @@ public extension FeedSelection {
     var localized: LocalizedStringResource {
         switch self {
         case .morning:
-            .feedSelectionMorning
+            SharedStrings.feedSelectionMorning
         case .evening:
-            .feedSelectionEvening
+            SharedStrings.feedSelectionEvening
         case .both:
-            .feedSelectionBoth
+            SharedStrings.feedSelectionBoth
         }
     }
 }

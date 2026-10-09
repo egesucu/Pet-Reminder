@@ -24,21 +24,3 @@ public class Vaccine {
         self.name = name
     }
 }
-
-extension Vaccine {
-    @MainActor static var preview: Vaccine {
-        return previews.first ?? .init()
-    }
-
-    @MainActor static var previews: [Vaccine] {
-        var vaccines: [Vaccine] = []
-        Strings.demoVaccines.forEach { vaccineName in
-            let vaccine = Vaccine(
-                date: .randomDate(),
-                name: vaccineName
-            )
-            vaccines.append(vaccine)
-        }
-        return vaccines
-    }
-}

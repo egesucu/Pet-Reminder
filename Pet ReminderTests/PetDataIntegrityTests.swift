@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 import Testing
 import Shared
-@testable import Pet_Reminder
+@testable import Pets
 
 private final class MigrationFixtureBundle: NSObject {}
 

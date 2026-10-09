@@ -18,13 +18,13 @@ import Foundation
     public var errorDescription: String? {
         return switch self {
         case .cloudUnavailable:
-            String(localized: .cloudUnavailable)
+            String(localized: SharedStrings.cloudUnavailable)
         case .cloudNotPresent:
-            String(localized: .noAccount)
+            String(localized: SharedStrings.noAccount)
         case .restricted:
-            String(localized: .restrictedAccount)
+            String(localized: SharedStrings.restrictedAccount)
         case .cantFetchStatus:
-            String(localized: .cantFetchStatus)
+            String(localized: SharedStrings.cantFetchStatus)
         case .unknownError(let message):
             message
         }

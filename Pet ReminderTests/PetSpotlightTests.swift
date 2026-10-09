@@ -1,7 +1,9 @@
+import Pets
 import AppIntents
 import CoreSpotlight
 import Foundation
 import Shared
+import PetCare
 import SwiftData
 import Testing
 @testable import Pet_Reminder

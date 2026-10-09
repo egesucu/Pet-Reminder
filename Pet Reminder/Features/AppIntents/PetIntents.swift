@@ -1,6 +1,8 @@
 import AppIntents
 import Foundation
 import Shared
+import SharedUI
+import PetCare
 
 nonisolated enum Meal: String, AppEnum {
     case morning, evening

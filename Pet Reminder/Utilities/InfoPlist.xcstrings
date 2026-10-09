@@ -7,19 +7,19 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Pet Reminder"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "Pet Reminder"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Pet Reminder"
           }
         },
@@ -31,7 +31,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Pet Reminder"
           }
         },
@@ -48,7 +48,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Diese Berechtigung wird benötigt, um deinen Kalender und deine Ereignisse zu lesen und zu bearbeiten."
           }
         },
@@ -60,7 +60,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Necesitamos este permiso para leer y modificar el calendario y los eventos."
           }
         },
@@ -72,7 +72,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Questa autorizzazione è necessaria per leggere e modificare il calendario e gli eventi."
           }
         },
@@ -89,7 +89,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Diese Berechtigung wird benötigt, um dir Tierarztpraxen in deiner Nähe anzuzeigen."
           }
         },
@@ -113,7 +113,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "machine_translated",
+            "state" : "translated",
             "value" : "Questa autorizzazione è necessaria per mostrare le cliniche veterinarie nelle vicinanze."
           }
         },
