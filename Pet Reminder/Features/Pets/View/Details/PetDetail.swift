@@ -24,6 +24,11 @@ struct PetDetail: View {
     @State private var historyDestination: HistoryDestination?
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(PetCareService.self) private var careService
+    @State private var careSession: PetCareSession?
+
+    private var feedingPet: Pet { careSession?.pet ?? pet }
 
     var body: some View {
         ScrollView {
@@ -53,6 +58,13 @@ struct PetDetail: View {
         }
         .scrollIndicators(.hidden)
         .navigationTitle(Text("pet_name_title \(pet.name)"))
+        .onChange(of: careService.revision, initial: true) { _, _ in refreshCare() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { refreshCare() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
+            refreshCare()
+        }
         .task {
             #if DEBUG
             let arguments = ProcessInfo.processInfo.arguments
@@ -67,7 +79,7 @@ struct PetDetail: View {
         .navigationDestination(item: $historyDestination) { destination in
             switch destination {
             case .feedHistory:
-                FeedHistory(feeds: pet.feeds, feedSelection: pet.feedSelection)
+                FeedHistory(feeds: feedingPet.feeds, feedSelection: feedingPet.feedSelection)
             case .vaccines:
                 VaccineHistory(pet: pet)
             }
@@ -77,6 +89,17 @@ struct PetDetail: View {
 }
 
 private extension PetDetail {
+
+    func refreshCare() {
+        guard let id = pet.intentID else { return }
+        let session = careSession ?? PetCareSession(container: modelContext.container)
+        do {
+            try session.reload(id: id)
+            careSession = session
+        } catch {
+            Logger.feed.error("Failed to refresh feeding data: \(error.localizedDescription)")
+        }
+    }
 
     var yellowGradient: LinearGradient {
         LinearGradient(
@@ -105,7 +128,8 @@ private extension PetDetail {
                 .font(.headline)
                 .foregroundStyle(Color.label)
 
-            FeedList(pet: pet)
+            FeedList(pet: feedingPet)
+                .environment(\.modelContext, careSession?.context ?? modelContext)
                 .frame(maxWidth: .infinity, minHeight: .feedCardHeight100)
                 .padding(.vertical, .spacing8)
 
@@ -205,11 +229,11 @@ private extension PetDetail {
     }
 
     var isMorningFed: Bool {
-        DailyFeeds.isFed(.morning, pet: pet, at: .now)
+        DailyFeeds.isFed(.morning, pet: feedingPet, at: .now)
     }
 
     var isEveningFed: Bool {
-        DailyFeeds.isFed(.evening, pet: pet, at: .now)
+        DailyFeeds.isFed(.evening, pet: feedingPet, at: .now)
     }
 
     var nextFeedSummary: String {
@@ -264,6 +288,7 @@ private extension CGFloat {
             pet: .preview
         )
         .modelContainer(DataController.previewContainer)
+        .environment(PetCareService(container: DataController.previewContainer))
     }
 }
 #endif

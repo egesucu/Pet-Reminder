@@ -10,10 +10,12 @@ import SwiftUI
 import SwiftData
 import OSLog
 import Shared
+import AppIntents
 
 struct PetList: View {
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(AppNavigationCoordinator.self) private var navigation
 
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
@@ -45,6 +47,15 @@ struct PetList: View {
         }
             .navigationSplitViewStyle(.balanced)
             .task(setupInitials)
+            .onChange(of: navigation.pendingPet, initial: true) { _, _ in
+                consumePendingPet()
+            }
+            .onChange(of: pets.map(\.intentID)) { _, _ in
+                consumePendingPet()
+            }
+            .onChange(of: pets.map { "\($0.intentID?.uuidString ?? ""):\($0.name)" }, initial: true) { _, _ in
+                PetAppShortcuts.updateAppShortcutParameters()
+            }
             .sheet(isPresented: $addPet, onDismiss: handleDismissAction, content: addPetView)
             .sheet(isPresented: $showManagePet, onDismiss: dismissManagePet, content: managePetView)
             .onReceive(NotificationCenter.default.publisher(for: .openPetByName)) { note in
@@ -181,6 +192,17 @@ struct PetList: View {
 // MARK: - Helper Functions
 private extension PetList {
 
+    func consumePendingPet() {
+        guard let request = navigation.pendingPet else { return }
+        do {
+            guard let pet = try navigation.resolvePendingPet(in: modelContext) else { return }
+            selectedPet = pet
+            navigation.consume(request)
+        } catch {
+            Logger.pets.error("Failed to open requested pet: \(error.localizedDescription)")
+        }
+    }
+
     func setupInitials() async {
         logDuplicateNamesIfAny()
         #if DEBUG
@@ -256,6 +278,8 @@ private extension CGFloat {
 #Preview("Multiple Pets") {
     NavigationStack {
         PetList()
+            .environment(AppNavigationCoordinator())
+            .environment(PetCareService(container: DataController.previewContainer))
             .modelContainer(DataController.previewContainer)
             .notification(NotificationManager.shared)
             .navigationTitle(Text("Pets"))
@@ -265,6 +289,8 @@ private extension CGFloat {
 #Preview("Empty Pets") {
     NavigationStack {
         PetList()
+            .environment(AppNavigationCoordinator())
+            .environment(PetCareService(container: DataController.emptyContainer))
             .modelContainer(DataController.emptyContainer)
             .notification(NotificationManager.shared)
             .navigationTitle(Text("Pets"))

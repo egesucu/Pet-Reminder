@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftData
 import OSLog
 
-public enum Kind: String {
+public enum Kind: String, Sendable {
     case cat, dog, fish, bird, other
 }
 

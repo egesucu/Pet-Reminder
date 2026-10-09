@@ -12,6 +12,9 @@ import Shared
 
 @MainActor
 class DataController {
+    static func productionContainer() throws -> ModelContainer {
+        try ModelContainer(for: Pet.self, migrationPlan: PetMigrationPlan.self)
+    }
     #if DEBUG
     /// Isolated sample data for real simulator captures; never touches the user's store.
     static func screenshotContainer() -> ModelContainer {

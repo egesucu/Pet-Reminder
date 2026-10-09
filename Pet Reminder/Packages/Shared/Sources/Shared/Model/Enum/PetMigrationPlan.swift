@@ -10,12 +10,24 @@ import SwiftData
 
 public enum PetMigrationPlan: SchemaMigrationPlan {
     public static var stages: [MigrationStage] {
-        [migrateV1toV2, migrateV2toV3, migrateV3toV4]
+        [migrateV1toV2, migrateV2toV3, migrateV3toV4, migrateV4toV5]
     }
 
     public static var schemas: [any VersionedSchema.Type] {
-        [PetSchemaV1.self, PetSchemaV2.self, PetSchemaV3.self, PetSchemaV4.self]
+        [PetSchemaV1.self, PetSchemaV2.self, PetSchemaV3.self, PetSchemaV4.self, PetSchemaV5.self]
     }
+
+    static let migrateV4toV5 = MigrationStage.custom(
+        fromVersion: PetSchemaV4.self,
+        toVersion: PetSchemaV5.self,
+        willMigrate: nil,
+        didMigrate: { context in
+            for pet in try context.fetch(FetchDescriptor<PetSchemaV5.Pet>()) where pet.intentID == nil {
+                pet.intentID = UUID()
+            }
+            try context.save()
+        }
+    )
 
     static let migrateV1toV2 = MigrationStage.custom(
         fromVersion: PetSchemaV1.self,

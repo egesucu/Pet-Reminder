@@ -19,6 +19,8 @@ This repository contains the app's Swift source code, with an interface built us
 - **Calendar events:** Create pet-related events, browse today's and upcoming events, and add calendar alarms through Apple's EventKit integration.
 - **Vet finder:** Search for nearby veterinarians on a map and open directions in a supported maps app.
 - **Data persistence:** Store pet data with SwiftData, with CloudKit integration configured for iCloud sync.
+- **Spotlight:** Search saved pets by name, animal type, or breed and open their details.
+- **Siri and Shortcuts:** Find pets, check today's feeding status, record a meal, and open a pet's details with App Intents.
 - **Localization:** String catalogs support localized app text and reminders.
 
 ## Built with
@@ -38,6 +40,29 @@ The current app and app test targets require **iOS 27.0 or later**. The `Shared`
 5. Build and run with **⌘R**.
 
 Enable notifications to receive feeding and birthday reminders, calendar access to manage events, and location access to use the nearby vet finder.
+
+## App Intents
+
+In Shortcuts, search for **Pet Reminder** to find these actions:
+
+| Action | Parameters | Result |
+| --- | --- | --- |
+| Find Pets | Optional name search | Matching pets, or all pets, sorted by name |
+| Get Today's Feeding Status | Pet | Local day, feeding schedule, morning/evening completion flags and timestamps |
+| Mark Meal Fed | Pet and Morning or Evening | Updated feeding status |
+| Open Pet | Pet | Opens that pet's detail screen |
+
+App Shortcuts provide phrases such as “Open Luna in Pet Reminder,” “Check Luna's feeding in Pet Reminder,” and “Record a meal in Pet Reminder.” The system asks for missing parameters. Actions require device authentication. Reading and recording can run in the background; opening a pet brings the app forward. Titles, dialogs, and shortcut phrases support English, Turkish, German, Spanish, French, and Italian.
+
+Meal recording uses today's date in the device's current calendar and time zone. Only meals in the pet's configured schedule can be recorded. Repeating the action preserves completion and the original timestamp; it does not toggle or undo a meal. Saved shortcuts identify pets by a persistent UUID, so renaming a pet does not change the reference. Deleted pets must be selected again.
+
+Schema V5 adds optional UUID storage, backfills existing pets, and assigns and saves IDs for older records imported from CloudKit before exposing them as entities. Production persistence keeps the existing store location and migration chain. Intent operations use separate contexts to protect unfinished UI edits; the feeding controls and history refresh their own session after saves and app activation.
+
+Pet entities are also indexed in Spotlight. Search by name, animal type, or breed; the Open Pet result opens the matching UUID. Spotlight may also show feeding App Shortcuts for that pet. The app reconciles the index after successful saves, CloudKit imports, and activation, and removes deleted pets across launches. System requests can rebuild all pets or selected identities. Indexing reads saved data only and uses complete file protection; unfinished edits and screenshot samples are excluded. Feeding status stays a live query rather than indexed content.
+
+The `Shared` package contains `PetCareService`, `PetCareSession`, and `DailyFeeds` for future reuse. No widget extension, AI experience, or App Group storage move is included. A future widget must share the actions/entities and dependencies with its extension and explicitly plan cross-process storage and timeline refresh. App Intents expose the app's capabilities to supported system experiences; they do not by themselves provide a custom AI feature.
+
+Before release, validate Siri on a signed compatible device and test upgrading two iCloud devices with the same existing pets. Independently upgrading legacy stores can initially assign different UUIDs to the same synced record; check convergence and saved-reference behavior after CloudKit synchronization. Simulator tests do not establish this behavior.
 
 ## Repository layout
 

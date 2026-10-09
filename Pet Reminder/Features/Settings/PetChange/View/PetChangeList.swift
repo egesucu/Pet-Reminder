@@ -138,6 +138,12 @@ struct PetChangeList: View {
         withAnimation {
             modelContext.delete(pet)
         }
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            throw error
+        }
     }
 }
 

@@ -14,6 +14,7 @@ struct HomeManager: View {
     @State private var currentTab: PetReminderTabs = .home
     @Environment(EventManager.self) private var eventManager
     @Environment(NotificationManager.self) private var notificationManager
+    @Environment(AppNavigationCoordinator.self) private var navigation
 
     // Optional: carry a pet name from deep link; your PetListView can observe this via NotificationCenter
     @State private var pendingPetNameFromDeepLink: String?
@@ -61,6 +62,9 @@ struct HomeManager: View {
         }
         .defaultTabBarPlacement(.tabBar)
         .tint(.accent)
+        .onChange(of: navigation.pendingPet, initial: true) { _, request in
+            if request != nil { currentTab = .home }
+        }
         .onOpenURL { url in
             handle(url)
         }
@@ -117,6 +121,8 @@ extension Notification.Name {
     HomeManager()
         .notification(NotificationManager.shared)
         .environment(EventManager.demo)
+        .environment(AppNavigationCoordinator())
+        .environment(PetCareService(container: DataController.previewContainer))
         .modelContainer(DataController.previewContainer)
 }
 #endif
