@@ -15,12 +15,6 @@ struct HomeManager: View {
     @Environment(EventManager.self) private var eventManager
     @Environment(NotificationManager.self) private var notificationManager
 
-    // One navigation path per tab to preserve stack state
-    @State private var homePath = NavigationPath()
-    @State private var eventsPath = NavigationPath()
-    @State private var settingsPath = NavigationPath()
-    @State private var vetPath = NavigationPath()
-
     // Optional: carry a pet name from deep link; your PetListView can observe this via NotificationCenter
     @State private var pendingPetNameFromDeepLink: String?
 
@@ -30,51 +24,42 @@ struct HomeManager: View {
         TabView(selection: $currentTab) {
             // HOME TAB
             Tab(value: PetReminderTabs.home) {
-                NavigationStack(path: $homePath) {
-                    PetList()
-                        .environment(notificationManager)
-                        .navigationTitle(.petNameTitle)
-                        .onChange(of: pendingPetNameFromDeepLink) { _, newValue in
-                                if let name = newValue {
-                                NotificationCenter.default.post(name: .openPetByName, object: name)
-                                pendingPetNameFromDeepLink = nil
-                            }
+                PetList()
+                    .environment(notificationManager)
+                    .onChange(of: pendingPetNameFromDeepLink) { _, newValue in
+                        if let name = newValue {
+                            NotificationCenter.default.post(name: .openPetByName, object: name)
+                            pendingPetNameFromDeepLink = nil
                         }
-                }
+                    }
             } label: {
                 Label(.homeTabTitle, systemImage: "pawprint")
             }
 
             // EVENTS TAB
             Tab(value: PetReminderTabs.events) {
-                NavigationStack(path: $eventsPath) {
-                    EventList()
-                        .environment(eventManager)
-                }
+                EventList()
+                    .environment(eventManager)
             } label: {
                 Label(.eventTabTitle, systemImage: "list.bullet")
             }
 
             // SETTINGS TAB
             Tab(value: PetReminderTabs.settings) {
-                NavigationStack(path: $settingsPath) {
-                    Settings()
-                        .environment(notificationManager)
-                        .navigationTitle(.settingsTabTitle)
-                }
+                Settings()
+                    .environment(notificationManager)
             } label: {
                 Label(.settingsTabTitle, systemImage: "gearshape")
             }
 
             // FIND VET TAB
             Tab(value: PetReminderTabs.vet, role: .prominent) {
-                NavigationStack(path: $vetPath) {
-                    FindVet()
-                }
+                FindVet()
             } label: {
                 Label(.findVetTitle, systemImage: "magnifyingglass")
             }
         }
+        .defaultTabBarPlacement(.tabBar)
         .tint(.accent)
         .onOpenURL { url in
             handle(url)

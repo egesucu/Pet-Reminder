@@ -18,6 +18,7 @@ struct AddPet: View {
     @Environment(\.modelContext) private var modelContext
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @State private var pet: Pet = .init()
     @State private var model: Model = .init()
@@ -25,14 +26,33 @@ struct AddPet: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: .spacing24) {
-                    PetNameTextField(model: $model)
-                    PetBirthday(model: $model)
-                    PetImageSelection(model: $model)
-                    NotificationSelect(model: $model)
-                    saveButton
+                Group {
+                    if horizontalSizeClass == .regular {
+                        if #available(iOS 27.1, *) {
+                            ArrangementView {
+                                identityPane
+                            } secondary: {
+                                carePane
+                            }
+                            .arrangementViewStyle(.split)
+                        } else {
+                            HStack(alignment: .top, spacing: .spacing24) {
+                                identityPane
+                                Divider()
+                                carePane
+                            }
+                        }
+                    } else {
+                        VStack(alignment: .leading, spacing: .spacing24) {
+                            PetNameTextField(model: $model)
+                            PetBirthday(model: $model)
+                            PetImageSelection(model: $model)
+                            NotificationSelect(model: $model)
+                            saveButton
+                        }
+                    }
                 }
-                .padding(.horizontal)
+                .padding(.spacing20)
                 .navigationTitle(.addPet)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { leadingToolbar }
@@ -146,11 +166,29 @@ extension AddPet {
 
 // MARK: - Toolbars
 private extension AddPet {
+    var identityPane: some View {
+        VStack(alignment: .leading, spacing: .spacing24) {
+            PetNameTextField(model: $model)
+            PetBirthday(model: $model)
+        }
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+    }
+
+    var carePane: some View {
+        VStack(alignment: .leading, spacing: .spacing24) {
+            PetImageSelection(model: $model)
+            NotificationSelect(model: $model)
+            saveButton
+        }
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+    }
+
     @ContentBuilder
     var leadingToolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button(role: .cancel, action: dismiss.callAsFunction) {
-                Image(systemName: "xmark")
+                Label(.cancelTitle, systemImage: "xmark")
+                    .labelStyle(.iconOnly)
                     .foregroundStyle(.red)
             }
         }

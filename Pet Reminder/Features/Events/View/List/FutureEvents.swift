@@ -8,21 +8,22 @@
 
 import SwiftUI
 import Shared
+import EventKit
 
 struct FutureEvents: View {
 
     @Environment(EventManager.self) private var manager
-
     var body: some View {
         Section {
             if manager.futureEvents.isEmpty {
                 Text(.eventNoTitle)
             } else {
                 ForEach(manager.futureEvents, id: \.self) { event in
-                    SingleEvent(event: event)
-                        .environment(manager)
-                        .padding(.horizontal, .spacing4)
-                        .listRowSeparator(.hidden)
+                    NavigationLink(value: event) {
+                        SingleEvent(event: event)
+                    }
+                    .padding(.horizontal, .spacing4)
+                    .listRowSeparator(.hidden)
                 }
             }
         } header: {

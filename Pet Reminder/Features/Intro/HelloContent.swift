@@ -10,12 +10,19 @@ import SwiftUI
 import Shared
 
 struct HelloContent: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    private var isShortLayout: Bool { verticalSizeClass == .compact }
+
     var body: some View {
-        VStack(spacing: .spacing20) {
+        VStack(spacing: isShortLayout ? .spacing12 : .spacing20) {
             Image(systemName: "pawprint.fill")
-                .font(.system(size: .icon64, weight: .semibold))
+                .font(.system(size: isShortLayout ? 36 : .icon64, weight: .semibold))
                 .foregroundStyle(.accent)
-                .frame(width: .symbolBackground, height: .symbolBackground)
+                .frame(
+                    width: isShortLayout ? 80 : .symbolBackground,
+                    height: isShortLayout ? 80 : .symbolBackground
+                )
                 .background(.accent.opacity(0.12), in: Circle())
                 .overlay {
                     Circle()

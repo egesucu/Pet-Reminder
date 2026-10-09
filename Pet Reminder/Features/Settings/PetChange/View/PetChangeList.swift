@@ -15,6 +15,7 @@ struct PetChangeList: View {
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.notification) private var notificationManager: NotificationManager
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Query(sort: \Pet.name) var pets: [Pet]
 
@@ -38,7 +39,11 @@ struct PetChangeList: View {
                         Button {
                             isEditing.toggle()
                         } label: {
-                            Text(isEditing ? .done : .edit)
+                            Label {
+                                Text(isEditing ? .done : .edit)
+                            } icon: {
+                                Image(systemName: isEditing ? "checkmark" : "pencil")
+                            }
                                 .animation(.bouncy, value: isEditing)
                         }
                     }
@@ -66,7 +71,7 @@ struct PetChangeList: View {
 
     @ContentBuilder
     private var petList: some View {
-        LazyVGrid(columns: [.init(), .init()]) {
+        LazyVGrid(columns: gridColumns, spacing: .spacing20) {
             ForEach(pets, id: \.name) { pet in
                 ZStack(alignment: .topTrailing) {
                     Button {
@@ -110,6 +115,11 @@ struct PetChangeList: View {
                 .padding(.leading, .spacing20)
             }
         }
+    }
+
+    private var gridColumns: [GridItem] {
+        let count = horizontalSizeClass == .regular ? 4 : 2
+        return Array(repeating: GridItem(.flexible(), spacing: .spacing20), count: count)
     }
 
     private func deselectPet() {

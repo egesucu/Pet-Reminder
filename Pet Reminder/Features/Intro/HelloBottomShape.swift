@@ -73,10 +73,8 @@ struct HelloBottomShape: View {
                 .blur(radius: 24)
                 .offset(x: isFloating ? -130 : -100, y: 120)
         }
-        .frame(height: .bottomShapeHeight)
         .clipped()
         .compositingGroup()
-        .ignoresSafeArea(edges: .bottom)
         .accessibilityHidden(true)
         .onAppear {
             guard !reduceMotion else { return }
@@ -108,8 +106,4 @@ private nonisolated struct OnboardingWave: Shape {
 
         return path
     }
-}
-
-private extension CGFloat {
-    static let bottomShapeHeight: Self = 330
 }

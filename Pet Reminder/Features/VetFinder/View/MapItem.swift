@@ -28,21 +28,21 @@ struct MapItem: View {
             }
 
             if let phoneNumber = location.phoneNumber {
-                Text(phoneNumber)
-                    .foregroundStyle(.accent)
-                    .multilineTextAlignment(.center)
-                    .onTapGesture {
-                        callThePlace(with: phoneNumber)
-                    }
-                    .accessibilityAddTraits(.isLink)
+                Button(phoneNumber) {
+                    callThePlace(with: phoneNumber)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.accent)
+                .multilineTextAlignment(.center)
             }
 
             if let fullAdress = location.fullAdress {
-                Text(fullAdress)
-                    .foregroundStyle(.blue)
-                    .multilineTextAlignment(.center)
-                    .onTapGesture(perform: openMapDetail)
-                    .accessibilityAddTraits(.isButton)
+                Button(action: openMapDetail) {
+                    Text(fullAdress)
+                        .multilineTextAlignment(.center)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.blue)
             }
         }
         .padding(.spacing8)

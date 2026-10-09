@@ -8,13 +8,9 @@
 
 import SwiftUI
 import EventKit
-import Playgrounds
 import Shared
 
 struct SingleEvent: View {
-
-    @Environment(EventManager.self) private var manager
-    @State private var addEvent: Event = .init()
 
     var event: EKEvent
 
@@ -26,10 +22,6 @@ struct SingleEvent: View {
                 futureEvent(event: event)
             }
         }
-        .sheet(isPresented: $addEvent.showWarningForCalendar,
-               onDismiss: onSheetDismiss) {
-            showEventDetail()
-        }
     }
 
     @ContentBuilder
@@ -38,10 +30,7 @@ struct SingleEvent: View {
             RoundedRectangle(cornerRadius: .spacing4 / 2)
                 .frame(width: .eventIndicatorWidth)
                 .foregroundStyle(Color(cgColor: event.calendar.cgColor))
-            Button(action: showWarning) {
-                Text(event.title).underline()
-            }
-            .buttonStyle(.plain)
+            Text(event.title)
             .frame(minHeight: 44)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
@@ -50,10 +39,7 @@ struct SingleEvent: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .padding(.trailing, .spacing4)
-            Button(action: showWarning) {
-                Text(event.title).underline()
-            }
-            .buttonStyle(.plain)
+            Text(event.title)
             .frame(minHeight: 44)
         }
     }
@@ -67,10 +53,7 @@ struct SingleEvent: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .padding(.trailing, .spacing4)
-            Button(action: showWarning) {
-                Text(event.title).underline()
-            }
-            .buttonStyle(.plain)
+            Text(event.title)
             .frame(minHeight: 44)
         } else {
             Text(event.startDate.formatted(.dateTime.day().month()))
@@ -79,38 +62,9 @@ struct SingleEvent: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .padding(.trailing, .spacing4)
-            Button(action: showWarning) {
-                Text(event.title).underline()
-            }
-            .buttonStyle(.plain)
+            Text(event.title)
             .frame(minHeight: 44)
         }
-    }
-
-    private func showEventDetail() -> some View {
-        SheetContent(event: event)
-            .presentationDetents([.medium])
-            .presentationCornerRadius(.radius10)
-            .presentationDragIndicator(.visible)
-    }
-}
-
-extension SingleEvent {
-    private func onSheetDismiss() {
-        Task {
-            await fillData()
-            await manager.reloadEvents()
-        }
-    }
-
-    private func showWarning() {
-        self.addEvent.showWarningForCalendar.toggle()
-    }
-
-    private func fillData() async {
-        self.addEvent.eventTitle = event.title
-        let content = manager.formattedEventDateString(for: event)
-        self.addEvent.dateString = content
     }
 }
 

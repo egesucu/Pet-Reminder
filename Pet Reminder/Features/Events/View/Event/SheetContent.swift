@@ -16,17 +16,14 @@ struct SheetContent: View {
     var event: EKEvent
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
+        NavigationStack {
             ESEventDetail(event: event)
-            Button(action: {
-                dismiss()
-            }, label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title)
-                    .tint(.accent)
-            })
-            .offset(x: .closeButtonX, y: .closeButtonY)
-
+                .navigationTitle(event.title)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close", systemImage: "xmark", action: dismiss.callAsFunction)
+                    }
+                }
         }
     }
 }

@@ -17,6 +17,7 @@ struct FindVet: View {
     @State private var vetService = VetServiceImplementation()
 
     @State private var searchText = String(localized: .defaultVetText)
+    @State private var isSearching = false
 
     @State private var userLocation: MapCameraPosition = .userLocation(
         fallback: .automatic
@@ -32,8 +33,9 @@ struct FindVet: View {
     var body: some View {
         NavigationStack {
             mapView
+                .navigationTitle(Text(.findVetTitle))
+                .overlay(locationNotAvailable)
         }
-        .overlay(locationNotAvailable)
         .task {
             await vetService.requestMapPermissions()
             await setupPreDefinedLocations()
@@ -42,9 +44,24 @@ struct FindVet: View {
             vetService.stopUpdating()
         }
         .sheet(item: $selectedLocation) { location in
-            MapItem(location: location)
-                .presentationDetents([.fraction(0.2)])
-                .presentationDragIndicator(.visible)
+            NavigationStack {
+                ScrollView {
+                    MapItem(location: location)
+                        .frame(maxWidth: .infinity)
+                        .padding(.spacing20)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            selectedLocation = nil
+                        } label: {
+                            Label("Close", systemImage: "xmark")
+                        }
+                    }
+                }
+            }
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
         }
     }
 }
@@ -72,10 +89,11 @@ private extension FindVet {
             MapPitchToggle()
             MapUserLocationButton()
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, isPresented: $isSearching)
         .onSubmit(of: .search) {
             searchedLocations.removeAll()
             searchLocations()
+            isSearching = false
         }
     }
 

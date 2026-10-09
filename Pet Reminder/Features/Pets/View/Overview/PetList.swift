@@ -25,13 +25,26 @@ struct PetList: View {
     @Environment(\.notification) private var notificationManager: NotificationManager
 
     var body: some View {
-        list
-            .toolbar(content: topActions)
-            .task(setupInitials)
-            .navigationTitle(Text(.petNameTitle))
-            .navigationDestination(item: $selectedPet) { pet in
-                PetDetail(pet: pet)
+        NavigationSplitView {
+            list
+                .navigationTitle(Text(.petNameTitle))
+                .toolbar(content: topActions)
+        } detail: {
+            NavigationStack {
+                if let selectedPet {
+                    PetDetail(pet: selectedPet)
+                        .id(selectedPet.persistentModelID)
+                } else {
+                    ContentUnavailableView(
+                        "Select a pet",
+                        systemImage: "pawprint.circle",
+                        description: Text("Choose a pet to see today's care and history.")
+                    )
+                }
             }
+        }
+            .navigationSplitViewStyle(.balanced)
+            .task(setupInitials)
             .sheet(isPresented: $addPet, onDismiss: handleDismissAction, content: addPetView)
             .sheet(isPresented: $showManagePet, onDismiss: dismissManagePet, content: managePetView)
             .onReceive(NotificationCenter.default.publisher(for: .openPetByName)) { note in
@@ -47,18 +60,10 @@ struct PetList: View {
         if pets.isEmpty {
             noPetAdded
         } else {
-            List(pets) { pet in
-                HStack {
+            List(pets, selection: $selectedPet) { pet in
+                NavigationLink(value: pet) {
                     cell(for: pet)
-                    Spacer()
-                    Image(systemName: "chevron.right")
                 }
-                .contentShape(.rect)
-                .onTapGesture {
-                    selectedPet = pet
-                }
-                .accessibility(addTraits: [.isButton])
-                .accessibility(removeTraits: .isStaticText)
             }
         }
     }
@@ -161,8 +166,8 @@ struct PetList: View {
                 Button {
                     addPet.toggle()
                 } label: {
-                    Image(systemName: "plus")
-                        .accessibilityLabel(Text(.addAnimalAccessibleLabel))
+                    Label(.addAnimalAccessibleLabel, systemImage: "plus")
+                        .labelStyle(.iconOnly)
                         .foregroundStyle(Color.background)
                 }
                 .buttonStyle(.glassProminent)
@@ -178,6 +183,15 @@ private extension PetList {
 
     func setupInitials() async {
         logDuplicateNamesIfAny()
+        #if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        if arguments.contains("--store-screenshots"),
+           let index = arguments.firstIndex(of: "--screenshot-screen"),
+           arguments.indices.contains(index + 1),
+           arguments[index + 1] != "pets" {
+            selectedPet = pets.first { $0.name == "Luna" }
+        }
+        #endif
     }
 
     func logDuplicateNamesIfAny() {
