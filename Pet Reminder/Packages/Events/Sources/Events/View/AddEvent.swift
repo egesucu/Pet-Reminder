@@ -7,8 +7,6 @@
 //
 
 import SwiftUI
-import EventKit
-import OSLog
 import Shared
 import SharedUI
 
@@ -17,65 +15,65 @@ struct AddEvent: View {
     @Environment(EventManager.self) private var manager
     @Environment(\.dismiss) var dismiss
 
-    @State private var eventName = String.empty
-    @State private var allDay = false
-    @State private var startDate: Date = Calendar.current.date(
-        byAdding: .hour,
-        value: 1,
-        to: .now
-    ) ?? .now
-    @State private var endDate: Date = Calendar.current.date(
-        byAdding: .hour,
-        value: 2,
-        to: .now
-    ) ?? .now
-    @State private var filteredCalendars: [EKCalendar] = []
-
-    @State private var saveError: String?
-    @State private var showSaveError = false
-    @State private var isSaving = false
+    @State private var creation = EventCreationState()
 
     var body: some View {
-        NavigationStack {
+        @Bindable var creation = creation
+        return NavigationStack {
             Form {
                 Section(
                     header: Text(SharedStrings.addEventInfo)
                 ) {
-                    TextField(text: $eventName) {
+                    TextField(text: $creation.name) {
                         Text(SharedStrings.addEventName)
+                    }
+                }
+                Section {
+                    LabeledContent {
+                        Text(manager.petCalendar?.title ?? "Pet Reminder")
+                    } label: {
+                        Text(SharedStrings.resource("Calendar"))
+                    }
+                    LabeledContent {
+                        Text(SharedStrings.resource("10 minutes before"))
+                    } label: {
+                        Text(SharedStrings.resource("Reminder"))
                     }
                 }
                 Section(
                     header: Text(SharedStrings.addEventTime)
                 ) {
-                    Toggle(isOn: $allDay) {
+                    Toggle(isOn: $creation.allDay) {
                         Text(SharedStrings.allDayTitle)
                     }
                     eventDateView()
                 }
             }
+            .onChange(of: creation.start) { old, new in
+                creation.end = Self.adjustedEndDate(oldStart: old, newStart: new, end: creation.end)
+            }
             .tint(.accent)
             .navigationTitle(Text(SharedStrings.addEventTitle))
             .toolbar(content: addEventToolbar)
-            .disabled(isSaving)
-            .alert(SharedStrings.saveFailed, isPresented: $showSaveError) { } message: {
-                Text(saveError ?? String(localized: SharedStrings.unknownError))
+            .disabled(creation.isSaving)
+            .alert(SharedStrings.saveFailed, isPresented: $creation.showError) { } message: {
+                Text(creation.errorMessage ?? String(localized: SharedStrings.unknownError))
             }
         }
     }
 
     @ContentBuilder
     func eventDateView() -> some View {
-        if allDay {
-            DatePicker(selection: $startDate, displayedComponents: .date) {
+        @Bindable var creation = creation
+        if creation.allDay {
+            DatePicker(selection: $creation.start, displayedComponents: .date) {
                 Text(SharedStrings.addEventDate)
             }
         } else {
-            DatePicker(selection: $startDate) {
+            DatePicker(selection: $creation.start) {
                 Text(SharedStrings.addEventStart)
             }
-            .onChange(of: startDate, changeEventMinimumDate)
-            DatePicker(selection: $endDate, in: startDate...) {
+            DatePicker(selection: $creation.end, in: creation.start...) {
                 Text(SharedStrings.addEventEnd)
             }
         }
@@ -91,44 +89,34 @@ struct AddEvent: View {
         }
     }
 
-    private func changeEventMinimumDate() {
-        endDate = startDate.addingTimeInterval(60*60)
+    static func adjustedEndDate(oldStart: Date, newStart: Date, end: Date) -> Date {
+        EventCreationState.adjustedEnd(oldStart: oldStart, newStart: newStart, end: end)
     }
 
     private func saveButton() -> some View {
         Button(action: saveEvent) {
-            Text(SharedStrings.addEventSave)
-                .foregroundStyle(.accent)
-                .bold()
+            if creation.isSaving {
+                ProgressView().accessibilityLabel(Text(SharedStrings.resource("Saving event")))
+            } else {
+                Text(SharedStrings.addEventSave).bold()
+            }
         }
-        .disabled(eventName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || (!allDay && endDate < startDate))
+        .disabled(!creation.canSave)
     }
 
     private func cancelButton() -> some View {
         Button(action: dismiss.callAsFunction) {
             Text(SharedStrings.cancelTitle)
         }
-        .foregroundStyle(Color.red)
-        .bold()
+
     }
 
     private func saveEvent() {
-        guard !isSaving else { return }
-        isSaving = true
         Task {
-            defer { isSaving = false }
-            do {
-                try await manager.saveEvent(
-                    name: eventName,
-                    start: startDate,
-                    end: endDate,
-                    allDay: allDay
-                )
-                dismiss()
-            } catch {
-                saveError = error.localizedDescription
-                showSaveError = true
+            let saved = await creation.save { name, start, end, allDay in
+                try await manager.saveEvent(name: name, start: start, end: end, allDay: allDay)
             }
+            if saved { dismiss() }
         }
     }
 

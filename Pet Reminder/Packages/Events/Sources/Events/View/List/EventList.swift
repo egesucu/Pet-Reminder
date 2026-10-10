@@ -11,6 +11,7 @@ import EventKit
 import Shared
 import SharedUI
 import OSLog
+import Combine
 
 @MainActor
 public struct EventList: View {
@@ -18,6 +19,7 @@ public struct EventList: View {
     public init() {}
 
     @Environment(EventManager.self) private var eventManager
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showAddEvent = false
     @State private var selectedEvent: EKEvent?
 
@@ -26,7 +28,7 @@ public struct EventList: View {
             Group {
                 switch eventManager.status {
                 case .authorized:
-                    Events(selectedEvent: $selectedEvent)
+                    Events(selectedEvent: $selectedEvent, addEvent: toggleAddEvent)
                         .toolbar {
                             EventFilterMenu()
                             eventToolBar
@@ -41,8 +43,7 @@ public struct EventList: View {
             .environment(eventManager)
         } detail: {
             if let selectedEvent {
-                ESEventDetail(event: selectedEvent)
-                    .navigationTitle(selectedEvent.title)
+                EventDetail(event: selectedEvent, onComplete: onDismiss)
             } else {
                 ContentUnavailableView(
                     SharedStrings.resource("Select an event"),
@@ -56,10 +57,20 @@ public struct EventList: View {
                 .environment(eventManager)
         }
         .task(reloadEvents)
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { onDismiss() }
+        }
+        .onChange(of: eventManager.selectedCalendar) { _, _ in
+            selectedEvent = eventManager.reconciledEvent(selectedEvent)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in onDismiss() }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in onDismiss() }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in onDismiss() }
     }
 
     func reloadEvents() async {
         await eventManager.reloadEvents()
+        selectedEvent = eventManager.reconciledEvent(selectedEvent)
     }
 
     @ContentBuilder var eventNotAllowed: some View {

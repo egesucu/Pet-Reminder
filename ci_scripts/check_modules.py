@@ -66,7 +66,7 @@ def check(root=ROOT):
         graph[owner] = set(local)
         if set(local) - ALLOWED[owner]:
             errors.append(f'{owner}: forbidden package dependencies {sorted(set(local) - ALLOWED[owner])}')
-        declarations = re.findall(r'\.target\(name: "(\w+)", dependencies: (\[[^\]]*\])', manifest)
+        declarations = re.findall(r'\.target\(\s*name:\s*"(\w+)",\s*dependencies:\s*(\[[^\]]*\])', manifest)
         if len(declarations) != 1 or declarations[0][0] != owner:
             errors.append(f'{owner}: must declare one production target with the package name')
             continue

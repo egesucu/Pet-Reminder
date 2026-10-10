@@ -47,6 +47,12 @@ public final class EventManager {
 
     @ObservationIgnored var eventStore: any EventStoreProtocol
     @ObservationIgnored private let authorizationStatusProvider: AuthorizationStatusProvider
+    @ObservationIgnored private let now: () -> Date
+    @ObservationIgnored private let calendar: Calendar
+    @ObservationIgnored private let preferences: UserDefaults
+    private static let filterKey = "events.selectedCalendar"
+    private static let allCalendarsID = AgendaRules.allCalendarsID
+    private var restoringFilter = false
 
     // MARK: - Properties
 
@@ -55,7 +61,12 @@ public final class EventManager {
     }
     var calendars: [EventCalendar] = []
     var selectedCalendar: EventCalendar? {
-        didSet { updateFilteredEvents() }
+        didSet {
+            if !restoringFilter {
+                preferences.set(selectedCalendar?.id ?? Self.allCalendarsID, forKey: Self.filterKey)
+            }
+            updateFilteredEvents()
+        }
     }
     var petCalendar: EventCalendar?
     var status: Status = .notDetermined
@@ -114,17 +125,25 @@ public final class EventManager {
     public init(
         isDemo: Bool = false,
         eventStore: any EventStoreProtocol = EKEventStore(),
+        now: @escaping () -> Date = { .now },
+        calendar: Calendar = .autoupdatingCurrent,
+        preferences: UserDefaults = .standard,
         authorizationStatusProvider: @escaping AuthorizationStatusProvider = {
             EKEventStore.authorizationStatus(for: .event)
         }
     ) {
         self.eventStore = eventStore
         self.authorizationStatusProvider = authorizationStatusProvider
+        self.now = now
+        self.calendar = calendar
+        self.preferences = preferences
 
         if isDemo {
             events = EventManager.Demo.exampleEvents
             status = .authorized
+            restoringFilter = true
             selectedCalendar = nil
+            restoringFilter = false
             updateFilteredEvents()
         }
     }
@@ -164,29 +183,41 @@ public final class EventManager {
         }
     }
 
-    private func updateFilteredEvents() {
-        todaysEvents = events.filter { event in
-            Calendar.current.isDateInToday(event.startDate) && eventMatchesSelectedCalendar(event)
-        }
+    private var rules: AgendaRules { AgendaRules(now: now(), calendar: calendar) }
 
-        futureEvents = events.filter { event in
-            Calendar.current.isDateLater(date: event.startDate) && eventMatchesSelectedCalendar(event)
-        }
+    private func entry(_ event: EKEvent) -> AgendaEntry {
+        AgendaEntry(identifier: event.calendarItemIdentifier,
+                    occurrence: event.hasRecurrenceRules ? (event.occurrenceDate ?? event.startDate) : nil,
+                    calendarID: event.calendar.calendarIdentifier,
+                    title: event.title ?? "", start: event.startDate, end: event.endDate)
     }
 
-    private func eventMatchesSelectedCalendar(_ event: EKEvent) -> Bool {
-        guard let selectedCalendar else {
-            return true
-        }
+    private func updateFilteredEvents() {
+        let partition = rules.partition(events.map(entry), selectedID: selectedCalendar?.id)
+        todaysEvents = partition.today.map { events[$0] }
+        futureEvents = partition.future.map { events[$0] }
+    }
 
-        return event.calendar.title == selectedCalendar.title
+    var futureEventDays: [Date] { rules.days(for: futureEvents.map(entry)) }
+
+    func events(on day: Date) -> [EKEvent] {
+        futureEvents.filter { calendar.isDate($0.startDate, inSameDayAs: day) }
+    }
+
+    func reconciledEvent(_ selected: EKEvent?) -> EKEvent? {
+        guard let selected else { return nil }
+        return (todaysEvents + futureEvents).first { rules.matches(entry($0), selection: entry(selected)) }
     }
 
     func fetchCalendars() async {
-        if status == .authorized {
-            self.calendars = eventStore.calendars(for: .event).map(\.title).map(EventCalendar.init)
-            await definePetCalendar()
-        }
+        guard status == .authorized else { return }
+        calendars = eventStore.calendars(for: .event).map { EventCalendar(calendar: $0) }
+        await definePetCalendar()
+        let saved = preferences.string(forKey: Self.filterKey)
+        restoringFilter = true
+        let id = rules.selectedCalendarID(saved: saved, available: calendars.map(\.id), petID: petCalendar?.id)
+        selectedCalendar = calendars.first { $0.id == id }
+        restoringFilter = false
     }
 
     func definePetCalendar() async {
@@ -225,7 +256,7 @@ public final class EventManager {
         }
         do {
             try eventStore.saveCalendar(calendar, commit: true)
-            let petCalendar = EventCalendar(calendar.title)
+            let petCalendar = EventCalendar(calendar: calendar)
             calendars.append(petCalendar)
             return petCalendar
         } catch {
@@ -235,11 +266,10 @@ public final class EventManager {
     }
 
     func loadEvents() async -> [EKEvent] {
-        let startDate: Date = .now
-        let endDate = Calendar.current.date(byAdding: .month, value: 1, to: .now) ?? .now
+        let window = rules.window
         let predicate = eventStore.predicateForEvents(
-            withStart: startDate,
-            end: endDate,
+            withStart: window.start,
+            end: window.end,
             calendars: eventStore.calendars(for: .event)
         )
         return eventStore.events(matching: predicate)
@@ -253,16 +283,19 @@ public final class EventManager {
         selectedCalendar: EventCalendar
     ) async throws {
         let calendars = eventStore.calendars(for: .event)
-        guard let petCalendar = calendars.first(where: { $0.title == selectedCalendar.title }) else {
+        guard let petCalendar = calendars.first(where: { $0.calendarIdentifier == selectedCalendar.id }) else {
             throw EventSaveError.calendarUnavailable
         }
 
         let newEvent = eventStore.makeEvent()
-        newEvent.title = eventName
+        newEvent.title = eventName.trimmingCharacters(in: .whitespacesAndNewlines)
         newEvent.isAllDay = isAllDay
-        // Keep the provided start/end dates
-        newEvent.startDate = eventStartDate
-        newEvent.endDate = isAllDay ? eventStartDate : eventEndDate
+        // Compute both boundaries before EventKit normalizes all-day date values.
+        let dates = eventDates(start: eventStartDate, end: eventEndDate, allDay: isAllDay)
+        newEvent.startDate = dates.start
+        // EventKit treats the end date of an all-day event as inclusive.
+        // Use the last instant before the next midnight to avoid a second day.
+        newEvent.endDate = isAllDay ? dates.end.addingTimeInterval(-1) : dates.end
         newEvent.calendar = petCalendar
 
         // Fire 10 minutes before the event start
@@ -271,6 +304,10 @@ public final class EventManager {
         newEvent.notes = "Pet Event"
 
         try eventStore.save(newEvent, span: .thisEvent, commit: true)
+    }
+
+    func eventDates(start: Date, end: Date, allDay: Bool) -> (start: Date, end: Date) {
+        rules.eventDates(start: start, end: end, allDay: allDay)
     }
 
     func reloadEvents() async {

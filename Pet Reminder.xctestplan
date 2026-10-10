@@ -7,12 +7,12 @@
     }
   ],
   "defaultOptions": {
+    "codeCoverage": true,
     "targetForVariableExpansion": {
       "containerPath": "container:Pet Reminder.xcodeproj",
       "identifier": "9D8E76ED248666BD004610C8",
       "name": "Pet Reminder"
-    },
-    "codeCoverage": true
+    }
   },
   "testTargets": [
     {
@@ -21,62 +21,6 @@
         "containerPath": "container:Pet Reminder.xcodeproj",
         "identifier": "72C446432C9B6BBC003B1DE7",
         "name": "Pet ReminderTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/Shared",
-        "identifier": "SharedTests",
-        "name": "SharedTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/PetCare",
-        "identifier": "PetCareTests",
-        "name": "PetCareTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/Pets",
-        "identifier": "PetsTests",
-        "name": "PetsTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/Reminders",
-        "identifier": "RemindersTests",
-        "name": "RemindersTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/Events",
-        "identifier": "EventsTests",
-        "name": "EventsTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/VetFinder",
-        "identifier": "VetFinderTests",
-        "name": "VetFinderTests"
-      }
-    },
-    {
-      "parallelizable": false,
-      "target": {
-        "containerPath": "container:Pet Reminder/Packages/ModuleTests",
-        "identifier": "ModuleAPITests",
-        "name": "ModuleAPITests"
       }
     }
   ],

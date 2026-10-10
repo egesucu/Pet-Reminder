@@ -1,113 +1,32 @@
-//
-//  SingleEvent.swift
-//  Pet Reminder
-//
-//  Created by Ege Sucu on 4.09.2023.
-//  Copyright © 2023 Ege Sucu. All rights reserved.
-//
-
 import SwiftUI
 import EventKit
 import Shared
-import SharedUI
 
 struct SingleEvent: View {
-
     var event: EKEvent
 
     var body: some View {
-        HStack {
-            if event.isAllDay {
-                allDayEvent(event: event)
-            } else {
-                futureEvent(event: event)
+        VStack(alignment: .leading, spacing: 6) {
+            Text(event.title ?? "").font(.headline).foregroundStyle(.primary)
+            Text(timeDescription).font(.subheadline).foregroundStyle(.secondary)
+            HStack(spacing: 6) {
+                Image(systemName: "circle.fill")
+                    .font(.caption2)
+                    .foregroundStyle(event.calendar.cgColor.map { Color(cgColor: $0) } ?? .accentColor)
+                    .accessibilityHidden(true)
+                Text(event.calendar.title).font(.caption).foregroundStyle(.secondary)
             }
         }
+        .padding(.vertical, 4)
+        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .accessibilityElement(children: .combine)
     }
 
-    @ContentBuilder
-    private func allDayEvent(event: EKEvent) -> some View {
-        if Calendar.current.isDateInToday(event.startDate) {
-            RoundedRectangle(cornerRadius: .spacing4 / 2)
-                .frame(width: .eventIndicatorWidth)
-                .foregroundStyle(Color(cgColor: event.calendar.cgColor))
-            Text(event.title)
-            .frame(minHeight: 44)
-        } else {
-            Text(event.startDate.formatted(.dateTime.day().month()))
-                .padding(.spacing4)
-                .background(Color(cgColor: event.calendar.cgColor))
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: .radius10))
-                .padding(.trailing, .spacing4)
-            Text(event.title)
-            .frame(minHeight: 44)
-        }
-    }
-
-    @ContentBuilder
-    private func futureEvent(event: EKEvent) -> some View {
-        if Calendar.current.isDateInToday(event.startDate) {
-            Text(event.startDate.formatted(.dateTime.hour().minute()))
-                .padding(.spacing4)
-                .background(Color(cgColor: event.calendar.cgColor))
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: .radius10))
-                .padding(.trailing, .spacing4)
-            Text(event.title)
-            .frame(minHeight: 44)
-        } else {
-            Text(event.startDate.formatted(.dateTime.day().month()))
-                .padding(.spacing4)
-                .background(Color(cgColor: event.calendar.cgColor))
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: .radius10))
-                .padding(.trailing, .spacing4)
-            Text(event.title)
-            .frame(minHeight: 44)
-        }
+    private var timeDescription: String {
+        if event.isAllDay { return String(localized: SharedStrings.allDayTitle) }
+        let sameDay = Calendar.current.isDate(event.startDate, inSameDayAs: event.endDate)
+        let start = event.startDate.formatted(date: sameDay ? .omitted : .abbreviated, time: .shortened)
+        let end = event.endDate.formatted(date: sameDay ? .omitted : .abbreviated, time: .shortened)
+        return "\(start) – \(end)"
     }
 }
-
-#if DEBUG
-#Preview("Daily Event", traits: .sizeThatFitsLayout) {
-    let dummyStore = EKEventStore()
-    let dummyEvent = EKEvent(eventStore: dummyStore)
-    dummyEvent.title = "Checkup"
-    dummyEvent.startDate = Date()
-    dummyEvent.endDate = Date().addingTimeInterval(3600)
-    dummyEvent.calendar = {
-        let cal = EKCalendar(for: .event, eventStore: dummyStore)
-        cal.title = "Vet"
-        cal.cgColor = UIColor.systemBlue.cgColor
-        return cal
-    }()
-
-    let dummyVM = EventManager.demo
-    return SingleEvent(event: dummyEvent)
-        .environment(dummyVM)
-        .frame(height: .feedCardHeight100)
-        .padding()
-}
-
-#Preview("Full Day Event", traits: .sizeThatFitsLayout) {
-    let dummyStore = EKEventStore()
-    let dummyEvent = EKEvent(eventStore: dummyStore)
-    dummyEvent.title = "Checkup"
-    dummyEvent.startDate = Date()
-    dummyEvent.isAllDay = true
-    dummyEvent.endDate = Date().addingTimeInterval(3600)
-    dummyEvent.calendar = {
-        let cal = EKCalendar(for: .event, eventStore: dummyStore)
-        cal.title = "Vet"
-        cal.cgColor = UIColor.systemBlue.cgColor
-        return cal
-    }()
-
-    let dummyVM = EventManager.demo
-    return SingleEvent(event: dummyEvent)
-        .environment(dummyVM)
-        .frame(height: .feedCardHeight100)
-        .padding()
-}
-#endif

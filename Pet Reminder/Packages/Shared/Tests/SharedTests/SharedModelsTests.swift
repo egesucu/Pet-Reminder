@@ -1,3 +1,4 @@
+import Foundation
 /// Tests validating shared model and localization behavior.
 
 import Testing

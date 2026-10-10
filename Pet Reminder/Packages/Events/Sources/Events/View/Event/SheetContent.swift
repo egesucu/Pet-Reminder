@@ -18,8 +18,7 @@ struct SheetContent: View {
 
     var body: some View {
         NavigationStack {
-            ESEventDetail(event: event)
-                .navigationTitle(event.title)
+            EventDetail(event: event)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(SharedStrings.resource("Close"), systemImage: "xmark", action: dismiss.callAsFunction)
@@ -31,6 +30,7 @@ struct SheetContent: View {
 
 #if DEBUG
 #Preview {
-    SheetContent(event: .init(eventStore: .init()))
+    SheetContent(event: EventManager.Demo.exampleEvents[0])
+        .environment(EventManager.demo)
 }
 #endif

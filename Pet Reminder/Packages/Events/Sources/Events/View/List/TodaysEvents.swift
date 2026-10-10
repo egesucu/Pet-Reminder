@@ -17,7 +17,10 @@ struct TodaysEvents: View {
     var body: some View {
         Section {
             if manager.todaysEvents.isEmpty {
-                Text(SharedStrings.eventNoTitle)
+                Text(SharedStrings.resource("Nothing scheduled today"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .listRowBackground(Color.clear)
             } else {
                 ForEach(manager.todaysEvents, id: \.self) { event in
                     NavigationLink(value: event) {

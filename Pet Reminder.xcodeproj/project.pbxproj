@@ -29,9 +29,22 @@
 		A10000000000000000140002 /* Pets in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000140001 /* Pets */; };
 		A10000000000000000140102 /* Pets in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000140101 /* Pets */; };
 		A10000000000000000150002 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000150001 /* Settings */; };
-		A10000000000000000160002 /* Intro in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000160001 /* Intro */; };
 		A10000000000000000150102 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000150101 /* Settings */; };
+		A10000000000000000160002 /* Intro in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000160001 /* Intro */; };
 		A10000000000000000160102 /* Intro in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000160101 /* Intro */; };
+		B40000000000000000000101 /* AgendaRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000001 /* AgendaRulesTests.swift */; };
+		B40000000000000000000102 /* EventAlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000002 /* EventAlarmTests.swift */; };
+		B40000000000000000000103 /* EventPermissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000003 /* EventPermissionTests.swift */; };
+		B40000000000000000000104 /* ModuleAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000004 /* ModuleAPITests.swift */; };
+		B40000000000000000000105 /* DailyFeedsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000005 /* DailyFeedsTests.swift */; };
+		B40000000000000000000106 /* PetCareServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000006 /* PetCareServiceTests.swift */; };
+		B40000000000000000000107 /* FeedDayRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000007 /* FeedDayRecordTests.swift */; };
+		B40000000000000000000108 /* PetRouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000008 /* PetRouteTests.swift */; };
+		B40000000000000000000109 /* NotificationAuthorizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000009 /* NotificationAuthorizationTests.swift */; };
+		B4000000000000000000010A /* ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000000000000000000000A /* ExtensionTests.swift */; };
+		B4000000000000000000010B /* SharedModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000000000000000000000B /* SharedModelsTests.swift */; };
+		B4000000000000000000010C /* StringsIdentifiersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000000000000000000000C /* StringsIdentifiersTests.swift */; };
+		B4000000000000000000010D /* VetServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000000000000000000000D /* VetServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +65,19 @@
 		9D71CEF3248836BD00AA1458 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9D8E76EE248666BD004610C8 /* Pet Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pet Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DC8262426FF690100EA2423 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B40000000000000000000001 /* AgendaRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Events/Tests/EventsTests/AgendaRulesTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000002 /* EventAlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Events/Tests/EventsTests/EventAlarmTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000003 /* EventPermissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Events/Tests/EventsTests/EventPermissionTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000004 /* ModuleAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/ModuleTests/Tests/ModuleAPITests/ModuleAPITests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000005 /* DailyFeedsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/PetCare/Tests/PetCareTests/DailyFeedsTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000006 /* PetCareServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/PetCare/Tests/PetCareTests/PetCareServiceTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000007 /* FeedDayRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Pets/Tests/PetsTests/FeedDayRecordTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000008 /* PetRouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Pets/Tests/PetsTests/PetRouteTests.swift"; sourceTree = SOURCE_ROOT; };
+		B40000000000000000000009 /* NotificationAuthorizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Reminders/Tests/RemindersTests/NotificationAuthorizationTests.swift"; sourceTree = SOURCE_ROOT; };
+		B4000000000000000000000A /* ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Shared/Tests/SharedTests/ExtensionTests.swift"; sourceTree = SOURCE_ROOT; };
+		B4000000000000000000000B /* SharedModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Shared/Tests/SharedTests/SharedModelsTests.swift"; sourceTree = SOURCE_ROOT; };
+		B4000000000000000000000C /* StringsIdentifiersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/Shared/Tests/SharedTests/StringsIdentifiersTests.swift"; sourceTree = SOURCE_ROOT; };
+		B4000000000000000000000D /* VetServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet Reminder/Packages/VetFinder/Tests/VetFinderTests/VetServiceTests.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -131,6 +157,7 @@
 		9D8E76E5248666BD004610C8 = {
 			isa = PBXGroup;
 			children = (
+				B40000000000000000000200 /* Hosted package tests */,
 				7214E4902DB2B61B00F1BAA2 /* Pet Reminder */,
 				72C446452C9B6BBC003B1DE7 /* Pet ReminderTests */,
 				9D60E6D22ABB7C5600AC0CC2 /* ci_scripts */,
@@ -148,6 +175,26 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B40000000000000000000200 /* Hosted package tests */ = {
+            isa = PBXGroup;
+            children = (
+				B40000000000000000000001 /* AgendaRulesTests.swift */,
+				B40000000000000000000002 /* EventAlarmTests.swift */,
+				B40000000000000000000003 /* EventPermissionTests.swift */,
+				B40000000000000000000004 /* ModuleAPITests.swift */,
+				B40000000000000000000005 /* DailyFeedsTests.swift */,
+				B40000000000000000000006 /* PetCareServiceTests.swift */,
+				B40000000000000000000007 /* FeedDayRecordTests.swift */,
+				B40000000000000000000008 /* PetRouteTests.swift */,
+				B40000000000000000000009 /* NotificationAuthorizationTests.swift */,
+				B4000000000000000000000A /* ExtensionTests.swift */,
+				B4000000000000000000000B /* SharedModelsTests.swift */,
+				B4000000000000000000000C /* StringsIdentifiersTests.swift */,
+				B4000000000000000000000D /* VetServiceTests.swift */,
+            );
+            name = "Hosted package tests";
+            sourceTree = "<group>";
+        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -299,6 +346,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4000000000000000000010D /* VetServiceTests.swift in Sources */,
+				B4000000000000000000010C /* StringsIdentifiersTests.swift in Sources */,
+				B4000000000000000000010B /* SharedModelsTests.swift in Sources */,
+				B4000000000000000000010A /* ExtensionTests.swift in Sources */,
+				B40000000000000000000109 /* NotificationAuthorizationTests.swift in Sources */,
+				B40000000000000000000108 /* PetRouteTests.swift in Sources */,
+				B40000000000000000000107 /* FeedDayRecordTests.swift in Sources */,
+				B40000000000000000000106 /* PetCareServiceTests.swift in Sources */,
+				B40000000000000000000105 /* DailyFeedsTests.swift in Sources */,
+				B40000000000000000000104 /* ModuleAPITests.swift in Sources */,
+				B40000000000000000000103 /* EventPermissionTests.swift in Sources */,
+				B40000000000000000000102 /* EventAlarmTests.swift in Sources */,
+				B40000000000000000000101 /* AgendaRulesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,10 +798,6 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Pet Reminder/Packages/Settings";
 		};
-		A2000000000000000000000A /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Intro" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "Pet Reminder/Packages/Intro";
-		};
 		A20000000000000000000007 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/PreviewSupport" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Pet Reminder/Packages/PreviewSupport";
@@ -749,6 +805,10 @@
 		A20000000000000000000008 /* XCLocalSwiftPackageReference "Pet Reminder/Packages/ModuleTests" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Pet Reminder/Packages/ModuleTests";
+		};
+		A2000000000000000000000A /* XCLocalSwiftPackageReference "Pet Reminder/Packages/Intro" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Pet Reminder/Packages/Intro";
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -821,13 +881,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
 		};
-		A10000000000000000160001 /* Intro */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Intro;
-		};
 		A10000000000000000150101 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		A10000000000000000160001 /* Intro */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Intro;
 		};
 		A10000000000000000160101 /* Intro */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,63 +1,45 @@
-//
-//  EventFilterMenu.swift
-//  Pet Reminder
-//
-//  Created by Sucu, Ege on 17.05.2025.
-//  Copyright © 2025 Ege Sucu. All rights reserved.
-//
-
 import SwiftUI
-import EventKit
 import Shared
-import SharedUI
 
 struct EventFilterMenu: ToolbarContent {
-
     @Environment(EventManager.self) private var manager
-
-    var allCalendars: [EventCalendar] {
-        let allOption = EventCalendar(String(localized: SharedStrings.all))
-        return ([allOption] + manager.calendars)
-    }
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Menu {
-                ForEach(allCalendars) { calendar in
-                    Button {
-                        if calendar.title == String(localized: SharedStrings.all) {
-                            manager.selectedCalendar = nil
-                        } else {
-                            manager.selectedCalendar = calendar
-                        }
-                    } label: {
-                        Text(calendar.title)
-                            .fontWeight(manager.selectedCalendar == calendar ? .semibold : .regular)
-                    }
-                    .tag(calendar.title)
+                Picker(selection: Binding<String?>(
+                    get: { manager.selectedCalendar?.id },
+                    set: { id in manager.selectedCalendar = manager.calendars.first { $0.id == id } }
+                )) {
+                    if let pet = manager.petCalendar { option(pet) }
+                    Text(SharedStrings.resource("All Calendars")).tag(nil as String?)
+                    ForEach(manager.calendars.filter { $0.id != manager.petCalendar?.id }) { option($0) }
+                } label: {
+                    Text(SharedStrings.resource("Calendar"))
                 }
+                .pickerStyle(.inline)
             } label: {
-                Text(manager.selectedCalendar?.title ?? String(localized: SharedStrings.all))
+                Text(manager.selectedCalendar?.title ?? String(localized: SharedStrings.resource("All Calendars")))
+                    .lineLimit(1)
             }
-            .menuOrder(.priority)
+            .menuOrder(.fixed)
+        }
+    }
+
+    private func option(_ calendar: EventCalendar) -> some View {
+        Label {
+            Text(calendar.title)
+        } icon: {
+            // UIKit menus otherwise apply the app tint to template symbols.
+            Image(uiImage: colorDot(calendar.color)).renderingMode(.original)
+        }
+        .tag(Optional(calendar.id))
+    }
+
+    private func colorDot(_ color: Color) -> UIImage {
+        UIGraphicsImageRenderer(size: CGSize(width: 14, height: 14)).image { context in
+            UIColor(color).setFill()
+            context.cgContext.fillEllipse(in: CGRect(x: 1, y: 1, width: 12, height: 12))
         }
     }
 }
-
-#if DEBUG
-#Preview {
-    NavigationStack {
-        ScrollView {
-            VStack {
-                Text(SharedStrings.hello)
-            }
-            .navigationTitle(Text(SharedStrings.hello))
-            .toolbar {
-                EventFilterMenu()
-            }
-        }
-    }
-    .environment(EventManager.demo)
-
-}
-#endif
