@@ -28,7 +28,7 @@ struct TodaysEvents: View {
                 }
             }
         } header: {
-            Text(SharedStrings.todayTitle)
+            Text(SharedStrings.today)
         }
     }
 }

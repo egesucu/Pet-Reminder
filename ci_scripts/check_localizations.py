@@ -28,7 +28,13 @@ def arguments(text):
 
 def inspect_catalog(catalog):
     errors = []
+    keys_by_case = {}
     for key, entry in catalog['strings'].items():
+        folded_key = key.casefold()
+        if folded_key in keys_by_case:
+            errors.append(f'{key!r}: differs only in case from {keys_by_case[folded_key]!r}')
+        else:
+            keys_by_case[folded_key] = key
         if entry.get('extractionState') == 'stale':
             errors.append(f'{key!r}: stale entry')
         if entry.get('shouldTranslate') is False:

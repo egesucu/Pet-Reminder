@@ -49,7 +49,7 @@ private struct FeedDayHeader: View {
         HStack(alignment: .firstTextBaseline, spacing: .spacing12) {
             VStack(alignment: .leading, spacing: .spacing4) {
                 if showsRelativeDate {
-                    Text(SharedStrings.resource("Today", comment: "Date label for today's feeding record."))
+                    Text(SharedStrings.today)
                         .font(.headline)
                 } else {
                     Text(date, format: .dateTime.weekday(.wide).month(.abbreviated).day())

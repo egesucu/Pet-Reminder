@@ -15,7 +15,8 @@ struct CurrentFeedSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: .spacing12) {
-            Text(SharedStrings.resource("TODAY", comment: "Heading for today's feeding history section."))
+            Text(SharedStrings.today)
+                .textCase(.uppercase)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
 

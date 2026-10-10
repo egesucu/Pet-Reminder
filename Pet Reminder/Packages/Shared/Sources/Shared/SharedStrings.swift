@@ -309,9 +309,6 @@ public enum SharedStrings {
     public nonisolated static var today: LocalizedStringResource {
         LocalizedStringResource("today", table: "Localizable", bundle: .atURL(SharedResources.bundle.bundleURL))
     }
-    public nonisolated static var todayTitle: LocalizedStringResource {
-        LocalizedStringResource("today_title", table: "Localizable", bundle: .atURL(SharedResources.bundle.bundleURL))
-    }
     public nonisolated static var upcomingTitle: LocalizedStringResource {
         LocalizedStringResource("upcoming_title", table: "Localizable", bundle: .atURL(SharedResources.bundle.bundleURL))
     }
