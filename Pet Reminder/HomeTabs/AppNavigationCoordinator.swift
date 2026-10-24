@@ -10,8 +10,27 @@ final class AppNavigationCoordinator {
     var selectedTab: PetReminderTabs = .home
     private(set) var pendingRequest: PetRouteRequest?
 
+    // Only the app-intent inbox uses this target. Scene coordinators own their state.
+    weak var activeWindow: AppNavigationCoordinator?
+
+    func connect(to window: AppNavigationCoordinator) {
+        activeWindow = window
+        if let pendingRequest {
+            window.open(pendingRequest.destination)
+            self.pendingRequest = nil
+        }
+    }
+
+    func disconnect(from window: AppNavigationCoordinator) {
+        if activeWindow === window { activeWindow = nil }
+    }
+
     func openPet(id: UUID) { open(.pet(id)) }
     func open(_ destination: PetRoute) {
+        if let activeWindow {
+            activeWindow.open(destination)
+            return
+        }
         selectedTab = .home
         pendingRequest = PetRouteRequest(destination)
     }

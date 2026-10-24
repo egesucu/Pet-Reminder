@@ -11,6 +11,8 @@ import SwiftUI
 import PhotosUI
 
 public struct PhotoImagePicker: View {
+    @State private var isImporting = false
+    @State private var showImportError = false
     @State private var selectedPhoto: PhotosPickerItem?
     var desiredTitle: LocalizedStringResource
     var desiredIcon: String
@@ -32,9 +34,7 @@ public struct PhotoImagePicker: View {
 
         PhotosPicker(
             selection: $selectedPhoto,
-            matching: .any(
-                of: [.images, .not(.screenshots), .not(.bursts)]
-            )
+            matching: .images
         ) {
             Label {
                 Text(desiredTitle)
@@ -43,10 +43,17 @@ public struct PhotoImagePicker: View {
             }
         }
 
-        .onChange(of: selectedPhoto) {
+        .task(id: selectedPhoto) {
             if let selectedPhoto {
                 await handlePhotoChange(selectedPhoto)
             }
+        }
+        .overlay {
+            if isImporting { ProgressView().allowsHitTesting(false) }
+        }
+        .disabled(isImporting)
+        .alert(SharedStrings.resource("Could not load photo"), isPresented: $showImportError) { } message: {
+            Text(SharedStrings.resource("This photo could not be processed. Please try another image."))
         }
         .contentShape(.rect)
         .tint(.accent)
@@ -58,17 +65,17 @@ public struct PhotoImagePicker: View {
     }
 
     private func processPhotoChange(_ newPhoto: PhotosPickerItem) async {
-        if let data = try? await newPhoto.loadTransferable(type: Data.self) {
-            // Downsample before assigning to reduce memory/storage footprint
-            let processed = ImageDownsampling.downsampleIfNeeded(
-                data: data,
-                maxDimension: 1024,
-                jpegQuality: 0.8
-            ) ?? data
+        isImporting = true
+        defer { if !Task.isCancelled { isImporting = false } }
+        let data = try? await newPhoto.loadTransferable(type: Data.self)
+        guard !Task.isCancelled else { return }
+        let processed: Data?
+        if let data { processed = await PetPhotoImport.prepare(data) } else { processed = nil }
+        guard !Task.isCancelled else { return }
+        if let processed {
             photoData = processed
         } else {
-            photoData = nil
-            selectedPhoto = nil
+            showImportError = true
         }
     }
 

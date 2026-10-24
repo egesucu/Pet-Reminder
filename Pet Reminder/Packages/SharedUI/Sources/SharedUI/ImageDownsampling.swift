@@ -1,48 +1,44 @@
-//
-//  ImageDownsampling.swift
-//  Shared
-//
-//  Created by Assistant on 17.09.2025.
-//
-
-import Shared
 import Foundation
-import UIKit
 import ImageIO
-import MobileCoreServices
+import UniformTypeIdentifiers
 
 public enum ImageDownsampling {
-
-    /// Downsamples image data to a maximum pixel dimension and compresses to JPEG.
-    /// - Parameters:
-    ///   - data: Original image data.
-    ///   - maxDimension: Maximum width/height in pixels for the downsampled image.
-    ///   - jpegQuality: JPEG compression quality (0.0 - 1.0).
-    /// - Returns: Processed image data if successful; otherwise the original data.
-    public static func downsampleIfNeeded(
+    /// Creates a display-sized image without decoding a full-resolution bitmap.
+    /// Preserves orientation, aspect ratio and transparency; never enlarges the source.
+    /// Returns nil when decoding or encoding fails instead of storing the original.
+    public nonisolated static func downsampleIfNeeded(
         data: Data,
         maxDimension: CGFloat = 1024,
         jpegQuality: CGFloat = 0.8
     ) -> Data? {
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return data
-        }
+        guard maxDimension.isFinite, maxDimension >= 1,
+              let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary),
+              let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any],
+              let width = properties[kCGImagePropertyPixelWidth] as? NSNumber,
+              let height = properties[kCGImagePropertyPixelHeight] as? NSNumber,
+              width.doubleValue > 0, height.doubleValue > 0 else { return nil }
 
-        let options: [NSString: Any] = [
+        let target = min(maxDimension, max(CGFloat(width.doubleValue), CGFloat(height.doubleValue)))
+        let options: [CFString: Any] = [
             kCGImageSourceCreateThumbnailFromImageAlways: true,
             kCGImageSourceShouldCacheImmediately: true,
             kCGImageSourceCreateThumbnailWithTransform: true,
-            kCGImageSourceThumbnailMaxPixelSize: Int(maxDimension)
+            kCGImageSourceThumbnailMaxPixelSize: Int(target)
         ]
+        guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else { return nil }
 
-        guard let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else {
-            return data
+        let hasAlpha: Bool
+        switch image.alphaInfo {
+        case .first, .last, .premultipliedFirst, .premultipliedLast, .alphaOnly: hasAlpha = true
+        default: hasAlpha = false
         }
-
-        let image = UIImage(cgImage: cgImage)
-        guard let jpeg = image.jpegData(compressionQuality: jpegQuality) else {
-            return data
-        }
-        return jpeg
+        let type = hasAlpha ? UTType.png : UTType.jpeg
+        let output = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(output, type.identifier as CFString, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, image, [
+            kCGImageDestinationLossyCompressionQuality: min(1, max(0, jpegQuality))
+        ] as CFDictionary)
+        guard CGImageDestinationFinalize(destination) else { return nil }
+        return output as Data
     }
 }

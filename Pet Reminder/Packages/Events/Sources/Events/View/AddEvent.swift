@@ -15,6 +15,7 @@ struct AddEvent: View {
     @Environment(EventManager.self) private var manager
     @Environment(\.dismiss) var dismiss
 
+    @State private var showDiscard = false
     @State private var creation = EventCreationState()
 
     var body: some View {
@@ -60,6 +61,13 @@ struct AddEvent: View {
                 Text(creation.errorMessage ?? String(localized: SharedStrings.unknownError))
             }
         }
+        .interactiveDismissDisabled(creation.hasChanges || creation.isSaving)
+        .confirmDiscardChanges(isPresented: $showDiscard, discard: dismiss.callAsFunction)
+    }
+
+    private func requestDismiss() {
+        guard !creation.isSaving else { return }
+        if creation.hasChanges { showDiscard = true } else { dismiss() }
     }
 
     @ContentBuilder
@@ -101,13 +109,15 @@ struct AddEvent: View {
                 Text(SharedStrings.addEventSave).bold()
             }
         }
+        .keyboardShortcut(.return, modifiers: .command)
         .disabled(!creation.canSave)
     }
 
     private func cancelButton() -> some View {
-        Button(action: dismiss.callAsFunction) {
+        Button(action: requestDismiss) {
             Text(SharedStrings.cancelTitle)
         }
+        .keyboardShortcut(.cancelAction)
 
     }
 

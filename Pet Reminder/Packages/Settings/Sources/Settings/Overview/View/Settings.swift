@@ -14,7 +14,7 @@ import SharedUI
 
 @MainActor
 public struct Settings: View {
-    private enum Destination: Hashable {
+    private enum Destination: String, Hashable {
         case managePets, notifications, privacyPolicy, donate
         #if DEBUG
         case allNotifications
@@ -22,7 +22,11 @@ public struct Settings: View {
     }
 
     private let managePets: () -> AnyView
-    @State private var selectedDestination: Destination?
+    @SceneStorage("settings.destination") private var storedDestination = ""
+    private var selectedDestination: Destination? { Destination(rawValue: storedDestination) }
+    private var selection: Binding<Destination?> {
+        Binding(get: { selectedDestination }, set: { storedDestination = $0?.rawValue ?? "" })
+    }
 
     public init(managePets: @escaping () -> AnyView) {
         self.managePets = managePets
@@ -30,7 +34,7 @@ public struct Settings: View {
 
     public var body: some View {
         NavigationSplitView {
-            List(selection: $selectedDestination) {
+            List(selection: selection) {
                 Section(header: Text(SharedStrings.appSettings)) {
                     sidebarLink(.managePets, title: SharedStrings.managePetTitle, systemImage: "pawprint")
                     sidebarLink(.notifications, title: SharedStrings.notificationsManageTitle, systemImage: "bell")

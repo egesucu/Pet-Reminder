@@ -53,6 +53,7 @@ public final class EventManager {
     private static let filterKey = "events.selectedCalendar"
     private static let allCalendarsID = AgendaRules.allCalendarsID
     private var restoringFilter = false
+    private var hasRestoredFilter = false
 
     // MARK: - Properties
 
@@ -213,11 +214,20 @@ public final class EventManager {
         guard status == .authorized else { return }
         calendars = eventStore.calendars(for: .event).map { EventCalendar(calendar: $0) }
         await definePetCalendar()
-        let saved = preferences.string(forKey: Self.filterKey)
         restoringFilter = true
-        let id = rules.selectedCalendarID(saved: saved, available: calendars.map(\.id), petID: petCalendar?.id)
+        let id = restoredCalendarID(available: calendars.map(\.id), petID: petCalendar?.id)
         selectedCalendar = calendars.first { $0.id == id }
         restoringFilter = false
+    }
+
+    /// Only a new window reads the shared last-used default. Refreshing an
+    /// existing window preserves its own selection, including All Calendars.
+    func restoredCalendarID(available: [String], petID: String?) -> String? {
+        let saved = hasRestoredFilter
+            ? (selectedCalendar?.id ?? Self.allCalendarsID)
+            : preferences.string(forKey: Self.filterKey)
+        hasRestoredFilter = true
+        return rules.selectedCalendarID(saved: saved, available: available, petID: petID)
     }
 
     func definePetCalendar() async {

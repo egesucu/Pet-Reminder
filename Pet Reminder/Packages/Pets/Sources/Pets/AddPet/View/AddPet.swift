@@ -22,6 +22,8 @@ struct AddPet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
+    @State private var isSaving = false
+    @State private var showDiscard = false
     @State private var pet: Pet = .init()
     @State private var model: Model = .init()
 
@@ -60,6 +62,8 @@ struct AddPet: View {
                 .toolbar { leadingToolbar }
             }
         }
+        .interactiveDismissDisabled(model.hasChanges || isSaving)
+        .confirmDiscardChanges(isPresented: $showDiscard, discard: dismiss.callAsFunction)
         .sensoryFeedback(.error, trigger: model.saveState == .failure)
         .sensoryFeedback(.success, trigger: model.saveState == .success)
         .onChange(of: model.selectedImageData) {
@@ -105,6 +109,23 @@ extension AddPet {
         enum SaveState: Equatable {
             case none, success, failure
         }
+
+        private struct Snapshot: Equatable {
+            let name: String
+            let birthday: Date
+            let kind: Kind
+            let breed: String?
+            let image: Data?
+            let schedule: FeedSelection
+            let morning: Date
+            let evening: Date
+        }
+        private var initialSnapshot: Snapshot?
+        private var snapshot: Snapshot {
+            Snapshot(name: name, birthday: birthday, kind: kind, breed: breed,
+                     image: selectedImageData, schedule: feedSelection, morning: morningFeed, evening: eveningFeed)
+        }
+        var hasChanges: Bool { initialSnapshot != snapshot }
 
         /// Entered pet name.
         var name: String
@@ -152,6 +173,7 @@ extension AddPet {
             self.eveningFeed = eveningFeed
             self.nameIsValid = nameIsValid
             self.petExists = petExists
+            self.initialSnapshot = snapshot
         }
 
         /// Returns true when the pet can be saved.
@@ -188,11 +210,12 @@ private extension AddPet {
     @ContentBuilder
     var leadingToolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button(role: .cancel, action: dismiss.callAsFunction) {
+            Button(role: .cancel, action: requestDismiss) {
                 Label(SharedStrings.cancelTitle, systemImage: "xmark")
                     .labelStyle(.iconOnly)
                     .foregroundStyle(.red)
             }
+            .keyboardShortcut(.cancelAction)
         }
     }
 
@@ -206,9 +229,10 @@ private extension AddPet {
                     await persistPet()
                 }
             }
+            .keyboardShortcut(.return, modifiers: .command)
             .buttonStyle(.glassProminent)
             .tint(.accent)
-            .disabled(!model.petCanBeSaved)
+            .disabled(!model.petCanBeSaved || isSaving || model.saveState == .success)
 
             Spacer()
         }
@@ -218,15 +242,22 @@ private extension AddPet {
 // MARK: - Actions
 private extension AddPet {
 
+    func requestDismiss() {
+        guard !isSaving else { return }
+        if model.hasChanges { showDiscard = true } else { dismiss() }
+    }
+
     // MARK: - Save
 
     func persistPet() async {
         let cleanedName = Pet.cleanedName(for: model.name)
 
-        guard model.petCanBeSaved, cleanedName.isNotEmpty else {
+        guard !isSaving, model.saveState != .success, model.petCanBeSaved, cleanedName.isNotEmpty else {
             return
         }
 
+        isSaving = true
+        defer { isSaving = false }
         model.name = cleanedName
         pet.name = cleanedName
         pet.kind = model.kind

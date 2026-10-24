@@ -20,6 +20,10 @@ public struct EventList: View {
 
     @Environment(EventManager.self) private var eventManager
     @Environment(\.scenePhase) private var scenePhase
+    @SceneStorage("events.calendar") private var storedCalendar = ""
+    @SceneStorage("events.selection") private var storedEventID = ""
+    @SceneStorage("events.occurrence") private var storedOccurrence: Double = 0
+    @State private var hasRestored = false
     @State private var showAddEvent = false
     @State private var selectedEvent: EKEvent?
 
@@ -76,8 +80,15 @@ public struct EventList: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { onDismiss() }
         }
-        .onChange(of: eventManager.selectedCalendar) { _, _ in
-            selectedEvent = eventManager.reconciledEvent(selectedEvent)
+        .onChange(of: eventManager.selectedCalendar) { _, calendar in
+            if hasRestored {
+                storedCalendar = calendar?.id ?? AgendaRules.allCalendarsID
+                selectedEvent = eventManager.reconciledEvent(selectedEvent)
+            }
+        }
+        .onChange(of: selectedEvent) { _, event in
+            storedEventID = event?.calendarItemIdentifier ?? ""
+            storedOccurrence = event?.occurrenceDate?.timeIntervalSince1970 ?? 0
         }
         .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in onDismiss() }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in onDismiss() }
@@ -86,7 +97,19 @@ public struct EventList: View {
 
     func reloadEvents() async {
         await eventManager.reloadEvents()
-        selectedEvent = eventManager.reconciledEvent(selectedEvent)
+        guard eventManager.status == .authorized else { return }
+        if !hasRestored {
+            if !storedCalendar.isEmpty {
+                eventManager.selectedCalendar = eventManager.calendars.first { $0.id == storedCalendar }
+            }
+            hasRestored = true
+            storedCalendar = eventManager.selectedCalendar?.id ?? AgendaRules.allCalendarsID
+            selectedEvent = (eventManager.todaysEvents + eventManager.futureEvents).first {
+                $0.calendarItemIdentifier == storedEventID && ($0.occurrenceDate?.timeIntervalSince1970 ?? 0) == storedOccurrence
+            }
+        } else {
+            selectedEvent = eventManager.reconciledEvent(selectedEvent)
+        }
     }
 
     @ContentBuilder var eventNotAllowed: some View {
@@ -128,6 +151,8 @@ public struct EventList: View {
                 }
             }
             .tint(.accent)
+            .keyboardShortcut("n")
+            .disabled(showAddEvent)
         }
     }
 

@@ -48,16 +48,21 @@ struct VaccineHistory: View {
     /// including a list of vaccines and controls for adding/removing entries.
     var body: some View {
         VStack {
-            if let vaccines = pet.vaccines {
+            if let vaccines = pet.vaccines, !vaccines.isEmpty {
                 List {
                     ForEach(vaccines, content: vaccineView)
                         .onDelete(perform: removeVaccine)
                 }
                 .listStyle(.automatic)
+                .scrollContentBackground(.hidden)
             } else {
                 Text(SharedStrings.noVaccineTitle)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.groupedBackground.ignoresSafeArea())
+        .containerBackground(Color.groupedBackground, for: .navigation)
+        .toolbarBackground(Color.groupedBackground, for: .navigationBar)
         .toolbar(content: vaccineToolbars)
         .navigationTitle(Text(SharedStrings.vaccineHistoryTitle))
         .sheet(
