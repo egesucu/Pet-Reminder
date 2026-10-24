@@ -46,6 +46,8 @@ struct AddVaccine: View {
                 DatePicker(SharedStrings.vaccineDateLabel, selection: $vaccineDate)
                     .bold()
             }
+            .containerBackground(Color.groupedBackground, for: .navigation)
+            .toolbarBackground(Color.groupedBackground, for: .navigationBar)
             .navigationTitle(Text(SharedStrings.addVaccine))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -60,6 +62,8 @@ struct AddVaccine: View {
         }
 
         .padding()
+        .background(Color.groupedBackground.ignoresSafeArea())
+        .presentationBackground(Color.groupedBackground)
         .alert(SharedStrings.saveFailed, isPresented: $showSaveError) { }
     }
 

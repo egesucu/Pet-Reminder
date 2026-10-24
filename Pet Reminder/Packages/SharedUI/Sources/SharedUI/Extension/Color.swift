@@ -41,6 +41,8 @@ public extension Color {
     static let label = Color(.label)
     /// White-ish on Light Mode, Black on Dark Mode
     static let background = Color(uiColor: .systemBackground)
+    /// Shared canvas for grouped content, including navigation and safe areas.
+    static let groupedBackground = Color(uiColor: .systemGroupedBackground)
 }
 
 #if DEBUG

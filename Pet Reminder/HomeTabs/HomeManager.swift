@@ -64,6 +64,7 @@ struct HomeManager: View {
             }
         }
         .defaultTabBarPlacement(.tabBar)
+        .background(Color.groupedBackground.ignoresSafeArea())
         .tint(.accent)
         .onChange(of: pets.map { "\($0.intentID?.uuidString ?? ""):\($0.name)" }, initial: true) { _, _ in
             PetAppShortcuts.updateAppShortcutParameters()

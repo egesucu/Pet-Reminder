@@ -39,19 +39,35 @@ public struct EventList: View {
                     wrongTypeError
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.groupedBackground)
+            .containerBackground(Color.groupedBackground, for: .navigation)
+            .toolbarBackground(Color.groupedBackground, for: .navigationBar)
             .navigationTitle(Text(SharedStrings.eventTitle))
+            .navigationBarTitleDisplayMode(.large)
+            .navigationSplitViewColumnWidth(min: 320, ideal: 380, max: 460)
             .environment(eventManager)
         } detail: {
-            if let selectedEvent {
-                EventDetail(event: selectedEvent, onComplete: onDismiss)
-            } else {
-                ContentUnavailableView(
-                    SharedStrings.resource("Select an event"),
-                    systemImage: "calendar",
-                    description: Text(SharedStrings.resource("Choose an event to see its details."))
-                )
+            Group {
+                if let selectedEvent {
+                    EventDetail(event: selectedEvent, onComplete: onDismiss)
+                } else {
+                    ContentUnavailableView(
+                        SharedStrings.resource("Select an event"),
+                        systemImage: "calendar",
+                        description: Text(SharedStrings.resource("Choose an event to see its details."))
+                    )
+                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.groupedBackground)
+            .containerBackground(Color.groupedBackground, for: .navigation)
+            .toolbarBackground(Color.groupedBackground, for: .navigationBar)
         }
+        .navigationSplitViewStyle(.balanced)
+        .containerBackground(Color.groupedBackground, for: .navigationSplitView)
+        .background(Color.groupedBackground.ignoresSafeArea())
+        .toolbarBackground(Color.groupedBackground, for: .tabBar)
         .sheet(isPresented: $showAddEvent, onDismiss: onDismiss) {
             AddEvent()
                 .environment(eventManager)

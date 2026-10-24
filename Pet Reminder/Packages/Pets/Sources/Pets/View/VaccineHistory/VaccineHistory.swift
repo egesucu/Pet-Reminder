@@ -73,7 +73,7 @@ struct VaccineHistory: View {
     @ContentBuilder func vaccineToolbars() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button(role: .confirm, action: addVaccine) {
-                Label(SharedStrings.resource("Add vaccine"), systemImage: "plus")
+                Label(SharedStrings.addVaccine, systemImage: "plus")
                     .labelStyle(.iconOnly)
                     .foregroundStyle(Color.background)
             }

@@ -41,23 +41,37 @@ public struct PetList: View {
     public var body: some View {
         NavigationSplitView {
             list
+                .scrollContentBackground(.hidden)
+                .background(Color.groupedBackground)
+                .containerBackground(Color.groupedBackground, for: .navigation)
+                .toolbarBackground(Color.groupedBackground, for: .navigationBar)
                 .navigationTitle(Text(SharedStrings.petNameTitle))
                 .toolbar(content: topActions)
+                .navigationSplitViewColumnWidth(min: 320, ideal: 380, max: 460)
         } detail: {
             NavigationStack {
-                if let selectedPet {
-                    PetDetail(pet: selectedPet)
-                        .id(selectedPet.persistentModelID)
-                } else {
-                    ContentUnavailableView(
-                        SharedStrings.resource("Select a pet"),
-                        systemImage: "pawprint.circle",
-                        description: Text(SharedStrings.resource("Choose a pet to see today's care and history."))
-                    )
+                Group {
+                    if let selectedPet {
+                        PetDetail(pet: selectedPet)
+                            .id(selectedPet.persistentModelID)
+                    } else {
+                        ContentUnavailableView(
+                            SharedStrings.resource("Select a pet"),
+                            systemImage: "pawprint.circle",
+                            description: Text(SharedStrings.resource("Choose a pet to see today's care and history."))
+                        )
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.groupedBackground)
+                .containerBackground(Color.groupedBackground, for: .navigation)
+                .toolbarBackground(Color.groupedBackground, for: .navigationBar)
             }
         }
             .navigationSplitViewStyle(.balanced)
+            .containerBackground(Color.groupedBackground, for: .navigationSplitView)
+            .background(Color.groupedBackground.ignoresSafeArea())
+            .toolbarBackground(Color.groupedBackground, for: .tabBar)
             .task(setupInitials)
             .onChange(of: request, initial: true) { _, _ in
                 consumePendingPet()
