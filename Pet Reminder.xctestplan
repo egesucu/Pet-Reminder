@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "id": "70378B08-6E05-408F-93FA-D5DAF6012553",
+      "name": "All Tests",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {
+    "codeCoverage": true,
+    "targetForVariableExpansion": {
+      "containerPath": "container:Pet Reminder.xcodeproj",
+      "identifier": "9D8E76ED248666BD004610C8",
+      "name": "Pet Reminder"
+    }
+  },
+  "testTargets": [
+    {
+      "parallelizable": false,
+      "target": {
+        "containerPath": "container:Pet Reminder.xcodeproj",
+        "identifier": "72C446432C9B6BBC003B1DE7",
+        "name": "Pet ReminderTests"
+      }
+    }
+  ],
+  "version": 1
+}

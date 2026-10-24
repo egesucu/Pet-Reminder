@@ -6,34 +6,38 @@
 //  Copyright © 2023 Ege Sucu. All rights reserved.
 //
 
+import AppIntents
+import VetFinder
+import Events
+import Reminders
+import Pets
+import Settings
 import SwiftUI
 import Shared
+import SharedUI
+import PetCare
 import SwiftData
+#if DEBUG
+import PreviewSupport
+#endif
 
 struct HomeManager: View {
-    @State private var currentTab: PetReminderTabs = .home
+    @Query(sort: \Pet.name) private var pets: [Pet]
+    @Environment(VetServiceImplementation.self) private var vetService
     @Environment(EventManager.self) private var eventManager
     @Environment(NotificationManager.self) private var notificationManager
-
-    // Optional: carry a pet name from deep link; your PetListView can observe this via NotificationCenter
-    @State private var pendingPetNameFromDeepLink: String?
+    @Environment(AppNavigationCoordinator.self) private var navigation
 
     init() {}
 
     var body: some View {
-        TabView(selection: $currentTab) {
+        @Bindable var navigation = navigation
+        TabView(selection: $navigation.selectedTab) {
             // HOME TAB
             Tab(value: PetReminderTabs.home) {
-                PetList()
-                    .environment(notificationManager)
-                    .onChange(of: pendingPetNameFromDeepLink) { _, newValue in
-                        if let name = newValue {
-                            NotificationCenter.default.post(name: .openPetByName, object: name)
-                            pendingPetNameFromDeepLink = nil
-                        }
-                    }
+                PetList(request: navigation.pendingRequest, onRequestHandled: navigation.consume)
             } label: {
-                Label(.homeTabTitle, systemImage: "pawprint")
+                Label(SharedStrings.homeTabTitle, systemImage: "pawprint")
             }
 
             // EVENTS TAB
@@ -41,82 +45,41 @@ struct HomeManager: View {
                 EventList()
                     .environment(eventManager)
             } label: {
-                Label(.eventTabTitle, systemImage: "list.bullet")
+                Label(SharedStrings.eventTabTitle, systemImage: "list.bullet")
             }
 
             // SETTINGS TAB
             Tab(value: PetReminderTabs.settings) {
-                Settings()
+                Settings(managePets: { AnyView(PetChangeList()) })
                     .environment(notificationManager)
             } label: {
-                Label(.settingsTabTitle, systemImage: "gearshape")
+                Label(SharedStrings.settingsTabTitle, systemImage: "gearshape")
             }
 
             // FIND VET TAB
             Tab(value: PetReminderTabs.vet, role: .prominent) {
-                FindVet()
+                FindVet(service: vetService)
             } label: {
-                Label(.findVetTitle, systemImage: "magnifyingglass")
+                Label(SharedStrings.findVetTitle, systemImage: "magnifyingglass")
             }
         }
         .defaultTabBarPlacement(.tabBar)
         .tint(.accent)
-        .onOpenURL { url in
-            handle(url)
+        .onChange(of: pets.map { "\($0.intentID?.uuidString ?? ""):\($0.name)" }, initial: true) { _, _ in
+            PetAppShortcuts.updateAppShortcutParameters()
         }
+
     }
-}
-
-// MARK: - Deep Link Handling
-private extension HomeManager {
-    func handle(_ url: URL) {
-        guard url.scheme?.lowercased() == "petreminder" else { return }
-
-        // Expected forms:
-        // petreminder://home
-        // petreminder://home/<pet-name>
-        // petreminder://events
-        // petreminder://findVet
-        // petreminder://settings
-        guard let host = url.host?.lowercased() else { return }
-
-        switch host {
-        case "home":
-            currentTab = .home
-            // if there is a trailing component, treat it as a pet name slug
-            let comps = url.pathComponents.filter { $0 != "/" }
-            if let petName = comps.first, !petName.isEmpty {
-                // save to state; forwarded to PetListView via NotificationCenter
-                pendingPetNameFromDeepLink = petName
-            }
-        case "events":
-            currentTab = .events
-        case "findvet":
-            currentTab = .vet
-        case "settings":
-            currentTab = .settings
-        case "add":
-            currentTab = .home
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .openAddPet, object: nil)
-            }
-        default:
-            break
-        }
-    }
-}
-
-// Notification your PetListView can observe to open a pet by name
-extension Notification.Name {
-    static let openPetByName = Notification.Name("OpenPetByNameNotification")
-    static let openAddPet = Notification.Name("OpenAddPetSheetNotification")
 }
 
 #if DEBUG
 #Preview {
     HomeManager()
-        .notification(NotificationManager.shared)
-        .environment(EventManager.demo)
-        .modelContainer(DataController.previewContainer)
+        .notification(NotificationManager())
+        .environment(EventManager(isDemo: true))
+        .environment(VetServiceImplementation())
+        .environment(AppNavigationCoordinator())
+        .environment(PetCareService(container: PreviewData.previewContainer))
+        .modelContainer(PreviewData.previewContainer)
 }
 #endif

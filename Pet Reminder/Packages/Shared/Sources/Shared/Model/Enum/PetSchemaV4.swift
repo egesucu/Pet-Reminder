@@ -8,8 +8,6 @@
 import Foundation
 import SwiftData
 
-public typealias Pet = PetSchemaV4.Pet
-
 public enum PetSchemaV4: VersionedSchema {
     public static let versionIdentifier = Schema.Version(4, 0, 0)
 
@@ -89,92 +87,49 @@ public enum PetSchemaV4: VersionedSchema {
             }
         }
     }
-}
+    // Keep historical relationships within this schema; never reference the current Pet alias.
 
-public extension Pet {
-    func addFeed(_ feed: Feed) {
-        var updatedFeeds = feeds ?? []
-        updatedFeeds.append(feed)
-        feeds = updatedFeeds
-        feed.pet = self
-    }
+    @Model
+    public class Feed: Identifiable {
+        public var id: UUID = UUID()
+        public var eveningFed: Bool = false
+        public var eveningFedStamp: Date?
+        public var feedDate: Date?
+        public var morningFed: Bool = false
+        public var morningFedStamp: Date?
+        public var pet: Pet?
 
-    func addVaccine(_ vaccine: Vaccine) {
-        var updatedVaccines = vaccines ?? []
-        updatedVaccines.append(vaccine)
-        vaccines = updatedVaccines
-        vaccine.pet = self
-    }
-
-    static func cleanedName(for name: String) -> String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    static func normalizedName(for name: String) -> String {
-        cleanedName(for: name)
-            .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
-            .lowercased()
-    }
-
-    static func exactNameFetchDescriptor(for name: String) -> FetchDescriptor<Pet> {
-        let cleanedName = cleanedName(for: name)
-        var descriptor = FetchDescriptor<Pet>(
-            predicate: #Predicate<Pet> { pet in
-                pet.name == cleanedName
-            }
-        )
-        descriptor.fetchLimit = 1
-        return descriptor
-    }
-
-    func hasNameMatching(_ name: String) -> Bool {
-        Self.normalizedName(for: self.name) == Self.normalizedName(for: name)
-    }
-
-    @MainActor static var preview: Pet {
-        let firstPet = previews.first ?? .init(
-            birthday: .now,
-            name: .empty,
-            createdAt: nil,
-            feedSelection: .both,
-            image: nil,
-            breed: "Husky",
-            kind: .dog
-        )
-        return firstPet
-    }
-
-    @MainActor static var previews: [Pet] {
-        var pets: [Pet] = []
-        Strings.demoPets.forEach { petName in
-            let randomKind = Kind.allCases.randomElement() ?? .dog
-
-            let randomBreed: String? = switch randomKind {
-            case .cat:
-                "Aegean"
-            case .dog:
-                "Beagle"
-            case .fish:
-                "Queen Angelfish"
-            case .bird:
-                "Australian King Parrot"
-            case .other:
-                nil
-            }
-
-            let pet = Pet(
-                birthday: .randomDate(),
-                name: petName,
-                createdAt: .randomDate(),
-                feedSelection: .both,
-                image: randomKind.uiImage.jpegData(compressionQuality: 0.8),
-                breed: randomBreed,
-                kind: randomKind
-            )
-            pet.feeds = Feed.previews
-            pet.vaccines = Vaccine.previews
-            pets.append(pet)
+        public init(
+            id: UUID = UUID(),
+            eveningFed: Bool = false,
+            eveningFedStamp: Date? = nil,
+            feedDate: Date? = nil,
+            morningFed: Bool = false,
+            morningFedStamp: Date? = nil
+        ) {
+            self.id = id
+            self.eveningFed = eveningFed
+            self.eveningFedStamp = eveningFedStamp
+            self.feedDate = feedDate
+            self.morningFed = morningFed
+            self.morningFedStamp = morningFedStamp
         }
-        return pets
+
     }
+
+    @Model
+    public class Vaccine {
+        public var date: Date = Date.now
+        public var name: String = String.empty
+        public var pet: Pet?
+
+        public init(
+            date: Date = Date.now,
+            name: String = .empty
+        ) {
+            self.date = date
+            self.name = name
+        }
+    }
+
 }

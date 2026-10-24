@@ -9,7 +9,6 @@
 
 import Foundation
 import SwiftData
-import Playgrounds
 
 @Model
 public class Feed: Identifiable {
@@ -37,32 +36,4 @@ public class Feed: Identifiable {
         self.morningFedStamp = morningFedStamp
     }
 
-}
-
-public extension Feed {
-    @MainActor static var preview: Feed {
-        Feed(
-            eveningFed: true,
-            eveningFedStamp: .eightPM,
-            feedDate: .eightPM,
-            morningFed: true,
-            morningFedStamp: .eightAM
-        )
-    }
-
-    @MainActor static var previews: [Feed] {
-        var feeds: [Feed] = []
-        [0...4].forEach { _ in
-            let date = Date.randomDate()
-            let feed = Feed(
-                eveningFed: true,
-                eveningFedStamp: date,
-                feedDate: date,
-                morningFed: true,
-                morningFedStamp: date
-            )
-            feeds.append(feed)
-        }
-        return feeds
-    }
 }

@@ -91,4 +91,49 @@ public enum PetSchemaV2: VersionedSchema {
             }
         }
     }
+    // Keep historical relationships within this schema; never reference the current Pet alias.
+
+    @Model
+    public class Feed: Identifiable {
+        public var id: UUID = UUID()
+        public var eveningFed: Bool = false
+        public var eveningFedStamp: Date?
+        public var feedDate: Date?
+        public var morningFed: Bool = false
+        public var morningFedStamp: Date?
+        public var pet: Pet?
+
+        public init(
+            id: UUID = UUID(),
+            eveningFed: Bool = false,
+            eveningFedStamp: Date? = nil,
+            feedDate: Date? = nil,
+            morningFed: Bool = false,
+            morningFedStamp: Date? = nil
+        ) {
+            self.id = id
+            self.eveningFed = eveningFed
+            self.eveningFedStamp = eveningFedStamp
+            self.feedDate = feedDate
+            self.morningFed = morningFed
+            self.morningFedStamp = morningFedStamp
+        }
+
+    }
+
+    @Model
+    public class Vaccine {
+        public var date: Date = Date.now
+        public var name: String = String.empty
+        public var pet: Pet?
+
+        public init(
+            date: Date = Date.now,
+            name: String = .empty
+        ) {
+            self.date = date
+            self.name = name
+        }
+    }
+
 }

@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import EventKit
-import SwiftUI
 
 public struct Strings {
     public static let demoPets = [
@@ -47,46 +45,11 @@ public struct Strings {
 }
 
 public extension String {
-    static func formatEventDateTime(current: Bool, allDay: Bool, event: EKEvent) -> Self {
-        if allDay {
-            return current ? String(
-                localized: .allDayTitle
-            ) : String.futureDateTimeFormat(
-                allDay: allDay,
-                event: event
-            )
-        } else {
-            return current ? String.currentDateTimeFormat(
-                allDay: allDay,
-                event: event
-            ) : String.futureDateTimeFormat(
-                allDay: allDay,
-                event: event
-            )
-        }
-    }
-
     func convertStringToDate(locale: Locale = .current) -> Date {
         let formatter = DateFormatter()
         formatter.locale = locale
         formatter.dateFormat = "dd MMM yyyy"
         return formatter.date(from: self) ?? Date()
-    }
-
-    static func futureDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
-        if allDay {
-            return "\(event.startDate.printDate()) \(String(localized: .allDayTitle))"
-        } else {
-            return "\(event.startDate.printDate()) \(event.startDate.printTime()) - \(event.endDate.printTime())"
-        }
-    }
-
-    static func currentDateTimeFormat(allDay: Bool, event: EKEvent) -> Self {
-        if allDay {
-            return String(localized: .allDayTitle)
-        } else {
-            return "\(event.startDate.printTime()) - \(event.endDate.printTime())"
-        }
     }
 
     var isNotEmpty: Bool {

@@ -7,11 +7,9 @@
 //
 
 import Foundation
-import SwiftUI
-import SwiftData
 import OSLog
 
-public enum Kind: String {
+public enum Kind: String, Sendable {
     case cat, dog, fish, bird, other
 }
 
@@ -21,60 +19,26 @@ extension Kind {
     public var localizedName: String {
         switch self {
         case .cat:
-            let cat = String(localized: .cat)
+            let cat = String(localized: SharedStrings.cat)
             Logger.pets.debug("Pet's localized type is: \(cat)")
             return cat
         case .dog:
-            let dog = String(localized: .dog)
+            let dog = String(localized: SharedStrings.dog)
             Logger.pets.debug("Pet's localized type is: \(dog)")
             return dog
         case .fish:
-            let fish = String(localized: .fish)
+            let fish = String(localized: SharedStrings.fish)
             Logger.pets.debug("Pet's localized type is: \(fish)")
             return fish
         case .bird:
-            let bird = String(localized: .bird)
+            let bird = String(localized: SharedStrings.bird)
             Logger.pets.debug("Pet's localized type is: \(bird)")
             return bird
         case .other:
-            let other = String(localized: .other)
+            let other = String(localized: SharedStrings.other)
             Logger.pets.debug("Pet's localized type is: \(other)")
             return other
         }
     }
 
-    public var image: Image {
-        return switch self {
-        case .cat:
-            Image(.defaultCat)
-                .resizable()
-        case .dog:
-            Image(.defaultDog)
-                .resizable()
-        case .fish:
-            Image(.defaultFish)
-                .resizable()
-        case .bird:
-            Image(.defaultBird)
-                .resizable()
-        case .other:
-            Image(.defaultOther)
-                .resizable()
-        }
-    }
-
-    public var uiImage: UIImage {
-        return switch self {
-        case .cat:
-            UIImage(resource: .defaultCat)
-        case .dog:
-            UIImage(resource: .defaultDog)
-        case .fish:
-            UIImage(resource: .defaultFish)
-        case .bird:
-            UIImage(resource: .defaultBird)
-        case .other:
-            UIImage(resource: .defaultOther)
-        }
-    }
 }

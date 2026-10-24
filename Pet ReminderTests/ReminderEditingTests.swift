@@ -2,7 +2,7 @@ import Foundation
 import Shared
 import Testing
 import UserNotifications
-@testable import Pet_Reminder
+@testable import Pets
 
 @MainActor
 private final class ReminderCenter: NotificationCenterProtocol {
@@ -77,7 +77,7 @@ struct ReminderEditingTests {
     func nameValidation() {
         let pet = Pet(name: "Max")
         let other = Pet(name: "Café")
-        let editor = PetDataManager()
+        let editor = PetDataManager(notificationManager: NotificationManager(notificationCenter: ReminderCenter()))
         for invalid in ["   ", " CAFE ", "café"] {
             editor.name = invalid
             #expect(!editor.nameCanBeSaved(for: pet, among: [pet, other]))
@@ -86,3 +86,5 @@ struct ReminderEditingTests {
         #expect(editor.nameCanBeSaved(for: pet, among: [pet, other]))
     }
 }
+
+@testable import Reminders

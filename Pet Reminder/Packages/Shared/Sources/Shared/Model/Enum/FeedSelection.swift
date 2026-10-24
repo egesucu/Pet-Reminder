@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-public enum FeedSelection: Codable, CaseIterable, Equatable, CustomStringConvertible {
+public enum FeedSelection: Sendable, Codable, CaseIterable, Equatable, CustomStringConvertible {
     case morning
     case evening
     case both
@@ -31,11 +31,11 @@ public extension FeedSelection {
     var localized: LocalizedStringResource {
         switch self {
         case .morning:
-            .feedSelectionMorning
+            SharedStrings.feedSelectionMorning
         case .evening:
-            .feedSelectionEvening
+            SharedStrings.feedSelectionEvening
         case .both:
-            .feedSelectionBoth
+            SharedStrings.feedSelectionBoth
         }
     }
 }
