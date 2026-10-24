@@ -14,4 +14,4 @@ defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 repository_path="${CI_PRIMARY_REPOSITORY_PATH:-$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)}"
 python3 "$repository_path/ci_scripts/check_modules.py"
 python3 "$repository_path/ci_scripts/check_test_plan.py"
-python3 -m unittest discover -s "$repository_path/ci_scripts" -p 'test_module_boundaries.py'
+python3 -m unittest discover -s "$repository_path/ci_scripts" -p 'test_*.py'

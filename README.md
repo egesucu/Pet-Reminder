@@ -8,7 +8,7 @@
 
 Pet Reminder is an iPhone and iPad app that helps you manage your pets' daily care. Keep pet profiles, track meals and vaccinations, plan events, and find nearby veterinarians in one place.
 
-This repository contains the app's Swift source code, with an interface built using SwiftUI.
+The SwiftUI app composes feature and service modules implemented as local Swift packages. The app target owns startup, navigation, persistence configuration, and system integrations.
 
 ## Features
 
@@ -27,7 +27,35 @@ This repository contains the app's Swift source code, with an interface built us
 
 The app uses SwiftUI and Observation for its interface and state, SwiftData for persistence and schema migrations, UserNotifications for reminders, EventKit for calendar integration, MapKit and Core Location for vet search, and Swift Charts for feeding insights.
 
-Separate local Swift packages contain the app’s models, UI helpers, services, and features: `Shared`, `SharedUI`, `PetCare`, `Reminders`, `Pets`, `Events`, `VetFinder`, `Settings`, `Intro`, and `PreviewSupport`. They use explicit local package dependencies and no third-party packages. See [ARCHITECTURE.md](ARCHITECTURE.md) for ownership and integration contracts.
+## Modules and architecture
+
+Packages live under [`Pet Reminder/Packages`](Pet%20Reminder/Packages). Each production package has one library target with the same name as the package. Dependencies use explicit local paths; there are no third-party packages.
+
+| Package | Responsibility | Library dependencies |
+| --- | --- | --- |
+| `Shared` | SwiftData models, schema migrations, common values, localization, and shared assets | None |
+| `SharedUI` | Reusable SwiftUI views, modifiers, and image/presentation helpers | `Shared` |
+| `PetCare` | Feeding operations, saved-data snapshots, isolated operation contexts, and UI refresh sessions | `Shared` |
+| `Reminders` | Feeding and birthday notifications, scheduling, and notification authorization | `Shared` |
+| `Pets` | Pet lists, creation, editing, details, feeding history, and vaccination screens | `Shared`, `SharedUI`, `PetCare`, `Reminders` |
+| `Events` | Calendar access, event models, agenda rules, and event screens | `Shared`, `SharedUI` |
+| `VetFinder` | Location services, nearby vet search, maps, and directions | `Shared`, `SharedUI` |
+| `Settings` | Preferences, notification settings, donations, and privacy screens | `Shared`, `SharedUI`, `Reminders` |
+| `Intro` | Onboarding UI and a completion callback | `Shared`, `SharedUI` |
+| `PreviewSupport` | Repeatable sample data and in-memory preview containers without CloudKit | `Shared`, `SharedUI` |
+| `ModuleTests` | Public API and resource consumer tests; no production library | All libraries above |
+
+`Pets` and `Settings` also declare `PreviewSupport` for previews; its imports must stay inside `#if DEBUG`. Package unit tests live in `Tests/<ModuleName>Tests` where present, and `ModuleTests/Tests/ModuleAPITests` exercises public APIs without `@testable` imports.
+
+The app connects these modules in `PetReminderApp` and `HomeManager`:
+
+- `PetReminderApp` creates the production model container and notification, calendar, location, and pet-care services, injects them into the view tree, and switches from onboarding to the home tabs.
+- `HomeManager` composes the Pets, Events, Settings, and VetFinder screens. The app supplies Settings' pet-management destination as a closure, keeping Settings independent of Pets.
+- `AppNavigationCoordinator` handles incoming URLs and pet routes, including requests received before onboarding completes. App Intents, App Shortcuts, and Spotlight remain in the app target and use `PetCare` for feeding operations.
+
+Feature packages depend on shared libraries and services rather than importing other features or the app. Persisted models and migration definitions remain in `Shared`; production store and CloudKit configuration remain app-owned. Shared strings and assets are accessed through `SharedStrings` and `SharedResources`.
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed ownership and integration contracts.
 
 ## Getting started
 
@@ -66,19 +94,59 @@ Before release, validate Siri on a signed compatible device and test upgrading t
 
 ## Repository layout
 
-| Path | Contents |
-| --- | --- |
-| `Pet Reminder/Features/` | App-owned App Intents and Spotlight |
-| `Pet Reminder/HomeTabs/` | Tab navigation and deep-link handling |
-| `Pet Reminder/Utilities/` | App entry point, persistence helpers, configuration, and app resources |
-| `Pet Reminder/Packages/` | Separate local packages for features, services, shared models/UI, previews, and public API tests |
-| `Pet ReminderTests/` | Hosted tests for migrations, reminder editing, navigation, App Intents, and Spotlight |
-| `AppStore/` | Store descriptions, release notes, screenshots, and promotional assets |
-| `ci_scripts/` | Xcode Cloud lifecycle scripts |
+```text
+Pet Reminder/
+├── Features/AppIntents/     # Entities, intents, shortcuts, and Spotlight indexing
+├── HomeTabs/               # Tab composition and navigation coordination
+├── Utilities/              # App entry point, persistence configuration, and app resources
+├── AppIcon.icon/           # Icon Composer app icon
+├── Preview Content/        # App preview assets
+└── Packages/
+    ├── Shared/
+    ├── SharedUI/
+    ├── PetCare/
+    ├── Reminders/
+    ├── Pets/
+    ├── Events/
+    ├── VetFinder/
+    ├── Settings/
+    ├── Intro/
+    ├── PreviewSupport/
+    └── ModuleTests/
+Pet Reminder.xcodeproj/     # Xcode project and workspace
+Pet Reminder.xctestplan     # Shared app-hosted test plan
+Pet ReminderTests/          # App integration tests and migration fixtures
+AppStore/                  # Store descriptions, release notes, screenshots, and promotional assets
+ci_scripts/                # Repository checks and Xcode Cloud lifecycle scripts
+ARCHITECTURE.md             # Module boundaries and integration contracts
+TESTING.md                 # Simulator/device test commands and test-plan maintenance
+```
+
+Each library package contains `Package.swift` and `Sources/<ModuleName>/`, plus `Tests/<ModuleName>Tests/` where it has unit tests. `ModuleTests` contains only its manifest and public API tests.
 
 ## Testing and contributing
 
-Run the shared **Pet Reminder** scheme in Xcode with **⌘U** on a compatible simulator. Its checked-in test plan includes package unit tests, public API/resource checks, and app integration tests. Open an individual package’s `Package.swift` to test it independently. Run `python3 ci_scripts/check_modules.py` to verify dependency and source-ownership rules; Xcode Cloud runs this check before builds.
+Select the **Pet Reminder** scheme and **Pet Reminder** test plan in Xcode, choose a compatible simulator or signed device, and run **⌘U**. The checked-in plan selects one app-hosted target, `Pet ReminderTests`, which includes package unit tests and public API/resource checks alongside integration tests for data integrity and migrations, reminder editing, navigation, App Intents, and Spotlight.
+
+For focused simulator testing, open an individual package's `Package.swift` in Xcode and run its test target where available. [TESTING.md](TESTING.md) describes the full-suite app-hosted setup and command-line simulator/device examples. After changing test membership, verify in Xcode that the intended package suites are included in the run.
+
+Repository checks:
+
+```sh
+# Validate package dependencies, imports, source ownership, and debug-only previews.
+python3 ci_scripts/check_modules.py
+
+# Verify the main test plan includes all package test sources without exclusions.
+python3 ci_scripts/check_test_plan.py
+
+# Run regression tests for the module-boundary and test-plan checkers.
+python3 -m unittest discover -s ci_scripts -p 'test_*.py'
+
+# Check localization completeness and format arguments.
+python3 ci_scripts/check_localizations.py
+```
+
+Xcode Cloud invokes the module checker, test-plan checker, and checker regression tests before builds. The test-plan checker reads target membership directly from `Pet Reminder.xcodeproj/project.xcproj`, including folder exclusions.
 
 Bug reports and pull requests are welcome. Include steps to reproduce a bug and describe how you validated a change. Follow the [Code of Conduct](CODE_OF_CONDUCT.md), and use the [Security Policy](SECURITY.md) to report vulnerabilities.
 
