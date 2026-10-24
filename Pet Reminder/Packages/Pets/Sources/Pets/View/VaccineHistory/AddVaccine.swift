@@ -29,6 +29,8 @@ struct AddVaccine: View {
     @Binding var vaccineName: String
     /// The date selected for the new vaccine (defaults to now).
     @State private var vaccineDate = Date.now
+    @State private var initialDate = Date.now
+    @State private var showDiscard = false
     @State private var showSaveError = false
     @Environment(\.modelContext) private var modelContext
 
@@ -39,27 +41,40 @@ struct AddVaccine: View {
     /// The main UI with fields for vaccine name, date, and a button to save the record.
     var body: some View {
         NavigationStack {
-            VStack(spacing: .spacing16) {
+            Form {
                 TextField(SharedStrings.vaccineTitleLabel, text: $vaccineName)
-                    .textFieldStyle(.outlined)
                     .bold()
                 DatePicker(SharedStrings.vaccineDateLabel, selection: $vaccineDate)
                     .bold()
             }
+            .scrollContentBackground(.hidden)
+            .containerBackground(Color.groupedBackground, for: .navigation)
+            .toolbarBackground(Color.groupedBackground, for: .navigationBar)
             .navigationTitle(Text(SharedStrings.addVaccine))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(SharedStrings.cancelTitle, role: .cancel) {
+                        if !vaccineName.isEmpty || vaccineDate != initialDate { showDiscard = true } else { dismiss() }
+                    }
+                    .keyboardShortcut(.cancelAction)
+                }
                 ToolbarItem(placement: .primaryAction) {
                     Button(role: .confirm, action: saveVaccine) {
                         Text(SharedStrings.save)
                     }
+                    .keyboardShortcut(.return, modifiers: .command)
                     .tint(.accent)
                     .disabled(isVaccineEmpty)
                 }
             }
         }
 
-        .padding()
+        .onAppear { initialDate = vaccineDate }
+        .interactiveDismissDisabled(!vaccineName.isEmpty || vaccineDate != initialDate)
+        .confirmDiscardChanges(isPresented: $showDiscard, discard: dismiss.callAsFunction)
+        .background(Color.groupedBackground.ignoresSafeArea())
+        .presentationBackground(Color.groupedBackground)
         .alert(SharedStrings.saveFailed, isPresented: $showSaveError) { }
     }
 

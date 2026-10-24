@@ -5,7 +5,7 @@ struct EventFilterMenu: ToolbarContent {
     @Environment(EventManager.self) private var manager
 
     var body: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .bottomBar) {
             Menu {
                 Picker(selection: Binding<String?>(
                     get: { manager.selectedCalendar?.id },
@@ -19,11 +19,24 @@ struct EventFilterMenu: ToolbarContent {
                 }
                 .pickerStyle(.inline)
             } label: {
-                Text(manager.selectedCalendar?.title ?? String(localized: SharedStrings.resource("All Calendars")))
-                    .lineLimit(1)
+                HStack {
+                    Image(systemName: "calendar")
+                    Text(selectedCalendarTitle)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.caption)
+                        .accessibilityHidden(true)
+                }
             }
             .menuOrder(.fixed)
+            .accessibilityLabel(Text(SharedStrings.resource("Calendar")))
+            .accessibilityValue(selectedCalendarTitle)
         }
+    }
+
+    private var selectedCalendarTitle: String {
+        manager.selectedCalendar?.title ?? String(localized: SharedStrings.resource("All Calendars"))
     }
 
     private func option(_ calendar: EventCalendar) -> some View {

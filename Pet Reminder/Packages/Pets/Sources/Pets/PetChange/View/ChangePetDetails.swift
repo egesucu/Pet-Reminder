@@ -32,6 +32,7 @@ struct ChangePetDetails: View {
         self._manager = State(initialValue: PetDataManager(notificationManager: notificationManager))
     }
 
+    @State private var showDiscard = false
     @State private var showError = false
     @State private var isLoading = true
     @State private var isSaving = false
@@ -72,6 +73,7 @@ struct ChangePetDetails: View {
                 showManagerErrorAlert = manager.lastErrorMessage != nil
             }
         }
+        .confirmDiscardChanges(isPresented: $showDiscard, discard: cancel)
     }
 
     @ContentBuilder
@@ -102,6 +104,11 @@ struct ChangePetDetails: View {
             }
         }
         .padding(.bottom, .spacing8)
+        .petPhotoDrop(data: $manager.petImageData)
+        .onChange(of: manager.petImageData) {
+            if manager.petImageData != nil { manager.defaultSelected = false }
+            manager.loadImage()
+        }
     }
 
     func preview(for image: UIImage) -> some View {
@@ -116,6 +123,7 @@ struct ChangePetDetails: View {
                 Text(SharedStrings.resource("Delete Photo"))
             }
             .buttonStyle(.glass)
+            .keyboardShortcut(.cancelAction)
             .tint(.red)
         }
     }
@@ -240,12 +248,15 @@ struct ChangePetDetails: View {
             } label: {
                 Label(SharedStrings.save, systemImage: "checkmark")
             }
+            .keyboardShortcut(.return, modifiers: .command)
+            .disabled(!nameCanBeSaved() || isLoading || isSaving)
             .tint(.accent)
         }
         ToolbarItem(placement: .cancellationAction) {
-            Button(action: cancel) {
+            Button(action: requestDismiss) {
                 Label(SharedStrings.cancelTitle, systemImage: "xmark")
             }
+            .keyboardShortcut(.cancelAction)
             .tint(.red)
         }
     }
@@ -378,6 +389,14 @@ struct ChangePetDetails: View {
         pet.kind = manager.kind
         pet.birthday = manager.birthday
         pet.feedSelection = manager.selection
+    }
+
+    private func requestDismiss() {
+        guard !isLoading && !isSaving else { return }
+        let changed = manager.name != pet.name || manager.breed != (pet.breed ?? "")
+            || manager.birthday != pet.birthday || manager.kind != pet.kind
+            || manager.petImageData != pet.image || manager.scheduleChanged
+        if changed { showDiscard = true } else { cancel() }
     }
 
     private func cancel() {
