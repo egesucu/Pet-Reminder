@@ -48,7 +48,7 @@ private extension Notifications {
     func noPets() -> some View {
         if pets.isEmpty {
             ContentUnavailableView(
-                "pet_no_pet",
+                SharedStrings.petNoPet,
                 systemImage: "pawprint.circle"
             )
         }

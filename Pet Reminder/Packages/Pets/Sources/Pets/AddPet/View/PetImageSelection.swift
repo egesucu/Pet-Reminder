@@ -39,6 +39,7 @@ struct PetImageSelection: View {
                     .textFieldStyle(.outlined)
 
                 petImage
+                    .petPhotoDrop(data: $model.selectedImageData)
 
                 PhotoImagePicker(
                     desiredTitle: SharedStrings.add,

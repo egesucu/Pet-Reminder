@@ -69,6 +69,21 @@ The current app and app test targets require **iOS 27.0 or later**. All local pa
 
 Enable notifications to receive feeding and birthday reminders, calendar access to manage events, and location access to use the nearby vet finder.
 
+## iPad input and windows
+
+Pet rows offer context actions for editing, feeding history, vaccine history, and opening a pet in another window where supported. The Pets sidebar searches name and breed, ignoring case and accents. Add/Edit Pet avatars accept image drops; dropped and picked photos are processed in the background into copies up to 2048 pixels on the longest edge, without a fixed input file-size limit. Ordinary photos use JPEG; images with transparency retain PNG. Smaller images are not enlarged. The photo picker remains available on iPhone and iPad.
+
+| Shortcut | Action |
+| --- | --- |
+| Command–N | Add a pet in Pets, or an event in Events |
+| Command–F | Focus pet search |
+| Command–1 / 2 / 3 / 4 | Pets / Events / Settings / Nearby |
+| Command–Return | Save the active supported editor when valid |
+| Escape | Cancel editing, confirming before discarding changed fields |
+| Command–Shift–N | Open a new app window on supported platforms |
+
+Each window keeps its own navigation, pet selection, calendar filter, event selection, and Settings destination. Lightweight scene restoration preserves navigation; editor drafts remain in memory during resizing and are not persisted across termination. App Intents target the key window, and saved care data is shared between windows.
+
 ## App Intents
 
 In Shortcuts, search for **Pet Reminder** to find these actions:

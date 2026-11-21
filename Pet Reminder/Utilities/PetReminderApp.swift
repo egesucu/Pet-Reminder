@@ -23,10 +23,7 @@ import CoreData
 
 @main
 struct PetReminderApp: App {
-    @AppStorage(Strings.helloSeen) var helloSeen = false
     @State private var notificationManager = NotificationManager()
-    @State private var eventManager = EventManager()
-    @State private var vetService = VetServiceImplementation()
     @State private var navigation: AppNavigationCoordinator
     @State private var careService: PetCareService
     @Environment(\.scenePhase) private var scenePhase
@@ -61,15 +58,15 @@ struct PetReminderApp: App {
     }
 
     var body: some Scene {
-        WindowGroup {
-            Group {
-                if helloSeen || isCapturingScreenshots {
-                    HomeManager()
-                } else {
-                    IntroView { helloSeen = true }
+        WindowGroup("Pet Reminder", id: "main", for: PetWindowState.self) { $windowState in
+            PetReminderWindow(petID: Binding(
+                get: { windowState?.petID },
+                set: { id in
+                    if windowState == nil { windowState = PetWindowState(petID: id) }
+                    else { windowState?.petID = id }
                 }
-            }
-            .onOpenURL { navigation.handle($0) }
+            ), intentInbox: navigation,
+                              isCapturingScreenshots: isCapturingScreenshots)
             .task {
                 if !isCapturingScreenshots {
                     spotlight.scheduleRefresh()
@@ -96,11 +93,9 @@ struct PetReminderApp: App {
             }
         }
         .notification(notificationManager)
-        .environment(eventManager)
-        .environment(vetService)
-        .environment(navigation)
         .environment(careService)
         .modelContainer(container)
+        .commands { PetWindowCommands() }
     }
 
     private var isCapturingScreenshots: Bool {

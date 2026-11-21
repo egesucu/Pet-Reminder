@@ -1,5 +1,6 @@
 import EventKit
 import Shared
+import SharedUI
 import SwiftUI
 
 /// A lightweight summary of the event already loaded by the agenda.
@@ -82,7 +83,7 @@ struct EventDetail: View {
             .padding(24)
             .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        .background(Color(uiColor: .systemBackground))
+        .background(Color.groupedBackground)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if event.calendar.allowsContentModifications, manager.eventStore is EKEventStore {

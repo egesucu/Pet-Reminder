@@ -17,7 +17,7 @@ Each production module is a separate local Swift package under `Pet Reminder/Pac
 
 Pets and Settings also declare PreviewSupport for debug previews; imports must be inside `#if DEBUG`. The ModuleTests package contains public API consumer tests and has no production product.
 
-The app target owns startup, onboarding completion state, tabs, URL parsing, navigation coordination, production persistence configuration, App Intents registration, App Shortcuts updates, and Spotlight. Feature packages cannot import one another, the app, AppIntents, or CoreSpotlight. The app composes Settings' pet-management destination with a closure that returns the Pets screen. Production notification, calendar and location services are created at startup and injected into the feature tree.
+The app target owns startup, onboarding completion state, tabs, URL parsing, navigation coordination, production persistence configuration, App Intents registration, App Shortcuts updates, and Spotlight. Feature packages cannot import one another, the app, AppIntents, or CoreSpotlight. The app composes Settings' pet-management destination with a closure that returns the Pets screen. The app shares the notification service, persistence container, and PetCare service. Each PetReminderWindow owns its navigation coordinator, calendar manager, and location service. The app-owned navigation dependency is an App Intent inbox that forwards to the key window and retains requests until a window connects.
 
 ## Boundary contracts
 

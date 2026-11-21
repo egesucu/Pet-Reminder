@@ -18,15 +18,9 @@ import PreviewSupport
 
 struct PetDetail: View {
 
-    private enum HistoryDestination: Hashable, Identifiable {
-        case feedHistory
-        case vaccines
-
-        var id: Self { self }
-    }
-
     let pet: Pet
-    @State private var historyDestination: HistoryDestination?
+    var historyRequest: PetHistoryRequest? = nil
+    @State private var historyDestination: PetHistoryDestination?
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
@@ -62,6 +56,9 @@ struct PetDetail: View {
             .padding(.bottom, .spacing32)
         }
         .scrollIndicators(.hidden)
+        .onChange(of: historyRequest, initial: true) { _, request in
+            if let request, request.petID == pet.intentID { historyDestination = request.destination }
+        }
         .navigationTitle(Text(SharedStrings.resource("pet_name_title \(pet.name)")))
         .onChange(of: careService.revision, initial: true) { _, _ in refreshCare() }
         .onChange(of: scenePhase) { _, phase in
@@ -297,3 +294,14 @@ private extension CGFloat {
     }
 }
 #endif
+
+enum PetHistoryDestination: Hashable, Identifiable {
+    case feedHistory, vaccines
+    var id: Self { self }
+}
+
+struct PetHistoryRequest: Equatable {
+    let destination: PetHistoryDestination
+    let petID: UUID?
+    let token = UUID()
+}
