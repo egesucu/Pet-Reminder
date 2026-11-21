@@ -19,6 +19,18 @@ struct Events: View {
     var body: some View {
         if manager.status == .authorized {
             List(selection: $selectedEvent) {
+                if !manager.todaysEvents.isEmpty || !manager.futureEvents.isEmpty {
+                    TodaysEvents()
+                    FutureEvents()
+                    Section {
+                        Text(SharedStrings.resource("Showing events from today through the next month."))
+                            .font(.footnote).foregroundStyle(.secondary)
+                            .listRowBackground(Color.clear)
+                    }
+                }
+            }
+            .refreshable(action: reloadEvents)
+            .overlay {
                 if manager.todaysEvents.isEmpty && manager.futureEvents.isEmpty {
                     ContentUnavailableView {
                         Label(SharedStrings.resource("No upcoming events"), systemImage: "calendar")
@@ -28,20 +40,8 @@ struct Events: View {
                         Button(action: addEvent) { Text(SharedStrings.addEventAccessibleTitle) }
                             .buttonStyle(.borderedProminent)
                     }
-                    .listRowBackground(Color.clear)
-                } else {
-                    TodaysEvents()
-                    FutureEvents()
-                }
-                if !manager.todaysEvents.isEmpty || !manager.futureEvents.isEmpty {
-                    Section {
-                        Text(SharedStrings.resource("Showing events from today through the next month."))
-                            .font(.footnote).foregroundStyle(.secondary)
-                            .listRowBackground(Color.clear)
-                    }
                 }
             }
-            .refreshable(action: reloadEvents)
         }
     }
 }

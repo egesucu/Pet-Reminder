@@ -4,6 +4,9 @@ import Observation
 @MainActor
 @Observable
 final class EventCreationState {
+    private let initialStart: Date
+    private let initialEnd: Date
+    var hasChanges: Bool { !name.isEmpty || allDay || start != initialStart || end != initialEnd }
     var name = ""
     var allDay = false
     var start: Date
@@ -13,8 +16,10 @@ final class EventCreationState {
     var showError = false
 
     init(now: Date = .now) {
-        start = now.addingTimeInterval(3600)
-        end = now.addingTimeInterval(7200)
+        initialStart = now.addingTimeInterval(3600)
+        initialEnd = now.addingTimeInterval(7200)
+        start = initialStart
+        end = initialEnd
     }
 
     var canSave: Bool {

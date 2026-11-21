@@ -28,14 +28,23 @@ struct HomeManager: View {
     @Environment(NotificationManager.self) private var notificationManager
     @Environment(AppNavigationCoordinator.self) private var navigation
 
-    init() {}
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.supportsMultipleWindows) private var supportsMultipleWindows
+
+    @Binding private var windowPetID: UUID?
+
+    init(windowPetID: Binding<UUID?> = .constant(nil)) {
+        self._windowPetID = windowPetID
+    }
 
     var body: some View {
         @Bindable var navigation = navigation
         TabView(selection: $navigation.selectedTab) {
             // HOME TAB
             Tab(value: PetReminderTabs.home) {
-                PetList(request: navigation.pendingRequest, onRequestHandled: navigation.consume)
+                PetList(request: navigation.pendingRequest, onRequestHandled: navigation.consume,
+                        openPetWindow: supportsMultipleWindows ? { id in openWindow(id: "main", value: PetWindowState(petID: id)) } : nil,
+                        onSelectionChanged: { windowPetID = $0 })
             } label: {
                 Label(SharedStrings.homeTabTitle, systemImage: "pawprint")
             }
@@ -64,6 +73,7 @@ struct HomeManager: View {
             }
         }
         .defaultTabBarPlacement(.tabBar)
+        .background(Color.groupedBackground.ignoresSafeArea())
         .tint(.accent)
         .onChange(of: pets.map { "\($0.intentID?.uuidString ?? ""):\($0.name)" }, initial: true) { _, _ in
             PetAppShortcuts.updateAppShortcutParameters()

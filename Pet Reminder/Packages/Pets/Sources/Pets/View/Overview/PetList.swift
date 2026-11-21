@@ -22,15 +22,23 @@ public struct PetList: View {
 
     @Environment(\.modelContext) private var modelContext
     private let request: PetRouteRequest?
+    private let onSelectionChanged: (UUID?) -> Void
+    private let openPetWindow: ((UUID) -> Void)?
     private let onRequestHandled: (PetRouteRequest) -> Void
 
-    public init(request: PetRouteRequest? = nil, onRequestHandled: @escaping (PetRouteRequest) -> Void = { _ in }) {
+    public init(request: PetRouteRequest? = nil, onRequestHandled: @escaping (PetRouteRequest) -> Void = { _ in }, openPetWindow: ((UUID) -> Void)? = nil, onSelectionChanged: @escaping (UUID?) -> Void = { _ in }) {
+        self.onSelectionChanged = onSelectionChanged
+        self.openPetWindow = openPetWindow
         self.request = request
         self.onRequestHandled = onRequestHandled
     }
 
     @Query(sort: [.init(\Pet.name)]) var pets: [Pet]
 
+    @SceneStorage("pets.selectedID") private var storedPetID = ""
+    @SceneStorage("pets.search") private var searchText = ""
+    @State private var isSearching = false
+    @State private var historyRequest: PetHistoryRequest?
     @State private var addPet = false
     @State private var selectedPet: Pet?
     @State private var managedPet: Pet = .init()
@@ -41,29 +49,53 @@ public struct PetList: View {
     public var body: some View {
         NavigationSplitView {
             list
+                .searchable(text: $searchText, isPresented: $isSearching,
+                            prompt: Text(SharedStrings.resource("Search pets")))
+                .scrollContentBackground(.hidden)
+                .background(Color.groupedBackground)
+                .containerBackground(Color.groupedBackground, for: .navigation)
+                .toolbarBackground(Color.groupedBackground, for: .navigationBar)
                 .navigationTitle(Text(SharedStrings.petNameTitle))
                 .toolbar(content: topActions)
+                .navigationSplitViewColumnWidth(min: 320, ideal: 380, max: 460)
         } detail: {
             NavigationStack {
-                if let selectedPet {
-                    PetDetail(pet: selectedPet)
-                        .id(selectedPet.persistentModelID)
-                } else {
-                    ContentUnavailableView(
-                        SharedStrings.resource("Select a pet"),
-                        systemImage: "pawprint.circle",
-                        description: Text(SharedStrings.resource("Choose a pet to see today's care and history."))
-                    )
+                Group {
+                    if let selectedPet {
+                        PetDetail(pet: selectedPet, historyRequest: historyRequest)
+                            .id(selectedPet.persistentModelID)
+                    } else {
+                        ContentUnavailableView(
+                            SharedStrings.resource("Select a pet"),
+                            systemImage: "pawprint.circle",
+                            description: Text(SharedStrings.resource("Choose a pet to see today's care and history."))
+                        )
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.groupedBackground)
+                .containerBackground(Color.groupedBackground, for: .navigation)
+                .toolbarBackground(Color.groupedBackground, for: .navigationBar)
             }
         }
             .navigationSplitViewStyle(.balanced)
+            .containerBackground(Color.groupedBackground, for: .navigationSplitView)
+            .background(Color.groupedBackground.ignoresSafeArea())
+            .toolbarBackground(Color.groupedBackground, for: .tabBar)
             .task(setupInitials)
             .onChange(of: request, initial: true) { _, _ in
                 consumePendingPet()
             }
             .onChange(of: pets.map { "\($0.intentID?.uuidString ?? ""):\($0.name)" }) { _, _ in
+                if let selectedPet, !pets.contains(where: { $0.persistentModelID == selectedPet.persistentModelID }) {
+                    self.selectedPet = nil
+                }
                 consumePendingPet()
+            }
+            .onChange(of: selectedPet?.intentID) { _, id in
+                storedPetID = id?.uuidString ?? ""
+                onSelectionChanged(id)
+                if historyRequest?.petID != id { historyRequest = nil }
             }
             .sheet(isPresented: $addPet, onDismiss: handleDismissAction, content: addPetView)
             .sheet(isPresented: $showManagePet, onDismiss: dismissManagePet, content: managePetView)
@@ -74,12 +106,37 @@ public struct PetList: View {
         if pets.isEmpty {
             noPetAdded
         } else {
-            List(pets, selection: $selectedPet) { pet in
+            List(filteredPets, selection: $selectedPet) { pet in
                 NavigationLink(value: pet) {
                     cell(for: pet)
                 }
+                .contextMenu {
+                    Button(SharedStrings.edit, systemImage: "pencil") { openManagePet(for: pet) }
+                    Button(SharedStrings.feedHistoryTitle, systemImage: "fork.knife") { openHistory(.feedHistory, for: pet) }
+                    Button(SharedStrings.vaccineHistoryTitle, systemImage: "syringe") { openHistory(.vaccines, for: pet) }
+                    if let openPetWindow, let id = pet.intentID {
+                        Button(SharedStrings.resource("Open in New Window"), systemImage: "rectangle.on.rectangle") {
+                            openPetWindow(id)
+                        }
+                    }
+                }
+            }
+            .overlay {
+                if filteredPets.isEmpty {
+                    ContentUnavailableView.search(text: searchText)
+                }
             }
         }
+    }
+
+    private var filteredPets: [Pet] {
+        pets.filter { PetSearch.matches(name: $0.name, breed: $0.breed, query: searchText) }
+    }
+
+    private func openHistory(_ destination: PetHistoryDestination, for pet: Pet) {
+        selectedPet = pet
+        // A fresh token also lets the same menu action reopen a popped history.
+        historyRequest = PetHistoryRequest(destination: destination, petID: pet.intentID)
     }
 
     func cell(for pet: Pet) -> some View {
@@ -176,18 +233,22 @@ public struct PetList: View {
     @ContentBuilder
     func topActions() -> some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            if pets.isNotEmpty {
-                Button {
-                    addPet.toggle()
-                } label: {
-                    Label(SharedStrings.addAnimalAccessibleLabel, systemImage: "plus")
-                        .labelStyle(.iconOnly)
-                        .foregroundStyle(Color.background)
-                }
-                .buttonStyle(.glassProminent)
-                .tint(.accent)
-                .clipShape(.circle)
+            Button {
+                addPet.toggle()
+            } label: {
+                Label(SharedStrings.addAnimalAccessibleLabel, systemImage: "plus")
+                    .labelStyle(.iconOnly)
+                    .foregroundStyle(Color.background)
             }
+            .buttonStyle(.glassProminent)
+            .tint(.accent)
+            .clipShape(.circle)
+            .keyboardShortcut("n")
+            .disabled(addPet || showManagePet)
+        }
+        ToolbarItem(placement: .secondaryAction) {
+            Button(SharedStrings.resource("Search pets"), systemImage: "magnifyingglass") { isSearching = true }
+                .keyboardShortcut("f")
         }
     }
 }
@@ -201,6 +262,7 @@ private extension PetList {
             switch request.destination {
             case .pet(let id):
                 guard let pet = try PetRouteResolver.resolve(id: id, in: modelContext) else { return }
+                searchText = ""
                 selectedPet = pet
             case .namedPet(let name):
                 guard selectPet(named: name) else { return }
@@ -215,6 +277,10 @@ private extension PetList {
 
     func setupInitials() async {
         logDuplicateNamesIfAny()
+        if request == nil, let id = UUID(uuidString: storedPetID) {
+            selectedPet = try? PetRouteResolver.resolve(id: id, in: modelContext)
+            if selectedPet == nil { storedPetID = "" }
+        }
         #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
         if arguments.contains("--store-screenshots"),
@@ -238,6 +304,7 @@ private extension PetList {
 
     func selectPet(named name: String) -> Bool {
         guard let pet = PetRouteResolver.resolve(name: name, among: pets) else { return false }
+        searchText = ""
         selectedPet = pet
         return true
     }
