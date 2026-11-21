@@ -65,7 +65,9 @@ def inspect_catalog(catalog):
 
 def check(root=ROOT):
     errors = []
-    for path in (root / 'Pet Reminder').rglob('*.xcstrings'):
+    catalogs = list((root / 'Pet Reminder').rglob('*.xcstrings'))
+    catalogs += list((root / 'PetReminderWidgets').rglob('*.xcstrings'))
+    for path in catalogs:
         catalog = json.loads(path.read_text())
         errors.extend(f'{path.relative_to(root)}: {error}' for error in inspect_catalog(catalog))
     shared = json.loads((root / 'Pet Reminder/Packages/Shared/Sources/Shared/Localizable.xcstrings').read_text())['strings']

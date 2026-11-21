@@ -97,6 +97,27 @@ public final class PetCareService {
         return try feedingSnapshot(pet, at: now, calendar: calendar)
     }
 
+    public func toggleFed(id: UUID, meal: FeedSelection, expectedFed: Bool? = nil) throws -> FeedingSnapshot {
+        let (context, pets) = try loadPets()
+        guard let pet = pets.first(where: { $0.intentID == id }) else { throw PetCareError.petNotFound }
+        guard meal != .both, pet.feedSelection == .both || pet.feedSelection == meal else {
+            throw PetCareError.unsupportedMeal
+        }
+        let now = clock()
+        let calendar = calendar()
+        // A second tap on the same rendered widget should keep the newly saved state.
+        if let expectedFed, DailyFeeds.isFed(meal, pet: pet, at: now, calendar: calendar) != expectedFed {
+            return try feedingSnapshot(pet, at: now, calendar: calendar)
+        }
+        do {
+            try DailyFeeds.toggle(meal, pet: pet, at: now, calendar: calendar, context: context, save: save)
+        } catch {
+            throw PetCareError.saveFailed
+        }
+        revision &+= 1
+        return try feedingSnapshot(pet, at: now, calendar: calendar)
+    }
+
     private func loadPets() throws -> (ModelContext, [Pet]) {
         let context = ModelContext(container)
         context.autosaveEnabled = false

@@ -22,9 +22,13 @@ public enum DailyFeeds {
         }
     }
 
-    public static func toggle(_ type: FeedSelection, pet: Pet, at date: Date, context: ModelContext) throws {
-        let newValue = !isFed(type, pet: pet, at: date)
-        var feeds = records(for: pet, at: date)
+    public static func toggle(
+        _ type: FeedSelection, pet: Pet, at date: Date,
+        calendar: Calendar = .current, context: ModelContext,
+        save: (ModelContext) throws -> Void = { try $0.save() }
+    ) throws {
+        let newValue = !isFed(type, pet: pet, at: date, calendar: calendar)
+        var feeds = records(for: pet, at: date, calendar: calendar)
         if feeds.isEmpty {
             let feed = Feed(feedDate: date)
             pet.addFeed(feed)
@@ -41,7 +45,7 @@ public enum DailyFeeds {
             }
         }
         do {
-            try context.save()
+            try save(context)
         } catch {
             context.rollback()
             throw error
