@@ -14,7 +14,9 @@ import SharedUI
 @MainActor
 class DataController {
     static func productionContainer() throws -> ModelContainer {
-        try ModelContainer(for: Pet.self, migrationPlan: PetMigrationPlan.self)
+        // Adding widget App Groups must not redirect the existing SwiftData store.
+        let configuration = ModelConfiguration(groupContainer: .none)
+        return try ModelContainer(for: Pet.self, migrationPlan: PetMigrationPlan.self, configurations: configuration)
     }
     #if DEBUG
     /// Isolated sample data for real simulator captures; never touches the user's store.

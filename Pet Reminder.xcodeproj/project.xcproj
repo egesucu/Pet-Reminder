@@ -69,7 +69,22 @@
       ],
     },
     { "kind": "folder", "path": "Pet ReminderTests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "WidgetSupport", "target-membership": [ "Pet Reminder", "PetReminderWidgets" ] },
     {
+      "kind": "folder",
+      "path": "PetReminderWidgets",
+      "target-membership": [
+        "PetReminderWidgets",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "PetReminderWidgets",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Frameworks",
       "children": [
@@ -82,8 +97,16 @@
       "children": [
         { "path": "<PRODUCTS>/Pet Reminder.app", "id": "9D8E76EE248666BD004610C8", "type": "wrapper.application", "index": false },
         { "path": "<PRODUCTS>/Pet ReminderTests.xctest", "id": "72C446442C9B6BBC003B1DE7", "type": "wrapper.cfbundle", "index": false },
+        { "path": "<PRODUCTS>/PetReminderWidgets.appex", "id": "35D7D2C861F2D7E18A75C54E", "type": "wrapper.app-extension", "index": false, "target-membership": [ "Pet Reminder/copy/Embed Widgets" ] },
       ],
     },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Events/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/ModuleTests/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/PetCare/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Pets/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Reminders/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Shared/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/VetFinder/Tests", "target-membership": [ "Pet ReminderTests" ] },
   ],
   "targets": [
     {
@@ -91,10 +114,18 @@
       "id": "9D8E76ED248666BD004610C8",
       "product": "Products/Pet Reminder.app",
       "product-type": "application",
+      "dependencies": [
+        "PetReminderWidgets",
+      ],
       "build-phases": [
         "compile-sources",
         "frameworks",
         "resources",
+        {
+          "kind": "copy",
+          "name": "Embed Widgets",
+          "bundle-base-path": "plugins-directory",
+        },
       ],
       "package-product-members": [
         {
@@ -157,7 +188,7 @@
           "$(inherited)",
           "@executable_path/Frameworks",
         ],
-        "MARKETING_VERSION": "27.2.1",
+        "MARKETING_VERSION": "27.3",
         "PRODUCT_BUNDLE_IDENTIFIER": "com.egesucu.Pet-Reminder",
         "PRODUCT_NAME": "$(TARGET_NAME)",
         "PROVISIONING_PROFILE_SPECIFIER": "",
@@ -259,6 +290,39 @@
         "SWIFT_VERSION": "6.0",
         "TARGETED_DEVICE_FAMILY": "1,2",
         "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/Pet Reminder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pet Reminder",
+      },
+    }, {
+      "name": "PetReminderWidgets",
+      "id": "BC5C984E39B248248A249301",
+      "product": "Products/PetReminderWidgets.appex",
+      "product-type": "app-extension",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "build-settings": {
+        "APPLICATION_EXTENSION_API_ONLY": "YES",
+        "CODE_SIGN_ENTITLEMENTS": "PetReminderWidgets/PetReminderWidgets.entitlements",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "PetReminderWidgets/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName": "Pet Reminder",
+        "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+          "@executable_path/../../Frameworks",
+        ],
+        "MARKETING_VERSION": "27.3",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.egesucu.Pet-Reminder.Widgets",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SKIP_INSTALL": "YES",
+        "SUPPORTED_PLATFORMS": "iphoneos iphonesimulator",
+        "SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated",
+        "SWIFT_VERSION": "6.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
       },
     },
   ],
