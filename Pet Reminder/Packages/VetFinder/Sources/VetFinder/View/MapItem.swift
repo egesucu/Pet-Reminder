@@ -9,45 +9,58 @@ import SwiftUI
 import MapKit
 import Shared
 import SharedUI
-import Contacts
 
 struct MapItem: View {
 
     @State private var presentApps = false
 
     let location: Pin
+    var isSelected = false
+    var showsCardStyle = false
 
     var body: some View {
-        VStack(spacing: .spacing16) {
-            HStack(spacing: .zero) {
-                Spacer()
-
+        VStack(alignment: .leading, spacing: .spacing8) {
+            HStack(alignment: .firstTextBaseline) {
                 Text(location.name)
-                    .bold()
-                    .font(.title3)
+                    .font(.headline)
+                    .accessibilityAddTraits(isSelected ? [.isHeader, .isSelected] : .isHeader)
 
-                Spacer()
+                if isSelected {
+                    Spacer()
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.accent)
+                        .accessibilityHidden(true)
+                }
             }
+
+            Button(action: openMapDetail) {
+                Label {
+                    if let fullAddress = location.fullAdress {
+                        Text(fullAddress)
+                            .font(showsCardStyle ? .subheadline : .body)
+                            .foregroundStyle(showsCardStyle ? Color(uiColor: .secondaryLabel) : Color.accentColor)
+                    } else {
+                        Text(SharedStrings.findVetOpen)
+                    }
+                } icon: {
+                    Image(systemName: "location")
+                }
+                .multilineTextAlignment(.leading)
+            }
+            .buttonStyle(.borderless)
 
             if let phoneNumber = location.phoneNumber {
-                Button(phoneNumber) {
+                Button {
                     callThePlace(with: phoneNumber)
+                } label: {
+                    Label(phoneNumber, systemImage: "phone")
+                        .font(showsCardStyle ? .subheadline : .body)
                 }
-                .buttonStyle(.plain)
-                .foregroundStyle(.accent)
-                .multilineTextAlignment(.center)
-            }
-
-            if let fullAdress = location.fullAdress {
-                Button(action: openMapDetail) {
-                    Text(fullAdress)
-                        .multilineTextAlignment(.center)
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(.blue)
+                .buttonStyle(.borderless)
             }
         }
-        .padding(.spacing8)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, .spacing8)
         .alert(SharedStrings.findVetOpen, isPresented: $presentApps) {
             ForEach(MapApplication.allCases, id: \.self) { app in
                 Button(app.name) {
@@ -129,15 +142,8 @@ let address = MKAddress(
     item.name = "Basilica Cistern"
     item.phoneNumber = "+90 212 512 15 70"
 
-    return Color
-        .gray
-        .ignoresSafeArea()
-        .sheet(isPresented: .constant(true)) {
-            MapItem(
-                location: Pin(item: item)
-            )
-            .presentationDetents([.fraction(0.3)])
-            .presentationDragIndicator(.visible)
-        }
+    return List {
+        MapItem(location: Pin(item: item), isSelected: true)
+    }
 }
 #endif
