@@ -60,9 +60,18 @@ public final class VetServiceImplementation: VetService {
 
     public func searchLocations(with searchTerm: String, near userLocation: MapCameraPosition) async -> [Pin] {
         let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = searchTerm
+        searchRequest.naturalLanguageQuery = searchTerm.caseInsensitiveCompare("vet") == .orderedSame
+            ? "Veterinarian"
+            : searchTerm
+        searchRequest.resultTypes = .pointOfInterest
         if let region = userLocation.region {
             searchRequest.region = region
+        } else if let location = locationManager.location {
+            searchRequest.region = MKCoordinateRegion(
+                center: location.coordinate,
+                latitudinalMeters: 20_000,
+                longitudinalMeters: 20_000
+            )
         }
 
         let localSearch = MKLocalSearch(request: searchRequest)
