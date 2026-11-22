@@ -84,6 +84,13 @@
         { "path": "<PRODUCTS>/Pet ReminderTests.xctest", "id": "72C446442C9B6BBC003B1DE7", "type": "wrapper.cfbundle", "index": false },
       ],
     },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Events/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/ModuleTests/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/PetCare/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Pets/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Reminders/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/Shared/Tests", "target-membership": [ "Pet ReminderTests" ] },
+    { "kind": "folder", "path": "Pet Reminder/Packages/VetFinder/Tests", "target-membership": [ "Pet ReminderTests" ] },
   ],
   "targets": [
     {
