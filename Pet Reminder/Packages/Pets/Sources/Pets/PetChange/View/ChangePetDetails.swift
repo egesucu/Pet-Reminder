@@ -47,8 +47,8 @@ struct ChangePetDetails: View {
                     ProgressView()
                         .frame(width: .avatar200, height: .avatar200)
                         .tint(.accent)
-                case .loaded(let pet):
-                    petDetailView(pet)
+                case .loaded:
+                    petDetailView()
                 case .failed:
                     EmptyView()
                 }
@@ -77,19 +77,23 @@ struct ChangePetDetails: View {
         .confirmDiscardChanges(isPresented: $showDiscard, discard: cancel)
     }
 
-    @ContentBuilder
-    func petImageView(_ pet: Pet) -> some View {
+    func petImageView() -> some View {
         HStack {
-            if let photo = manager.petImage {
-                preview(for: photo)
-                    .frame(width: .avatar150, height: .avatar150)
-                    .padding(.horizontal)
+            if let photo = manager.petImageData {
+                VStack(spacing: .spacing16) {
+                    PetPortrait(imageData: photo, kind: manager.kind, style: .photoPreview)
+
+                    Button(role: .destructive, action: manager.removePhoto) {
+                        Text(SharedStrings.resource("Delete Photo"))
+                    }
+                    .buttonStyle(.glass)
+                    .keyboardShortcut(.cancelAction)
+                    .tint(.red)
+                }
+                .frame(width: .avatar150, height: .avatar150)
+                .padding(.horizontal)
             } else {
-                pet
-                    .kind
-                    .image
-                    .frame(width: .avatar150, height: .avatar150)
-                    .clipShape(.circle)
+                PetPortrait(imageData: nil, kind: manager.kind, style: .circularPlaceholder(size: .avatar150))
                     .padding(.horizontal)
             }
             if !manager.defaultSelected {
@@ -99,50 +103,29 @@ struct ChangePetDetails: View {
                     desiredIcon: "photo.fill"
                 )
                 .padding(.vertical)
-                .onChange(of: manager.petImageData) {
-                    manager.loadImage()
-                }
             }
         }
         .padding(.bottom, .spacing8)
         .petPhotoDrop(data: $manager.petImageData)
         .onChange(of: manager.petImageData) {
             if manager.petImageData != nil { manager.defaultSelected = false }
-            manager.loadImage()
-        }
-    }
-
-    func preview(for image: UIImage) -> some View {
-        VStack(spacing: .spacing16) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: .radius10))
-                .glassEffect(.identity)
-
-            Button(role: .destructive, action: manager.removePhoto) {
-                Text(SharedStrings.resource("Delete Photo"))
-            }
-            .buttonStyle(.glass)
-            .keyboardShortcut(.cancelAction)
-            .tint(.red)
         }
     }
 
     @ContentBuilder
-    func petDetailView(_ pet: Pet) -> some View {
+    func petDetailView() -> some View {
         Group {
             if horizontalSizeClass == .regular {
                 if #available(iOS 27.1, *) {
                     ArrangementView {
-                        photoPane(for: pet)
+                        photoPane()
                     } secondary: {
                         detailsForm
                     }
                     .arrangementViewStyle(.split)
                 } else {
                     HStack(spacing: .zero) {
-                        photoPane(for: pet)
+                        photoPane()
                         Divider()
                         detailsForm
                             .frame(maxWidth: .infinity)
@@ -151,7 +134,7 @@ struct ChangePetDetails: View {
             } else {
                 Form {
                     Section {
-                        photoEditor(for: pet)
+                        photoEditor()
                     }
                     personalDetailsView
                     notificationSelectionView
@@ -162,17 +145,17 @@ struct ChangePetDetails: View {
         .background(Color(uiColor: .systemGroupedBackground))
     }
 
-    func photoPane(for pet: Pet) -> some View {
+    func photoPane() -> some View {
         ScrollView {
-            photoEditor(for: pet)
+            photoEditor()
                 .padding(.spacing20)
         }
         .frame(maxWidth: .infinity)
     }
 
-    func photoEditor(for pet: Pet) -> some View {
+    func photoEditor() -> some View {
         VStack {
-            petImageView(pet)
+            petImageView()
 
             Toggle(isOn: $manager.defaultSelected) {
                 Text(SharedStrings.defaultPhotoLabel)
@@ -242,9 +225,6 @@ struct ChangePetDetails: View {
                 Text(SharedStrings.petKindText)
             }
             .adaptivePickerStyle()
-            .onChange(of: manager.kind) {
-                manager.loadImage()
-            }
         }
     }
 

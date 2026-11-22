@@ -1,19 +1,8 @@
-import SwiftUI
-import Shared
-import UniformTypeIdentifiers
 import CoreTransferable
-import ImageIO
-
-/// Both import paths store an optimized copy suitable for large Retina previews.
-public enum PetPhotoImport {
-    public nonisolated static func normalized(_ data: Data) -> Data? {
-        ImageDownsampling.downsampleIfNeeded(data: data, maxDimension: 2048, jpegQuality: 0.88)
-    }
-
-    public nonisolated static func prepare(_ data: Data) async -> Data? {
-        await Task.detached(priority: .userInitiated) { normalized(data) }.value
-    }
-}
+import Shared
+import SharedUI
+import SwiftUI
+import UniformTypeIdentifiers
 
 private nonisolated struct DroppedPetPhoto: Transferable {
     let data: Data
@@ -67,6 +56,6 @@ private struct PetPhotoDrop: ViewModifier {
     }
 }
 
-public extension View {
+extension View {
     func petPhotoDrop(data: Binding<Data?>) -> some View { modifier(PetPhotoDrop(data: data)) }
 }

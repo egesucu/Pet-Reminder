@@ -23,7 +23,6 @@ struct FeedList: View {
 
     @State private var now = Date.now
     @State private var showSaveError = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
 
     private var morningOn: Bool { DailyFeeds.isFed(.morning, pet: pet, at: now) }
@@ -56,7 +55,7 @@ struct FeedList: View {
         .alert(SharedStrings.saveFailed, isPresented: $showSaveError) { }
     }
 
-    @ViewBuilder private var feedButtons: some View {
+    @ContentBuilder private var feedButtons: some View {
         if pet.feedSelection != .evening { morningButton }
         if pet.feedSelection != .morning { eveningButton }
     }
@@ -80,58 +79,17 @@ struct FeedList: View {
     }
 
     var morningButton: some View {
-        feedButton(
-            title: SharedStrings.feedSelectionMorning,
-            symbol: "sun.max",
-            isFed: morningOn,
-            type: .morning
-        )
+        MealButton(meal: .morning, isFed: morningOn) { toggle(.morning) }
         .onChange(of: morningOn) {
             Logger.feed.info("PR: Morning Changed, new value: \(morningOn), pet: \(pet.name)")
         }
     }
 
     var eveningButton: some View {
-        feedButton(
-            title: SharedStrings.feedSelectionEvening,
-            symbol: "moon",
-            isFed: eveningOn,
-            type: .evening
-        )
+        MealButton(meal: .evening, isFed: eveningOn) { toggle(.evening) }
         .onChange(of: eveningOn) {
             Logger.feed.info("PR: Evening Changed, new value: \(eveningOn), pet: \(pet.name)")
         }
-    }
-
-    private func feedButton(
-        title: LocalizedStringResource,
-        symbol: String,
-        isFed: Bool,
-        type: FeedSelection
-    ) -> some View {
-        Button {
-            toggle(type)
-        } label: {
-            Label {
-                Text(title)
-                    .multilineTextAlignment(.leading)
-            } icon: {
-                Image(systemName: isFed ? "checkmark" : symbol)
-            }
-            .font(.title2.bold(isFed))
-            .foregroundStyle(.primary)
-            .padding(.horizontal, .spacing16)
-            .frame(minHeight: 44)
-            .background(Color(uiColor: .tertiarySystemGroupedBackground), in: Capsule())
-            .overlay {
-                Capsule().strokeBorder(.primary, lineWidth: isFed ? 2 : 1)
-            }
-            .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .accessibilityValue(Text(isFed ? SharedStrings.resource("Fed") : SharedStrings.resource("Not fed")))
-        .animation(reduceMotion ? nil : .smooth, value: isFed)
-        .sensoryFeedback(.selection, trigger: isFed)
     }
 
     private func toggle(_ type: FeedSelection) {

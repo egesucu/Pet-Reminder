@@ -61,33 +61,18 @@ struct PetImageSelection: View {
 // MARK: - Subviews
 private extension PetImageSelection {
     @ContentBuilder var petImage: some View {
-        if let data = model.selectedImageData,
-           let selectedImage = UIImage(data: data) {
-            preview(for: selectedImage)
-        } else {
-            model
-                .kind
-                .image
-                .frame(width: .avatar200, height: .avatar200)
-                .clipShape(.rect(cornerRadius: .radius10))
-                .accessibilityHidden(true)
-        }
-    }
+        if let data = model.selectedImageData {
+            VStack(spacing: .spacing16) {
+                PetPortrait(imageData: data, kind: model.kind, style: .photoPreview)
 
-    func preview(for image: UIImage) -> some View {
-        VStack(spacing: .spacing16) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: .radius10))
-                .glassEffect(.identity)
-                .accessibilityHidden(true)
-
-            Button(role: .destructive, action: removeImage) {
-                Text(SharedStrings.resource("Delete Photo"))
+                Button(role: .destructive, action: removeImage) {
+                    Text(SharedStrings.resource("Delete Photo"))
+                }
+                .buttonStyle(.glass)
+                .tint(.red)
             }
-            .buttonStyle(.glass)
-            .tint(.red)
+        } else {
+            PetPortrait(imageData: nil, kind: model.kind, style: .photoPlaceholder(size: .avatar200))
         }
     }
 }

@@ -7,26 +7,7 @@
 //
 
 import Shared
-import UIKit
 import SwiftUI
-
-public extension UIImage {
-    static func loadImage(name: String) -> UIImage {
-        UIImage(named: name) ?? UIImage()
-    }
-}
-
-public extension Image {
-    func petImageStyle() -> some View {
-        Group {
-            self
-                .resizable()
-                .aspectRatio(1, contentMode: .fill)
-                .clipShape(.circle)
-                .contentShape(.circle)
-        }
-    }
-}
 
 public extension ImageResource {
     static func generateDefaultData(kind: Kind) -> Self {

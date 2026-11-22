@@ -12,7 +12,6 @@ import SwiftUI
 import OSLog
 import SwiftData
 import Shared
-import SharedUI
 
 @MainActor
 @Observable
@@ -24,22 +23,15 @@ class PetDataManager {
         case failed
     }
 
-    enum PhotoMode: Equatable {
-        case none
-        case some(data: Data?)
-    }
-
     var name = String.empty
     var breed = String.empty
     var birthday = Date()
     var selection: FeedSelection = .both
     var morningDate: Date = .eightAM
     var eveningDate: Date = .eightPM
-    var showImagePicker = false
     var kind: Kind = .other
 
     var petImageData: Data?
-    var petImage: UIImage?
 
     let notificationManager: NotificationManager
     private var initialMorningDate: Date = .eightAM
@@ -72,7 +64,6 @@ class PetDataManager {
     }
 
     var pageState: PageState = .loading
-    var photoMode: PhotoMode = .none
 
     var defaultSelected = false
 
@@ -80,9 +71,7 @@ class PetDataManager {
     var lastErrorMessage: String?
 
     func removePhoto() {
-        photoMode = .none
         petImageData = nil
-        petImage = nil
     }
 
     func loadPet(for pet: Pet?, dismiss: @escaping () -> Void) {
@@ -100,33 +89,9 @@ class PetDataManager {
         self.breed = pet.breed ?? String.empty
         self.kind = pet.kind
 
-        if let image = pet.image {
-            petImageData = image
-            self.photoMode = .some(data: image)
-            self.loadImage()
-            self.defaultSelected = false
-        } else {
-            self.photoMode = .none
-            self.defaultSelected = true
-        }
-
+        petImageData = pet.image
+        defaultSelected = pet.image == nil
         pageState = .loaded(pet: pet)
-    }
-
-    func loadImage() {
-        if let petImageData {
-            if let decoded = UIImage(data: petImageData) {
-                petImage = decoded
-            } else {
-                Logger.pets.error("Failed to decode image data for pet")
-                // Clear invalid data to avoid repeated failures
-                petImage = nil
-                self.petImageData = nil
-                photoMode = .none
-            }
-        } else {
-            petImage = nil
-        }
     }
 
     func changeBirthday() async {
@@ -195,14 +160,11 @@ class PetDataManager {
         morningDate = .eightAM
         eveningDate = .eightPM
         name = .empty
-        petImage = nil
         petImageData = nil
         birthday = .now
         selection = .both
         kind = .other
-        showImagePicker = false
         defaultSelected = false
-        photoMode = .none
         lastErrorMessage = nil
 
         loadPet(for: pet, dismiss: {})

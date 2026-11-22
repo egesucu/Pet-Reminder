@@ -29,6 +29,14 @@ The app target owns startup, onboarding completion state, tabs, URL parsing, nav
 - SharedStrings and SharedResources provide explicit access to the Shared resource bundle. Generated asset and localization symbols remain implementation details. Default pet images live in the original resource bundle. App catalogs remain available for app-owned and system metadata localization.
 - Persisted model types stay in Shared. Do not rename stored fields, move schema types, change migration stages, move the store, or alter CloudKit identifiers as an incidental modularization change.
 
+## Multiplatform readiness
+
+- **Portraits.** `SharedUI.PetPortrait` takes image data, pet kind, and a presentation style. UIKit decoding stays behind the view. The Pets feature owns photo selection, drag and drop, and editing state. The selected pet kind drives the fallback portrait in the editor.
+- **Feeding.** `SharedUI.MealButton` takes a meal, completion state, and an action. Pets owns the layout, save errors, and the connection to `PetCare`. The widget keeps its own presentation and reuses the feeding operation through its intent.
+- **Platform integration.** App shells own navigation, windows, and commands. The iPad key-window observer lives in its own app file. Keep future platform checks local to the affected integration, such as Settings links or calendar editing. Use adaptive layout for changes driven by the available space.
+
+Before adding a platform, choose its first end-to-end flow. Use that flow to decide which packages need to support the destination, what the app shell owns, and how it reads and updates pet data. Keep persisted models and migrations in Shared.
+
 ## Checks
 
 Run `python3 ci_scripts/check_modules.py` to validate local package paths, dependency products, imports, source ownership, cycles and debug-only preview imports. Run its regression tests with `python3 -m unittest discover -s ci_scripts -p 'test_module_boundaries.py'`. Xcode Cloud runs both checks before its build.

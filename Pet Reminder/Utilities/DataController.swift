@@ -36,7 +36,7 @@ class DataController {
                     birthday: calendar.date(byAdding: .year, value: -years, to: today)!,
                     name: name,
                     feedSelection: .both,
-                    image: kind.uiImage.jpegData(compressionQuality: 0.95),
+                    image: kind.defaultPhotoData(jpegQuality: 0.95),
                     breed: breed,
                     kind: kind
                 )

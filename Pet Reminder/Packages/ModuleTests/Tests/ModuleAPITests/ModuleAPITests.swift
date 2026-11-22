@@ -65,10 +65,10 @@ struct ModuleAPITests {
     }
 
     @Test("All default pet images resolve across the resource boundary")
-    func defaultImages() {
+    func defaultImages() throws {
         for kind in Kind.allCases {
-            #expect(kind.uiImage.size.width > 0)
-            #expect(kind.uiImage.size.height > 0)
+            let data = try #require(kind.defaultPhotoData(jpegQuality: 0.8))
+            #expect(PetPhotoImport.normalized(data) != nil)
         }
     }
 

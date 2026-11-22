@@ -142,10 +142,10 @@ public struct PetList: View {
     func cell(for pet: Pet) -> some View {
         VStack {
             HStack {
-                CircleImage(
-                    avatarSize: .avatar80,
+                PetPortrait(
                     imageData: pet.image,
-                    kind: pet.kind
+                    kind: pet.kind,
+                    style: .avatar(size: .avatar80)
                 )
 
                 VStack(alignment: .leading) {

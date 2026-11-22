@@ -7,10 +7,11 @@
 //
 
 import Shared
+import SharedUI
 import SwiftUI
 import PhotosUI
 
-public struct PhotoImagePicker: View {
+struct PhotoImagePicker: View {
     @State private var isImporting = false
     @State private var showImportError = false
     @State private var selectedPhoto: PhotosPickerItem?
@@ -18,19 +19,17 @@ public struct PhotoImagePicker: View {
     var desiredIcon: String
     @Binding var photoData: Data?
 
-    public init(
+    init(
         desiredTitle: LocalizedStringResource,
-        selectedPhoto: PhotosPickerItem? = nil,
         photoData: Binding<Data?> = .constant(nil),
         desiredIcon: String = "photo.badge.plus.fill"
     ) {
-        self.selectedPhoto = selectedPhoto
         self._photoData = photoData
         self.desiredTitle = desiredTitle
         self.desiredIcon = desiredIcon
     }
 
-    public var body: some View {
+    var body: some View {
 
         PhotosPicker(
             selection: $selectedPhoto,
@@ -45,7 +44,7 @@ public struct PhotoImagePicker: View {
 
         .task(id: selectedPhoto) {
             if let selectedPhoto {
-                await handlePhotoChange(selectedPhoto)
+                await processPhotoChange(selectedPhoto)
             }
         }
         .overlay {
@@ -58,10 +57,6 @@ public struct PhotoImagePicker: View {
         .contentShape(.rect)
         .tint(.accent)
         .padding(.vertical)
-    }
-
-    private func handlePhotoChange(_ newPhoto: PhotosPickerItem) async {
-        await processPhotoChange(newPhoto)
     }
 
     private func processPhotoChange(_ newPhoto: PhotosPickerItem) async {
@@ -80,32 +75,3 @@ public struct PhotoImagePicker: View {
     }
 
 }
-
-#if DEBUG
-#Preview("Photo picker with default title") {
-    @Previewable @State var photoData: Data?
-
-    PhotoImagePicker(
-        desiredTitle: SharedStrings.addText,
-        photoData: $photoData
-    )
-    .task {
-        photoData = UIImage(resource: .defaultOther).pngData()
-    }
-    .environment(\.locale, .init(identifier: "tr"))
-}
-
-#Preview("Photo Picker with custom title") {
-    @Previewable @State var photoData: Data?
-
-    PhotoImagePicker(
-        desiredTitle: SharedStrings.change,
-        photoData: $photoData,
-        desiredIcon: "photo.fill"
-    )
-    .task {
-        photoData = UIImage(resource: .defaultOther).pngData()
-    }
-    .environment(\.locale, .init(identifier: "tr"))
-}
-#endif

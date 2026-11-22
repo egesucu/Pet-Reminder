@@ -1,39 +1,10 @@
+import Foundation
 import Shared
-import SwiftUI
+import UIKit
 
 public extension Kind {
-    var image: Image {
-        return switch self {
-        case .cat:
-            Image(.defaultCat)
-                .resizable()
-        case .dog:
-            Image(.defaultDog)
-                .resizable()
-        case .fish:
-            Image(.defaultFish)
-                .resizable()
-        case .bird:
-            Image(.defaultBird)
-                .resizable()
-        case .other:
-            Image(.defaultOther)
-                .resizable()
-        }
-    }
-
-    var uiImage: UIImage {
-        return switch self {
-        case .cat:
-            UIImage(resource: .defaultCat)
-        case .dog:
-            UIImage(resource: .defaultDog)
-        case .fish:
-            UIImage(resource: .defaultFish)
-        case .bird:
-            UIImage(resource: .defaultBird)
-        case .other:
-            UIImage(resource: .defaultOther)
-        }
+    /// Encodes the bundled portrait for sample data that needs a stored photo.
+    func defaultPhotoData(jpegQuality: CGFloat) -> Data? {
+        UIImage(resource: .generateDefaultData(kind: self)).jpegData(compressionQuality: jpegQuality)
     }
 }

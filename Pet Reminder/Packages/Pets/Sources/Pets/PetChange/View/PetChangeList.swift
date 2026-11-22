@@ -89,10 +89,10 @@ public struct PetChangeList: View {
                         showSelectedPet = true
                     } label: {
                         VStack {
-                            CircleImage(
-                                avatarSize: .avatar120,
+                            PetPortrait(
                                 imageData: pet.image,
-                                kind: pet.kind
+                                kind: pet.kind,
+                                style: .avatar(size: .avatar120)
                             )
                             .modifier(WiggleModifier(isEnabled: isEditing))
                             Text(pet.name)

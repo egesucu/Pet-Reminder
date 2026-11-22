@@ -116,12 +116,10 @@ private extension PetDetail {
     var header: some View {
         HStack {
             Spacer()
-            CircleImage(
-                avatarSize: .avatar120,
+            PetPortrait(
                 imageData: pet.image,
                 kind: pet.kind
             )
-            .accessibilityHidden(true)
             Spacer()
         }
     }

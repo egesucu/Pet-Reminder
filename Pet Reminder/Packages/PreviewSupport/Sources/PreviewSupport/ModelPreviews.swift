@@ -7,7 +7,7 @@ public extension Pet {
     @MainActor static var previews: [Pet] {
         let date = Date(timeIntervalSince1970: 1_780_000_000)
         return [("Luna", Kind.dog, "Beagle"), ("Milo", .cat, "Maine Coon"), ("Coco", .bird, "Budgie")].map { name, kind, breed in
-            let pet = Pet(birthday: date, name: name, createdAt: date, image: kind.uiImage.jpegData(compressionQuality: 0.8), breed: breed, kind: kind)
+            let pet = Pet(birthday: date, name: name, createdAt: date, image: kind.defaultPhotoData(jpegQuality: 0.8), breed: breed, kind: kind)
             for feed in Feed.previews { pet.addFeed(feed) }
             for vaccine in Vaccine.previews { pet.addVaccine(vaccine) }
             return pet
