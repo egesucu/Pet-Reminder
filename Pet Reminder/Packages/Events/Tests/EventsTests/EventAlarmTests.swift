@@ -191,7 +191,13 @@ struct AgendaReliabilityTests {
         #expect(restored.selectedCalendar?.id == restored.petCalendar?.id)
         restored.selectedCalendar = nil
         await sut.reloadEvents()
-        #expect(sut.selectedCalendar == nil)
+        #expect(sut.selectedCalendar?.id == sut.petCalendar?.id)
+        await restored.reloadEvents()
+        #expect(restored.selectedCalendar == nil)
+
+        let newWindow = EventManager(eventStore: store, preferences: preferences, authorizationStatusProvider: { .fullAccess })
+        await newWindow.reloadEvents()
+        #expect(newWindow.selectedCalendar == nil)
     }
 
     @Test("Same-name calendars remain distinct; ongoing events and date groups are ordered")
