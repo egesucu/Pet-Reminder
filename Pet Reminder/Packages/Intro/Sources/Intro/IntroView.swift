@@ -15,6 +15,8 @@ public struct IntroView: View {
     private let onContinue: @MainActor () -> Void
 
     @State private var shouldAnimate = false
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     public init(onContinue: @escaping @MainActor () -> Void) {
@@ -23,18 +25,24 @@ public struct IntroView: View {
 
     public var body: some View {
         ScrollView {
-            HelloContent()
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, .spacing20)
-                .padding(.vertical, verticalSizeClass == .compact ? .spacing12 : .spacing40)
+            VStack(spacing: .spacing20) {
+                HelloContent()
+                if dynamicTypeSize.isAccessibilitySize {
+                    HelloContinueButton(action: onContinue)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, .spacing20)
+            .padding(.vertical, verticalSizeClass == .compact ? .spacing12 : .spacing40)
         }
-        .scrollIndicators(.hidden)
         .opacity(shouldAnimate ? 1 : 0)
-        .offset(y: shouldAnimate ? 0 : .spacing20)
+        .offset(y: shouldAnimate || reduceMotion ? 0 : .spacing20)
         .safeAreaInset(edge: .bottom) {
-            HelloContinueButton(action: onContinue)
-                .padding(.horizontal, .spacing20)
-                .padding(.bottom, .spacing20)
+            if !dynamicTypeSize.isAccessibilitySize {
+                HelloContinueButton(action: onContinue)
+                    .padding(.horizontal, .spacing20)
+                    .padding(.bottom, .spacing20)
+            }
         }
         .background {
             GeometryReader { geometry in
@@ -55,7 +63,7 @@ public struct IntroView: View {
 
 private extension IntroView {
     func animateView() {
-        withAnimation(.smooth(duration: 0.7)) {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.7)) {
             shouldAnimate = true
         }
     }

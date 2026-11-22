@@ -16,6 +16,7 @@ public struct FindVet: View {
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let vetService: any VetService
@@ -60,7 +61,7 @@ public struct FindVet: View {
                     }
                 } else {
                     VStack(spacing: 0) {
-                        mapView.frame(height: geometry.size.height * 0.58)
+                        mapView.frame(height: geometry.size.height * (dynamicTypeSize.isAccessibilitySize ? 0.35 : 0.58))
                         resultsView(sideBySide: false, compactRows: true)
                     }
                 }

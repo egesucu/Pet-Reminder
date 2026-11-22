@@ -43,26 +43,35 @@ struct PetPortrait: View {
 }
 
 struct CareRing: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let completed: Int
     let total: Int
     var size: CGFloat = 60
     var body: some View {
-        ZStack {
-            Circle().stroke(CareStyle.mint.opacity(0.16), lineWidth: 6)
-            Circle().trim(from: 0, to: total > 0 ? Double(completed) / Double(total) : 0)
-                .stroke(CareStyle.mint, style: StrokeStyle(lineWidth: 6, lineCap: .round))
-                .rotationEffect(.degrees(-90))
-                .widgetAccentable()
-            Text("\(completed)/\(total)")
-                .monospacedDigit()
-                .contentTransition(.numericText())
-                .font(.system(.headline, design: .rounded, weight: .bold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                .padding(size <= 36 ? 5 : 8)
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                Text("\(completed)/\(total)")
+                    .font(.headline.monospacedDigit())
+            } else {
+                ZStack {
+                    Circle().stroke(CareStyle.mint.opacity(0.16), lineWidth: 6)
+                    Circle().trim(from: 0, to: total > 0 ? Double(completed) / Double(total) : 0)
+                        .stroke(CareStyle.mint, style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                        .rotationEffect(.degrees(-90))
+                        .widgetAccentable()
+                    Text("\(completed)/\(total)")
+                        .monospacedDigit()
+                        .contentTransition(reduceMotion ? .identity : .numericText())
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                        .padding(size <= 36 ? 5 : 8)
+                }
+                .frame(width: size, height: size)
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: completed)
+            }
         }
-        .frame(width: size, height: size)
-        .animation(.easeInOut(duration: 0.25), value: completed)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(completed) of \(total) meals given"))
     }
@@ -124,38 +133,36 @@ struct EmptyCareView: View {
 }
 
 struct SmallPetCareCard: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let pet: WidgetPet
     let day: Date
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
-                PetPortrait(pet: pet, size: 32)
+                if !dynamicTypeSize.isAccessibilitySize {
+                    PetPortrait(pet: pet, size: 32)
+                }
                 Text(pet.name)
                     .font(.system(.subheadline, design: .rounded, weight: .bold))
-                    .lineLimit(2).minimumScaleFactor(0.85)
+                    .lineLimit(2).minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.85)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             VStack(alignment: .leading, spacing: 5) {
                 Text("\(pet.completed)/\(pet.scheduled) today")
                     .monospacedDigit()
-                    .contentTransition(.numericText())
+                    .contentTransition(reduceMotion ? .identity : .numericText())
                     .font(.caption).foregroundStyle(.secondary)
-                    .lineLimit(1).minimumScaleFactor(0.85)
-                GeometryReader { geometry in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(CareStyle.mint.opacity(0.16))
-                        Capsule().fill(CareStyle.mint)
-                            .frame(width: geometry.size.width * Double(pet.completed) / Double(max(1, pet.scheduled)))
-                            .widgetAccentable()
-                    }
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                    .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.85)
+                if !dynamicTypeSize.isAccessibilitySize {
+                    progressBar
                 }
-                .frame(height: 4)
-                .animation(.easeInOut(duration: 0.25), value: pet.completed)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(Text("\(pet.completed) of \(pet.scheduled) meals given"))
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("\(pet.completed) of \(pet.scheduled) meals given"))
             Spacer(minLength: 0)
             HStack(spacing: 6) {
                 if pet.morningScheduled {
@@ -167,9 +174,23 @@ struct SmallPetCareCard: View {
             }
         }
     }
+
+    private var progressBar: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Capsule().fill(CareStyle.mint.opacity(0.16))
+                Capsule().fill(CareStyle.mint)
+                    .frame(width: geometry.size.width * Double(pet.completed) / Double(max(1, pet.scheduled)))
+                    .widgetAccentable()
+            }
+        }
+        .frame(height: 4)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: pet.completed)
+    }
 }
 
 private struct MealControlLabel: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let morning: Bool
     let fed: Bool
     let compact: Bool
@@ -178,15 +199,24 @@ private struct MealControlLabel: View {
         let layout = compact ? AnyLayout(VStackLayout(spacing: 3)) : AnyLayout(HStackLayout(spacing: 6))
         let shape = RoundedRectangle(cornerRadius: 12)
 
-        layout {
-            Image(systemName: fed ? "checkmark.circle.fill" : "circle")
-                .font(.system(.subheadline, weight: .semibold))
-                .foregroundStyle(fed ? CareStyle.mint : .primary)
-                .widgetAccentable(fed)
-            Text(morning ? LocalizedStringKey("Morning") : LocalizedStringKey("Evening"))
-                .font(.system(compact ? .caption2 : .caption, design: .rounded, weight: .semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+        Group {
+            if compact && dynamicTypeSize.isAccessibilitySize {
+                HStack(spacing: 4) {
+                    Image(systemName: morning ? "sun.max" : "moon")
+                        .font(.subheadline.weight(.semibold))
+                    mealStatusIcon
+                        .font(.caption.weight(.semibold))
+                }
+            } else {
+                layout {
+                    mealStatusIcon
+                        .font(.subheadline.weight(.semibold))
+                    Text(morning ? LocalizedStringKey("Morning") : LocalizedStringKey("Evening"))
+                        .font(.system(compact ? .caption2 : .caption, design: .rounded, weight: .semibold))
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                        .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.75)
+                }
+            }
         }
         .padding(.horizontal, 4)
         .frame(maxWidth: .infinity, minHeight: 44)
@@ -195,9 +225,16 @@ private struct MealControlLabel: View {
             shape.strokeBorder(.primary.opacity(0.16))
         }
     }
+
+    private var mealStatusIcon: some View {
+        Image(systemName: fed ? "checkmark.circle.fill" : "circle")
+            .foregroundStyle(fed ? CareStyle.mint : .primary)
+            .widgetAccentable(fed)
+    }
 }
 
 struct SmallCareOverviewCard: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let entry: CareEntry
     private var completed: Int { entry.pets.reduce(0) { $0 + $1.completed } }
     private var total: Int { entry.pets.reduce(0) { $0 + $1.scheduled } }
@@ -206,34 +243,40 @@ struct SmallCareOverviewCard: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Your pets")
                 .font(.system(.headline, design: .rounded, weight: .bold))
-                .lineLimit(1).minimumScaleFactor(0.85)
-            Label {
-                Text(entry.date, format: .dateTime.month(.abbreviated).day())
-            } icon: {
-                Image(systemName: "heart").foregroundStyle(CareStyle.mint).widgetAccentable()
-            }
-            .font(.caption2).foregroundStyle(.secondary)
-            .lineLimit(1)
-            .padding(.top, 2)
-            Spacer(minLength: 6)
-            HStack(spacing: 10) {
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.85)
+            if dynamicTypeSize.isAccessibilitySize {
+                Spacer(minLength: 4)
                 CareRing(completed: completed, total: total, size: 46)
-                Text(completed == total ? LocalizedStringKey("Everyone's all fed.") : LocalizedStringKey("\(total - completed) meals to go"))
-                    .font(.system(.caption, design: .rounded, weight: .semibold))
-                    .lineLimit(3).minimumScaleFactor(0.85)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            Spacer(minLength: 6)
-            HStack(spacing: 6) {
-                HStack(spacing: -6) {
-                    ForEach(Array(entry.pets.prefix(3))) { pet in
-                        PetPortrait(pet: pet, size: 26)
-                            .overlay(Circle().stroke(.primary.opacity(0.1), lineWidth: 1))
-                    }
+            } else {
+                Label {
+                    Text(entry.date, format: .dateTime.month(.abbreviated).day())
+                } icon: {
+                    Image(systemName: "heart").foregroundStyle(CareStyle.mint).widgetAccentable()
                 }
-                if entry.pets.count > 3 {
-                    Text("+\(entry.pets.count - 3)")
-                        .font(.caption2).foregroundStyle(.secondary)
+                .font(.caption2).foregroundStyle(.secondary)
+                .lineLimit(1)
+                .padding(.top, 2)
+                Spacer(minLength: 6)
+                HStack(spacing: 10) {
+                    CareRing(completed: completed, total: total, size: 46)
+                    Text(completed == total ? LocalizedStringKey("Everyone's all fed.") : LocalizedStringKey("\(total - completed) meals to go"))
+                        .font(.system(.caption, design: .rounded, weight: .semibold))
+                        .lineLimit(3).minimumScaleFactor(0.85)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Spacer(minLength: 6)
+                HStack(spacing: 6) {
+                    HStack(spacing: -6) {
+                        ForEach(Array(entry.pets.prefix(3))) { pet in
+                            PetPortrait(pet: pet, size: 26)
+                                .overlay(Circle().stroke(.primary.opacity(0.1), lineWidth: 1))
+                        }
+                    }
+                    if entry.pets.count > 3 {
+                        Text("+\(entry.pets.count - 3)")
+                            .font(.caption2).foregroundStyle(.secondary)
+                    }
                 }
             }
         }
@@ -241,6 +284,8 @@ struct SmallCareOverviewCard: View {
 }
 
 struct PetFeedingView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let entry: CareEntry
     @Environment(\.widgetFamily) private var family
 
@@ -277,22 +322,31 @@ struct PetFeedingView: View {
         }
         .widgetURL(entry.selectedPet?.url ?? URL(string: entry.hasSnapshot && entry.pets.isEmpty ? "petreminder://add" : "petreminder://home"))
         .containerBackground(for: .widget) { CareBackground() }
+        .transaction { transaction in
+            if reduceMotion {
+                transaction.animation = nil
+                transaction.disablesAnimations = true
+            }
+        }
     }
 
     private func homeCard(_ pet: WidgetPet) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Link(destination: pet.url) {
                 HStack(spacing: 12) {
-                    PetPortrait(pet: pet, size: 52)
+                    if !dynamicTypeSize.isAccessibilitySize {
+                        PetPortrait(pet: pet, size: 52)
+                    }
                     VStack(alignment: .leading, spacing: 2) {
                         Text(pet.name).font(.system(.title3, design: .rounded, weight: .bold))
-                            .lineLimit(1).minimumScaleFactor(0.7)
+                            .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                            .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.7)
                         Text(pet.scheduled > 0 && pet.completed == pet.scheduled
                              ? LocalizedStringKey("All fed. All loved.")
                              : LocalizedStringKey("\(pet.scheduled - pet.completed) meals to go"))
                             .monospacedDigit()
-                            .contentTransition(.numericText())
-                            .font(.caption).foregroundStyle(.secondary).lineLimit(2).minimumScaleFactor(0.75)
+                            .contentTransition(reduceMotion ? .identity : .numericText())
+                            .font(.caption).foregroundStyle(.secondary).lineLimit(2).minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.75)
                     }
                     Spacer(minLength: 0)
                     CareRing(completed: pet.completed, total: pet.scheduled, size: 52)
@@ -318,6 +372,8 @@ struct PetFeedingView: View {
 }
 
 struct CareOverviewView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let entry: CareEntry
     @Environment(\.widgetFamily) private var family
     private var completed: Int { entry.pets.reduce(0) { $0 + $1.completed } }
@@ -336,7 +392,8 @@ struct CareOverviewView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Your little crew")
                                 .font(.system(.headline, design: .rounded, weight: .bold))
-                                .lineLimit(1).minimumScaleFactor(0.75)
+                                .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                                .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.75)
                             Label {
                                 Text(entry.date, format: .dateTime.weekday(.wide).month(.abbreviated).day())
                             } icon: {
@@ -350,9 +407,11 @@ struct CareOverviewView: View {
                     ForEach(visiblePets) { pet in
                         Link(destination: pet.url) {
                             HStack(spacing: 10) {
-                                PetPortrait(pet: pet, size: family == .systemLarge ? 44 : 30)
+                                if !dynamicTypeSize.isAccessibilitySize {
+                                    PetPortrait(pet: pet, size: family == .systemLarge ? 44 : 30)
+                                }
                                 Text(pet.name).font(.system(.subheadline, design: .rounded, weight: .semibold))
-                                    .lineLimit(1)
+                                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
                                 Spacer()
                                 if pet.morningScheduled { mealDot(morning: true, fed: pet.morningFed) }
                                 if pet.eveningScheduled { mealDot(morning: false, fed: pet.eveningFed) }
@@ -370,7 +429,7 @@ struct CareOverviewView: View {
                         Spacer(minLength: 0)
                         HStack {
                             Text(completed == total ? LocalizedStringKey("Everyone's all fed.") : LocalizedStringKey("\(total - completed) meals to go"))
-                                .contentTransition(.numericText())
+                                .contentTransition(reduceMotion ? .identity : .numericText())
                             Spacer(minLength: 2)
                             if entry.pets.count > visiblePets.count {
                                 Text("+\(entry.pets.count - visiblePets.count) pets")
@@ -382,6 +441,12 @@ struct CareOverviewView: View {
         }
         .widgetURL(URL(string: entry.hasSnapshot && entry.pets.isEmpty ? "petreminder://add" : "petreminder://home"))
         .containerBackground(for: .widget) { CareBackground() }
+        .transaction { transaction in
+            if reduceMotion {
+                transaction.animation = nil
+                transaction.disablesAnimations = true
+            }
+        }
     }
 
     private func mealDot(morning: Bool, fed: Bool) -> some View {

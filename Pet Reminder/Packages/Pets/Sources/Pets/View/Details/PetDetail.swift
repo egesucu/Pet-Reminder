@@ -119,6 +119,7 @@ private extension PetDetail {
                 imageData: pet.image,
                 kind: pet.kind
             )
+            .accessibilityHidden(true)
             Spacer()
         }
     }
@@ -140,7 +141,7 @@ private extension PetDetail {
             TimelineView(.periodic(from: .now, by: 60)) { _ in
                 Label(nextFeedSummary, systemImage: nextFeedIcon)
                 .font(.subheadline.weight(.semibold))
-                .foregroundStyle(nextFeedColor)
+                .foregroundStyle(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
@@ -261,10 +262,6 @@ private extension PetDetail {
 
     var nextFeedIcon: String {
         isFeedComplete ? "checkmark.circle.fill" : "clock.fill"
-    }
-
-    var nextFeedColor: Color {
-        isFeedComplete ? .green : .orange
     }
 
     var isFeedComplete: Bool {

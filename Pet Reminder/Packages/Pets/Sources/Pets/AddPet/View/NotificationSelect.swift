@@ -13,25 +13,16 @@ import SharedUI
 struct NotificationSelect: View {
 
     @Binding var model: AddPet.Model
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(alignment: .leading, spacing: .spacing20) {
             Text(SharedStrings.feedTimeTitle)
                 .font(.headline)
                 .foregroundStyle(Color.label)
-                .animation(.easeOut(duration: 0.8), value: model.feedSelection)
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.8), value: model.feedSelection)
 
-            Picker(
-                selection: $model.feedSelection,
-                label: Text(SharedStrings.feedTimeTitle)
-            ) {
-                ForEach(FeedSelection.allCases, id: \.description) {
-                    Text($0.localized)
-                        .tag($0)
-                }
-            }
-            .pickerStyle(.segmented)
-            .animation(.easeOut(duration: 0.8), value: model.feedSelection)
+            feedingPicker.adaptivePickerStyle()
 
             notificationType
         }
@@ -39,6 +30,18 @@ struct NotificationSelect: View {
 }
 
 private extension NotificationSelect {
+    var feedingPicker: some View {
+        Picker(
+            selection: $model.feedSelection,
+            label: Text(SharedStrings.feedTimeTitle)
+        ) {
+            ForEach(FeedSelection.allCases, id: \.description) {
+                Text($0.localized)
+                    .tag($0)
+            }
+        }
+    }
+
     @ContentBuilder var notificationType: some View {
         switch model.feedSelection {
         case .morning:
@@ -65,7 +68,7 @@ private extension NotificationSelect {
             }
         }
         .tint(Color.label)
-        .animation(.easeOut(duration: 0.8), value: model.feedSelection)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.8), value: model.feedSelection)
         .transition(.identity)
     }
 
@@ -84,7 +87,7 @@ private extension NotificationSelect {
             }
         }
         .tint(Color.label)
-        .animation(.easeOut(duration: 0.8), value: model.feedSelection)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.8), value: model.feedSelection)
         .transition(.identity)
     }
 
@@ -93,7 +96,7 @@ private extension NotificationSelect {
             morningView
             eveningView
         }
-        .animation(.easeOut(duration: 0.8), value: model.feedSelection)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.8), value: model.feedSelection)
         .transition(.identity)
     }
 }

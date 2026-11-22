@@ -28,6 +28,7 @@ struct AddEvent: View {
                     TextField(text: $creation.name) {
                         Text(SharedStrings.addEventName)
                     }
+                    .accessibilityLabel(Text(SharedStrings.addEventName))
                 }
                 Section {
                     LabeledContent {
