@@ -41,12 +41,16 @@ struct FeedDayCard: View {
 }
 
 private struct FeedDayHeader: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let date: Date
     let completedCount: Int
     let showsRelativeDate: Bool
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: .spacing12) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: .spacing8))
+            : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: .spacing12))
+        layout {
             VStack(alignment: .leading, spacing: .spacing4) {
                 if showsRelativeDate {
                     Text(SharedStrings.today)
@@ -61,7 +65,7 @@ private struct FeedDayHeader: View {
                     .foregroundStyle(.secondary)
             }
 
-            Spacer(minLength: .spacing8)
+            if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: .spacing8) }
 
             Text(
                 SharedStrings.resource("\(completedCount) recorded",
@@ -77,16 +81,21 @@ private struct FeedDayHeader: View {
 }
 
 private struct FeedRecordRow: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let type: NotificationType
     let time: Date
 
     var body: some View {
-        HStack(spacing: .spacing12) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: .spacing8))
+            : AnyLayout(HStackLayout(spacing: .spacing12))
+        layout {
             Image(systemName: systemImage)
                 .font(.headline)
                 .foregroundStyle(tint)
                 .frame(width: .spacing40, height: .spacing40)
                 .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: .radius10))
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: .spacing4) {
                 Text(title)
@@ -98,10 +107,10 @@ private struct FeedRecordRow: View {
                     Image(systemName: "checkmark.circle.fill")
                 }
                 .font(.caption)
-                .foregroundStyle(.green)
+                .foregroundStyle(.primary)
             }
 
-            Spacer(minLength: .spacing12)
+            if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: .spacing12) }
 
             Text(time, format: .dateTime.hour().minute())
                 .font(.subheadline.weight(.semibold))

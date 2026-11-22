@@ -43,6 +43,9 @@ final class AppNavigationCoordinator {
             if let name = url.pathComponents.first(where: { $0 != "/" }), !name.isEmpty {
                 open(.namedPet(name))
             }
+        case "pet":
+            guard url.pathComponents.count == 2, let id = UUID(uuidString: url.lastPathComponent) else { return }
+            openPet(id: id)
         case "add": open(.addPet)
         case "events": selectedTab = .events
         case "findvet": selectedTab = .vet

@@ -17,6 +17,7 @@ import PreviewSupport
 
 struct Notifications: View {
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.modelContext) private var modelContext
 
     @Query(sort: \Pet.name) var pets: [Pet]
@@ -97,10 +98,15 @@ private extension Notifications {
             }
             Text(notification.content.body)
                 .font(.footnote)
-                .foregroundStyle(Color.gray)
-            HStack(spacing: .spacing8) {
+                .foregroundStyle(.secondary)
+            let dateLayout = dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(alignment: .leading, spacing: .spacing8))
+                : AnyLayout(HStackLayout(spacing: .spacing8))
+            dateLayout {
                 Text(SharedStrings.nextNotificationDate)
                     .bold()
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 if let trigger = notification.trigger as? UNCalendarNotificationTrigger,
                    let date = trigger.nextTriggerDate() {
                     if notification.identifier.contains("birthday") {
@@ -111,6 +117,7 @@ private extension Notifications {
                 }
             }
         }
+        .accessibilityElement(children: .combine)
     }
 
     func notificationSection(

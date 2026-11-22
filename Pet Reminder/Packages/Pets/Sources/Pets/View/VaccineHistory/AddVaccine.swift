@@ -43,6 +43,7 @@ struct AddVaccine: View {
         NavigationStack {
             Form {
                 TextField(SharedStrings.vaccineTitleLabel, text: $vaccineName)
+                    .accessibilityLabel(Text(SharedStrings.vaccineTitleLabel))
                     .bold()
                 DatePicker(SharedStrings.vaccineDateLabel, selection: $vaccineDate)
                     .bold()

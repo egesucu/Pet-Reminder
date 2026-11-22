@@ -16,8 +16,9 @@ struct HelloContinueButton: View {
     var body: some View {
         Button(action: action) {
             Text(SharedStrings.welcomeGoButton)
-                .foregroundStyle(.accent)
-                .font(.largeTitle)
+                .foregroundStyle(.primary)
+                .font(.title2.weight(.semibold))
+                .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, .spacing16)
         }

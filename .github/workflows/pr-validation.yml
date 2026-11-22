@@ -1,0 +1,44 @@
+name: PR validation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-validation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  repository-checks:
+    name: Repository checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Validate modules, test coverage, and localizations
+        run: |
+          python3 ci_scripts/check_modules.py
+          python3 ci_scripts/check_test_plan.py
+          python3 ci_scripts/check_localizations.py
+          python3 -m unittest discover -s ci_scripts -p 'test_*.py'
+
+  simulator-tests:
+    name: iOS simulator tests
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Run the shared test plan
+        run: |
+          xcodebuild -version
+          xcodebuild test -project 'Pet Reminder.xcodeproj' -scheme 'Pet Reminder' \
+            -testPlan 'Pet Reminder' \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=27.2' \
+            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO

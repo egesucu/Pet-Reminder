@@ -28,6 +28,7 @@ struct PetReminderApp: App {
     @State private var careService: PetCareService
     @Environment(\.scenePhase) private var scenePhase
     private let spotlight: PetSpotlightIndexer
+    private let widgets: PetWidgetPublisher
 
     let container: ModelContainer
 
@@ -39,9 +40,13 @@ struct PetReminderApp: App {
         _careService = State(initialValue: service)
         let spotlight = PetSpotlightIndexer(service: service)
         self.spotlight = spotlight
+        let widgets = PetWidgetPublisher(container: container, service: service)
+        self.widgets = widgets
+        let widgetFeeding = widgets.feedingAction()
         unsafe AppDependencyManager.shared.add(dependency: service)
         unsafe AppDependencyManager.shared.add(dependency: navigation)
         unsafe AppDependencyManager.shared.add(dependency: spotlight)
+        unsafe AppDependencyManager.shared.add(dependency: widgetFeeding)
     }
 
     private static func makeContainer() -> ModelContainer {
@@ -69,27 +74,29 @@ struct PetReminderApp: App {
                               isCapturingScreenshots: isCapturingScreenshots)
             .task {
                 if !isCapturingScreenshots {
-                    spotlight.scheduleRefresh()
+                    refreshIntegrations(reloadWidgetTimelines: true)
                     await refreshNotificationLocalizations()
                 }
             }
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active && !isCapturingScreenshots { spotlight.scheduleRefresh() }
+                if phase == .active && !isCapturingScreenshots {
+                    refreshIntegrations(reloadWidgetTimelines: true)
+                }
             }
             .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave).receive(on: RunLoop.main)) { _ in
                 // The saving context may outlive its container by the time this event is delivered.
                 // Reconcile our own container without dereferencing the notification object.
-                if !isCapturingScreenshots { spotlight.scheduleRefresh() }
+                if !isCapturingScreenshots { refreshIntegrations() }
             }
             .onReceive(NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange).receive(on: RunLoop.main)) { _ in
-                if !isCapturingScreenshots { spotlight.scheduleRefresh() }
+                if !isCapturingScreenshots { refreshIntegrations() }
             }
             .onReceive(NotificationCenter.default.publisher(for: NSPersistentCloudKitContainer.eventChangedNotification).receive(on: RunLoop.main)) { notification in
                 guard !isCapturingScreenshots,
                       let event = notification.userInfo?[NSPersistentCloudKitContainer.eventNotificationUserInfoKey]
                         as? NSPersistentCloudKitContainer.Event,
                       event.type == .import, event.endDate != nil, event.succeeded else { return }
-                spotlight.scheduleRefresh()
+                refreshIntegrations()
             }
         }
         .notification(notificationManager)
@@ -104,6 +111,11 @@ struct PetReminderApp: App {
         #else
         false
         #endif
+    }
+
+    private func refreshIntegrations(reloadWidgetTimelines: Bool = false) {
+        spotlight.scheduleRefresh()
+        widgets.scheduleRefresh(reloadTimelines: reloadWidgetTimelines)
     }
 
     @MainActor

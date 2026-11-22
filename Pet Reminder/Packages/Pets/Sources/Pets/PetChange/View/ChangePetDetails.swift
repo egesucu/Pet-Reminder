@@ -21,6 +21,7 @@ struct ChangePetDetails: View {
     @Binding var pet: Pet
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Query(sort: \Pet.name) var pets: [Pet]
@@ -93,7 +94,7 @@ struct ChangePetDetails: View {
             }
             if !manager.defaultSelected {
                 PhotoImagePicker(
-                    desiredTitle: SharedStrings.change,
+                    desiredTitle: SharedStrings.resource("Change Photo"),
                     photoData: $manager.petImageData,
                     desiredIcon: "photo.fill"
                 )
@@ -148,10 +149,12 @@ struct ChangePetDetails: View {
                     }
                 }
             } else {
-                ScrollView {
-                    photoEditor(for: pet)
-                    detailsForm
-                        .frame(minHeight: .editFormMinHeight500)
+                Form {
+                    Section {
+                        photoEditor(for: pet)
+                    }
+                    personalDetailsView
+                    notificationSelectionView
                 }
             }
         }
@@ -199,20 +202,27 @@ struct ChangePetDetails: View {
 
     @MainActor var personalDetailsView: some View {
         Section {
-            HStack {
+            let fieldLayout = dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(alignment: .leading))
+                : AnyLayout(HStackLayout())
+            fieldLayout {
                 Text(SharedStrings.name)
                     .bold()
+                    .accessibilityHidden(true)
                 TextField(text: $manager.name) {
                     Text(SharedStrings.tapToChangeText)
                 }
+                .accessibilityLabel(Text(SharedStrings.name))
             }
 
-            HStack {
+            fieldLayout {
                 Text(SharedStrings.petBreedTitle)
                     .bold()
+                    .accessibilityHidden(true)
                 TextField(text: $manager.breed) {
                     Text(SharedStrings.tapToChangeText)
                 }
+                .accessibilityLabel(Text(SharedStrings.petBreedTitle))
             }
 
             DatePicker(
@@ -231,7 +241,7 @@ struct ChangePetDetails: View {
             } label: {
                 Text(SharedStrings.petKindText)
             }
-            .pickerStyle(.segmented)
+            .adaptivePickerStyle()
             .onChange(of: manager.kind) {
                 manager.loadImage()
             }
@@ -280,7 +290,7 @@ struct ChangePetDetails: View {
             } label: {
                 Text(SharedStrings.feedTimeTitle)
             }
-            .pickerStyle(.segmented)
+            .adaptivePickerStyle()
         }
     }
 
