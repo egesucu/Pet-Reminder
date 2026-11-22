@@ -84,6 +84,8 @@ struct PetDetail: View {
                 FeedHistory(feeds: feedingPet.feeds, feedSelection: feedingPet.feedSelection)
             case .vaccines:
                 VaccineHistory(pet: pet)
+            case .notes:
+                PetNotes(pet: pet)
             }
         }
     }
@@ -185,6 +187,15 @@ private extension PetDetail {
                         .pets
                         .info("PR: Vaccine History Tapped")
                     historyDestination = .vaccines
+                }
+
+                detailActionButton(
+                    title: SharedStrings.resource("Notes"),
+                    subtitle: String(localized: SharedStrings.resource("View and manage pet notes")),
+                    systemImage: "note.text",
+                    tint: .orange
+                ) {
+                    historyDestination = .notes
                 }
             }
         }
@@ -293,7 +304,7 @@ private extension CGFloat {
 #endif
 
 enum PetHistoryDestination: Hashable, Identifiable {
-    case feedHistory, vaccines
+    case feedHistory, vaccines, notes
     var id: Self { self }
 }
 

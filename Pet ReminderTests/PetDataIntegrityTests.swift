@@ -27,10 +27,50 @@ struct PetDataIntegrityTests {
         #expect(pet.intentID != nil)
         #expect(pet.name == "Shipped V4")
         #expect(pet.breed == "Beagle")
+        #expect(pet.notes?.isEmpty ?? true)
         #expect(pet.feeds?.first?.morningFed == true)
         #expect(pet.feeds?.first?.pet === pet)
         #expect(pet.vaccines?.first?.name == "Rabies")
         #expect(pet.vaccines?.first?.pet === pet)
+    }
+
+    @Test("Pet notes persist across store opens and can be removed")
+    func petNotesPersistence() throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let configuration = ModelConfiguration(
+            url: directory.appending(path: "Pets.store"),
+            cloudKitDatabase: .none
+        )
+        let notes = "Use the blue bowl.\nKeep the leash by the door."
+
+        do {
+            let container = try ModelContainer(for: Pet.self, configurations: configuration)
+            let pet = Pet(name: "Buddy")
+            let otherPet = Pet(name: "Luna")
+            container.mainContext.insert(pet)
+            container.mainContext.insert(otherPet)
+            container.mainContext.insert(PetNote(text: notes, pet: pet))
+            container.mainContext.insert(PetNote(text: "Second note", pet: pet))
+            container.mainContext.insert(PetNote(text: "Luna’s note", pet: otherPet))
+            try container.mainContext.save()
+        }
+
+        do {
+            let container = try ModelContainer(for: Pet.self, configurations: configuration)
+            let pet = try #require(container.mainContext.fetch(Pet.exactNameFetchDescriptor(for: "Buddy")).first)
+            #expect(pet.notes?.count == 2)
+            let note = try #require(pet.notes?.first { $0.text == notes })
+            container.mainContext.delete(note)
+            try container.mainContext.save()
+        }
+
+        let container = try ModelContainer(for: Pet.self, configurations: configuration)
+        let pet = try #require(container.mainContext.fetch(Pet.exactNameFetchDescriptor(for: "Buddy")).first)
+        let otherPet = try #require(container.mainContext.fetch(Pet.exactNameFetchDescriptor(for: "Luna")).first)
+        #expect(pet.notes?.map(\.text) == ["Second note"])
+        #expect(otherPet.notes?.map(\.text) == ["Luna’s note"])
     }
 
     @Test("Fresh pets accept their first feed and vaccine")
