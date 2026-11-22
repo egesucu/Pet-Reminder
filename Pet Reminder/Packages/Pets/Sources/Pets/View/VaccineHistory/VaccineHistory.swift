@@ -21,6 +21,8 @@ import PreviewSupport
 
 struct VaccineHistory: View {
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     /// The pet whose vaccine history is displayed and modified.
     let pet: Pet
 
@@ -42,6 +44,7 @@ struct VaccineHistory: View {
                 .tint(.blue)
                 .bold()
         }
+        .accessibilityElement(children: .combine)
     }
 
     /// The main content for the vaccine history,
@@ -65,12 +68,13 @@ struct VaccineHistory: View {
         .toolbarBackground(Color.groupedBackground, for: .navigationBar)
         .toolbar(content: vaccineToolbars)
         .navigationTitle(Text(SharedStrings.vaccineHistoryTitle))
+        .navigationBarTitleDisplayMode(dynamicTypeSize.isAccessibilitySize ? .inline : .automatic)
         .sheet(
             isPresented: $shouldAddVaccine,
             onDismiss: clearVaccineName
         ) {
             AddVaccine(pet: pet, vaccineName: $vaccineName)
-                .presentationDetents([.medium])
+                .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.medium, .large])
         }
     }
 
@@ -83,6 +87,7 @@ struct VaccineHistory: View {
                     .foregroundStyle(Color.background)
             }
             .tint(.blue)
+            .accessibilityLabel(Text(SharedStrings.addVaccine))
             .disabled(shouldAddVaccine)
         }
     }

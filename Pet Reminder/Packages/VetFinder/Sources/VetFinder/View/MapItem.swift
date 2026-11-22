@@ -38,7 +38,7 @@ struct MapItem: View {
                     if let fullAddress = location.fullAdress {
                         Text(fullAddress)
                             .font(showsCardStyle ? .subheadline : .body)
-                            .foregroundStyle(showsCardStyle ? Color(uiColor: .secondaryLabel) : Color.accentColor)
+                            .foregroundStyle(.primary)
                     } else {
                         Text(SharedStrings.findVetOpen)
                     }
@@ -46,6 +46,8 @@ struct MapItem: View {
                     Image(systemName: "location")
                 }
                 .multilineTextAlignment(.leading)
+                .frame(minHeight: 44, alignment: .leading)
+                .contentShape(Rectangle())
             }
             .buttonStyle(.borderless)
 
@@ -55,10 +57,13 @@ struct MapItem: View {
                 } label: {
                     Label(phoneNumber, systemImage: "phone")
                         .font(showsCardStyle ? .subheadline : .body)
+                        .frame(minHeight: 44, alignment: .leading)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.borderless)
             }
         }
+        .tint(.primary)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, .spacing8)
         .alert(SharedStrings.findVetOpen, isPresented: $presentApps) {

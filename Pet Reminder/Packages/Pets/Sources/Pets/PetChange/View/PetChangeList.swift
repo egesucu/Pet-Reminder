@@ -23,6 +23,7 @@ public struct PetChangeList: View {
 
     @Environment(\.modelContext) private var modelContext
     @Environment(NotificationManager.self) private var notificationManager
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @Query(sort: \Pet.name) var pets: [Pet]
@@ -52,7 +53,7 @@ public struct PetChangeList: View {
                             } icon: {
                                 Image(systemName: isEditing ? "checkmark" : "pencil")
                             }
-                                .animation(.bouncy, value: isEditing)
+                                .animation(reduceMotion ? nil : .bouncy, value: isEditing)
                         }
                     }
 
@@ -153,7 +154,7 @@ public struct PetChangeList: View {
         if pet == selectedPet {
             deselectPet()
         }
-        withAnimation {
+        withAnimation(reduceMotion ? nil : .default) {
             modelContext.delete(pet)
         }
         do {

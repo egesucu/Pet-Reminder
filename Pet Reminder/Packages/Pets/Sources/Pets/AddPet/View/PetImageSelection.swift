@@ -30,7 +30,7 @@ struct PetImageSelection: View {
                 } label: {
                     Text(SharedStrings.petKindText)
                 }
-                .pickerStyle(.segmented)
+                .adaptivePickerStyle()
 
                 TextField(SharedStrings.petBreedOptional, text: $breedInput)
                     .onChange(of: breedInput) {
@@ -70,6 +70,7 @@ private extension PetImageSelection {
                 .image
                 .frame(width: .avatar200, height: .avatar200)
                 .clipShape(.rect(cornerRadius: .radius10))
+                .accessibilityHidden(true)
         }
     }
 
@@ -80,6 +81,7 @@ private extension PetImageSelection {
                 .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: .radius10))
                 .glassEffect(.identity)
+                .accessibilityHidden(true)
 
             Button(role: .destructive, action: removeImage) {
                 Text(SharedStrings.resource("Delete Photo"))

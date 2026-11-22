@@ -15,6 +15,8 @@ struct FeedInsightsSection: View {
     let records: [FeedDayRecord]
     let feedSelection: FeedSelection
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var isChartVisible = false
 
     private let calendar = Calendar.current
@@ -26,7 +28,10 @@ struct FeedInsightsSection: View {
                 .foregroundStyle(.secondary)
 
             VStack(alignment: .leading, spacing: .spacing20) {
-                HStack(spacing: .spacing12) {
+                let statisticsLayout = dynamicTypeSize.isAccessibilitySize
+                    ? AnyLayout(VStackLayout(alignment: .leading, spacing: .spacing12))
+                    : AnyLayout(HStackLayout(spacing: .spacing12))
+                statisticsLayout {
                     FeedStatistic(
                         value: completionRate.formatted(.percent.precision(.fractionLength(0))),
                         label: SharedStrings.resource("Completion")
@@ -52,7 +57,7 @@ struct FeedInsightsSection: View {
                     Chart(recentDays) { day in
                         BarMark(
                             x: .value(String(localized: "Day", bundle: SharedResources.bundle), day.date, unit: .day),
-                            y: .value(String(localized: "Feeds", bundle: SharedResources.bundle), isChartVisible ? day.completedCount : 0)
+                            y: .value(String(localized: "Feeds", bundle: SharedResources.bundle), (isChartVisible || reduceMotion) ? day.completedCount : 0)
                         )
                         .foregroundStyle(day.completedCount >= expectedFeedCount ? Color.green : Color.accentColor)
                         .cornerRadius(4)
@@ -63,10 +68,10 @@ struct FeedInsightsSection: View {
                     }
                     .chartXAxis(.hidden)
                     .frame(height: 130)
-                    .animation(.smooth(duration: 0.6), value: isChartVisible)
-                    .animation(.smooth, value: recentDays.map(\.completedCount))
+                    .animation(reduceMotion ? nil : .smooth(duration: 0.6), value: isChartVisible)
+                    .animation(reduceMotion ? nil : .smooth, value: recentDays.map(\.completedCount))
                     .onAppear {
-                        withAnimation(.smooth(duration: 0.6)) {
+                        withAnimation(reduceMotion ? nil : .smooth(duration: 0.6)) {
                             isChartVisible = true
                         }
                     }
@@ -82,7 +87,6 @@ struct FeedInsightsSection: View {
                     }
                     .accessibilityHidden(true)
                 }
-                .frame(height: 150)
             }
             .padding(.spacing16)
             .background(

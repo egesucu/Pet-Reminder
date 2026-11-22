@@ -23,6 +23,7 @@ struct PetNameTextField: View {
 
     @Binding var model: AddPet.Model
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @FocusState var isFocused
 
     var body: some View {
@@ -35,6 +36,7 @@ struct PetNameTextField: View {
                 Strings.doggo,
                 text: $model.name
             )
+            .accessibilityLabel(Text(SharedStrings.startNameLabel))
             .focused($isFocused)
             .foregroundStyle(Color.label)
             .font(.title)
@@ -58,7 +60,7 @@ struct PetNameTextField: View {
                                 .opacity(0.1)
 
                     )
-                    .animation(.easeInOut, value: isFocused)
+                    .animation(reduceMotion ? nil : .easeInOut, value: isFocused)
                     .clipShape(.rect(cornerRadius: .radius10))
             )
 

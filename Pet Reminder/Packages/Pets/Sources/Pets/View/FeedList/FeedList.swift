@@ -23,6 +23,7 @@ struct FeedList: View {
 
     @State private var now = Date.now
     @State private var showSaveError = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
 
     private var morningOn: Bool { DailyFeeds.isFed(.morning, pet: pet, at: now) }
@@ -79,67 +80,58 @@ struct FeedList: View {
     }
 
     var morningButton: some View {
-        Button {
-            toggle(.morning)
-        } label: {
-            Label {
-                Text(SharedStrings.feedSelectionMorning)
-                    .font(.title2.bold(morningOn))
-                    .foregroundStyle(morningOn ? Color.background : Color.label)
-            } icon: {
-                Image(systemName: morningOn ? "checkmark" : "sun.max")
-                    .font(.system(size: .icon20, weight: morningOn ? .bold : .regular))
-                    .foregroundStyle(morningOn ? Color.background : Color.label)
-            }
-        }
-        .buttonStyle(
-            .glass(
-                .regular
-                    .interactive(morningOn)
-                    .tint(morningOn ? .yellow : .yellow.opacity(0.4))
-            )
+        feedButton(
+            title: SharedStrings.feedSelectionMorning,
+            symbol: "sun.max",
+            isFed: morningOn,
+            type: .morning
         )
-        .animation(.smooth, value: morningOn)
-        .sensoryFeedback(.selection, trigger: morningOn)
         .onChange(of: morningOn) {
-            Logger
-                .feed
-                .info("PR: Morning Changed, new value: \(morningOn), pet: \(pet.name)")
+            Logger.feed.info("PR: Morning Changed, new value: \(morningOn), pet: \(pet.name)")
         }
     }
 
     var eveningButton: some View {
+        feedButton(
+            title: SharedStrings.feedSelectionEvening,
+            symbol: "moon",
+            isFed: eveningOn,
+            type: .evening
+        )
+        .onChange(of: eveningOn) {
+            Logger.feed.info("PR: Evening Changed, new value: \(eveningOn), pet: \(pet.name)")
+        }
+    }
+
+    private func feedButton(
+        title: LocalizedStringResource,
+        symbol: String,
+        isFed: Bool,
+        type: FeedSelection
+    ) -> some View {
         Button {
-            toggle(.evening)
+            toggle(type)
         } label: {
             Label {
-                Text(SharedStrings.feedSelectionEvening)
-                    .font(.title2.bold(eveningOn))
-                    .foregroundStyle(eveningOn ? Color.background : Color.label)
+                Text(title)
+                    .multilineTextAlignment(.leading)
             } icon: {
-                Image(systemName: eveningOn ? "checkmark" : "moon")
-                    .font(.system(size: .icon20, weight: eveningOn ? .bold : .regular))
-                    .foregroundStyle(eveningOn ? Color.background : Color.label)
+                Image(systemName: isFed ? "checkmark" : symbol)
             }
+            .font(.title2.bold(isFed))
+            .foregroundStyle(.primary)
+            .padding(.horizontal, .spacing16)
+            .frame(minHeight: 44)
+            .background(Color(uiColor: .tertiarySystemGroupedBackground), in: Capsule())
+            .overlay {
+                Capsule().strokeBorder(.primary, lineWidth: isFed ? 2 : 1)
+            }
+            .contentShape(Capsule())
         }
-        .buttonStyle(
-            .glass(
-                .regular
-                    .interactive(
-                        eveningOn
-                    )
-                    .tint(
-                        eveningOn ? .blue : .blue.opacity(0.4)
-                    )
-            )
-        )
-        .animation(.smooth, value: eveningOn)
-        .sensoryFeedback(.selection, trigger: eveningOn)
-        .onChange(of: eveningOn) {
-            Logger
-                .feed
-                .info("PR: Evening Changed, new value: \(eveningOn), pet: \(pet.name)")
-        }
+        .buttonStyle(.plain)
+        .accessibilityValue(Text(isFed ? SharedStrings.resource("Fed") : SharedStrings.resource("Not fed")))
+        .animation(reduceMotion ? nil : .smooth, value: isFed)
+        .sensoryFeedback(.selection, trigger: isFed)
     }
 
     private func toggle(_ type: FeedSelection) {

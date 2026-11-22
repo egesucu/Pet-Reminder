@@ -13,6 +13,7 @@ import Shared
 import SharedUI
 
 struct Donate: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var consumables: [Product] = []
     private let productIDs = [
         Strings.donateTeaID,
@@ -72,7 +73,7 @@ private extension Donate {
                             .settings
                             .info("Purchasing the product: \(product.displayName)")
                     }
-                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                    .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .bottom)))
             }
         }
     }
@@ -123,7 +124,7 @@ private extension Donate {
                 }
             }
 
-            withAnimation {
+            withAnimation(reduceMotion ? .easeInOut : .default) {
                 consumables = newConsumables.sorted { return $0.price < $1.price }
             }
         } catch {

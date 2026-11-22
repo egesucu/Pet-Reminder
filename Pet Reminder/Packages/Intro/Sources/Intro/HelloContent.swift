@@ -34,14 +34,16 @@ struct HelloContent: View {
             VStack(spacing: .spacing12) {
                 Text(SharedStrings.welcomeTitle)
                     .font(.largeTitle.bold())
+                    .accessibilityAddTraits(.isHeader)
                     .foregroundStyle(.primary)
                     .multilineTextAlignment(.center)
 
                 Text(SharedStrings.welcomeContext)
                     .font(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.primary)
                     .multilineTextAlignment(.center)
                     .lineSpacing(.spacing4)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
