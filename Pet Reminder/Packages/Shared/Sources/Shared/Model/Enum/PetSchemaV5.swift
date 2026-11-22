@@ -8,8 +8,6 @@
 import Foundation
 import SwiftData
 
-public typealias Pet = PetSchemaV5.Pet
-
 public enum PetSchemaV5: VersionedSchema {
     public static let versionIdentifier = Schema.Version(5, 0, 0)
 
@@ -92,46 +90,48 @@ public enum PetSchemaV5: VersionedSchema {
             }
         }
     }
-}
 
-public extension Pet {
-    func addFeed(_ feed: Feed) {
-        var updatedFeeds = feeds ?? []
-        updatedFeeds.append(feed)
-        feeds = updatedFeeds
-        feed.pet = self
+    @Model
+    public class Feed: Identifiable {
+        public var id: UUID = UUID()
+        public var eveningFed: Bool = false
+        public var eveningFedStamp: Date?
+        public var feedDate: Date?
+        public var morningFed: Bool = false
+        public var morningFedStamp: Date?
+        public var pet: Pet?
+
+        public init(
+            id: UUID = UUID(),
+            eveningFed: Bool = false,
+            eveningFedStamp: Date? = nil,
+            feedDate: Date? = nil,
+            morningFed: Bool = false,
+            morningFedStamp: Date? = nil
+        ) {
+            self.id = id
+            self.eveningFed = eveningFed
+            self.eveningFedStamp = eveningFedStamp
+            self.feedDate = feedDate
+            self.morningFed = morningFed
+            self.morningFedStamp = morningFedStamp
+        }
+
     }
 
-    func addVaccine(_ vaccine: Vaccine) {
-        var updatedVaccines = vaccines ?? []
-        updatedVaccines.append(vaccine)
-        vaccines = updatedVaccines
-        vaccine.pet = self
-    }
+    @Model
+    public class Vaccine {
+        public var date: Date = Date.now
+        public var name: String = String.empty
+        public var pet: Pet?
 
-    static func cleanedName(for name: String) -> String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    static func normalizedName(for name: String) -> String {
-        cleanedName(for: name)
-            .folding(options: [.diacriticInsensitive, .widthInsensitive], locale: .current)
-            .lowercased()
-    }
-
-    static func exactNameFetchDescriptor(for name: String) -> FetchDescriptor<Pet> {
-        let cleanedName = cleanedName(for: name)
-        var descriptor = FetchDescriptor<Pet>(
-            predicate: #Predicate<Pet> { pet in
-                pet.name == cleanedName
-            }
-        )
-        descriptor.fetchLimit = 1
-        return descriptor
-    }
-
-    func hasNameMatching(_ name: String) -> Bool {
-        Self.normalizedName(for: self.name) == Self.normalizedName(for: name)
+        public init(
+            date: Date = Date.now,
+            name: String = .empty
+        ) {
+            self.date = date
+            self.name = name
+        }
     }
 
 }

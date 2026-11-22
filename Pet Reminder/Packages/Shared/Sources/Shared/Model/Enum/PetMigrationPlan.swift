@@ -10,12 +10,17 @@ import SwiftData
 
 public enum PetMigrationPlan: SchemaMigrationPlan {
     public static var stages: [MigrationStage] {
-        [migrateV1toV2, migrateV2toV3, migrateV3toV4, migrateV4toV5]
+        [migrateV1toV2, migrateV2toV3, migrateV3toV4, migrateV4toV5, migrateV5toV6]
     }
 
     public static var schemas: [any VersionedSchema.Type] {
-        [PetSchemaV1.self, PetSchemaV2.self, PetSchemaV3.self, PetSchemaV4.self, PetSchemaV5.self]
+        [PetSchemaV1.self, PetSchemaV2.self, PetSchemaV3.self, PetSchemaV4.self, PetSchemaV5.self, PetSchemaV6.self]
     }
+
+    static let migrateV5toV6 = MigrationStage.lightweight(
+        fromVersion: PetSchemaV5.self,
+        toVersion: PetSchemaV6.self
+    )
 
     static let migrateV4toV5 = MigrationStage.custom(
         fromVersion: PetSchemaV4.self,
