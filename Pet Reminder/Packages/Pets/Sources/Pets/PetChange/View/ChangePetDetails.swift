@@ -94,7 +94,7 @@ struct ChangePetDetails: View {
             }
             if !manager.defaultSelected {
                 PhotoImagePicker(
-                    desiredTitle: SharedStrings.change,
+                    desiredTitle: SharedStrings.resource("Change Photo"),
                     photoData: $manager.petImageData,
                     desiredIcon: "photo.fill"
                 )

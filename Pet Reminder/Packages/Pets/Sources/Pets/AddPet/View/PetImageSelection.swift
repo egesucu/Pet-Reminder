@@ -42,7 +42,7 @@ struct PetImageSelection: View {
                     .petPhotoDrop(data: $model.selectedImageData)
 
                 PhotoImagePicker(
-                    desiredTitle: SharedStrings.add,
+                    desiredTitle: SharedStrings.resource("Add Photo"),
                     photoData: $model.selectedImageData
                 )
             }
