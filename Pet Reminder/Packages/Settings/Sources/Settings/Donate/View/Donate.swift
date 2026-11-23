@@ -73,7 +73,7 @@ private extension Donate {
                             .settings
                             .info("Purchasing the product: \(product.displayName)")
                     }
-                    .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .bottom)))
+                    .transition(unsafe reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .bottom)))
             }
         }
     }

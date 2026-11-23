@@ -1,14 +1,77 @@
 import Foundation
 import SwiftData
 import Testing
-import Shared
+@testable import Shared
 @testable import Pets
+@testable import Pet_Reminder
 
 private final class MigrationFixtureBundle: NSObject {}
 
 @MainActor
 @Suite("Pet data integrity")
 struct PetDataIntegrityTests {
+    @Test("The early Notes store migrates text and retains the pet and its feeding history")
+    func draftNotesStoreMigratesToCurrentSchema() throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let configuration = ModelConfiguration(
+            url: directory.appending(path: "Pets.store"),
+            cloudKitDatabase: .none
+        )
+        let identity = UUID()
+        let note = "Use the blue bowl.\nKeep the leash by the door."
+
+        do {
+            let container = try ModelContainer(for: PetDraftNotesSchema.Pet.self, configurations: configuration)
+            let pet = PetDraftNotesSchema.Pet(name: "Luna", intentID: identity, notes: note)
+            let feed = PetDraftNotesSchema.Feed()
+            feed.morningFed = true
+            pet.feeds = [feed]
+            container.mainContext.insert(pet)
+            try container.mainContext.save()
+        }
+
+        for _ in 0..<2 {
+            let container = try DataController.productionContainer(configuration: configuration)
+            let pet = try #require(container.mainContext.fetch(FetchDescriptor<Pet>()).first)
+            #expect(pet.intentID == identity)
+            #expect(pet.name == "Luna")
+            #expect(pet.feeds?.first?.morningFed == true)
+            #expect(pet.notes?.map(\.text) == [note])
+            #expect(pet.notes?.first?.pet === pet)
+        }
+    }
+
+    @Test("Version 5 stores open with the current migration plan and preserve pet identities")
+    func versionFiveStoreMigratesToCurrentSchema() throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let configuration = ModelConfiguration(
+            url: directory.appending(path: "Pets.store"),
+            cloudKitDatabase: .none
+        )
+        let identity = UUID()
+
+        do {
+            let container = try ModelContainer(for: PetSchemaV5.Pet.self, configurations: configuration)
+            let pet = PetSchemaV5.Pet(name: "Luna")
+            pet.intentID = identity
+            pet.feeds = [PetSchemaV5.Feed(feedDate: .now, morningFed: true)]
+            container.mainContext.insert(pet)
+            try container.mainContext.save()
+        }
+
+        let container = try ModelContainer(
+            for: Pet.self, migrationPlan: PetMigrationPlan.self, configurations: configuration
+        )
+        let pet = try #require(container.mainContext.fetch(FetchDescriptor<Pet>()).first)
+        #expect(pet.intentID == identity)
+        #expect(pet.feeds?.first?.morningFed == true)
+        #expect(pet.notes?.isEmpty ?? true)
+    }
+
     @Test("The original shipped V4 store migrates with its feeding and vaccine relationships intact")
     func shippedVersionFourStore() throws {
         let fixture = try #require(Bundle(for: MigrationFixtureBundle.self).url(forResource: "OriginalV4", withExtension: "store"))

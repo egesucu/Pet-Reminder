@@ -13,10 +13,15 @@ import SharedUI
 
 @MainActor
 class DataController {
-    static func productionContainer() throws -> ModelContainer {
-        // Adding widget App Groups must not redirect the existing SwiftData store.
-        let configuration = ModelConfiguration(groupContainer: .none)
-        return try ModelContainer(for: Pet.self, migrationPlan: PetMigrationPlan.self, configurations: configuration)
+    static func productionContainer(
+        configuration: ModelConfiguration = ModelConfiguration(groupContainer: .none)
+    ) throws -> ModelContainer {
+        // The widget App Group must not redirect the existing production store.
+        do {
+            return try ModelContainer(for: Pet.self, migrationPlan: PetMigrationPlan.self, configurations: configuration)
+        } catch let error as SwiftDataError where error == .unknownDataStoreSchema {
+            return try ModelContainer(for: Pet.self, migrationPlan: PetDraftNotesMigrationPlan.self, configurations: configuration)
+        }
     }
     #if DEBUG
     /// Isolated sample data for real simulator captures; never touches the user's store.
